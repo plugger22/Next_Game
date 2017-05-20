@@ -1,125 +1,119 @@
-//Exile Game File "LogTurn.txt" opened at: 20/05/2017 09:31:06
+//Exile Game File "LogTurn.txt" opened at: 20/05/2017 15:45:34
 --- ProcessStartTurn (World.cs)
-Day 3, Turn 2
---- MoveActors -> 2 Records (World.cs)
- [Move -> MoveObject] Inquisitor Brother Haborym, ActID 75 travelling to Parchments (current Loc 16:12)
---- CheckIfFoundEnemy (World.cs)
- [Search -> Debug] Active Gerbertus Stark, ID 1 at 11:1, Enemy at 16:12 (Brother Haborym, ID 75
- [Move -> MoveObject] Inquisitor Brother Damballa, ActID 77 travelling to The Yellow Huntress (current Loc 14:12)
---- CheckIfFoundEnemy (World.cs)
- [Search -> Debug] Active Gerbertus Stark, ID 1 at 11:1, Enemy at 14:12 (Brother Damballa, ID 77
+Day 4, Turn 3
+--- UpdateRumours (World.cs)
+dictRumoursTimed (Start) -> 5 records
+[Notification -> Removal] RID 283, "Inquisitor Brother Amon, ActID 118 has been spotted drinking at Kingskeep (loc 15:14)" removed from Global All list
+[Notification -> Removal] RID 284, "Inquisitor Brother Kali, ActID 119 has been spotted gambling at Kingskeep (loc 15:14)" removed from Global All list
+[Notification -> Removal] RID 285, "Inquisitor Brother Damballa, ActID 120 has been spotted wenching at Kingskeep (loc 15:14)" removed from Global All list
+RumourID 286 -> TimerExpire decremented, now 1
+RumourID 287 -> TimerExpire decremented, now 2
+--- MoveActors -> 0 Records (World.cs)
 --- UpdatePlayerStatus (World.cs)
 --- UpdateWorldStatus (World.cs)
 --- CheckFollowerActivity (World.cs)
 --- GetRumour (Director.cs)
-arrayOfRumours [0] -> RumourID 105, Strength 1, Scope Global, Type Item, Global All
-arrayOfRumours [1] -> RumourID 109, Strength 2, Scope Global, Type Desire, Global North
-arrayOfRumours [5] -> RumourID 97, Strength 4, Scope Local, Type Skill, Global All
-RumourID 97 selected from the Pool
-Rumour "BannerLord Forley Tallhart "The Simple", ActID 49 at Torrhen's Square, is known to be Gullible" revealed to ActorID6 on turn 2 -> added to List
-RumourID 97 removed from listRumoursHouse[0]
-Follower The Dark Eminence, ActID 6, added RumourID 97
-BannerLord Forley Tallhart, ActID 49, skill Treachery set to True
+arrayOfRumours [0] -> RumourID 53, Strength 1, Scope Global, Type Item, Global All
+arrayOfRumours [1] -> RumourID 280, Strength 3, Scope Global, Type Friends, Global North
+arrayOfRumours [5] -> RumourID 77, Strength 2, Scope Local, Type Skill, Global All
+RumourID 77 selected from the Pool
+Rumour "Knight Ser Herriot Ouin "The Licentious", ActID 38 at Bloodkeep, is whispered to be Lecherous" revealed to ActorID9 on turn 3 -> added to List
+RumourID 77 removed from listRumoursHouse[1]
+Follower The Spider, ActID 9, added RumourID 77
+Knight Ser Herriot Ouin, ActID 38, skill Charm set to True
 --- GetRumour (Director.cs)
-arrayOfRumours [0] -> RumourID 168, Strength 3, Scope Global, Type Enemy, Global All
-arrayOfRumours [3] -> RumourID 129, Strength 2, Scope Global, Type Desire, Global South
-arrayOfRumours [5] -> RumourID 110, Strength 4, Scope Local, Type Skill, Global All
-RumourID 168 selected from the Pool
-Rumour "Inquisitor Brother Mastema, ActID 74 has been spotted laying low in Kingskeep (loc 15:12)" revealed to ActorID8 on turn 2 -> added to List
-RumourID 168 removed from listRumoursGlobal[12]
-Follower The Waif, ActID 8, added RumourID 168
+arrayOfRumours [0] -> RumourID 114, Strength 1, Scope Global, Type Item, Global All
+arrayOfRumours [1] -> RumourID 270, Strength 2, Scope Global, Type HouseRel, Global North
+arrayOfRumours [5] -> RumourID 175, Strength 4, Scope Local, Type Skill, Global All
+RumourID 270 selected from the Pool
+Rumour "House Baratheon has had poor past relations with their BannerLord at House Tarth due to their unreliability in battle" revealed to ActorID5 on turn 3 -> added to List
+RumourID 270 removed from listRumoursNorth[17]
+Follower The Crone, ActID 5, added RumourID 270
+[Notification -> HouseRel] "Unreliable in battle and prone to holding back" -> Known is True
 --- GetRumour (Director.cs)
-[Notification] No house rumours available -> none added to pool
-arrayOfRumours [0] -> RumourID 61, Strength 1, Scope Global, Type Item, Global All
-arrayOfRumours [1] -> RumourID 36, Strength 2, Scope Global, Type Desire, Global North
-RumourID 36 selected from the Pool
-Rumour "It is said that Lady Isopel Targaryen, ActID 29 at Valyria, desires that their Son, Lord Wyman Targaryen "The Eyeless", ActID 36, attains a position in the Royal Court" revealed to ActorID3 on turn 2 -> added to List
-RumourID 36 removed from listRumoursNorth[0]
-Follower The Crone, ActID 3, added RumourID 36
-[Notification] Lord Wyman Targaryen "The Eyeless" DesireKnown status changed to "True"
+arrayOfRumours [0] -> RumourID 114, Strength 1, Scope Global, Type Item, Global All
+arrayOfRumours [3] -> RumourID 230, Strength 2, Scope Global, Type Desire, Global South
+arrayOfRumours [5] -> RumourID 190, Strength 4, Scope Local, Type Skill, Global All
+RumourID 190 selected from the Pool
+Rumour "BannerLord Bran Bracken "The Blood Spiller", ActID 86 at Stone Hedge, is known by all to be Blood Thirsty" revealed to ActorID3 on turn 3 -> added to List
+RumourID 190 removed from listRumoursHouse[0]
+Follower The Haggler, ActID 3, added RumourID 190
+BannerLord Bran Bracken, ActID 86, skill Combat set to True
 [Notification] Player in SafeHouse -> World events cancelled
 --- CheckStationaryActiveActors (World.cs)
- [Search -> Stationary] Usurper Gerbertus Stark, ActID 1 is AtLocation
+ [Search -> Stationary] Usurper Daue Stark, ActID 1 is AtLocation
 --- CheckIfFoundActive (World.cs)
- [Search -> Debug] Enemy, Brother Mastema, ID 74 at 15:12, Active Gerbertus Stark, ID 1, at 11:1
- [Search -> Debug] Enemy, Brother Haborym, ID 75 at 17:12, Active Gerbertus Stark, ID 1, at 11:1
- [Search -> Debug] Enemy, Brother Dagon, ID 76 at 15:12, Active Gerbertus Stark, ID 1, at 11:1
- [Search -> Debug] Enemy, Brother Damballa, ID 77 at 13:12, Active Gerbertus Stark, ID 1, at 11:1
- [Search -> Debug] Enemy, The Unrelenting, ID 78 at 15:12, Active Gerbertus Stark, ID 1, at 11:1
- [Search -> Stationary] Follower The Dark Eminence, ActID 6 is AtLocation
- [Search -> Stationary] Follower The Waif, ActID 8 is AtLocation
- [Search -> Stationary] Follower The Crone, ActID 3 is AtLocation
+ [Search -> Debug] Enemy, Brother Behemoth, ID 117 at 15:14, Active Daue Stark, ID 1, at 2:4
+ [Search -> Debug] Enemy, Brother Amon, ID 118 at 15:14, Active Daue Stark, ID 1, at 2:4
+ [Search -> Debug] Enemy, Brother Kali, ID 119 at 15:14, Active Daue Stark, ID 1, at 2:4
+ [Search -> Debug] Enemy, Brother Damballa, ID 120 at 15:14, Active Daue Stark, ID 1, at 2:4
+ [Search -> Debug] Enemy, The Unrelenting, ID 121 at 15:14, Active Daue Stark, ID 1, at 2:4
+ [Search -> Stationary] Follower The Spider, ActID 9 is AtLocation
+ [Search -> Stationary] Follower The Crone, ActID 5 is AtLocation
+ [Search -> Stationary] Follower The Haggler, ActID 3 is AtLocation
 --- UpdateAIController (World.cs)
- [AI -> Player Unknown] Inquisitor Brother Mastema, Act ID 74 Mode -> Normal
- [AI -> Player Unknown] Inquisitor Brother Dagon, Act ID 76 Mode -> Normal
- [AI -> Player Unknown] Nemesis The Unrelenting, Act ID 78 Mode -> Normal
+ [AI -> Player Unknown] Inquisitor Brother Behemoth, Act ID 117 Mode -> Normal
+ [AI -> Player Unknown] Inquisitor Brother Amon, Act ID 118 Mode -> Normal
+ [AI -> Player Unknown] Inquisitor Brother Kali, Act ID 119 Mode -> Normal
+ [AI -> Player Unknown] Inquisitor Brother Damballa, Act ID 120 Mode -> Normal
+ [AI -> Player Unknown] Nemesis The Unrelenting, Act ID 121 Mode -> Normal
 --- SetEnemyActivity (World.cs)
- [Enemy -> Known] Brother Mastema ActID 74 has become KNOWN
- [Enemy -> Goal] Brother Mastema, ActID 74 retains Goal -> Wait
- [Enemy -> Goal] Brother Dagon, ActID 76 retains Goal -> Wait
- [Enemy -> Known] Brother Damballa ActID 77 has become KNOWN
- [Enemy -> Goal] The Unrelenting, ActID 78 retains Goal -> Wait
+ [Enemy -> Goal] Brother Behemoth, ActID 117 retains Goal -> Wait
+ [Enemy -> Goal] Brother Amon, ActID 118 retains Goal -> Wait
+ [Enemy -> Goal] Brother Kali, ActID 119 retains Goal -> Hide
+ [Enemy -> Goal] Brother Damballa, ActID 120 retains Goal -> Wait
+ [Enemy -> Goal] The Unrelenting, ActID 121 retains Goal -> Wait
 --- CheckPlayerEvents (Director.cs)
 --- GetValidPlayerEvents (Director.cs)
  Event "Mysterious Stranger" has no attached Conditions
 --- GetValidPlayerEvents (Director.cs)
 --- GetValidPlayerEvents (Director.cs)
- Chance of Player Location event 37 %
+ Chance of Player Location event 18 %
 --- ResolvePlayerEvents (Director.cs)
  "Talk to them" Trait Trigger, if type 3 is GreaterThanOrEqual to 3
  Trigger passed on "3" GreaterThanOrEqual 3
  "Curse all strangers" Trait Trigger, if type 4 is GreaterThanOrEqual to 3
- Trigger passed on "3" GreaterThanOrEqual 3
- Event "Mysterious Stranger" Timer Repeat now 9
+ Trigger passed on "4" GreaterThanOrEqual 3
+ Event "Mysterious Stranger" Timer Repeat now 8
  Event "Mysterious Stranger" Cooldown Timer has been reset to 0
 --- UpdateActiveActors (World.cs)
- Usurper Gerbertus Stark has had their TurnsUnknown Timer increased from 101 to 102
- Follower The Dark Eminence has had their TurnsUnknown Timer increased from 1 to 2
- Follower The Waif has had their TurnsUnknown Timer increased from 1 to 2
- Follower The Crone has had their TurnsUnknown Timer increased from 1 to 2
+ Usurper Daue Stark has had their TurnsUnknown Timer increased from 102 to 103
+ Follower The Spider has had their TurnsUnknown Timer increased from 2 to 3
+ Follower The Crone has had their TurnsUnknown Timer increased from 2 to 3
+ Follower The Haggler has had their TurnsUnknown Timer increased from 2 to 3
 --- ResolveOutcome (Director.cs)
---- MultiKeyInput (Game.cs)
-168 input
---- SetEndGame (Game.cs)
-[Alert] Player chose to exit (pressed 'X')
-//Exile Game file ops "LogTurn.txt" Completed at: 20/05/2017 09:33:05
-eset to 0
---- UpdateActiveActors (World.cs)
- Usurper Gerbertus Stark has had their TurnsUnknown Timer increased from 100 to 101
- Follower The Dark Eminence has had their TurnsUnknown Timer increased from 0 to 1
- Follower The Waif has had their TurnsUnknown Timer increased from 0 to 1
- Follower The Crone has had their TurnsUnknown Timer increased from 0 to 1
---- ResolveOutcome (Director.cs)
+--- ResolveFollowerEvents (Director.cs)
+--- ProcessEndTurn (World.cs)
+Day 4, Turn 3
+--- CheckEventTimers (Director.cs)
+ Event "Search and Detain" Dormant Timer decremented to 17
+--- InitialiseDynamicRumours (Director.cs)
+[Enemy] Inquisitor Brother Amon, ActID 118 has been spotted wenching at Kingskeep (loc 15:14) -> dict
+--- HouseKeepActors (World.cs)
+[GameStat] "Location_Days" -> increased from 3 to 4
+
+//Exile Game File "LogTurn.txt" Close completed at: 20/05/2017 15:46:45
+rmured among friends that Hand_of_the_King Warnerus Tybout, ActID 112 at Kingskeep, hungers for Gold", rumourID 248, added to dictRumoursKnown
+[Notification] None  "" DesireKnown status changed to "True"
+It is murmured among friends that Hand_of_the_King Warnerus Tybout, ActID 112 at Kingskeep, hungers for Gold
 --- ChangePlayerRumourStatus (Director.cs)
 --- GetRumour (Director.cs)
-arrayOfRumours [0] -> RumourID 61, Strength 1, Scope Global, Type Item, Global All
-arrayOfRumours [1] -> RumourID 162, Strength 2, Scope Global, Type HouseRel, Global North
-arrayOfRumours [5] -> RumourID 89, Strength 4, Scope Local, Type Skill, Global All
-RumourID 162 selected from the Pool
-Rumour "House Targaryen has had good past relations with their BannerLord at House Leygood due to them rescuing a Lord" revealed to ActorID1 on turn 1 -> added to List
-RumourID 162 removed from listRumoursNorth[6]
-Rumour "House Targaryen has had good past relations with their BannerLord at House Leygood due to them rescuing a Lord", rumourID 162, added to dictRumoursKnown
-[Notification -> HouseRel] "Rescued our Ancestral Lord from marauding Sell Swords" -> Known is True
-House Targaryen has had good past relations with their BannerLord at House Leygood due to them rescuing a Lord
---- ChangePlayerRumourStatus (Director.cs)
---- GetRumour (Director.cs)
-arrayOfRumours [0] -> RumourID 99, Strength 1, Scope Global, Type Item, Global All
-arrayOfRumours [1] -> RumourID 36, Strength 2, Scope Global, Type Desire, Global North
-arrayOfRumours [5] -> RumourID 89, Strength 4, Scope Local, Type Skill, Global All
-RumourID 89 selected from the Pool
-Rumour "BannerLord Willas Flint "The Locked", ActID 46 at Widow's Watch, is known to be Overweight" revealed to ActorID1 on turn 1 -> added to List
-RumourID 89 removed from listRumoursHouse[0]
-Rumour "BannerLord Willas Flint "The Locked", ActID 46 at Widow's Watch, is known to be Overweight", rumourID 89, added to dictRumoursKnown
-BannerLord Willas Flint, ActID 46, has their Combat changed to True
-BannerLord Willas Flint "The Locked", ActID 46 at Widow's Watch, is known to be Overweight
+arrayOfRumours [0] -> RumourID 53, Strength 1, Scope Global, Type Item, Global All
+arrayOfRumours [1] -> RumourID 176, Strength 2, Scope Global, Type Desire, Global North
+arrayOfRumours [5] -> RumourID 177, Strength 4, Scope Local, Type Skill, Global All
+RumourID 176 selected from the Pool
+Rumour "It is commonly known that BannerLord Roose Harlaw, ActID 80 at Ten Towers, is in thrall to Gold" revealed to ActorID1 on turn 1 -> added to List
+RumourID 176 removed from listRumoursNorth[5]
+Rumour "It is commonly known that BannerLord Roose Harlaw, ActID 80 at Ten Towers, is in thrall to Gold", rumourID 176, added to dictRumoursKnown
+[Notification] None  "" DesireKnown status changed to "True"
+It is commonly known that BannerLord Roose Harlaw, ActID 80 at Ten Towers, is in thrall to Gold
 --- ProcessEndTurn (World.cs)
 Day 2, Turn 1
 --- CheckEventTimers (Director.cs)
  Event "Search and Detain" Dormant Timer decremented to 19
 --- InitialiseDynamicRumours (Director.cs)
-[Enemy] Inquisitor Brother Mastema, ActID 74 has been spotted laying low in Kingskeep (loc 15:12) -> dict
-[Enemy] Inquisitor Brother Dagon, ActID 76 has been spotted laying low in Kingskeep (loc 15:12) -> dict
+[Enemy] Inquisitor Brother Amon, ActID 118 has been spotted relaxing at Kingskeep (loc 15:14) -> dict
 --- HouseKeepActors (World.cs)
 [GameStat] "Location_Days" -> increased from 1 to 2
 
-//Exile Game File "LogTurn.txt" Close completed at: 20/05/2017 09:31:06
+//Exile Game File "LogTurn.txt" Close completed at: 20/05/2017 15:45:21

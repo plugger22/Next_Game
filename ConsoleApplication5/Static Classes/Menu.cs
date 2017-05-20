@@ -127,6 +127,7 @@ namespace Next_Game
                     //Rumours menu commands
                     menuArrayText[1, 0] = "[R] All";
                     menuArrayText[1, 1] = "[S] Show Rumour";
+                    menuArrayText[1, 2] = "[E] Show Enemies";
                     //Lore menu commands
                     menuArrayText[2, 0] = "[U] Uprising";
                     menuArrayText[2, 1] = "[F] Fate of Royals";

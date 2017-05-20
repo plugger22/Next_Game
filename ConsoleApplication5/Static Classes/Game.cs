@@ -644,6 +644,11 @@ namespace Next_Game
                                         //Show Enemies (what player knows)
                                         infoChannel.SetInfoList(world.ShowEnemiesRL(), ConsoleDisplay.Multi);
                                         break;
+                                    case MenuMode.Reference:
+                                        //Show Enemy Rumours
+                                        infoChannel.SetInfoList(world.ShowRumoursRL(RumourDisplay.Enemies), ConsoleDisplay.Multi);
+                                        infoChannel.InsertHeader(new Snippet("--- Rumours Enemies", RLColor.Yellow, RLColor.Black), ConsoleDisplay.Multi);
+                                        break;
                                     case MenuMode.Debug:
                                         //Show ALL Errors
                                         infoChannel.SetInfoList(ShowErrorsRL(), ConsoleDisplay.Multi);
@@ -853,7 +858,7 @@ namespace Next_Game
                                         break;
                                     case MenuMode.Reference:
                                         //Show All Rumours
-                                        infoChannel.SetInfoList(world.ShowRumoursRL(), ConsoleDisplay.Multi);
+                                        infoChannel.SetInfoList(world.ShowRumoursRL(RumourDisplay.All), ConsoleDisplay.Multi);
                                         infoChannel.InsertHeader(new Snippet("--- Rumours ALL", RLColor.Yellow, RLColor.Black), ConsoleDisplay.Multi);
                                         break;
                                     case MenuMode.Debug:
@@ -1711,7 +1716,7 @@ namespace Next_Game
                 if (logStart == null)
                 {
                     Message message = new Message($"[Error_{error.Code}] {error.Text}", MessageType.Error);
-                    world.SetMessage(message);
+                    world?.SetMessage(message);
                 }
             }
             catch(ArgumentNullException)

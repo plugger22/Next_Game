@@ -3980,18 +3980,36 @@ namespace Next_Game
 
         /// <summary>
         /// Generate a list of All Known Rumours
+        /// <param name="displayMode">Which filtered set do you wish to display?</param>
+        /// <param name="data">A multipurpose data point that can be used to further filter rumours, eg. RefID for House Rumours, has a default of '0'</param>
         /// </summary>
         /// <returns></returns>
-        public List<Snippet> ShowRumoursRL()
+        public List<Snippet> ShowRumoursRL(RumourDisplay displayMode, int data = 0)
         {
             List<Snippet> listData = new List<Snippet>();
             string description;
             int age;
-            foreach( var rumour in dictRumoursKnown)
+            bool selectRumour;
+            foreach (var rumour in dictRumoursKnown)
             {
-                age = Game.gameTurn - rumour.Value.TurnCreated;
-                description = string.Format("RID {0}, \"{1}\", {2} day{3} old", rumour.Key, rumour.Value.Text, age, age != 1 ? "s" : "" );
-                listData.Add(new Snippet(description));
+                selectRumour = false;
+                switch (displayMode)
+                {
+                    case RumourDisplay.All:
+                        selectRumour = true;
+                        break;
+                    case RumourDisplay.Enemies:
+                        if (rumour.Value is RumourEnemy)
+                        { selectRumour = true; }
+                        break;
+                }
+                //add to list if meets the filter criteria
+                if (selectRumour == true)
+                {
+                    age = Game.gameTurn - rumour.Value.TurnCreated;
+                    description = string.Format("RID {0}, \"{1}\", {2} day{3} old", rumour.Key, rumour.Value.Text, age, age != 1 ? "s" : "");
+                    listData.Add(new Snippet(description));
+                }
             }
             return listData;
         }
@@ -4451,7 +4469,9 @@ namespace Next_Game
         private void UpdateRumours()
         {
             Game.logTurn?.Write("--- UpdateRumours (World.cs)");
+            Game.logTurn?.Write($"dictRumoursTimed (Start) -> {dictRumoursTimed.Count} records");
             bool rumourRemoved = false;
+            int numRecordsRemoved = 0;
             //Timed Rumours
             if (dictRumoursTimed.Count > 0)
             {
@@ -4461,12 +4481,9 @@ namespace Next_Game
                     rumour.Value.TimerExpire--;
                     if (rumour.Value.TimerExpire <= 0)
                     {
-                        //Rumour has expired
-                        int rumourID = rumour.Value.RumourID;
-                        rumourRemoved = true;
-                        //Remove Rumour from list
-                        if (Game.director.RemoveRumourFromList(rumour.Value) == false)
-                        { Game.logTurn?.Write($"RumourID {rumour.Value.RumourID} has failed to be removed from the correct List"); }
+                        //Rumour Expired -> remove from list
+                        if (Game.director.RemoveRumourFromList(rumour.Value) == true)
+                        { rumourRemoved = true;}
                     }
                     else { Game.logTurn?.Write($"RumourID {rumour.Value.RumourID} -> TimerExpire decremented, now {rumour.Value.TimerExpire}"); }
                 }
@@ -4476,8 +4493,15 @@ namespace Next_Game
                     for (int i = dictRumoursTimed.Count; i >= 0; i--)
                     {
                         Rumour rumour = dictRumoursTimed[i];
-                        if (rumour.TimerExpire <= 0) { dictRumoursTimed.Remove(rumour.RumourID); }
+                        if (rumour.TimerExpire <= 0)
+                        {
+                            if (dictRumoursTimed.Remove(rumour.RumourID) == true)
+                            { numRecordsRemoved++; }
+                            else { Game.SetError(new Error(280, $"RID {rumour.RumourID}, \"{rumour.Text}\" -> FAILED removal from dict")); }
+                        }
                     }
+                    Game.logTurn?.Write($"{numRecordsRemoved} records have expired and been removed");
+                    Game.logTurn?.Write($"dictRumoursTimed (End) -> {dictRumoursTimed.Count} records");
                 }
             }
             else { Game.logTurn?.Write("[Notification] No Timed rumours present -> dictRumoursTimed is MT"); }

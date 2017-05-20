@@ -120,6 +120,14 @@ namespace Next_Game
         }
 
         /// <summary>
+        /// remove a rumour from the list, returns true if successful, false otherwise
+        /// </summary>
+        /// <param name="rumourID"></param>
+        /// <returns></returns>
+        internal bool RemoveRumour(int rumourID)
+        { return listOfRumours.Remove(rumourID); }
+
+        /// <summary>
         /// Can be set directly but used to generate a msg
         /// </summary>
         /// <param name="status"></param>

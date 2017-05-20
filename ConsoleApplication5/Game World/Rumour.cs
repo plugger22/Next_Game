@@ -10,6 +10,7 @@ namespace Next_Game
     public enum RumourType { None, Terrain, Road, Skill, Secret, Item, Disguise, HouseRel, Friends, Desire, Enemy } //Corresponds to Rumour subclasses, set in subclass
     public enum RumourGlobal { All, North, East, South, West }
     public enum RumourStatus { Normal, Timed, Inactive} //Normal -> dictRumoursNormal, Timed (TimerExpire > 0) -> dictRumoursTimed, Inactive (TimerStart > 0) -> dictRumoursInactive
+    public enum RumourDisplay { All, Enemies} //used by Game.ShowRumoursRL to filter the required rumour set
 
     /// <summary>
     /// handles all rumours, eg. 'Ask around for information'

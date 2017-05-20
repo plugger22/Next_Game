@@ -2753,8 +2753,8 @@ namespace Next_Game
                                                 {
                                                     if (i == 0)
                                                     {
-                                                        resultList.Add(new Snippet($"{player.Name}, \"{player.Handle}\", has learned of the following rumours...", foreColor, backColor));
-                                                        resultList.Add(new Snippet(""));
+                                                        resultList.Add(new Snippet($"{player.Name}, \"{player.Handle}\", has learned of the following rumours...", RLColor.Red, backColor));
+                                                        resultList.Add(new Snippet("")); resultList.Add(new Snippet(""));
                                                     }
                                                     rumourCount++;
                                                     resultList.Add(new Snippet(outcomeText, foreColor, backColor)); resultList.Add(new Snippet(""));
@@ -4819,7 +4819,7 @@ namespace Next_Game
                 int relEnemies = Game.constant.GetValue(Global.ENEMY_THRESHOLD);
                 int numFriends, numEnemies, relPlyr;
                 string friendPrefix, enemyPrefix;
-                string[] arrayOfDescriptors = new string[] { "no", "a", "a few", "a handful of", "many" }; //used for Friends and enemies, index corresponds to #'s, eg. index 0 -> 'no' friends, 4+ -> 'many'
+                string[] arrayOfDescriptors = new string[] { "no", "an", "a few", "a handful of", "many" }; //used for Friends and enemies, index corresponds to #'s, eg. index 0 -> 'no' friends, 4+ -> 'many'
                 //Major Houses
                 foreach (var house in dictMajorHouses)
                 {
@@ -4952,12 +4952,16 @@ namespace Next_Game
         {
             Game.logTurn?.Write("--- InitialiseDynamicRumours (Director.cs)");
             int chanceOfRumour, rndNum, strength, branch, timerExpire;
-            string rumourText;
+            string rumourText, waitText;
+            //
             //Enemies
+            //
             Dictionary<int, Enemy> dictEnemyActors = Game.world.GetEnemyActors();
             if (dictEnemyActors != null)
             {
                 chanceOfRumour = Game.constant.GetValue(Global.ENEMY_RUMOURS);
+                string[] arrayOfInquisitorWaitTexts = new string[] { "relaxing", "wenching", "drinking", "gambling", "doing sword drills" };
+                string[] arrayOfNemesisWaitTexts = new string[] { "praying", "worshipping", "meditating", "flagelatting themselves", "absolving themselves" };
                 foreach(var enemy in dictEnemyActors)
                 {
                     rumourText = ""; branch = 0;
@@ -4969,32 +4973,39 @@ namespace Next_Game
                         {
                             rndNum = rnd.Next(100);
                             strength = 3;
-                            timerExpire = 5;
+                            timerExpire = 3;
                             Location loc = Game.network.GetLocation(enemy.Value.LocID);
                             if (loc != null)
                             {
                                 branch = loc.GetBranch();
                                 switch (enemy.Value.Goal)
                                 {
+                                    case ActorAIGoal.Hide:
+                                        //halved chance for an enemy in hiding -> hunt mode not possible
+                                        if (rndNum < (chanceOfRumour / 2))
+                                        { rumourText = string.Format("{0} {1}, ActID {2} has been spotted hiding at {3} {4}", enemy.Value.Title, enemy.Value.Name,
+                                             enemy.Value.ActID, loc.LocName, Game.world.ShowLocationCoords(loc.LocationID)); }
+                                        break;
                                     case ActorAIGoal.Wait:
-                                        //halved chance for an enemy in hiding
+                                        //hunt mode not possible for 'wait'
                                         if (rndNum < (chanceOfRumour ))
                                         {
-                                            if (enemy.Value.HuntMode == true)
-                                            { rumourText = string.Format("{0} {1}, ActID {2} has been spotted relaxing in {3} {4} with {5} sword at the ready", enemy.Value.Title, enemy.Value.Name,
-                                                enemy.Value.ActID, loc.LocName, Game.world.ShowLocationCoords(loc.LocationID), enemy.Value.Sex == ActorSex.Male ? "his" : "her"); }
-                                            else { rumourText = string.Format("{0} {1}, ActID {2} has been spotted relaxing in {3} {4}", enemy.Value.Title, enemy.Value.Name,
-                                                enemy.Value.ActID, loc.LocName, Game.world.ShowLocationCoords(loc.LocationID)); }
+                                            if (enemy.Value is Nemesis)
+                                            { waitText = arrayOfNemesisWaitTexts[rnd.Next(arrayOfNemesisWaitTexts.Length)]; }
+                                            else
+                                            { waitText = arrayOfInquisitorWaitTexts[rnd.Next(arrayOfInquisitorWaitTexts.Length)]; }
+                                            rumourText = string.Format("{0} {1}, ActID {2} has been spotted {3} at {4} {5}", enemy.Value.Title, enemy.Value.Name,
+                                                  enemy.Value.ActID, waitText, loc.LocName, Game.world.ShowLocationCoords(loc.LocationID));
                                         }
                                         break;
                                     case ActorAIGoal.Search:
                                         if (rndNum < chanceOfRumour)
                                         {
                                             if (enemy.Value.HuntMode == true)
-                                            { rumourText = string.Format("{0} {1}, ActID {2} has been spotted asking about the Usurper's whereabouts in {3} {4} with {5} sword at the ready", enemy.Value.Title, enemy.Value.Name,
+                                            { rumourText = string.Format("{0} {1}, ActID {2} has been spotted asking about the Usurper's whereabouts at {3} {4} with {5} sword at the ready", enemy.Value.Title, enemy.Value.Name,
                                                   enemy.Value.ActID, loc.LocName, Game.world.ShowLocationCoords(loc.LocationID), enemy.Value.Sex == ActorSex.Male ? "his" : "her"); }
                                             else
-                                            { rumourText = string.Format("{0} {1}, ActID {2} has been spotted asking about the Usurper's whereabouts in {3} {4}", enemy.Value.Title, enemy.Value.Name,
+                                            { rumourText = string.Format("{0} {1}, ActID {2} has been spotted asking about the Usurper's whereabouts at {3} {4}", enemy.Value.Title, enemy.Value.Name,
                                              enemy.Value.ActID, loc.LocName, Game.world.ShowLocationCoords(loc.LocationID)); }
                                         }
                                         break;
@@ -5002,10 +5013,10 @@ namespace Next_Game
                                         if (rndNum < chanceOfRumour)
                                         {
                                             if (enemy.Value.HuntMode == true)
-                                            { rumourText = string.Format("{0} {1}, ActID {2} has been spotted on the road to {3} {4} with {5} sword at the ready", enemy.Value.Title, enemy.Value.Name,
+                                            { rumourText = string.Format("{0} {1}, ActID {2} has been seen on the road to {3} {4} with {5} sword at the ready", enemy.Value.Title, enemy.Value.Name,
                                                     enemy.Value.ActID, loc.LocName, Game.world.ShowLocationCoords(loc.LocationID), enemy.Value.Sex == ActorSex.Male ? "his" : "her"); }
                                             else
-                                            { rumourText = string.Format("{0} {1}, ActID {2} has been spotted on the road to {3} {4}", enemy.Value.Title, enemy.Value.Name,
+                                            { rumourText = string.Format("{0} {1}, ActID {2} has been seen on the road to {3} {4}", enemy.Value.Title, enemy.Value.Name,
                                                enemy.Value.ActID, loc.LocName, Game.world.ShowLocationCoords(loc.LocationID)); }
                                         }
                                         break;
@@ -5235,6 +5246,80 @@ namespace Next_Game
             }
             else { Game.logTurn?.Write("[Notification] No rumours available (listRumourPool empty)  -> none selected"); }
             return rumourID;
+        }
+
+        /// <summary>
+        /// Remove a Rumour's ID form the appropriate list
+        /// </summary>
+        /// <param name="rumour"></param>
+        /// <returns></returns>
+        internal bool RemoveRumourFromList(Rumour rumour)
+        {
+            if (rumour != null)
+            {
+                switch (rumour.Scope)
+                {
+                    case RumourScope.Local:
+                        //remove from a house list
+                        if (rumour.RefID != 9999)
+                        {
+                            House house = Game.world.GetHouse(rumour.RefID);
+                            if (house != null)
+                            {
+                                if (house.RemoveRumour(rumour.RumourID) == true)
+                                { Game.logTurn?.Write($"[Notification -> Removal] RID {rumour.RumourID}, \"{rumour.Text}\" removed from House list"); }
+                                else { Game.SetError(new Error(279, $"RID {rumour.RumourID}, \"{rumour.Text}\" FAILED removed from House list")); }
+                            }
+                            else { Game.SetError(new Error(279, $"Invalid house (null) for rumourID {rumour.RumourID}, refID {rumour.RefID} -> list removal cancelled")); }
+                        }
+                        else
+                        {
+                            //remove from capital list
+                            if (listRumoursCapital.Remove(rumour.RumourID) == true)
+                            { Game.logTurn?.Write($"[Notification -> Removal] RID {rumour.RumourID}, \"{rumour.Text}\" removed from Capital list"); }
+                            else { Game.SetError(new Error(279, $"RID {rumour.RumourID}, \"{rumour.Text}\" FAILED removed from Capital list")); }
+                        }
+                        break;
+                    case RumourScope.Global:
+                        switch (rumour.Global)
+                        {
+                            case RumourGlobal.All:
+                                if (listRumoursGlobal.Remove(rumour.RumourID) == true)
+                                { Game.logTurn?.Write($"[Notification -> Removal] RID {rumour.RumourID}, \"{rumour.Text}\" removed from Global All list"); }
+                                else { Game.SetError(new Error(279, $"RID {rumour.RumourID}, \"{rumour.Text}\" FAILED removed from Global All list")); }
+                                break;
+                            case RumourGlobal.North:
+                                if (listRumoursNorth.Remove(rumour.RumourID) == true)
+                                { Game.logTurn?.Write($"[Notification -> Removal] RID {rumour.RumourID}, \"{rumour.Text}\" removed from Global North list"); }
+                                else { Game.SetError(new Error(279, $"RID {rumour.RumourID}, \"{rumour.Text}\" FAILED removed from Global North list")); }
+                                break;
+                            case RumourGlobal.East:
+                                if (listRumoursEast.Remove(rumour.RumourID) == true)
+                                { Game.logTurn?.Write($"[Notification -> Removal] RID {rumour.RumourID}, \"{rumour.Text}\" removed from Global East list"); }
+                                else { Game.SetError(new Error(279, $"RID {rumour.RumourID}, \"{rumour.Text}\" FAILED removed from Global East list")); }
+                                break;
+                            case RumourGlobal.South:
+                                if (listRumoursSouth.Remove(rumour.RumourID) == true)
+                                { Game.logTurn?.Write($"[Notification -> Removal] RID {rumour.RumourID}, \"{rumour.Text}\" removed from Global South list"); }
+                                else { Game.SetError(new Error(279, $"RID {rumour.RumourID}, \"{rumour.Text}\" FAILED removed from Global South list")); }
+                                break;
+                            case RumourGlobal.West:
+                                if (listRumoursGlobal.Remove(rumour.RumourID) == true)
+                                { Game.logTurn?.Write($"[Notification -> Removal] RID {rumour.RumourID}, \"{rumour.Text}\" removed from Global West list"); }
+                                else { Game.SetError(new Error(279, $"RID {rumour.RumourID}, \"{rumour.Text}\" FAILED removed from Global West list")); }
+                                break;
+                            default:
+                                Game.SetError(new Error(279, $"Invalid rumour.Global \"{rumour.Global}\" for RumourID {rumour.RumourID} -> list removal cancelled"));
+                                break;
+                        }
+                        break;
+                    default:
+                        Game.SetError(new Error(279, $"Invalid rumour.Scope \"{rumour.Scope}\" for RumourID {rumour.RumourID} -> list removal cancelled"));
+                        break;
+                }
+            }
+            else { Game.SetError(new Error(279, "Invalid Rumour (null)")); }
+            return false;
         }
 
 
