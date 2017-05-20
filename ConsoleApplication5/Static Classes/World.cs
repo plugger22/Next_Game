@@ -4397,6 +4397,7 @@ namespace Next_Game
             Game.director.CheckEventTimers();
             Game.director.InitialiseDynamicRumours();
             HousekeepActors();
+            HousekeepRumours();
             Game.gameTurn++;
         }
 
@@ -4514,6 +4515,35 @@ namespace Next_Game
                 }
             }
             else { Game.logTurn?.Write("[Notification] No Timed rumours present -> dictRumoursTimed is MT"); }
+        }
+
+        /// <summary>
+        /// Deletes old timed rumours from dictRumoursKnown
+        /// </summary>
+        private void HousekeepRumours()
+        {
+            Game.logTurn?.Write("--- HousekeepRumours (World.cs)");
+            int timeLimit = Game.constant.GetValue(Global.ENEMY_RUMOUR_TIME) * 2;
+            List<int> listOfKeysToDelete = new List<int>();
+            int numRecords = dictRumoursKnown.Count;
+            if (numRecords> 0)
+            {
+                Game.logTurn?.Write($"dictRumoursKnown has {numRecords} records");
+                //find any old enemy records that need deleting
+                foreach (var rumour in dictRumoursKnown)
+                {
+                    if (rumour.Value.Status == RumourStatus.Timed && rumour.Value.TimerExpire <= 0)
+                    { listOfKeysToDelete.Add(rumour.Key); }
+                }
+                //delete the records from the dict
+                for(int i = 0; i < listOfKeysToDelete.Count; i++)
+                {
+                    if (dictRumoursKnown.Remove(listOfKeysToDelete[i]) == true)
+                    { Game.logTurn?.Write($"[Rumour -> Deleted] RumourID {listOfKeysToDelete[i]}");}
+                    else { Game.SetError(new Error(281, $"Failed to delete RumourID {listOfKeysToDelete[i]} from dictRumoursKnown")); }
+                }
+            }
+            else { Game.logTurn?.Write("[Notification] There are no rumours in dictRumoursKnown"); }
         }
 
         /// <summary>

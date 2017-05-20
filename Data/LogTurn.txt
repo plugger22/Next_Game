@@ -1,159 +1,122 @@
-//Exile Game File "LogTurn.txt" opened at: 20/05/2017 17:36:24
+//Exile Game File "LogTurn.txt" opened at: 20/05/2017 19:59:38
 --- ProcessStartTurn (World.cs)
-Day 11, Turn 10
+Day 5, Turn 4
 --- UpdateRumours (World.cs)
-dictRumoursTimed (Start) -> 8 records
-RumourID 309 -> TimerExpire decremented, now 2
-RumourID 310 -> TimerExpire decremented, now 2
-[Notification -> Removal] RID 305, "Inquisitor, Brother Haborym, ActID 113 has been seen on the road to The Pickled Prune (loc 19:8)" removed from Global East list
-RumourID 306 -> TimerExpire decremented, now 1
-[Notification -> ALL] RID 303, "Inquisitor, Brother Behemoth, ActID 111 has been spotted relaxing at Kingskeep (loc 12:12)" already Known (not removed, but O.K)
-[Notification -> Removal] RID 304, "Inquisitor, Brother Dagon, ActID 112 has been seen on the road to The Pickled Prune (loc 19:8)" removed from Global East list
-RumourID 307 -> TimerExpire decremented, now 1
-RumourID 308 -> TimerExpire decremented, now 1
-3 records have expired and been removed
-dictRumoursTimed (End) -> 5 records
---- MoveActors -> 3 Records (World.cs)
- [Move -> MoveObject] Inquisitor Brother Dagon, ActID 112 travelling to The Pickled Prune (current Loc 18:12)
+dictRumoursTimed (Start) -> 9 records
+RumourID 339 -> TimerExpire decremented, now 2
+RumourID 340 -> TimerExpire decremented, now 2
+[Notification -> Removal] RID 333, "Inquisitor, Brother Nergal, ActID 122 has been spotted relaxing at Kingskeep (loc 17:14)" removed from Global All list
+[Notification -> Removal] RID 334, "Inquisitor, Brother Shiva, ActID 123 has been spotted wenching at Kingskeep (loc 17:14)" removed from Global All list
+RumourID 335 -> TimerExpire decremented, now 1
+RumourID 336 -> TimerExpire decremented, now 1
+RumourID 337 -> TimerExpire decremented, now 1
+RumourID 338 -> TimerExpire decremented, now 1
+RumourID 341 -> TimerExpire decremented, now 2
+2 records have expired and been removed
+dictRumoursTimed (End) -> 7 records
+--- MoveActors -> 1 Records (World.cs)
+ [Move -> MoveObject] Inquisitor Brother Mormo, ActID 121 travelling to The Singing Ghost (current Loc 18:14)
 --- CheckIfFoundEnemy (World.cs)
- [Search -> Debug] Active Tytos Arryn, ID 1 at 9:24, Enemy at 18:12 (Brother Dagon, ID 112
---- CheckIfFoundEnemy (World.cs)
- [Search -> Debug] Active Tytos Arryn, ID 1 at 9:24, Enemy at 19:12 (Brother Dagon, ID 112
- [Move -> MoveObject] Inquisitor Brother Haborym, ActID 113 travelling to The Pickled Prune (current Loc 16:12)
---- CheckIfFoundEnemy (World.cs)
- [Search -> Debug] Active Tytos Arryn, ID 1 at 9:24, Enemy at 16:12 (Brother Haborym, ID 113
---- CheckIfFoundEnemy (World.cs)
- [Search -> Debug] Active Tytos Arryn, ID 1 at 9:24, Enemy at 17:12 (Brother Haborym, ID 113
- [Move -> MoveObject] Inquisitor Brother Shaitan, ActID 114 travelling to Pyke (current Loc 8:16)
---- CheckIfFoundEnemy (World.cs)
- [Search -> Debug] Active Tytos Arryn, ID 1 at 9:24, Enemy at 8:16 (Brother Shaitan, ID 114
---- CheckIfFoundEnemy (World.cs)
- [Search -> Debug] Active Tytos Arryn, ID 1 at 9:24, Enemy at 8:17 (Brother Shaitan, ID 114
+ [Search -> Debug] Active Vortimer Martell, ID 1 at 10:29, Enemy at 18:14 (Brother Mormo, ID 121
 --- UpdatePlayerStatus (World.cs)
 --- UpdateWorldStatus (World.cs)
 --- CheckFollowerActivity (World.cs)
 --- GetRumour (Director.cs)
-arrayOfRumours [0] -> RumourID 129, Strength 4, Scope Global, Type Disguise, Global All
-arrayOfRumours [3] -> RumourID 275, Strength 3, Scope Global, Type Friends, Global South
-arrayOfRumours [5] -> RumourID 19, Strength 1, Scope Local, Type Skill, Global All
-RumourID 19 selected from the Pool
-Rumour "lord Jonos Lannister "The Splenetic", ActID 19 at Casterly Rock, is whispered to be Bad Tempered" revealed to ActorID8 on turn 10 -> added to List
-RumourID 19 removed from listRumoursHouse[14]
-Follower The Crone, ActID 8, added RumourID 19
-lord Jonos Lannister, ActID 19, skill Wits set to True
+[Notification] No house rumours available -> none added to pool
+arrayOfRumours [0] -> RumourID 99, Strength 1, Scope Global, Type Item, Global All
+arrayOfRumours [4] -> RumourID 104, Strength 2, Scope Global, Type Desire, Global West
+RumourID 104 selected from the Pool
+Rumour "It is rumoured that Lord Quentyn Tully, ActID 48 at Riverrun, hungers for the infamous Book of the Dead" revealed to ActorID2 on turn 4 -> added to List
+RumourID 104 removed from listRumoursWest[0]
+Follower The Beast, ActID 2, added RumourID 104
+[Notification] Knight Ser Chett Colinus "The Saintly" DesireKnown status changed to "True"
 --- GetRumour (Director.cs)
-arrayOfRumours [0] -> RumourID 242, Strength 1, Scope Global, Type Item, Global All
-arrayOfRumours [2] -> RumourID 265, Strength 3, Scope Global, Type Friends, Global East
-arrayOfRumours [5] -> RumourID 155, Strength 3, Scope Local, Type Skill, Global All
-RumourID 242 selected from the Pool
-Rumour "It is well known that the fabled Mammoth Cloak (Passive Item) is to be found at Kingskeep" revealed to ActorID9 on turn 10 -> added to List
-RumourID 242 removed from listRumoursGlobal[7]
-Follower The Waif, ActID 9, added RumourID 242
+arrayOfRumours [0] -> RumourID 99, Strength 1, Scope Global, Type Item, Global All
+arrayOfRumours [2] -> RumourID 200, Strength 2, Scope Global, Type Desire, Global East
+arrayOfRumours [5] -> RumourID 197, Strength 4, Scope Local, Type Skill, Global All
+RumourID 197 selected from the Pool
+Rumour "BannerLord Brandon Mormont "The Hypocritical", ActID 80 at Bearpit, is known by all to be Deceitful" revealed to ActorID9 on turn 4 -> added to List
+RumourID 197 removed from listRumoursHouse[0]
+Follower The Crone, ActID 9, added RumourID 197
+BannerLord Brandon Mormont, ActID 80, skill Treachery set to True
 --- GetRumour (Director.cs)
-arrayOfRumours [0] -> RumourID 145, Strength 1, Scope Global, Type Item, Global All
-arrayOfRumours [3] -> RumourID 273, Strength 2, Scope Global, Type HouseRel, Global South
-arrayOfRumours [5] -> RumourID 236, Strength 3, Scope Local, Type Skill, Global All
-RumourID 145 selected from the Pool
-Rumour "It is known by all that the dreaded Chalice of Pain (Passive Item) is to be found at Highgarden" revealed to ActorID4 on turn 10 -> added to List
-RumourID 145 removed from listRumoursGlobal[4]
-Follower The Beast, ActID 4, added RumourID 145
+[Notification] No house rumours available -> none added to pool
+arrayOfRumours [0] -> RumourID 266, Strength 1, Scope Global, Type Item, Global All
+arrayOfRumours [4] -> RumourID 318, Strength 2, Scope Global, Type HouseRel, Global West
+RumourID 318 selected from the Pool
+Rumour "House Tully has had poor past relations with their BannerLord at House Penrose due to their refusal to bow to authority" revealed to ActorID8 on turn 4 -> added to List
+RumourID 318 removed from listRumoursWest[4]
+Follower The Dark Eminence, ActID 8, added RumourID 318
+[Notification -> HouseRel] "Refused to recognise the authority of our past Ancestral Lord" -> Known is True
 [Notification] Player in SafeHouse -> World events cancelled
 --- CheckStationaryActiveActors (World.cs)
- [Search -> Stationary] Usurper Tytos Arryn, ActID 1 is AtLocation
+ [Search -> Stationary] Usurper Vortimer Martell, ActID 1 is AtLocation
 --- CheckIfFoundActive (World.cs)
- [Search -> Debug] Enemy, Brother Behemoth, ID 111 at 12:12, Active Tytos Arryn, ID 1, at 9:24
- [Search -> Debug] Enemy, Brother Dagon, ID 112 at 19:11, Active Tytos Arryn, ID 1, at 9:24
- [Search -> Debug] Enemy, Brother Haborym, ID 113 at 18:12, Active Tytos Arryn, ID 1, at 9:24
- [Search -> Debug] Enemy, Brother Shaitan, ID 114 at 8:18, Active Tytos Arryn, ID 1, at 9:24
- [Search -> Debug] Enemy, The Unrelenting, ID 115 at 12:12, Active Tytos Arryn, ID 1, at 9:24
- [Search -> Stationary] Follower The Crone, ActID 8 is AtLocation
- [Search -> Stationary] Follower The Waif, ActID 9 is AtLocation
- [Search -> Stationary] Follower The Beast, ActID 4 is AtLocation
+ [Search -> Debug] Enemy, Brother Beelzebub, ID 120 at 17:14, Active Vortimer Martell, ID 1, at 10:29
+ [Search -> Debug] Enemy, Brother Mormo, ID 121 at 19:14, Active Vortimer Martell, ID 1, at 10:29
+ [Search -> Debug] Enemy, Brother Nergal, ID 122 at 17:14, Active Vortimer Martell, ID 1, at 10:29
+ [Search -> Debug] Enemy, Brother Shiva, ID 123 at 17:14, Active Vortimer Martell, ID 1, at 10:29
+ [Search -> Debug] Enemy, The Unrelenting, ID 124 at 17:14, Active Vortimer Martell, ID 1, at 10:29
+ [Search -> Stationary] Follower The Beast, ActID 2 is AtLocation
+ [Search -> Stationary] Follower The Crone, ActID 9 is AtLocation
+ [Search -> Stationary] Follower The Dark Eminence, ActID 8 is AtLocation
 --- UpdateAIController (World.cs)
- [AI -> Player Unknown] Inquisitor Brother Behemoth, Act ID 111 Mode -> Normal
- [AI -> Player Unknown] Nemesis The Unrelenting, Act ID 115 Mode -> Normal
+ [AI -> Player Unknown] Inquisitor Brother Beelzebub, Act ID 120 Mode -> Normal
+ [AI -> Player Unknown] Inquisitor Brother Nergal, Act ID 122 Mode -> Normal
+ [AI -> Player Unknown] Inquisitor Brother Shiva, Act ID 123 Mode -> Normal
+ [AI -> Player Unknown] Nemesis The Unrelenting, Act ID 124 Mode -> Normal
 --- SetEnemyActivity (World.cs)
---- SetEnemyGoal (World.cs)
- [Goal -> Branch] Brother Behemoth, ActID 111 Assigned Branch -> 0 Current Branch -> 0
- [Enemy -> Unknown] The Unrelenting ActID 115 has reverted to Unknown status (timer elapsed)
- [Enemy -> Goal] The Unrelenting, ActID 115 retains Goal -> Wait
+ [Enemy -> Goal] Brother Beelzebub, ActID 120 retains Goal -> Hide
+ [Enemy -> Known] Brother Nergal ActID 122 has become KNOWN
+ [Enemy -> Goal] Brother Nergal, ActID 122 retains Goal -> Wait
+ [Enemy -> Goal] Brother Shiva, ActID 123 retains Goal -> Wait
+ [Enemy -> Unknown] The Unrelenting ActID 124 has reverted to Unknown status (timer elapsed)
+ [Enemy -> Goal] The Unrelenting, ActID 124 retains Goal -> Wait
 --- CheckPlayerEvents (Director.cs)
-- CreateAutoLocEvent (Director.cs)
- [AutoEvent -> ActorList] "The Beast", ID 4 added to list of Actors
- [AutoEvent -> ActorList] "Audry Umber", ID 87 added to list of Actors
- [AutoEvent -> ActorList] "Tomard Edon", ID 98 added to list of Actors
- [AutoEvent -> ActorList] "Wyschardus Selles", ID 99 added to list of Actors
- [AutoEvent -> ActorList] "Renoldus Segar", ID 100 added to list of Actors
- [AutoEvent -> ActorList] "Ser Vortimer Bartolomeus", ID 101 added to list of Actors
- [AutoEvent -> ActorList] "Janei Umber", ID 102 added to list of Actors
- [AutoEvent -> ActorList] "Gylbard Umber", ID 103 added to list of Actors
- [AutoEvent -> FollowerList] "The Beast", ID 4 added to list of Followers
- [AutoEvent -> LocalList] "Audry Umber", ID 87 added to list of Locals
- [AutoEvent -> AdvisorList] "Tomard Edon", ID 98 added to list of Advisors
- [AutoEvent -> AdvisorList] "Wyschardus Selles", ID 99 added to list of Advisors
- [AutoEvent -> AdvisorList] "Renoldus Segar", ID 100 added to list of Advisors
- [AutoEvent -> LocalList] "Ser Vortimer Bartolomeus", ID 101 added to list of Locals
- [AutoEvent -> LocalList] "Janei Umber", ID 102 added to list of Locals
- [AutoEvent -> LocalList] "Gylbard Umber", ID 103 added to list of Locals
-[Notification] No entry found in dictOfIntroductions for RefID 99
- Chance of Player Location event 75 %
+--- GetValidPlayerEvents (Director.cs)
+ Event "Mysterious Stranger" has no attached Conditions
+--- GetValidPlayerEvents (Director.cs)
+--- GetValidPlayerEvents (Director.cs)
+ Chance of Player Location event 37 %
 --- ResolvePlayerEvents (Director.cs)
- Trigger FAILED on "0" Equals 1
- Trigger: Player is wrong type of Known status -> Trigger failed
- Trigger FAILED on "0" Equals 1
- Trigger: Player is wrong type of Known status -> Trigger failed
- Trigger FAILED on "0" Equals 1
- Trigger: Player is wrong type of Known status -> Trigger failed
- Trigger FAILED on "0" Equals 1
- Trigger: Player is wrong type of Known status -> Trigger failed
- Event "What to do?" Timer Repeat now 999
- Event "What to do?" Cooldown Timer has been reset to 0
+ "Talk to them" Trait Trigger, if type 3 is GreaterThanOrEqual to 3
+ Trigger passed on "3" GreaterThanOrEqual 3
+ "Curse all strangers" Trait Trigger, if type 4 is GreaterThanOrEqual to 3
+ Trigger passed on "3" GreaterThanOrEqual 3
+ Event "Mysterious Stranger" Timer Repeat now 8
+ Event "Mysterious Stranger" Cooldown Timer has been reset to 0
 --- UpdateActiveActors (World.cs)
- Usurper Tytos Arryn has had their TurnsUnknown Timer increased from 109 to 110
- Follower The Crone has had their TurnsUnknown Timer increased from 9 to 10
- Follower The Waif has had their TurnsUnknown Timer increased from 9 to 10
- Follower The Beast has had their TurnsUnknown Timer increased from 9 to 10
+ Usurper Vortimer Martell has had their TurnsUnknown Timer increased from 103 to 104
+ Follower The Beast has had their TurnsUnknown Timer increased from 3 to 4
+ Follower The Crone has had their TurnsUnknown Timer increased from 3 to 4
+ Follower The Dark Eminence has had their TurnsUnknown Timer increased from 3 to 4
 --- ResolveOutcome (Director.cs)
---- ResolveFollowerEvents (Director.cs)
 --- SetEndGame (Game.cs)
 [Alert] Player chose to exit (pressed 'X')
-//Exile Game file ops "LogTurn.txt" Completed at: 20/05/2017 17:36:42
-or.cs)
---- GetRumour (Director.cs)
-arrayOfRumours [0] -> RumourID 301, Strength 3, Scope Global, Type Enemy, Global All
-arrayOfRumours [3] -> RumourID 196, Strength 2, Scope Global, Type Desire, Global South
-arrayOfRumours [5] -> RumourID 208, Strength 5, Scope Local, Type Skill, Global All
-RumourID 301 selected from the Pool
-Rumour "Inquisitor, Brother Behemoth, ActID 111 has been spotted relaxing at Kingskeep (loc 12:12)" revealed to ActorID1 on turn 8 -> added to List
-RumourID 301 removed from listRumoursGlobal[8]
-Rumour "Inquisitor, Brother Behemoth, ActID 111 has been spotted relaxing at Kingskeep (loc 12:12)", rumourID 301, added to dictRumoursKnown
-Inquisitor, Brother Behemoth, ActID 111 has been spotted relaxing at Kingskeep (loc 12:12)
---- ChangePlayerRumourStatus (Director.cs)
---- GetRumour (Director.cs)
-arrayOfRumours [0] -> RumourID 229, Strength 1, Scope Global, Type Item, Global All
-arrayOfRumours [3] -> RumourID 230, Strength 2, Scope Global, Type Desire, Global South
-arrayOfRumours [5] -> RumourID 226, Strength 2, Scope Local, Type Skill, Global All
-RumourID 230 selected from the Pool
-Rumour "It is known that Knight Ser Vortimer Bartolomeus, ActID 101 at Eyrie, is determined to gain a Title" revealed to ActorID1 on turn 8 -> added to List
-RumourID 230 removed from listRumoursSouth[6]
-Rumour "It is known that Knight Ser Vortimer Bartolomeus, ActID 101 at Eyrie, is determined to gain a Title", rumourID 230, added to dictRumoursKnown
-[Notification] None  "" DesireKnown status changed to "True"
-It is known that Knight Ser Vortimer Bartolomeus, ActID 101 at Eyrie, is determined to gain a Title
+//Exile Game file ops "LogTurn.txt" Completed at: 20/05/2017 20:00:11
+wer The Dark Eminence has had their TurnsUnknown Timer increased from 2 to 3
+--- ResolveOutcome (Director.cs)
+--- ResolveFollowerEvents (Director.cs)
 --- ProcessEndTurn (World.cs)
-Day 9, Turn 8
+Day 4, Turn 3
 --- CheckEventTimers (Director.cs)
- Event "Search and Detain" Dormant Timer decremented to 12
- "Search and Detain" event, Cooldown Timer decremented from 3 to 2
+ Event "Search and Detain" Dormant Timer decremented to 17
 --- InitialiseDynamicRumours (Director.cs)
-[Enemy] RID 306, "Inquisitor, Brother Behemoth, ActID 111 has been spotted drinking at Kingskeep (loc 12:12)" -> dict
-[Enemy] RID 307, "Inquisitor, Brother Dagon, ActID 112 has been seen on the road to The Pickled Prune (loc 19:8)" -> dict
-[Enemy] RID 308, "Inquisitor, Brother Haborym, ActID 113 has been seen on the road to The Pickled Prune (loc 19:8)" -> dict
+[Enemy] RID 339, "Inquisitor, Brother Mormo, ActID 121 has been seen on the road to The Singing Ghost (loc 24:14)" -> dict
+[Enemy] RID 340, "Inquisitor, Brother Nergal, ActID 122 has been spotted doing sword drills at Kingskeep (loc 17:14)" -> dict
+[Enemy] RID 341, "Inquisitor, Brother Shiva, ActID 123 has been spotted wenching at Kingskeep (loc 17:14)" -> dict
 --- HouseKeepActors (World.cs)
-[GameStat] "Location_Days" -> increased from 8 to 9
+[GameStat] "Location_Days" -> increased from 3 to 4
+--- HousekeepRumours (World.cs)
+dictRumoursKnown has 11 records
+[Rumour -> Deleted] RumourID 332
 
-//Exile Game File "LogTurn.txt" Close completed at: 20/05/2017 17:35:28
- has been spotted doing sword drills at Kingskeep (loc 12:12)" -> dict
+//Exile Game File "LogTurn.txt" Close completed at: 20/05/2017 19:59:38
+gskeep (loc 17:14)" -> dict
+[Enemy] RID 334, "Inquisitor, Brother Shiva, ActID 123 has been spotted wenching at Kingskeep (loc 17:14)" -> dict
 --- HouseKeepActors (World.cs)
-[GameStat] "Location_Days" -> increased from 6 to 7
+[GameStat] "Location_Days" -> increased from 1 to 2
+--- HousekeepRumours (World.cs)
+dictRumoursKnown has 5 records
 
-//Exile Game File "LogTurn.txt" Close completed at: 20/05/2017 17:34:07
+//Exile Game File "LogTurn.txt" Close completed at: 20/05/2017 19:57:09

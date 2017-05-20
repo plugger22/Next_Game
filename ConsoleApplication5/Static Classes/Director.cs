@@ -4622,7 +4622,7 @@ namespace Next_Game
                                                     if (actor is Noble && actor.RefID == royalRefID) { proceedFlag = false; }
                                                     if (proceedFlag == true) { house.AddRumour(rumour.RumourID); }
                                                     else { AddRumourToCapital(rumour.RumourID); }
-                                                    Game.logStart?.Write($"[Skill] {rumourText} -> dict");
+                                                    Game.logStart?.Write($"[Skill] RID {rumour.RumourID}, \"{rumourText}\" -> dict");
                                                 }
                                             }
                                         }
@@ -4644,7 +4644,7 @@ namespace Next_Game
                                             if (actor is Noble && actor.RefID == royalRefID) { proceedFlag = false; }
                                             if (proceedFlag == true) { house.AddRumour(rumour.RumourID); }
                                             else { AddRumourToCapital(rumour.RumourID); }
-                                            Game.logStart?.Write($"[Secret] {rumourText} -> dict");
+                                            Game.logStart?.Write($"[Secret] RID {rumour.RumourID}, \"{rumourText}\" -> dict");
                                         }
                                         //
                                         //Rumours -> Items (one rumour per item possessed, global All)
@@ -4673,7 +4673,7 @@ namespace Next_Game
                                                                 //add to dictionary and global list
                                                                 if (AddGlobalRumour(rumour) == false)
                                                                 { Game.SetError(new Error(268, $"{rumour.Text}, RumourID {rumour.RumourID}, failed to load (Item) -> Rumour Cancelled")); }
-                                                                Game.logStart?.Write($"[Item] {rumourText} -> dict");
+                                                                Game.logStart?.Write($"[Item] RID {rumour.RumourID}, \"{rumourText}\" -> dict");
                                                             }
                                                             else { Game.SetError(new Error(268, "Possession is not an Item")); }
                                                         }
@@ -4699,7 +4699,7 @@ namespace Next_Game
                                                 //add to dictionary and global list
                                                 if (AddGlobalRumour(rumour) == false)
                                                 { Game.SetError(new Error(268, $"{rumour.Text}, RumourID {rumour.RumourID}, failed to load (Disguise) -> Rumour Cancelled")); }
-                                                Game.logStart?.Write($"[Disguise] {rumourText} -> dict");
+                                                Game.logStart?.Write($"[Disguise] RID {rumour.RumourID}, \"{rumourText}\" -> dict");
                                             }
                                         }
                                         //
@@ -4727,7 +4727,8 @@ namespace Next_Game
                                                         {
                                                             Noble noble = actor as Noble;
                                                             string relation = noble.GetFamilyRelationship(sibling.ActID);
-                                                            desireText = $"{actor.Title} {actor.Name}, ActID {actor.ActID} at {locName}, desires that their {relation}, {sibling.Title} {sibling.Name} \"{sibling.Handle}\", ActID {sibling.ActID}, attains a position in the Royal Court";
+                                                            string nobleSex = string.Format("{0}", noble.Sex == ActorSex.Male ? "his" : "her");
+                                                            desireText = $"{actor.Title} {actor.Name}, ActID {actor.ActID} at {locName}, desires that {nobleSex} {relation}, {sibling.Title} {sibling.Name} \"{sibling.Handle}\", ActID {sibling.ActID}, attains a position in the Royal Court";
                                                         }
                                                         else { Game.SetError(new Error(268, $"Actor {actor.Title} {actor.Name}, ActID {actor.ActID}, is not a Noble -> Desire Court rumour cancelled")); }
                                                     }
@@ -4748,8 +4749,9 @@ namespace Next_Game
                                                         {
                                                             Noble noble = actor as Noble;
                                                             string relation = noble.GetFamilyRelationship(daughter.ActID);
+                                                            string nobleSex = string.Format("{0}", noble.Sex == ActorSex.Male ? "his" : "her");
                                                             string daughterText = $"{daughter.Title} {daughter.Name} \"{daughter.Handle}\", ActID {daughter.ActID}";
-                                                            desireText = $"{actor.Title} {actor.Name}, ActID {actor.ActID} at {locName}, desires that their {relation}, {daughterText}, is betrothed to the Ursurper";
+                                                            desireText = $"{actor.Title} {actor.Name}, ActID {actor.ActID} at {locName}, desires that {nobleSex} {relation}, {daughterText}, is betrothed to the Ursurper";
                                                         }
                                                         else { Game.SetError(new Error(268, $"Actor {actor.Title} {actor.Name}, ActID {actor.ActID}, is not a Noble -> Desire Marriage rumour cancelled")); }
                                                     }
@@ -4795,7 +4797,7 @@ namespace Next_Game
                                                     //add to dictionary and global list
                                                     if (AddGlobalRumour(rumour) == false)
                                                     { Game.SetError(new Error(268, $"{rumour.Text}, RumourID {rumour.RumourID}, failed to load (Desire) -> Rumour Cancelled")); }
-                                                    Game.logStart?.Write($"[Desire] {rumourText} -> dict");
+                                                    Game.logStart?.Write($"[Desire] RID {rumour.RumourID}, \"{rumourText}\" -> dict");
                                                 }
                                                 else { Game.SetError(new Error(268, $"Invalid House Branch \"{branch}\" -> Rumour Desire not created")); }
                                             }
@@ -4873,7 +4875,7 @@ namespace Next_Game
                                 //add to dictionary and global list
                                 if (AddGlobalRumour(rumour) == false)
                                 { Game.SetError(new Error(268, $"{rumour.Text}, RumourID {rumour.RumourID}, failed to load (Friends and Enemies) -> Rumour Cancelled")); }
-                                Game.logStart?.Write($"[Friends and Enemies] {rumourText} -> dict");
+                                Game.logStart?.Write($"[Friends and Enemies] RID {rumour.RumourID}, \"{rumourText}\" -> dict");
                             }
                             else { Game.SetError(new Error(268, $"Invalid House Branch \"{branch}\" -> Rumour Friends not created")); }
                         }
@@ -4929,7 +4931,7 @@ namespace Next_Game
                                                 //add to dictionary and global list
                                                 if (AddGlobalRumour(rumour) == false)
                                                 { Game.SetError(new Error(268, $"{rumour.Text}, RumourID {rumour.RumourID}, failed to load (HouseRel) -> Rumour Cancelled")); }
-                                                Game.logStart?.Write($"[HouseRel] {rumourText} -> dict");
+                                                Game.logStart?.Write($"[HouseRel] RID {rumour.RumourID}, \"{rumourText}\" -> dict");
                                             }
                                             else { Game.SetError(new Error(268, $"Invalid houseFrom.Branch \"{branch}\" -> rumour cancelled")); }
                                         }
@@ -4974,7 +4976,7 @@ namespace Next_Game
                         {
                             rndNum = rnd.Next(100);
                             strength = 3;
-                            timerExpire = 3;
+                            timerExpire = Game.constant.GetValue(Global.ENEMY_RUMOUR_TIME);
                             Location loc = Game.network.GetLocation(enemy.Value.LocID);
                             if (loc != null)
                             {

@@ -193,6 +193,8 @@
 # PLAYER_RUMOURS -> number of rumours the player gets when 'asking around for information' at a location
 72: 2 @ 1 @ 3
 # ENEMY_RUMOURS -> base % chance of rumour being generated for unknown enemy (chance halved for enemies in hiding)
-73: 90 @ 10 @ 90
+73: 50 @ 10 @ 90
+# ENEMY_RUMOUR_TIME -> how long (# turns) rumours rumours of enemy activity stay active (deleted after this)
+74: 3 @ 2 @ 6
 
-# Next valid number -> 74
+# Next valid number -> 75
