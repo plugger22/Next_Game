@@ -4978,21 +4978,41 @@ namespace Next_Game
                                 {
                                     case ActorAIGoal.Wait:
                                         //halved chance for an enemy in hiding
-                                        if (rndNum < (chanceOfRumour / 2))
+                                        if (rndNum < (chanceOfRumour ))
                                         {
                                             if (enemy.Value.HuntMode == true)
-                                            { rumourText = string.Format("{0} {1}, ActID {2} has been spotted laying low in {3} {4} with {5} sword at the ready", enemy.Value.Title, enemy.Value.Name,
+                                            { rumourText = string.Format("{0} {1}, ActID {2} has been spotted relaxing in {3} {4} with {5} sword at the ready", enemy.Value.Title, enemy.Value.Name,
                                                 enemy.Value.ActID, loc.LocName, Game.world.ShowLocationCoords(loc.LocationID), enemy.Value.Sex == ActorSex.Male ? "his" : "her"); }
-                                            else { rumourText = string.Format("{0} {1}, ActID {2} has been spotted laying low in {3} {4}", enemy.Value.Title, enemy.Value.Name,
+                                            else { rumourText = string.Format("{0} {1}, ActID {2} has been spotted relaxing in {3} {4}", enemy.Value.Title, enemy.Value.Name,
                                                 enemy.Value.ActID, loc.LocName, Game.world.ShowLocationCoords(loc.LocationID)); }
+                                        }
+                                        break;
+                                    case ActorAIGoal.Search:
+                                        if (rndNum < chanceOfRumour)
+                                        {
+                                            if (enemy.Value.HuntMode == true)
+                                            { rumourText = string.Format("{0} {1}, ActID {2} has been spotted asking about the Usurper's whereabouts in {3} {4} with {5} sword at the ready", enemy.Value.Title, enemy.Value.Name,
+                                                  enemy.Value.ActID, loc.LocName, Game.world.ShowLocationCoords(loc.LocationID), enemy.Value.Sex == ActorSex.Male ? "his" : "her"); }
+                                            else
+                                            { rumourText = string.Format("{0} {1}, ActID {2} has been spotted asking about the Usurper's whereabouts in {3} {4}", enemy.Value.Title, enemy.Value.Name,
+                                             enemy.Value.ActID, loc.LocName, Game.world.ShowLocationCoords(loc.LocationID)); }
+                                        }
+                                        break;
+                                    case ActorAIGoal.Move:
+                                        if (rndNum < chanceOfRumour)
+                                        {
+                                            if (enemy.Value.HuntMode == true)
+                                            { rumourText = string.Format("{0} {1}, ActID {2} has been spotted on the road to {3} {4} with {5} sword at the ready", enemy.Value.Title, enemy.Value.Name,
+                                                    enemy.Value.ActID, loc.LocName, Game.world.ShowLocationCoords(loc.LocationID), enemy.Value.Sex == ActorSex.Male ? "his" : "her"); }
+                                            else
+                                            { rumourText = string.Format("{0} {1}, ActID {2} has been spotted on the road to {3} {4}", enemy.Value.Title, enemy.Value.Name,
+                                               enemy.Value.ActID, loc.LocName, Game.world.ShowLocationCoords(loc.LocationID)); }
                                         }
                                         break;
                                 }
                                 //is there a rumour to create?
                                 if (rumourText.Length > 0)
                                 {
-
-
                                     if (branch >= 0 && branch < 5)
                                     {
                                         strength = 3;

@@ -4450,7 +4450,37 @@ namespace Next_Game
         /// </summary>
         private void UpdateRumours()
         {
-
+            Game.logTurn?.Write("--- UpdateRumours (World.cs)");
+            bool rumourRemoved = false;
+            //Timed Rumours
+            if (dictRumoursTimed.Count > 0)
+            {
+                foreach (var rumour in dictRumoursTimed)
+                {
+                    //countdown expire timers
+                    rumour.Value.TimerExpire--;
+                    if (rumour.Value.TimerExpire <= 0)
+                    {
+                        //Rumour has expired
+                        int rumourID = rumour.Value.RumourID;
+                        rumourRemoved = true;
+                        //Remove Rumour from list
+                        if (Game.director.RemoveRumourFromList(rumour.Value) == false)
+                        { Game.logTurn?.Write($"RumourID {rumour.Value.RumourID} has failed to be removed from the correct List"); }
+                    }
+                    else { Game.logTurn?.Write($"RumourID {rumour.Value.RumourID} -> TimerExpire decremented, now {rumour.Value.TimerExpire}"); }
+                }
+                if (rumourRemoved == true)
+                {
+                    //loop dict backwards and remove any rumours with TimerExpire <= 0
+                    for (int i = dictRumoursTimed.Count; i >= 0; i--)
+                    {
+                        Rumour rumour = dictRumoursTimed[i];
+                        if (rumour.TimerExpire <= 0) { dictRumoursTimed.Remove(rumour.RumourID); }
+                    }
+                }
+            }
+            else { Game.logTurn?.Write("[Notification] No Timed rumours present -> dictRumoursTimed is MT"); }
         }
 
         /// <summary>
