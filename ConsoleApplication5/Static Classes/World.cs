@@ -4345,6 +4345,7 @@ namespace Next_Game
             Game.infoChannel.ClearConsole(ConsoleDisplay.Event);
             Game.logTurn?.Write("--- ProcessStartTurn (World.cs)");
             Game.logTurn?.Write($"Day {Game.gameTurn + 1}, Turn {Game.gameTurn}");
+            Game.logTurn?.Write($"{GetPlayerStatusReport()}");
             UpdateRumours();
             UpdateActorMoveStatus(MoveActors());
             if (UpdatePlayerStatus() == true) { notificationStatus = true; }
@@ -6648,14 +6649,10 @@ namespace Next_Game
                     switch (player.Status)
                     {
                         case ActorStatus.AtLocation:
-                            //debug
-                            eventList.Add(new Snippet("The Word on the Street", RLColor.Red, backColor));
+                            //Market View
+                            eventList.Add(new Snippet("The Word from the Market", RLColor.Red, backColor));
                             eventList.Add(new Snippet(""));
-                            eventList.Add(new Snippet("Blight has hit wheat crops at The Twins. Food shortages loom.", foreColor, backColor));
-                            eventList.Add(new Snippet(""));
-                            eventList.Add(new Snippet("Rumour that the King has the pox and that he is going mad", foreColor, backColor));
-                            eventList.Add(new Snippet(""));
-                            eventList.Add(new Snippet("- 0 -", RLColor.Gray, backColor));
+                            eventList.AddRange(Game.director.GetMarketView());
                             eventList.Add(new Snippet(""));
                             break;
                         case ActorStatus.Travelling:
@@ -7061,6 +7058,17 @@ namespace Next_Game
             Game.logTurn?.Write("--- InitialiseGameVars (World.cs)");
             Game.variable.SetValue(GameVar.Street_View, 1);
         }
+
+        /// <summary>
+        /// returns short string of Player's status and whereabouts
+        /// </summary>
+        /// <returns></returns>
+        private string GetPlayerStatusReport()
+        {
+            Player player = GetPlayer();
+            return $"{player.Title} {player.Name}, \"{player.Handle}\", {player.Status}, {GetLocationName(player.LocID)}";
+        }
+
 
         //new Methods above here
     }

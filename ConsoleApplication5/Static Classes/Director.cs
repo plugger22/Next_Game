@@ -21,6 +21,7 @@ namespace Next_Game
     public enum ConflictResult { None, MinorWin, Win, MajorWin, MinorLoss, Loss, MajorLoss, Count } //result of challenge
     public enum ConflictState { None, Relative_Army_Size, Relative_Fame, Relative_Honour, Relative_Justice, Known_Status } //game specific states that are used for situations
     public enum ResourceLevel { None, Meagre, Moderate, Substantial, Wealthy, Excessive }
+    public enum WorldGroup { None, Noble, Church, Merchant, Craft, Peasant} //main population groupings within world
 
 
     /// <summary>
@@ -5351,15 +5352,20 @@ namespace Next_Game
         }
 
         /// <summary>
-        /// Gives the word from the street (tied into gamestates) -> rotates through options using GameVar.Street_View
+        /// Gives the word from the Market (tied into gamestates) -> rotates through options using GameVar.Street_View -> Returns empty list on error
         /// </summary>
         /// <returns></returns>
-        public string GetStreetView()
+        public List<Snippet> GetMarketView()
         {
+            Game.logTurn?.Write("--- GetMarketView (Director.cs)");
+            List<Snippet> listToDisplay = new List<Snippet>();
+            RLColor backColor = Color._background1;
             string streetView = "";
             int streetIndex = Game.variable.GetValue(GameVar.Street_View);
-            string[] arrayOfOccupationsMale = new string[] { "Noble", "Merchant", "Church", "Craftsman", "Craftsman", "Craftsman", "Peasant", "Peasant", "Peasant", "Peasant" };
-            string name, group, locName, place;
+            WorldGroup [] arrayOfGroupsMale = new WorldGroup[] { WorldGroup.Noble, WorldGroup.Merchant, WorldGroup.Church, WorldGroup.Craft, WorldGroup.Craft, WorldGroup.Craft,
+                WorldGroup.Peasant, WorldGroup.Peasant, WorldGroup.Peasant, WorldGroup.Peasant };
+            WorldGroup group = WorldGroup.None;
+            string name, locName, place;
             string occupation = "Unknown";
             string view = "";
             int data, difference;
@@ -5383,44 +5389,44 @@ namespace Next_Game
                 if (rnd.Next(100) <= 70)
                 {
                     //male
-                    group = arrayOfOccupationsMale[rnd.Next(arrayOfOccupationsMale.Length)];
+                    group = arrayOfGroupsMale[rnd.Next(arrayOfGroupsMale.Length)];
                     name = Game.history.GetFirstName(ActorSex.Male);
                     sex = ActorSex.Male;
                 }
                 else
                 {
                     //female
-                    group = "peasant";
+                    group = WorldGroup.Peasant;
                     name = Game.history.GetFirstName(ActorSex.Female);
                     sex = ActorSex.Female;
                 }
                 switch (group)
                 {
-                    case "Noble":
+                    case WorldGroup.Noble:
                         string[] arrayOfNobles = new string[] { "Bailiff", "Chancellor", "Diplomat", "Constable", "Hayward", "Jailer", "Judge", "Nobleman", "Nobleman", "Nobleman", "Pursuivant", "Sherrif" };
                         occupation = arrayOfNobles[rnd.Next(arrayOfNobles.Length)];
                         educated = true;
                         break;
-                    case "Church":
+                    case WorldGroup.Church:
                         string[] arrayOfChurch = new string[] { "Pilgrim", "Ostiary", "Pardoner", "Sacristan", "Sexton", "Summoner", "Clerk", "Chanty Priest", "Cantor", "Beadle", "Almoner", "Friar", "Monk" };
                         occupation = arrayOfChurch[rnd.Next(arrayOfChurch.Length)];
                         educated = true;
                         break;
-                    case "Merchant":
+                    case WorldGroup.Merchant:
                         string[] arrayOfMerchants = new string[] { "Innkeeper", "MoneyLender", "Trader", "Brothel Owner", "Glass Seller", "Ironmonger", "Linen Draper", "Peddler", "Mercer",
                     "Eggler", "Chapman", "Boothman", "Banker", "Apothecary", "Acater", "Oil Merchant", "Oynter", "Skinner", "Spice Merchant", "Spicer", "Stationer", "Thresher", "Taverner",
                     "Unguentary", "Waferer", "Waterseller", "Woodmonger", "Wool Stapler"};
                         occupation = arrayOfMerchants[rnd.Next(arrayOfMerchants.Length)];
                         educated = true;
                         break;
-                    case "Craftsman":
+                    case WorldGroup.Craft:
                         string[] arrayOfCraftsman = new string[] {"Armourer", "Artist", "Baker", "Bookbinder", "Candlemaker", "Blacksmith", "Carpenter", "Dyer", "Forester",
                     "Engraver", "Brewer", "Bricklayer", "Stonemason", "Glassblower", "Jester", "Furrier", "Clothier", "Weaver", "Engineer", "Cartographer", "Potter", "Scribe", "Musician",
                     "Poet", "Troubadour", "Tumbler", "Illuminator", "Fiddler", "Barker", "Bard", "Saddler", "Chandler", "Shoemaker", "Tanner", "Locksmith", "Glover", "Butcher", "Scabbard Maker"};
                         occupation = arrayOfCraftsman[rnd.Next(arrayOfCraftsman.Length)];
                         educated = false;
                         break;
-                    case "Peasant":
+                    case WorldGroup.Peasant:
                         if (sex == ActorSex.Male)
                         {
                             string[] arrayOfPeasantsMale = new string[] { "Farmer", "Fowler", "Crofter", "Farmer", "Cook", "Messenger", "Rat Catcher", "Pickpocket", "Boothaler", "Footpad",
@@ -5445,7 +5451,44 @@ namespace Next_Game
                 {
                     case 1:
                         //Justice of Cause
-                        data = CheckGameState(GameState.Justice);
+                        data = CheckGameState(GameState.Justice) - 50;
+                        difference = Math.Abs(data);
+                        if (difference <= 10)
+                        {
+                            //neutral view (both scores within 10 points of each other)
+                            if (educated == true)
+                            {
+                                view = $"Does {player.Name} have a right to be King? Hard to say";
+                            }
+                            else
+                            {
+                                view = $"Kings are all the same. Who cares if it's {player.Name} or King {newKingName}?";
+                            }
+                        }
+                        else if (data > 0)
+                        {
+                            //positive view (for usurper) -> Justice of cause 10+ points ahead
+                            if (educated == true)
+                            {
+                                view = $"Yes, of course {player.Name}, the Usurper, should be King. It's his birthright.";
+                            }
+                            else
+                            {
+                                view = $"So {player.Name} thinks that they should be King? Doesn't everybody?";
+                            }
+                        }
+                        else
+                        {
+                            //negative (for usurper) -> Justice of cause 10+ points behind
+                            if (educated == true)
+                            {
+                                view = $"King {newKingName} sits rightfully upon the throne. {player.Name} is nothing but an imposter";
+                            }
+                            else
+                            {
+                                view = $"King {newKingName} is the King and good on him. {player.Name} is fit for nothing more than pig swill";
+                            }
+                        }
                         break;
                     case 2:
                         //Relative Legend
@@ -5552,12 +5595,20 @@ namespace Next_Game
                 if (streetIndex > 4) { streetIndex = 1; }
                 //update GameVar
                 Game.variable.SetValue(GameVar.Street_View, streetIndex);
-                //put string together
+                //put Snippets together
                 if (view.Length > 0)
-                { streetView = $"{name}, age {age}, {occupation} {place} \"{view}\""; }
+                {
+                    
+                    streetView = $"{name}, age {age}, {occupation} ({group}), {place}";
+                    listToDisplay.Add(new Snippet(streetView, RLColor.Black, backColor));
+                    listToDisplay.Add(new Snippet(""));
+                    listToDisplay.Add(new Snippet($"\"{view}\"", RLColor.Black, backColor));
+                }
+                else
+                { listToDisplay.Add(new Snippet("With downcast heads and sullen looks, people go about their business, refusing to talk", RLColor.Black, backColor)); }
             }
             else { Game.SetError(new Error(282, "Invalid Player (null) -> Street view cancelled")); }
-            return streetView;
+            return listToDisplay;
         }
 
         //place new methods above here
