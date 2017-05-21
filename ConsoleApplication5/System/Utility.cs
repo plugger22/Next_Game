@@ -217,6 +217,96 @@ namespace Next_Game
         }
 
         /// <summary>
+        /// selection of tags used for the 'View from the Market' (Director.cs -> GetMarketView)
+        /// </summary>
+        /// <param name="text"></param>
+        /// <param name="player"></param>
+        /// <returns></returns>
+        public string CheckTagsView(string text, Player player)
+        {
+            string checkedText = text;
+            if (String.IsNullOrEmpty(text) == false)
+            {
+
+                string tag, replaceText;
+                int tagStart, tagFinish, length; //indexes
+                if (player != null)
+                {
+                    //loop whilever tags are present
+                    while (checkedText.Contains("<") == true)
+                    {
+                        tagStart = checkedText.IndexOf("<");
+                        tagFinish = checkedText.IndexOf(">");
+                        length = tagFinish - tagStart;
+                        tag = checkedText.Substring(tagStart + 1, length - 1);
+                        //strip brackets
+                        replaceText = null;
+                        switch (tag)
+                        {
+                            case "player":
+                                replaceText = player.Name;
+                                break;
+                            case "newKing":
+                                replaceText = Game.lore.NewKing.Name;
+                                break;
+                            case "oldKing":
+                                replaceText = Game.lore.OldKing.Name;
+                                break;
+                            case "playerHandle":
+                                replaceText = player.Handle;
+                                break;
+                            case "newKingHandle":
+                                replaceText = Game.lore.NewKing.Handle;
+                                break;
+                            case "oldKingHandle":
+                                replaceText = Game.lore.OldKing.Handle;
+                                break;
+                            case "him":
+                                replaceText = string.Format("{0}", player.Sex == ActorSex.Male ? "him" : "her");
+                                break;
+                            case "he":
+                                replaceText = string.Format("{0}", player.Sex == ActorSex.Male ? "he" : "she");
+                                break;
+                            case "He":
+                                replaceText = string.Format("{0}", player.Sex == ActorSex.Male ? "He" : "She");
+                                break;
+                            case "his":
+                                replaceText = string.Format("{0}", player.Sex == ActorSex.Male ? "his" : "her");
+                                break;
+                            case "His":
+                                replaceText = string.Format("{0}", player.Sex == ActorSex.Male ? "His" : "Her");
+                                break;
+                            case "man":
+                                replaceText = string.Format("{0}", player.Sex == ActorSex.Male ? "man" : "woman");
+                                break;
+                            case "locRecent":
+                                replaceText = Game.world.GetLocationName(Game.director.GetRecentlyVisited());
+                                break;
+                            case "locRandom":
+                                replaceText = Game.world.GetLocationName(Game.director.GetRandomVisited());
+                                break;
+                            default:
+                                replaceText = "";
+                                Game.SetError(new Error(283, string.Format("Invalid tag (\"{0}\")", tag)));
+                                break;
+                        }
+                        if (replaceText != null)
+                        {
+                            //swap tag for text
+                            checkedText = checkedText.Remove(tagStart, length + 1);
+                            checkedText = checkedText.Insert(tagStart, replaceText);
+                        }
+                    }
+                }
+                else { Game.SetError(new Error(283, "Invalid player (null) in CheckTagsView")); }
+            }
+            else
+            { Game.SetError(new Error(283, "Invalid Input (null or empty)")); }
+
+            return checkedText;
+        }
+
+        /// <summary>
         /// Capitalises the first letter of a word, eg. cat -> Cat
         /// </summary>
         /// <param name="s"></param>

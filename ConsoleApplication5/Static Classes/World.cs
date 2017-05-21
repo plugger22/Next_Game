@@ -589,7 +589,10 @@ namespace Next_Game
                             Message message = new Message(tempText, person.ActID, locDestination.LocationID, messageType);
                             SetMessage(message);
                             if (person.ActID == 1)
-                            { SetPlayerRecord(new Record(tempText, person.ActID, person.LocID, CurrentActorIncident.Travel)); }
+                            {
+                                SetPlayerRecord(new Record(tempText, person.ActID, person.LocID, CurrentActorIncident.Travel));
+                                Game.director.AddVisitedLoc(locID, Game.gameTurn);
+                            }
                             else if (person.ActID > 1)
                             { SetCurrentRecord(new Record(tempText, person.ActID, person.LocID, CurrentActorIncident.Travel)); }
                             //enemy -> arrives at destination, assign goal
@@ -4334,6 +4337,9 @@ namespace Next_Game
             InitialiseGameVars();
             CalculateCrows();
 
+            //DEBUG -> populate dictionary with sample data
+            for (int i = 3; i >= 0; i--)
+            { Game.director.AddVisitedLoc(Game.network.GetRandomLocation(), i * -1); }
         }
 
         /// <summary>
@@ -6650,7 +6656,7 @@ namespace Next_Game
                     {
                         case ActorStatus.AtLocation:
                             //Market View
-                            eventList.Add(new Snippet("The Word from the Market", RLColor.Red, backColor));
+                            eventList.Add(new Snippet("The View from the Market", RLColor.Red, backColor));
                             eventList.Add(new Snippet(""));
                             eventList.AddRange(Game.director.GetMarketView());
                             eventList.Add(new Snippet(""));

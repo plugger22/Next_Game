@@ -1,0 +1,73 @@
+# Market[lists.txt -> various [lists of text used for generating the World from the Market
+
+# Format -> Single lines of text with embedded tags
+# <player> <newKing> <oldKing> -> Names
+# <playerHandle> <newKingHandle> <oldKingHandle> -> Handles
+# <his> <he> <him> <man> -> sex specific for Usurper (also <His> <He> which are for starting sentences with)
+# <locCurrent>, <locRecent>, <locRandom> -> Usurper Loc Names
+
+[[listJusticeNeutralEduc]
+Does <player> have a right to be King? Hard to say
+
+[[listJusticeNeutralUned]
+Kings are all the same. Who cares if it's <player> or King <newKing>?
+
+[[listJusticeGoodEduc]
+Yes, of course <player>, the Usurper, should be King. It's <his> birthright.
+
+[listJusticeGoodUned]
+"So <player> thinks that they should be King? Doesn't everybody?
+
+[listJusticeBadEduc]
+King <newKing> sits rightfully upon the throne. <player> is nothing but an imposter
+
+[listJusticeBadUned]
+King <newKing> is the King and good on him. <player> is fit for nothing more than pig swill
+
+[listLegendNeutralEduc]
+I never did go much on Old King <oldKing> but I don't like <newKing> either
+
+[listLegendNeutralUned]
+<player>? Who's he?
+
+[listLegendGoodEduc]
+Didn't the <player>, the Usurper, once kill a lion with <his> bare hands?
+
+[listLegendGoodUned]
+That heir, <player>, <he> will chew King <newKing>'s head off before breakfast
+
+[listLegendBadEduc]
+<player>, the so called Usurper, I heard the <he> was frightened to get out of bed in the morning
+
+[listLegendBadUned]
+King <newKing> will piss all over <player>. Everybody knows that.
+
+[listHonourNeutralEduc]
+Who can you trust more? King <newKing> or the Usurper, <player>
+
+[listHonourNeutralUned]
+Kings and Usurpers treat you like dirt. The pox on all of them
+
+[listHonourGoodEduc]
+<player> is a <man> you can rely on. The sooner <he> takes over from King <newKing>, the better.
+
+[listHonourGoodUned]
+Can I rely on that Usurper, <player> to make my life better? I hear that you can trust <him>.
+
+[listHonourBadEduc]
+King <newKing>'s word can be relied upon. I trust him.
+
+[listHonourBadUned]
+Why would I want to trust <player>, the pretend King? Nobody else does.
+
+[listKnownEduc]
+They say that the Usurper, <player>, was seen in <locKnown> recently. What is <he> up to?
+
+[listKnownUned]
+The Usurper, <player>. Isn't he at <locKnown>?
+
+[listUnknownEduc]
+Who knows where <player> is? I heard the Inquisitors were asking after <him>.
+
+[listUnknownUned]
+Do I care where <player> is? Does <he> know who I am and what my problems are? If you see <him> make sure you tell <him>.

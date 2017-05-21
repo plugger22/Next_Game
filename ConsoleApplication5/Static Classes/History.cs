@@ -346,7 +346,8 @@ namespace Next_Game
             Location loc = Game.network.GetLocation(locID);
             if (loc != null)
             {
-                //place characters at Location
+                Game.director.AddVisitedLoc(locID, Game.gameTurn);
+                //place character at Location
                 player.LocID = locID;
                 player.LastKnownLocID = locID;
                 player.TurnsUnknown = 100; //start player off unknown

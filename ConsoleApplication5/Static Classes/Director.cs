@@ -92,6 +92,32 @@ namespace Next_Game
         List<int> listRumoursEast;
         List<int> listRumoursSouth;
         List<int> listRumoursWest;
+        //Word from the Market
+        List<string> listJusticeNeutralEduc; //educated viewpoint, 'Educ'
+        List<string> listJusticeNeutralUned; //uneducated viewpoint, "Uned'
+        List<string> listJusticeGoodEduc;
+        List<string> listJusticeGoodUned;
+        List<string> listJusticeBadEduc;
+        List<string> listJusticeBadUned;
+        List<string> listLegendNeutralEduc; //educated viewpoint, 'Educ'
+        List<string> listLegendNeutralUned; //uneducated viewpoint, "Uned'
+        List<string> listLegendGoodEduc;
+        List<string> listLegendGoodUned;
+        List<string> listLegendBadEduc;
+        List<string> listLegendBadUned;
+        List<string> listHonourNeutralEduc; //educated viewpoint, 'Educ'
+        List<string> listHonourNeutralUned; //uneducated viewpoint, "Uned'
+        List<string> listHonourGoodEduc;
+        List<string> listHonourGoodUned;
+        List<string> listHonourBadEduc;
+        List<string> listHonourBadUned;
+        List<string> listKnownEduc;
+        List<string> listKnownUned;
+        List<string> listUnknownEduc;
+        List<string> listUnknownUned;
+        //places visited by the Player
+        Dictionary<int, List<int>> dictLocsVisitedAll; //All locs visited, key is LocID, Value is Turn # for each visit
+        //Dictionary<int, List<int>> dictLocsVisitedKnown; //locs visited when Player was 'Known', key is LocID, Value is Turn # for each visit
         //other
         List<Follower> listOfFollowers;
         List<EventPackage> listFollCurrentEvents; //follower
@@ -159,6 +185,32 @@ namespace Next_Game
             listRumoursEast = new List<int>();
             listRumoursSouth = new List<int>();
             listRumoursWest = new List<int>();
+            //Word from the Markre
+            listJusticeNeutralEduc = new List<string>();
+            listJusticeNeutralUned = new List<string>();
+            listJusticeGoodEduc = new List<string>();
+            listJusticeGoodUned = new List<string>();
+            listJusticeBadEduc = new List<string>();
+            listJusticeBadUned = new List<string>();
+            listLegendNeutralEduc = new List<string>();
+            listLegendNeutralUned = new List<string>();
+            listLegendGoodEduc = new List<string>();
+            listLegendGoodUned = new List<string>();
+            listLegendBadEduc = new List<string>();
+            listLegendBadUned = new List<string>();
+            listHonourNeutralEduc = new List<string>();
+            listHonourNeutralUned = new List<string>();
+            listHonourGoodEduc = new List<string>();
+            listHonourGoodUned = new List<string>();
+            listHonourBadEduc = new List<string>();
+            listHonourBadUned = new List<string>();
+            listKnownEduc = new List<string>();
+            listKnownUned = new List<string>();
+            listUnknownEduc = new List<string>();
+            listUnknownUned = new List<string>();
+            //places the Player has visited
+            dictLocsVisitedAll = new Dictionary<int, List<int>>();
+            //dictLocsVisitedKnown = new Dictionary<int, List<int>>();
             //other
             listFollCurrentEvents = new List<EventPackage>(); //follower events
             listPlyrCurrentEvents = new List<EventPackage>(); //player events
@@ -5575,15 +5627,33 @@ namespace Next_Game
                         break;
                     case 4:
                         //Known / Unknown
-                        if (educated == true)
+                        if (player.Known == true)
                         {
-                            locName = Game.world.GetLocationName(player.LocID);
-                            view = $"They say that the Usurper, {player.Name}, was seen in {locName} recently. What is {sexHe} up to?";
+                            //Player Known
+                            if (educated == true)
+                            {
+                                locName = Game.world.GetLocationName(player.LocID);
+                                view = $"They say that the Usurper, {player.Name}, was seen in {locName} recently. What is {sexHe} up to?";
+                            }
+                            else
+                            {
+                                locName = Game.world.GetLocationName(Game.network.GetRandomLocation());
+                                view = $"The Usurper, {player.Name}. Isn't he at {locName}?";
+                            }
                         }
                         else
                         {
-                            locName = Game.world.GetLocationName(Game.network.GetRandomLocation());
-                            view = $"The Usurper, {player.Name}. Isn't he at {locName}?";
+                            //player Unknown
+                            if (educated == true)
+                            {
+                                locName = Game.world.GetLocationName(player.LocID);
+                                view = $"They say that the Usurper, {player.Name}, was seen in {locName} recently. What is {sexHe} up to?";
+                            }
+                            else
+                            {
+                                locName = Game.world.GetLocationName(Game.network.GetRandomLocation());
+                                view = $"The Usurper, {player.Name}. Isn't he at {locName}?";
+                            }
                         }
                         break;
                     default:
@@ -5610,6 +5680,74 @@ namespace Next_Game
             else { Game.SetError(new Error(282, "Invalid Player (null) -> Street view cancelled")); }
             return listToDisplay;
         }
+
+        /// <summary>
+        /// Add a loc to dict, auto handles visiting of an existing location within dictionary -> returns true if successful
+        /// </summary>
+        /// <param name="locID"></param>
+        /// <param name="turn"></param>
+        internal bool AddVisitedLoc(int locID, int turn)
+        {
+            if (locID > 0)
+            {
+                //existing record for that loc?
+                if (dictLocsVisitedAll.ContainsKey(locID) == true)
+                {
+                    //add turn # visited to list
+                    List<int> tempList = dictLocsVisitedAll[locID];
+                    tempList.Add(turn);
+                    Game.logTurn?.Write($"[AddVisitedLoc] LocID {locID}, \"{Game.world.GetLocationName(locID)}\", turn {turn} -> record updated in dictLocsVisitedAll");
+                    return true;
+                }
+                else
+                {
+                    //add new record
+                    List<int> tempList = new List<int>();
+                    tempList.Add(turn);
+                    dictLocsVisitedAll.Add(locID, tempList);
+                    Game.logTurn?.Write($"[AddVisitedLoc] LocID {locID}, \"{Game.world.GetLocationName(locID)}\", turn {turn} -> new record added to dictLocsVisitedAll");
+                    return true;
+                }
+            }
+            else { Game.SetError(new Error(284, $"Invalid LocID \"{locID}\" -> Loc not added to dictionary")); }
+            return false;
+        }
+
+        /// <summary>
+        /// Returns last, but one, visited location, returns 0 if none, or error
+        /// </summary>
+        /// <returns></returns>
+        internal int GetRecentlyVisited()
+        {
+            int locID = 0;
+            int count = dictLocsVisitedAll.Count;
+            if (count > 0)
+            {
+                //get last but one loc (last would be current loc), or, if only a single record, that one
+                if (count > 1)
+                { locID = dictLocsVisitedAll.ElementAt(count - 2).Key; }
+                else
+                { locID = dictLocsVisitedAll.ElementAt(count - 1).Key; }
+            }
+            else { Game.SetError(new Error(285, "dictLocsVisitedAll has no records (should have at least one) -> No valid loc returned")); }
+            return locID;
+        }
+
+        /// <summary>
+        /// returns a random loc from those visited, returns 0 if none, or error. Could return current loc.
+        /// </summary>
+        /// <returns></returns>
+        internal int GetRandomVisited()
+        {
+            int locID = 0;
+            if (dictLocsVisitedAll.Count > 0)
+            {
+                List<int> keyList = new List<int>(dictLocsVisitedAll.Keys);
+                locID = rnd.Next(keyList.Count);
+            }
+            return locID;
+        }
+
 
         //place new methods above here
     }
