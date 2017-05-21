@@ -22,6 +22,8 @@ namespace Next_Game
     public enum ConflictState { None, Relative_Army_Size, Relative_Fame, Relative_Honour, Relative_Justice, Known_Status } //game specific states that are used for situations
     public enum ResourceLevel { None, Meagre, Moderate, Substantial, Wealthy, Excessive }
     public enum WorldGroup { None, Noble, Church, Merchant, Craft, Peasant} //main population groupings within world
+    public enum ViewType { JusticeNeutralEduc, JusticeNeutralUned, JusticeGoodEduc, JusticeGoodUned, JusticeBadEduc, JusticeBadUned, LegendNeutralEduc, LegendNeutralUned, LegendGoodEduc, LegendGoodUned,
+    LegendBadEduc, LegendBadUned, HonourNeutralEduc, HonourNeutralUned, HonourGoodEduc, HonourGoodUned, HonourBadEduc, HonourBadUned, KnownEduc, KnownUned, UnknownEduc, UnknownUned, Count} //Market View
 
 
     /// <summary>
@@ -93,7 +95,7 @@ namespace Next_Game
         List<int> listRumoursSouth;
         List<int> listRumoursWest;
         //Word from the Market
-        List<string> listJusticeNeutralEduc; //educated viewpoint, 'Educ'
+        /*List<string> listJusticeNeutralEduc; //educated viewpoint, 'Educ'
         List<string> listJusticeNeutralUned; //uneducated viewpoint, "Uned'
         List<string> listJusticeGoodEduc;
         List<string> listJusticeGoodUned;
@@ -114,10 +116,11 @@ namespace Next_Game
         List<string> listKnownEduc;
         List<string> listKnownUned;
         List<string> listUnknownEduc;
-        List<string> listUnknownUned;
+        List<string> listUnknownUned;*/
+        string[][] arrayOfViewTexts;
         //places visited by the Player
-        Dictionary<int, List<int>> dictLocsVisitedAll; //All locs visited, key is LocID, Value is Turn # for each visit
-        //Dictionary<int, List<int>> dictLocsVisitedKnown; //locs visited when Player was 'Known', key is LocID, Value is Turn # for each visit
+        List<int> listLocsVisited; //Sequential list of LocID's
+        Dictionary<int, List<int>> dictLocsVisited; //All locs visited, key is LocID, Value is Turn # for each visit
         //other
         List<Follower> listOfFollowers;
         List<EventPackage> listFollCurrentEvents; //follower
@@ -186,7 +189,7 @@ namespace Next_Game
             listRumoursSouth = new List<int>();
             listRumoursWest = new List<int>();
             //Word from the Markre
-            listJusticeNeutralEduc = new List<string>();
+            /*listJusticeNeutralEduc = new List<string>();
             listJusticeNeutralUned = new List<string>();
             listJusticeGoodEduc = new List<string>();
             listJusticeGoodUned = new List<string>();
@@ -207,10 +210,11 @@ namespace Next_Game
             listKnownEduc = new List<string>();
             listKnownUned = new List<string>();
             listUnknownEduc = new List<string>();
-            listUnknownUned = new List<string>();
+            listUnknownUned = new List<string>();*/
+            arrayOfViewTexts = new string[(int)RelListType.Count][];
             //places the Player has visited
-            dictLocsVisitedAll = new Dictionary<int, List<int>>();
-            //dictLocsVisitedKnown = new Dictionary<int, List<int>>();
+            listLocsVisited = new List<int>();
+            dictLocsVisited = new Dictionary<int, List<int>>();
             //other
             listFollCurrentEvents = new List<EventPackage>(); //follower events
             listPlyrCurrentEvents = new List<EventPackage>(); //player events
@@ -5414,10 +5418,11 @@ namespace Next_Game
             RLColor backColor = Color._background1;
             string streetView = "";
             int streetIndex = Game.variable.GetValue(GameVar.Street_View);
-            WorldGroup [] arrayOfGroupsMale = new WorldGroup[] { WorldGroup.Noble, WorldGroup.Merchant, WorldGroup.Church, WorldGroup.Craft, WorldGroup.Craft, WorldGroup.Craft,
-                WorldGroup.Peasant, WorldGroup.Peasant, WorldGroup.Peasant, WorldGroup.Peasant };
+            WorldGroup [] arrayOfGroupsMale = new WorldGroup[] { WorldGroup.Noble, WorldGroup.Merchant, WorldGroup.Church, WorldGroup.Craft, WorldGroup.Craft,
+                WorldGroup.Peasant, WorldGroup.Peasant };
             WorldGroup group = WorldGroup.None;
-            string name, locName, place;
+            string name, place;
+            string randomText = "";
             string occupation = "Unknown";
             string view = "";
             int data, difference;
@@ -5427,10 +5432,6 @@ namespace Next_Game
             Player player = Game.world.GetPlayer();
             if (player != null)
             {
-                //player data
-                string sexHe = "he";
-                string sexHim = "him";
-                if (player.Sex == ActorSex.Female) { sexHe = "she"; sexHim = "her"; }
                 //lore data
                 string oldKingName = Game.lore.OldKing.Name;
                 string newKingName = Game.lore.NewKing.Name;
@@ -5509,24 +5510,24 @@ namespace Next_Game
                         {
                             //neutral view (both scores within 10 points of each other)
                             if (educated == true)
-                            {
-                                view = $"Does {player.Name} have a right to be King? Hard to say";
+                            { //randomText = listJusticeNeutralEduc[rnd.Next(listJusticeNeutralEduc.Count)];
+                                randomText = arrayOfViewTexts[(int)ViewType.JusticeNeutralEduc][rnd.Next(arrayOfViewTexts.GetUpperBound(1))];
                             }
                             else
-                            {
-                                view = $"Kings are all the same. Who cares if it's {player.Name} or King {newKingName}?";
+                            { //randomText = listJusticeNeutralUned[rnd.Next(listJusticeNeutralUned.Count)]; 
+                                randomText = arrayOfViewTexts[(int)ViewType.JusticeNeutralUned][rnd.Next(arrayOfViewTexts.GetUpperBound(1))];
                             }
                         }
                         else if (data > 0)
                         {
                             //positive view (for usurper) -> Justice of cause 10+ points ahead
                             if (educated == true)
-                            {
-                                view = $"Yes, of course {player.Name}, the Usurper, should be King. It's his birthright.";
+                            { //randomText = listJusticeGoodEduc[rnd.Next(listJusticeGoodEduc.Count)]; 
+                                randomText = arrayOfViewTexts[(int)ViewType.JusticeGoodEduc][rnd.Next(arrayOfViewTexts.GetUpperBound(1))];
                             }
                             else
-                            {
-                                view = $"So {player.Name} thinks that they should be King? Doesn't everybody?";
+                            { //randomText = listJusticeGoodUned[rnd.Next(listJusticeGoodUned.Count)]; 
+                                randomText = arrayOfViewTexts[(int)ViewType.JusticeGoodUned][rnd.Next(arrayOfViewTexts.GetUpperBound(1))];
                             }
                         }
                         else
@@ -5534,11 +5535,12 @@ namespace Next_Game
                             //negative (for usurper) -> Justice of cause 10+ points behind
                             if (educated == true)
                             {
-                                view = $"King {newKingName} sits rightfully upon the throne. {player.Name} is nothing but an imposter";
+                                //randomText = listJusticeBadEduc[rnd.Next(listJusticeBadEduc.Count)];
+                                randomText = arrayOfViewTexts[(int)ViewType.JusticeBadEduc][rnd.Next(arrayOfViewTexts.GetUpperBound(1))];
                             }
                             else
-                            {
-                                view = $"King {newKingName} is the King and good on him. {player.Name} is fit for nothing more than pig swill";
+                            { //randomText = listJusticeBadUned[rnd.Next(listJusticeBadUned.Count)]; 
+                                randomText = arrayOfViewTexts[(int)ViewType.JusticeBadUned][rnd.Next(arrayOfViewTexts.GetUpperBound(1))];
                             }
                         }
                         break;
@@ -5550,36 +5552,36 @@ namespace Next_Game
                         {
                             //neutral view (both scores within 10 points of each other)
                             if (educated == true)
-                            {
-                                view = $"I never did go much on Old King {oldKingName} but I don't like {newKingName} either";
+                            { //randomText = listLegendNeutralEduc[rnd.Next(listLegendNeutralEduc.Count)]; 
+                                randomText = arrayOfViewTexts[(int)ViewType.LegendNeutralEduc][rnd.Next(arrayOfViewTexts.GetUpperBound(1))];
                             }
                             else
-                            {
-                                view = $"Old King {oldKingName}? Who's he?";
+                            { //randomText = listLegendNeutralUned[rnd.Next(listLegendNeutralUned.Count)]; 
+                                randomText = arrayOfViewTexts[(int)ViewType.LegendNeutralUned][rnd.Next(arrayOfViewTexts.GetUpperBound(1))];
                             }
                         }
                         else if (data > 0)
                         {
                             //positive view (for usurper) -> Usurper's legend 10+ points ahead of Kings
                             if (educated == true)
-                            {
-                                view = $"Didn't the {player.Name}, the Usurper, kill a lion with his bare hands?";
+                            { //randomText = listLegendGoodEduc[rnd.Next(listLegendGoodEduc.Count)]; 
+                                randomText = arrayOfViewTexts[(int)ViewType.LegendGoodEduc][rnd.Next(arrayOfViewTexts.GetUpperBound(1))];
                             }
                             else
-                            {
-                                view = $"That heir, {player.Name}, he'll chew King {newKingName}'s head off before breakfast";
+                            { //randomText = listLegendGoodUned[rnd.Next(listLegendGoodUned.Count)]; 
+                                randomText = arrayOfViewTexts[(int)ViewType.LegendGoodUned][rnd.Next(arrayOfViewTexts.GetUpperBound(1))];
                             }
                         }
                         else
                         {
                             //negative (for usurper) -> Usurpers legend 10+ point behind that of Kings
                             if (educated == true)
-                            {
-                                view = $"{player.Name}, the so called Usurper, I heard the he was frightened to get out of bed in the morning";
+                            { //randomText = listLegendBadEduc[rnd.Next(listLegendBadEduc.Count)]; 
+                                randomText = arrayOfViewTexts[(int)ViewType.LegendBadEduc][rnd.Next(arrayOfViewTexts.GetUpperBound(1))];
                             }
                             else
-                            {
-                                view = $"King {newKingName} will piss all over {player.Name}. Everybody knows that.";
+                            { //randomText = listLegendBadUned[rnd.Next(listLegendBadUned.Count)]; 
+                                randomText = arrayOfViewTexts[(int)ViewType.LegendBadUned][rnd.Next(arrayOfViewTexts.GetUpperBound(1))];
                             }
                         }
                         break;
@@ -5591,36 +5593,36 @@ namespace Next_Game
                         {
                             //neutral view (both scores within 10 points of each other)
                             if (educated == true)
-                            {
-                                view = $"Who can you trust more? King {newKingName} or the Usurper, {player.Name}";
+                            { //randomText = listHonourNeutralEduc[rnd.Next(listHonourNeutralEduc.Count)]; 
+                                randomText = arrayOfViewTexts[(int)ViewType.HonourNeutralEduc][rnd.Next(arrayOfViewTexts.GetUpperBound(1))];
                             }
                             else
-                            {
-                                view = $"Kings and Usurpers treat you like dirt. The pox on all of them";
+                            { //randomText = listHonourNeutralUned[rnd.Next(listHonourNeutralUned.Count)]; 
+                                randomText = arrayOfViewTexts[(int)ViewType.HonourNeutralUned][rnd.Next(arrayOfViewTexts.GetUpperBound(1))];
                             }
                         }
                         else if (data > 0)
                         {
                             //positive view (for usurper) -> Usurper's honour 10+ points ahead of Kings
                             if (educated == true)
-                            {
-                                view = $"{player.Name} is a man you can rely on. The sooner {sexHe} takes over from King {newKingName}, the better.";
+                            { //randomText = listHonourGoodEduc[rnd.Next(listHonourGoodEduc.Count)]; 
+                                randomText = arrayOfViewTexts[(int)ViewType.HonourGoodEduc][rnd.Next(arrayOfViewTexts.GetUpperBound(1))];
                             }
                             else
-                            {
-                                view = $"Can I rely on that Usurper, {player.Name} to make my life better? I hear that you can trust {sexHim}.";
+                            { //randomText = listHonourGoodUned[rnd.Next(listHonourGoodUned.Count)]; 
+                                randomText = arrayOfViewTexts[(int)ViewType.HonourGoodUned][rnd.Next(arrayOfViewTexts.GetUpperBound(1))];
                             }
                         }
                         else
                         {
                             //negative (for usurper) -> Usurpers honour 10+ point behind that of Kings
                             if (educated == true)
-                            {
-                                view = $"King {newKingName}'s word can be relied upon. I trust him.";
+                            { //randomText = listHonourBadEduc[rnd.Next(listHonourBadEduc.Count)]; 
+                                randomText = arrayOfViewTexts[(int)ViewType.HonourBadEduc][rnd.Next(arrayOfViewTexts.GetUpperBound(1))];
                             }
                             else
-                            {
-                                view = $"Why would I want to trust {player.Name}, the pretend King? Nobody else does.";
+                            { //randomText = listHonourBadUned[rnd.Next(listHonourBadUned.Count)]; 
+                                randomText = arrayOfViewTexts[(int)ViewType.HonourBadUned][rnd.Next(arrayOfViewTexts.GetUpperBound(1))];
                             }
                         }
 
@@ -5631,28 +5633,24 @@ namespace Next_Game
                         {
                             //Player Known
                             if (educated == true)
-                            {
-                                locName = Game.world.GetLocationName(player.LocID);
-                                view = $"They say that the Usurper, {player.Name}, was seen in {locName} recently. What is {sexHe} up to?";
+                            { //randomText = listKnownEduc[rnd.Next(listKnownEduc.Count)]; 
+                                randomText = arrayOfViewTexts[(int)ViewType.KnownEduc][rnd.Next(arrayOfViewTexts.GetUpperBound(1))];
                             }
                             else
-                            {
-                                locName = Game.world.GetLocationName(Game.network.GetRandomLocation());
-                                view = $"The Usurper, {player.Name}. Isn't he at {locName}?";
+                            { //randomText = listKnownUned[rnd.Next(listKnownUned.Count)]; 
+                                randomText = arrayOfViewTexts[(int)ViewType.KnownUned][rnd.Next(arrayOfViewTexts.GetUpperBound(1))];
                             }
                         }
                         else
                         {
                             //player Unknown
                             if (educated == true)
-                            {
-                                locName = Game.world.GetLocationName(player.LocID);
-                                view = $"They say that the Usurper, {player.Name}, was seen in {locName} recently. What is {sexHe} up to?";
+                            { //randomText = listUnknownEduc[rnd.Next(listUnknownEduc.Count)]; 
+                                randomText = arrayOfViewTexts[(int)ViewType.UnknownEduc][rnd.Next(arrayOfViewTexts.GetUpperBound(1))];
                             }
                             else
-                            {
-                                locName = Game.world.GetLocationName(Game.network.GetRandomLocation());
-                                view = $"The Usurper, {player.Name}. Isn't he at {locName}?";
+                            { //randomText = listUnknownUned[rnd.Next(listUnknownUned.Count)]; 
+                                randomText = arrayOfViewTexts[(int)ViewType.UnknownUned][rnd.Next(arrayOfViewTexts.GetUpperBound(1))];
                             }
                         }
                         break;
@@ -5660,11 +5658,16 @@ namespace Next_Game
                         Game.SetError(new Error(282, $"Invalid Street_View \"{streetIndex} -> Street View cancelled"));
                         break;
                 }
-                //increment index and roll over if need be
-                streetIndex++;
-                if (streetIndex > 4) { streetIndex = 1; }
-                //update GameVar
-                Game.variable.SetValue(GameVar.Street_View, streetIndex);
+                if (randomText.Length > 0)
+                {
+                    //deal with tags
+                    view = Game.utility.CheckTagsView(randomText, player);
+                    //increment index and roll over if need be
+                    streetIndex++;
+                    if (streetIndex > 4) { streetIndex = 1; }
+                    //update GameVar
+                    Game.variable.SetValue(GameVar.Street_View, streetIndex);
+                }
                 //put Snippets together
                 if (view.Length > 0)
                 {
@@ -5682,7 +5685,7 @@ namespace Next_Game
         }
 
         /// <summary>
-        /// Add a loc to dict, auto handles visiting of an existing location within dictionary -> returns true if successful
+        /// Add a loc to dict & list, auto handles visiting of an existing location within dictionary -> returns true if successful
         /// </summary>
         /// <param name="locID"></param>
         /// <param name="turn"></param>
@@ -5690,13 +5693,16 @@ namespace Next_Game
         {
             if (locID > 0)
             {
+                //add to list (sequential record of loc's visited whereas dict is unique places visited)
+                listLocsVisited.Add(locID);
+                Game.logTurn?.Write($"[AddVisitedLoc] LocID {locID}, \"{Game.world.GetLocationName(locID)}\", turn {turn} -> record added to listLocsVisited");
                 //existing record for that loc?
-                if (dictLocsVisitedAll.ContainsKey(locID) == true)
+                if (dictLocsVisited.ContainsKey(locID) == true)
                 {
                     //add turn # visited to list
-                    List<int> tempList = dictLocsVisitedAll[locID];
+                    List<int> tempList = dictLocsVisited[locID];
                     tempList.Add(turn);
-                    Game.logTurn?.Write($"[AddVisitedLoc] LocID {locID}, \"{Game.world.GetLocationName(locID)}\", turn {turn} -> record updated in dictLocsVisitedAll");
+                    Game.logTurn?.Write($"[AddVisitedLoc] LocID {locID}, \"{Game.world.GetLocationName(locID)}\", turn {turn} -> record updated in dictLocsVisited");
                     return true;
                 }
                 else
@@ -5704,8 +5710,8 @@ namespace Next_Game
                     //add new record
                     List<int> tempList = new List<int>();
                     tempList.Add(turn);
-                    dictLocsVisitedAll.Add(locID, tempList);
-                    Game.logTurn?.Write($"[AddVisitedLoc] LocID {locID}, \"{Game.world.GetLocationName(locID)}\", turn {turn} -> new record added to dictLocsVisitedAll");
+                    dictLocsVisited.Add(locID, tempList);
+                    Game.logTurn?.Write($"[AddVisitedLoc] LocID {locID}, \"{Game.world.GetLocationName(locID)}\", turn {turn} -> new record added to dictLocsVisited");
                     return true;
                 }
             }
@@ -5720,16 +5726,14 @@ namespace Next_Game
         internal int GetRecentlyVisited()
         {
             int locID = 0;
-            int count = dictLocsVisitedAll.Count;
+            int count = listLocsVisited.Count;
             if (count > 0)
             {
-                //get last but one loc (last would be current loc), or, if only a single record, that one
-                if (count > 1)
-                { locID = dictLocsVisitedAll.ElementAt(count - 2).Key; }
+                if (count > 1) { locID = listLocsVisited[count - 2]; }
                 else
-                { locID = dictLocsVisitedAll.ElementAt(count - 1).Key; }
+                { locID = listLocsVisited[count - 1]; }
             }
-            else { Game.SetError(new Error(285, "dictLocsVisitedAll has no records (should have at least one) -> No valid loc returned")); }
+            else { Game.SetError(new Error(285, "listLocsVisited has no records (should have at least one) -> No valid recent loc returned")); }
             return locID;
         }
 
@@ -5740,11 +5744,14 @@ namespace Next_Game
         internal int GetRandomVisited()
         {
             int locID = 0;
-            if (dictLocsVisitedAll.Count > 0)
+            int count = listLocsVisited.Count;
+            if (count > 0)
             {
-                List<int> keyList = new List<int>(dictLocsVisitedAll.Keys);
-                locID = rnd.Next(keyList.Count);
+                if (count > 1)
+                { locID = listLocsVisited[rnd.Next(count - 1)]; }
+                else { locID = listLocsVisited[rnd.Next(count)]; }
             }
+            else { Game.SetError(new Error(286, "listLocsVisited has no records (should have at least one) -> No valid random Loc returned")); }
             return locID;
         }
 

@@ -4,15 +4,16 @@
 # <player> <newKing> <oldKing> -> Names
 # <playerHandle> <newKingHandle> <oldKingHandle> -> Handles
 # <his> <he> <him> <man> -> sex specific for Usurper (also <His> <He> which are for starting sentences with)
-# <locCurrent>, <locRecent>, <locRandom> -> Usurper Loc Names
+# <locRecent>, <locRandom> -> Usurper Loc Names
+# <randomMale> <randomFemale> -> random first names
 
-[[listJusticeNeutralEduc]
+[listJusticeNeutralEduc]
 Does <player> have a right to be King? Hard to say
 
-[[listJusticeNeutralUned]
+[listJusticeNeutralUned]
 Kings are all the same. Who cares if it's <player> or King <newKing>?
 
-[[listJusticeGoodEduc]
+[listJusticeGoodEduc]
 Yes, of course <player>, the Usurper, should be King. It's <his> birthright.
 
 [listJusticeGoodUned]
@@ -61,13 +62,16 @@ King <newKing>'s word can be relied upon. I trust him.
 Why would I want to trust <player>, the pretend King? Nobody else does.
 
 [listKnownEduc]
-They say that the Usurper, <player>, was seen in <locKnown> recently. What is <he> up to?
+They say that the Usurper, <player>, was seen in <locRecent> recently. What is <he> up to?
 
 [listKnownUned]
-The Usurper, <player>. Isn't he at <locKnown>?
+The Usurper, <player>. Isn't he at <locRecent>?
+I heard that <player> had visited <locRandom> once. Maybe <he> liked the ale?
+<randomMale> from the village swore that he'd seen <player> at <locRandom>.
 
 [listUnknownEduc]
 Who knows where <player> is? I heard the Inquisitors were asking after <him>.
 
 [listUnknownUned]
 Do I care where <player> is? Does <he> know who I am and what my problems are? If you see <him> make sure you tell <him>.
+I overheard <randomFemale> talking about <player> the other day. She sure knows how to curse.

@@ -3499,6 +3499,187 @@ namespace Next_Game
         }
 
         /// <summary>
+        /// Import View lists (Director.cs -> GetMarketView) "The View from the Market
+        /// </summary>
+        /// <param name="fileName"></param>
+        /// <returns></returns>
+        internal string[][] GetViews(string fileName)
+        {
+            //master jagged array which will be returned, NOTE: add to enum 'RelListType' (Tracker.cs) for each unique new Relationship lis
+            string[][] arrayOfViews = new string[(int)ViewType.Count][];
+            string tempString;
+            //temporary sub lists for each category of geoNames
+            List<string> listJusticeNeutralEduc = new List<string>();
+            List<string> listJusticeNeutralUned = new List<string>();
+            List<string> listJusticeGoodEduc = new List<string>();
+            List<string> listJusticeGoodUned = new List<string>();
+            List<string> listJusticeBadEduc = new List<string>();
+            List<string> listJusticeBadUned = new List<string>();
+            List<string> listLegendNeutralEduc = new List<string>();
+            List<string> listLegendNeutralUned = new List<string>();
+            List<string> listLegendGoodEduc = new List<string>();
+            List<string> listLegendGoodUned = new List<string>();
+            List<string> listLegendBadEduc = new List<string>();
+            List<string> listLegendBadUned = new List<string>();
+            List<string> listHonourNeutralEduc = new List<string>();
+            List<string> listHonourNeutralUned = new List<string>();
+            List<string> listHonourGoodEduc = new List<string>();
+            List<string> listHonourGoodUned = new List<string>();
+            List<string> listHonourBadEduc = new List<string>();
+            List<string> listHonourBadUned = new List<string>();
+            List<string> listKnownEduc = new List<string>();
+            List<string> listKnownUned = new List<string>();
+            List<string> listUnknownEduc = new List<string>();
+            List<string> listUnknownUned = new List<string>();
+            //import data from file
+            string[] arrayOfViewTexts = ImportDataFile(fileName);
+            if (arrayOfViewTexts != null)
+            {
+
+                //read location names from array into list
+                string nameType = null;
+                char[] charsToTrim = { '[', ']' };
+                for (int i = 0; i < arrayOfViewTexts.Length; i++)
+                {
+                    if (arrayOfViewTexts[i] != "" && !arrayOfViewTexts[i].StartsWith("#"))
+                    {
+                        //which sublist are we dealing with
+                        tempString = arrayOfViewTexts[i];
+                        //trim off leading and trailing whitespace
+                        tempString = tempString.Trim();
+                        if (tempString.StartsWith("["))
+                        { nameType = tempString.Trim(charsToTrim); }
+                        else if (nameType != null)
+                        {
+                            //place in the correct list
+                            switch (nameType)
+                            {
+                                case "JusticeNeutralEduc":
+                                    listJusticeNeutralEduc.Add(tempString);
+                                    break;
+                                case "JusticeNeutralUned":
+                                    listJusticeNeutralUned.Add(tempString);
+                                    break;
+                                case "JusticeGoodEduc":
+                                    listJusticeGoodEduc.Add(tempString);
+                                    break;
+                                case "JusticeGoodUned":
+                                    listJusticeGoodUned.Add(tempString);
+                                    break;
+                                case "JusticeBadEduc":
+                                    listJusticeBadEduc.Add(tempString);
+                                    break;
+                                case "JusticeBadUned":
+                                    listJusticeBadUned.Add(tempString);
+                                    break;
+                                case "LegendNeutralEduc":
+                                    listLegendNeutralEduc.Add(tempString);
+                                    break;
+                                case "LegendNeutralUned":
+                                    listLegendNeutralUned.Add(tempString);
+                                    break;
+                                case "LegendGoodEduc":
+                                    listLegendGoodEduc.Add(tempString);
+                                    break;
+                                case "LegendGoodUned":
+                                    listLegendGoodUned.Add(tempString);
+                                    break;
+                                case "LegendBadEduc":
+                                    listLegendBadEduc.Add(tempString);
+                                    break;
+                                case "LegendBadUned":
+                                    listLegendBadUned.Add(tempString);
+                                    break;
+                                case "HonourNeutralEduc":
+                                    listHonourNeutralEduc.Add(tempString);
+                                    break;
+                                case "HonourNeutralUned":
+                                    listHonourNeutralUned.Add(tempString);
+                                    break;
+                                case "HonourGoodEduc":
+                                    listHonourGoodEduc.Add(tempString);
+                                    break;
+                                case "HonourGoodUned":
+                                    listHonourGoodUned.Add(tempString);
+                                    break;
+                                case "HonourBadEduc":
+                                    listHonourBadEduc.Add(tempString);
+                                    break;
+                                case "HonourBadUned":
+                                    listHonourBadUned.Add(tempString);
+                                    break;
+                                case "KnownEduc":
+                                    listKnownEduc.Add(tempString);
+                                    break;
+                                case "KnownUned":
+                                    listKnownUned.Add(tempString);
+                                    break;
+                                case "UnknownEduc":
+                                    listUnknownEduc.Add(tempString);
+                                    break;
+                                case "UnknownUned":
+                                    listUnknownUned.Add(tempString);
+                                    break;
+                                default:
+                                    Game.SetError(new Error(287, string.Format("Invalid ViewType {0}, record {1}", nameType, i)));
+                                    break;
+                            }
+                        }
+                    }
+                }
+                //size jagged array
+                arrayOfViews[(int)ViewType.JusticeNeutralEduc] = new string[listJusticeNeutralEduc.Count];
+                arrayOfViews[(int)ViewType.JusticeNeutralUned] = new string[listJusticeNeutralUned.Count];
+                arrayOfViews[(int)ViewType.JusticeGoodEduc] = new string[listJusticeGoodEduc.Count];
+                arrayOfViews[(int)ViewType.JusticeGoodUned] = new string[listJusticeGoodUned.Count];
+                arrayOfViews[(int)ViewType.JusticeBadEduc] = new string[listJusticeBadEduc.Count];
+                arrayOfViews[(int)ViewType.JusticeBadUned] = new string[listJusticeBadUned.Count];
+                arrayOfViews[(int)ViewType.LegendNeutralEduc] = new string[listLegendNeutralEduc.Count];
+                arrayOfViews[(int)ViewType.LegendNeutralUned] = new string[listLegendNeutralUned.Count];
+                arrayOfViews[(int)ViewType.LegendGoodEduc] = new string[listLegendGoodEduc.Count];
+                arrayOfViews[(int)ViewType.LegendGoodUned] = new string[listLegendGoodUned.Count];
+                arrayOfViews[(int)ViewType.LegendBadEduc] = new string[listLegendBadEduc.Count];
+                arrayOfViews[(int)ViewType.LegendBadUned] = new string[listLegendBadUned.Count];
+                arrayOfViews[(int)ViewType.HonourNeutralEduc] = new string[listHonourNeutralEduc.Count];
+                arrayOfViews[(int)ViewType.HonourNeutralUned] = new string[listHonourNeutralUned.Count];
+                arrayOfViews[(int)ViewType.HonourGoodEduc] = new string[listHonourGoodEduc.Count];
+                arrayOfViews[(int)ViewType.HonourGoodUned] = new string[listHonourGoodUned.Count];
+                arrayOfViews[(int)ViewType.HonourBadEduc] = new string[listHonourBadEduc.Count];
+                arrayOfViews[(int)ViewType.HonourBadUned] = new string[listHonourBadUned.Count];
+                arrayOfViews[(int)ViewType.KnownEduc] = new string[listKnownEduc.Count];
+                arrayOfViews[(int)ViewType.KnownUned] = new string[listKnownUned.Count];
+                arrayOfViews[(int)ViewType.UnknownEduc] = new string[listUnknownEduc.Count];
+                arrayOfViews[(int)ViewType.UnknownUned] = new string[listUnknownUned.Count];
+                //populate from lists
+                arrayOfViews[(int)ViewType.JusticeNeutralEduc] = listJusticeNeutralEduc.ToArray();
+                arrayOfViews[(int)ViewType.JusticeNeutralUned] = listJusticeNeutralUned.ToArray();
+                arrayOfViews[(int)ViewType.JusticeGoodEduc] = listJusticeGoodEduc.ToArray();
+                arrayOfViews[(int)ViewType.JusticeGoodUned] = listJusticeGoodUned.ToArray();
+                arrayOfViews[(int)ViewType.JusticeBadEduc] = listJusticeBadEduc.ToArray();
+                arrayOfViews[(int)ViewType.JusticeBadUned] = listJusticeBadUned.ToArray();
+                arrayOfViews[(int)ViewType.LegendNeutralEduc] = listLegendNeutralEduc.ToArray();
+                arrayOfViews[(int)ViewType.LegendNeutralUned] = listLegendNeutralUned.ToArray();
+                arrayOfViews[(int)ViewType.LegendGoodEduc] = listLegendGoodEduc.ToArray();
+                arrayOfViews[(int)ViewType.LegendGoodUned] = listLegendGoodUned.ToArray();
+                arrayOfViews[(int)ViewType.LegendBadEduc] = listLegendBadEduc.ToArray();
+                arrayOfViews[(int)ViewType.LegendBadUned] = listLegendBadUned.ToArray();
+                arrayOfViews[(int)ViewType.HonourNeutralEduc] = listHonourNeutralEduc.ToArray();
+                arrayOfViews[(int)ViewType.HonourNeutralUned] = listHonourNeutralUned.ToArray();
+                arrayOfViews[(int)ViewType.HonourGoodEduc] = listHonourGoodEduc.ToArray();
+                arrayOfViews[(int)ViewType.HonourGoodUned] = listHonourGoodUned.ToArray();
+                arrayOfViews[(int)ViewType.HonourBadEduc] = listHonourBadEduc.ToArray();
+                arrayOfViews[(int)ViewType.HonourBadUned] = listHonourBadUned.ToArray();
+                arrayOfViews[(int)ViewType.KnownEduc] = listKnownEduc.ToArray();
+                arrayOfViews[(int)ViewType.KnownUned] = listKnownUned.ToArray();
+                arrayOfViews[(int)ViewType.UnknownEduc] = listUnknownEduc.ToArray();
+                arrayOfViews[(int)ViewType.UnknownUned] = listUnknownUned.ToArray();
+            }
+            else
+            { Game.SetError(new Error(287, string.Format("File not found (\"{0}\")", fileName))); }
+            return arrayOfViews;
+        }
+
+        /// <summary>
         /// Import Followers
         /// </summary>
         /// <param name="fileName"></param>

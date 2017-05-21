@@ -285,6 +285,12 @@ namespace Next_Game
                             case "locRandom":
                                 replaceText = Game.world.GetLocationName(Game.director.GetRandomVisited());
                                 break;
+                            case "randomMale":
+                                replaceText = Game.history.GetFirstName(ActorSex.Male);
+                                break;
+                            case "randomFemale":
+                                replaceText = Game.history.GetFirstName(ActorSex.Female);
+                                break;
                             default:
                                 replaceText = "";
                                 Game.SetError(new Error(283, string.Format("Invalid tag (\"{0}\")", tag)));

@@ -4338,7 +4338,7 @@ namespace Next_Game
             CalculateCrows();
 
             //DEBUG -> populate dictionary with sample data
-            for (int i = 3; i >= 0; i--)
+            for (int i = 3; i > 0; i--)
             { Game.director.AddVisitedLoc(Game.network.GetRandomLocation(), i * -1); }
         }
 
