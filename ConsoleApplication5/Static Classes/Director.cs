@@ -5359,90 +5359,204 @@ namespace Next_Game
             string streetView = "";
             int streetIndex = Game.variable.GetValue(GameVar.Street_View);
             string[] arrayOfOccupationsMale = new string[] { "Noble", "Merchant", "Church", "Craftsman", "Craftsman", "Craftsman", "Peasant", "Peasant", "Peasant", "Peasant" };
-            string name, group;
+            string name, group, locName, place;
             string occupation = "Unknown";
             string view = "";
-            int data;
+            int data, difference;
             int age = rnd.Next(15, 50);
-            if (rnd.Next(100) <= 50)
+            bool educated = true; //if true then character provides an educated viewpoint, otherwise an uneducated, less well informed, one
+            ActorSex sex;
+            Player player = Game.world.GetPlayer();
+            if (player != null)
             {
-                //male
-                group = arrayOfOccupationsMale[rnd.Next(arrayOfOccupationsMale.Length)];
-                name = Game.history.GetFirstName(ActorSex.Male);
-            }
-            else
-            {
-                //female
-                group = "peasant";
-                name = Game.history.GetFirstName(ActorSex.Female);
-            }
-            switch (group)
-            {
-                case "Craftsman":
-                    string[] arrayOfCraftsman = new string[] {"Armourer", "Artist", "Baker", "Bookbinder", "Candlemaker", "Blacksmith", "Carpenter", "Dyer", "Forester",
-                    "Engraver", "Brewer", "Bricklayer", "Stonemason", "Glassblower", "Jester", "Furrier", "Clothier", "Weaver", "Engineer", "Cartographer", "Potter", "Scribe", "Musician",
-                    "Poet", "Troubadour", "Tumbler", "Illuminator", "Fiddler", "Barker", "Bard", "Saddler", "Chandler", "Shoemaker", "Tanner", "Locksmith", "Glover", "Butcher", "Scabbard Maker"};
-                    occupation = arrayOfCraftsman[rnd.Next(arrayOfCraftsman.Length)];
-                    break;
-                case "Merchant":
-                    string[] arrayOfMerchants = new string[] { "Innkeeper", "MoneyLender", "Trader", "Brothel Owner", "Glass Seller", "Ironmonger", "Linen Draper", "Peddler", "Mercer",
+                //player data
+                string sexHe = "he";
+                string sexHim = "him";
+                if (player.Sex == ActorSex.Female) { sexHe = "she"; sexHim = "her"; }
+                //lore data
+                string oldKingName = Game.lore.OldKing.Name;
+                string newKingName = Game.lore.NewKing.Name;
+                //location of person
+                if (rnd.Next(100) < 30) { place = $"visiting {Game.world.GetLocationName(player.LocID)}"; }
+                else { place = $"at {Game.world.GetLocationName(player.LocID)}"; }
+                //higher chance of male (more variety available)
+                if (rnd.Next(100) <= 70)
+                {
+                    //male
+                    group = arrayOfOccupationsMale[rnd.Next(arrayOfOccupationsMale.Length)];
+                    name = Game.history.GetFirstName(ActorSex.Male);
+                    sex = ActorSex.Male;
+                }
+                else
+                {
+                    //female
+                    group = "peasant";
+                    name = Game.history.GetFirstName(ActorSex.Female);
+                    sex = ActorSex.Female;
+                }
+                switch (group)
+                {
+                    case "Noble":
+                        string[] arrayOfNobles = new string[] { "Bailiff", "Chancellor", "Diplomat", "Constable", "Hayward", "Jailer", "Judge", "Nobleman", "Nobleman", "Nobleman", "Pursuivant", "Sherrif" };
+                        occupation = arrayOfNobles[rnd.Next(arrayOfNobles.Length)];
+                        educated = true;
+                        break;
+                    case "Church":
+                        string[] arrayOfChurch = new string[] { "Pilgrim", "Ostiary", "Pardoner", "Sacristan", "Sexton", "Summoner", "Clerk", "Chanty Priest", "Cantor", "Beadle", "Almoner", "Friar", "Monk" };
+                        occupation = arrayOfChurch[rnd.Next(arrayOfChurch.Length)];
+                        educated = true;
+                        break;
+                    case "Merchant":
+                        string[] arrayOfMerchants = new string[] { "Innkeeper", "MoneyLender", "Trader", "Brothel Owner", "Glass Seller", "Ironmonger", "Linen Draper", "Peddler", "Mercer",
                     "Eggler", "Chapman", "Boothman", "Banker", "Apothecary", "Acater", "Oil Merchant", "Oynter", "Skinner", "Spice Merchant", "Spicer", "Stationer", "Thresher", "Taverner",
                     "Unguentary", "Waferer", "Waterseller", "Woodmonger", "Wool Stapler"};
-                    occupation = arrayOfMerchants[rnd.Next(arrayOfMerchants.Length)];
-                    break;
-                case "Peasant":
-                    string[] arrayOfPeasants = new string[] { "Farmer", "Fowler", "Crofter", "Farmer", "Cook", "Story Teller", "Fortune Teller", "Messenger", "Rat Catcher", "Astrologer",
-                    "Pickpocket", "Boothaler", "Footpad", "Poacher", "Silk Snatcher", "Thimblerigger", "Hermit", "Beggar", "Beggar", "Beggar", "Buffoon", "Dwarf", "Palmer", "Tenter",
+                        occupation = arrayOfMerchants[rnd.Next(arrayOfMerchants.Length)];
+                        educated = true;
+                        break;
+                    case "Craftsman":
+                        string[] arrayOfCraftsman = new string[] {"Armourer", "Artist", "Baker", "Bookbinder", "Candlemaker", "Blacksmith", "Carpenter", "Dyer", "Forester",
+                    "Engraver", "Brewer", "Bricklayer", "Stonemason", "Glassblower", "Jester", "Furrier", "Clothier", "Weaver", "Engineer", "Cartographer", "Potter", "Scribe", "Musician",
+                    "Poet", "Troubadour", "Tumbler", "Illuminator", "Fiddler", "Barker", "Bard", "Saddler", "Chandler", "Shoemaker", "Tanner", "Locksmith", "Glover", "Butcher", "Scabbard Maker"};
+                        occupation = arrayOfCraftsman[rnd.Next(arrayOfCraftsman.Length)];
+                        educated = false;
+                        break;
+                    case "Peasant":
+                        if (sex == ActorSex.Male)
+                        {
+                            string[] arrayOfPeasantsMale = new string[] { "Farmer", "Fowler", "Crofter", "Farmer", "Cook", "Messenger", "Rat Catcher", "Pickpocket", "Boothaler", "Footpad",
+                            "Poacher", "Silk Snatcher", "Thimblerigger", "Hermit", "Beggar", "Beggar", "Beggar", "Buffoon", "Dwarf", "Palmer", "Tenter",
                     "Ferryman", "Sheperd", "Hawker", "Hunter", "Goatherder", "Fewterer", "Falconer", "Sheepshearer", "Reaper", "Trapper", "Molecatcher" };
-                    occupation = arrayOfPeasants[rnd.Next(arrayOfPeasants.Length)];
-                    break;
-                case "Noble":
-                    string[] arrayOfNobles = new string[] { "Bailiff", "Chancellor", "Diplomat", "Constable", "Hayward", "Jailer", "Judge", "Nobleman", "Nobleman", "Nobleman", "Pursuivant", "Sherrif" };
-                    occupation = arrayOfNobles[rnd.Next(arrayOfNobles.Length)];
-                    break;
-                case "Church":
-                    string[] arrayOfChurch = new string[] { "Pilgrim", "Ostiary", "Pardoner", "Sacristan", "Sexton", "Summoner", "Clerk", "Chanty Priest", "Cantor", "Beadle", "Almoner", "Friar", "Monk" };
-                    occupation = arrayOfChurch[rnd.Next(arrayOfChurch.Length)];
-                    break;
-                default:
-                    Game.SetError(new Error(282, $"Invalid Group \"{group}\" -> StreetView cancelled"));
-                    break;
-            }
-            //each turn is a different option to maximise variety
-            switch(streetIndex)
-            {
-                case 1:
-                    //Justice of Cause
-                    data = CheckGameState(GameState.Justice);
-                    break;
-                case 2:
-                    //Relative Legend
-                    if (rnd.Next(100) <= 50)
-                    { data = CheckGameState(GameState.Legend_Usurper); }
-                    else
-                    { data = CheckGameState(GameState.Legend_King); }
-                    view =
-                    break;
-                case 3:
-                    //Relative Honour
+                            occupation = arrayOfPeasantsMale[rnd.Next(arrayOfPeasantsMale.Length)];
+                        }
+                        else
+                        {
+                            string[] arrayOfPeasantsFemale = new string[] { "Farmer's Wife", "Farmer's Wife", "Servant", "Servant", "Cook", "Story Teller", "Fortune Teller", "Messenger", "Rat Catcher", "Astrologer",
+                    "Pickpocket", "Prostitute", "Prostitute", "Washerwoman", "Silk Snatcher", "Beggar", "Beggar", "Beggar", "Palmer", "Hawker", "Molecatcher" };
+                            occupation = arrayOfPeasantsFemale[rnd.Next(arrayOfPeasantsFemale.Length)];
+                        }
+                        educated = false;
+                        break;
+                    default:
+                        Game.SetError(new Error(282, $"Invalid Group \"{group}\" -> StreetView cancelled"));
+                        break;
+                }
+                //each turn is a different option to maximise variety
+                switch (streetIndex)
+                {
+                    case 1:
+                        //Justice of Cause
+                        data = CheckGameState(GameState.Justice);
+                        break;
+                    case 2:
+                        //Relative Legend
+                        data = CheckGameState(GameState.Legend_Usurper) - CheckGameState(GameState.Legend_King);
+                        difference = Math.Abs(data);
+                        if (difference <= 10)
+                        {
+                            //neutral view (both scores within 10 points of each other)
+                            if (educated == true)
+                            {
+                                view = $"I never did go much on Old King {oldKingName} but I don't like {newKingName} either";
+                            }
+                            else
+                            {
+                                view = $"Old King {oldKingName}? Who's he?";
+                            }
+                        }
+                        else if (data > 0)
+                        {
+                            //positive view (for usurper) -> Usurper's legend 10+ points ahead of Kings
+                            if (educated == true)
+                            {
+                                view = $"Didn't the {player.Name}, the Usurper, kill a lion with his bare hands?";
+                            }
+                            else
+                            {
+                                view = $"That heir, {player.Name}, he'll chew King {newKingName}'s head off before breakfast";
+                            }
+                        }
+                        else
+                        {
+                            //negative (for usurper) -> Usurpers legend 10+ point behind that of Kings
+                            if (educated == true)
+                            {
+                                view = $"{player.Name}, the so called Usurper, I heard the he was frightened to get out of bed in the morning";
+                            }
+                            else
+                            {
+                                view = $"King {newKingName} will piss all over {player.Name}. Everybody knows that.";
+                            }
+                        }
+                        break;
+                    case 3:
+                        //Relative Honour
+                        data = CheckGameState(GameState.Honour_Usurper) - CheckGameState(GameState.Honour_King);
+                        difference = Math.Abs(data);
+                        if (difference <= 10)
+                        {
+                            //neutral view (both scores within 10 points of each other)
+                            if (educated == true)
+                            {
+                                view = $"Who can you trust more? King {newKingName} or the Usurper, {player.Name}";
+                            }
+                            else
+                            {
+                                view = $"Kings and Usurpers treat you like dirt. The pox on all of them";
+                            }
+                        }
+                        else if (data > 0)
+                        {
+                            //positive view (for usurper) -> Usurper's honour 10+ points ahead of Kings
+                            if (educated == true)
+                            {
+                                view = $"{player.Name} is a man you can rely on. The sooner {sexHe} takes over from King {newKingName}, the better.";
+                            }
+                            else
+                            {
+                                view = $"Can I rely on that Usurper, {player.Name} to make my life better? I hear that you can trust {sexHim}.";
+                            }
+                        }
+                        else
+                        {
+                            //negative (for usurper) -> Usurpers honour 10+ point behind that of Kings
+                            if (educated == true)
+                            {
+                                view = $"King {newKingName}'s word can be relied upon. I trust him.";
+                            }
+                            else
+                            {
+                                view = $"Why would I want to trust {player.Name}, the pretend King? Nobody else does.";
+                            }
+                        }
 
-                    break;
-                case 4:
-                    //Known / Unknown
-
-                    break;
-                default:
-                    Game.SetError(new Error(282, $"Invalid Street_View \"{streetIndex} -> Street View cancelled"));
-                    break;
+                        break;
+                    case 4:
+                        //Known / Unknown
+                        if (educated == true)
+                        {
+                            locName = Game.world.GetLocationName(player.LocID);
+                            view = $"They say that the Usurper, {player.Name}, was seen in {locName} recently. What is {sexHe} up to?";
+                        }
+                        else
+                        {
+                            locName = Game.world.GetLocationName(Game.network.GetRandomLocation());
+                            view = $"The Usurper, {player.Name}. Isn't he at {locName}?";
+                        }
+                        break;
+                    default:
+                        Game.SetError(new Error(282, $"Invalid Street_View \"{streetIndex} -> Street View cancelled"));
+                        break;
+                }
+                //increment index and roll over if need be
+                streetIndex++;
+                if (streetIndex > 4) { streetIndex = 1; }
+                //update GameVar
+                Game.variable.SetValue(GameVar.Street_View, streetIndex);
+                //put string together
+                if (view.Length > 0)
+                { streetView = $"{name}, age {age}, {occupation} {place} \"{view}\""; }
             }
-            //increment index and roll over if need be
-            streetIndex++;
-            if (streetIndex > 4) { streetIndex = 1; }
-            //update GameVar
-            Game.variable.SetValue(GameVar.Street_View, streetIndex);
-            //put string together
-            if (view.Length > 0)
-            { streetView = $"{name}, age {age}, {occupation} \"{view}\""; }
+            else { Game.SetError(new Error(282, "Invalid Player (null) -> Street view cancelled")); }
             return streetView;
         }
 

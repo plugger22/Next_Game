@@ -4325,12 +4325,13 @@ namespace Next_Game
         }
 
         /// <summary>
-        /// handles all start (day 0) Game stuff
+        /// handles all start (day 0) Game stuff -> NOTE: logTurn
         /// </summary>
         public void ProcessStartGame()
         {
             Game.logTurn?.Write("--- ProcessStartGame (World.cs)");
             Game.history.AgePassiveCharacters(dictPassiveActors);
+            InitialiseGameVars();
             CalculateCrows();
 
         }
@@ -7050,6 +7051,15 @@ namespace Next_Game
             { listToDisplay.Add(new Snippet(description, concealColor, RLColor.Black)); }
             else { listToDisplay.Add(new Snippet("Error in ChangeDisguise", RLColor.LightRed, RLColor.Black)); }
             return listToDisplay;
+        }
+
+        /// <summary>
+        /// Sets the values of any GameVars at game start
+        /// </summary>
+        private void InitialiseGameVars()
+        {
+            Game.logTurn?.Write("--- InitialiseGameVars (World.cs)");
+            Game.variable.SetValue(GameVar.Street_View, 1);
         }
 
         //new Methods above here
