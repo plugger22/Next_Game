@@ -96,7 +96,7 @@ namespace Next_Game
         List<int> listRumoursSouth;
         List<int> listRumoursWest;
         //View from the Market
-        string[][] arrayOfViewTexts;
+        string[][] arrayOfViews;
         string[][] arrayOfOccupations;
         //places visited by the Player
         List<int> listLocsVisited; //Sequential list of LocID's
@@ -169,7 +169,7 @@ namespace Next_Game
             listRumoursSouth = new List<int>();
             listRumoursWest = new List<int>();
             //View from the Market
-            arrayOfViewTexts = new string[(int)ViewType.Count][];
+            arrayOfViews = new string[(int)ViewType.Count][];
             arrayOfOccupations = new string[(int)Occupation.Count][];
             //places the Player has visited
             listLocsVisited = new List<int>();
@@ -234,7 +234,7 @@ namespace Next_Game
             Game.logStart?.Write("--- InitialiseRumours (Director.cs)");
             InitialiseStartRumours();
             Game.logStart?.Write("--- InitialiseViewTexts (Director.cs)");
-            arrayOfViewTexts = Game.file.GetViews("ViewLists.txt");
+            arrayOfViews = Game.file.GetViews("ViewLists.txt");
             Game.logStart?.Write("--- InitialiseOccupations (Director.cs)");
             arrayOfOccupations = Game.file.GetOccupations("Occupations.txt");
         }
@@ -5467,25 +5467,25 @@ namespace Next_Game
                         {
                             //neutral view (both scores within 10 points of each other)
                             if (educated == true)
-                            { innerArray = arrayOfViewTexts[(int)ViewType.JusticeNeutralEduc]; }
+                            { innerArray = arrayOfViews[(int)ViewType.JusticeNeutralEduc]; }
                             else
-                            { innerArray = arrayOfViewTexts[(int)ViewType.JusticeNeutralUned]; }
+                            { innerArray = arrayOfViews[(int)ViewType.JusticeNeutralUned]; }
                         }
                         else if (data > 0)
                         {
                             //positive view (for usurper) -> Justice of cause 10+ points ahead
                             if (educated == true)
-                            { innerArray = arrayOfViewTexts[(int)ViewType.JusticeGoodEduc]; }
+                            { innerArray = arrayOfViews[(int)ViewType.JusticeGoodEduc]; }
                             else
-                            { innerArray = arrayOfViewTexts[(int)ViewType.JusticeGoodUned]; }
+                            { innerArray = arrayOfViews[(int)ViewType.JusticeGoodUned]; }
                         }
                         else
                         {
                             //negative (for usurper) -> Justice of cause 10+ points behind
                             if (educated == true)
-                            { innerArray = arrayOfViewTexts[(int)ViewType.JusticeBadEduc]; }
+                            { innerArray = arrayOfViews[(int)ViewType.JusticeBadEduc]; }
                             else
-                            { innerArray = arrayOfViewTexts[(int)ViewType.JusticeBadUned]; }
+                            { innerArray = arrayOfViews[(int)ViewType.JusticeBadUned]; }
                         }
                         break;
                     case 2:
@@ -5496,25 +5496,25 @@ namespace Next_Game
                         {
                             //neutral view (both scores within 10 points of each other)
                             if (educated == true)
-                            { innerArray = arrayOfViewTexts[(int)ViewType.LegendNeutralEduc]; }
+                            { innerArray = arrayOfViews[(int)ViewType.LegendNeutralEduc]; }
                             else
-                            { innerArray = arrayOfViewTexts[(int)ViewType.LegendNeutralUned]; }
+                            { innerArray = arrayOfViews[(int)ViewType.LegendNeutralUned]; }
                         }
                         else if (data > 0)
                         {
                             //positive view (for usurper) -> Usurper's legend 10+ points ahead of Kings
                             if (educated == true)
-                            { innerArray = arrayOfViewTexts[(int)ViewType.LegendGoodEduc]; }
+                            { innerArray = arrayOfViews[(int)ViewType.LegendGoodEduc]; }
                             else
-                            { innerArray = arrayOfViewTexts[(int)ViewType.LegendGoodUned]; }
+                            { innerArray = arrayOfViews[(int)ViewType.LegendGoodUned]; }
                         }
                         else
                         {
                             //negative (for usurper) -> Usurpers legend 10+ point behind that of Kings
                             if (educated == true)
-                            { innerArray = arrayOfViewTexts[(int)ViewType.LegendBadEduc]; }
+                            { innerArray = arrayOfViews[(int)ViewType.LegendBadEduc]; }
                             else
-                            { innerArray = arrayOfViewTexts[(int)ViewType.LegendBadUned]; }
+                            { innerArray = arrayOfViews[(int)ViewType.LegendBadUned]; }
                         }
                         break;
                     case 3:
@@ -5525,25 +5525,25 @@ namespace Next_Game
                         {
                             //neutral view (both scores within 10 points of each other)
                             if (educated == true)
-                            { innerArray = arrayOfViewTexts[(int)ViewType.HonourNeutralEduc]; }
+                            { innerArray = arrayOfViews[(int)ViewType.HonourNeutralEduc]; }
                             else
-                            { innerArray = arrayOfViewTexts[(int)ViewType.HonourNeutralUned]; }
+                            { innerArray = arrayOfViews[(int)ViewType.HonourNeutralUned]; }
                         }
                         else if (data > 0)
                         {
                             //positive view (for usurper) -> Usurper's honour 10+ points ahead of Kings
                             if (educated == true)
-                            { innerArray = arrayOfViewTexts[(int)ViewType.HonourGoodEduc]; }
+                            { innerArray = arrayOfViews[(int)ViewType.HonourGoodEduc]; }
                             else
-                            { innerArray = arrayOfViewTexts[(int)ViewType.HonourGoodUned]; }
+                            { innerArray = arrayOfViews[(int)ViewType.HonourGoodUned]; }
                         }
                         else
                         {
                             //negative (for usurper) -> Usurpers honour 10+ point behind that of Kings
                             if (educated == true)
-                            { innerArray = arrayOfViewTexts[(int)ViewType.HonourBadEduc]; }
+                            { innerArray = arrayOfViews[(int)ViewType.HonourBadEduc]; }
                             else
-                            { innerArray = arrayOfViewTexts[(int)ViewType.HonourBadUned]; }
+                            { innerArray = arrayOfViews[(int)ViewType.HonourBadUned]; }
                         }
 
                         break;
@@ -5553,17 +5553,17 @@ namespace Next_Game
                         {
                             //Player Known
                             if (educated == true)
-                            { innerArray = arrayOfViewTexts[(int)ViewType.KnownEduc]; }
+                            { innerArray = arrayOfViews[(int)ViewType.KnownEduc]; }
                             else
-                            { innerArray = arrayOfViewTexts[(int)ViewType.KnownUned]; }
+                            { innerArray = arrayOfViews[(int)ViewType.KnownUned]; }
                         }
                         else
                         {
                             //player Unknown
                             if (educated == true)
-                            { innerArray = arrayOfViewTexts[(int)ViewType.UnknownEduc]; }
+                            { innerArray = arrayOfViews[(int)ViewType.UnknownEduc]; }
                             else
-                            { innerArray = arrayOfViewTexts[(int)ViewType.UnknownUned]; }
+                            { innerArray = arrayOfViews[(int)ViewType.UnknownUned]; }
                         }
                         break;
                     default:

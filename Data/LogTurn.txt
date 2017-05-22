@@ -1,102 +1,16 @@
-//Exile Game File "LogTurn.txt" opened at: 22/05/2017 14:04:59
---- ProcessStartTurn (World.cs)
-Day 3, Turn 2
-Usurper Urian Greyjoy, "The Enslaving", AtLocation, Yronwood Castle
---- UpdateRumours (World.cs)
-dictRumoursTimed (Start) -> 2 records
-RumourID 321 -> TimerExpire decremented, now 1
-RumourID 322 -> TimerExpire decremented, now 1
---- MoveActors -> 1 Records (World.cs)
- [Move -> MoveObject] Inquisitor Brother Diabolous, ActID 129 travelling to The Raucous Rat (current Loc 11:13)
---- CheckIfFoundEnemy (World.cs)
- [Search -> Debug] Active Urian Greyjoy, ID 1 at 7:23, Enemy at 11:13 (Brother Diabolous, ID 129
---- UpdatePlayerStatus (World.cs)
---- UpdateWorldStatus (World.cs)
---- CheckFollowerActivity (World.cs)
---- GetRumour (Director.cs)
-[Notification] No house rumours available -> none added to pool
-arrayOfRumours [0] -> RumourID 82, Strength 4, Scope Global, Type Disguise, Global All
-arrayOfRumours [3] -> RumourID 289, Strength 2, Scope Global, Type HouseRel, Global South
-RumourID 82 selected from the Pool
-Rumour "It is rumoured that Disguises can be had from Septon Druet Huchon, ActID 50 at Eyrie" revealed to ActorID5 on turn 2 -> added to List
-RumourID 82 removed from listRumoursGlobal[4]
-Follower The Leper, ActID 5, added RumourID 82
---- GetRumour (Director.cs)
-arrayOfRumours [0] -> RumourID 97, Strength 1, Scope Global, Type Item, Global All
-arrayOfRumours [1] -> RumourID 84, Strength 2, Scope Global, Type Desire, Global North
-arrayOfRumours [5] -> RumourID 185, Strength 4, Scope Local, Type Skill, Global All
-RumourID 97 selected from the Pool
-Rumour "It is said that the lusted after Elixir of Wellness (Passive Item) is to be found at Winterfell" revealed to ActorID3 on turn 2 -> added to List
-RumourID 97 removed from listRumoursGlobal[4]
-Follower The Crone, ActID 3, added RumourID 97
---- GetRumour (Director.cs)
-[Notification] No house rumours available -> none added to pool
-arrayOfRumours [0] -> RumourID 60, Strength 4, Scope Global, Type Disguise, Global All
-arrayOfRumours [3] -> RumourID 20, Strength 2, Scope Global, Type Desire, Global South
-RumourID 60 selected from the Pool
-Rumour "It is suspected that Disguises can be had from Septon Elyes Fulchard, ActID 31 at Brightwater Keep" revealed to ActorID8 on turn 2 -> added to List
-RumourID 60 removed from listRumoursGlobal[1]
-Follower The Haggler, ActID 8, added RumourID 60
---- GetMarketView (Director.cs)
-[GameVar] View_Index changed from 2 to 3
-[Notification] Player in SafeHouse -> World events cancelled
---- CheckStationaryActiveActors (World.cs)
- [Search -> Stationary] Usurper Urian Greyjoy, ActID 1 is AtLocation
---- CheckIfFoundActive (World.cs)
- [Search -> Debug] Enemy, Brother Gorgo, ID 127 at 11:14, Active Urian Greyjoy, ID 1, at 7:23
- [Search -> Debug] Enemy, Brother Shaitan, ID 128 at 11:14, Active Urian Greyjoy, ID 1, at 7:23
- [Search -> Debug] Enemy, Brother Diabolous, ID 129 at 11:12, Active Urian Greyjoy, ID 1, at 7:23
- [Search -> Debug] Enemy, Brother Beelzebub, ID 130 at 11:14, Active Urian Greyjoy, ID 1, at 7:23
- [Search -> Debug] Enemy, The Unrelenting, ID 131 at 11:14, Active Urian Greyjoy, ID 1, at 7:23
- [Search -> Stationary] Follower The Leper, ActID 5 is AtLocation
- [Search -> Stationary] Follower The Crone, ActID 3 is AtLocation
- [Search -> Stationary] Follower The Haggler, ActID 8 is AtLocation
---- UpdateAIController (World.cs)
- [AI -> Player Unknown] Inquisitor Brother Gorgo, Act ID 127 Mode -> Normal
- [AI -> Player Unknown] Inquisitor Brother Shaitan, Act ID 128 Mode -> Normal
- [AI -> Player Unknown] Inquisitor Brother Beelzebub, Act ID 130 Mode -> Normal
- [AI -> Player Unknown] Nemesis The Unrelenting, Act ID 131 Mode -> Normal
---- SetEnemyActivity (World.cs)
- [Enemy -> Goal] Brother Gorgo, ActID 127 retains Goal -> Wait
---- SetEnemyGoal (World.cs)
- [Goal -> Branch] Brother Shaitan, ActID 128 Assigned Branch -> 0 Current Branch -> 0
- [Goal -> New] Brother Shaitan, ActID 128, (loc 11:14), assigned new Goal -> Hide
---- SetEnemyGoal (World.cs)
- [Goal -> Branch] Brother Beelzebub, ActID 130 Assigned Branch -> 3 Current Branch -> 0
- [Goal -> New] Brother Beelzebub, ActID 130, (loc 11:14), assigned new Goal -> Move
- [Goal -> Move] Brother Beelzebub, ActID 130 -> Capital to Correct Branch -> One Eyed Pete's, LocID 17
---- InitiateMoveActor (World.cs)
---- Move Actor (Director.cs)
- [Enemy -> Goal] The Unrelenting, ActID 131 retains Goal -> Wait
---- CheckPlayerEvents (Director.cs)
---- GetValidPlayerEvents (Director.cs)
- Event "Mysterious Stranger" has no attached Conditions
---- GetValidPlayerEvents (Director.cs)
---- GetValidPlayerEvents (Director.cs)
- Chance of Player Location event 37 %
---- ResolvePlayerEvents (Director.cs)
- "Talk to them" Trait Trigger, if type 3 is GreaterThanOrEqual to 3
- Trigger passed on "3" GreaterThanOrEqual 3
- "Curse all strangers" Trait Trigger, if type 4 is GreaterThanOrEqual to 3
- Trigger passed on "3" GreaterThanOrEqual 3
- Event "Mysterious Stranger" Timer Repeat now 9
- Event "Mysterious Stranger" Cooldown Timer has been reset to 0
---- UpdateActiveActors (World.cs)
- Usurper Urian Greyjoy has had their TurnsUnknown Timer increased from 101 to 102
- Follower The Leper has had their TurnsUnknown Timer increased from 1 to 2
- Follower The Crone has had their TurnsUnknown Timer increased from 1 to 2
- Follower The Haggler has had their TurnsUnknown Timer increased from 1 to 2
---- ResolveOutcome (Director.cs)
---- ResolveFollowerEvents (Director.cs)
+//Exile Game file ops "LogTurn.txt" commenced at: 22/05/2017 14:35:57
+--- ProcessStartGame (World.cs)
+--- AgePassiveCharacters (History.cs)
+--- InitialiseGameVars (World.cs)
+[GameVar] View_Index changed from 0 to 1
+[AddVisitedLoc] LocID 10, "Harrenhal", turn -3 -> record added to listLocsVisited
+[AddVisitedLoc] LocID 10, "Harrenhal", turn -3 -> new record added to dictLocsVisited
+[AddVisitedLoc] LocID 29, "Bloodkeep", turn -2 -> record added to listLocsVisited
+[AddVisitedLoc] LocID 29, "Bloodkeep", turn -2 -> new record added to dictLocsVisited
+[AddVisitedLoc] LocID 3, "Uplands", turn -1 -> record added to listLocsVisited
+[AddVisitedLoc] LocID 3, "Uplands", turn -1 -> new record added to dictLocsVisited
+[AddVisitedLoc] LocID 26, "Fishfork", turn 0 -> record added to listLocsVisited
+[AddVisitedLoc] LocID 26, "Fishfork", turn 0 -> new record added to dictLocsVisited
 --- SetEndGame (Game.cs)
 [Alert] Player chose to exit (pressed 'X')
-//Exile Game file ops "LogTurn.txt" Completed at: 22/05/2017 14:05:15
-
- Event "Search and Detain" Dormant Timer decremented to 19
---- InitialiseDynamicRumours (Director.cs)
---- HouseKeepActors (World.cs)
-[GameStat] "Location_Days" -> increased from 1 to 2
---- HousekeepRumours (World.cs)
-dictRumoursKnown has 3 records
-
-//Exile Game File "LogTurn.txt" Close completed at: 22/05/2017 14:04:59
+//Exile Game file ops "LogTurn.txt" Completed at: 22/05/2017 14:37:12

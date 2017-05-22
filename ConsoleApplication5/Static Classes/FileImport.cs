@@ -3492,6 +3492,9 @@ namespace Next_Game
                 arrayOfNames[(int)RelListType.Lord_3] = listOfLord_3.ToArray();
                 arrayOfNames[(int)RelListType.Lord_4] = listOfLord_4.ToArray();
                 arrayOfNames[(int)RelListType.Lord_5] = listOfLord_5.ToArray();
+                //output stat data
+                for (int i = 0; i < arrayOfNames.Length; i++)
+                { Game.logStart?.Write($"{(RelListType)i} -> {arrayOfNames[i].Length} records imported"); }
             }
             else
             { Game.SetError(new Error(23, string.Format("File not found (\"{0}\")", fileName))); }
@@ -3673,6 +3676,9 @@ namespace Next_Game
                 arrayOfViews[(int)ViewType.KnownUned] = listKnownUned.ToArray();
                 arrayOfViews[(int)ViewType.UnknownEduc] = listUnknownEduc.ToArray();
                 arrayOfViews[(int)ViewType.UnknownUned] = listUnknownUned.ToArray();
+                //output stat data
+                for (int i = 0; i < arrayOfViews.Length; i++)
+                { Game.logStart?.Write($"{(ViewType)i} -> {arrayOfViews[i].Length} records imported"); }
             }
             else
             { Game.SetError(new Error(287, string.Format("File not found (\"{0}\")", fileName))); }
@@ -3757,6 +3763,9 @@ namespace Next_Game
                 arrayOfOccupations[(int)Occupation.Craft] = listCraft.ToArray();
                 arrayOfOccupations[(int)Occupation.PeasantMale] = listPeasantMale.ToArray();
                 arrayOfOccupations[(int)Occupation.PeasantFemale] = listPeasantFemale.ToArray();
+                //output stat data
+                for (int i = 0; i < arrayOfOccupations.Length; i++)
+                { Game.logStart?.Write($"{(Occupation)i} -> {arrayOfOccupations[i].Length} records imported"); }
             }
             else
             { Game.SetError(new Error(288, string.Format("File not found (\"{0}\")", fileName))); }

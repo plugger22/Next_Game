@@ -128,6 +128,7 @@ namespace Next_Game
             InitialiseCapital();
             InitialiseFollowers(Game.file.GetFollowers("Followers.txt"));
             //Past Relationship Histories
+            Game.logStart?.Write("--- Import Relation Texts (History.cs)");
             arrayOfRelTexts = Game.file.GetRelations("RelLists.txt");
         }
 
