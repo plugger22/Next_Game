@@ -4340,6 +4340,10 @@ namespace Next_Game
             //DEBUG -> populate dictionary with sample data
             for (int i = 3; i > 0; i--)
             { Game.director.AddVisitedLoc(Game.network.GetRandomLocation(), i * -1); }
+
+            //Player's start location added to dict & list
+            Player player = GetPlayer();
+            Game.director.AddVisitedLoc(player.LocID, 0);
         }
 
         /// <summary>
@@ -7062,7 +7066,7 @@ namespace Next_Game
         private void InitialiseGameVars()
         {
             Game.logTurn?.Write("--- InitialiseGameVars (World.cs)");
-            Game.variable.SetValue(GameVar.Street_View, 1);
+            Game.variable.SetValue(GameVar.View_Index, 1);
         }
 
         /// <summary>

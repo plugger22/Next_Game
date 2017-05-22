@@ -11,7 +11,7 @@ namespace Next_Game
     {
         None,
         Promises_Num,
-        Street_View,
+        View_Index,
         //keep as last
         Count
     }
@@ -32,7 +32,7 @@ namespace Next_Game
             arrayOfVariables = new int[(int)GameVar.Count];
             //set up array of Globals
             arrayOfGameVars[1] = GameVar.Promises_Num;
-            arrayOfGameVars[2] = GameVar.Street_View;
+            arrayOfGameVars[2] = GameVar.View_Index;
         }
 
         public GameVar[] GetArrayOfGameVars()

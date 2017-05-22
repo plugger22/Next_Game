@@ -127,7 +127,6 @@ namespace Next_Game
             InitialisePlayer();
             InitialiseCapital();
             InitialiseFollowers(Game.file.GetFollowers("Followers.txt"));
-            
             //Past Relationship Histories
             arrayOfRelTexts = Game.file.GetRelations("RelLists.txt");
         }
@@ -346,7 +345,6 @@ namespace Next_Game
             Location loc = Game.network.GetLocation(locID);
             if (loc != null)
             {
-                //Game.director.AddVisitedLoc(locID, Game.gameTurn);
                 //place character at Location
                 player.LocID = locID;
                 player.LastKnownLocID = locID;

@@ -3,4 +3,4 @@
 
 
 1: Promises_Num     # Number of Promises made
-2: Street_View		# used to rotate GetStreetView through gamestates on a regular basis
+2: View_Index		# used to rotate GetMarketView through Gamestates (Justice/Legend/Honour/Known) on a regular basis

@@ -94,29 +94,7 @@ namespace Next_Game
         List<int> listRumoursEast;
         List<int> listRumoursSouth;
         List<int> listRumoursWest;
-        //Word from the Market
-        /*List<string> listJusticeNeutralEduc; //educated viewpoint, 'Educ'
-        List<string> listJusticeNeutralUned; //uneducated viewpoint, "Uned'
-        List<string> listJusticeGoodEduc;
-        List<string> listJusticeGoodUned;
-        List<string> listJusticeBadEduc;
-        List<string> listJusticeBadUned;
-        List<string> listLegendNeutralEduc; //educated viewpoint, 'Educ'
-        List<string> listLegendNeutralUned; //uneducated viewpoint, "Uned'
-        List<string> listLegendGoodEduc;
-        List<string> listLegendGoodUned;
-        List<string> listLegendBadEduc;
-        List<string> listLegendBadUned;
-        List<string> listHonourNeutralEduc; //educated viewpoint, 'Educ'
-        List<string> listHonourNeutralUned; //uneducated viewpoint, "Uned'
-        List<string> listHonourGoodEduc;
-        List<string> listHonourGoodUned;
-        List<string> listHonourBadEduc;
-        List<string> listHonourBadUned;
-        List<string> listKnownEduc;
-        List<string> listKnownUned;
-        List<string> listUnknownEduc;
-        List<string> listUnknownUned;*/
+        //View from the Market
         string[][] arrayOfViewTexts;
         //places visited by the Player
         List<int> listLocsVisited; //Sequential list of LocID's
@@ -188,29 +166,7 @@ namespace Next_Game
             listRumoursEast = new List<int>();
             listRumoursSouth = new List<int>();
             listRumoursWest = new List<int>();
-            //Word from the Markre
-            /*listJusticeNeutralEduc = new List<string>();
-            listJusticeNeutralUned = new List<string>();
-            listJusticeGoodEduc = new List<string>();
-            listJusticeGoodUned = new List<string>();
-            listJusticeBadEduc = new List<string>();
-            listJusticeBadUned = new List<string>();
-            listLegendNeutralEduc = new List<string>();
-            listLegendNeutralUned = new List<string>();
-            listLegendGoodEduc = new List<string>();
-            listLegendGoodUned = new List<string>();
-            listLegendBadEduc = new List<string>();
-            listLegendBadUned = new List<string>();
-            listHonourNeutralEduc = new List<string>();
-            listHonourNeutralUned = new List<string>();
-            listHonourGoodEduc = new List<string>();
-            listHonourGoodUned = new List<string>();
-            listHonourBadEduc = new List<string>();
-            listHonourBadUned = new List<string>();
-            listKnownEduc = new List<string>();
-            listKnownUned = new List<string>();
-            listUnknownEduc = new List<string>();
-            listUnknownUned = new List<string>();*/
+            //View from the Market
             arrayOfViewTexts = new string[(int)RelListType.Count][];
             //places the Player has visited
             listLocsVisited = new List<int>();
@@ -271,8 +227,10 @@ namespace Next_Game
             Game.logStart?.Write("--- Initialise Challenges (Director.cs)"); //run AFTER GetResults
             dictChallenges = Game.file.GetChallenges("Challenge.txt");
             Game.logStart?.Write("--- InitialiseGameStates (Director.cs)");
-            InitialiseStartRumours();
             InitialiseGameStates();
+            Game.logStart?.Write("--- InitialiseRumours (Director.cs)");
+            InitialiseStartRumours();
+            Game.logStart?.Write("--- InitialiseViewTexts (Director.cs)");
             arrayOfViewTexts = Game.file.GetViews("ViewLists.txt");
         }
 
@@ -4605,7 +4563,7 @@ namespace Next_Game
 
             if (dictPassiveActors != null)
             {
-                Game.logStart?.Write("--- InitialiseRumours (World.cs)");
+                
                 int skill, strength, index, branch;
                 bool proceedFlag;
                 int royalRefID = Game.lore.RoyalRefIDNew;
@@ -5418,7 +5376,7 @@ namespace Next_Game
             List<Snippet> listToDisplay = new List<Snippet>();
             RLColor backColor = Color._background1;
             string streetView = "";
-            int streetIndex = Game.variable.GetValue(GameVar.Street_View);
+            int viewIndex = Game.variable.GetValue(GameVar.View_Index);
             WorldGroup [] arrayOfGroupsMale = new WorldGroup[] { WorldGroup.Noble, WorldGroup.Merchant, WorldGroup.Church, WorldGroup.Craft, WorldGroup.Craft,
                 WorldGroup.Peasant, WorldGroup.Peasant };
             WorldGroup group = WorldGroup.None;
@@ -5502,7 +5460,7 @@ namespace Next_Game
                         break;
                 }
                 //each turn is a different option to maximise variety
-                switch (streetIndex)
+                switch (viewIndex)
                 {
                     case 1:
                         //Justice of Cause
@@ -5612,14 +5570,14 @@ namespace Next_Game
                         }
                         break;
                     default:
-                        Game.SetError(new Error(282, $"Invalid Street_View \"{streetIndex} -> Street View cancelled"));
+                        Game.SetError(new Error(282, $"Invalid Street_View \"{viewIndex} -> Street View cancelled"));
                         break;
                 }
                 if (innerArray != null)
                 {
                     if (innerArray.Length > 0)
                     { randomText = innerArray[rnd.Next(innerArray.Length)]; }
-                    else { Game.logTurn?.Write($"[Alert] No data in innerArray for group {group}, StreetIndex {streetIndex}, Educated {educated} -> Market View cancelled"); }
+                    else { Game.logTurn?.Write($"[Alert] No data in innerArray for group {group}, StreetIndex {viewIndex}, Educated {educated} -> Market View cancelled"); }
                 }
                 else { Game.SetError(new Error(282, "Invalid innerArray (null) -> Market view cancelled")); }
                 if (randomText.Length > 0)
@@ -5627,10 +5585,10 @@ namespace Next_Game
                     //deal with tags
                     view = Game.utility.CheckTagsView(randomText, player);
                     //increment index and roll over if need be
-                    streetIndex++;
-                    if (streetIndex > 4) { streetIndex = 1; }
+                    viewIndex++;
+                    if (viewIndex > 4) { viewIndex = 1; }
                     //update GameVar
-                    Game.variable.SetValue(GameVar.Street_View, streetIndex);
+                    Game.variable.SetValue(GameVar.View_Index, viewIndex);
                 }
                 //put Snippets together
                 if (view.Length > 0)
