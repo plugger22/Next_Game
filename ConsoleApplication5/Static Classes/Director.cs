@@ -24,6 +24,7 @@ namespace Next_Game
     public enum WorldGroup { None, Noble, Church, Merchant, Craft, Peasant} //main population groupings within world
     public enum ViewType { JusticeNeutralEduc, JusticeNeutralUned, JusticeGoodEduc, JusticeGoodUned, JusticeBadEduc, JusticeBadUned, LegendNeutralEduc, LegendNeutralUned, LegendGoodEduc, LegendGoodUned,
     LegendBadEduc, LegendBadUned, HonourNeutralEduc, HonourNeutralUned, HonourGoodEduc, HonourGoodUned, HonourBadEduc, HonourBadUned, KnownEduc, KnownUned, UnknownEduc, UnknownUned, Count} //Market View
+    public enum Occupation { Noble, Church, Merchant, Craft, PeasantMale, PeasantFemale, Count}
 
 
     /// <summary>
@@ -96,6 +97,7 @@ namespace Next_Game
         List<int> listRumoursWest;
         //View from the Market
         string[][] arrayOfViewTexts;
+        string[][] arrayOfOccupations;
         //places visited by the Player
         List<int> listLocsVisited; //Sequential list of LocID's
         Dictionary<int, List<int>> dictLocsVisited; //All locs visited, key is LocID, Value is Turn # for each visit
@@ -167,7 +169,8 @@ namespace Next_Game
             listRumoursSouth = new List<int>();
             listRumoursWest = new List<int>();
             //View from the Market
-            arrayOfViewTexts = new string[(int)RelListType.Count][];
+            arrayOfViewTexts = new string[(int)ViewType.Count][];
+            arrayOfOccupations = new string[(int)Occupation.Count][];
             //places the Player has visited
             listLocsVisited = new List<int>();
             dictLocsVisited = new Dictionary<int, List<int>>();
@@ -232,6 +235,8 @@ namespace Next_Game
             InitialiseStartRumours();
             Game.logStart?.Write("--- InitialiseViewTexts (Director.cs)");
             arrayOfViewTexts = Game.file.GetViews("ViewLists.txt");
+            Game.logStart?.Write("--- InitialiseOccupations (Director.cs)");
+            arrayOfOccupations = Game.file.GetOccupations("Occupations.txt");
         }
 
         /// <summary>
@@ -5416,50 +5421,42 @@ namespace Next_Game
                 switch (group)
                 {
                     case WorldGroup.Noble:
-                        string[] arrayOfNobles = new string[] { "Bailiff", "Chancellor", "Diplomat", "Constable", "Hayward", "Jailer", "Judge", "Nobleman", "Nobleman", "Nobleman", "Pursuivant", "Sherrif" };
-                        occupation = arrayOfNobles[rnd.Next(arrayOfNobles.Length)];
+                        innerArray = arrayOfOccupations[(int)Occupation.Noble];
                         educated = true;
                         break;
                     case WorldGroup.Church:
-                        string[] arrayOfChurch = new string[] { "Pilgrim", "Ostiary", "Pardoner", "Sacristan", "Sexton", "Summoner", "Clerk", "Chanty Priest", "Cantor", "Beadle", "Almoner", "Friar", "Monk" };
-                        occupation = arrayOfChurch[rnd.Next(arrayOfChurch.Length)];
+                        innerArray = arrayOfOccupations[(int)Occupation.Church];
                         educated = true;
                         break;
                     case WorldGroup.Merchant:
-                        string[] arrayOfMerchants = new string[] { "Innkeeper", "MoneyLender", "Trader", "Brothel Owner", "Glass Seller", "Ironmonger", "Linen Draper", "Peddler", "Mercer",
-                    "Eggler", "Chapman", "Boothman", "Banker", "Apothecary", "Acater", "Oil Merchant", "Oynter", "Skinner", "Spice Merchant", "Spicer", "Stationer", "Thresher", "Taverner",
-                    "Unguentary", "Waferer", "Waterseller", "Woodmonger", "Wool Stapler"};
-                        occupation = arrayOfMerchants[rnd.Next(arrayOfMerchants.Length)];
+                        innerArray = arrayOfOccupations[(int)Occupation.Merchant];
                         educated = true;
                         break;
                     case WorldGroup.Craft:
-                        string[] arrayOfCraftsman = new string[] {"Armourer", "Artist", "Baker", "Bookbinder", "Candlemaker", "Blacksmith", "Carpenter", "Dyer", "Forester",
-                    "Engraver", "Brewer", "Bricklayer", "Stonemason", "Glassblower", "Jester", "Furrier", "Clothier", "Weaver", "Engineer", "Cartographer", "Potter", "Scribe", "Musician",
-                    "Poet", "Troubadour", "Tumbler", "Illuminator", "Fiddler", "Barker", "Bard", "Saddler", "Chandler", "Shoemaker", "Tanner", "Locksmith", "Glover", "Butcher", "Scabbard Maker"};
-                        occupation = arrayOfCraftsman[rnd.Next(arrayOfCraftsman.Length)];
+                        innerArray = arrayOfOccupations[(int)Occupation.Merchant];
                         educated = false;
                         break;
                     case WorldGroup.Peasant:
                         if (sex == ActorSex.Male)
-                        {
-                            string[] arrayOfPeasantsMale = new string[] { "Farmer", "Fowler", "Crofter", "Farmer", "Cook", "Messenger", "Rat Catcher", "Pickpocket", "Boothaler", "Footpad",
-                            "Poacher", "Silk Snatcher", "Thimblerigger", "Hermit", "Beggar", "Beggar", "Beggar", "Buffoon", "Dwarf", "Palmer", "Tenter",
-                    "Ferryman", "Sheperd", "Hawker", "Hunter", "Goatherder", "Fewterer", "Falconer", "Sheepshearer", "Reaper", "Trapper", "Molecatcher" };
-                            occupation = arrayOfPeasantsMale[rnd.Next(arrayOfPeasantsMale.Length)];
-                        }
+                        { innerArray = arrayOfOccupations[(int)Occupation.PeasantMale]; }
                         else
-                        {
-                            string[] arrayOfPeasantsFemale = new string[] { "Farmer's Wife", "Farmer's Wife", "Servant", "Servant", "Cook", "Story Teller", "Fortune Teller", "Messenger", "Rat Catcher", "Astrologer",
-                    "Pickpocket", "Prostitute", "Prostitute", "Washerwoman", "Silk Snatcher", "Beggar", "Beggar", "Beggar", "Palmer", "Hawker", "Molecatcher" };
-                            occupation = arrayOfPeasantsFemale[rnd.Next(arrayOfPeasantsFemale.Length)];
-                        }
+                        { innerArray = arrayOfOccupations[(int)Occupation.PeasantFemale]; }
                         educated = false;
                         break;
                     default:
                         Game.SetError(new Error(282, $"Invalid Group \"{group}\" -> StreetView cancelled"));
                         break;
                 }
+                //select a random occupation
+                if (innerArray != null)
+                {
+                    if (innerArray.Length > 0)
+                    { occupation = innerArray[rnd.Next(innerArray.Length)]; }
+                    else { Game.logTurn?.Write($"[Alert] No data in innerArray for Occupation group {group}, ViewIndex {viewIndex}, Educated {educated}"); }
+                }
+                else { Game.SetError(new Error(282, "Invalid innerArray (null) for Occupation -> Market view cancelled")); }
                 //each turn is a different option to maximise variety
+                innerArray = null;
                 switch (viewIndex)
                 {
                     case 1:
@@ -5577,9 +5574,9 @@ namespace Next_Game
                 {
                     if (innerArray.Length > 0)
                     { randomText = innerArray[rnd.Next(innerArray.Length)]; }
-                    else { Game.logTurn?.Write($"[Alert] No data in innerArray for group {group}, StreetIndex {viewIndex}, Educated {educated} -> Market View cancelled"); }
+                    else { Game.logTurn?.Write($"[Alert] No data in innerArray for View group {group}, ViewIndex {viewIndex}, Educated {educated} -> Market View cancelled"); }
                 }
-                else { Game.SetError(new Error(282, "Invalid innerArray (null) -> Market view cancelled")); }
+                else { Game.SetError(new Error(282, "Invalid innerArray (null) for View -> Market view cancelled")); }
                 if (randomText.Length > 0)
                 {
                     //deal with tags

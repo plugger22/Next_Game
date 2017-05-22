@@ -3680,6 +3680,90 @@ namespace Next_Game
         }
 
         /// <summary>
+        /// Import Occupation lists (used for View from the Market)
+        /// </summary>
+        /// <param name="fileName"></param>
+        /// <returns></returns>
+        internal string[][] GetOccupations(string fileName)
+        {
+            //master jagged array which will be returned, NOTE: add to enum 'RelListType' (Tracker.cs) for each unique new Relationship lis
+            string[][] arrayOfOccupations = new string[(int)Occupation.Count][];
+            string tempString;
+            //temporary sub lists for each category of geoNames
+            List<string> listNoble = new List<string>();
+            List<string> listChurch = new List<string>();
+            List<string> listMerchant = new List<string>();
+            List<string> listCraft = new List<string>();
+            List<string> listPeasantMale = new List<string>();
+            List<string> listPeasantFemale = new List<string>();
+            //import data from file
+            string[] arrayOfOccTexts = ImportDataFile(fileName);
+            if (arrayOfOccTexts != null)
+            {
+                //read occupation names from array into list
+                string occType = null;
+                char[] charsToTrim = { '[', ']' };
+                for (int i = 0; i < arrayOfOccTexts.Length; i++)
+                {
+                    if (arrayOfOccTexts[i] != "" && !arrayOfOccTexts[i].StartsWith("#"))
+                    {
+                        //which sublist are we dealing with
+                        tempString = arrayOfOccTexts[i];
+                        //trim off leading and trailing whitespace
+                        tempString = tempString.Trim();
+                        if (tempString.StartsWith("["))
+                        { occType = tempString.Trim(charsToTrim); }
+                        else if (occType != null)
+                        {
+                            //place in the correct list
+                            switch (occType)
+                            {
+                                case "Noble":
+                                    listNoble.Add(tempString);
+                                    break;
+                                case "Church":
+                                    listChurch.Add(tempString);
+                                    break;
+                                case "Merchant":
+                                    listMerchant.Add(tempString);
+                                    break;
+                                case "Craft":
+                                    listCraft.Add(tempString);
+                                    break;
+                                case "PeasantMale":
+                                    listPeasantMale.Add(tempString);
+                                    break;
+                                case "PeasantFemale":
+                                    listPeasantFemale.Add(tempString);
+                                    break;
+                                default:
+                                    Game.SetError(new Error(288, string.Format("Invalid Relationship Category {0}, record {1}", occType, i)));
+                                    break;
+                            }
+                        }
+                    }
+                }
+                //size jagged array
+                arrayOfOccupations[(int)Occupation.Noble] = new string[listNoble.Count];
+                arrayOfOccupations[(int)Occupation. Church] = new string[listChurch.Count];
+                arrayOfOccupations[(int)Occupation.Merchant] = new string[listMerchant.Count];
+                arrayOfOccupations[(int)Occupation.Craft] = new string[listCraft.Count];
+                arrayOfOccupations[(int)Occupation.PeasantMale] = new string[listPeasantMale.Count];
+                arrayOfOccupations[(int)Occupation.PeasantFemale] = new string[listPeasantFemale.Count];
+                //populate from lists
+                arrayOfOccupations[(int)Occupation.Noble] = listNoble.ToArray();
+                arrayOfOccupations[(int)Occupation.Church] = listChurch.ToArray();
+                arrayOfOccupations[(int)Occupation.Merchant] = listMerchant.ToArray();
+                arrayOfOccupations[(int)Occupation.Craft] = listCraft.ToArray();
+                arrayOfOccupations[(int)Occupation.PeasantMale] = listPeasantMale.ToArray();
+                arrayOfOccupations[(int)Occupation.PeasantFemale] = listPeasantFemale.ToArray();
+            }
+            else
+            { Game.SetError(new Error(288, string.Format("File not found (\"{0}\")", fileName))); }
+            return arrayOfOccupations;
+        }
+
+        /// <summary>
         /// Import Followers
         /// </summary>
         /// <param name="fileName"></param>

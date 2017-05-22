@@ -1,0 +1,160 @@
+# Occupations.txt -> list of occupations (enum Occupations in director.cs)
+
+# multiple repeat entries are O.K (higher chance of being chosen in a random draw)
+
+[Noble]
+Bailiff 
+Chancellor 
+Diplomat 
+Constable 
+Hayward 
+Jailer 
+Judge 
+Nobleman 
+Nobleman 
+Nobleman 
+Pursuivant 
+Sherrif
+
+[Church]
+Pilgrim 
+Ostiary 
+Pardoner
+Sacristan 
+Sexton 
+Summoner 
+Clerk 
+Chanty Priest 
+Cantor 
+Beadle 
+Almoner 
+Friar 
+Monk
+
+[Merchant]
+ Innkeeper 
+ MoneyLender 
+ Trader 
+ Brothel Owner 
+ Glass Seller 
+ Ironmonger 
+ Linen Draper 
+ Peddler 
+ Mercer
+ Eggler 
+ Chapman 
+ Boothman 
+ Banker 
+ Apothecary 
+ Acater 
+ Oil Merchant 
+ Oynter 
+ Skinner 
+ Spice Merchant 
+ Spicer 
+ Stationer 
+ Thresher 
+ Taverner
+ Unguentary 
+ Waferer 
+ Waterseller 
+ Woodmonger 
+ Wool Stapler
+ 
+ [Craft]
+ Armourer 
+ Artist 
+ Baker 
+ Bookbinder 
+ Candlemaker 
+ Blacksmith 
+ Carpenter 
+ Dyer 
+ Forester
+ Engraver 
+ Brewer 
+ Bricklayer 
+ Stonemason 
+ Glassblower 
+ Jester 
+ Furrier 
+ Clothier 
+ Weaver 
+ Engineer 
+ Cartographer 
+ Potter 
+ Scribe 
+ Musician
+ Poet 
+ Troubadour 
+ Tumbler 
+ Illuminator 
+ Fiddler 
+ Barker 
+ Bard 
+ Saddler 
+ Chandler 
+ Shoemaker 
+ Tanner 
+ Locksmith 
+ Glover 
+ Butcher 
+ Scabbard Maker
+ 
+ [PeasantMale]
+ Farmer 
+ Fowler 
+ Crofter 
+ Farmer 
+ Cook 
+ Messenger 
+ Rat Catcher 
+ Pickpocket 
+ Boothaler 
+ Footpad
+ Poacher 
+ Silk Snatcher 
+ Thimblerigger 
+ Hermit 
+ Beggar 
+ Beggar 
+ Beggar 
+ Buffoon 
+ Dwarf 
+ Palmer 
+ Tenter
+ Ferryman 
+ Sheperd 
+ Hawker 
+ Hunter 
+ Goatherder 
+ Fewterer 
+ Falconer 
+ Sheepshearer 
+ Reaper 
+ Trapper 
+ Molecatcher
+ 
+ [PeasantFemale]
+ Farmer's Wife 
+ Farmer's Wife 
+ Servant 
+ Servant 
+ Cook 
+ Serving Girl
+ Story Teller 
+ Fortune Teller 
+ Messenger 
+ Rat Catcher 
+ Astrologer
+ Pickpocket 
+ Prostitute 
+ Prostitute 
+ Washerwoman 
+ Silk Snatcher 
+ Beggar 
+ Beggar 
+ Beggar 
+ Palmer 
+ Hawker 
+ Molecatcher
