@@ -99,6 +99,7 @@ namespace Next_Game
         string[][] arrayOfViews;
         string[][] arrayOfOccupations;
         //places visited by the Player
+        List<int> listCourtsVisited; //Sequential list of RefID's (NOTE: RefID)
         List<int> listLocsVisited; //Sequential list of LocID's
         Dictionary<int, List<int>> dictLocsVisited; //All locs visited, key is LocID, Value is Turn # for each visit
         //other
@@ -172,6 +173,7 @@ namespace Next_Game
             arrayOfViews = new string[(int)ViewType.Count][];
             arrayOfOccupations = new string[(int)Occupation.Count][];
             //places the Player has visited
+            listCourtsVisited = new List<int>();
             listLocsVisited = new List<int>();
             dictLocsVisited = new Dictionary<int, List<int>>();
             //other
@@ -1659,20 +1661,9 @@ namespace Next_Game
                                 Actor person = Game.world.GetAnyActor(actorID);
                                 if (person != null)
                                 {
-                                    /*if (person is Advisor)
-                                    {
-                                        Advisor advisor = person as Advisor;
-                                        actorText = $"{advisor.Title} {advisor.Name}";
-                                        //if (advisor.advisorRoyal > AdvisorRoyal.None) { actorText = string.Format("{0} {1}", advisor.advisorRoyal, advisor.Name); }
-                                        //else { actorText = string.Format("{0} {1}", advisor.advisorNoble, advisor.Name); }
-                                    }
-                                    else if (person.Office > ActorOffice.None)
-                                    { actorText = string.Format("{0} {1}", person.Office, person.Name); }
-                                    else { actorText = string.Format("{0} {1}", person.Type, person.Name); }*/
-
+                                    if (player.Conceal == ActorConceal.None) { AddCourtVisit(refID); } //add to list of Court's visited (not if in disguise)
                                     if (person is Advisor) { actorText = $"{Game.world.GetAdvisorType((Advisor)person)} {person.Name}"; }
                                     else { actorText = string.Format("{0} {1}", person.Type, person.Name); }
-
                                     actorText = $"{person.Title} {person.Name}";
                                     eventObject.Name = "Interact";
                                     eventObject.Text = string.Format("How would you like to interact with {0}?", actorText);
@@ -5654,7 +5645,7 @@ namespace Next_Game
                 else
                 { locID = listLocsVisited[count - 1]; }
             }
-            else { Game.SetError(new Error(285, "listLocsVisited has no records (should have at least one) -> No valid recent loc returned")); }
+            else { Game.logTurn?.Write("[Alert] listLocsVisited has no records (should have at least one) -> No valid recent loc returned"); }
             return locID;
         }
 
@@ -5672,10 +5663,39 @@ namespace Next_Game
                 { locID = listLocsVisited[rnd.Next(count - 1)]; }
                 else { locID = listLocsVisited[rnd.Next(count)]; }
             }
-            else { Game.SetError(new Error(286, "listLocsVisited has no records (should have at least one) -> No valid random Loc returned")); }
+            else { Game.logTurn?.Write("[Alert] listLocsVisited has no records (should have at least one) -> No valid random Loc returned"); }
             return locID;
         }
 
+
+        /// <summary>
+        /// add a court visit to list
+        /// </summary>
+        /// <param name="refID"></param>
+        internal void AddCourtVisit(int refID)
+        {
+            if (refID > 0)
+            { listCourtsVisited.Add(refID); }
+            else { Game.SetError(new Error(289, $"Invalid locID \"{refID}\"")); }
+        }
+
+        /// <summary>
+        /// returns a random refID from those where player visited the Court (got to interact), returns 0 if none, or error. Could return current loc.
+        /// </summary>
+        /// <returns></returns>
+        internal int GetRandomCourt()
+        {
+            int locID = 0;
+            int count = listCourtsVisited.Count;
+            if (count > 0)
+            {
+                if (count > 1)
+                { locID = listCourtsVisited[rnd.Next(count - 1)]; }
+                else { locID = listCourtsVisited[rnd.Next(count)]; }
+            }
+            else { Game.logTurn?.Write("[Notification} listLocsVisited has no records  -> No valid random Loc returned"); }
+            return locID;
+        }
 
         //place new methods above here
     }

@@ -5,6 +5,7 @@
 # <playerHandle> <newKingHandle> <oldKingHandle> -> Handles
 # <his> <he> <him> <man> -> sex specific for Usurper (also <His> <He> which are for starting sentences with)
 # <locRecent>, <locRandom> -> Usurper Loc Names
+# <courtRandom> -> A court that the Usurper has visited, returns House name, eg. "Lannister"
 # <randomMale> <randomFemale> -> random first names
 
 [JusticeNeutralEduc]
@@ -92,6 +93,8 @@ Why would I want to trust <player>, the pretend King? Nobody else does.
 [KnownEduc]
 They say that the Usurper, <player>, was seen in <locRecent> recently. What is <he> up to?
 <player>? Yes, of course. Wasn't <he> in <locRecent> recently? It was this moon, I'm sure.
+Word has it that <player> was seen entering the court of House <court>.
+Was that <player> who was noticed leaving the court of House <court>?
 
 [KnownUned]
 The Usurper, <player>. Isn't he at <locRecent>?
@@ -101,6 +104,8 @@ I heard that <player> had visited <locRandom> once. Maybe <he> liked the ale?
 [UnknownEduc]
 Who knows where <player> is? I heard the Inquisitors were asking after <him>.
 <player> might have been seen in <locRandom> this moon, but I can't say for certain.
+They say that <player> visited the court of House <court> but I can't say for sure.
+The court of House <court>? Was <player> there recently? Who can tell?
 
 [UnknownUned]
 Do I care where <player> is? Does <he> know who I am and what my problems are? If you see <him> make sure you tell <him>.

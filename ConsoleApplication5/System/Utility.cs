@@ -229,7 +229,7 @@ namespace Next_Game
             {
 
                 string tag, replaceText;
-                int tagStart, tagFinish, length; //indexes
+                int tagStart, tagFinish, length, data; //indexes
                 if (player != null)
                 {
                     //loop whilever tags are present
@@ -280,10 +280,34 @@ namespace Next_Game
                                 replaceText = string.Format("{0}", player.Sex == ActorSex.Male ? "man" : "woman");
                                 break;
                             case "locRecent":
-                                replaceText = Game.world.GetLocationName(Game.director.GetRecentlyVisited());
+                                data = Game.director.GetRecentlyVisited();
+                                if (data <= 0)
+                                {
+                                    //gets a random locID as no viable one found above
+                                    data = Game.network.GetRandomLocation();
+                                    Game.logTurn?.Write("[Alert -> LocRecent] No viable locID returned from director.GetRecentlyVisited -> default Network.GetRandomLocation");
+                                }
+                                replaceText = Game.world.GetLocationName(data);
                                 break;
                             case "locRandom":
-                                replaceText = Game.world.GetLocationName(Game.director.GetRandomVisited());
+                                data = Game.director.GetRandomVisited();
+                                if (data <= 0)
+                                {
+                                    //gets a random locID as no viable one found above
+                                    data = Game.network.GetRandomLocation();
+                                    Game.logTurn?.Write("[Alert -> LocRandom] No viable locID returned from director.GetRandomVisited -> default Network.GetRandomLocation");
+                                }
+                                replaceText = Game.world.GetLocationName(data);
+                                break;
+                            case "court":
+                                data = Game.director.GetRandomCourt();
+                                if (data <= 0)
+                                {
+                                    //get a random court name as no viable name found normally
+                                    replaceText = Game.world.GetRandomMajorHouseName();
+                                    Game.logTurn?.Write("[Alert -> Court] No viable House name returned from Director.GetRandomCourt -> default World.GetRandomMajorHouseName");
+                                }
+                                else { replaceText = Game.world.GetHouseName(data); }
                                 break;
                             case "randomMale":
                                 replaceText = Game.history.GetFirstName(ActorSex.Male);

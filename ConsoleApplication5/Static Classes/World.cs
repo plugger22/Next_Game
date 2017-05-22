@@ -6707,7 +6707,7 @@ namespace Next_Game
                         SetNotification(eventList);
                     }
                 }
-                Game.logTurn?.Write("[Notification] Player in SafeHouse -> World events cancelled");
+                else { Game.logTurn?.Write("[Notification] Player in SafeHouse -> World events cancelled"); }
             }
             else { Game.SetError(new Error(224, "Invalid player (null)")); }
             return notificationStatus;
@@ -7079,7 +7079,15 @@ namespace Next_Game
             return $"{player.Title} {player.Name}, \"{player.Handle}\", {player.Status}, {GetLocationName(player.LocID)}";
         }
 
-
+        /// <summary>
+        /// returns a random Major house name
+        /// </summary>
+        /// <returns></returns>
+        internal string GetRandomMajorHouseName()
+        {
+            int count = dictMajorHouses.Count;
+            return dictMajorHouses.ElementAt(rnd.Next(count)).Value.Name;
+        }
         //new Methods above here
     }
 }
