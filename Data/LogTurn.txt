@@ -1,0 +1,131 @@
+//Exile Game File "LogTurn.txt" opened at: 22/05/2017 11:49:09
+--- ProcessStartTurn (World.cs)
+Day 17, Turn 16
+Usurper Godet Tyrell, "The Quiet", AtLocation, The Pickled Prune
+--- UpdateRumours (World.cs)
+dictRumoursTimed (Start) -> 8 records
+RumourID 324 -> TimerExpire decremented, now 2
+RumourID 325 -> TimerExpire decremented, now 2
+[Notification -> Removal] RID 320, "Inquisitor, Brother Damballa, ActID 121 has been seen on the road to The Clumsy Hog (loc 7:16)" removed from Global South list
+RumourID 323 -> TimerExpire decremented, now 1
+RumourID 321 -> TimerExpire decremented, now 1
+RumourID 322 -> TimerExpire decremented, now 1
+[Notification -> North] RID 318, "Inquisitor, Brother Kali, ActID 118 has been seen on the road to Winterfell (loc 3:3)" removed from Global North list
+[Notification -> Removal] RID 319, "Inquisitor, Brother Demogorgon, ActID 120 has been spotted doing sword drills at The Crag (loc 19:11)" removed from Global East list
+3 records have expired and been removed
+dictRumoursTimed (End) -> 5 records
+--- MoveActors -> 2 Records (World.cs)
+ [Move -> MoveObject] Inquisitor Brother Damballa, ActID 121 travelling to Kingskeep (current Loc 8:16)
+--- CheckIfFoundEnemy (World.cs)
+ [Search -> Debug] Active Godet Tyrell, ID 1 at 9:12, Enemy at 8:16 (Brother Damballa, ID 121
+ [Move -> MoveObject] Nemesis The Unrelenting, ActID 122 travelling to The Pickled Prune (current Loc 11:14)
+--- CheckIfFoundEnemy (World.cs)
+ [Search -> Debug] Active Godet Tyrell, ID 1 at 9:12, Enemy at 11:14 (The Unrelenting, ID 122
+--- UpdatePlayerStatus (World.cs)
+--- UpdateWorldStatus (World.cs)
+--- CheckFollowerActivity (World.cs)
+--- GetRumour (Director.cs)
+arrayOfRumours [0] -> RumourID 21, Strength 1, Scope Global, Type Item, Global All
+arrayOfRumours [3] -> RumourID 9, Strength 2, Scope Global, Type Desire, Global South
+arrayOfRumours [5] -> RumourID 226, Strength 2, Scope Local, Type Secret, Global All
+RumourID 9 selected from the Pool
+Rumour "It is whispered that Lady Brigida Lannister, ActID 11 at Casterly Rock, desires that her Son, Heir Patrek Lannister "The Raucous", ActID 16, attains a position in the Royal Court" revealed to ActorID8 on turn 16 -> added to List
+RumourID 9 removed from listRumoursSouth[0]
+Follower The Beast, ActID 8, added RumourID 9
+[Notification] Heir Patrek Lannister "The Raucous" DesireKnown status changed to "True"
+--- GetRumour (Director.cs)
+[Notification] No house rumours available -> none added to pool
+arrayOfRumours [0] -> RumourID 21, Strength 1, Scope Global, Type Item, Global All
+arrayOfRumours [2] -> RumourID 271, Strength 3, Scope Global, Type Friends, Global East
+RumourID 271 selected from the Pool
+Rumour "It is rumoured that you have many Friends and no Enemies at Brightwater Keep (House Florent)" revealed to ActorID5 on turn 16 -> added to List
+RumourID 271 removed from listRumoursEast[17]
+Follower The Jester, ActID 5, added RumourID 271
+[Notification] House Florent FriendsAndEnemies status changed to "True"
+--- GetRumour (Director.cs)
+arrayOfRumours [0] -> RumourID 168, Strength 1, Scope Global, Type Item, Global All
+arrayOfRumours [3] -> RumourID 323, Strength 3, Scope Global, Type Enemy, Global South
+arrayOfRumours [5] -> RumourID 37, Strength 2, Scope Local, Type Skill, Global All
+RumourID 168 selected from the Pool
+Rumour "It is said that the fabled Mammoth Cloak (Passive Item) is to be found at Lordsport" revealed to ActorID4 on turn 16 -> added to List
+RumourID 168 removed from listRumoursGlobal[2]
+Follower The Crone, ActID 4, added RumourID 168
+--- GetMarketView (Director.cs)
+[GameVar] Street_View changed from 4 to 1
+[Notification] Player in SafeHouse -> World events cancelled
+--- CheckStationaryActiveActors (World.cs)
+ [Search -> Stationary] Usurper Godet Tyrell, ActID 1 is AtLocation
+--- CheckIfFoundActive (World.cs)
+ [Search -> Debug] Enemy, Brother Kali, ID 118 at 3:3, Active Godet Tyrell, ID 1, at 9:12
+ [Search -> Debug] Enemy, Brother Mastema, ID 119 at 15:7, Active Godet Tyrell, ID 1, at 9:12
+ [Search -> Debug] Enemy, Brother Demogorgon, ID 120 at 19:11, Active Godet Tyrell, ID 1, at 9:12
+ [Search -> Debug] Enemy, Brother Damballa, ID 121 at 9:16, Active Godet Tyrell, ID 1, at 9:12
+ [Search -> Debug] Enemy, The Unrelenting, ID 122 at 10:14, Active Godet Tyrell, ID 1, at 9:12
+ [Search -> Stationary] Follower The Beast, ActID 8 is AtLocation
+ [Search -> Stationary] Follower The Jester, ActID 5 is AtLocation
+ [Search -> Stationary] Follower The Crone, ActID 4 is AtLocation
+--- UpdateAIController (World.cs)
+ [AI -> Notification] Inquisitor Brother Damballa, ActID 121 is Travelling to Kingskeep
+ [AI -> Notification] Nemesis The Unrelenting, ActID 122 is Travelling to The Pickled Prune
+ [AI -> Mode] enemyID 119,  distance -> 15  Threshold (turns) -> 4  Mode -> Normal
+ [AI -> Mode] enemyID 120,  distance -> 23  Threshold (turns) -> 4  Mode -> Normal
+ [AI -> Mode] enemyID 118,  distance -> 25  Threshold (turns) -> 4  Mode -> Normal
+--- SetEnemyActivity (World.cs)
+ [Enemy -> Goal] Brother Kali, ActID 118 retains Goal -> Wait
+ [Enemy -> Unknown] Brother Mastema ActID 119 has reverted to Unknown status (timer elapsed)
+ [Enemy -> Goal] Brother Mastema, ActID 119 retains Goal -> Wait
+--- SetEnemyGoal (World.cs)
+ [Goal -> Branch] Brother Demogorgon, ActID 120 Assigned Branch -> 2 Current Branch -> 2
+ [Goal -> New] Brother Demogorgon, ActID 120, (loc 19:11), assigned new Goal -> Move
+ [Goal -> Move] Brother Demogorgon, ActID 120 -> Move Outwards -> Pyke, LocID 18
+--- InitiateMoveActor (World.cs)
+--- Move Actor (Director.cs)
+--- CheckPlayerEvents (Director.cs)
+- CreateAutoLocEvent (Director.cs)
+ Chance of Player Location event 75 %
+--- ResolvePlayerEvents (Director.cs)
+ Event "What to do?" Timer Repeat now 999
+ Event "What to do?" Cooldown Timer has been reset to 0
+--- UpdateActiveActors (World.cs)
+ Usurper Godet Tyrell has had their Revert Timer reduced from 3 to 2
+ Follower The Beast has had their TurnsUnknown Timer increased from 15 to 16
+ Follower The Jester has had their TurnsUnknown Timer increased from 15 to 16
+ Follower The Crone has had their TurnsUnknown Timer increased from 15 to 16
+--- ResolveOutcome (Director.cs)
+--- SetEndGame (Game.cs)
+[Alert] Player chose to exit (pressed 'X')
+//Exile Game file ops "LogTurn.txt" Completed at: 22/05/2017 11:51:12
+Event (Director.cs)
+ Chance of Player Location event 75 %
+--- ResolvePlayerEvents (Director.cs)
+ Event "What to do?" Timer Repeat now 999
+ Event "What to do?" Cooldown Timer has been reset to 0
+--- UpdateActiveActors (World.cs)
+ Usurper Godet Tyrell has had their Revert Timer reduced from 4 to 3
+ Follower The Beast has had their TurnsUnknown Timer increased from 14 to 15
+ Follower The Jester has had their TurnsUnknown Timer increased from 14 to 15
+ Follower The Crone has had their TurnsUnknown Timer increased from 14 to 15
+--- ResolveOutcome (Director.cs)
+--- ProcessEndTurn (World.cs)
+Day 16, Turn 15
+--- CheckEventTimers (Director.cs)
+ Event "Search and Detain" Dormant Timer decremented to 5
+--- InitialiseDynamicRumours (Director.cs)
+[Enemy] RID 324, "Inquisitor, Brother Kali, ActID 118 has been spotted doing sword drills at Winterfell (loc 3:3)" -> dict
+[Enemy] RID 325, "Inquisitor, Brother Demogorgon, ActID 120 has been spotted relaxing at The Crag (loc 19:11)" -> dict
+--- HouseKeepActors (World.cs)
+[GameStat] "Known_Days" -> increased from 1 to 2
+[GameStat] "Location_Days" -> increased from 15 to 16
+--- HousekeepRumours (World.cs)
+dictRumoursKnown has 43 records
+
+//Exile Game File "LogTurn.txt" Close completed at: 22/05/2017 11:49:09
+
+[GameStat] "Location_Days" -> increased from 13 to 14
+--- HousekeepRumours (World.cs)
+dictRumoursKnown has 37 records
+
+//Exile Game File "LogTurn.txt" Close completed at: 22/05/2017 11:48:55
+s
+
+//Exile Game File "LogTurn.txt" Close completed at: 22/05/2017 11:48:08

@@ -273,6 +273,7 @@ namespace Next_Game
             Game.logStart?.Write("--- InitialiseGameStates (Director.cs)");
             InitialiseStartRumours();
             InitialiseGameStates();
+            arrayOfViewTexts = Game.file.GetViews("ViewLists.txt");
         }
 
         /// <summary>
@@ -5425,6 +5426,7 @@ namespace Next_Game
             string randomText = "";
             string occupation = "Unknown";
             string view = "";
+            string[] innerArray = null;
             int data, difference;
             int age = rnd.Next(15, 50);
             bool educated = true; //if true then character provides an educated viewpoint, otherwise an uneducated, less well informed, one
@@ -5510,38 +5512,25 @@ namespace Next_Game
                         {
                             //neutral view (both scores within 10 points of each other)
                             if (educated == true)
-                            { //randomText = listJusticeNeutralEduc[rnd.Next(listJusticeNeutralEduc.Count)];
-                                randomText = arrayOfViewTexts[(int)ViewType.JusticeNeutralEduc][rnd.Next(arrayOfViewTexts.GetUpperBound(1))];
-                            }
+                            { innerArray = arrayOfViewTexts[(int)ViewType.JusticeNeutralEduc]; }
                             else
-                            { //randomText = listJusticeNeutralUned[rnd.Next(listJusticeNeutralUned.Count)]; 
-                                randomText = arrayOfViewTexts[(int)ViewType.JusticeNeutralUned][rnd.Next(arrayOfViewTexts.GetUpperBound(1))];
-                            }
+                            { innerArray = arrayOfViewTexts[(int)ViewType.JusticeNeutralUned]; }
                         }
                         else if (data > 0)
                         {
                             //positive view (for usurper) -> Justice of cause 10+ points ahead
                             if (educated == true)
-                            { //randomText = listJusticeGoodEduc[rnd.Next(listJusticeGoodEduc.Count)]; 
-                                randomText = arrayOfViewTexts[(int)ViewType.JusticeGoodEduc][rnd.Next(arrayOfViewTexts.GetUpperBound(1))];
-                            }
+                            { innerArray = arrayOfViewTexts[(int)ViewType.JusticeGoodEduc]; }
                             else
-                            { //randomText = listJusticeGoodUned[rnd.Next(listJusticeGoodUned.Count)]; 
-                                randomText = arrayOfViewTexts[(int)ViewType.JusticeGoodUned][rnd.Next(arrayOfViewTexts.GetUpperBound(1))];
-                            }
+                            { innerArray = arrayOfViewTexts[(int)ViewType.JusticeGoodUned]; }
                         }
                         else
                         {
                             //negative (for usurper) -> Justice of cause 10+ points behind
                             if (educated == true)
-                            {
-                                //randomText = listJusticeBadEduc[rnd.Next(listJusticeBadEduc.Count)];
-                                randomText = arrayOfViewTexts[(int)ViewType.JusticeBadEduc][rnd.Next(arrayOfViewTexts.GetUpperBound(1))];
-                            }
+                            { innerArray = arrayOfViewTexts[(int)ViewType.JusticeBadEduc]; }
                             else
-                            { //randomText = listJusticeBadUned[rnd.Next(listJusticeBadUned.Count)]; 
-                                randomText = arrayOfViewTexts[(int)ViewType.JusticeBadUned][rnd.Next(arrayOfViewTexts.GetUpperBound(1))];
-                            }
+                            { innerArray = arrayOfViewTexts[(int)ViewType.JusticeBadUned]; }
                         }
                         break;
                     case 2:
@@ -5552,37 +5541,25 @@ namespace Next_Game
                         {
                             //neutral view (both scores within 10 points of each other)
                             if (educated == true)
-                            { //randomText = listLegendNeutralEduc[rnd.Next(listLegendNeutralEduc.Count)]; 
-                                randomText = arrayOfViewTexts[(int)ViewType.LegendNeutralEduc][rnd.Next(arrayOfViewTexts.GetUpperBound(1))];
-                            }
+                            { innerArray = arrayOfViewTexts[(int)ViewType.LegendNeutralEduc]; }
                             else
-                            { //randomText = listLegendNeutralUned[rnd.Next(listLegendNeutralUned.Count)]; 
-                                randomText = arrayOfViewTexts[(int)ViewType.LegendNeutralUned][rnd.Next(arrayOfViewTexts.GetUpperBound(1))];
-                            }
+                            { innerArray = arrayOfViewTexts[(int)ViewType.LegendNeutralUned]; }
                         }
                         else if (data > 0)
                         {
                             //positive view (for usurper) -> Usurper's legend 10+ points ahead of Kings
                             if (educated == true)
-                            { //randomText = listLegendGoodEduc[rnd.Next(listLegendGoodEduc.Count)]; 
-                                randomText = arrayOfViewTexts[(int)ViewType.LegendGoodEduc][rnd.Next(arrayOfViewTexts.GetUpperBound(1))];
-                            }
+                            { innerArray = arrayOfViewTexts[(int)ViewType.LegendGoodEduc]; }
                             else
-                            { //randomText = listLegendGoodUned[rnd.Next(listLegendGoodUned.Count)]; 
-                                randomText = arrayOfViewTexts[(int)ViewType.LegendGoodUned][rnd.Next(arrayOfViewTexts.GetUpperBound(1))];
-                            }
+                            { innerArray = arrayOfViewTexts[(int)ViewType.LegendGoodUned]; }
                         }
                         else
                         {
                             //negative (for usurper) -> Usurpers legend 10+ point behind that of Kings
                             if (educated == true)
-                            { //randomText = listLegendBadEduc[rnd.Next(listLegendBadEduc.Count)]; 
-                                randomText = arrayOfViewTexts[(int)ViewType.LegendBadEduc][rnd.Next(arrayOfViewTexts.GetUpperBound(1))];
-                            }
+                            { innerArray = arrayOfViewTexts[(int)ViewType.LegendBadEduc]; }
                             else
-                            { //randomText = listLegendBadUned[rnd.Next(listLegendBadUned.Count)]; 
-                                randomText = arrayOfViewTexts[(int)ViewType.LegendBadUned][rnd.Next(arrayOfViewTexts.GetUpperBound(1))];
-                            }
+                            { innerArray = arrayOfViewTexts[(int)ViewType.LegendBadUned]; }
                         }
                         break;
                     case 3:
@@ -5593,37 +5570,25 @@ namespace Next_Game
                         {
                             //neutral view (both scores within 10 points of each other)
                             if (educated == true)
-                            { //randomText = listHonourNeutralEduc[rnd.Next(listHonourNeutralEduc.Count)]; 
-                                randomText = arrayOfViewTexts[(int)ViewType.HonourNeutralEduc][rnd.Next(arrayOfViewTexts.GetUpperBound(1))];
-                            }
+                            { innerArray = arrayOfViewTexts[(int)ViewType.HonourNeutralEduc]; }
                             else
-                            { //randomText = listHonourNeutralUned[rnd.Next(listHonourNeutralUned.Count)]; 
-                                randomText = arrayOfViewTexts[(int)ViewType.HonourNeutralUned][rnd.Next(arrayOfViewTexts.GetUpperBound(1))];
-                            }
+                            { innerArray = arrayOfViewTexts[(int)ViewType.HonourNeutralUned]; }
                         }
                         else if (data > 0)
                         {
                             //positive view (for usurper) -> Usurper's honour 10+ points ahead of Kings
                             if (educated == true)
-                            { //randomText = listHonourGoodEduc[rnd.Next(listHonourGoodEduc.Count)]; 
-                                randomText = arrayOfViewTexts[(int)ViewType.HonourGoodEduc][rnd.Next(arrayOfViewTexts.GetUpperBound(1))];
-                            }
+                            { innerArray = arrayOfViewTexts[(int)ViewType.HonourGoodEduc]; }
                             else
-                            { //randomText = listHonourGoodUned[rnd.Next(listHonourGoodUned.Count)]; 
-                                randomText = arrayOfViewTexts[(int)ViewType.HonourGoodUned][rnd.Next(arrayOfViewTexts.GetUpperBound(1))];
-                            }
+                            { innerArray = arrayOfViewTexts[(int)ViewType.HonourGoodUned]; }
                         }
                         else
                         {
                             //negative (for usurper) -> Usurpers honour 10+ point behind that of Kings
                             if (educated == true)
-                            { //randomText = listHonourBadEduc[rnd.Next(listHonourBadEduc.Count)]; 
-                                randomText = arrayOfViewTexts[(int)ViewType.HonourBadEduc][rnd.Next(arrayOfViewTexts.GetUpperBound(1))];
-                            }
+                            { innerArray = arrayOfViewTexts[(int)ViewType.HonourBadEduc]; }
                             else
-                            { //randomText = listHonourBadUned[rnd.Next(listHonourBadUned.Count)]; 
-                                randomText = arrayOfViewTexts[(int)ViewType.HonourBadUned][rnd.Next(arrayOfViewTexts.GetUpperBound(1))];
-                            }
+                            { innerArray = arrayOfViewTexts[(int)ViewType.HonourBadUned]; }
                         }
 
                         break;
@@ -5633,31 +5598,30 @@ namespace Next_Game
                         {
                             //Player Known
                             if (educated == true)
-                            { //randomText = listKnownEduc[rnd.Next(listKnownEduc.Count)]; 
-                                randomText = arrayOfViewTexts[(int)ViewType.KnownEduc][rnd.Next(arrayOfViewTexts.GetUpperBound(1))];
-                            }
+                            { innerArray = arrayOfViewTexts[(int)ViewType.KnownEduc]; }
                             else
-                            { //randomText = listKnownUned[rnd.Next(listKnownUned.Count)]; 
-                                randomText = arrayOfViewTexts[(int)ViewType.KnownUned][rnd.Next(arrayOfViewTexts.GetUpperBound(1))];
-                            }
+                            { innerArray = arrayOfViewTexts[(int)ViewType.KnownUned]; }
                         }
                         else
                         {
                             //player Unknown
                             if (educated == true)
-                            { //randomText = listUnknownEduc[rnd.Next(listUnknownEduc.Count)]; 
-                                randomText = arrayOfViewTexts[(int)ViewType.UnknownEduc][rnd.Next(arrayOfViewTexts.GetUpperBound(1))];
-                            }
+                            { innerArray = arrayOfViewTexts[(int)ViewType.UnknownEduc]; }
                             else
-                            { //randomText = listUnknownUned[rnd.Next(listUnknownUned.Count)]; 
-                                randomText = arrayOfViewTexts[(int)ViewType.UnknownUned][rnd.Next(arrayOfViewTexts.GetUpperBound(1))];
-                            }
+                            { innerArray = arrayOfViewTexts[(int)ViewType.UnknownUned]; }
                         }
                         break;
                     default:
                         Game.SetError(new Error(282, $"Invalid Street_View \"{streetIndex} -> Street View cancelled"));
                         break;
                 }
+                if (innerArray != null)
+                {
+                    if (innerArray.Length > 0)
+                    { randomText = innerArray[rnd.Next(innerArray.Length)]; }
+                    else { Game.logTurn?.Write($"[Alert] No data in innerArray for group {group}, StreetIndex {streetIndex}, Educated {educated} -> Market View cancelled"); }
+                }
+                else { Game.SetError(new Error(282, "Invalid innerArray (null) -> Market view cancelled")); }
                 if (randomText.Length > 0)
                 {
                     //deal with tags
@@ -5680,7 +5644,7 @@ namespace Next_Game
                 else
                 { listToDisplay.Add(new Snippet("With downcast heads and sullen looks, people go about their business, refusing to talk", RLColor.Black, backColor)); }
             }
-            else { Game.SetError(new Error(282, "Invalid Player (null) -> Street view cancelled")); }
+            else { Game.SetError(new Error(282, "Invalid Player (null) -> Market view cancelled")); }
             return listToDisplay;
         }
 

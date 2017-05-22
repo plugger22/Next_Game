@@ -1,0 +1,78 @@
+# ViewLists.txt -> various lists of text used for generating the View from the Market
+
+# Format -> Single lines of text with embedded tags
+# <player> <newKing> <oldKing> -> Names
+# <playerHandle> <newKingHandle> <oldKingHandle> -> Handles
+# <his> <he> <him> <man> -> sex specific for Usurper (also <His> <He> which are for starting sentences with)
+# <locRecent>, <locRandom> -> Usurper Loc Names
+# <randomMale> <randomFemale> -> random first names
+
+[JusticeNeutralEduc]
+Does <player> have a right to be King? Hard to say
+
+[JusticeNeutralUned]
+Kings are all the same. Who cares if it's <player> or King <newKing>?
+
+[JusticeGoodEduc]
+Yes, of course <player>, the Usurper, should be King. It's <his> birthright.
+
+[JusticeGoodUned]
+"So <player> thinks that they should be King? Doesn't everybody?
+
+[JusticeBadEduc]
+King <newKing> sits rightfully upon the throne. <player> is nothing but an imposter
+
+[JusticeBadUned]
+King <newKing> is the King and good on him. <player> is fit for nothing more than pig swill
+
+[LegendNeutralEduc]
+I never did go much on Old King <oldKing> but I don't like <newKing> either
+
+[LegendNeutralUned]
+<player>? Who's he?
+Everybody is a legend in their own mind. I bet <player> thinks <he> is a God. Pigs *ss.
+
+[LegendGoodEduc]
+Didn't the <player>, the Usurper, once kill a lion with <his> bare hands?
+
+[LegendGoodUned]
+That heir, <player>, <he> will chew King <newKing>'s head off before breakfast
+
+[LegendBadEduc]
+<player>, the so called Usurper, I heard the <he> was frightened to get out of bed in the morning
+
+[LegendBadUned]
+King <newKing> will piss all over <player>. Everybody knows that.
+
+[HonourNeutralEduc]
+Who can you trust more? King <newKing> or the Usurper, <player>
+
+[HonourNeutralUned]
+Kings and Usurpers treat you like dirt. The pox on all of them
+
+[HonourGoodEduc]
+<player> is a <man> you can rely on. The sooner <he> takes over from King <newKing>, the better.
+
+[HonourGoodUned]
+Can I rely on that Usurper, <player> to make my life better? I hear that you can trust <him>.
+
+[HonourBadEduc]
+King <newKing>'s word can be relied upon. I trust him.
+
+[HonourBadUned]
+Why would I want to trust <player>, the pretend King? Nobody else does.
+
+[KnownEduc]
+They say that the Usurper, <player>, was seen in <locRecent> recently. What is <he> up to?
+
+[KnownUned]
+The Usurper, <player>. Isn't he at <locRecent>?
+I heard that <player> had visited <locRandom> once. Maybe <he> liked the ale?
+<randomMale> from the village swore that he'd seen <player> at <locRandom>.
+
+[UnknownEduc]
+Who knows where <player> is? I heard the Inquisitors were asking after <him>.
+
+[UnknownUned]
+Do I care where <player> is? Does <he> know who I am and what my problems are? If you see <him> make sure you tell <him>.
+I overheard <randomFemale> talking about <player> the other day. She sure knows how to curse.
