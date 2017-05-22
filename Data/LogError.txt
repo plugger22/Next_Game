@@ -1,2 +1,10 @@
-//Exile Game file ops "LogError.txt" commenced at: 22/05/2017 14:35:56
-//Exile Game file ops "LogError.txt" Completed at: 22/05/2017 14:37:12
+//Exile Game file ops "LogError.txt" commenced at: 22/05/2017 15:27:17
+ERROR_29 "Location Deleted 0:20"
+Method: LocationSweeper,  Line: 1675,  Object: Map.cs,  Turn: 0,  Local Time: 15:27:17 UTC +10:00
+ERROR_29 "Location Deleted 3:24"
+Method: LocationSweeper,  Line: 1675,  Object: Map.cs,  Turn: 0,  Local Time: 15:27:17 UTC +10:00
+ERROR_29 "Location Deleted 2:26"
+Method: LocationSweeper,  Line: 1675,  Object: Map.cs,  Turn: 0,  Local Time: 15:27:17 UTC +10:00
+ERROR_29 "Location Deleted 0:28"
+Method: LocationSweeper,  Line: 1675,  Object: Map.cs,  Turn: 0,  Local Time: 15:27:17 UTC +10:00
+//Exile Game file ops "LogError.txt" Completed at: 22/05/2017 15:28:38

@@ -5391,7 +5391,7 @@ namespace Next_Game
             string view = "";
             string[] innerArray = null;
             int data, difference;
-            int age = rnd.Next(15, 50);
+            int age = 20;
             bool educated = true; //if true then character provides an educated viewpoint, otherwise an uneducated, less well informed, one
             ActorSex sex;
             Player player = Game.world.GetPlayer();
@@ -5455,6 +5455,8 @@ namespace Next_Game
                     else { Game.logTurn?.Write($"[Alert] No data in innerArray for Occupation group {group}, ViewIndex {viewIndex}, Educated {educated}"); }
                 }
                 else { Game.SetError(new Error(282, "Invalid innerArray (null) for Occupation -> Market view cancelled")); }
+                //adjust age for education level
+                if (educated == true) { age = rnd.Next(25, 55); } else { age = rnd.Next(14, 30); }
                 //each turn is a different option to maximise variety
                 innerArray = null;
                 switch (viewIndex)

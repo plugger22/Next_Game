@@ -8,62 +8,90 @@
 # <randomMale> <randomFemale> -> random first names
 
 [JusticeNeutralEduc]
-Does <player> have a right to be King? Hard to say
+Does <player> have a right to be King? Hard to say.
+Justice is a relative term. I'd consider that both <player> and King <newKing> have valid claims on the throne.
 
 [JusticeNeutralUned]
 Kings are all the same. Who cares if it's <player> or King <newKing>?
+Justice, what in Seven Hells is that? Why should I care about <player> and <his> crown?
+So <player> thinks that <he> has a just cause? What about mine? Who's helping me?
 
 [JusticeGoodEduc]
 Yes, of course <player>, the Usurper, should be King. It's <his> birthright.
+When your cause is just the wind blows from behind. <player> should set <his> sails.
 
 [JusticeGoodUned]
-"So <player> thinks that they should be King? Doesn't everybody?
+So <player> thinks that they should be King? Doesn't everybody?
+If <player> wants to be King then let <him> win the crown. Justice doesn't count for much around here.
+<player> has a right to the throne, does <he>? Where's my right to a decent wage?
 
 [JusticeBadEduc]
-King <newKing> sits rightfully upon the throne. <player> is nothing but an imposter
+King <newKing> sits rightfully upon the throne. <player> is nothing but an imposter.
+<player>, the Imposter, should stop bothering King <newKing> as <his> cause is unjust and <his> health is a about to worsen.
 
 [JusticeBadUned]
 King <newKing> is the King and good on him. <player> is fit for nothing more than pig swill
+<player> has as much claim to the crown as I do.
+King <newKing> is in charge. He has a god given right to sit upon the throne, not some stranger.
 
 [LegendNeutralEduc]
-I never did go much on Old King <oldKing> but I don't like <newKing> either
+I never did go much on Old King <oldKing> but I don't like the new King <newKing> either
+Those who do become legends. Those who don't die. <player> needs to step up.
 
 [LegendNeutralUned]
 <player>? Who's he?
 Everybody is a legend in their own mind. I bet <player> thinks <he> is a God. Pigs *ss.
+A legend you say? Tell me what <player> has done other than fluff around?
+I like legends who do things. <player> hasn't done nothing famous, <randomFemale> said so.
 
 [LegendGoodEduc]
 Didn't the <player>, the Usurper, once kill a lion with <his> bare hands?
+It's said that <player> is a geniune legend but nobody can state why?
 
 [LegendGoodUned]
-That heir, <player>, <he> will chew King <newKing>'s head off before breakfast
+That heir, <player>, <he> will chew King <newKing>'s balls off before breakfast
+They say that <he> sh*ts arrows and farts bolts. <player> sure is a legend around here.
+Yeah, <player> is a legend. Ask <randomMale> 'cause he saw <him> kill a full grown Musk Ox with <his> bare hands.
 
 [LegendBadEduc]
-<player>, the so called Usurper, I heard the <he> was frightened to get out of bed in the morning
+<player>, the so called Usurper, I heard the <he> was frightened to crawk out of <his> bed in the morning.
+King <newKing> is a real legend. Singlehandedly ate an entire pig at a feast. <player>, you say? Who?
 
 [LegendBadUned]
 King <newKing> will piss all over <player>. Everybody knows that.
+<player> a Legend? Hah! King <newKing> is a real live legend. He eats babies for breakfast, he does.
+I don't know where you got the idea that <player> is a legend? Maybe a maggoty cow pat perhaps. <kingNew> is the real legend.
 
 [HonourNeutralEduc]
 Who can you trust more? King <newKing> or the Usurper, <player>
+Honour is an important part of a <man>. It's difficult to judge <player> as I don't know <him>.
 
 [HonourNeutralUned]
-Kings and Usurpers treat you like dirt. The pox on all of them
+Kings and Usurpers treat you like dirt. The pox on all of them.
+What does it matter if <player> is honourable, or not? Will it put food my my table?
+When did honour have anything to do with anything? <player> could be a pig in disguise, for all I know.
 
 [HonourGoodEduc]
 <player> is a <man> you can rely on. The sooner <he> takes over from King <newKing>, the better.
+Yes, <player> is a <man> of honour. I fully support <his> claim on the throne. We need a <man> like <him>.
 
 [HonourGoodUned]
 Can I rely on that Usurper, <player> to make my life better? I hear that you can trust <him>.
+<player> is a man of honour. Sure <he> is. Old <randomFemale> swears on it and she's always right.
+If <player> is going to be our King then <he> had better keep <his> honourable reputation. I can't stand fakers.
 
 [HonourBadEduc]
 King <newKing>'s word can be relied upon. I trust him.
+When you talk about honour you can't go past King <newKing>. <He> does what <he> says and keeps <his> word. A good <man>.
 
 [HonourBadUned]
 Why would I want to trust <player>, the pretend King? Nobody else does.
+<player> is about as honourable as a snake in the grass. At least you can rely on King <newKing> to do as he says.
+<randomFemale> and I both think that <player> should crawl back to where <he> came from. <He> isn't King material.
 
 [KnownEduc]
 They say that the Usurper, <player>, was seen in <locRecent> recently. What is <he> up to?
+<player>? Yes, of course. Wasn't <he> in <locRecent> recently? It was this moon, I'm sure.
 
 [KnownUned]
 The Usurper, <player>. Isn't he at <locRecent>?
@@ -72,7 +100,10 @@ I heard that <player> had visited <locRandom> once. Maybe <he> liked the ale?
 
 [UnknownEduc]
 Who knows where <player> is? I heard the Inquisitors were asking after <him>.
+<player> might have been seen in <locRandom> this moon, but I can't say for certain.
 
 [UnknownUned]
 Do I care where <player> is? Does <he> know who I am and what my problems are? If you see <him> make sure you tell <him>.
 I overheard <randomFemale> talking about <player> the other day. She sure knows how to curse.
+Does it matter where <player> is? Does <he> care where I am? I hope that <he> doesn't get lost in the woods. Hungry bears there.
+I don't know where <player> is. Nobody tells me nothin.
