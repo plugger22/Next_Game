@@ -100,6 +100,7 @@ Was that <player> who was noticed leaving the court of House <court>?
 The Usurper, <player>. Isn't he at <locRecent>?
 I heard that <player> had visited <locRandom> once. Maybe <he> liked the ale?
 <randomMale> from the village swore that he'd seen <player> at <locRandom>.
+The word is that <player> was seen at <locRecent> but who am I to say?
 
 [UnknownEduc]
 Who knows where <player> is? I heard the Inquisitors were asking after <him>.

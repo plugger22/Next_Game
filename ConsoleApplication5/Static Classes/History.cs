@@ -1014,6 +1014,7 @@ namespace Next_Game
                     }
                     else { needRandomTrait = true; }
                 }
+                else { needRandomTrait = true; }
             }
             else { needRandomTrait = true; }
             //Random Trait (no genetics apply, either no parents or genetic roll failed)
@@ -1065,6 +1066,7 @@ namespace Next_Game
                     }
                     else { needRandomTrait = true; }
                 }
+                else { needRandomTrait = true; }
             }
             else { needRandomTrait = true; }
             //Random Trait (no genetics apply, either no parents or genetic roll failed)
@@ -1115,6 +1117,7 @@ namespace Next_Game
                     }
                     else { needRandomTrait = true; }
                 }
+                else { needRandomTrait = true; }
             }
             else { needRandomTrait = true; }
             //Random Trait (no genetics apply, either no parents or genetic roll failed)
@@ -1165,6 +1168,7 @@ namespace Next_Game
                     }
                     else { needRandomTrait = true; }
                 }
+                else { needRandomTrait = true; }
             }
             else { needRandomTrait = true; }
             //Random Trait (no genetics apply, either no parents or genetic roll failed)
@@ -1215,6 +1219,7 @@ namespace Next_Game
                     }
                     else { needRandomTrait = true; }
                 }
+                else { needRandomTrait = true; }
             }
             else { needRandomTrait = true; }
             //Random Trait (no genetics apply, either no parents or genetic roll failed)
@@ -1267,6 +1272,7 @@ namespace Next_Game
                     }
                     else { needRandomTrait = true; }
                 }
+                else { needRandomTrait = true; }
             }
             //Random Trait (no genetics apply, either no parents or genetic roll failed)
             if (needRandomTrait == true)

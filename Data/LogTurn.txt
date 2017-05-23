@@ -1,107 +1,18 @@
-//Exile Game File "LogTurn.txt" opened at: 22/05/2017 20:54:52
---- ProcessStartTurn (World.cs)
-Day 5, Turn 4
-Usurper Tytos Arryn, "The Nonplussed", AtLocation, Lordsport
---- UpdateRumours (World.cs)
-dictRumoursTimed (Start) -> 2 records
-[Notification -> Removal] RID 274, "Inquisitor, Brother Set, ActID 114 has been spotted drinking at Kingskeep (loc 16:16)" removed from Global All list
-[Notification -> Removal] RID 275, "Inquisitor, Brother Adramalech, ActID 116 has been spotted gambling at Kingskeep (loc 16:16)" removed from Global All list
-2 records have expired and been removed
-dictRumoursTimed (End) -> 0 records
---- MoveActors -> 1 Records (World.cs)
- [Move -> MoveObject] Inquisitor Brother Demogorgon, ActID 115 travelling to The Pickled Prune (current Loc 16:20)
---- CheckIfFoundEnemy (World.cs)
- [Search -> Debug] Active Tytos Arryn, ID 1 at 18:8, Enemy at 16:20 (Brother Demogorgon, ID 115
---- CheckIfFoundEnemy (World.cs)
- [Search -> Debug] Active Tytos Arryn, ID 1 at 18:8, Enemy at 16:21 (Brother Demogorgon, ID 115
---- UpdatePlayerStatus (World.cs)
---- UpdateWorldStatus (World.cs)
---- CheckFollowerActivity (World.cs)
---- GetRumour (Director.cs)
-arrayOfRumours [0] -> RumourID 87, Strength 1, Scope Global, Type Item, Global All
-arrayOfRumours [3] -> RumourID 254, Strength 3, Scope Global, Type Friends, Global South
-arrayOfRumours [5] -> RumourID 206, Strength 4, Scope Local, Type Skill, Global All
-RumourID 206 selected from the Pool
-Rumour "BannerLord Aunger Dondarrion "The Prodigal", ActID 95 at Bearpit, is known to be Generous" revealed to ActorID4 on turn 4 -> added to List
-RumourID 206 removed from listRumoursHouse[0]
-Follower The Waif, ActID 4, added RumourID 206
-BannerLord Aunger Dondarrion, ActID 95, skill Charm set to True
---- GetRumour (Director.cs)
-[Notification] No house rumours available -> none added to pool
-arrayOfRumours [0] -> RumourID 92, Strength 4, Scope Global, Type Disguise, Global All
-arrayOfRumours [1] -> RumourID 204, Strength 2, Scope Global, Type Desire, Global North
-RumourID 92 selected from the Pool
-Rumour "It is known that Disguises can be had from Maester Wyman Drake, ActID 44 at Riverrun" revealed to ActorID3 on turn 4 -> added to List
-RumourID 92 removed from listRumoursGlobal[7]
-Follower The Jester, ActID 3, added RumourID 92
---- GetRumour (Director.cs)
-arrayOfRumours [0] -> RumourID 32, Strength 1, Scope Global, Type Item, Global All
-arrayOfRumours [1] -> RumourID 77, Strength 2, Scope Global, Type Desire, Global North
-arrayOfRumours [5] -> RumourID 161, Strength 2, Scope Local, Type Secret, Global All
-RumourID 161 selected from the Pool
-Rumour "It is known by all that BannerLord Elyes Karstark "The Whimsical", ActID 72 at Karhold, has a dark secret" revealed to ActorID7 on turn 4 -> added to List
-RumourID 161 removed from listRumoursHouse[1]
-Follower The Leper, ActID 7, added RumourID 161
---- GetMarketView (Director.cs)
-[Notification} listLocsVisited has no records  -> No valid random Loc returned
-[Alert -> Court] No viable House name returned from Director.GetRandomCourt -> default World.GetRandomMajorHouseName
-[GameVar] View_Index changed from 4 to 1
-[Notification] Player in SafeHouse -> World events cancelled
---- CheckStationaryActiveActors (World.cs)
- [Search -> Stationary] Usurper Tytos Arryn, ActID 1 is AtLocation
---- CheckIfFoundActive (World.cs)
- [Search -> Debug] Enemy, Brother Mormo, ID 113 at 16:16, Active Tytos Arryn, ID 1, at 18:8
- [Search -> Debug] Enemy, Brother Set, ID 114 at 16:16, Active Tytos Arryn, ID 1, at 18:8
- [Search -> Debug] Enemy, Brother Demogorgon, ID 115 at 17:21, Active Tytos Arryn, ID 1, at 18:8
- [Search -> Debug] Enemy, Brother Adramalech, ID 116 at 16:16, Active Tytos Arryn, ID 1, at 18:8
- [Search -> Debug] Enemy, The Unrelenting, ID 117 at 16:16, Active Tytos Arryn, ID 1, at 18:8
- [Search -> Stationary] Follower The Waif, ActID 4 is AtLocation
- [Search -> Stationary] Follower The Jester, ActID 3 is AtLocation
- [Search -> Stationary] Follower The Leper, ActID 7 is AtLocation
---- UpdateAIController (World.cs)
- [AI -> Player Unknown] Inquisitor Brother Mormo, Act ID 113 Mode -> Normal
- [AI -> Player Unknown] Inquisitor Brother Set, Act ID 114 Mode -> Normal
- [AI -> Player Unknown] Inquisitor Brother Adramalech, Act ID 116 Mode -> Normal
- [AI -> Player Unknown] Nemesis The Unrelenting, Act ID 117 Mode -> Normal
---- SetEnemyActivity (World.cs)
- [Enemy -> Unknown] Brother Mormo ActID 113 has reverted to Unknown status (timer elapsed)
- [Enemy -> Goal] Brother Mormo, ActID 113 retains Goal -> Wait
---- SetEnemyGoal (World.cs)
- [Goal -> Branch] Brother Set, ActID 114 Assigned Branch -> 1 Current Branch -> 0
- [Goal -> New] Brother Set, ActID 114, (loc 16:16), assigned new Goal -> Move
- [Goal -> Move] Brother Set, ActID 114 -> Capital to Correct Branch -> One Eyed Pete's, LocID 2
---- InitiateMoveActor (World.cs)
---- Move Actor (Director.cs)
- [Enemy -> Goal] Brother Adramalech, ActID 116 retains Goal -> Hide
---- SetEnemyGoal (World.cs)
- [Goal -> Branch] The Unrelenting, ActID 117 Assigned Branch -> 0 Current Branch -> 0
---- CheckPlayerEvents (Director.cs)
---- GetValidPlayerEvents (Director.cs)
- Event "Mysterious Stranger" has no attached Conditions
---- GetValidPlayerEvents (Director.cs)
---- GetValidPlayerEvents (Director.cs)
- Chance of Player Location event 37 %
---- ResolvePlayerEvents (Director.cs)
- "Talk to them" Trait Trigger, if type 3 is GreaterThanOrEqual to 3
- Trigger passed on "3" GreaterThanOrEqual 3
- "Curse all strangers" Trait Trigger, if type 4 is GreaterThanOrEqual to 3
- Trigger passed on "3" GreaterThanOrEqual 3
- Event "Mysterious Stranger" Timer Repeat now 8
- Event "Mysterious Stranger" Cooldown Timer has been reset to 0
---- UpdateActiveActors (World.cs)
- Usurper Tytos Arryn has had their TurnsUnknown Timer increased from 103 to 104
- Follower The Waif has had their TurnsUnknown Timer increased from 3 to 4
- Follower The Jester has had their TurnsUnknown Timer increased from 3 to 4
- Follower The Leper has had their TurnsUnknown Timer increased from 3 to 4
---- ResolveOutcome (Director.cs)
+//Exile Game file ops "LogTurn.txt" commenced at: 23/05/2017 11:25:02
+--- ProcessStartGame (World.cs)
+--- AgePassiveCharacters (History.cs)
+--- InitialiseGameVars (World.cs)
+[GameVar] View_Index changed from 0 to 1
+[AddVisitedLoc] LocID 23, "Harrenhal", turn -3 -> record added to listLocsVisited
+[AddVisitedLoc] LocID 23, "Harrenhal", turn -3 -> new record added to dictLocsVisited
+[AddVisitedLoc] LocID 11, "Red Lake", turn -2 -> record added to listLocsVisited
+[AddVisitedLoc] LocID 11, "Red Lake", turn -2 -> new record added to dictLocsVisited
+[AddVisitedLoc] LocID 6, "Blackhaven", turn -1 -> record added to listLocsVisited
+[AddVisitedLoc] LocID 6, "Blackhaven", turn -1 -> new record added to dictLocsVisited
+[AddVisitedLoc] LocID 18, "Evenfall", turn 0 -> record added to listLocsVisited
+[AddVisitedLoc] LocID 18, "Evenfall", turn 0 -> new record added to dictLocsVisited
+--- MultiKeyInput (Game.cs)
+31 input
 --- SetEndGame (Game.cs)
 [Alert] Player chose to exit (pressed 'X')
-//Exile Game file ops "LogTurn.txt" Completed at: 22/05/2017 20:56:31
-s (Director.cs)
---- HouseKeepActors (World.cs)
-[GameStat] "Location_Days" -> increased from 3 to 4
---- HousekeepRumours (World.cs)
-dictRumoursKnown has 9 records
-[Rumour -> Deleted] RumourID 272
-
-//Exile Game File "LogTurn.txt" Close completed at: 22/05/2017 20:54:52
+//Exile Game file ops "LogTurn.txt" Completed at: 23/05/2017 11:25:57

@@ -940,6 +940,8 @@ namespace Next_Game
         {
             List<Snippet> listToDisplay = new List<Snippet>();
             Actor person = new Actor();
+            RLColor foreColor, tagColor;
+            RLColor unknownColor = RLColor.LightGray;
             string actorType;
             if (dictAllActors.TryGetValue(actorID, out person))
             {
@@ -1041,7 +1043,7 @@ namespace Next_Game
                             case ActorConceal.Disguise:
                                 listToDisplay.Add(new Snippet(string.Format("{0, -16}", "In Disguise"), RLColor.Yellow, RLColor.Black, false));
                                 listToDisplay.Add(new Snippet(string.Format("{0, -12}", GetStars(player.ConcealLevel)), RLColor.LightRed, RLColor.Black, false));
-                                listToDisplay.Add(new Snippet($"{disguise?.Description}", RLColor.LightGray, RLColor.Black));
+                                listToDisplay.Add(new Snippet($"{disguise?.Description}", unknownColor, RLColor.Black));
                                 break;
                         }
                     }
@@ -1069,7 +1071,7 @@ namespace Next_Game
                 RLColor traitColor;
                 RLColor starColor;
                 RLColor skillColor;
-                RLColor unknownColor = RLColor.LightGray;
+                
                 SkillType trait;
                 //age of actor
                 SkillAge age = SkillAge.Fifteen;
@@ -1249,16 +1251,20 @@ namespace Next_Game
                 if (!(person is Player || person is Special) && person.Status != ActorStatus.Gone)
                 {
                     listToDisplay.Add(new Snippet("Relationships", RLColor.Brown, RLColor.Black));
+                    
                     //with Player
                     int relStars = person.GetRelPlyrStars();
                     listToDisplay.Add(new Snippet(string.Format("{0, -16}", "Player"), false));
-                    listToDisplay.Add(new Snippet(string.Format("{0, -12}", GetStars(relStars)), RLColor.LightRed, RLColor.Black, false));
+                    if (person.relKnown == true) { foreColor = RLColor.LightRed; } else { foreColor = unknownColor; }
+                    listToDisplay.Add(new Snippet(string.Format("{0, -12}", GetStars(relStars)), foreColor, RLColor.Black, false));
                     int change = person.GetPlayerChange();
                     int relPlyr = person.GetRelPlyr();
                     string tagText = string.Format("(Change {0}{1})", change > 0 ? "+" : "", change);
                     if (change == 0) { tagText = ""; }
-                    RLColor tagColor = Color._badTrait;
-                    if (relPlyr >= 50) { tagColor = Color._goodTrait; }
+                    if (person.relKnown == true)
+                    { tagColor = Color._badTrait;
+                        if (relPlyr >= 50) { tagColor = Color._goodTrait; } }
+                    else { tagColor = unknownColor; }
                     listToDisplay.Add(new Snippet(string.Format("{0}, Rel {1}, {2}", person.GetPlayerTag(), relPlyr, tagText),
                         tagColor, RLColor.Black, true));
                     //with Lord
@@ -1266,13 +1272,15 @@ namespace Next_Game
                     {
                         relStars = person.GetRelLordStars();
                         listToDisplay.Add(new Snippet(string.Format("{0, -16}", "Lord"), false));
-                        listToDisplay.Add(new Snippet(string.Format("{0, -12}", GetStars(relStars)), RLColor.LightRed, RLColor.Black, false));
+                        listToDisplay.Add(new Snippet(string.Format("{0, -12}", GetStars(relStars)), foreColor, RLColor.Black, false));
                         change = person.GetLordChange();
                         int relLord = person.GetRelLord();
                         tagText = string.Format("(Change {0}{1})", change > 0 ? "+" : "", change);
                         if (change == 0) { tagText = ""; }
-                        tagColor = Color._badTrait;
-                        if (relLord >= 50) { tagColor = Color._goodTrait; }
+                        if (person.relKnown == true)
+                        { tagColor = Color._badTrait;
+                            if (relLord >= 50) { tagColor = Color._goodTrait; } }
+                        else { tagColor = unknownColor; }
                         listToDisplay.Add(new Snippet(string.Format("{0}, Rel {1}, {2}", person.GetLordTag(), relLord, tagText),
                             tagColor, RLColor.Black, true));
                     }
@@ -1323,7 +1331,7 @@ namespace Next_Game
                                     if (possession is Disguise)
                                     {
                                         Disguise tempDisguise = possession as Disguise;
-                                        listToDisplay.Add(new Snippet($"Disguise \"{tempDisguise.Description}\", PossID {tempDisguise.PossID} {GetStars(tempDisguise.Strength)}", RLColor.LightGray, RLColor.Black));
+                                        listToDisplay.Add(new Snippet($"Disguise \"{tempDisguise.Description}\", PossID {tempDisguise.PossID} {GetStars(tempDisguise.Strength)}", unknownColor, RLColor.Black));
                                     }
                                     else { Game.SetError(new Error(245, $"Invalid Possession (not a Disguise) for PossID {possession.PossID}")); }
                                 }
@@ -1346,7 +1354,7 @@ namespace Next_Game
                         //debug -> display item in grey if it isn't known (eg. a secret)
                         if (item.Active == true)
                         { listToDisplay.Add(new Snippet(string.Format("Item ID {0}, \"{1}\", {2}", item.ItemID, item.Description, item.ItemType))); }
-                        else { listToDisplay.Add(new Snippet(string.Format("Item ID {0}, \"{1}\", {2}", item.ItemID, item.Description, item.ItemType), RLColor.LightGray, RLColor.Black)); }
+                        else { listToDisplay.Add(new Snippet(string.Format("Item ID {0}, \"{1}\", {2}", item.ItemID, item.Description, item.ItemType), unknownColor, RLColor.Black)); }
                     }
                 }
                 //Desires 
@@ -1358,7 +1366,7 @@ namespace Next_Game
                         listToDisplay.Add(new Snippet("Desire", RLColor.Brown, RLColor.Black));
                         if (passivePerson.DesireKnown == true)
                         { listToDisplay.Add(new Snippet($"Wants {passivePerson.DesireText}", RLColor.White, RLColor.Black)); } //visible if known
-                        else { listToDisplay.Add(new Snippet($"Wants {passivePerson.DesireText}", RLColor.LightGray, RLColor.Black)); } //hidden if not
+                        else { listToDisplay.Add(new Snippet($"Wants {passivePerson.DesireText}", unknownColor, RLColor.Black)); } //hidden if not
                     }
                 }
                 //family
@@ -1487,13 +1495,14 @@ namespace Next_Game
                 //Relationship records
                 if (!(person is Player) && person.Status != ActorStatus.Gone)
                 {
+                    if (person.relKnown == true) { foreColor = RLColor.White; } else { foreColor = unknownColor; }
                     //with Player
                     List<Relation> playerRelations = person.GetRelEventPlyr();
                     if (playerRelations.Count > 0)
                     {
                         listToDisplay.Add(new Snippet("Relationship History with Player", RLColor.Brown, RLColor.Black));
                         foreach (Relation relationship in playerRelations)
-                        { listToDisplay.Add(new Snippet(relationship.GetRelationText())); }
+                        { listToDisplay.Add(new Snippet(relationship.GetRelationText(), foreColor, RLColor.Black)); }
                     }
                     //with Lord
                     List<Relation> lordRelations = person.GetRelEventLord();
@@ -1502,7 +1511,7 @@ namespace Next_Game
                     {
                         listToDisplay.Add(new Snippet("Relationship History with Lord", RLColor.Brown, RLColor.Black));
                         foreach (Relation relationship in lordRelations)
-                        { listToDisplay.Add(new Snippet(relationship.GetRelationText())); }
+                        { listToDisplay.Add(new Snippet(relationship.GetRelationText(), foreColor, RLColor.Black)); }
                     }
                 }
             }
