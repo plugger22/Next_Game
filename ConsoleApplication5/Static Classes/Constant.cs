@@ -95,6 +95,7 @@ namespace Next_Game
         PLAYER_RUMORS,
         ENEMY_RUMOURS,
         ENEMY_RUMOUR_TIME,
+        REL_RUMOUR_TIME,
         //keep as last
         Count 
     }
@@ -185,6 +186,7 @@ namespace Next_Game
             arrayOfGlobals[72] = Global.PLAYER_RUMORS;
             arrayOfGlobals[73] = Global.ENEMY_RUMOURS;
             arrayOfGlobals[74] = Global.ENEMY_RUMOUR_TIME;
+            arrayOfGlobals[75] = Global.REL_RUMOUR_TIME;
         }
 
         /// <summary>

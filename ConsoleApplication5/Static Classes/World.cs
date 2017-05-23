@@ -3313,6 +3313,7 @@ namespace Next_Game
             int numChildren = numActors - (numGreatHouses * 2) - numBannerLords;
             int numSecrets = GetPossessionsCount(PossessionType.Secret);
             int numRumours = dictRumoursNormal.Count;
+            int numTimedRumours = dictRumoursTimed.Count;
             //checksum
             if (numLocs != numGreatHouses + numSpecialLocs + numBannerLords + 1)
             { Game.SetError(new Error(25, "Locations don't tally")); }
@@ -3326,7 +3327,7 @@ namespace Next_Game
             listStats.Add(new Snippet("1 Capital"));
             listStats.Add(new Snippet(string.Format("{0} Actors ({1} Children)", numActors, numChildren)));
             listStats.Add(new Snippet(string.Format("{0} Secrets", numSecrets))); 
-            listStats.Add(new Snippet(string.Format("{0} Rumours", numRumours)));
+            listStats.Add(new Snippet(string.Format("{0} Total Rumours  ({1} Normal, {2} Timed)", numRumours + numTimedRumours, numRumours, numTimedRumours)));
             if (numErrors > 0) { listStats.Add(new Snippet(string.Format("{0} Errors", numErrors), RLColor.LightRed, RLColor.Black)); }
             //list of all Greathouses by power
             listStats.Add(new Snippet("Great Houses", RLColor.Yellow, RLColor.Black));

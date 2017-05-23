@@ -4582,7 +4582,6 @@ namespace Next_Game
 
             if (dictPassiveActors != null)
             {
-                
                 int skill, strength, index, branch;
                 bool proceedFlag;
                 int royalRefID = Game.lore.RoyalRefIDNew;
@@ -4850,6 +4849,12 @@ namespace Next_Game
                     }
                     else { Game.SetError(new Error(268, "Invalid Passive actor (null)")); }
                 }
+                //Relationships (timed rumours)
+                InitialiseRelationshipRumours();
+                //set turn number to generate the next set of relationship rumours (turn after the first set has expired)
+                int newValue = Game.constant.GetValue(Global.REL_RUMOUR_TIME);
+                newValue += 1;
+                Game.variable.SetValue(GameVar.New_RelRumours, newValue);
                 //
                 //Houses ---
                 //
@@ -4991,6 +4996,19 @@ namespace Next_Game
             Game.logTurn?.Write("--- InitialiseDynamicRumours (Director.cs)");
             int chanceOfRumour, rndNum, strength, branch, timerExpire;
             string rumourText, waitText;
+            //
+            // Relationship rumours
+            //
+            int newSet = Game.variable.GetValue(GameVar.New_RelRumours);
+            Game.logTurn?.Write($"[Notification] Turn {Game.gameTurn}, generate new set of Relationship rumours on turn {newSet}");
+            if (Game.gameTurn >= newSet)
+            {
+                InitialiseRelationshipRumours();
+                //set turn number to generate the next set of relationship rumours (turn after the current set has expired)
+                int newValue = Game.gameTurn + newSet + 1 ;
+                Game.variable.SetValue(GameVar.New_RelRumours, newValue);
+                Game.logTurn?.Write($"[Notification] A new set of Relationship Rumours is set to be generated on turn {newValue}");
+            }
             //
             //Enemies
             //
@@ -5733,26 +5751,23 @@ namespace Next_Game
         /// </summary>
         internal void InitialiseRelationshipRumours()
         {
+            Game.logTurn?.Write("--- InitialiseRelationshipRumours (Director.cs)");
             Dictionary<int, Passive> dictPassiveActors = Game.world.GetAllPassiveActors();
             Dictionary<int, MajorHouse> dictMajorHouses = Game.world.GetMajorHouses();
             //loop NPC's
             if (dictPassiveActors != null)
             {
-                int skill, strength;
+                int strength, relPlyr, band;
                 bool proceedFlag;
                 int royalRefID = Game.lore.RoyalRefIDNew;
-                string trait, rumourText, immersionText, locName;
+                int timerExpire = Game.constant.GetValue(Global.REL_RUMOUR_TIME);
+                string view, rumourText, immersionText, opinionText, locName;
                 string[] arrayOfRumourTexts = new string[] { "rumoured", "rumoured", "said", "known", "widely known", "suspected", "well known", "known by all", "commonly known", "whispered",
                     "whispered", "murmured among friends" };
-                string[] arrayOfSecretTexts = new string[] { "has a dark secret", "is keeping something private", "knows more than they let on", "has a mysterious past",
-                    "has hidden secrets carefully kept from view", "jealously guards a secret", "knows something important", "conceals a dark truth" };
-                string[] arrayOfPrefixTexts = new string[] { "has an unquenched hunger for", "thirsts for", "hungers for", "lusts after", "thinks only of", "is in thrall to", "is fixated upon" };
-                string[] arrayOfTitleTexts = new string[] { "is impatient for a Title", "desires a Title", "has their eyes set on a Title", "is determined to gain a Title", "would do anything for a Title" };
-                //
-                // Characters ---
-                //
+                string[] arrayOfOpinions = new string[] { "impression", "opinion", "view" };
+
                 //loop through all Passive Actors 
-                for (int i = 0; i < dictPassiveActors.Count - 1; i++)
+                for (int i = 0; i < dictPassiveActors.Count; i++)
                 {
                     Passive actor = dictPassiveActors.ElementAt(i).Value;
                     if (actor != null)
@@ -5766,69 +5781,83 @@ namespace Next_Game
                                 House house = Game.world.GetHouse(actor.RefID);
                                 if (house != null || actor.RefID == 9999)
                                 {
-                                    //check actor alive and kicking (should 
+                                    //check actor alive and kicking (doesn't have to be at a location)
                                     if (actor.Status != ActorStatus.Gone)
                                     {
                                         locName = Game.world.GetLocationName(actor.LocID);
-                                        //
-                                        //rumour -> Skills (all skills except touched)
-                                        //
-                                        for (int skillIndex = 1; skillIndex < (int)SkillType.Count; skillIndex++)
+                                        //create a rumour -> make more important characters rumours more visible (higher strength)
+                                        switch (actor.Type)
                                         {
-                                            skill = actor.GetSkill((SkillType)skillIndex);
-                                            if (skill != 3)
-                                            {
-                                                trait = actor.GetTraitName((SkillType)skillIndex);
-                                                if (String.IsNullOrEmpty(trait) == false)
-                                                {
-                                                    //create a rumour -> make more important characters rumours more visible (higher strength)
-                                                    switch (actor.Type)
-                                                    {
-                                                        case ActorType.Lord:
-                                                            strength = 5;
-                                                            break;
-                                                        case ActorType.Lady:
-                                                            strength = 4;
-                                                            break;
-                                                        case ActorType.BannerLord:
-                                                            strength = 4;
-                                                            break;
-                                                        case ActorType.Heir:
-                                                            strength = 3;
-                                                            break;
-                                                        case ActorType.lady:
-                                                        case ActorType.lord:
-                                                            strength = 1;
-                                                            break;
-                                                        default:
-                                                            strength = 2;
-                                                            break;
-                                                    }
-                                                    immersionText = $"{arrayOfRumourTexts[rnd.Next(arrayOfRumourTexts.Length)]} {actor.GetPrefixName((SkillType)skillIndex)}";
-                                                    rumourText = $"{actor.Title} {actor.Name} \"{actor.Handle}\", ActID {actor.ActID} at {locName}, is {immersionText} {trait}";
-                                                    RumourSkill rumour = new RumourSkill(rumourText, strength, actor.ActID, (SkillType)skillIndex, RumourScope.Local, rnd.Next(100) * -1) { RefID = actor.RefID };
-                                                    //add to dictionary and house list
-                                                    Game.world.AddRumour(rumour.RumourID, rumour);
-                                                    //royal family or royal advisors go to the Capital list, all others to their house list
-                                                    proceedFlag = true;
-                                                    if (actor.RefID == 9999) { proceedFlag = false; }
-                                                    if (actor is Noble && actor.RefID == royalRefID) { proceedFlag = false; }
-                                                    if (proceedFlag == true) { house.AddRumour(rumour.RumourID); }
-                                                    else { AddRumourToCapital(rumour.RumourID); }
-                                                    Game.logStart?.Write($"[Skill] RID {rumour.RumourID}, \"{rumourText}\" -> dict");
-                                                }
-                                            }
+                                            case ActorType.Lord:
+                                                strength = 5;
+                                                break;
+                                            case ActorType.Lady:
+                                                strength = 4;
+                                                break;
+                                            case ActorType.BannerLord:
+                                                strength = 4;
+                                                break;
+                                            case ActorType.Heir:
+                                                strength = 3;
+                                                break;
+                                            case ActorType.lady:
+                                            case ActorType.lord:
+                                                strength = 1;
+                                                break;
+                                            default:
+                                                strength = 2; 
+                                                break;
                                         }
+                                        //get view
+                                        relPlyr = actor.GetRelPlyr();
+                                        band = relPlyr / 20;
+                                        view = "Unknown";
+                                        switch (band)
+                                        {
+                                            case 5:
+                                            case 4:
+                                                view = "a very good";
+                                                break;
+                                            case 3:
+                                                view = "a good";
+                                                break;
+                                            case 2:
+                                                view = "an average";
+                                                break;
+                                            case 1:
+                                                view = "a poor";
+                                                break;
+                                            case 0:
+                                                view = "a very poor";
+                                                break;
+                                            default:
+                                                Game.SetError(new Error(286, $"Invalid band \"{band}\" -> given default value 'average"));
+                                                view = "an average";
+                                                break;
+                                        }
+                                        immersionText = $"{arrayOfRumourTexts[rnd.Next(arrayOfRumourTexts.Length)]}";
+                                        opinionText = $"{arrayOfOpinions[rnd.Next(arrayOfOpinions.Length)]}";
+                                        rumourText = $"{actor.Title} {actor.Name} \"{actor.Handle}\", ActID {actor.ActID} at {locName}, is {immersionText} to have {view} {opinionText} of the Usurper";
+                                        RumourRelationship rumour = new RumourRelationship(rumourText, strength, RumourScope.Local, timerExpire, actor.ActID) { RefID = actor.RefID };
+                                        //add to dictionary and house list
+                                        Game.world.AddRumour(rumour.RumourID, rumour);
+                                        //royal family or royal advisors go to the Capital list, all others to their house list
+                                        proceedFlag = true;
+                                        if (actor.RefID == 9999) { proceedFlag = false; }
+                                        if (actor is Noble && actor.RefID == royalRefID) { proceedFlag = false; }
+                                        if (proceedFlag == true) { house.AddRumour(rumour.RumourID); }
+                                        else { AddRumourToCapital(rumour.RumourID); }
+                                        Game.logStart?.Write($"[Relationship] RID {rumour.RumourID}, \"{rumourText}\" -> dict");
                                     }
                                 }
-                                else { Game.SetError(new Error(268, $"Invalid house (null) for Passive ActID {actor.ActID} and RefID {actor.RefID}")); }
+                                else { Game.SetError(new Error(286, $"Invalid house (null) for Passive ActID {actor.ActID} and RefID {actor.RefID}")); }
                             }
                         }
                     }
-                    else { Game.SetError(new Error(268, "Invalid Passive actor (null)")); }
+                    else { Game.SetError(new Error(286, "Invalid Passive actor (null)")); }
                 }
             }
-            else { Game.SetError(new Error(268, "Invalid dictOfPassiveActors (null)")); }
+            else { Game.SetError(new Error(286, "Invalid dictOfPassiveActors (null)")); }
         }
 
 

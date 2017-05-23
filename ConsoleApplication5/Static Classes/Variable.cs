@@ -7,12 +7,14 @@ using Next_Game.Event_System;
 
 namespace Next_Game
 {
-    public enum GameVar  //NOTE: KEEP order the same as in arrayOfGameVar, eg. enum 1 is arrayOfGameVars[1]
+    public enum GameVar  
     {
+        //NOTE: KEEP order the same as in arrayOfGameVar, eg. enum 1 is arrayOfGameVars[1]
         None,
         Promises_Num,
         View_Index,
-        //keep as last
+        New_RelRumours,
+        //keep as last, DO NOT change order of GameVars
         Count
     }
 
@@ -33,6 +35,7 @@ namespace Next_Game
             //set up array of Globals
             arrayOfGameVars[1] = GameVar.Promises_Num;
             arrayOfGameVars[2] = GameVar.View_Index;
+            arrayOfGameVars[3] = GameVar.New_RelRumours;
         }
 
         public GameVar[] GetArrayOfGameVars()

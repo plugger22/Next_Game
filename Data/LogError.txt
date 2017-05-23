@@ -1,4 +1,6 @@
-//Exile Game file ops "LogError.txt" commenced at: 23/05/2017 11:51:17
-ERROR_29 "Location Deleted 28:0"
-Method: LocationSweeper,  Line: 1675,  Object: Map.cs,  Turn: 0,  Local Time: 11:51:17 UTC +10:00
-//Exile Game file ops "LogError.txt" Completed at: 23/05/2017 11:54:07
+//Exile Game file ops "LogError.txt" commenced at: 23/05/2017 15:24:06
+ERROR_279 "RID 361, "BannerLord Desmond Karstark "The Buff", ActID 113 at Skyreach, is known by all to have a very poor view of the Usurper" FAILED removed from House list"
+Method: RemoveRumourFromList,  Line: 5331,  Object: Director.cs,  Turn: 5,  Local Time: 15:27:00 UTC +10:00
+ERROR_279 "RID 502, "Inquisitor, Brother Behemoth, ActID 131 has been seen on the road to Last Hearth (loc 9:13)" FAILED removed from Global All list"
+Method: RemoveRumourFromList,  Line: 5393,  Object: Director.cs,  Turn: 9,  Local Time: 15:31:19 UTC +10:00
+//Exile Game file ops "LogError.txt" Completed at: 23/05/2017 15:31:39

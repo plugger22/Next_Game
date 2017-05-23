@@ -972,6 +972,8 @@ namespace Next_Game
         {
             //nicknames from all assigned traits kept here and one is randomly chosen to be given the actor (their 'handle')
             List<string> tempHandles = new List<string>();
+            string[] arrayOfAverages = new string[] {"The Average", "The Mundane", "The Ordinary", "The Mediocre", "The Humdrum", "The Boring", "The Middling", "The Passable", "The So-So",
+                "The Undistinguished", "The Unexceptional", "The Tolerable", "The Colorless", "The Dull", "The Common" }; //handles for when character has no distinguishing traits
             bool needRandomTrait = true;
             int rndRange;
             int startRange = 0; //used for random selection of traits
@@ -1303,7 +1305,7 @@ namespace Next_Game
             //choose NickName (handle)
             if (tempHandles.Count > 0)
             { person.Handle = tempHandles[rnd.Next(tempHandles.Count)]; }
-            else { person.Handle = "The Average"; }
+            else { person.Handle = arrayOfAverages[rnd.Next(arrayOfAverages.Length)]; }
         }
 
         /// <summary>
@@ -2364,6 +2366,7 @@ namespace Next_Game
                         NewKing = rebelActor;
                         NewKing.Office = ActorOffice.King;
                         NewKing.Title = "King";
+                        rebelActor.RefID = 9999;
                         rebelActor.AddRelEventPlyr(new Relation("Assumes power and looks to crush any threats", "Assumes Power", -25));
                         break;
                     case ActorType.Lady:
@@ -2371,19 +2374,23 @@ namespace Next_Game
                         NewQueen = rebelActor;
                         NewQueen.Office = ActorOffice.Queen;
                         NewQueen.Title = "Queen";
+                        rebelActor.RefID = 9999;
                         rebelActor.AddRelEventPlyr(new Relation("Becomes Queen and supports her Husband, the New King", "Supports her husband", -25));
                         break;
                     case ActorType.Heir:
                         Game.lore.NewHeir = rebelActor;
                         NewHeir = rebelActor;
+                        rebelActor.RefID = 9999;
                         rebelActor.AddRelEventPlyr(new Relation("Father is now the New King and Heir in line to inherit", "Awaits Inherited Power", -25));
                         break;
                     case ActorType.lord:
                         rebelActor.Type = ActorType.Prince;
+                        rebelActor.RefID = 9999;
                         rebelActor.AddRelEventPlyr(new Relation("Son of the New King, a believer in the family", "Son of New King", -25));
                         break;
                     case ActorType.lady:
                         rebelActor.Type = ActorType.Princess;
+                        rebelActor.RefID = 9999;
                         rebelActor.AddRelEventPlyr(new Relation("Daughter of the New King, a believer in the family", "Sibling of New King", -25));
                         break;
                 }
