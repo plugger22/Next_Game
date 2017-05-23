@@ -4520,59 +4520,6 @@ namespace Next_Game
             return resultText;
         }
 
-        /// <summary>
-        /// Add rumour to Capital (eg. all rumours with refID 9999)
-        /// </summary>
-        /// <param name="rumourID"></param>
-        public void AddRumourToCapital(int rumourID)
-        {
-            if (rumourID > 0)
-            { listRumoursCapital.Add(rumourID); }
-            else { Game.SetError(new Error(269, "Invalid rumourID (zero, or less)")); }
-        }
-
-
-        /*
-        /// <summary>
-        /// Add's a global rumour to appropriate director list and appropriate master dictionary, returns True on success
-        /// </summary>
-        /// <param name="rumourID"></param>
-        /// <param name="global"></param>
-        internal bool AddGlobalRumour(Rumour rumour)
-        {
-            //add to appropriate dictionary (handled automatically)
-            if (Game.world.AddLocalRumour(rumour.RumourID, rumour) == false)
-            { Game.SetError(new Error(270, $"RumourID {rumour.RumourID} failed to Add to Dictionary -> not added to Global lists")); return false; }
-            else
-            {
-                //add to appropraite Global list
-                switch (rumour.Global)
-                {
-                    case RumourGlobal.All:
-                        listRumoursGlobal.Add(rumour.RumourID);
-                        break;
-                    case RumourGlobal.North:
-                        listRumoursNorth.Add(rumour.RumourID);
-                        break;
-                    case RumourGlobal.East:
-                        listRumoursEast.Add(rumour.RumourID);
-                        break;
-                    case RumourGlobal.South:
-                        listRumoursSouth.Add(rumour.RumourID);
-                        break;
-                    case RumourGlobal.West:
-                        listRumoursWest.Add(rumour.RumourID);
-                        break;
-                    default:
-                        listRumoursGlobal.Add(rumour.RumourID);
-                        Game.SetError(new Error(270, $"[Alert] RumourID {rumour.RumourID} has an invalid Global Type \"{rumour.Global}\" -> Added to Global list"));
-                        break;
-                }
-                return true;
-            }
-        }
-        */
-
 
         /// <summary>
         /// create rumours at game start -> adds to dict and places rumourID in relevant pool
@@ -4694,7 +4641,6 @@ namespace Next_Game
                                                                 //add to dictionary and global list
                                                                 if (AddRumour(rumour) == false)
                                                                 { Game.SetError(new Error(268, $"{rumour.Text}, RumourID {rumour.RumourID}, failed to load (Item) -> Rumour Cancelled")); }
-                                                                Game.logStart?.Write($"[Item] RID {rumour.RumourID}, \"{rumourText}\" -> dict");
                                                             }
                                                             else { Game.SetError(new Error(268, "Possession is not an Item")); }
                                                         }
@@ -4720,7 +4666,6 @@ namespace Next_Game
                                                 //add to dictionary and global list
                                                 if (AddRumour(rumour) == false)
                                                 { Game.SetError(new Error(268, $"{rumour.Text}, RumourID {rumour.RumourID}, failed to load (Disguise) -> Rumour Cancelled")); }
-                                                Game.logStart?.Write($"[Disguise] RID {rumour.RumourID}, \"{rumourText}\" -> dict");
                                             }
                                         }
                                         //
@@ -4818,7 +4763,6 @@ namespace Next_Game
                                                     //add to dictionary and global list
                                                     if (AddRumour(rumour) == false)
                                                     { Game.SetError(new Error(268, $"{rumour.Text}, RumourID {rumour.RumourID}, failed to load (Desire) -> Rumour Cancelled")); }
-                                                    Game.logStart?.Write($"[Desire] RID {rumour.RumourID}, \"{rumourText}\" -> dict");
                                                 }
                                                 else { Game.SetError(new Error(268, $"Invalid House Branch \"{branch}\" -> Rumour Desire not created")); }
                                             }
@@ -4902,7 +4846,6 @@ namespace Next_Game
                                 //add to dictionary and global list
                                 if (AddRumour(rumour) == false)
                                 { Game.SetError(new Error(268, $"{rumour.Text}, RumourID {rumour.RumourID}, failed to load (Friends and Enemies) -> Rumour Cancelled")); }
-                                Game.logStart?.Write($"[Friends and Enemies] RID {rumour.RumourID}, \"{rumourText}\" -> dict");
                             }
                             else { Game.SetError(new Error(268, $"Invalid House Branch \"{branch}\" -> Rumour Friends not created")); }
                         }
@@ -4958,7 +4901,6 @@ namespace Next_Game
                                                 //add to dictionary and global list
                                                 if (AddRumour(rumour) == false)
                                                 { Game.SetError(new Error(268, $"{rumour.Text}, RumourID {rumour.RumourID}, failed to load (HouseRel) -> Rumour Cancelled")); }
-                                                Game.logStart?.Write($"[HouseRel] RID {rumour.RumourID}, \"{rumourText}\" -> dict");
                                             }
                                             else { Game.SetError(new Error(268, $"Invalid houseFrom.Branch \"{branch}\" -> rumour cancelled")); }
                                         }
@@ -5074,7 +5016,6 @@ namespace Next_Game
                                         //add to appropriate dictionary and appropriate global list
                                         if (AddRumour(rumour) == false)
                                         { Game.SetError(new Error(277, $"{rumour.Text}, RumourID {rumour.RumourID}, failed to load (Enemy) -> Enemy Rumour Cancelled")); }
-                                        Game.logTurn?.Write($"[Enemy] RID {rumour.RumourID}, \"{rumourText}\" -> dict");
                                     }
                                     else { Game.SetError(new Error(277, $"Invalid branch \"{branch}\" -> Enemy rumour cancelled")); }
                                 }
@@ -5288,6 +5229,7 @@ namespace Next_Game
                             Game.logTurn?.Write($"RumourID {rumourID} removed from listRumoursCapital[{index}]");
                             break;
                     }
+                    
                 }
                 else { Game.SetError(new Error(271, "Selected Rumour not found in arrayOfRumours (deleteIndex -1) -> rumour cancelled")); rumourID = 0; }
             }
@@ -5314,7 +5256,7 @@ namespace Next_Game
                             if (house != null)
                             {
                                 if (house.RemoveRumour(rumour.RumourID) == true)
-                                { Game.logTurn?.Write($"[Notification -> Removal] RID {rumour.RumourID}, \"{rumour.Text}\" removed from House list"); return true; }
+                                { Game.logTurn?.Write($"[Rumour -> Removal] RID {rumour.RumourID}, \"{rumour.Text}\" removed from House list"); return true; }
                                 else { Game.SetError(new Error(279, $"RID {rumour.RumourID}, \"{rumour.Text}\" FAILED removed from House list")); }
                             }
                             else { Game.SetError(new Error(279, $"Invalid house (null) for rumourID {rumour.RumourID}, refID {rumour.RefID} -> list removal cancelled")); }
@@ -5323,7 +5265,7 @@ namespace Next_Game
                         {
                             //remove from capital list
                             if (listRumoursCapital.Remove(rumour.RumourID) == true)
-                            { Game.logTurn?.Write($"[Notification -> Removal] RID {rumour.RumourID}, \"{rumour.Text}\" removed from Capital list"); return true; }
+                            { Game.logTurn?.Write($"[Rumour -> Removal] RID {rumour.RumourID}, \"{rumour.Text}\" removed from Capital list"); return true; }
                             else { Game.SetError(new Error(279, $"RID {rumour.RumourID}, \"{rumour.Text}\" FAILED removed from Capital list")); }
                         }
                         break;
@@ -5332,7 +5274,7 @@ namespace Next_Game
                         {
                             case RumourGlobal.All:
                                 if (listRumoursGlobal.Remove(rumour.RumourID) == true)
-                                { Game.logTurn?.Write($"[Notification -> Removal] RID {rumour.RumourID}, \"{rumour.Text}\" removed from Global All list"); return true; }
+                                { Game.logTurn?.Write($"[Rumour -> Removal] RID {rumour.RumourID}, \"{rumour.Text}\" removed from Global All list"); return true; }
                                 else
                                 {
                                     if (Game.world.CheckRumourKnown(rumour.RumourID) == true)
@@ -5352,7 +5294,7 @@ namespace Next_Game
                                 break;
                             case RumourGlobal.East:
                                 if (listRumoursEast.Remove(rumour.RumourID) == true)
-                                { Game.logTurn?.Write($"[Notification -> Removal] RID {rumour.RumourID}, \"{rumour.Text}\" removed from Global East list"); return true; }
+                                { Game.logTurn?.Write($"[Rumour -> Removal] RID {rumour.RumourID}, \"{rumour.Text}\" removed from Global East list"); return true; }
                                 else
                                 {
                                     if (Game.world.CheckRumourKnown(rumour.RumourID) == true)
@@ -5362,7 +5304,7 @@ namespace Next_Game
                                 break;
                             case RumourGlobal.South:
                                 if (listRumoursSouth.Remove(rumour.RumourID) == true)
-                                { Game.logTurn?.Write($"[Notification -> Removal] RID {rumour.RumourID}, \"{rumour.Text}\" removed from Global South list"); return true; }
+                                { Game.logTurn?.Write($"[Rumour -> Removal] RID {rumour.RumourID}, \"{rumour.Text}\" removed from Global South list"); return true; }
                                 else
                                 {
                                     if (Game.world.CheckRumourKnown(rumour.RumourID) == true)
@@ -5372,7 +5314,7 @@ namespace Next_Game
                                 break;
                             case RumourGlobal.West:
                                 if (listRumoursGlobal.Remove(rumour.RumourID) == true)
-                                { Game.logTurn?.Write($"[Notification -> Removal] RID {rumour.RumourID}, \"{rumour.Text}\" removed from Global West list"); return true; }
+                                { Game.logTurn?.Write($"[Rumour -> Removal] RID {rumour.RumourID}, \"{rumour.Text}\" removed from Global West list"); return true; }
                                 else
                                 {
                                     if (Game.world.CheckRumourKnown(rumour.RumourID) == true)
@@ -5394,7 +5336,97 @@ namespace Next_Game
             return false;
         }
 
-
+        /// <summary>
+        /// Add a rumour to the Normal, Inactive, or Timed, dictionary (checks rumour is the correct Status first and changes Status if need be) returns true if successful
+        /// </summary>
+        /// <param name="rumourID"></param>
+        /// <param name="rumour"></param>
+        /// <param name="house">provide House if it's to be a house, locak, rumour otherwise ignore</param>
+        /// <returns></returns>
+        internal bool AddRumour(Rumour rumour, House house = null)
+        {
+            bool successFlag = false;
+            if (rumour != null)
+            {
+                //check the logic to prevent rumours being added to the wrong dictionary
+                if (rumour.TimerStart > 0) { rumour.Status = RumourStatus.Inactive; }
+                else if (rumour.TimerExpire > 0) { rumour.Status = RumourStatus.Timed; }
+                //add to correct dicitonary
+                switch (rumour.Status)
+                {
+                    case RumourStatus.Normal:
+                        if (Game.world.AddRumourNormal(rumour) == true)
+                        { successFlag = true; }
+                        break;
+                    case RumourStatus.Timed:
+                        Game.world.AddRumourTimed(rumour);
+                        successFlag = true;
+                        break;
+                    case RumourStatus.Inactive:
+                        Game.world.AddRumourInactive(rumour);
+                        successFlag = true;
+                        break;
+                }
+                if (successFlag == true)
+                {
+                    //add to appropriate list
+                    switch (rumour.Scope)
+                    {
+                        case RumourScope.Global:
+                            //add to appropraite Global list
+                            switch (rumour.Global)
+                            {
+                                case RumourGlobal.All:
+                                    listRumoursGlobal.Add(rumour.RumourID);
+                                    break;
+                                case RumourGlobal.North:
+                                    listRumoursNorth.Add(rumour.RumourID);
+                                    break;
+                                case RumourGlobal.East:
+                                    listRumoursEast.Add(rumour.RumourID);
+                                    break;
+                                case RumourGlobal.South:
+                                    listRumoursSouth.Add(rumour.RumourID);
+                                    break;
+                                case RumourGlobal.West:
+                                    listRumoursWest.Add(rumour.RumourID);
+                                    break;
+                                default:
+                                    listRumoursGlobal.Add(rumour.RumourID);
+                                    Game.SetError(new Error(270, $"[Alert] RumourID {rumour.RumourID} has an invalid Global Type \"{rumour.Global}\" -> Added to Global list"));
+                                    break;
+                            }
+                            break;
+                        case RumourScope.Local:
+                            //add to house list
+                            if (house != null || rumour.RefID == 9999)
+                            {
+                                //royal family or royal advisors go to the Capital list, all others to their house list
+                                bool proceedFlag = true;
+                                if (rumour.RefID == 9999) { proceedFlag = false; }
+                                //if (actor is Noble && actor.RefID == royalRefID) { proceedFlag = false; }
+                                if (proceedFlag == true) { house.AddRumour(rumour.RumourID); }
+                                else { listRumoursCapital.Add(rumour.RumourID); }
+                            }
+                            else { Game.SetError(new Error(270, $"Invalid house (null) -> rumourID {rumour.RumourID} not added to List")); }
+                            break;
+                        default:
+                            Game.SetError(new Error(270, $"Invalid rumour.Scope \"{rumour.Scope}\" -> rumourID {rumour.RumourID} not added to List"));
+                            break;
+                    }
+                    //admin
+                    Game.logStart?.Write($"[Rumour -> Added] RID {rumour.RumourID}, \"{rumour.Text}\" -> dict & List");
+                    Game.logTurn?.Write($"[Rumour -> Added] RID {rumour.RumourID}, \"{rumour.Text}\" -> dict & List");
+                }
+                else
+                {
+                    Game.logStart?.Write($"[Alert] RID {rumour.RumourID}, \"{rumour.Text}\" -> NOT added dict & List");
+                    Game.logTurn?.Write($"[Alert] RID {rumour.RumourID}, \"{rumour.Text}\" -> NOT added dict & List");
+                }
+            }
+            else { Game.SetError(new Error(270, "Invalid Rumour (null) -> Rumour not added to dict or list")); }
+            return successFlag;
+        }
 
 
         /// <summary>
@@ -5746,7 +5778,6 @@ namespace Next_Game
             if (dictPassiveActors != null)
             {
                 int strength, relPlyr, band;
-                bool proceedFlag;
                 int royalRefID = Game.lore.RoyalRefIDNew;
                 int timerExpire = Game.constant.GetValue(Global.REL_RUMOUR_TIME);
                 string view, rumourText, immersionText, opinionText, locName;
@@ -5832,13 +5863,13 @@ namespace Next_Game
                                         if (AddRumour(rumour, house) == true)
                                         {
                                             counter++;
-                                            //royal family or royal advisors go to the Capital list, all others to their house list
+                                            /*//royal family or royal advisors go to the Capital list, all others to their house list
                                             proceedFlag = true;
                                             if (actor.RefID == 9999) { proceedFlag = false; }
                                             if (actor is Noble && actor.RefID == royalRefID) { proceedFlag = false; }
                                             if (proceedFlag == true) { house.AddRumour(rumour.RumourID); }
                                             else { AddRumourToCapital(rumour.RumourID); }
-                                            Game.logStart?.Write($"[Relationship] RID {rumour.RumourID}, \"{rumourText}\" -> dict");
+                                            Game.logStart?.Write($"[Relationship] RID {rumour.RumourID}, \"{rumourText}\" -> dict");*/
                                         }
                                     }
                                 }
@@ -5853,89 +5884,6 @@ namespace Next_Game
             Game.logTurn?.Write($"[Notification] {counter} Relationship Rumours have been added to the dictRumoursTimed");
         }
 
-        /// <summary>
-        /// Add a rumour to the Normal, Inactive, or Timed, dictionary (checks rumour is the correct Status first and changes Status if need be) returns true if successful
-        /// </summary>
-        /// <param name="rumourID"></param>
-        /// <param name="rumour"></param>
-        /// <param name="house">provide House if it's to be a house, locak, rumour otherwise ignore</param>
-        /// <returns></returns>
-        internal bool AddRumour(Rumour rumour, House house = null)
-        {
-            bool successFlag = false;
-            if (rumour != null)
-            {
-                //check the logic to prevent rumours being added to the wrong dictionary
-                if (rumour.TimerStart > 0) { rumour.Status = RumourStatus.Inactive; }
-                else if (rumour.TimerExpire > 0) { rumour.Status = RumourStatus.Timed; }
-                //add to correct dicitonary
-                switch (rumour.Status)
-                {
-                    case RumourStatus.Normal:
-                        if (Game.world.AddRumourNormal(rumour) == true)
-                        { successFlag = true; }
-                        break;
-                    case RumourStatus.Timed:
-                        Game.world.AddRumourTimed(rumour);
-                        successFlag = true;
-                        break;
-                    case RumourStatus.Inactive:
-                        Game.world.AddRumourInactive(rumour);
-                        successFlag = true;
-                        break;
-                }
-                //add to appropriate list
-                switch (rumour.Scope)
-                {
-                    case RumourScope.Global:
-                        //add to appropraite Global list
-                        switch (rumour.Global)
-                        {
-                            case RumourGlobal.All:
-                                listRumoursGlobal.Add(rumour.RumourID);
-                                break;
-                            case RumourGlobal.North:
-                                listRumoursNorth.Add(rumour.RumourID);
-                                break;
-                            case RumourGlobal.East:
-                                listRumoursEast.Add(rumour.RumourID);
-                                break;
-                            case RumourGlobal.South:
-                                listRumoursSouth.Add(rumour.RumourID);
-                                break;
-                            case RumourGlobal.West:
-                                listRumoursWest.Add(rumour.RumourID);
-                                break;
-                            default:
-                                listRumoursGlobal.Add(rumour.RumourID);
-                                Game.SetError(new Error(270, $"[Alert] RumourID {rumour.RumourID} has an invalid Global Type \"{rumour.Global}\" -> Added to Global list"));
-                                break;
-                        }
-                        break;
-                    case RumourScope.Local:
-                        //add to house list
-                        if (house != null)
-                        {
-                            //royal family or royal advisors go to the Capital list, all others to their house list
-                            bool proceedFlag = true;
-                            if (rumour.RefID == 9999) { proceedFlag = false; }
-                            //if (actor is Noble && actor.RefID == royalRefID) { proceedFlag = false; }
-                            if (proceedFlag == true) { house.AddRumour(rumour.RumourID); }
-                            else { AddRumourToCapital(rumour.RumourID); }
-                            Game.logStart?.Write($"[Rumour -> Added] RID {rumour.RumourID}, \"{rumour.Text}\" -> dict & List");
-                            Game.logTurn?.Write($"[Rumour -> Added] RID {rumour.RumourID}, \"{rumour.Text}\" -> dict");
-                        }
-                        else { Game.SetError(new Error(270, $"Invalid house (null) -> rumourID {rumour.RumourID} not added to List")); }
-                        break;
-                    default:
-                        Game.SetError(new Error(270, $"Invalid rumour.Scope \"{rumour.Scope}\" -> rumourID {rumour.RumourID} not added to List"));
-                        break;
-                }
-                if (successFlag == true) { return true; }
-            }
-            else { Game.SetError(new Error(270, "Invalid Rumour (null) -> Rumour not added to dict or list")); }
-            return false;
-        }
 
         //place new methods above here
     }

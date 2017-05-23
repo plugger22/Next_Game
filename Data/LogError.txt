@@ -1,0 +1,4 @@
+//Exile Game file ops "LogError.txt" commenced at: 23/05/2017 21:32:05
+ERROR_275 "Invalid Rumour.Type "Relationship""
+Method: ShowRumourRL,  Line: 4111,  Object: World.cs,  Turn: 5,  Local Time: 21:34:59 UTC +10:00
+//Exile Game file ops "LogError.txt" Completed at: 23/05/2017 21:35:43

@@ -1,18 +1,262 @@
-//Exile Game file ops "LogTurn.txt" commenced at: 23/05/2017 16:23:10
---- ProcessStartGame (World.cs)
---- AgePassiveCharacters (History.cs)
---- InitialiseGameVars (World.cs)
-[GameVar] View_Index changed from 0 to 1
-[AddVisitedLoc] LocID 15, "Red Lake", turn -3 -> record added to listLocsVisited
-[AddVisitedLoc] LocID 15, "Red Lake", turn -3 -> new record added to dictLocsVisited
-[AddVisitedLoc] LocID 23, "Deepwood Motte", turn -2 -> record added to listLocsVisited
-[AddVisitedLoc] LocID 23, "Deepwood Motte", turn -2 -> new record added to dictLocsVisited
-[AddVisitedLoc] LocID 22, "Bloodkeep", turn -1 -> record added to listLocsVisited
-[AddVisitedLoc] LocID 22, "Bloodkeep", turn -1 -> new record added to dictLocsVisited
-[AddVisitedLoc] LocID 3, "Skyreach", turn 0 -> record added to listLocsVisited
-[AddVisitedLoc] LocID 3, "Skyreach", turn 0 -> new record added to dictLocsVisited
---- MultiKeyInput (Game.cs)
-113 input
+//Exile Game File "LogTurn.txt" opened at: 23/05/2017 21:35:37
+--- ProcessStartTurn (World.cs)
+Day 7, Turn 6
+Usurper Thomme Greyjoy, "The Foolhardy", AtLocation, Skyreach
+--- UpdateRumours (World.cs)
+dictRumoursTimed (Start) -> 1 records
+RumourID 415 -> TimerExpire decremented, now 1
+--- MoveActors -> 1 Records (World.cs)
+ [Move -> MoveObject] Inquisitor Brother Haborym, ActID 128 travelling to Pyke (current Loc 12:14)
+--- CheckIfFoundEnemy (World.cs)
+ [Search -> Debug] Active Thomme Greyjoy, ID 1 at 13:7, Enemy at 12:14 (Brother Haborym, ID 128
+--- CheckIfFoundEnemy (World.cs)
+ [Search -> Debug] Active Thomme Greyjoy, ID 1 at 13:7, Enemy at 12:13 (Brother Haborym, ID 128
+--- UpdatePlayerStatus (World.cs)
+--- UpdateWorldStatus (World.cs)
+--- CheckFollowerActivity (World.cs)
+--- GetRumour (Director.cs)
+arrayOfRumours [0] -> RumourID 24, Strength 4, Scope Global, Type Disguise, Global All
+arrayOfRumours [2] -> RumourID 16, Strength 2, Scope Global, Type Desire, Global East
+arrayOfRumours [5] -> RumourID 214, Strength 4, Scope Local, Type Skill, Global All
+RumourID 214 selected from the Pool
+Rumour "BannerLord Audry Crane "The Ambitious", ActID 95 at Red Lake, is known by all to be Alert" revealed to ActorID6 on turn 6 -> added to List
+RumourID 214 removed from listRumoursHouse[0]
+Follower The Spider, ActID 6, added RumourID 214
+BannerLord Audry Crane, ActID 95, has their Combat changed to True
+--- GetRumour (Director.cs)
+arrayOfRumours [0] -> RumourID 285, Strength 2, Scope Global, Type Desire, Global All
+arrayOfRumours [1] -> RumourID 178, Strength 2, Scope Global, Type Desire, Global North
+arrayOfRumours [5] -> RumourID 251, Strength 4, Scope Local, Type Skill, Global All
+RumourID 251 selected from the Pool
+Rumour "BannerLord Desmond Karstark "The Buff", ActID 113 at Skyreach, is murmured among friends to be a Connoisseur" revealed to ActorID8 on turn 6 -> added to List
+RumourID 251 removed from listRumoursHouse[0]
+Follower The Dark Eminence, ActID 8, added RumourID 251
+BannerLord Desmond Karstark, ActID 113, has their Charm changed to True
+--- GetRumour (Director.cs)
+arrayOfRumours [0] -> RumourID 23, Strength 1, Scope Global, Type Item, Global All
+arrayOfRumours [2] -> RumourID 397, Strength 2, Scope Global, Type HouseRel, Global East
+arrayOfRumours [5] -> RumourID 110, Strength 2, Scope Local, Type Skill, Global All
+RumourID 110 selected from the Pool
+Rumour "Maester Gib Umbert "The Feeble", ActID 58 at Riverrun, is known to be Anemic" revealed to ActorID5 on turn 6 -> added to List
+RumourID 110 removed from listRumoursHouse[3]
+Follower The Beast, ActID 5, added RumourID 110
+Maester Gib Umbert, ActID 58, has their Combat changed to True
+--- GetMarketView (Director.cs)
+[GameVar] View_Index changed from 2 to 3
+--- CheckStationaryActiveActors (World.cs)
+ [Search -> Stationary] Usurper Thomme Greyjoy, ActID 1 is AtLocation
+--- CheckIfFoundActive (World.cs)
+ [Search -> Debug] Enemy, Brother Haborym, ID 128 at 12:12, Active Thomme Greyjoy, ID 1, at 13:7
+ [Search -> Debug] Enemy, Brother Mastema, ID 129 at 12:16, Active Thomme Greyjoy, ID 1, at 13:7
+ [Search -> Debug] Enemy, Brother Nergal, ID 130 at 9:20, Active Thomme Greyjoy, ID 1, at 13:7
+ [Search -> Debug] Enemy, Brother Behemoth, ID 131 at 12:16, Active Thomme Greyjoy, ID 1, at 13:7
+ [Search -> Debug] Enemy, The Unrelenting, ID 132 at 12:16, Active Thomme Greyjoy, ID 1, at 13:7
+ [Search -> Stationary] Follower The Spider, ActID 6 is AtLocation
+ [Search -> Stationary] Follower The Dark Eminence, ActID 8 is AtLocation
+ [Search -> Stationary] Follower The Beast, ActID 5 is AtLocation
+--- UpdateAIController (World.cs)
+ [AI -> Player Unknown] Inquisitor Brother Mastema, Act ID 129 Mode -> Normal
+ [AI -> Player Unknown] Inquisitor Brother Nergal, Act ID 130 Mode -> Normal
+ [AI -> Player Unknown] Inquisitor Brother Behemoth, Act ID 131 Mode -> Normal
+ [AI -> Player Unknown] Nemesis The Unrelenting, Act ID 132 Mode -> Normal
+--- SetEnemyActivity (World.cs)
+--- SetEnemyGoal (World.cs)
+ [Goal -> Branch] Brother Mastema, ActID 129 Assigned Branch -> 2 Current Branch -> 0
+ [Goal -> New] Brother Mastema, ActID 129, (loc 12:16), assigned new Goal -> Move
+ [Goal -> Move] Brother Mastema, ActID 129 -> Capital to Correct Branch -> One Eyed Pete's, LocID 7
+--- InitiateMoveActor (World.cs)
+--- Move Actor (Director.cs)
+ [Enemy -> Unknown] Brother Nergal ActID 130 has reverted to Unknown status (timer elapsed)
+ [Enemy -> Goal] Brother Nergal, ActID 130 retains Goal -> Wait
+ [Enemy -> Unknown] Brother Behemoth ActID 131 has reverted to Unknown status (timer elapsed)
+--- SetEnemyGoal (World.cs)
+ [Goal -> Branch] Brother Behemoth, ActID 131 Assigned Branch -> 4 Current Branch -> 0
+ [Goal -> New] Brother Behemoth, ActID 131, (loc 12:16), assigned new Goal -> Move
+ [Goal -> Move] Brother Behemoth, ActID 131 -> Capital to Correct Branch -> Last Hearth, LocID 27
+--- InitiateMoveActor (World.cs)
+--- Move Actor (Director.cs)
+--- SetEnemyGoal (World.cs)
+ [Goal -> Branch] The Unrelenting, ActID 132 Assigned Branch -> 0 Current Branch -> 0
+--- CheckPlayerEvents (Director.cs)
+- CreateAutoLocEvent (Director.cs)
+ [AutoEvent -> ActorList] "The Dark Eminence", ID 8 added to list of Actors
+ [AutoEvent -> ActorList] "Desmond Karstark", ID 113 added to list of Actors
+ [AutoEvent -> FollowerList] "The Dark Eminence", ID 8 added to list of Followers
+ [AutoEvent -> LocalList] "Desmond Karstark", ID 113 added to list of Locals
+[Notification] No entry found in dictOfIntroductions for RefID 99
+ Chance of Player Location event 75 %
+--- ResolvePlayerEvents (Director.cs)
+ Trigger FAILED on "0" Equals 1
+ Trigger: Player is wrong type of Known status -> Trigger failed
+ Trigger FAILED on "0" Equals 1
+ Trigger: Player is wrong type of Known status -> Trigger failed
+ Event "What to do?" Timer Repeat now 999
+ Event "What to do?" Cooldown Timer has been reset to 0
+--- UpdateActiveActors (World.cs)
+ Usurper Thomme Greyjoy has had their TurnsUnknown Timer increased from 105 to 106
+ Follower The Spider has had their TurnsUnknown Timer increased from 5 to 6
+ Follower The Dark Eminence has had their TurnsUnknown Timer increased from 5 to 6
+ Follower The Beast has had their TurnsUnknown Timer increased from 5 to 6
+--- ResolveOutcome (Director.cs)
+ Inactive (greyed out) Option chosen for "What to do?", option # 1
 --- SetEndGame (Game.cs)
 [Alert] Player chose to exit (pressed 'X')
-//Exile Game file ops "LogTurn.txt" Completed at: 23/05/2017 16:23:47
+//Exile Game file ops "LogTurn.txt" Completed at: 23/05/2017 21:35:43
+w of the Usurper" removed from House list
+[Rumour -> Removal] RID 327, "Septon Benjen Timm "The Abnormal", ActID 66 at Highgarden, is whispered to have a poor opinion of the Usurper" removed from House list
+[Rumour -> Removal] RID 328, "Heir Aunger Tyrell "The Polite", ActID 67 at Highgarden, is well known to have an average opinion of the Usurper" removed from House list
+[Rumour -> Removal] RID 329, "Lord Willem Targaryen "The Hefty", ActID 68 at Valyria, is rumoured to have a poor impression of the Usurper" removed from House list
+[Rumour -> Removal] RID 330, "Lady Sari Targaryen "The Breathtaking", ActID 69 at Valyria, is suspected to have a very poor impression of the Usurper" removed from House list
+[Rumour -> Removal] RID 331, "Knight Ser Stannis Tolly "The Speaker Of Tongues", ActID 70 at Valyria, is said to have a poor view of the Usurper" removed from House list
+[Rumour -> Removal] RID 332, "Castellan Salemon Reignolde "Fish Tongue", ActID 71 at Valyria, is said to have a poor impression of the Usurper" removed from House list
+[Rumour -> Removal] RID 333, "Maester Frederick Simonnet "The Gourmet", ActID 72 at Valyria, is murmured among friends to have a very poor impression of the Usurper" removed from House list
+[Rumour -> Removal] RID 334, "Septon Tolly Heylot "The Staunch", ActID 73 at Valyria, is widely known to have a poor opinion of the Usurper" removed from House list
+[Rumour -> Removal] RID 335, "Heir Salemon Targaryen "The Contemptuous", ActID 74 at Valyria, is known to have a poor opinion of the Usurper" removed from House list
+[Rumour -> Removal] RID 336, "lady Egelina Targaryen "The Breathtaking", ActID 75 at Valyria, is known to have a very poor impression of the Usurper" removed from House list
+[Rumour -> Removal] RID 337, "lady Wantliana Targaryen "The Breathtaking", ActID 76 at Valyria, is whispered to have a poor opinion of the Usurper" removed from House list
+[Rumour -> Removal] RID 338, "lady Brigida Targaryen "The Breathtaking", ActID 77 at Valyria, is whispered to have an average opinion of the Usurper" removed from House list
+[Rumour -> Removal] RID 339, "Heir Martyn Baratheon "The Smooth", ActID 78 at Bloodkeep, is rumoured to have a very poor impression of the Usurper" removed from House list
+[Rumour -> Removal] RID 340, "Lord Preston Fowler "The Resolute", ActID 79 at Pyke, is commonly known to have a very poor opinion of the Usurper" removed from House list
+[Rumour -> Removal] RID 341, "BannerLord Mikken Botley "The Great", ActID 80 at Lordsport, is known to have a good opinion of the Usurper" removed from House list
+[Rumour -> Removal] RID 342, "BannerLord Chett Estermont "The Repetitious", ActID 81 at Greenstone, is known by all to have a good impression of the Usurper" removed from House list
+[Rumour -> Removal] RID 343, "BannerLord Aldis Tallhart "The Droll", ActID 82 at Torrhen's Square, is widely known to have an average view of the Usurper" removed from House list
+[Rumour -> Removal] RID 344, "BannerLord Jaime Penrose "The Majestic", ActID 83 at Parchments, is known by all to have a very poor opinion of the Usurper" removed from House list
+[Rumour -> Removal] RID 345, "BannerLord Ferri Frey "The Decent", ActID 84 at The Twins, is murmured among friends to have a poor view of the Usurper" removed from House list
+[Rumour -> Removal] RID 346, "BannerLord Gerbertus Glover "The Cantankerous", ActID 85 at Deepwood Motte, is known by all to have a poor impression of the Usurper" removed from House list
+[Rumour -> Removal] RID 347, "BannerLord Doran Westerling "The Scaled", ActID 86 at The Crag, is known by all to have a poor impression of the Usurper" removed from House list
+[Rumour -> Removal] RID 348, "BannerLord Audry Tarth "The Whiffy", ActID 88 at Evenfall, is whispered to have a very good view of the Usurper" removed from House list
+[Rumour -> Removal] RID 349, "BannerLord Quentyn Clegane "The Incredulous", ActID 90 at Clegane's Keep, is said to have a good impression of the Usurper" removed from House list
+[Rumour -> Removal] RID 350, "BannerLord Theon Caron "The Patrician", ActID 93 at Nightsong, is rumoured to have a poor view of the Usurper" removed from House list
+[Rumour -> Removal] RID 351, "BannerLord Kevan Flint "The Ductile", ActID 94 at Widow's Watch, is murmured among friends to have a poor view of the Usurper" removed from House list
+[Rumour -> Removal] RID 352, "BannerLord Audry Crane "The Ambitious", ActID 95 at Red Lake, is well known to have a poor impression of the Usurper" removed from House list
+[Rumour -> Removal] RID 353, "BannerLord Kevan Hightower "The Devoted", ActID 96 at Oldtown, is whispered to have a very poor view of the Usurper" removed from House list
+[Rumour -> Removal] RID 354, "BannerLord Gib Mormont "The Aristocrat", ActID 97 at Bearpit, is rumoured to have a poor impression of the Usurper" removed from House list
+[Rumour -> Removal] RID 355, "BannerLord Barristan Yronwood "The Forbearing", ActID 98 at Yronwood Castle, is commonly known to have an average impression of the Usurper" removed from House list
+[Rumour -> Removal] RID 356, "BannerLord Tolly Leygood "The Responsible", ActID 108 at Barrow Hill, is well known to have a poor impression of the Usurper" removed from House list
+[Rumour -> Removal] RID 357, "BannerLord Eddard Umber "The Unmovable", ActID 109 at Last Hearth, is well known to have a poor view of the Usurper" removed from House list
+[Rumour -> Removal] RID 358, "BannerLord Gregor Dondarrion "The Controller", ActID 110 at Blackhaven, is whispered to have a poor opinion of the Usurper" removed from House list
+[Rumour -> Removal] RID 359, "BannerLord Joffery Ambrose "The Imposing", ActID 111 at Blackwater, is known to have a poor impression of the Usurper" removed from House list
+[Rumour -> Removal] RID 360, "BannerLord Iamys Hunt "The Ghostly", ActID 112 at Longbow Hall, is known by all to have a poor impression of the Usurper" removed from House list
+[Rumour -> Removal] RID 362, "Castellan Gib Edon "The Kingly", ActID 114 at Pyke, is commonly known to have an average opinion of the Usurper" removed from House list
+[Rumour -> Removal] RID 363, "Maester Aunger Simonnet "The Talented", ActID 115 at Pyke, is commonly known to have a poor impression of the Usurper" removed from House list
+[Rumour -> Removal] RID 364, "Septon Mathias Manfred "The Alcoholic", ActID 116 at Pyke, is commonly known to have an average opinion of the Usurper" removed from House list
+[Rumour -> Removal] RID 365, "Knight Ser Wyman Hue "The Simple", ActID 117 at Pyke, is whispered to have a very poor view of the Usurper" removed from House list
+[Rumour -> Removal] RID 366, "Lady Joanna Fowler "The Enslaving", ActID 118 at Pyke, is said to have an average view of the Usurper" removed from House list
+[Rumour -> Removal] RID 367, "Heir Iamys Fowler "The Anarchic", ActID 119 at Pyke, is murmured among friends to have a poor impression of the Usurper" removed from House list
+[Rumour -> Removal] RID 368, "High_Septon Eddard Fulchard "The Weighty", ActID 100 at Kingskeep, is suspected to have an average opinion of the Usurper" removed from Capital list
+[Rumour -> Removal] RID 369, "Master_of_Coin Victarion Guy "The Laborious", ActID 120 at Kingskeep, is rumoured to have a poor opinion of the Usurper" removed from Capital list
+[Rumour -> Removal] RID 370, "Master_of_Laws Frederick Heimart "The Slippery", ActID 102 at Kingskeep, is known to have a good view of the Usurper" removed from Capital list
+[Rumour -> Removal] RID 371, "Master_of_Ships Varys Rouland "The Inconclusive", ActID 121 at Kingskeep, is whispered to have an average opinion of the Usurper" removed from Capital list
+[Rumour -> Removal] RID 372, "Master_of_Whisperers Randyll Ademar "The Psychotic", ActID 122 at Kingskeep, is whispered to have a very poor view of the Usurper" removed from Capital list
+[Rumour -> Removal] RID 373, "Hand_of_the_King Jaime Gilebin "The Polite", ActID 123 at Kingskeep, is suspected to have a poor opinion of the Usurper" removed from Capital list
+[Rumour -> Removal] RID 374, "Commander_of_Kings_Guard Harys Timm "The Rash", ActID 124 at Kingskeep, is known by all to have a poor opinion of the Usurper" removed from Capital list
+[Rumour -> Removal] RID 375, "Commander_of_City_Watch Dick Guarin "The Mediocre", ActID 107 at Kingskeep, is suspected to have a very poor impression of the Usurper" removed from Capital list
+RumourID 415 -> TimerExpire decremented, now 2
+85 records have expired and been removed
+dictRumoursTimed (End) -> 1 records
+--- MoveActors -> 2 Records (World.cs)
+ [Move -> MoveObject] Inquisitor Brother Nergal, ActID 130 travelling to The Pickled Prune (current Loc 10:20)
+--- CheckIfFoundEnemy (World.cs)
+ [Search -> Debug] Active Thomme Greyjoy, ID 1 at 13:7, Enemy at 10:20 (Brother Nergal, ID 130
+--- CheckIfFoundEnemy (World.cs)
+ [Search -> Debug] Active Thomme Greyjoy, ID 1 at 13:7, Enemy at 9:20 (Brother Nergal, ID 130
+ [Goal -> Arrival] Inquisitor Brother Nergal, ActID 130, currently at The Pickled Prune, new Goal -> Wait
+ [Move -> MoveObject] Inquisitor Brother Haborym, ActID 128 travelling to Pyke (current Loc 12:15)
+--- CheckIfFoundEnemy (World.cs)
+ [Search -> Debug] Active Thomme Greyjoy, ID 1 at 13:7, Enemy at 12:15 (Brother Haborym, ID 128
+--- UpdatePlayerStatus (World.cs)
+--- UpdateWorldStatus (World.cs)
+--- CheckFollowerActivity (World.cs)
+--- GetRumour (Director.cs)
+arrayOfRumours [0] -> RumourID 274, Strength 2, Scope Global, Type Desire, Global All
+arrayOfRumours [2] -> RumourID 229, Strength 2, Scope Global, Type Desire, Global East
+arrayOfRumours [5] -> RumourID 215, Strength 4, Scope Local, Type Skill, Global All
+RumourID 215 selected from the Pool
+Rumour "BannerLord Audry Crane "The Ambitious", ActID 95 at Red Lake, is well known to be a Megalomaniac" revealed to ActorID6 on turn 5 -> added to List
+RumourID 215 removed from listRumoursHouse[1]
+Follower The Spider, ActID 6, added RumourID 215
+BannerLord Audry Crane, ActID 95, has their Treachery changed to True
+--- GetRumour (Director.cs)
+arrayOfRumours [0] -> RumourID 106, Strength 2, Scope Global, Type Desire, Global All
+arrayOfRumours [1] -> RumourID 259, Strength 2, Scope Global, Type Desire, Global North
+arrayOfRumours [5] -> RumourID 251, Strength 4, Scope Local, Type Skill, Global All
+RumourID 259 selected from the Pool
+Rumour "It is known by all that Septon Mathias Manfred, ActID 116 at Pyke, has an unquenched hunger for Gold" revealed to ActorID8 on turn 5 -> added to List
+RumourID 259 removed from listRumoursNorth[3]
+Follower The Dark Eminence, ActID 8, added RumourID 259
+[Notification] None  "" DesireKnown status changed to "True"
+--- GetRumour (Director.cs)
+arrayOfRumours [0] -> RumourID 153, Strength 1, Scope Global, Type Item, Global All
+arrayOfRumours [2] -> RumourID 406, Strength 2, Scope Global, Type HouseRel, Global East
+arrayOfRumours [5] -> RumourID 115, Strength 2, Scope Local, Type Skill, Global All
+RumourID 115 selected from the Pool
+Rumour "Septon Jaime Raaf "The Fiery", ActID 59 at Riverrun, is whispered to be a person who Stutters" revealed to ActorID5 on turn 5 -> added to List
+RumourID 115 removed from listRumoursHouse[7]
+Follower The Beast, ActID 5, added RumourID 115
+Septon Jaime Raaf, ActID 59, has their Charm changed to True
+--- GetMarketView (Director.cs)
+[GameVar] View_Index changed from 1 to 2
+--- CheckStationaryActiveActors (World.cs)
+ [Search -> Stationary] Usurper Thomme Greyjoy, ActID 1 is AtLocation
+--- CheckIfFoundActive (World.cs)
+ [Search -> Debug] Enemy, Brother Haborym, ID 128 at 12:14, Active Thomme Greyjoy, ID 1, at 13:7
+ [Search -> Debug] Enemy, Brother Mastema, ID 129 at 12:16, Active Thomme Greyjoy, ID 1, at 13:7
+ [Search -> Debug] Enemy, Brother Nergal, ID 130 at 9:20, Active Thomme Greyjoy, ID 1, at 13:7
+ [Search -> Debug] Enemy, Brother Behemoth, ID 131 at 12:16, Active Thomme Greyjoy, ID 1, at 13:7
+ [Search -> Debug] Enemy, The Unrelenting, ID 132 at 12:16, Active Thomme Greyjoy, ID 1, at 13:7
+ [Search -> Stationary] Follower The Spider, ActID 6 is AtLocation
+ [Search -> Stationary] Follower The Dark Eminence, ActID 8 is AtLocation
+ [Search -> Stationary] Follower The Beast, ActID 5 is AtLocation
+--- UpdateAIController (World.cs)
+ [AI -> Player Unknown] Inquisitor Brother Mastema, Act ID 129 Mode -> Normal
+ [AI -> Player Unknown] Inquisitor Brother Nergal, Act ID 130 Mode -> Normal
+ [AI -> Player Unknown] Inquisitor Brother Behemoth, Act ID 131 Mode -> Normal
+ [AI -> Player Unknown] Nemesis The Unrelenting, Act ID 132 Mode -> Normal
+--- SetEnemyActivity (World.cs)
+ [Enemy -> Unknown] Brother Haborym ActID 128 has reverted to Unknown status (timer elapsed)
+ [Enemy -> Goal] Brother Mastema, ActID 129 retains Goal -> Wait
+ [Enemy -> Goal] Brother Nergal, ActID 130 retains Goal -> Wait
+--- SetEnemyGoal (World.cs)
+ [Goal -> Branch] Brother Behemoth, ActID 131 Assigned Branch -> 4 Current Branch -> 0
+ [Goal -> New] Brother Behemoth, ActID 131, (loc 12:16), assigned new Goal -> Hide
+--- SetEnemyGoal (World.cs)
+ [Goal -> Branch] The Unrelenting, ActID 132 Assigned Branch -> 0 Current Branch -> 0
+--- CheckPlayerEvents (Director.cs)
+--- GetValidPlayerEvents (Director.cs)
+ Event "Mysterious Stranger" has no attached Conditions
+--- GetValidPlayerEvents (Director.cs)
+--- GetValidPlayerEvents (Director.cs)
+ Chance of Player Location event 18 %
+--- ResolvePlayerEvents (Director.cs)
+ "Talk to them" Trait Trigger, if type 3 is GreaterThanOrEqual to 3
+ Trigger passed on "3" GreaterThanOrEqual 3
+ "Curse all strangers" Trait Trigger, if type 4 is GreaterThanOrEqual to 3
+ Trigger FAILED on "2" GreaterThanOrEqual 3
+Trait trigger failed
+[Notification] Trait trigger Compulsory fail check
+ Event "Mysterious Stranger" Timer Repeat now 7
+ Event "Mysterious Stranger" Cooldown Timer has been reset to 0
+--- UpdateActiveActors (World.cs)
+ Usurper Thomme Greyjoy has had their TurnsUnknown Timer increased from 104 to 105
+ Follower The Spider has had their TurnsUnknown Timer increased from 4 to 5
+ Follower The Dark Eminence has had their TurnsUnknown Timer increased from 4 to 5
+ Follower The Beast has had their TurnsUnknown Timer increased from 4 to 5
+--- ResolveOutcome (Director.cs)
+--- SetEndGame (Game.cs)
+[Alert] Player chose to exit (pressed 'X')
+--- MultiKeyInput (Game.cs)
+361 input
+ERROR_275 "Invalid Rumour.Type "Relationship""
+Method: ShowRumourRL,  Line: 4111,  Object: World.cs,  Turn: 5,  Local Time: 21:34:59 UTC +10:00
+--- ProcessEndTurn (World.cs)
+Day 6, Turn 5
+--- CheckEventTimers (Director.cs)
+ Event "Search and Detain" Dormant Timer decremented to 15
+--- InitialiseDynamicRumours (Director.cs)
+[Notification] Turn 5, generate new set of Relationship rumours on turn 6
+--- HouseKeepActors (World.cs)
+[GameStat] "Location_Days" -> increased from 5 to 6
+--- HousekeepRumours (World.cs)
+dictRumoursKnown has 15 records
+
+//Exile Game File "LogTurn.txt" Close completed at: 23/05/2017 21:35:37
