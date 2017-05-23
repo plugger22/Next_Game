@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 namespace Next_Game
 {
     public enum RumourScope { None, Local, Global }
-    public enum RumourType { None, Terrain, Road, Skill, Secret, Item, Disguise, HouseRel, Friends, Desire, Enemy } //Corresponds to Rumour subclasses, set in subclass
+    public enum RumourType { None, Terrain, Road, Skill, Secret, Item, Disguise, HouseRel, Friends, Desire, Enemy, Relationship } //Corresponds to Rumour subclasses, set in subclass
     public enum RumourGlobal { All, North, East, South, West }
     public enum RumourStatus { Normal, Timed, Inactive} //Normal -> dictRumoursNormal, Timed (TimerExpire > 0) -> dictRumoursTimed, Inactive (TimerStart > 0) -> dictRumoursInactive
     public enum RumourDisplay { All, Enemies} //used by Game.ShowRumoursRL to filter the required rumour set
@@ -233,6 +233,11 @@ namespace Next_Game
         }
     }
 
+
+    //
+    // Timed Rumours ---
+    //
+
     /// <summary>
     /// Timed rumour (TimerExpire > 0) about location & activity of an Unknown enemy
     /// </summary>
@@ -253,9 +258,39 @@ namespace Next_Game
         public RumourEnemy(string text, int strength, RumourScope scope, int timerExpire, int turnCreated = 0, RumourGlobal global = RumourGlobal.All, bool isActive = true) : base(text, strength, scope, turnCreated, global, isActive)
         {
             if (timerExpire <= 0)
-            { Game.SetError(new Error(278, $"Invalid timerExpire \"{timerExpire}\" -> changed to default value of 3")); timerExpire = 3; }
+            { Game.SetError(new Error(278, $"Invalid timerExpire \"{timerExpire}\" for RumourEnemy -> changed to default value of 3")); timerExpire = 3; }
             this.TimerExpire = timerExpire;
             Type = RumourType.Enemy;
+        }
+    }
+
+
+    /// <summary>
+    /// Timed rumour (TimerExpire > 0). Reveals NPC's relationship status with Lord and Player (changes Actor.RelKnown to true) -> Local (House) scope
+    /// </summary>
+    class RumourRelationship : Rumour
+    {
+        public int ActorID { get; set; } //who the rumour refers to
+
+        /// <summary>
+        /// RumourItem constructor
+        /// </summary>
+        /// <param name="text"></param>
+        /// <param name="strength"></param>
+        /// <param name="skill"></param>
+        /// <param name="scope"></param>
+        /// <param name="TimerExpire">Should be > 0 (# of turns until rumour expires)</param>
+        /// <param name="actorID">actorID of the NPC being referred to</param>
+        /// <param name="turnCreated">If '0' then defaults to current game turn</param>
+        /// <param name="global"></param>
+        /// <param name="isActive"></param>
+        public RumourRelationship(string text, int strength, RumourScope scope, int timerExpire, int actorID, int turnCreated = 0, RumourGlobal global = RumourGlobal.All, bool isActive = true) : base(text, strength, scope, turnCreated, global, isActive)
+        {
+            if (timerExpire <= 0)
+            { Game.SetError(new Error(285, $"Invalid timerExpire \"{timerExpire}\" for RumourRel-> changed to default value of 3")); timerExpire = 3; }
+            this.TimerExpire = timerExpire;
+            this.ActorID = actorID;
+            Type = RumourType.Relationship;
         }
     }
 

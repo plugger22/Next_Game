@@ -1255,13 +1255,13 @@ namespace Next_Game
                     //with Player
                     int relStars = person.GetRelPlyrStars();
                     listToDisplay.Add(new Snippet(string.Format("{0, -16}", "Player"), false));
-                    if (person.relKnown == true) { foreColor = RLColor.LightRed; } else { foreColor = unknownColor; }
+                    if (person.RelKnown == true) { foreColor = RLColor.LightRed; } else { foreColor = unknownColor; }
                     listToDisplay.Add(new Snippet(string.Format("{0, -12}", GetStars(relStars)), foreColor, RLColor.Black, false));
                     int change = person.GetPlayerChange();
                     int relPlyr = person.GetRelPlyr();
                     string tagText = string.Format("(Change {0}{1})", change > 0 ? "+" : "", change);
                     if (change == 0) { tagText = ""; }
-                    if (person.relKnown == true)
+                    if (person.RelKnown == true)
                     { tagColor = Color._badTrait;
                         if (relPlyr >= 50) { tagColor = Color._goodTrait; } }
                     else { tagColor = unknownColor; }
@@ -1277,7 +1277,7 @@ namespace Next_Game
                         int relLord = person.GetRelLord();
                         tagText = string.Format("(Change {0}{1})", change > 0 ? "+" : "", change);
                         if (change == 0) { tagText = ""; }
-                        if (person.relKnown == true)
+                        if (person.RelKnown == true)
                         { tagColor = Color._badTrait;
                             if (relLord >= 50) { tagColor = Color._goodTrait; } }
                         else { tagColor = unknownColor; }
@@ -1495,7 +1495,7 @@ namespace Next_Game
                 //Relationship records
                 if (!(person is Player) && person.Status != ActorStatus.Gone)
                 {
-                    if (person.relKnown == true) { foreColor = RLColor.White; } else { foreColor = unknownColor; }
+                    if (person.RelKnown == true) { foreColor = RLColor.White; } else { foreColor = unknownColor; }
                     //with Player
                     List<Relation> playerRelations = person.GetRelEventPlyr();
                     if (playerRelations.Count > 0)
@@ -6064,75 +6064,7 @@ namespace Next_Game
                                         numRumours++;
                                         Game.logTurn?.Write($"{actor.Value.Title} {actor.Value.Name}, ActID {actor.Value.ActID}, added RumourID {rumour.RumourID}");
                                         //handle special cases -> assumes that rumours are now known to the Player ('cause the Follower has auto sent a crow)
-                                        switch (rumour.Type)
-                                        {
-                                            case RumourType.Skill:
-                                                //switch skill to Known
-                                                if (rumour is RumourSkill)
-                                                {
-                                                    RumourSkill rumourSkill = rumour as RumourSkill;
-                                                    Passive passive = GetPassiveActor(rumourSkill.ActorID);
-                                                    if (passive != null)
-                                                    {
-                                                        if (passive.SetSkillKnownStatus(rumourSkill.Skill, true) == false)
-                                                        { Game.SetError(new Error(276, $"{passive.Title} {passive.Name}, ActID {passive.ActID} failed to set Skill {rumourSkill.Skill} to True")); }
-                                                        else { Game.logTurn?.Write($"{passive.Title} {passive.Name}, ActID {passive.ActID}, skill {rumourSkill.Skill} set to True"); }
-                                                    }
-                                                    else { Game.SetError(new Error(276, $"Invalid Passive actor for rumourSkill.ActorID {rumourSkill.ActorID}")); }
-                                                }
-                                                else { Game.SetError(new Error(276, $"Rumour Type doesn't match Rumour class (Skill) -> Skill not made Known, RumourID {rumour.RumourID}")); }
-                                                break;
-                                            case RumourType.HouseRel:
-                                                //switch relationship to Known
-                                                if (rumour is RumourHouseRel)
-                                                {
-                                                    RumourHouseRel rumourHouse = rumour as RumourHouseRel;
-                                                    House house = GetHouse(rumourHouse.RefID);
-                                                    if (house != null)
-                                                    {
-                                                        //find Relationship
-                                                        List<Relation> listHouseRels = house.GetRelations();
-                                                        if (listHouseRels != null)
-                                                        {
-                                                            foreach (var relation in listHouseRels)
-                                                            {
-                                                                if (relation.TrackerID == rumourHouse.TrackerID)
-                                                                {
-                                                                    //set Relation to Known (so it's visible to the player)
-                                                                    relation.Known = true;
-                                                                    Game.logTurn?.Write($"[Notification -> HouseRel] \"{relation.Text}\" -> Known is True");
-                                                                    break;
-                                                                }
-                                                            }
-                                                        }
-                                                        else { Game.SetError(new Error(276, "Invalid listHouseRels (null) -> HouseRel not made Known")); }
-                                                    }
-                                                    else { Game.SetError(new Error(276, $"Invalid house (null) for rumour.RefID {rumour.RefID} -> HouseRel not made Known")); }
-                                                }
-                                                else { Game.SetError(new Error(276, $"Rumour Type doesn't match Rumour class (HouseRel) -> HouseRel not made Known, RumourID {rumour.RumourID}")); }
-                                                break;
-                                            case RumourType.Friends:
-                                                if (rumour is RumourFriends)
-                                                {
-                                                    House house = Game.world.GetHouse(rumour.RefID);
-                                                    if (house != null)
-                                                    { house.SetFriendsAndEnemies(true); }
-                                                    else { Game.SetError(new Error(276, $"Invalid house (null) for rumour.RefID {rumour.RefID} -> FriendsAndEnemies not made Known")); }
-                                                }
-                                                else { Game.SetError(new Error(276, $"Rumour Type doesn't match Rumour class (Friends) -> FriendsAndEnemies not made Known, RumourID {rumour.RumourID}")); }
-                                                break;
-                                            case RumourType.Desire:
-                                                if (rumour is RumourDesire)
-                                                {
-                                                    RumourDesire rumourDesire = rumour as RumourDesire;
-                                                    Passive passive = Game.world.GetPassiveActor(rumourDesire.Data);
-                                                    if (passive != null)
-                                                    { passive.SetDesireKnown(true); }
-                                                    else { Game.SetError(new Error(276, $"Invalid actor (null) for rumourDesire.ActID {rumourDesire.Data} -> DesireKnown unchanged")); }
-                                                }
-                                                break;
-                                        }
-                                        //end switch
+                                        Game.director.ResolveRumours(rumour);
                                     }
                                     else { Game.SetError(new Error(276, $"Invalid rumour from RumourID {rumourID}")); }
                                 }

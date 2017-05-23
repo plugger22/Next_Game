@@ -38,7 +38,7 @@ namespace Next_Game
         public int Resources { get; set; } //abstracted money, equipment and influence
         private int relPlyr; //relationship with Player (0 to 100), higher the better
         private int relLord; //relationship with their Lord (0 to 100), higher the better (ignore if a Lord)
-        public bool relKnown; //if true relationship (Plyr & Lord) are Known
+        public bool RelKnown { get; private set; } //if true relationship (Plyr & Lord) are Known
         public string DelayReason { get; set; }
         public string Title { get; set; } //text description of whatever relevant title they have. Automatically set by constructors. Used for display purposes.
         public string SexText { get; } // 'him' or 'her' -> set in constructor
@@ -89,7 +89,7 @@ namespace Next_Game
             SexText = "Unknown";
             relPlyr = 50; //neutral
             relLord = 50; //neutral
-            relKnown = false;
+            RelKnown = false;
             InitialiseDataCollections();
             //set title but only if not already set by lower level constructor
             if (String.IsNullOrEmpty(Title) == true) { Title = string.Format("{0}", Type); }
@@ -112,7 +112,7 @@ namespace Next_Game
             if (Sex == ActorSex.Male) { SexText = "him"; } else { SexText = "her"; }
             relPlyr = 50; //neutral
             relLord = 50; //neutral
-            relKnown = false;
+            RelKnown = false;
             InitialiseDataCollections();
             //set title but only if not already set by lower level constructor
             if (String.IsNullOrEmpty(Title) == true) { Title = string.Format("{0}", Type); }
@@ -386,6 +386,15 @@ namespace Next_Game
             rel += 1;
             rel = Math.Min(5, rel);
             return rel;
+        }
+
+        /// <summary>
+        /// Change Relationship status -> if true, Relationship levels and history are shown to player
+        /// </summary>
+        public void SetRelationshipStatus(bool status)
+        {
+            RelKnown = status;
+            Game.logTurn?.Write($"[Notification] {Title} {Name}, ActID {ActID} -> RelKnown changed to {status}");
         }
 
         /// <summary>
