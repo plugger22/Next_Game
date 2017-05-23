@@ -5752,6 +5752,7 @@ namespace Next_Game
         internal void InitialiseRelationshipRumours()
         {
             Game.logTurn?.Write("--- InitialiseRelationshipRumours (Director.cs)");
+            int counter = 0;
             Dictionary<int, Passive> dictPassiveActors = Game.world.GetAllPassiveActors();
             Dictionary<int, MajorHouse> dictMajorHouses = Game.world.GetMajorHouses();
             //loop NPC's
@@ -5839,15 +5840,19 @@ namespace Next_Game
                                         opinionText = $"{arrayOfOpinions[rnd.Next(arrayOfOpinions.Length)]}";
                                         rumourText = $"{actor.Title} {actor.Name} \"{actor.Handle}\", ActID {actor.ActID} at {locName}, is {immersionText} to have {view} {opinionText} of the Usurper";
                                         RumourRelationship rumour = new RumourRelationship(rumourText, strength, RumourScope.Local, timerExpire, actor.ActID) { RefID = actor.RefID };
+
                                         //add to dictionary and house list
-                                        Game.world.AddRumour(rumour.RumourID, rumour);
-                                        //royal family or royal advisors go to the Capital list, all others to their house list
-                                        proceedFlag = true;
-                                        if (actor.RefID == 9999) { proceedFlag = false; }
-                                        if (actor is Noble && actor.RefID == royalRefID) { proceedFlag = false; }
-                                        if (proceedFlag == true) { house.AddRumour(rumour.RumourID); }
-                                        else { AddRumourToCapital(rumour.RumourID); }
-                                        Game.logStart?.Write($"[Relationship] RID {rumour.RumourID}, \"{rumourText}\" -> dict");
+                                        if (Game.world.AddRumour(rumour.RumourID, rumour) == true)
+                                        {
+                                            counter++;
+                                            //royal family or royal advisors go to the Capital list, all others to their house list
+                                            proceedFlag = true;
+                                            if (actor.RefID == 9999) { proceedFlag = false; }
+                                            if (actor is Noble && actor.RefID == royalRefID) { proceedFlag = false; }
+                                            if (proceedFlag == true) { house.AddRumour(rumour.RumourID); }
+                                            else { AddRumourToCapital(rumour.RumourID); }
+                                            Game.logStart?.Write($"[Relationship] RID {rumour.RumourID}, \"{rumourText}\" -> dict");
+                                        }
                                     }
                                 }
                                 else { Game.SetError(new Error(286, $"Invalid house (null) for Passive ActID {actor.ActID} and RefID {actor.RefID}")); }
@@ -5858,6 +5863,7 @@ namespace Next_Game
                 }
             }
             else { Game.SetError(new Error(286, "Invalid dictOfPassiveActors (null)")); }
+            Game.logTurn?.Write($"[Notification] {counter} Relationship Rumours have been added to the dictRumoursTimed");
         }
 
 

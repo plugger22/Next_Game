@@ -1,4 +1,4 @@
-//Exile Game file ops "LogStart.txt" commenced at: 23/05/2017 15:24:06
+//Exile Game file ops "LogStart.txt" commenced at: 23/05/2017 16:22:48
 --- Initialise Constants (FileImport.cs)
 INHERIT_TRAIT -> 50 Min 0 Max 100
 CHILDBIRTH_DEATH -> 15 Min 0 Max 100
@@ -1814,5 +1814,5 @@ Merchant -> 29 records imported
 Craft -> 39 records imported
 PeasantMale -> 33 records imported
 PeasantFemale -> 22 records imported
-//Exile Game file ops "LogStart.txt" Completed at: 23/05/2017 15:24:23
-//Elapsed Time 248 ms
+//Exile Game file ops "LogStart.txt" Completed at: 23/05/2017 16:23:10
+//Elapsed Time 589 ms
