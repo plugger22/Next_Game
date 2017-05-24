@@ -1521,9 +1521,11 @@ namespace Next_Game
                                 case "Event":
                                     structEvent.EventText = cleanToken;
                                     break;
+                                case "rumour":
                                 case "Rumour":
                                     structEvent.Rumour = cleanToken;
                                     break;
+                                case "timerExpire":
                                 case "TimerExpire":
                                     //Rumour Expire Timer (number of turns before rumour is cancelled)
                                     try
@@ -2471,7 +2473,7 @@ namespace Next_Game
                 {
                     Game.logStart?.Write(string.Format("\"{0}\" Event, ID {1}, Type {2}, Repeat {3}, Dormant {4}, Live {5}, Status {6}", eventObject.Value.Name, eventObject.Value.EventPID, eventObject.Value.Type,
                         eventObject.Value.TimerRepeat, eventObject.Value.TimerDormant, eventObject.Value.TimerLive, eventObject.Value.Status));
-                    if (eventObject.Value.Rumour.Length > 0)
+                    if (String.IsNullOrEmpty(eventObject.Value.Rumour) == false)
                     { Game.logStart?.Write($"    Rumour -> \"{eventObject.Value.Rumour}\", TimerExpire {eventObject.Value.TimerExpire}"); }
                     List<OptionInteractive> listTempOptions = eventObject.Value.GetOptions();
                     //options

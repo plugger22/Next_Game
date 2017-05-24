@@ -4107,6 +4107,7 @@ namespace Next_Game
                     case RumourType.Friends:
                     case RumourType.Enemy:
                     case RumourType.Relationship:
+                    case RumourType.Event:
                         break;
                     default:
                         Game.SetError(new Error(275, $"Invalid Rumour.Type \"{rumour.Type}\""));

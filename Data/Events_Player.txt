@@ -9,14 +9,12 @@
 # Freq: (Frequency) Very_Rare/Rare/Low/Normal/Common/High/Very_High
 # Status: (Active or Dormant) -> Optional tag (if not shown then default of 'Active')
 # Event: (Event Text)
+# Rumour: optional text (with tags) that is used to create a rumour when event activated
 
 # Repeat: (Timer) Number > 0 -> Optional tag (if not shown then default of 1000) -> Fixed number of activations before event goes dormant
 # Dormant: (Timer) Number > 0 -> Optional tag (if not shown then default of 0) -> Fixed number of turns before event goes dormant
 # Live: (Timer) Number > 0 -> Optional tag (if not shown then default of 0) -> Fixed number of turns before Live event becomes Active
 # Cool: (Timer) Number > 0 -> Optional tag (if not shown then default 0) -> number of turns of cool down before it can fire again
-
-# Rumour: optional text (with tags) that is used to create a rumour when event activated
-# TimerExpire: OPTIONAL number of turns before rumour is cancelled
 
 # [option]: Option Block (one block for each option, only use enough blocks for your need. Max 4 option blocks. Place block header at top
 # text: option text. Keep it short and clear.
@@ -196,7 +194,6 @@ Cool: 3
 Dormant: 20
 Event: You there, Halt! A group of red coated guards move purposely towards you.
 Rumour: Guards are actively targeting strangers in the larger towns.
-TimerExpire: 15
 [option]
 text: Leg it!
 reply: Do they know who you are? Why take the chance?
@@ -269,7 +266,6 @@ Freq: Low
 Repeat: 10
 Event: A hooded figure crosses your path, piercing eyes glancing in your direction.
 Rumour: A mysterious stranger has been sighted in the smaller towns. Nobody knows who they are or what they want.
-TimerExpire: 6
 [option]
 text: Ignore them
 reply: Why risk getting involved with an unknown stranger?
@@ -320,7 +316,6 @@ Repeat: 3
 Cool: 5
 Event: A crazy, old woman approaches you, yelling obscenities.
 Rumour: People talk about seeing an old woman on the roads, cursing all those she meets.
-TimerExpire: 5
 [option]
 text: Ride past, ignoring her
 reply: Crazy old hags are best left to themselves.
@@ -376,7 +371,6 @@ Status: Dormant
 Repeat: 10
 Event: A dazed, naked woman is limping along the road ahead, leading a donkey.
 Rumour: It's not safe to travel on the roads these days if you're a woman. When was it ever?
-TimerExpire: 9
 [option]
 text: Ride past, ignoring her
 reply: You can't save the world, it's too big and mean. The woman pleads for some water as you canter past.

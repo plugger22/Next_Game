@@ -207,7 +207,7 @@ namespace Next_Game
             dictPlayerEvents = Game.file.GetPlayerEvents("Events_Player.txt");
             Game.logStart?.Write("--- Import AutoReact Events (Director.cs)");
             AddAutoEvents(Game.file.GetPlayerEvents("Events_AutoReact.txt"));
-            InitialiseGenericEvents();
+            InitialiseEvents();
             Game.logStart?.Write("--- Import Archetypes (Director.cs)"); //Run AFTER importing Events
             dictArchetypes = Game.file.GetArchetypes("Archetypes.txt");
             Game.logStart?.Write("--- Import Stories (Director.cs)"); //Run AFTER importing Archetypes
@@ -302,7 +302,7 @@ namespace Next_Game
         /// <summary>
         /// loop all events and place Generic eventID's in their approrpriate lists for both Follower and Player event types
         /// </summary>
-        private void InitialiseGenericEvents()
+        private void InitialiseEvents()
         {
             int eventID;
             //Follower events
@@ -851,7 +851,6 @@ namespace Next_Game
                     Game.SetError(new Error(72, $"Invalid type \"{type}\" -> not recognised"));
                     break;
             }
-
             //character specific events
             if (actor.GetNumPlayerEvents() > 0)
             { listEventPool.AddRange(GetValidPlayerEvents(actor.GetPlayerEvents())); }
@@ -3528,6 +3527,13 @@ namespace Next_Game
                 switch (eventObject.Value.Status)
                 {
                     case EventStatus.Active:
+                        //create a rumour (only once)
+                        if (String.IsNullOrEmpty(eventObject.Value.Rumour) == false)
+                        {
+                            InitialiseEventRumour(eventObject.Value.Rumour);
+                            //delete rumour text to prevent repeat rumours
+                            eventObject.Value.Rumour = null;
+                        }
                         //decrement DORMANT timer, if present
                         if (eventObject.Value.TimerDormant > 0)
                         {
@@ -3559,6 +3565,13 @@ namespace Next_Game
                             {
                                 eventObject.Value.Status = EventStatus.Active;
                                 Game.logTurn?.Write(string.Format(" Event \"{0}\" Live Timer has run down to Zero. Event is now {1}", eventObject.Value.Name, eventObject.Value.Status));
+                                //create a rumour (only once)
+                                if (String.IsNullOrEmpty(eventObject.Value.Rumour) == false)
+                                {
+                                    InitialiseEventRumour(eventObject.Value.Rumour);
+                                    //delete rumour text to prevent repeat rumours
+                                    eventObject.Value.Rumour = null;
+                                }
                             }
                         }
                         break;
@@ -5861,9 +5874,7 @@ namespace Next_Game
 
                                         //add to dictionary and house list
                                         if (AddRumour(rumour, house) == true)
-                                        {
-                                            counter++;
-                                        }
+                                        { counter++; }
                                     }
                                 }
                                 else { Game.SetError(new Error(286, $"Invalid house (null) for Passive ActID {actor.ActID} and RefID {actor.RefID}")); }
@@ -5877,6 +5888,19 @@ namespace Next_Game
             Game.logTurn?.Write($"[Notification] {counter} Relationship Rumours have been added to the dictRumoursTimed");
         }
 
+
+        /// <summary>
+        /// Creates a Event Rumour
+        /// </summary>
+        /// <param name="text"></param>
+        internal void InitialiseEventRumour(string text)
+        {
+            Game.logTurn?.Write("--- InitialiseEventRumours (Director.cs)");
+            //check tags
+            string rumourText = text;
+            RumourEvent rumour = new RumourEvent(rumourText, 3, RumourScope.Global, 0, RumourGlobal.All);
+            AddRumour(rumour);
+        }
 
         //place new methods above here
     }
