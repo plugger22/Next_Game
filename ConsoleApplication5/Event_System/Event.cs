@@ -28,6 +28,8 @@ namespace Next_Game.Event_System
         public int TimerCoolDown { get; set; } = 0; //# turns of cool down -> event can only fire if '0'. Reset to TimerCoolBase whenever event fires. 
         public int SubRef { get; set; } //multipurpose ID to limit events to particular houseID's, geoID's etc. OPTIONAL
         public string Text { get; set; } //main text for event
+        public string Rumour { get; set; } //optional rumour text (could contain tags)
+        public int TimerExpire { get; set; } //optional rumour TimerExpire (value > 0, if input value is <= 0 then GetPlayer() assigns it a default value of '5')
         public EventFrequency Frequency { get; set; }
         public EventCategory Category { get; set; } = EventCategory.None;
         public EventStatus Status { get; set; } = EventStatus.Active;

@@ -197,6 +197,6 @@
 # ENEMY_RUMOUR_TIME -> how long (# turns) rumours rumours of enemy activity stay active (deleted after this)
 74: 3 @ 2 @ 6
 # REL_RUMOUR_TIME -> how many tunrs a relationship rumour exists for and the interval (time + 1) before initialising new ones.
-75: 5 @ 5 @ 20
+75: 20 @ 5 @ 30
 
 # Next valid number -> 76

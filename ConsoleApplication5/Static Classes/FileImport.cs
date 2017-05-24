@@ -66,6 +66,8 @@ namespace Next_Game
         public int Live { get; set; }
         public int Cool { get; set; }
         public int SubRef { get; set; }
+        public string Rumour { get; set; }
+        public int TimerExpire { get; set; }
         public ArcType Type { get; set; }
         public ArcGeo Geo { get; set; }
         public ArcRoad Road { get; set; }
@@ -1519,6 +1521,24 @@ namespace Next_Game
                                 case "Event":
                                     structEvent.EventText = cleanToken;
                                     break;
+                                case "Rumour":
+                                    structEvent.Rumour = cleanToken;
+                                    break;
+                                case "TimerExpire":
+                                    //Rumour Expire Timer (number of turns before rumour is cancelled)
+                                    try
+                                    {
+                                        structEvent.TimerExpire = Convert.ToInt32(cleanToken);
+                                        //can't be 0 or less
+                                        if (structEvent.TimerExpire <= 0)
+                                        {
+                                            //give default value of two
+                                            structEvent.TimerExpire = 5;
+                                            Game.SetError(new Error(49, string.Format("Invalid Input, Rumour Expire (timer), (value <= 0, set to default value of '5' instead) \"{0}\"", arrayOfEvents[i])));
+                                        }
+                                    }
+                                    catch { Game.SetError(new Error(49, string.Format("Invalid Input, Rumour Expire (timer), (Conversion) \"{0}\"", arrayOfEvents[i]))); validData = false; }
+                                    break;
                                 case "Status":
                                     switch (cleanToken)
                                     {
@@ -2229,6 +2249,10 @@ namespace Next_Game
                                             if (structEvent.Cool > 0) { eventTemp.TimerCoolBase = structEvent.Cool + 1; }
                                             //SubRef -> default 0, only applies to AutoReact Player Events
                                             if (structEvent.SubRef > 0) { eventTemp.SubRef = structEvent.SubRef; }
+                                            //Rumours
+                                            if (String.IsNullOrEmpty(structEvent.Rumour) == false)
+                                            { eventTemp.Rumour = structEvent.Rumour; }
+                                                if (structEvent.TimerExpire > 0) { eventTemp.TimerExpire = structEvent.TimerExpire; }
                                             //add options
                                             if (listOptions.Count > 1)
                                             {
@@ -2447,6 +2471,8 @@ namespace Next_Game
                 {
                     Game.logStart?.Write(string.Format("\"{0}\" Event, ID {1}, Type {2}, Repeat {3}, Dormant {4}, Live {5}, Status {6}", eventObject.Value.Name, eventObject.Value.EventPID, eventObject.Value.Type,
                         eventObject.Value.TimerRepeat, eventObject.Value.TimerDormant, eventObject.Value.TimerLive, eventObject.Value.Status));
+                    if (eventObject.Value.Rumour.Length > 0)
+                    { Game.logStart?.Write($"    Rumour -> \"{eventObject.Value.Rumour}\", TimerExpire {eventObject.Value.TimerExpire}"); }
                     List<OptionInteractive> listTempOptions = eventObject.Value.GetOptions();
                     //options
                     foreach (OptionInteractive optionObject in listTempOptions)
@@ -2502,48 +2528,6 @@ namespace Next_Game
                                     Game.logStart?.Write(string.Format("    {0} -> data {1}, amount {2}, apply {3}", cleanTag, outcomeObject.Data, outcomeObject.Amount, outcomeObject.Calc));
                                     break;
                             }
-                            /*
-                            }
-                            if (outcomeObject is OutEventStatus)
-                            {
-                                OutEventStatus tempOutcome = outcomeObject as OutEventStatus;
-                                Game.logStart?.Write(string.Format("    {0} -> Target EventID {1}, New Status {2}", cleanTag, tempOutcome.Data, tempOutcome.NewStatus));
-                            }
-                            else if (outcomeObject is OutEventChain)
-                            {
-                                OutEventChain tempOutcome = outcomeObject as OutEventChain;
-                                Game.logStart?.Write(string.Format("    {0} -> Target EventID {1}", cleanTag, tempOutcome.Data));
-                            }
-                            else if (outcomeObject is OutEventTimer)
-                            {
-                                OutEventTimer tempOutcome = outcomeObject as OutEventTimer;
-                                Game.logStart?.Write(string.Format("    {0} -> Target EventID {1}, {2} timer, amount {3} apply {4}", cleanTag, tempOutcome.Data, tempOutcome.Timer, 
-                                    tempOutcome.Amount, tempOutcome.Calc));
-                            }
-                            else if (outcomeObject is OutConflict)
-                            {
-                                OutConflict tempOutcome = outcomeObject as OutConflict;
-                                Game.logStart?.Write(string.Format("    {0} -> subType {1}, oppID {2}, Challenger {3}", cleanTag, tempOutcome.SubType, tempOutcome.Data, tempOutcome.Challenger));
-                            }
-                            else if (outcomeObject is OutResource)
-                            {
-                                OutResource tempOutcome = outcomeObject as OutResource;
-                                Game.logStart?.Write(string.Format("    {0} -> Player? {1}, amount {2}, apply {3}", cleanTag, tempOutcome.PlayerRes, tempOutcome.Amount, tempOutcome.Calc));
-                            }
-                            else if (outcomeObject is OutCondition)
-                            {
-                                OutCondition tempOutcome = outcomeObject as OutCondition;
-                                Game.logStart?.Write(string.Format("    {0} -> Player? {1}, Condition \"{2}\", {3} {4}, Timer {5}", cleanTag, tempOutcome.PlayerCondition, tempOutcome.NewCondition.Text, 
-                                    tempOutcome.NewCondition.Skill, tempOutcome.NewCondition.Effect, tempOutcome.NewCondition.Timer));
-                            }
-                            else if (outcomeObject is OutGameVar)
-                            {
-                                OutGameVar tempOutcome = outcomeObject as OutGameVar;
-                                Game.logStart?.Write(string.Format("    {0} -> GameVar {1}, Amount {2}, EventCalc {3}", cleanTag, tempOutcome.Amount, tempOutcome.Calc));
-                            }
-                            else
-                            { Game.logStart?.Write(string.Format("    {0} -> data {1}, amount {2}, apply {3}", cleanTag, outcomeObject.Data, outcomeObject.Amount, outcomeObject.Calc)); }
-                            */
                         }
                     }
                 }

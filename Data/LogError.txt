@@ -1,4 +1,28 @@
-//Exile Game file ops "LogError.txt" commenced at: 23/05/2017 21:32:05
-ERROR_275 "Invalid Rumour.Type "Relationship""
-Method: ShowRumourRL,  Line: 4111,  Object: World.cs,  Turn: 5,  Local Time: 21:34:59 UTC +10:00
-//Exile Game file ops "LogError.txt" Completed at: 23/05/2017 21:35:43
+//Exile Game file ops "LogError.txt" commenced at: 24/05/2017 13:39:23
+ERROR_0   (Initialise Game)
+--- Error Message
+Object reference not set to an instance of an object.
+--- Source
+ConsoleApplication5
+--- Stack Trace
+   at Next_Game.FileImport.GetPlayerEvents(String fileName)
+   at Next_Game.Director.InitialiseDirector()
+   at Next_Game.Game.Main(String[] args)
+--- TargetSite
+System.Collections.Generic.Dictionary`2[System.Int32,Next_Game.Event_System.EventPlayer] GetPlayerEvents(System.String)
+ERROR_282 "Invalid innerArray (null) for Occupation -> Market view cancelled"
+Method: GetMarketView,  Line: 5512,  Object: Director.cs,  Turn: 1,  Local Time: 13:44:28 UTC +10:00
+ERROR_282 "Invalid innerArray (null) for View -> Market view cancelled"
+Method: GetMarketView,  Line: 5636,  Object: Director.cs,  Turn: 1,  Local Time: 13:44:28 UTC +10:00
+ERROR_00   (Main Game Loop)
+--- Error Message
+Object reference not set to an instance of an object.
+--- Source
+ConsoleApplication5
+--- Stack Trace
+   at Next_Game.Director.CheckPlayerEvents()
+   at Next_Game.World.ProcessStartTurnLate()
+   at Next_Game.Game.OnRootConsoleUpdate(Object sender, UpdateEventArgs e)
+--- TargetSite
+Void CheckPlayerEvents()
+//Exile Game file ops "LogError.txt" Completed at: 24/05/2017 13:44:34

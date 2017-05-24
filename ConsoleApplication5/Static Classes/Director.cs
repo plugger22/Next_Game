@@ -5402,11 +5402,8 @@ namespace Next_Game
                             if (house != null || rumour.RefID == 9999)
                             {
                                 //royal family or royal advisors go to the Capital list, all others to their house list
-                                bool proceedFlag = true;
-                                if (rumour.RefID == 9999) { proceedFlag = false; }
-                                //if (actor is Noble && actor.RefID == royalRefID) { proceedFlag = false; }
-                                if (proceedFlag == true) { house.AddRumour(rumour.RumourID); }
-                                else { listRumoursCapital.Add(rumour.RumourID); }
+                                if (rumour.RefID == 9999) { listRumoursCapital.Add(rumour.RumourID);}
+                                else { house.AddRumour(rumour.RumourID); }
                             }
                             else { Game.SetError(new Error(270, $"Invalid house (null) -> rumourID {rumour.RumourID} not added to List")); }
                             break;
@@ -5766,7 +5763,7 @@ namespace Next_Game
 
         /// <summary>
         /// General purpose method to create rumours about NPC relationships (if not already Known). Called by InitialiseStartRumours and every so often by InitialiseDynamicRumours. 
-        /// All Relationship rumours are timed rumours. A set is generated, they eventually expire and a new set is created to replace them.
+        /// All Relationship rumours are timed rumours. A set is generated, they eventually expire and a new set is created to replace them -> Global Branch scope
         /// </summary>
         internal void InitialiseRelationshipRumours()
         {
@@ -5800,6 +5797,9 @@ namespace Next_Game
                                 House house = Game.world.GetHouse(actor.RefID);
                                 if (house != null || actor.RefID == 9999)
                                 {
+                                    //if (house != null) { branch = house.Branch; } // not needed if scope is local
+                                    //else { branch = 0; }
+
                                     //check actor alive and kicking (doesn't have to be at a location)
                                     if (actor.Status != ActorStatus.Gone)
                                     {
@@ -5863,13 +5863,6 @@ namespace Next_Game
                                         if (AddRumour(rumour, house) == true)
                                         {
                                             counter++;
-                                            /*//royal family or royal advisors go to the Capital list, all others to their house list
-                                            proceedFlag = true;
-                                            if (actor.RefID == 9999) { proceedFlag = false; }
-                                            if (actor is Noble && actor.RefID == royalRefID) { proceedFlag = false; }
-                                            if (proceedFlag == true) { house.AddRumour(rumour.RumourID); }
-                                            else { AddRumourToCapital(rumour.RumourID); }
-                                            Game.logStart?.Write($"[Relationship] RID {rumour.RumourID}, \"{rumourText}\" -> dict");*/
                                         }
                                     }
                                 }

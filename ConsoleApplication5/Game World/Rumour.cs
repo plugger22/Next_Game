@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 namespace Next_Game
 {
     public enum RumourScope { None, Local, Global }
-    public enum RumourType { None, Terrain, Road, Skill, Secret, Item, Disguise, HouseRel, Friends, Desire, Enemy, Relationship } //Corresponds to Rumour subclasses, set in subclass
+    public enum RumourType { None, Terrain, Road, Skill, Secret, Item, Disguise, HouseRel, Friends, Desire, Enemy, Relationship, Event } //Corresponds to Rumour subclasses, set in subclass
     public enum RumourGlobal { All, North, East, South, West }
     public enum RumourStatus { Normal, Timed, Inactive} //Normal -> dictRumoursNormal, Timed (TimerExpire > 0) -> dictRumoursTimed, Inactive (TimerStart > 0) -> dictRumoursInactive
     public enum RumourDisplay { All, Enemies} //used by Game.ShowRumoursRL to filter the required rumour set
@@ -31,7 +31,7 @@ namespace Next_Game
         public RumourScope Scope { get; set; }
         public RumourType Type { get; set; } //Corresponds to Rumour subclasses, set in subclass
         public RumourGlobal Global { get; set; } //Optional -> only applies if Type is RumourType.Global
-        public RumourStatus Status { get; set; } //Optional -> Default normal, only specify if not
+        public RumourStatus Status { get; set; } //Optional -> Default normal, automatically set by 'Director.cs -> AddRumour'
 
 
         public Rumour()
