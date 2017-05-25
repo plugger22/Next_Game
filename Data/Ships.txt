@@ -2,7 +2,7 @@
 
 [Safe]
 GrayFly
-The Sabrina
+Sabrina
 Phosphorus
 Onslow
 Dauntless

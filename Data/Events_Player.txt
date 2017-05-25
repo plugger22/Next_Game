@@ -436,12 +436,14 @@ Rumour: The King's Hand has been diligently searching for any sign of old King <
 [option]
 text: Thank the Citizen
 reply: You express your gratitude but the citizen scurries off down a lane way before you can finish.
+view: <randomMale> insists that he met <player> in the streets of <locName>. Said that he looked pale.
 [outcome]
 effect: Known
 data: -1
 [option]
 text: Deal with his Insolence
 reply: You slap the surprised citizen who recoils backwards before regaining his balance and yelling at the top of his voice "Guards! Guards!". You have no choice but to run for your life.
+view: The Usurper, <player>, belted <randomMale>'s brother at <locName> the other day. Out of the blue, just up and whacked him.
 [outcome]
 effect: GameState
 data: -2
@@ -456,6 +458,7 @@ timer: Repeat
 [option]
 text: Pay the Citizen
 reply: Carefully, without trying to attract any attention, you slip a gold coin into the citizens eager hand. it's always good to know what's going on, especially when it concerns yourself.
+view: Did you hear how <randomMale> earned a coin from <player>?  It was in <locName>, guards everywhere. Amazing. I could do with some coin myself.
 [trigger]
 check: Trait
 item: Wits
@@ -482,6 +485,7 @@ Event: A wild storm lashes the vessel. Amid slashing spray, large waves crash on
 [option]
 text: Seek shelter below decks in the relative safety of your cabin
 reply: Why risk being washed overboard? Let the crew deal with the storm. It's their job to keep you afloat.
+view: Word on the docks says that <player> is frightened of storms. One of the crew from the <ship> told me.
 [outcome]
 effect: VoyageTime
 amount: 3
@@ -489,6 +493,7 @@ apply: Add
 [option]
 text: Stand next to the Captain on the quarter deck and set an example for the crew.
 reply: Damn the storm. It's dangerous to remain on deck but the crew will be inspired by your calm demeanour.
+view: I heard that <player> sailed <sea> onboard the <ship>. Thought that <he> was the Captain, so <he> did.
 [trigger]
 check: Trait
 item: Leadership
@@ -501,9 +506,11 @@ apply: Add
 [option]
 text: Climb the mast and howl at the wind. Uncage your inner beast.
 reply: The crew look at you askance. Clearly you must be mad. Nobody goes aloft in a storm.
+view: That <player>? <He>'s crazy. <randomMale>, the bosun off the <ship> told me all about it.
 test: 75
 skill: Combat
 replyBad: The mast is bucking like a wild horse. The wind rips your hands from their desperate grasp of the ship's rigging. You find yourself clinging to a raft in the swirling malestrom of the storm tossed sea.
+viewBad: <randomMale>, a sailor off the <ship> got drunk and told us how <player> threw <him>self overboard during a wild storm.
 [trigger]
 check: Trait
 item: Combat
@@ -537,6 +544,7 @@ Event: The wind, the wind? Where to has it gone? Will it ever return? The ship s
 [option]   
 text: What can you do but go below and drink more wine?
 reply: The coolness of your cabin beckons along with the allure of a fine wine. Leave the Captain and crew to bake in the hot sun.
+view: Nobody who has any sense takes a voyage across <sea> this time of year. To easy to get becalmed.
 [outcome]
 effect: VoyageTime
 amount: 4

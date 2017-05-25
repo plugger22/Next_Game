@@ -9,6 +9,7 @@
 # <geocluster> -> name of geocluster at Player's current position (eg. Mountain / Forest / Sea)
 # <courtRandom> -> A court that the Usurper has visited, returns House name, eg. "Lannister"
 # <randomMale> <randomFemale> -> random first names
+# <ship> -> name of the ship that the player is on
 
 [JusticeNeutralEduc]
 Does <player> have a right to be King? Hard to say.

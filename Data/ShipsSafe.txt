@@ -1,7 +1,7 @@
 # ShipsSafe.txt -> Ship Name list of Safe passage vessels
 
 GrayFlyer
-The Sabrina
+Sabrina
 Phosphorus
 Dominator
 Dauntless

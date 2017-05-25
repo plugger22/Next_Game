@@ -332,6 +332,9 @@ namespace Next_Game
                                 }
                                 else { Game.SetError(new Error(283, "Invalid position (null) for forest/mountain/sea")); }
                                 break;
+                            case "ship":
+                                replaceText = player.ShipName;
+                                break;
                             default:
                                 replaceText = "";
                                 Game.SetError(new Error(283, string.Format("Invalid tag (\"{0}\")", tag)));
