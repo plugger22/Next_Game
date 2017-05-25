@@ -3736,14 +3736,14 @@ namespace Next_Game
                     }
                 }
                 //size jagged array
-                arrayOfOccupations[(int)Occupation.Noble] = new string[listNoble.Count];
+                arrayOfOccupations[(int)Occupation.Offical] = new string[listNoble.Count];
                 arrayOfOccupations[(int)Occupation. Church] = new string[listChurch.Count];
                 arrayOfOccupations[(int)Occupation.Merchant] = new string[listMerchant.Count];
                 arrayOfOccupations[(int)Occupation.Craft] = new string[listCraft.Count];
                 arrayOfOccupations[(int)Occupation.PeasantMale] = new string[listPeasantMale.Count];
                 arrayOfOccupations[(int)Occupation.PeasantFemale] = new string[listPeasantFemale.Count];
                 //populate from lists
-                arrayOfOccupations[(int)Occupation.Noble] = listNoble.ToArray();
+                arrayOfOccupations[(int)Occupation.Offical] = listNoble.ToArray();
                 arrayOfOccupations[(int)Occupation.Church] = listChurch.ToArray();
                 arrayOfOccupations[(int)Occupation.Merchant] = listMerchant.ToArray();
                 arrayOfOccupations[(int)Occupation.Craft] = listCraft.ToArray();

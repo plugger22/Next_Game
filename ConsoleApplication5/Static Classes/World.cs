@@ -1569,7 +1569,7 @@ namespace Next_Game
         }
 
         /// <summary>
-        /// returns blank string if not found
+        /// returns 'Unknown' string if not found
         /// </summary>
         /// <param name="pos"></param>
         /// <returns></returns>

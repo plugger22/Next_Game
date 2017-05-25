@@ -24,7 +24,7 @@ namespace Next_Game
     public enum WorldGroup { None, Noble, Church, Merchant, Craft, Peasant} //main population groupings within world
     public enum ViewType { JusticeNeutralEduc, JusticeNeutralUned, JusticeGoodEduc, JusticeGoodUned, JusticeBadEduc, JusticeBadUned, LegendNeutralEduc, LegendNeutralUned, LegendGoodEduc, LegendGoodUned,
     LegendBadEduc, LegendBadUned, HonourNeutralEduc, HonourNeutralUned, HonourGoodEduc, HonourGoodUned, HonourBadEduc, HonourBadUned, KnownEduc, KnownUned, UnknownEduc, UnknownUned, Count} //Market View
-    public enum Occupation { Noble, Church, Merchant, Craft, PeasantMale, PeasantFemale, Count}
+    public enum Occupation { Offical, Church, Merchant, Craft, PeasantMale, PeasantFemale, Count}
 
 
     /// <summary>
@@ -5461,7 +5461,7 @@ namespace Next_Game
             string occupation = "Unknown";
             string view = "";
             string[] innerArray = null;
-            int data, difference;
+            int data, difference, index, count;
             int age = 20;
             bool educated = true; //if true then character provides an educated viewpoint, otherwise an uneducated, less well informed, one
             ActorSex sex;
@@ -5492,7 +5492,7 @@ namespace Next_Game
                 switch (group)
                 {
                     case WorldGroup.Noble:
-                        innerArray = arrayOfOccupations[(int)Occupation.Noble];
+                        innerArray = arrayOfOccupations[(int)Occupation.Offical];
                         educated = true;
                         break;
                     case WorldGroup.Church:
@@ -5529,141 +5529,158 @@ namespace Next_Game
                 //adjust age for education level
                 if (educated == true) { age = rnd.Next(25, 55); } else { age = rnd.Next(14, 30); }
                 //each turn is a different option to maximise variety
-                innerArray = null;
-                switch (viewIndex)
+                count = listPlayerChoices.Count();
+                if (count > 0)
                 {
-                    case 1:
-                        //Justice of Cause
-                        data = CheckGameState(GameState.Justice) - 50;
-                        difference = Math.Abs(data);
-                        if (difference <= 10)
+                    Game.logTurn?.Write($"listPlayerChoices has {count} records");
+                    //check for a Player choice view first
+                    if (rnd.Next(100) <= (count * 10))
+                    {
+                        index = rnd.Next(count);
+                        view = listPlayerChoices[index];
+                        //remove string to prevent reuse
+                        listPlayerChoices.RemoveAt(index);
+                        Game.logTurn?.Write($"[Player Choice] -> \"{view}\", record removed at index {index}");
+                    }
+                    else
+                    {
+                        //use a rotating game state
+                        innerArray = null;
+                        switch (viewIndex)
                         {
-                            //neutral view (both scores within 10 points of each other)
-                            if (educated == true)
-                            { innerArray = arrayOfViews[(int)ViewType.JusticeNeutralEduc]; }
-                            else
-                            { innerArray = arrayOfViews[(int)ViewType.JusticeNeutralUned]; }
-                        }
-                        else if (data > 0)
-                        {
-                            //positive view (for usurper) -> Justice of cause 10+ points ahead
-                            if (educated == true)
-                            { innerArray = arrayOfViews[(int)ViewType.JusticeGoodEduc]; }
-                            else
-                            { innerArray = arrayOfViews[(int)ViewType.JusticeGoodUned]; }
-                        }
-                        else
-                        {
-                            //negative (for usurper) -> Justice of cause 10+ points behind
-                            if (educated == true)
-                            { innerArray = arrayOfViews[(int)ViewType.JusticeBadEduc]; }
-                            else
-                            { innerArray = arrayOfViews[(int)ViewType.JusticeBadUned]; }
-                        }
-                        break;
-                    case 2:
-                        //Relative Legend
-                        data = CheckGameState(GameState.Legend_Usurper) - CheckGameState(GameState.Legend_King);
-                        difference = Math.Abs(data);
-                        if (difference <= 10)
-                        {
-                            //neutral view (both scores within 10 points of each other)
-                            if (educated == true)
-                            { innerArray = arrayOfViews[(int)ViewType.LegendNeutralEduc]; }
-                            else
-                            { innerArray = arrayOfViews[(int)ViewType.LegendNeutralUned]; }
-                        }
-                        else if (data > 0)
-                        {
-                            //positive view (for usurper) -> Usurper's legend 10+ points ahead of Kings
-                            if (educated == true)
-                            { innerArray = arrayOfViews[(int)ViewType.LegendGoodEduc]; }
-                            else
-                            { innerArray = arrayOfViews[(int)ViewType.LegendGoodUned]; }
-                        }
-                        else
-                        {
-                            //negative (for usurper) -> Usurpers legend 10+ point behind that of Kings
-                            if (educated == true)
-                            { innerArray = arrayOfViews[(int)ViewType.LegendBadEduc]; }
-                            else
-                            { innerArray = arrayOfViews[(int)ViewType.LegendBadUned]; }
-                        }
-                        break;
-                    case 3:
-                        //Relative Honour
-                        data = CheckGameState(GameState.Honour_Usurper) - CheckGameState(GameState.Honour_King);
-                        difference = Math.Abs(data);
-                        if (difference <= 10)
-                        {
-                            //neutral view (both scores within 10 points of each other)
-                            if (educated == true)
-                            { innerArray = arrayOfViews[(int)ViewType.HonourNeutralEduc]; }
-                            else
-                            { innerArray = arrayOfViews[(int)ViewType.HonourNeutralUned]; }
-                        }
-                        else if (data > 0)
-                        {
-                            //positive view (for usurper) -> Usurper's honour 10+ points ahead of Kings
-                            if (educated == true)
-                            { innerArray = arrayOfViews[(int)ViewType.HonourGoodEduc]; }
-                            else
-                            { innerArray = arrayOfViews[(int)ViewType.HonourGoodUned]; }
-                        }
-                        else
-                        {
-                            //negative (for usurper) -> Usurpers honour 10+ point behind that of Kings
-                            if (educated == true)
-                            { innerArray = arrayOfViews[(int)ViewType.HonourBadEduc]; }
-                            else
-                            { innerArray = arrayOfViews[(int)ViewType.HonourBadUned]; }
-                        }
+                            case 1:
+                                //Justice of Cause
+                                data = CheckGameState(GameState.Justice) - 50;
+                                difference = Math.Abs(data);
+                                if (difference <= 10)
+                                {
+                                    //neutral view (both scores within 10 points of each other)
+                                    if (educated == true)
+                                    { innerArray = arrayOfViews[(int)ViewType.JusticeNeutralEduc]; }
+                                    else
+                                    { innerArray = arrayOfViews[(int)ViewType.JusticeNeutralUned]; }
+                                }
+                                else if (data > 0)
+                                {
+                                    //positive view (for usurper) -> Justice of cause 10+ points ahead
+                                    if (educated == true)
+                                    { innerArray = arrayOfViews[(int)ViewType.JusticeGoodEduc]; }
+                                    else
+                                    { innerArray = arrayOfViews[(int)ViewType.JusticeGoodUned]; }
+                                }
+                                else
+                                {
+                                    //negative (for usurper) -> Justice of cause 10+ points behind
+                                    if (educated == true)
+                                    { innerArray = arrayOfViews[(int)ViewType.JusticeBadEduc]; }
+                                    else
+                                    { innerArray = arrayOfViews[(int)ViewType.JusticeBadUned]; }
+                                }
+                                break;
+                            case 2:
+                                //Relative Legend
+                                data = CheckGameState(GameState.Legend_Usurper) - CheckGameState(GameState.Legend_King);
+                                difference = Math.Abs(data);
+                                if (difference <= 10)
+                                {
+                                    //neutral view (both scores within 10 points of each other)
+                                    if (educated == true)
+                                    { innerArray = arrayOfViews[(int)ViewType.LegendNeutralEduc]; }
+                                    else
+                                    { innerArray = arrayOfViews[(int)ViewType.LegendNeutralUned]; }
+                                }
+                                else if (data > 0)
+                                {
+                                    //positive view (for usurper) -> Usurper's legend 10+ points ahead of Kings
+                                    if (educated == true)
+                                    { innerArray = arrayOfViews[(int)ViewType.LegendGoodEduc]; }
+                                    else
+                                    { innerArray = arrayOfViews[(int)ViewType.LegendGoodUned]; }
+                                }
+                                else
+                                {
+                                    //negative (for usurper) -> Usurpers legend 10+ point behind that of Kings
+                                    if (educated == true)
+                                    { innerArray = arrayOfViews[(int)ViewType.LegendBadEduc]; }
+                                    else
+                                    { innerArray = arrayOfViews[(int)ViewType.LegendBadUned]; }
+                                }
+                                break;
+                            case 3:
+                                //Relative Honour
+                                data = CheckGameState(GameState.Honour_Usurper) - CheckGameState(GameState.Honour_King);
+                                difference = Math.Abs(data);
+                                if (difference <= 10)
+                                {
+                                    //neutral view (both scores within 10 points of each other)
+                                    if (educated == true)
+                                    { innerArray = arrayOfViews[(int)ViewType.HonourNeutralEduc]; }
+                                    else
+                                    { innerArray = arrayOfViews[(int)ViewType.HonourNeutralUned]; }
+                                }
+                                else if (data > 0)
+                                {
+                                    //positive view (for usurper) -> Usurper's honour 10+ points ahead of Kings
+                                    if (educated == true)
+                                    { innerArray = arrayOfViews[(int)ViewType.HonourGoodEduc]; }
+                                    else
+                                    { innerArray = arrayOfViews[(int)ViewType.HonourGoodUned]; }
+                                }
+                                else
+                                {
+                                    //negative (for usurper) -> Usurpers honour 10+ point behind that of Kings
+                                    if (educated == true)
+                                    { innerArray = arrayOfViews[(int)ViewType.HonourBadEduc]; }
+                                    else
+                                    { innerArray = arrayOfViews[(int)ViewType.HonourBadUned]; }
+                                }
 
-                        break;
-                    case 4:
-                        //Known / Unknown
-                        if (player.Known == true)
-                        {
-                            //Player Known
-                            if (educated == true)
-                            { innerArray = arrayOfViews[(int)ViewType.KnownEduc]; }
-                            else
-                            { innerArray = arrayOfViews[(int)ViewType.KnownUned]; }
+                                break;
+                            case 4:
+                                //Known / Unknown
+                                if (player.Known == true)
+                                {
+                                    //Player Known
+                                    if (educated == true)
+                                    { innerArray = arrayOfViews[(int)ViewType.KnownEduc]; }
+                                    else
+                                    { innerArray = arrayOfViews[(int)ViewType.KnownUned]; }
+                                }
+                                else
+                                {
+                                    //player Unknown
+                                    if (educated == true)
+                                    { innerArray = arrayOfViews[(int)ViewType.UnknownEduc]; }
+                                    else
+                                    { innerArray = arrayOfViews[(int)ViewType.UnknownUned]; }
+                                }
+                                break;
+                            default:
+                                Game.SetError(new Error(282, $"Invalid Street_View \"{viewIndex} -> Street View cancelled"));
+                                break;
                         }
-                        else
+                        if (innerArray != null)
                         {
-                            //player Unknown
-                            if (educated == true)
-                            { innerArray = arrayOfViews[(int)ViewType.UnknownEduc]; }
-                            else
-                            { innerArray = arrayOfViews[(int)ViewType.UnknownUned]; }
+                            if (innerArray.Length > 0)
+                            { randomText = innerArray[rnd.Next(innerArray.Length)]; }
+                            else { Game.logTurn?.Write($"[Alert] No data in innerArray for View group {group}, ViewIndex {viewIndex}, Educated {educated} -> Market View cancelled"); }
                         }
-                        break;
-                    default:
-                        Game.SetError(new Error(282, $"Invalid Street_View \"{viewIndex} -> Street View cancelled"));
-                        break;
+                        else { Game.SetError(new Error(282, "Invalid innerArray (null) for View -> Market view cancelled")); }
+                        //increment index and roll over if need be
+                        if (randomText.Length > 0)
+                        {
+                            //deal with tags (only for game states as player choice views are tag checked at the time that they are created)
+                            view = Game.utility.CheckTagsView(randomText, player);
+                            viewIndex++;
+                            if (viewIndex > 4) { viewIndex = 1; }
+                            //update GameVar
+                            Game.variable.SetValue(GameVar.View_Index, viewIndex);
+                        }
+                    }
                 }
-                if (innerArray != null)
-                {
-                    if (innerArray.Length > 0)
-                    { randomText = innerArray[rnd.Next(innerArray.Length)]; }
-                    else { Game.logTurn?.Write($"[Alert] No data in innerArray for View group {group}, ViewIndex {viewIndex}, Educated {educated} -> Market View cancelled"); }
-                }
-                else { Game.SetError(new Error(282, "Invalid innerArray (null) for View -> Market view cancelled")); }
-                if (randomText.Length > 0)
-                {
-                    //deal with tags
-                    view = Game.utility.CheckTagsView(randomText, player);
-                    //increment index and roll over if need be
-                    viewIndex++;
-                    if (viewIndex > 4) { viewIndex = 1; }
-                    //update GameVar
-                    Game.variable.SetValue(GameVar.View_Index, viewIndex);
-                }
-                //put Snippets together
+                //put Snippets together (could be either a game state or a player choice view)
                 if (view.Length > 0)
                 {
-                    
                     streetView = $"{name}, age {age}, {occupation} ({group}), {place}";
                     listToDisplay.Add(new Snippet(streetView, RLColor.Black, backColor));
                     listToDisplay.Add(new Snippet(""));

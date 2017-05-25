@@ -141,6 +141,7 @@ Rumour: There are soldiers on the King's Road, on the lookout for any threat to 
 [option]
 text: Run for it!
 reply: Giddee Up Trigger! You attempt to gallop away to safety
+view: Somebody who looked a lot like <player> was seen galloping away from the King's men on the road to <roadTo>
 [outcome]
 effect: Known
 data: -1
@@ -152,6 +153,7 @@ apply: Add
 [option]
 text: Talk your way through
 reply: You approach the King's Men with an easy smile and a confident demeanour.
+view: <randomMale> insists that <player> was on the King's road, heading to <roadTo>
 [trigger]
 check: Trait
 item: Charm
@@ -168,6 +170,7 @@ data: 1
 [option]
 text: Bluff your way through
 reply: You approach the King's Men with a haughty manner, demanding that they make way for the King's Tax Collector.
+view: King <newKing>'s tax collector? That who <randomFemale> says that <player> was impersonating on the road to <roadTo>. Who can say?
 [trigger]
 check: Trait
 item: Treachery
@@ -202,6 +205,8 @@ reply: Do they know who you are? Why take the chance?
 test: 60
 skill: Combat
 replyBad: Your foot snags the corner of a building as you run past. Regaining your feet you manage to evade the guards but they have recognised you.
+view: Some <man> bolted from the guards at <locName> the other day. Almost knocked over poor old <randomFemale>. Should be a law against it.
+viewBad: <He> ran! That <player> Usurper person, at <locName>. <randomMale> swears he saw it happen.
 [outcome]
 effect: EventStatus
 data: 4
@@ -218,6 +223,7 @@ data: -1
 [option]
 text: Stay Calm
 reply: They regularly stop people at random, you should be able to talk your way out of this.
+view: <player> has got that calm demeanour about <him>. Questioned by the guards at <locName>. Stayed as cool as <his> father, old King <oldKing>.
 [trigger]
 check: Trait
 item: Charm
@@ -236,6 +242,7 @@ apply: RandomPlus
 [option]
 text: Run straight at them
 reply: Surprise is the key. Wait until they are almost upon you, draw your sword and charge.
+view: You know what <player> did? Charged the <locName> guards singlehandedly. Heard all about it this morning. What a <man>!
 [trigger]
 check: Trait
 item: Combat
@@ -271,11 +278,13 @@ Rumour: A mysterious stranger has been sighted in the smaller towns. Nobody know
 [option]
 text: Ignore them
 reply: Why risk getting involved with an unknown stranger?
+view: Remember that stranger? The scary one? Says he bumped into <player> at <locName> recently.
 [outcome]
 effect: None
 [option]
 text: Talk to them
 reply: The Stranger stops and looks at your expectantly
+view: <randomMale> curses that he met that damn Usurper, <player> at <locName>. Hates the thought of change, he does.
 [trigger]
 check: Trait
 item: 3
@@ -289,9 +298,11 @@ apply: Add
 [option]
 text: Curse all strangers
 reply: You are heard. The Stranger has taken note of your insolence.
+view: Walking around <locName> <randomMale> was. Cursed by a passerby for no good reason. Had the air of royalty about <him>.
 test: 50
 skill: Treachery
 replyBad: The stranger stares at you angrily. Recognition slowly dawns. He knows you.
+viewBad: <randomMale>, the scary one, met <player> at <locName> recently, who was acting all high and mighty. Spread the word, he says.
 [trigger]
 check: Trait
 item: Treachery
@@ -321,6 +332,7 @@ Rumour: People talk about seeing an old woman on the roads, cursing all those sh
 [option]
 text: Ride past, ignoring her
 reply: Crazy old hags are best left to themselves.
+view: The old hag thinks she saw the Usurper, <player> on the road to <roadTo>. Sitting high in the saddle, all kingly and imperious like.
 [outcome]
 effect: EventTimer
 data: 6
@@ -330,6 +342,7 @@ apply: Add
 [option]
 text: Offer assistance
 reply: You immediately dismount and approach her on foot only to be assaulted by the incensed hag.
+view: I overheard the old Hag cackling how she robbed a noble on the road to <roadTo>. Nobody expects a hag to be so fast.
 [outcome]
 effect: GameState
 data: 5
@@ -343,6 +356,7 @@ apply: Subtract
 [option]
 text: Ride her down!
 reply: As you spur your horse into a gallop and aim directly at the helpless woman you feel no pity or remorse. The world has no use for demented old hags.
+view: They found the old Hag the other day on the road to <roadTo>. Somebody had ridden her down. Shame about that.
 [trigger]
 check: Trait
 item: Treachery

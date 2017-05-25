@@ -299,6 +299,11 @@ namespace Next_Game
                                 }
                                 replaceText = Game.world.GetLocationName(data);
                                 break;
+                            case "roadTo":
+                            case "locName":
+                                data = player.LocID;
+                                replaceText = Game.world.GetLocationName(data);
+                                break;
                             case "court":
                                 data = Game.director.GetRandomCourt();
                                 if (data <= 0)
