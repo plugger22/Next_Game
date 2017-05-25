@@ -337,6 +337,60 @@ namespace Next_Game
         }
 
         /// <summary>
+        /// selection of tags used for Rumours (events)
+        /// </summary>
+        /// <param name="text"></param>
+        /// <returns></returns>
+        public string CheckTagsRumour(string text)
+        {
+            string checkedText = text;
+            if (String.IsNullOrEmpty(text) == false)
+            {
+                string tag, replaceText;
+                int tagStart, tagFinish, length, data; //indexes
+
+                //loop while ever tags are present
+                while (checkedText.Contains("<") == true)
+                {
+                    tagStart = checkedText.IndexOf("<");
+                    tagFinish = checkedText.IndexOf(">");
+                    length = tagFinish - tagStart;
+                    tag = checkedText.Substring(tagStart + 1, length - 1);
+                    //strip brackets
+                    replaceText = null;
+                    switch (tag)
+                    {
+                        case "newKing":
+                            replaceText = Game.lore.NewKing.Name;
+                            break;
+                        case "oldKing":
+                            replaceText = Game.lore.OldKing.Name;
+                            break;
+                        case "newKingHandle":
+                            replaceText = Game.lore.NewKing.Handle;
+                            break;
+                        case "oldKingHandle":
+                            replaceText = Game.lore.OldKing.Handle;
+                            break;
+                        default:
+                            replaceText = "";
+                            Game.SetError(new Error(283, string.Format("Invalid tag (\"{0}\")", tag)));
+                            break;
+                    }
+                    if (replaceText != null)
+                    {
+                        //swap tag for text
+                        checkedText = checkedText.Remove(tagStart, length + 1);
+                        checkedText = checkedText.Insert(tagStart, replaceText);
+                    }
+                }
+            }
+            else
+            { Game.SetError(new Error(292, "Invalid Input (null or empty)")); }
+            return checkedText;
+        }
+
+        /// <summary>
         /// Capitalises the first letter of a word, eg. cat -> Cat
         /// </summary>
         /// <param name="s"></param>

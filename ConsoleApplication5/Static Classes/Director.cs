@@ -5897,7 +5897,7 @@ namespace Next_Game
         {
             Game.logTurn?.Write("--- InitialiseEventRumours (Director.cs)");
             //check tags
-            string rumourText = text;
+            string rumourText = Game.utility.CheckTagsRumour(text);
             RumourEvent rumour = new RumourEvent(rumourText, 3, RumourScope.Global, 0, RumourGlobal.All);
             AddRumour(rumour);
         }
