@@ -347,7 +347,7 @@ namespace Next_Game
             if (String.IsNullOrEmpty(text) == false)
             {
                 string tag, replaceText;
-                int tagStart, tagFinish, length, data; //indexes
+                int tagStart, tagFinish, length; //indexes
 
                 //loop while ever tags are present
                 while (checkedText.Contains("<") == true)

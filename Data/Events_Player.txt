@@ -9,7 +9,7 @@
 # Freq: (Frequency) Very_Rare/Rare/Low/Normal/Common/High/Very_High
 # Status: (Active or Dormant) -> Optional tag (if not shown then default of 'Active')
 # Event: (Event Text)
-# Rumour: optional text (with tags) that is used to create a rumour when event activated
+# Rumour: optional text (with tags) that is used to create a rumour when event activated (tags -> 'newKing/oldKing/newKingHandle/oldKingHandle')
 
 # Repeat: (Timer) Number > 0 -> Optional tag (if not shown then default of 1000) -> Fixed number of activations before event goes dormant
 # Dormant: (Timer) Number > 0 -> Optional tag (if not shown then default of 0) -> Fixed number of turns before event goes dormant
@@ -22,6 +22,8 @@
 # test: OPTIONAL if value > 0 (up to 98) then option gives Good outcomes if 1d100 <= Test and Bad if > test (must have replyBad and bad outcomes)
 # skill: OPTIONAL -> (gives DM to roll) Combat / Wits / Charm / Treachery / Leadership / Touched 
 # replyBad: OPTIONAL -> needed if test present and value > 0
+# view: OPTIONAL -> View from the Market to reflect player action (use tags from ViewList.txt or Utility.CheckTagsView)
+# viewBad: OPTIONAL -> needed if there is a replyBad tag in the option to handle a bad outcome
 
 # TO MAKE AN OPTION variable, eg. good or bad outcome depending on a random die roll
 # [option] -> use 'test:', 'replyBad:' & 'skill:'

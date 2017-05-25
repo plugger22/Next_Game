@@ -99,9 +99,11 @@ namespace Next_Game
         string[][] arrayOfViews;
         string[][] arrayOfOccupations;
         //places visited by the Player
-        List<int> listCourtsVisited; //Sequential list of RefID's (NOTE: RefID)
+        List<int> listCourtsVisited; //Sequential list of RefID's (NOTE: RefID) -> player needs to 'visit Court' of House to gain an entry to list
         List<int> listLocsVisited; //Sequential list of LocID's
         Dictionary<int, List<int>> dictLocsVisited; //All locs visited, key is LocID, Value is Turn # for each visit
+        //views as a result of player choices in events
+        List<string> listPlayerChoices;
         //other
         List<Follower> listOfFollowers;
         List<EventPackage> listFollCurrentEvents; //follower
@@ -176,6 +178,7 @@ namespace Next_Game
             listCourtsVisited = new List<int>();
             listLocsVisited = new List<int>();
             dictLocsVisited = new Dictionary<int, List<int>>();
+            listPlayerChoices = new List<string>();
             //other
             listFollCurrentEvents = new List<EventPackage>(); //follower events
             listPlyrCurrentEvents = new List<EventPackage>(); //player events
