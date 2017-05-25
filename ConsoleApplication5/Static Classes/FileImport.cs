@@ -86,6 +86,8 @@ namespace Next_Game
         public SkillType Skill { get; set; }
         public string Reply { get; set; }
         public string ReplyBad { get; set; }
+        public string View { get; set; }
+        public string ViewBad { get; set; }
 
         /// <summary>
         /// copy constructor
@@ -98,6 +100,8 @@ namespace Next_Game
             Skill = option.Skill;
             Reply = option.Reply;
             ReplyBad = option.ReplyBad;
+            View = option.View;
+            ViewBad = option.ViewBad;
         }
     }
 
@@ -1188,6 +1192,8 @@ namespace Next_Game
                                         //zero out optional data as structOption reused
                                         structOption.Test = 0;
                                         structOption.ReplyBad = "";
+                                        structOption.View = "";
+                                        structOption.ViewBad = "";
                                         structOption.Skill = SkillType.None;
                                         outcomeFlag = false;
                                         //add Triggers to a list in same sequential order as options (place a blank trigger in the list if none exists)
@@ -1637,6 +1643,14 @@ namespace Next_Game
                                 case "replyBad":
                                     //Option (variable) reply for a bad outcome if test failed
                                     structOption.ReplyBad = cleanToken;
+                                    break;
+                                case "view":
+                                    //Option (view from the Market -> good outcome)
+                                    structOption.View = cleanToken;
+                                    break;
+                                case "viewBad":
+                                    //Option (view from the Market -> bad outcome)
+                                    structOption.ViewBad = cleanToken;
                                     break;
                                 case "test":
                                     try
@@ -2265,8 +2279,8 @@ namespace Next_Game
                                                     if (listAllOutcomes.Count > 0)
                                                     {
                                                         OptionInteractive optionObject = new OptionInteractive(optionTemp.Text)
-                                                        { ReplyGood = optionTemp.Reply, ReplyBad = optionTemp.ReplyBad, Test = optionTemp.Test, Skill = optionTemp.Skill };
-
+                                                        { ReplyGood = optionTemp.Reply, ReplyBad = optionTemp.ReplyBad, Test = optionTemp.Test, Skill = optionTemp.Skill,
+                                                            View = optionTemp.View, ViewBad = optionTemp.ViewBad};
                                                         //Triggers (optional)
                                                         List<Trigger> tempTriggers = listAllTriggers[index];
                                                         Trigger trigger = tempTriggers[0];
@@ -2482,6 +2496,8 @@ namespace Next_Game
                         string varText = "";
                         if (optionObject.Test > 0) { varText = $" [Variable -> {optionObject.Test} % Success, {optionObject.Skill} DM]"; }
                         Game.logStart?.Write(string.Format("  Option \"{0}\" {1}", optionObject.Text, varText));
+                        if (String.IsNullOrEmpty(optionObject.View) == false) { Game.logStart?.Write($"   [View] \"{optionObject.View}\""); }
+                        if (String.IsNullOrEmpty(optionObject.ViewBad) == false) { Game.logStart?.Write($"   [ViewBad] \"{optionObject.ViewBad}\""); }
                         List<Outcome> listTempOutcomes = new List<Outcome>(); //need to create a new list otherwise copying by reference and affects records in dictOfPlayerEvents
                         listTempOutcomes.AddRange(optionObject.GetGoodOutcomes());
                         listTempOutcomes.AddRange(optionObject.GetBadOutcomes());

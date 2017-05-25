@@ -18,6 +18,8 @@ namespace Next_Game.Event_System
         public SkillType Skill { get; set; } //OPTIONAL, if Test > 0 then skill can act as a +/- DM to the random roll
         public string ReplyGood { get; set; } //text for good outcome or if only a single outcome result possible (eg. interactive)
         public string ReplyBad { get; set; } //text for bad outcome
+        public string View { get; set; } //OPTIONAL, provided a player choice view from the market on the option when the player chooses it
+        public string ViewBad { get; set; } //OPTIONAL, as above but for a bad outcome for the option
         public string Tooltip { get; set; }
         private List<Outcome> listGoodOutcomes; //All possible outcomes if success (auto) or if selected (eg. interactive)
         private List<Outcome> listBadOutcomes; //All possible outcomes if fail
