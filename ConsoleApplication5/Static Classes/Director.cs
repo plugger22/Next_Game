@@ -4704,7 +4704,7 @@ namespace Next_Game
                                             {
                                                 case PossPromiseType.Land:
                                                     //Lord wants neighbouring minor house
-                                                    data = actor.DesireData; //refID of land desired
+                                                    data = actor.DesireData;
                                                     desireText = $"{actor.Title} {actor.Name}, ActID {actor.ActID} at {locName}, desires the neighbouring lands belonging to the Bannerlord at {Game.world.GetHouseName(data)}";
                                                     break;
                                                 case PossPromiseType.Court:
@@ -4727,6 +4727,7 @@ namespace Next_Game
                                                     break;
                                                 case PossPromiseType.Gold:
                                                     //actor wants gold
+                                                    data = actor.DesireData;
                                                     desireText = $"{actor.Title} {actor.Name}, ActID {actor.ActID} at {locName}, {arrayOfPrefixTexts[rnd.Next(arrayOfPrefixTexts.Length)]} Gold";
                                                     break;
                                                 case PossPromiseType.Marriage:
@@ -4764,11 +4765,12 @@ namespace Next_Game
                                                     else { Game.SetError(new Error(268, $"Invalid Item possession (Null), possID {data} -> Desire rumour cancelled")); }
                                                     break;
                                                 case PossPromiseType.Title:
+                                                    data = actor.DesireData;
                                                     //Knight who wants to become a BannerLord
                                                     desireText = $"{actor.Title} {actor.Name}, ActID {actor.ActID} at {locName}, {arrayOfTitleTexts[rnd.Next(arrayOfTitleTexts.Length)]}";
                                                     break;
                                                 case PossPromiseType.Lordship:
-                                                    data = actor.DesireData; //houseID of majorHouse
+                                                    data = actor.DesireData;
                                                     desireText = $"{actor.Title} { actor.Name}, ActID { actor.ActID} at {locName}, desires to become Lord of House {Game.world.GetMajorHouseName(data)}";
                                                     break;
                                                 default:
@@ -4784,6 +4786,7 @@ namespace Next_Game
                                                 {
                                                     strength = 2;
                                                     rumourText = $"{startText} that {desireText}";
+                                                    
                                                     RumourDesire rumour = new RumourDesire(rumourText, strength, RumourScope.Global, data, rnd.Next(100) * -1, (RumourGlobal)branch) { RefID = actor.RefID };
                                                     //add to dictionary and global list
                                                     if (AddRumour(rumour) == false)

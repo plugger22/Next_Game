@@ -3247,6 +3247,7 @@ namespace Next_Game
                                 break;
                             case PossPromiseType.Gold:
                                 actor.DesireText = "more Gold";
+                                actor.DesireData = actor.ActID;
                                 break;
                             case PossPromiseType.Marriage:
                                 actor.DesireData = listOfDaughters[rnd.Next(listOfDaughters.Count)];
@@ -3260,6 +3261,7 @@ namespace Next_Game
                                 break;
                             case PossPromiseType.Title:
                                 actor.DesireText = "wants to become a BannerLord with their own castle";
+                                actor.DesireData = actor.ActID;
                                 break;
                             case PossPromiseType.Lordship:
                                 actor.DesireData = actor.HouseID;
@@ -3267,6 +3269,7 @@ namespace Next_Game
                                 break;
                             case PossPromiseType.None:
                                 actor.DesireText = "nothing";
+                                actor.DesireData = actor.ActID;
                                 break;
                             default:
                                 Game.SetError(new Error(234, $"Invalid PossPromiseType for desire \"{desire}\" -> {actor.Title} {actor.Name}, ActID {actor.ActID} desire revoked"));
