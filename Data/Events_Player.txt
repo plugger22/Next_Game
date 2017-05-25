@@ -298,7 +298,7 @@ apply: Add
 [option]
 text: Curse all strangers
 reply: You are heard. The Stranger has taken note of your insolence.
-view: Walking around <locName> <randomMale> was. Cursed by a passerby for no good reason. Had the air of royalty about <him>.
+view: Walking around <locName>, poor <randomMale> was. Cursed by a passerby for no good reason. Had the air of royalty about <him>.
 test: 50
 skill: Treachery
 replyBad: The stranger stares at you angrily. Recognition slowly dawns. He knows you.

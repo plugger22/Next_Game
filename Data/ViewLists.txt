@@ -61,7 +61,7 @@ King <newKing> is a real legend. Singlehandedly ate an entire pig at a feast. <p
 [LegendBadUned]
 King <newKing> will piss all over <player>. Everybody knows that.
 <player> a Legend? Hah! King <newKing> is a real live legend. He eats babies for breakfast, he does.
-I don't know where you got the idea that <player> is a legend? Maybe a maggoty cow pat perhaps. <newKing> is the real legend.
+I don't know where you got the idea that <player> is a legend? Maybe a maggoty cow pat. <newKing> is the real legend.
 
 [HonourNeutralEduc]
 Who can you trust more? King <newKing> or the Usurper, <player>

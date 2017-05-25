@@ -1,16 +1,212 @@
-//Exile Game file ops "LogTurn.txt" commenced at: 25/05/2017 14:34:57
---- ProcessStartGame (World.cs)
---- AgePassiveCharacters (History.cs)
---- InitialiseGameVars (World.cs)
-[GameVar] View_Index changed from 0 to 1
-[AddVisitedLoc] LocID 26, "Deepwood Motte", turn -3 -> record added to listLocsVisited
-[AddVisitedLoc] LocID 26, "Deepwood Motte", turn -3 -> new record added to dictLocsVisited
-[AddVisitedLoc] LocID 5, "Valyria", turn -2 -> record added to listLocsVisited
-[AddVisitedLoc] LocID 5, "Valyria", turn -2 -> new record added to dictLocsVisited
-[AddVisitedLoc] LocID 17, "Uplands", turn -1 -> record added to listLocsVisited
-[AddVisitedLoc] LocID 17, "Uplands", turn -1 -> new record added to dictLocsVisited
-[AddVisitedLoc] LocID 16, "Nightsong", turn 0 -> record added to listLocsVisited
-[AddVisitedLoc] LocID 16, "Nightsong", turn 0 -> new record added to dictLocsVisited
---- SetEndGame (Game.cs)
-[Alert] Player chose to exit (pressed 'X')
-//Exile Game file ops "LogTurn.txt" Completed at: 25/05/2017 14:35:38
+//Exile Game File "LogTurn.txt" opened at: 25/05/2017 15:20:00
+--- ProcessStartTurn (World.cs)
+Day 7, Turn 6
+Usurper Vardis Stark, "The Alcoholic", AtLocation, Maidenpool
+--- UpdateRumours (World.cs)
+dictRumoursTimed (Start) -> 93 records
+RumourID 312 -> TimerExpire decremented, now 14
+RumourID 313 -> TimerExpire decremented, now 14
+RumourID 314 -> TimerExpire decremented, now 14
+RumourID 315 -> TimerExpire decremented, now 14
+RumourID 316 -> TimerExpire decremented, now 14
+RumourID 317 -> TimerExpire decremented, now 14
+RumourID 318 -> TimerExpire decremented, now 14
+RumourID 319 -> TimerExpire decremented, now 14
+RumourID 320 -> TimerExpire decremented, now 14
+RumourID 321 -> TimerExpire decremented, now 14
+RumourID 322 -> TimerExpire decremented, now 14
+RumourID 323 -> TimerExpire decremented, now 14
+RumourID 324 -> TimerExpire decremented, now 14
+RumourID 325 -> TimerExpire decremented, now 14
+RumourID 326 -> TimerExpire decremented, now 14
+RumourID 327 -> TimerExpire decremented, now 14
+RumourID 328 -> TimerExpire decremented, now 14
+RumourID 329 -> TimerExpire decremented, now 14
+RumourID 330 -> TimerExpire decremented, now 14
+RumourID 331 -> TimerExpire decremented, now 14
+RumourID 332 -> TimerExpire decremented, now 14
+RumourID 333 -> TimerExpire decremented, now 14
+RumourID 334 -> TimerExpire decremented, now 14
+RumourID 335 -> TimerExpire decremented, now 14
+RumourID 336 -> TimerExpire decremented, now 14
+RumourID 337 -> TimerExpire decremented, now 14
+RumourID 338 -> TimerExpire decremented, now 14
+RumourID 339 -> TimerExpire decremented, now 14
+RumourID 340 -> TimerExpire decremented, now 14
+RumourID 341 -> TimerExpire decremented, now 14
+RumourID 342 -> TimerExpire decremented, now 14
+RumourID 343 -> TimerExpire decremented, now 14
+RumourID 344 -> TimerExpire decremented, now 14
+RumourID 345 -> TimerExpire decremented, now 14
+RumourID 346 -> TimerExpire decremented, now 14
+RumourID 347 -> TimerExpire decremented, now 14
+RumourID 348 -> TimerExpire decremented, now 14
+RumourID 349 -> TimerExpire decremented, now 14
+RumourID 350 -> TimerExpire decremented, now 14
+RumourID 351 -> TimerExpire decremented, now 14
+RumourID 352 -> TimerExpire decremented, now 14
+RumourID 353 -> TimerExpire decremented, now 14
+RumourID 354 -> TimerExpire decremented, now 14
+RumourID 355 -> TimerExpire decremented, now 14
+RumourID 356 -> TimerExpire decremented, now 14
+RumourID 357 -> TimerExpire decremented, now 14
+RumourID 358 -> TimerExpire decremented, now 14
+[Rumour -> Removal] RID 451, "Nemesis, The Unrelenting, ActID 135 has been spotted flagelatting themself at Kingskeep (loc 13:14)" removed from Global All list
+RumourID 361 -> TimerExpire decremented, now 14
+RumourID 362 -> TimerExpire decremented, now 14
+RumourID 363 -> TimerExpire decremented, now 14
+RumourID 364 -> TimerExpire decremented, now 14
+RumourID 365 -> TimerExpire decremented, now 14
+RumourID 366 -> TimerExpire decremented, now 14
+RumourID 367 -> TimerExpire decremented, now 14
+RumourID 368 -> TimerExpire decremented, now 14
+RumourID 369 -> TimerExpire decremented, now 14
+RumourID 370 -> TimerExpire decremented, now 14
+RumourID 371 -> TimerExpire decremented, now 14
+RumourID 372 -> TimerExpire decremented, now 14
+RumourID 373 -> TimerExpire decremented, now 14
+RumourID 374 -> TimerExpire decremented, now 14
+RumourID 375 -> TimerExpire decremented, now 14
+RumourID 376 -> TimerExpire decremented, now 14
+RumourID 377 -> TimerExpire decremented, now 14
+RumourID 378 -> TimerExpire decremented, now 14
+RumourID 379 -> TimerExpire decremented, now 14
+RumourID 380 -> TimerExpire decremented, now 14
+RumourID 381 -> TimerExpire decremented, now 14
+RumourID 382 -> TimerExpire decremented, now 14
+RumourID 383 -> TimerExpire decremented, now 14
+RumourID 384 -> TimerExpire decremented, now 14
+RumourID 385 -> TimerExpire decremented, now 14
+RumourID 387 -> TimerExpire decremented, now 14
+RumourID 388 -> TimerExpire decremented, now 14
+RumourID 389 -> TimerExpire decremented, now 14
+RumourID 390 -> TimerExpire decremented, now 14
+RumourID 391 -> TimerExpire decremented, now 14
+RumourID 392 -> TimerExpire decremented, now 14
+RumourID 393 -> TimerExpire decremented, now 14
+RumourID 394 -> TimerExpire decremented, now 14
+RumourID 395 -> TimerExpire decremented, now 14
+RumourID 396 -> TimerExpire decremented, now 14
+RumourID 397 -> TimerExpire decremented, now 14
+RumourID 398 -> TimerExpire decremented, now 14
+RumourID 399 -> TimerExpire decremented, now 14
+RumourID 400 -> TimerExpire decremented, now 14
+RumourID 401 -> TimerExpire decremented, now 14
+RumourID 402 -> TimerExpire decremented, now 14
+RumourID 403 -> TimerExpire decremented, now 14
+RumourID 404 -> TimerExpire decremented, now 14
+RumourID 405 -> TimerExpire decremented, now 14
+RumourID 452 -> TimerExpire decremented, now 2
+1 records have expired and been removed
+dictRumoursTimed (End) -> 92 records
+--- MoveActors -> 0 Records (World.cs)
+--- UpdatePlayerStatus (World.cs)
+--- UpdateWorldStatus (World.cs)
+--- CheckFollowerActivity (World.cs)
+--- GetRumour (Director.cs)
+arrayOfRumours [0] -> RumourID 9, Strength 4, Scope Global, Type Disguise, Global All
+arrayOfRumours [4] -> RumourID 260, Strength 2, Scope Global, Type Desire, Global West
+arrayOfRumours [5] -> RumourID 177, Strength 2, Scope Local, Type Skill, Global All
+RumourID 9 selected from the Pool
+Rumour "It is murmured among friends that Disguises can be had from Maester Harys Timm, ActID 14 at Casterly Rock" revealed to ActorID2 on turn 6 -> added to List
+RumourID 9 removed from listRumoursGlobal[0]
+Follower The Waif, ActID 2, added RumourID 9
+--- GetRumour (Director.cs)
+[Notification] No house rumours available -> none added to pool
+arrayOfRumours [0] -> RumourID 34, Strength 2, Scope Global, Type Desire, Global All
+arrayOfRumours [3] -> RumourID 428, Strength 2, Scope Global, Type HouseRel, Global South
+RumourID 428 selected from the Pool
+Rumour "House Arryn has had good past relations with House Tyrell due to them saving the day in a battle" revealed to ActorID3 on turn 6 -> added to List
+RumourID 428 removed from listRumoursSouth[25]
+Follower The Crone, ActID 3, added RumourID 428
+[Notification -> HouseRel] "Saved the day in a past Battle" -> Known is True
+--- GetRumour (Director.cs)
+arrayOfRumours [0] -> RumourID 304, Strength 2, Scope Global, Type Desire, Global All
+arrayOfRumours [3] -> RumourID 192, Strength 2, Scope Global, Type Desire, Global South
+arrayOfRumours [5] -> RumourID 321, Strength 2, Scope Local, Type Relationship, Global All
+RumourID 192 selected from the Pool
+Rumour "It is suspected that BannerLord Eddard Harlaw, ActID 80 at Ten Towers, has an unquenched hunger for Gold" revealed to ActorID8 on turn 6 -> added to List
+RumourID 192 removed from listRumoursSouth[5]
+Follower The Viper, ActID 8, added RumourID 192
+[Notification] None  "" DesireKnown status changed to "True"
+--- GetMarketView (Director.cs)
+listPlayerChoices has 2 records, 20 % needed, rolled 19
+[Player Choice] -> "Walking around Maidenpool Will was. Cursed by a passerby for no good reason. Had the air of royalty about him.", record removed at index 1
+--- CheckStationaryActiveActors (World.cs)
+ [Search -> Stationary] Usurper Vardis Stark, ActID 1 is AtLocation
+--- CheckIfFoundActive (World.cs)
+ [Search -> Debug] Enemy, Brother Nergal, ID 131 at 13:14, Active Vardis Stark, ID 1, at 4:13
+ [Search -> Debug] Enemy, Brother Damballa, ID 132 at 13:14, Active Vardis Stark, ID 1, at 4:13
+ [Search -> Debug] Enemy, Brother Amon, ID 133 at 14:19, Active Vardis Stark, ID 1, at 4:13
+ [Search -> Debug] Enemy, Brother Kali, ID 134 at 13:14, Active Vardis Stark, ID 1, at 4:13
+ [Search -> Debug] Enemy, The Unrelenting, ID 135 at 13:14, Active Vardis Stark, ID 1, at 4:13
+ [Search -> Stationary] Follower The Waif, ActID 2 is AtLocation
+ [Search -> Stationary] Follower The Crone, ActID 3 is AtLocation
+ [Search -> Stationary] Follower The Viper, ActID 8 is AtLocation
+--- UpdateAIController (World.cs)
+ [AI -> Player Unknown] Inquisitor Brother Nergal, Act ID 131 Mode -> Nor 1, at 4:13
+ [Search -> Stationary] Follower The Waif, ActID 2 is AtLocation
+ [Search -> Stationary] Follower The Crone, ActID 3 is AtLocation
+ [Search -> Stationary] Follower The Viper, ActID 8 is AtLocation
+--- UpdateAIController (World.cs)
+ [AI -> Player Unknown] Inquisitor Brother Nergal, Act ID 131 Mode -> Normal
+ [AI -> Player Unknown] Inquisitor Brother Damballa, Act ID 132 Mode -> Normal
+ [AI -> Player Unknown] Inquisitor Brother Amon, Act ID 133 Mode -> Normal
+ [AI -> Player Unknown] Inquisitor Brother Kali, Act ID 134 Mode -> Normal
+ [AI -> Player Unknown] Nemesis The Unrelenting, Act ID 135 Mode -> Normal
+--- SetEnemyActivity (World.cs)
+ [Enemy -> Goal] Brother Nergal, ActID 131 retains Goal -> Hide
+ [Enemy -> Goal] Brother Damballa, ActID 132 retains Goal -> Wait
+--- SetEnemyGoal (World.cs)
+ [Goal -> Branch] Brother Amon, ActID 133 Assigned Branch -> 3 Current Branch -> 3
+ [Goal -> New] Brother Amon, ActID 133, (loc 14:19), assigned new Goal -> Hide
+--- SetEnemyGoal (World.cs)
+ [Goal -> Branch] Brother Kali, ActID 134 Assigned Branch -> 4 Current Branch -> 0
+ [Enemy -> Goal] The Unrelenting, ActID 135 retains Goal -> Wait
+--- CheckPlayerEvents (Director.cs)
+--- GetValidPlayerEvents (Director.cs)
+ Event "Mysterious Stranger" has no attached Conditions
+--- GetValidPlayerEvents (Director.cs)
+--- GetValidPlayerEvents (Director.cs)
+ Chance of Player Location event 37 %
+--- ResolvePlayerEvents (Director.cs)
+ "Talk to them" Trait Trigger, if type 3 is GreaterThanOrEqual to 3
+ Trigger passed on "3" GreaterThanOrEqual 3
+ "Curse all strangers" Trait Trigger, if type 4 is GreaterThanOrEqual to 3
+ Trigger passed on "5" GreaterThanOrEqual 3
+ Event "Mysterious Stranger" Timer Repeat now 8
+ Event "Mysterious Stranger" Cooldown Timer has been reset to 0
+--- UpdateActiveActors (World.cs)
+ Usurper Vardis Stark has had their TurnsUnknown Timer increased from 104 to 105
+ Follower The Waif has had their TurnsUnknown Timer increased from 4 to 5
+ Follower The Crone has had their TurnsUnknown Timer increased from 4 to 5
+ Follower The Viper has had their TurnsUnknown Timer increased from 4 to 5
+--- ResolveOutcome (Director.cs)
+ [Variable Option] "Curse all strangers" Passed test (50 % needed, rolled 32)  Roll 52 + DMskill -20 + DMtouched 0 -> modifiedRoll 32
+[Player Choice View -> Added] "Walking around Maidenpool Will was. Cursed by a passerby for no good reason. Had the air of royalty about him."
+[Notification] listPlayerChoices now has 2 records
+--- ProcessEndTurn (World.cs)
+Day 6, Turn 5
+--- CheckEventTimers (Director.cs)
+ Event "Search and Detain" Dormant Timer decremented to 15
+--- InitialiseDynamicRumours (Director.cs)
+[Notification] Turn 5, generate new set of Relationship rumours on turn 21
+[Rumour -> Added] RID 452, "Inquisitor, Brother Amon, ActID 133 has been spotted hiding at The Raucous Rat (loc 14:19)" -> dict & List
+--- HouseKeepActors (World.cs)
+[GameStat] "Location_Days" -> increased from 5 to 6
+--- HousekeepRumours (World.cs)
+dictRumoursKnown has 15 records
+
+//Exile Game File "LogTurn.txt" Close completed at: 25/05/2017 15:20:00
+orld.cs)
+Day 5, Turn 4
+--- CheckEventTimers (Director.cs)
+ Event "Search and Detain" Dormant Timer decremented to 16
+--- InitialiseDynamicRumours (Director.cs)
+[Notification] Turn 4, generate new set of Relationship rumours on turn 21
+--- HouseKeepActors (World.cs)
+[GameStat] "Location_Days" -> increased from 4 to 5
+--- HousekeepRumours (World.cs)
+dictRumoursKnown has 12 records
+
+//Exile Game File "LogTurn.txt" Close completed at: 25/05/2017 15:18:06
