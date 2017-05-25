@@ -5,6 +5,8 @@
 # <playerHandle> <newKingHandle> <oldKingHandle> -> Handles
 # <his> <he> <him> <man> -> sex specific for Usurper (also <His> <He> which are for starting sentences with)
 # <locRecent>, <locRandom> -> Usurper Loc Names
+# <locName> <roadTo> -> uses Usurpers current Loc or current destination if travelling
+# <geocluster> -> name of geocluster at Player's current position (eg. Mountain / Forest / Sea)
 # <courtRandom> -> A court that the Usurper has visited, returns House name, eg. "Lannister"
 # <randomMale> <randomFemale> -> random first names
 

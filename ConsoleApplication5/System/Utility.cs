@@ -320,6 +320,18 @@ namespace Next_Game
                             case "randomFemale":
                                 replaceText = Game.history.GetFirstName(ActorSex.Female);
                                 break;
+                            case "geocluster":
+                                Position pos = player.GetActorPosition();
+                                if (pos != null)
+                                {
+                                    data = Game.map.GetMapInfo(MapLayer.GeoID, pos.PosX, pos.PosY);
+                                    GeoCluster geocluster = Game.world.GetGeoCluster(data);
+                                    if (geocluster != null)
+                                    { replaceText = geocluster.Name; }
+                                    else { Game.SetError(new Error(283, "Invalid geocluster (null) for forest/mountain/sea")); }
+                                }
+                                else { Game.SetError(new Error(283, "Invalid position (null) for forest/mountain/sea")); }
+                                break;
                             default:
                                 replaceText = "";
                                 Game.SetError(new Error(283, string.Format("Invalid tag (\"{0}\")", tag)));

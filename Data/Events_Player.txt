@@ -284,7 +284,7 @@ effect: None
 [option]
 text: Talk to them
 reply: The Stranger stops and looks at your expectantly
-view: <randomMale> curses that he met that damn Usurper, <player> at <locName>. Hates the thought of change, he does.
+view: <randomMale>, the scary one, curses that he met that damn Usurper, <player> at <locName>. Hates the thought of change, he does.
 [trigger]
 check: Trait
 item: 3
@@ -390,11 +390,13 @@ Rumour: It's not safe to travel on the roads these days if you're a woman. When 
 [option]
 text: Ride past, ignoring her
 reply: You can't save the world, it's too big and mean. The woman pleads for some water as you canter past.
+view: I heard that <randomFemale>'s cousin was having some trouble on the road to <roadTo>. That Usurper, <player>, curse him, ignored her. 
 [outcome]
 effect: None
 [option]
 text: Offer assistance
 reply: You immediately dismount and approach her on foot only to find that she has strange, lifeless eyes. Bright blue eyes.
+view: Funniest thing is that <randomFemale> insists she saw <player> helping a helpless, naked, woman on the road to <roadTo>.
 [trigger]
 check: GameVar
 item: Legend_Urs
@@ -408,6 +410,7 @@ apply: Add
 [option]
 text: Ride her down!
 reply: As you spur your horse into a gallop and aim directly at the helpless woman you feel no pity or remorse. Anyone woman foolish enough to wander naked down a road deserves to the form of natural justice that you are so adept at providing.
+view: Can you believe <randomMale>'s story of <player> riding down a poor woman on the road to <roadTo>? I certainly can.
 [trigger]
 check: Trait
 item: Treachery
