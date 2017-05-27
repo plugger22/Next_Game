@@ -188,7 +188,8 @@ namespace Next_Game
         public ArcHouse House { get; set; }
         public ArcActor Actor { get; set; }
         public string SubType { get; set; }
-        public List<int> listOfEvents { get; set; }
+        public List<int> listOfFollowerEvents { get; set; }
+        public List<int> listOfPlayerEvents { get; set; }
     }
 
     //story
@@ -2761,40 +2762,72 @@ namespace Next_Game
                                     catch
                                     { Game.SetError(new Error(53, string.Format("Invalid Chance (Conversion) for  {0}", structArc.Name))); validData = false; }
                                     break;
-                                case "Events":
-                                    //get list of Events
-                                    string[] arrayOfEvents = cleanToken.Split(',');
-                                    List<int> tempList = new List<int>();
+                                case "EventsFoll":
+                                    //get list of Follower Events
+                                    string[] arrayOfEventsFoll = cleanToken.Split(',');
+                                    List<int> tempListFoll = new List<int>();
                                     //loop eventID array and add all to lists
-                                    string tempHandle = null;
-                                    for (int k = 0; k < arrayOfEvents.Length; k++)
+                                    string tempHandleFoll = null;
+                                    for (int k = 0; k < arrayOfEventsFoll.Length; k++)
                                     {
-                                        tempHandle = arrayOfEvents[k].Trim();
-                                        if (String.IsNullOrEmpty(tempHandle) == false)
+                                        tempHandleFoll = arrayOfEventsFoll[k].Trim();
+                                        if (String.IsNullOrEmpty(tempHandleFoll) == false)
                                         {
                                             try
                                             {
-                                                dataInt = Convert.ToInt32(tempHandle);
+                                                dataInt = Convert.ToInt32(tempHandleFoll);
                                                 if (dataInt > 0)
                                                 {
                                                     //check a valid event
                                                     if (Game.director.CheckEvent(dataInt))
-                                                    { tempList.Add(dataInt); }
+                                                    { tempListFoll.Add(dataInt); }
                                                     else
-                                                    { Game.SetError(new Error(53, string.Format("Invalid EventID \"{0}\" (Not found in Dictionary) for {1}", dataInt, structArc.Name))); validData = false; }
+                                                    { Game.SetError(new Error(53, string.Format("Invalid Follower EventID \"{0}\" (Not found in Dictionary) for {1}", dataInt, structArc.Name))); validData = false; }
                                                 }
                                                 else
-                                                { Game.SetError(new Error(53, string.Format("Invalid EventID (Zero Value) for {0}, {1}", structArc.Name, fileName))); validData = false; }
+                                                { Game.SetError(new Error(53, string.Format("Invalid Follower EventID (Zero Value) for {0}, {1}", structArc.Name, fileName))); validData = false; }
                                             }
-                                            catch { Game.SetError(new Error(53, string.Format("Invalid EventID (Conversion Error) for {0}, {1}", structArc.Name, fileName))); validData = false; }
+                                            catch { Game.SetError(new Error(53, string.Format("Invalid Follower EventID (Conversion Error) for {0}, {1}", structArc.Name, fileName))); validData = false; }
                                         }
                                         //dodgy EventID is ignored, it doesn't invalidate the record (some records deliberately don't have nicknames)
                                         else
-                                        { Game.SetError(new Error(53, string.Format("Invalid EventID for {0}, {1}", structArc.Name, fileName))); }
+                                        { Game.SetError(new Error(53, string.Format("Invalid Follower EventID for {0}, {1}", structArc.Name, fileName))); }
                                     }
-                                    structArc.listOfEvents = tempList;
+                                    structArc.listOfFollowerEvents = tempListFoll;
                                     break;
-
+                                case "EventsPlyr":
+                                    //get list of Player Events
+                                    string[] arrayOfEventsPlyr = cleanToken.Split(',');
+                                    List<int> tempListPlyr = new List<int>();
+                                    //loop eventID array and add all to lists
+                                    string tempHandlePlyr = null;
+                                    for (int k = 0; k < arrayOfEventsPlyr.Length; k++)
+                                    {
+                                        tempHandlePlyr = arrayOfEventsPlyr[k].Trim();
+                                        if (String.IsNullOrEmpty(tempHandlePlyr) == false)
+                                        {
+                                            try
+                                            {
+                                                dataInt = Convert.ToInt32(tempHandlePlyr);
+                                                if (dataInt > 0)
+                                                {
+                                                    //check a valid event
+                                                    if (Game.director.CheckEvent(dataInt))
+                                                    { tempListPlyr.Add(dataInt); }
+                                                    else
+                                                    { Game.SetError(new Error(53, string.Format("Invalid Player EventID \"{0}\" (Not found in Dictionary) for {1}", dataInt, structArc.Name))); validData = false; }
+                                                }
+                                                else
+                                                { Game.SetError(new Error(53, string.Format("Invalid Player EventID (Zero Value) for {0}, {1}", structArc.Name, fileName))); validData = false; }
+                                            }
+                                            catch { Game.SetError(new Error(53, string.Format("Invalid Player EventID (Conversion Error) for {0}, {1}", structArc.Name, fileName))); validData = false; }
+                                        }
+                                        //dodgy EventID is ignored, it doesn't invalidate the record (some records deliberately don't have nicknames)
+                                        else
+                                        { Game.SetError(new Error(53, string.Format("Invalid Player EventID for {0}, {1}", structArc.Name, fileName))); }
+                                    }
+                                    structArc.listOfPlayerEvents = tempListPlyr;
+                                    break;
                                 case "[end]":
                                 case "[End]":
                                     //write record
@@ -2805,19 +2838,19 @@ namespace Next_Game
                                         switch (structArc.Type)
                                         {
                                             case ArcType.GeoCluster:
-                                                arcObject = new ArcTypeGeo(structArc.Name, structArc.Geo, structArc.ArcID, structArc.Chance, structArc.listOfEvents);
+                                                arcObject = new ArcTypeGeo(structArc.Name, structArc.Geo, structArc.ArcID, structArc.Chance, structArc.listOfFollowerEvents, structArc.listOfPlayerEvents);
                                                 break;
                                             case ArcType.Location:
-                                                arcObject = new ArcTypeLoc(structArc.Name, structArc.Loc, structArc.ArcID, structArc.Chance, structArc.listOfEvents);
+                                                arcObject = new ArcTypeLoc(structArc.Name, structArc.Loc, structArc.ArcID, structArc.Chance, structArc.listOfFollowerEvents, structArc.listOfPlayerEvents);
                                                 break;
                                             case ArcType.Road:
-                                                arcObject = new ArcTypeRoad(structArc.Name, structArc.Road, structArc.ArcID, structArc.Chance, structArc.listOfEvents);
+                                                arcObject = new ArcTypeRoad(structArc.Name, structArc.Road, structArc.ArcID, structArc.Chance, structArc.listOfFollowerEvents, structArc.listOfPlayerEvents);
                                                 break;
                                             case ArcType.House:
-                                                arcObject = new ArcTypeHouse(structArc.Name, structArc.House, structArc.ArcID, structArc.Chance, structArc.listOfEvents);
+                                                arcObject = new ArcTypeHouse(structArc.Name, structArc.House, structArc.ArcID, structArc.Chance, structArc.listOfFollowerEvents, structArc.listOfPlayerEvents);
                                                 break;
                                             case ArcType.Actor:
-                                                arcObject = new ArcTypeActor(structArc.Name, structArc.Actor, structArc.ArcID, structArc.Chance, structArc.listOfEvents);
+                                                arcObject = new ArcTypeActor(structArc.Name, structArc.Actor, structArc.ArcID, structArc.Chance, structArc.listOfFollowerEvents);
                                                 break;
                                         }
                                         if (arcObject != null)
@@ -2830,8 +2863,8 @@ namespace Next_Game
                                                 try
                                                 {
                                                     dictOfArchetypes.Add(arcTemp.ArcID, arcTemp);
-                                                    Game.logStart.Write(string.Format("{0}, ArcID {1}, [{2}], has {3} events", arcTemp.Name, arcTemp.ArcID, 
-                                                        arcTemp.Type, arcTemp.GetNumEvents()));
+                                                    /*Game.logStart.Write(string.Format("{0}, ArcID {1}, [{2}], has {3} Follower & {4} Player events", arcTemp.Name, arcTemp.ArcID, 
+                                                        arcTemp.Type, arcTemp.GetNumFollowerEvents(), arcTemp.GetNumPlayerEvents()));*/
                                                 }
                                                 catch (ArgumentException)
                                                 { Game.SetError(new Error(53, $"Invalid ArcID \"{arcTemp.ArcID}\" (Duplicate record) -> {arcTemp.Name} not added to dict")); }

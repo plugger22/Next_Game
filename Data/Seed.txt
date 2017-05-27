@@ -14,3 +14,9 @@ Seed 3980 -> Thursday, 25 May 2017 3:09 PM
 Seed 46748 -> Thursday, 25 May 2017 4:56 PM
 Seed 53084 -> Thursday, 25 May 2017 5:01 PM
 Seed 13533 -> Thursday, 25 May 2017 8:36 PM
+Seed 21490 -> Saturday, 27 May 2017 11:50 AM
+Seed 46640 -> Saturday, 27 May 2017 11:52 AM
+Seed 40582 -> Saturday, 27 May 2017 11:57 AM
+Seed 5451 -> Saturday, 27 May 2017 12:01 PM
+Seed 46918 -> Saturday, 27 May 2017 12:04 PM
+Seed 181 -> Saturday, 27 May 2017 12:10 PM

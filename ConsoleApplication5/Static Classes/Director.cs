@@ -3250,10 +3250,10 @@ namespace Next_Game
                                     if (rnd.Next(100) < arcSea.Chance)
                                     {
                                         //copy Archetype event ID's across to GeoCluster -> Player events only (followers don't travel by sea)
-                                        cluster.SetPlayerEvents(arcSea.GetEvents());
+                                        cluster.SetPlayerEvents(arcSea.GetFollowerEvents());
                                         cluster.Archetype = arcSea.ArcID;
                                         //debug
-                                        Game.logStart?.Write(string.Format(" {0}, geoID {1}, has been initialised with \"{2}\", arcID {3}", cluster.Name, cluster.GeoID, arcSea.Name, arcSea.ArcID));
+                                        Game.logStart?.Write(string.Format("{0}, geoID {1}, has been initialised with \"{2}\", arcID {3}", cluster.Name, cluster.GeoID, arcSea.Name, arcSea.ArcID));
                                     }
                                 }
                             }
@@ -3265,10 +3265,10 @@ namespace Next_Game
                                 if (rnd.Next(100) < arcMountain.Chance)
                                 {
                                     //copy Archetype event ID's across to GeoCluster
-                                    cluster.SetFollowerEvents(arcMountain.GetEvents());
+                                    cluster.SetFollowerEvents(arcMountain.GetFollowerEvents());
                                     cluster.Archetype = arcMountain.ArcID;
                                     //debug
-                                    Game.logStart?.Write(string.Format(" {0}, geoID {1}, has been initialised with \"{2}\", arcID {3}", cluster.Name, cluster.GeoID, arcMountain.Name, arcMountain.ArcID));
+                                    Game.logStart?.Write(string.Format("{0}, geoID {1}, has been initialised with \"{2}\", arcID {3}", cluster.Name, cluster.GeoID, arcMountain.Name, arcMountain.ArcID));
                                 }
                             }
                             break;
@@ -3279,10 +3279,10 @@ namespace Next_Game
                                 if (rnd.Next(100) < arcForest.Chance)
                                 {
                                     //copy Archetype event ID's across to GeoCluster
-                                    cluster.SetFollowerEvents(arcForest.GetEvents());
+                                    cluster.SetFollowerEvents(arcForest.GetFollowerEvents());
                                     cluster.Archetype = arcForest.ArcID;
                                     //debug
-                                    Game.logStart?.Write(string.Format(" {0}, geoID {1}, has been initialised with \"{2}\", arcID {3}", cluster.Name, cluster.GeoID, arcForest.Name, arcForest.ArcID));
+                                    Game.logStart?.Write(string.Format("{0}, geoID {1}, has been initialised with \"{2}\", arcID {3}", cluster.Name, cluster.GeoID, arcForest.Name, arcForest.ArcID));
                                 }
                             }
                             break;
@@ -3297,17 +3297,17 @@ namespace Next_Game
             //Initialise Roads
             if (arcNormal != null)
             {
-                listArcFollRoadEventsNormal.AddRange(arcNormal.GetEvents());
+                listArcFollRoadEventsNormal.AddRange(arcNormal.GetFollowerEvents());
                 Game.logStart?.Write(string.Format("Normal roads have been initialised with \"{0}\", arcID {1}", arcNormal.Name, arcNormal.ArcID));
             }
             if (arcKings != null)
             {
-                listArcFollRoadEventsKings.AddRange(arcKings.GetEvents());
+                listArcFollRoadEventsKings.AddRange(arcKings.GetFollowerEvents());
                 Game.logStart?.Write(string.Format("Kings roads have been initialised with \"{0}\", arcID {1}", arcKings.Name, arcKings.ArcID));
             }
             if (arcConnector != null)
             {
-                listArcFollRoadEventsConnector.AddRange(arcConnector.GetEvents());
+                listArcFollRoadEventsConnector.AddRange(arcConnector.GetFollowerEvents());
                 Game.logStart?.Write(string.Format("Connector roads have been initialised with \"{0}\", arcID {1}", arcConnector.Name, arcConnector.ArcID));
             }
 
@@ -3316,7 +3316,7 @@ namespace Next_Game
             //Initialise Capital
             if (arcCapital != null)
             {
-                listArcFollCapitalEvents.AddRange(arcCapital.GetEvents());
+                listArcFollCapitalEvents.AddRange(arcCapital.GetFollowerEvents());
                 Game.logStart?.Write(string.Format("The Capital at KingsKeep has been initialised with \"{0}\", arcID {1}", arcCapital.Name, arcCapital.ArcID));
             }
 
@@ -3342,7 +3342,7 @@ namespace Next_Game
                             if (rnd.Next(100) < arcMajor.Chance)
                             {
                                 //copy Archetype event ID's across to GeoCluster
-                                loc.Value.SetEvents(arcMajor.GetEvents());
+                                loc.Value.SetEvents(arcMajor.GetFollowerEvents());
                                 loc.Value.ArcID = arcMajor.ArcID;
                                 //debug
                                 Game.logStart?.Write(string.Format("{0}, locID {1}, has been initialised with \"{2}\", arcID {3}", Game.world.GetLocationName(loc.Key), loc.Key, arcMajor.Name, arcMajor.ArcID));
@@ -3359,7 +3359,7 @@ namespace Next_Game
                             if (rnd.Next(100) < arcMinor.Chance)
                             {
                                 //copy Archetype event ID's across to GeoCluster
-                                loc.Value.SetEvents(arcMinor.GetEvents());
+                                loc.Value.SetEvents(arcMinor.GetFollowerEvents());
                                 loc.Value.ArcID = arcMinor.ArcID;
                                 //debug
                                 Game.logStart?.Write(string.Format("{0}, locID {1}, has been initialised with \"{2}\", arcID {3}", Game.world.GetLocationName(loc.Key), loc.Key, arcMinor.Name, arcMinor.ArcID));
@@ -3375,7 +3375,7 @@ namespace Next_Game
                             if (rnd.Next(100) < arcInn.Chance)
                             {
                                 //copy Archetype event ID's across to GeoCluster
-                                loc.Value.SetEvents(arcInn.GetEvents());
+                                loc.Value.SetEvents(arcInn.GetFollowerEvents());
                                 loc.Value.ArcID = arcInn.ArcID;
                                 //debug
                                 Game.logStart?.Write(string.Format("{0}, locID {1}, has been initialised with \"{2}\", arcID {3}", Game.world.GetLocationName(loc.Key), loc.Key, arcInn.Name, arcInn.ArcID));
@@ -3388,7 +3388,7 @@ namespace Next_Game
                     if (arcID > 0)
                     {
                         Archetype archetype = GetArchetype(arcID);
-                        house.SetFollowerEvents(archetype.GetEvents());
+                        house.SetFollowerEvents(archetype.GetFollowerEvents());
                         //debug
                         Game.logStart?.Write(string.Format("House {0}, refID {1}, has been initialised with \"{2}\", arcID {3}", house.Name, house.RefID, archetype.Name, archetype.ArcID));
                     }
@@ -3404,7 +3404,7 @@ namespace Next_Game
                     if (arcID > 0)
                     {
                         Archetype archetype = GetArchetype(arcID);
-                        actor.Value.SetEvents(archetype.GetEvents());
+                        actor.Value.SetEvents(archetype.GetFollowerEvents());
                         //debug
                         Game.logStart?.Write(string.Format("\"{0}\", AiD {1}, has been initialised with \"{2}\", arcID {3}", actor.Value.Name, actor.Value.ActID, archetype.Name, archetype.ArcID));
                     }

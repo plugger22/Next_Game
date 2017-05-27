@@ -27,7 +27,8 @@ namespace Next_Game
         public ArcRoad Road { get; set; }
         public ArcHouse House { get; set; } //specific to a house or an inn 
         public ArcActor Actor { get; set; }
-        private List<int> listOfEvents; //Event ID list that apply to followers
+        private List<int> listOfFollowerEvents; //Event ID list that apply to followers -> uses FollowerID
+        private List<int> listOfPlayerEvents; //Event ID list that apply to followers -> uses PlayerID
 
         public Archetype()
         { }
@@ -37,25 +38,61 @@ namespace Next_Game
         /// </summary>
         /// <param name="type"></param>
         /// <param name="category"></param>
-        /// <param name="events"></param>
-        public Archetype(string name, int arcID, int chance, List<int> events)
+        /// <param name="eventsFollower"></param>
+        public Archetype(string name, int arcID, int chance, List<int> eventsFollower, List<int> eventsPlayer = null)
         {
             //ArcID = arcIndex++;
             this.ArcID = arcID;
             this.Name = name;
             this.Chance = chance;
             //this.TempID = tempID;
-            if (events != null) { listOfEvents = new List<int>(events); }
-            else { Game.SetError(new Error(48, "Invalid list of Events")); }
+            if (eventsFollower != null) { listOfFollowerEvents = new List<int>(eventsFollower); }
+            else { Game.logStart?.Write($"  [Notification] No list of Follower Events (null) for Arc \"{name}\", ArcID {arcID}"); }
+            if (eventsPlayer != null) { listOfPlayerEvents = new List<int>(eventsPlayer); }
+            else { Game.logStart?.Write($"  [Notification] No list of Player Events (null) for Arc \"{name}\", ArcID {arcID}"); }
             //debug
-            Console.WriteLine("ArcID {0}, {1}, Chance {2}%, No. Events {3}", ArcID, Name, Chance, events.Count);
+            Game.logStart?.Write(string.Format("ArcID {0}, {1}, Chance {2}%, {3} Follower & {4} Player events", ArcID, Name, Chance, GetNumFollowerEvents(), GetNumPlayerEvents()));
         }
 
-        public List<int> GetEvents()
-        { return listOfEvents; }
+        /// <summary>
+        /// returns null if none present
+        /// </summary>
+        /// <returns></returns>
+        public List<int> GetFollowerEvents()
+        {
+            if (listOfFollowerEvents?.Count > 0) { return listOfFollowerEvents; }
+            else { return null; }
+        }
 
-        public int GetNumEvents()
-        { return listOfEvents.Count; }
+        /// <summary>
+        /// returns '0' if none present
+        /// </summary>
+        /// <returns></returns>
+        public int GetNumFollowerEvents()
+        {
+            if (listOfFollowerEvents != null) { return listOfFollowerEvents.Count; }
+            else { return 0; }
+        }
+
+        /// <summary>
+        /// returns null if none present
+        /// </summary>
+        /// <returns></returns>
+        public List<int> GetPlayerEvents()
+        {
+            if (listOfPlayerEvents?.Count > 0) { return listOfPlayerEvents; }
+            else { return null; }
+        }
+
+        /// <summary>
+        /// returns '0' if none present
+        /// </summary>
+        /// <returns></returns>
+        public int GetNumPlayerEvents()
+        {
+            if (listOfPlayerEvents != null) { return listOfPlayerEvents.Count; }
+            else { return 0; }
+        }
     }
 
     /// <summary>
@@ -64,7 +101,7 @@ namespace Next_Game
     public class ArcTypeGeo : Archetype
     {
 
-        public ArcTypeGeo(string name, ArcGeo subtype, int arcID, int chance, List<int> events) : base(name, arcID, chance, events)
+        public ArcTypeGeo(string name, ArcGeo subtype, int arcID, int chance, List<int> eventsFollower, List<int> eventsPlayer = null) : base(name, arcID, chance, eventsFollower, eventsPlayer)
         {
             Type = ArcType.GeoCluster;
             Geo = subtype;
@@ -77,7 +114,7 @@ namespace Next_Game
     public class ArcTypeLoc : Archetype
     {
 
-        public ArcTypeLoc(string name, ArcLoc subtype, int arcID, int chance, List<int> events) : base(name, arcID, chance, events)
+        public ArcTypeLoc(string name, ArcLoc subtype, int arcID, int chance, List<int> eventsFollower, List<int> eventsPlayer = null) : base(name, arcID, chance, eventsFollower, eventsPlayer)
         {
             Type = ArcType.Location;
             Loc = subtype;
@@ -90,7 +127,7 @@ namespace Next_Game
     public class ArcTypeRoad : Archetype
     {
 
-        public ArcTypeRoad(string name, ArcRoad subtype, int arcID, int chance, List<int> events) : base(name, arcID, chance, events)
+        public ArcTypeRoad(string name, ArcRoad subtype, int arcID, int chance, List<int> eventsFollower, List<int> eventsPlayer = null) : base(name, arcID, chance, eventsFollower, eventsPlayer)
         {
             Type = ArcType.Road;
             Road = subtype;
@@ -104,7 +141,7 @@ namespace Next_Game
     public class ArcTypeHouse : Archetype
     {
 
-        public ArcTypeHouse(string name, ArcHouse subtype, int arcID, int chance, List<int> events) : base(name, arcID, chance, events)
+        public ArcTypeHouse(string name, ArcHouse subtype, int arcID, int chance, List<int> eventsFollower, List<int> eventsPlayer = null) : base(name, arcID, chance, eventsFollower, eventsPlayer)
         {
             Type = ArcType.House;
             House = subtype;
@@ -117,7 +154,7 @@ namespace Next_Game
     public class ArcTypeActor : Archetype
     {
 
-        public ArcTypeActor(string name, ArcActor subtype, int arcID, int chance, List<int> events) : base(name, arcID, chance, events)
+        public ArcTypeActor(string name, ArcActor subtype, int arcID, int chance, List<int> eventsFollower) : base(name, arcID, chance, eventsFollower)
         {
             Type = ArcType.Actor;
             Actor = subtype;
