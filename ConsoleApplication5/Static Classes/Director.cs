@@ -3266,6 +3266,7 @@ namespace Next_Game
                                 {
                                     //copy Archetype event ID's across to GeoCluster
                                     cluster.SetFollowerEvents(arcMountain.GetFollowerEvents());
+                                    cluster.SetPlayerEvents(arcMountain.GetPlayerEvents());
                                     cluster.Archetype = arcMountain.ArcID;
                                     //debug
                                     Game.logStart?.Write(string.Format("{0}, geoID {1}, has been initialised with \"{2}\", arcID {3}", cluster.Name, cluster.GeoID, arcMountain.Name, arcMountain.ArcID));
@@ -3280,6 +3281,7 @@ namespace Next_Game
                                 {
                                     //copy Archetype event ID's across to GeoCluster
                                     cluster.SetFollowerEvents(arcForest.GetFollowerEvents());
+                                    cluster.SetPlayerEvents(arcForest.GetPlayerEvents());
                                     cluster.Archetype = arcForest.ArcID;
                                     //debug
                                     Game.logStart?.Write(string.Format("{0}, geoID {1}, has been initialised with \"{2}\", arcID {3}", cluster.Name, cluster.GeoID, arcForest.Name, arcForest.ArcID));

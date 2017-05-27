@@ -107,7 +107,7 @@ namespace Next_Game.Cartographic
             if (listArchEvents != null)
             { listOfFollowerEvents.AddRange(listArchEvents); }
             else
-            { Game.SetError(new Error(55, "Invalid list of Events input (null)")); }
+            { Game.logStart?.Write("Invalid list of Follower Events input (null) -> No follower events for this archetype"); }
         }
 
 
@@ -126,7 +126,7 @@ namespace Next_Game.Cartographic
             if (listArchEvents != null)
             { listOfPlayerEvents.AddRange(listArchEvents); }
             else
-            { Game.SetError(new Error(55, "Invalid list of Events input (null)")); }
+            { Game.logStart?.Write("Invalid list of Player Events input (null) -> No player events for this archetype"); }
         }
 
 
