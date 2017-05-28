@@ -72,10 +72,10 @@ namespace Next_Game.Cartographic
         public int ArcID { get; set; } //location archetype ID if applicable        
         private List<Position> listOfNeighboursPos; //list of immediate neighbours, by Position
         private List<int> listOfNeighboursLocID; //list of immediate neighbours, by LocID
-        private readonly List<Route> routeToCapital; //Loc -> Capital
-        private readonly List<Route> routeToConnector; //Loc -> Connector
-        private readonly List<Route> routeFromCapital; //Capital -> Loc
-        private readonly List<Route> routeFromConnector; //Connector -> Loc
+        private List<Route> routeToCapital; //Loc -> Capital
+        private List<Route> routeToConnector; //Loc -> Connector
+        private List<Route> routeFromCapital; //Capital -> Loc
+        private List<Route> routeFromConnector; //Connector -> Loc
         private List<int> listOfActors; //list of characters (actorID's) currently at Location
         private List<int> listOfSecrets;
         private List<int> listOfFollowerEvents;
@@ -88,17 +88,7 @@ namespace Next_Game.Cartographic
         //normal double constructor for a location
         public Location(Position pos)
         {
-            listOfActors = new List<int>();
-            listOfSecrets = new List<int>();
-            listOfFollowerEvents = new List<int>();
-            listOfPlayerEvents = new List<int>();
-            listOfNeighboursPos = new List<Position>();
-            listOfNeighboursLocID = new List<int>();
-            dictSeaDistances = new Dictionary<int, int>();
-            routeToCapital = new List<Route>();
-            routeToConnector = new List<Route>();
-            routeFromCapital = new List<Route>();
-            routeFromConnector = new List<Route>();
+            InitialiseDataCollections();
             LocName = "testville";
             locPos = new Position();
             locPos.PosX = pos.PosX; locPos.PosY = pos.PosY;
@@ -111,17 +101,7 @@ namespace Next_Game.Cartographic
         //triple constructor to specify capital
         public Location(Position pos, bool capital)
         {
-            listOfActors = new List<int>();
-            listOfSecrets = new List<int>();
-            listOfFollowerEvents = new List<int>();
-            listOfPlayerEvents = new List<int>();
-            listOfNeighboursPos = new List<Position>();
-            listOfNeighboursLocID = new List<int>();
-            dictSeaDistances = new Dictionary<int, int>();
-            routeToCapital = new List<Route>();
-            routeToConnector = new List<Route>();
-            routeFromCapital = new List<Route>();
-            routeFromConnector = new List<Route>();
+            InitialiseDataCollections();
             LocName = "testville";
             locPos = new Position();
             locPos.PosX = pos.PosX; locPos.PosY = pos.PosY;
@@ -134,6 +114,21 @@ namespace Next_Game.Cartographic
         //quad constructor to include CapitalRoute
         public Location(Position pos, int dir, bool capital)
         {
+            InitialiseDataCollections();
+            LocName = "testville";
+            locPos = new Position();
+            locPos.PosX = pos.PosX; locPos.PosY = pos.PosY; locPos.Branch = dir;
+            Capital = capital;
+            Port = false;
+            Connector = false;
+            LocationID = locationIndex++;
+        }
+
+        /// <summary>
+        /// generic collection initialiser for all constructors
+        /// </summary>
+        private void InitialiseDataCollections()
+        {
             listOfActors = new List<int>();
             listOfSecrets = new List<int>();
             listOfFollowerEvents = new List<int>();
@@ -145,14 +140,8 @@ namespace Next_Game.Cartographic
             routeToConnector = new List<Route>();
             routeFromCapital = new List<Route>();
             routeFromConnector = new List<Route>();
-            LocName = "testville";
-            locPos = new Position();
-            locPos.PosX = pos.PosX; locPos.PosY = pos.PosY; locPos.Branch = dir;
-            Capital = capital;
-            Port = false;
-            Connector = false;
-            LocationID = locationIndex++;
         }
+
 
         /// <summary>
         /// Default comparer for Location (based on distance to Capital)
@@ -358,12 +347,20 @@ namespace Next_Game.Cartographic
             Console.WriteLine(LocName);
         }
 
-        internal void SetEvents(List<int> listEvents)
+        internal void SetFollowerEvents(List<int> listEvents)
         {
             if (listEvents != null)
             { listOfFollowerEvents.AddRange(listEvents); }
             else
-            { Game.SetError(new Error(58, "Invalid list of Events input (null)")); }
+            { Game.SetError(new Error(58, "Invalid list of Follower Events input (null)")); }
+        }
+
+        internal void SetPlayerEvents(List<int> listEvents)
+        {
+            if (listEvents != null)
+            { listOfPlayerEvents.AddRange(listEvents); }
+            else
+            { Game.SetError(new Error(58, "Invalid list of Player Events input (null)")); }
         }
 
         internal List<int> GetFollowerEvents()
@@ -371,6 +368,12 @@ namespace Next_Game.Cartographic
 
         internal List<int> GetPlayerEvents()
         { return listOfPlayerEvents; }
+
+        internal int GetNumFollowerEvents()
+        { return listOfFollowerEvents.Count; }
+
+        internal int GetNumPlayerEvents()
+        { return listOfPlayerEvents.Count; }
 
         /// <summary>
         /// add the distance (at sea) to the specified location

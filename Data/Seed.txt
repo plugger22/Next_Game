@@ -39,3 +39,11 @@ Seed 39375 -> Sunday, 28 May 2017 1:13 PM
 Seed 59652 -> Sunday, 28 May 2017 1:16 PM
 Seed 49156 -> Sunday, 28 May 2017 1:22 PM
 Seed 55149 -> Sunday, 28 May 2017 1:26 PM
+Seed 32043 -> Sunday, 28 May 2017 4:00 PM
+Seed 25014 -> Sunday, 28 May 2017 4:03 PM
+Seed 42088 -> Sunday, 28 May 2017 4:06 PM
+Seed 41481 -> Sunday, 28 May 2017 4:16 PM
+Seed 13521 -> Sunday, 28 May 2017 4:20 PM
+Seed 37815 -> Sunday, 28 May 2017 4:21 PM
+Seed 24939 -> Sunday, 28 May 2017 4:27 PM
+Seed 40545 -> Sunday, 28 May 2017 4:31 PM

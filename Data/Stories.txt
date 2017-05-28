@@ -11,7 +11,7 @@
 # Ev_Player_Unsafe: number (1 to 100) -> chance of Player experiencing a random event while at sea on an unsafe vessel (VoyageSafe = false)
 # Ev_Player_Dungeon: number (1 to 100) -> chance of the Player experiencing a random event while in a dungeon (captured)
 # Ev_Player_Drift: number (1 to 100) -> chance of the Player experiencing a random event while adrift at sea
-# Arc_... : Archetype ID for Generic archetype that applies (leave blank if none) 
+# Arc_... : Archetype ID for Generic archetype that applies (leave blank if none) -> Follower or Player
 # Inquisitors: number of inquisitors at game start
 
 

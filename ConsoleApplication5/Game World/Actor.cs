@@ -145,12 +145,20 @@ namespace Next_Game
         public Position GetActorPosition()
         { return actorPos; }
 
-        internal void SetEvents(List<int> listEvents)
+        internal void SetFollowerEvents(List<int> listEvents)
         {
             if (listEvents != null)
             { listOfFollowerEvents.AddRange(listEvents); }
             else
-            { Game.SetError(new Error(65, "Invalid list of Events input (null)")); }
+            { Game.SetError(new Error(65, "Invalid list of Follower Events input (null)")); }
+        }
+
+        internal void SetPlayerEvents(List<int> listEvents)
+        {
+            if (listEvents != null)
+            { listOfPlayerEvents.AddRange(listEvents); }
+            else
+            { Game.SetError(new Error(65, "Invalid list of Player Events input (null)")); }
         }
 
         internal List<int> GetFollowerEvents()

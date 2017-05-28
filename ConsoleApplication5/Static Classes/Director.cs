@@ -500,9 +500,7 @@ namespace Next_Game
         /// </summary>
         public void CheckPlayerEvents()
         {
-            //Active player = Game.world.GetActiveActor(1);
             Player player = Game.world.GetPlayer();
-
             if (player != null && player.Status != ActorStatus.Gone && player.Delay == 0)
             {
                 Game.logTurn?.Write("--- CheckPlayerEvents (Director.cs)");
@@ -3250,8 +3248,9 @@ namespace Next_Game
                                     if (rnd.Next(100) < arcSea.Chance)
                                     {
                                         //copy Archetype event ID's across to GeoCluster -> Player events only (followers don't travel by sea)
-                                        cluster.SetPlayerEvents(arcSea.GetPlayerEvents());
-                                        cluster.Archetype = arcSea.ArcID;
+                                        if (arcSea.GetNumFollowerEvents() > 0) { cluster.SetFollowerEvents(arcSea.GetFollowerEvents()); }
+                                        if (arcSea.GetNumPlayerEvents() > 0) { cluster.SetPlayerEvents(arcSea.GetPlayerEvents()); }
+                                        cluster.Archetype = arcSea.ArcID; 
                                         //debug
                                         Game.logStart?.Write(string.Format("{0}, geoID {1}, has been initialised with \"{2}\", arcID {3}", cluster.Name, cluster.GeoID, arcSea.Name, arcSea.ArcID));
                                     }
@@ -3261,30 +3260,38 @@ namespace Next_Game
                         case Cluster.Mountain:
                             if (arcMountain != null)
                             {
-                                //% chance of applying to each instance
-                                if (rnd.Next(100) < arcMountain.Chance)
+                                //doesn't apply to small mountains
+                                if (cluster.Type != GeoType.Small_Mtn)
                                 {
-                                    //copy Archetype event ID's across to GeoCluster
-                                    cluster.SetFollowerEvents(arcMountain.GetFollowerEvents());
-                                    cluster.SetPlayerEvents(arcMountain.GetPlayerEvents());
-                                    cluster.Archetype = arcMountain.ArcID;
-                                    //debug
-                                    Game.logStart?.Write(string.Format("{0}, geoID {1}, has been initialised with \"{2}\", arcID {3}", cluster.Name, cluster.GeoID, arcMountain.Name, arcMountain.ArcID));
+                                    //% chance of applying to each instance
+                                    if (rnd.Next(100) < arcMountain.Chance)
+                                    {
+                                        //copy Archetype event ID's across to GeoCluster
+                                        if (arcMountain.GetNumFollowerEvents() > 0) { cluster.SetFollowerEvents(arcMountain.GetFollowerEvents()); }
+                                        if (arcMountain.GetNumPlayerEvents() > 0) { cluster.SetPlayerEvents(arcMountain.GetPlayerEvents()); }
+                                        cluster.Archetype = arcMountain.ArcID;
+                                        //debug
+                                        Game.logStart?.Write(string.Format("{0}, geoID {1}, has been initialised with \"{2}\", arcID {3}", cluster.Name, cluster.GeoID, arcMountain.Name, arcMountain.ArcID));
+                                    }
                                 }
                             }
                             break;
                         case Cluster.Forest:
                             if (arcForest != null)
                             {
-                                //% chance of applying to each instance
-                                if (rnd.Next(100) < arcForest.Chance)
+                                //doesn't apply to small forests
+                                if (cluster.Type != GeoType.Small_Forest)
                                 {
-                                    //copy Archetype event ID's across to GeoCluster
-                                    cluster.SetFollowerEvents(arcForest.GetFollowerEvents());
-                                    cluster.SetPlayerEvents(arcForest.GetPlayerEvents());
-                                    cluster.Archetype = arcForest.ArcID;
-                                    //debug
-                                    Game.logStart?.Write(string.Format("{0}, geoID {1}, has been initialised with \"{2}\", arcID {3}", cluster.Name, cluster.GeoID, arcForest.Name, arcForest.ArcID));
+                                    //% chance of applying to each instance
+                                    if (rnd.Next(100) < arcForest.Chance)
+                                    {
+                                        //copy Archetype event ID's across to GeoCluster
+                                        if (arcForest.GetNumFollowerEvents() > 0) { cluster.SetFollowerEvents(arcForest.GetFollowerEvents()); }
+                                        if (arcForest.GetNumPlayerEvents() > 0) { cluster.SetPlayerEvents(arcForest.GetPlayerEvents()); }
+                                        cluster.Archetype = arcForest.ArcID;
+                                        //debug
+                                        Game.logStart?.Write(string.Format("{0}, geoID {1}, has been initialised with \"{2}\", arcID {3}", cluster.Name, cluster.GeoID, arcForest.Name, arcForest.ArcID));
+                                    }
                                 }
                             }
                             break;
@@ -3330,7 +3337,8 @@ namespace Next_Game
             //Initialise Capital
             if (arcCapital != null)
             {
-                listArcFollCapitalEvents.AddRange(arcCapital.GetFollowerEvents());
+                if (arcCapital.GetNumFollowerEvents() > 0) { listArcFollCapitalEvents.AddRange(arcCapital.GetFollowerEvents()); }
+                if (arcCapital.GetNumPlayerEvents() > 0) { listArcPlyrCapitalEvents.AddRange(arcCapital.GetPlayerEvents()); }
                 Game.logStart?.Write(string.Format("The Capital at KingsKeep has been initialised with \"{0}\", arcID {1}", arcCapital.Name, arcCapital.ArcID));
             }
 
@@ -3356,7 +3364,8 @@ namespace Next_Game
                             if (rnd.Next(100) < arcMajor.Chance)
                             {
                                 //copy Archetype event ID's across to GeoCluster
-                                loc.Value.SetEvents(arcMajor.GetFollowerEvents());
+                                if (arcMajor.GetNumFollowerEvents() > 0) { loc.Value.SetFollowerEvents(arcMajor.GetFollowerEvents()); }
+                                if (arcMajor.GetNumPlayerEvents() > 0) { loc.Value.SetPlayerEvents(arcMajor.GetPlayerEvents()); }
                                 loc.Value.ArcID = arcMajor.ArcID;
                                 //debug
                                 Game.logStart?.Write(string.Format("{0}, locID {1}, has been initialised with \"{2}\", arcID {3}", Game.world.GetLocationName(loc.Key), loc.Key, arcMajor.Name, arcMajor.ArcID));
@@ -3373,7 +3382,8 @@ namespace Next_Game
                             if (rnd.Next(100) < arcMinor.Chance)
                             {
                                 //copy Archetype event ID's across to GeoCluster
-                                loc.Value.SetEvents(arcMinor.GetFollowerEvents());
+                                if (arcMinor.GetNumFollowerEvents() > 0) { loc.Value.SetFollowerEvents(arcMinor.GetFollowerEvents()); }
+                                if (arcMinor.GetNumPlayerEvents() > 0) { loc.Value.SetPlayerEvents(arcMajor.GetPlayerEvents()); }
                                 loc.Value.ArcID = arcMinor.ArcID;
                                 //debug
                                 Game.logStart?.Write(string.Format("{0}, locID {1}, has been initialised with \"{2}\", arcID {3}", Game.world.GetLocationName(loc.Key), loc.Key, arcMinor.Name, arcMinor.ArcID));
@@ -3389,7 +3399,8 @@ namespace Next_Game
                             if (rnd.Next(100) < arcInn.Chance)
                             {
                                 //copy Archetype event ID's across to GeoCluster
-                                loc.Value.SetEvents(arcInn.GetFollowerEvents());
+                                if (arcInn.GetNumFollowerEvents() > 0) { loc.Value.SetFollowerEvents(arcInn.GetFollowerEvents()); }
+                                if (arcInn.GetNumPlayerEvents() > 0) { loc.Value.SetPlayerEvents(arcMajor.GetPlayerEvents()); }
                                 loc.Value.ArcID = arcInn.ArcID;
                                 //debug
                                 Game.logStart?.Write(string.Format("{0}, locID {1}, has been initialised with \"{2}\", arcID {3}", Game.world.GetLocationName(loc.Key), loc.Key, arcInn.Name, arcInn.ArcID));
@@ -3402,11 +3413,39 @@ namespace Next_Game
                     if (arcID > 0)
                     {
                         Archetype archetype = GetArchetype(arcID);
-                        house.SetFollowerEvents(archetype.GetFollowerEvents());
+                        //avoid placing multiple copies of events into houses by checking if any are present first
+                        if (house.GetNumFollowerEvents() <= 0) { if (archetype.GetNumFollowerEvents() > 0) { house.SetFollowerEvents(archetype.GetFollowerEvents()); } }
+                        if (house.GetNumPlayerEvents() <= 0) { if (archetype.GetNumPlayerEvents() > 0) { house.SetPlayerEvents(arcMajor.GetPlayerEvents()); } }
                         //debug
                         Game.logStart?.Write(string.Format("House {0}, refID {1}, has been initialised with \"{2}\", arcID {3}", house.Name, house.RefID, archetype.Name, archetype.ArcID));
                     }
+                    if (house.GetNumPlayerEvents() > 0)
+                    {
+                        //add name of house to event list to facilitate generation of rumours once event becomes active
+                        List<int> listPlayerEvents = house.GetPlayerEvents();
+                        for (int i = 0; i < listPlayerEvents.Count; i++)
+                        {
+                            Event eventObject = GetPlayerEvent(listPlayerEvents[i]);
+                            if (eventObject != null)
+                            { eventObject.AddRumourName(house.Name); }
+                            else { Game.SetError(new Error(64, $"Invalid eventObject (House) for eventID {listPlayerEvents[i]}")); }
+                        }
+                    }
                 }
+                //check player events and add locName to listOfRumourNames for <name> tags
+                if (loc.Value.GetNumPlayerEvents() > 0)
+                {
+                    //add name of location to event list to facilitate generation of rumours once event becomes active
+                    List<int> listPlayerEvents = loc.Value.GetPlayerEvents();
+                    for (int i = 0; i < listPlayerEvents.Count; i++)
+                    {
+                        Event eventObject = GetPlayerEvent(listPlayerEvents[i]);
+                        if (eventObject != null)
+                        { eventObject.AddRumourName(loc.Value.LocName); }
+                        else { Game.SetError(new Error(64, $"Invalid eventObject (Location) for eventID {listPlayerEvents[i]}")); }
+                    }
+                }
+
             }
             //Player & Follower specific archetypes
             Dictionary<int, Active> tempActiveActors = Game.world.GetAllActiveActors();
@@ -3418,7 +3457,8 @@ namespace Next_Game
                     if (arcID > 0)
                     {
                         Archetype archetype = GetArchetype(arcID);
-                        actor.Value.SetEvents(archetype.GetFollowerEvents());
+                        if (archetype.GetNumFollowerEvents() > 0) { actor.Value.SetFollowerEvents(archetype.GetFollowerEvents()); }
+                        if (archetype.GetNumPlayerEvents() > 0) { actor.Value.SetPlayerEvents(archetype.GetPlayerEvents()); }
                         //debug
                         Game.logStart?.Write(string.Format("\"{0}\", AiD {1}, has been initialised with \"{2}\", arcID {3}", actor.Value.Name, actor.Value.ActID, archetype.Name, archetype.ArcID));
                     }
