@@ -5951,24 +5951,27 @@ namespace Next_Game
             //check tags
             if (eventObject != null)
             {
-                string rumourText = eventObject.Rumour;
+                string rumourText;
                 if (eventObject.GetNumRumourNames() > 0)
                 {
                     //Archetype events
                     List<string> tempNames = eventObject.GetRumourNames();
                     for (int i = 0; i < tempNames.Count; i++)
                     {
+                        rumourText = eventObject.Rumour;
                         rumourText = Game.utility.CheckTagsRumour(rumourText, tempNames[i]);
                         rumour = new RumourEvent(rumourText, 3, RumourScope.Global, 0, RumourGlobal.All);
+                        AddRumour(rumour);
                     }
                 }
                 else
                 {
                     //normal events
+                    rumourText = eventObject.Rumour;
                     rumourText = Game.utility.CheckTagsRumour(rumourText);
                     rumour = new RumourEvent(rumourText, 3, RumourScope.Global, 0, RumourGlobal.All);
+                    AddRumour(rumour);
                 }
-                AddRumour(rumour);
             }
             else { Game.SetError(new Error(293, "Invalid eventObject (null)")); }
         }
