@@ -5,6 +5,8 @@ using Next_Game;
 namespace Next_Game.Cartographic
 {
 
+    public enum LocType { None, Capital, MajorHouse, MinorHouse, Inn}
+
     public class Position
     {
         public int PosX { get; set; }
@@ -69,7 +71,8 @@ namespace Next_Game.Cartographic
         public int DistanceToConnector { get; set; }
         public int HouseID { get; set; } //location house ID if applicable
         public int RefID { get; set; } //location ref ID if applicable
-        public int ArcID { get; set; } //location archetype ID if applicable        
+        public int ArcID { get; set; } //location archetype ID if applicable      
+        public LocType Type { get; set; }  
         private List<Position> listOfNeighboursPos; //list of immediate neighbours, by Position
         private List<int> listOfNeighboursLocID; //list of immediate neighbours, by LocID
         private List<Route> routeToCapital; //Loc -> Capital

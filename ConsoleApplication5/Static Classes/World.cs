@@ -4377,6 +4377,7 @@ namespace Next_Game
             Game.logTurn?.Write("--- ProcessStartGame (World.cs)");
             Game.history.AgePassiveCharacters(dictPassiveActors);
             InitialiseGameVars();
+            InitialiseLocTypes();
             CalculateCrows();
 
             //DEBUG -> populate dictionary with sample data
@@ -7065,6 +7066,27 @@ namespace Next_Game
             int count = dictMajorHouses.Count;
             return dictMajorHouses.ElementAt(rnd.Next(count)).Value.Name;
         }
+
+        /// <summary>
+        /// assigns LocTypes to all Houses and Loc's
+        /// </summary>
+        private void InitialiseLocTypes()
+        {
+            int locID;
+            foreach(var house in dictAllHouses)
+            {
+                locID = house.Value.LocID;
+                Location loc = Game.network.GetLocation(locID);
+                if (loc != null)
+                {
+                    if (house.Value is MajorHouse) { loc.Type = LocType.MajorHouse; house.Value.Type = LocType.MajorHouse; }
+                    else if (house.Value is MinorHouse) { loc.Type = LocType.MinorHouse; house.Value.Type = LocType.MinorHouse; }
+                    else if (house.Value is InnHouse) { loc.Type = LocType.Inn; house.Value.Type = LocType.Inn; }
+                }
+                else { Game.SetError(new Error(294, $"Invalid Loc (null), LocID \"{locID}\" -> LocType not assigned to house or Loc")); }
+            }
+        }
+
         //new Methods above here
     }
 }
