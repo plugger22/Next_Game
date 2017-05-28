@@ -17,6 +17,7 @@ Type: GeoCluster
 subType: Forest
 Chance: 30
 EventsFoll: 5, 6
+EventsPlyr: 22
 [End]
 
 ArcID: 2

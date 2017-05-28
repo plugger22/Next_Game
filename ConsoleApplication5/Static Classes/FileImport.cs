@@ -1127,7 +1127,7 @@ namespace Next_Game
                 {
                     if (arrayOfEvents[i] != "" && !arrayOfEvents[i].StartsWith("#"))
                     {
-                        //set up for a new house
+                        //set up for a new event
                         if (newEvent == false)
                         {
                             newEvent = true;
@@ -1142,6 +1142,12 @@ namespace Next_Game
                             optionFlag = false;
                             outcomeFlag = false;
                             triggerFlag = false;
+                            //zero out option view texts
+                            structOption.Test = 0;
+                            structOption.ReplyBad = "";
+                            structOption.View = "";
+                            structOption.ViewBad = "";
+                            structOption.Skill = SkillType.None;
                         }
                         //string[] tokens = arrayOfEvents[i].Split(':');
                         string[] tokens = arrayOfEvents[i].Split(new Char[] { ':', ';' });

@@ -1,8 +1,6 @@
-//Exile Game file ops "LogError.txt" commenced at: 27/05/2017 13:34:54
-ERROR_55 "Invalid list of Events input (null)"
-Method: SetPlayerEvents,  Line: 129,  Object: GeoCluster.cs,  Turn: 0,  Local Time: 13:34:55 UTC +10:00
-ERROR_55 "Invalid list of Events input (null)"
-Method: SetPlayerEvents,  Line: 129,  Object: GeoCluster.cs,  Turn: 0,  Local Time: 13:34:55 UTC +10:00
-ERROR_55 "Invalid list of Events input (null)"
-Method: SetPlayerEvents,  Line: 129,  Object: GeoCluster.cs,  Turn: 0,  Local Time: 13:34:55 UTC +10:00
-//Exile Game file ops "LogError.txt" Completed at: 27/05/2017 13:35:16
+//Exile Game file ops "LogError.txt" commenced at: 28/05/2017 11:03:04
+ERROR_29 "Location Deleted 3:25"
+Method: LocationSweeper,  Line: 1675,  Object: Map.cs,  Turn: 0,  Local Time: 11:03:04 UTC +10:00
+ERROR_283 "Invalid tag ("geocluster")"
+Method: CheckTagsRumour,  Line: 397,  Object: Utility.cs,  Turn: 0,  Local Time: 11:04:12 UTC +10:00
+//Exile Game file ops "LogError.txt" Completed at: 28/05/2017 11:04:24
