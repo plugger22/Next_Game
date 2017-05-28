@@ -1333,6 +1333,10 @@ namespace Next_Game
                                         case "Adrift":
                                             structEvent.Type = ArcType.Adrift;
                                             break;
+                                        case "house":
+                                        case "House":
+                                            structEvent.Type = ArcType.House;
+                                            break;
                                         default:
                                             structEvent.Type = ArcType.None;
                                             Game.SetError(new Error(49, string.Format("Invalid Input, Type, (\"{0}\")", arrayOfEvents[i])));
@@ -2239,7 +2243,9 @@ namespace Next_Game
                                                 eventObject = new EventPlyrHouse(structEvent.EventID, structEvent.Name, structEvent.Frequency, structEvent.House);
                                                 break;
                                             case ArcType.Actor:
-                                                eventObject = new EventFolActor(structEvent.EventID, structEvent.Name, structEvent.Frequency, structEvent.Actor);
+                                                if (structEvent.Actor == ArcActor.Player)
+                                                { eventObject = new EventPlyrActor(structEvent.EventID, structEvent.Name, structEvent.Frequency, structEvent.Actor); }
+                                                else { eventObject = new EventFolActor(structEvent.EventID, structEvent.Name, structEvent.Frequency, structEvent.Actor); }
                                                 break;
                                             case ArcType.Dungeon:
                                                 eventObject = new EventPlyrDungeon(structEvent.EventID, structEvent.Name, structEvent.Frequency);

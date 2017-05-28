@@ -3,8 +3,9 @@
 
 # Name: descriptive
 # ID: (Event ID) unique number for PLAYER Events only (do not exceed ID1000)
-# Type: GeoCluster/Location/Road/Dungeon
+# Type: GeoCluster/Location/Road/Dungeon/Adrift/Actor/House
 # subType:(GeoCluster -> Sea/Unsafe/Mountain/Forest, Location -> Capital/Major/Minor/Inn, Road -> Normal/Kings/Connector)
+# subType: Actor -> Player/Follower, House -> Major/Minor/Inn
 # Cat: (Category) Generic/Archetype (Archetype soley for archetype events assigned to an object, Generic can be used for all)
 # Freq: (Frequency) Very_Rare/Rare/Low/Normal/Common/High/Very_High
 # Status: (Active or Dormant) -> Optional tag (if not shown then default of 'Active')
