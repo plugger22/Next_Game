@@ -1,13 +1,9 @@
-//Exile Game File "LogTurn.txt" opened at: 28/05/2017 11:04:12
+//Exile Game File "LogTurn.txt" opened at: 28/05/2017 13:12:11
 --- ProcessStartTurn (World.cs)
 Day 2, Turn 1
-Usurper Ingrannus Florent II, "The Insipid Rodent", AtLocation, Karhold
+Usurper Albar Tully, "The Heavy", AtLocation, Winterfell
 --- UpdateRumours (World.cs)
-dictRumoursTimed (Start) -> 93 records
-RumourID 305 -> TimerExpire decremented, now 19
-RumourID 306 -> TimerExpire decremented, now 19
-RumourID 307 -> TimerExpire decremented, now 19
-RumourID 308 -> TimerExpire decremented, now 19
+dictRumoursTimed (Start) -> 89 records
 RumourID 309 -> TimerExpire decremented, now 19
 RumourID 310 -> TimerExpire decremented, now 19
 RumourID 311 -> TimerExpire decremented, now 19
@@ -96,90 +92,57 @@ RumourID 393 -> TimerExpire decremented, now 19
 RumourID 394 -> TimerExpire decremented, now 19
 RumourID 395 -> TimerExpire decremented, now 19
 RumourID 396 -> TimerExpire decremented, now 19
-RumourID 435 -> TimerExpire decremented, now 2
+RumourID 440 -> TimerExpire decremented, now 2
 --- MoveActors -> 0 Records (World.cs)
 --- UpdatePlayerStatus (World.cs)
 --- UpdateWorldStatus (World.cs)
 --- CheckFollowerActivity (World.cs)
 --- GetRumour (Director.cs)
-arrayOfRumours [0] -> RumourID 100, Strength 1, Scope Global, Type Item, Global All
-arrayOfRumours [3] -> RumourID 414, Strength 3, Scope Global, Type Friends, Global South
-arrayOfRumours [5] -> RumourID 85, Strength 2, Scope Local, Type Secret, Global All
-RumourID 414 selected from the Pool
-Rumour "It is widely known that you have no Friends and many Enemies at Winterfell (House Stark)" revealed to ActorID4 on turn 1 -> added to List
-RumourID 414 removed from listRumoursSouth[13]
-Follower The Waif, ActID 4, added RumourID 414
-[Notification] House Stark FriendsAndEnemies status changed to "True"
+[Notification] No house rumours available -> none added to pool
+arrayOfRumours [0] -> RumourID 436, Strength 3, Scope Global, Type Event, Global All
+arrayOfRumours [4] -> RumourID 121, Strength 2, Scope Global, Type Desire, Global West
+RumourID 121 selected from the Pool
+Rumour "It is commonly known that Maester Heward Jehan, ActID 59 at Highgarden, thinks only of Gold" revealed to ActorID2 on turn 1 -> added to List
+RumourID 121 removed from listRumoursWest[4]
+Follower The Viper, ActID 2, added RumourID 121
+[Notification] Maester Heward Jehan "The Cavalier" DesireKnown status changed to "True"
 --- GetRumour (Director.cs)
-arrayOfRumours [0] -> RumourID 238, Strength 1, Scope Global, Type Item, Global All
-arrayOfRumours [4] -> RumourID 243, Strength 2, Scope Global, Type Desire, Global West
-arrayOfRumours [5] -> RumourID 241, Strength 4, Scope Local, Type Skill, Global All
-RumourID 243 selected from the Pool
-Rumour "It is whispered that BannerLord Peter Botley, ActID 111 at Lordsport, lusts after Gold" revealed to ActorID7 on turn 1 -> added to List
-RumourID 243 removed from listRumoursWest[11]
-Follower The Beast, ActID 7, added RumourID 243
-[Notification] BannerLord Peter Botley "The Titled" DesireKnown status changed to "True"
+arrayOfRumours [0] -> RumourID 292, Strength 1, Scope Global, Type Item, Global All
+arrayOfRumours [4] -> RumourID 429, Strength 2, Scope Global, Type HouseRel, Global West
+arrayOfRumours [5] -> RumourID 357, Strength 4, Scope Local, Type Relationship, Global All
+RumourID 357 selected from the Pool
+Rumour "BannerLord Albar Oakheart "The Hefty", ActID 75 at Old Oak, is rumoured to have a poor opinion of the Usurper" revealed to ActorID4 on turn 1 -> added to List
+RumourID 357 removed from listRumoursHouse[2]
+Follower The Waif, ActID 4, added RumourID 357
+[Notification] BannerLord Albar Oakheart, ActID 75 -> RelKnown changed to True
+[Rumour -> Deleted] Timed RumourID 357 removed from dictRumoursTimed
 --- GetRumour (Director.cs)
-arrayOfRumours [0] -> RumourID 80, Strength 4, Scope Global, Type Disguise, Global All
-arrayOfRumours [4] -> RumourID 398, Strength 2, Scope Global, Type HouseRel, Global West
-arrayOfRumours [5] -> RumourID 186, Strength 4, Scope Local, Type Skill, Global All
-RumourID 398 selected from the Pool
-Rumour "House Lannister has had poor past relations with their BannerLord at House Hornwood due to a unforgotten injustice" revealed to ActorID5 on turn 1 -> added to List
-RumourID 398 removed from listRumoursWest[13]
-Follower The Leper, ActID 5, added RumourID 398
-[Notification -> HouseRel] "Our past Lord was forced to hang a recalcitrant BannerLord which they haven't forgotten" -> Known is True
+arrayOfRumours [0] -> RumourID 138, Strength 4, Scope Global, Type Disguise, Global All
+arrayOfRumours [4] -> RumourID 134, Strength 2, Scope Global, Type Desire, Global West
+arrayOfRumours [5] -> RumourID 178, Strength 4, Scope Local, Type Skill, Global All
+RumourID 178 selected from the Pool
+Rumour "BannerLord Giradin Mormont "The Severe", ActID 78 at Bearpit, is said to be Despotic" revealed to ActorID8 on turn 1 -> added to List
+RumourID 178 removed from listRumoursHouse[1]
+Follower The Dark Eminence, ActID 8, added RumourID 178
+BannerLord Giradin Mormont, ActID 78, has their Leadership changed to True
 --- GetMarketView (Director.cs)
 [GameVar] View_Index changed from 1 to 2
 --- CheckStationaryActiveActors (World.cs)
- [Search -> Stationary] Usurper Ingrannus Florent II, ActID 1 is AtLocation
+ [Search -> Stationary] Usurper Albar Tully, ActID 1 is AtLocation
 --- CheckIfFoundActive (World.cs)
- [Search -> Debug] Enemy, Brother Behemoth, ID 127 at 14:17, Active Ingrannus Florent II, ID 1, at 18:20
- [Search -> Debug] Enemy, Brother Astaroth, ID 128 at 14:17, Active Ingrannus Florent II, ID 1, at 18:20
- [Search -> Debug] Enemy, Brother Beelzebub, ID 129 at 14:17, Active Ingrannus Florent II, ID 1, at 18:20
- [Search -> Debug] Enemy, Brother Amon, ID 130 at 14:17, Active Ingrannus Florent II, ID 1, at 18:20
- [Search -> Debug] Enemy, The Unrelenting, ID 131 at 14:17, Active Ingrannus Florent II, ID 1, at 18:20
+ [Search -> Debug] Enemy, Brother Haborym, ID 124 at 19:14, Active Albar Tully, ID 1, at 29:8
+ [Search -> Debug] Enemy, Brother Dagon, ID 125 at 19:14, Active Albar Tully, ID 1, at 29:8
+ [Search -> Debug] Enemy, Brother Mastema, ID 126 at 19:14, Active Albar Tully, ID 1, at 29:8
+ [Search -> Debug] Enemy, Brother Nergal, ID 127 at 19:14, Active Albar Tully, ID 1, at 29:8
+ [Search -> Debug] Enemy, The Unrelenting, ID 128 at 19:14, Active Albar Tully, ID 1, at 29:8
+ [Search -> Stationary] Follower The Viper, ActID 2 is AtLocation
  [Search -> Stationary] Follower The Waif, ActID 4 is AtLocation
- [Search -> Stationary] Follower The Beast, ActID 7 is AtLocation
- [Search -> Stationary] Follower The Leper, ActID 5 is AtLocation
+ [Search -> Stationary] Follower The Dark Eminence, ActID 8 is AtLocation
 --- UpdateAIController (World.cs)
- [AI -> Player Unknown] Inquisitor Brother Behemoth, Act ID 127 Mode -> Normal
- [AI -> Player Unknown] Inquisitor Brother Astaroth, Act ID 128 Mode -> Normal
- [AI -> Player Unknown] Inquisitor Brother Beelzebub, Act ID 129 Mode -> Normal
- [AI -> Player Unknown] Inquisitor Brother Amon, Act ID 130 Mode -> Normal
- [AI -> Player Unknown] Nemesis The Unrelenting, Act ID 131 Mode -> Normal
+ [AI -> Player Unknown] Inquisitor Brother Haborym, Act ID 124 Mode -> Normal
+ [AI -> Player Unknown] Inquisitor Brother Dagon, Act ID 125 Mode -> Normal
+ [AI -> Player Unknown] Inquisitor Brother Mastema, Act ID 126 Mode -> Normal
+ [AI -> Player Unknown] Inquisitor Brother Nergal, Act ID 127 Mode -> Normal
+ [AI -> Player Unknown] Nemesis The Unrelenting, Act ID 128 Mode -> Normal
 --- SetEnemyActivity (World.cs)
- [Enemy -> Goal] Brother Behemoth, ActID 127 retains Goal -> Wait
---- SetEnemyGoal (World.cs)
- [Goal -> Branch] Brother Astaroth, ActID 128 Assigned Branch -> 2 Current Branch -> 0
- [Goal -> New] Brother Astaroth, ActID 128, (loc 14:17), assigned new Goal -> Move
- [Goal -> Move] Brother Astaroth, ActID 128 -> Capital to Correct Branch -> Karhold, LocID 7
---- InitiateMoveActor (World.cs)
---- Move Actor (Director.cs)
- [Enemy -> Goal] Brother Beelzebub, ActID 129 retains Goal -> Wait
- [Enemy -> Goal] Brother Amon, ActID 130 retains Goal -> Wait
---- SetEnemyGoal (World.cs)
- [Goal -> Branch] The Unrelenting, ActID 131 Assigned Branch -> 0 Current Branch -> 0
---- CheckPlayerEvents (Director.cs)
-- CreateAutoLocEvent (Director.cs)
- [AutoEvent -> ActorList] "Doran Karstark", ID 96 added to list of Actors
- [AutoEvent -> LocalList] "Doran Karstark", ID 96 added to list of Locals
-[Notification] No entry found in dictOfIntroductions for RefID 10
- Chance of Player Location event 75 %
---- ResolvePlayerEvents (Director.cs)
- Trigger FAILED on "0" Equals 1
- Trigger: Player is wrong type of Known status -> Trigger failed
- Trigger FAILED on "0" Equals 1
- Trigger: Player is wrong type of Known status -> Trigger failed
- Event "What to do?" Timer Repeat now 999
- Event "What to do?" Cooldown Timer has been reset to 0
---- UpdateActiveActors (World.cs)
- Usurper Ingrannus Florent II has had their TurnsUnknown Timer increased from 100 to 101
- Follower The Waif has had their TurnsUnknown Timer increased from 0 to 1
- Follower The Beast has had their TurnsUnknown Timer increased from 0 to 1
- Follower The Leper has had their TurnsUnknown Timer increased from 0 to 1
---- ResolveOutcome (Director.cs)
- Inactive (greyed out) Option chosen for "What to do?", option # 1
---- ResolveFollowerEvents (Director.cs)
---- SetEndGame (Game.cs)
-[Alert] Player chose to exit (pressed 'X')
-//Exile Game file ops "LogTurn.txt" Completed at: 28/05/2017 11:04:24
+ [Enemy -> Known] Brother Haborym ActID 124 has be

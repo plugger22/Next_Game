@@ -3222,7 +3222,7 @@ namespace Next_Game
         }
 
         /// <summary>
-        /// Using Story, set up archetypes for geo / loc / road's (doesn't apply to player)
+        /// Using Story, set up archetypes for geo / loc / road's
         /// </summary>
         public void InitialiseArchetypes()
         {
@@ -3243,14 +3243,14 @@ namespace Next_Game
                         case Cluster.Sea:
                             if (arcSea != null)
                             {
-                                //only applies to Large sea zones with 2 or more ports (no events needed for the others)
-                                if (cluster.GetNumPorts() > 1 && cluster.Type == GeoType.Large_Sea)
+                                //only applies to Medium/Large sea zones with 2 or more ports (no events needed for the others)
+                                if (cluster.GetNumPorts() > 1 && cluster.Type != GeoType.Small_Sea)
                                 {
                                     //% chance of applying to each instance
                                     if (rnd.Next(100) < arcSea.Chance)
                                     {
                                         //copy Archetype event ID's across to GeoCluster -> Player events only (followers don't travel by sea)
-                                        cluster.SetPlayerEvents(arcSea.GetFollowerEvents());
+                                        cluster.SetPlayerEvents(arcSea.GetPlayerEvents());
                                         cluster.Archetype = arcSea.ArcID;
                                         //debug
                                         Game.logStart?.Write(string.Format("{0}, geoID {1}, has been initialised with \"{2}\", arcID {3}", cluster.Name, cluster.GeoID, arcSea.Name, arcSea.ArcID));
@@ -3288,6 +3288,18 @@ namespace Next_Game
                                 }
                             }
                             break;
+                    }
+                    if (cluster.GetNumPlayerEvents() > 0)
+                    {
+                        //add name of cluster to event list to facilitate generation of rumours once event becomes active
+                        List<int> listPlayerEvents = cluster.GetPlayerEvents();
+                        for (int i = 0; i < listPlayerEvents.Count; i++)
+                        {
+                            Event eventObject = GetPlayerEvent(listPlayerEvents[i]);
+                            if (eventObject != null)
+                            { eventObject.AddRumourName(cluster.Name); }
+                            else { Game.SetError(new Error(64, $"Invalid eventObject (cluster) for eventID {listPlayerEvents[i]}")); }
+                        }
                     }
                 }
             }
@@ -3544,7 +3556,7 @@ namespace Next_Game
                         //create a rumour (only once)
                         if (String.IsNullOrEmpty(eventObject.Value.Rumour) == false)
                         {
-                            InitialiseEventRumour(eventObject.Value.Rumour);
+                            InitialiseEventRumour(eventObject.Value);
                             //delete rumour text to prevent repeat rumours
                             eventObject.Value.Rumour = null;
                         }
@@ -3582,7 +3594,7 @@ namespace Next_Game
                                 //create a rumour (only once)
                                 if (String.IsNullOrEmpty(eventObject.Value.Rumour) == false)
                                 {
-                                    InitialiseEventRumour(eventObject.Value.Rumour);
+                                    InitialiseEventRumour(eventObject.Value);
                                     //delete rumour text to prevent repeat rumours
                                     eventObject.Value.Rumour = null;
                                 }
@@ -5932,13 +5944,33 @@ namespace Next_Game
         /// Creates a Event Rumour
         /// </summary>
         /// <param name="text"></param>
-        internal void InitialiseEventRumour(string text)
+        internal void InitialiseEventRumour(Event eventObject)
         {
             Game.logTurn?.Write("--- InitialiseEventRumours (Director.cs)");
+            RumourEvent rumour = null;
             //check tags
-            string rumourText = Game.utility.CheckTagsRumour(text);
-            RumourEvent rumour = new RumourEvent(rumourText, 3, RumourScope.Global, 0, RumourGlobal.All);
-            AddRumour(rumour);
+            if (eventObject != null)
+            {
+                string rumourText = eventObject.Rumour;
+                if (eventObject.GetNumRumourNames() > 0)
+                {
+                    //Archetype events
+                    List<string> tempNames = eventObject.GetRumourNames();
+                    for (int i = 0; i < tempNames.Count; i++)
+                    {
+                        rumourText = Game.utility.CheckTagsRumour(rumourText, tempNames[i]);
+                        rumour = new RumourEvent(rumourText, 3, RumourScope.Global, 0, RumourGlobal.All);
+                    }
+                }
+                else
+                {
+                    //normal events
+                    rumourText = Game.utility.CheckTagsRumour(rumourText);
+                    rumour = new RumourEvent(rumourText, 3, RumourScope.Global, 0, RumourGlobal.All);
+                }
+                AddRumour(rumour);
+            }
+            else { Game.SetError(new Error(293, "Invalid eventObject (null)")); }
         }
 
         /// <summary>

@@ -32,7 +32,7 @@ ArcID: 3
 Name: Kraken Sea
 Type: GeoCluster
 subType: Sea
-Chance: 50
+Chance: 80
 EventsPlyr: 16
 [End]
 

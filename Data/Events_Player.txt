@@ -10,6 +10,7 @@
 # Status: (Active or Dormant) -> Optional tag (if not shown then default of 'Active')
 # Event: (Event Text)
 # Rumour: optional text (with tags) that is used to create a rumour when event activated (tags -> 'newKing/oldKing/newKingHandle/oldKingHandle')
+# Rumour: For archetypes you can use the tag '<name>' which will use the geocluster, road, or location name automatically
 
 # Repeat: (Timer) Number > 0 -> Optional tag (if not shown then default of 1000) -> Fixed number of activations before event goes dormant
 # Dormant: (Timer) Number > 0 -> Optional tag (if not shown then default of 0) -> Fixed number of turns before event goes dormant
@@ -482,7 +483,7 @@ Freq: High
 Status: Active
 Cool: 3
 Event: The low pitched growling of wolves pierces the night air.
-Rumour: There are Direwolves roaming the murky depths of <geocluster>.
+Rumour: There are Direwolves roaming the murky depths of <name>.
 [option]
 text: Light a fire to keep the Wolves at bay
 reply: lkjljlj

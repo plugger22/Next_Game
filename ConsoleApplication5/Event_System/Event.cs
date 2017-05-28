@@ -39,11 +39,11 @@ namespace Next_Game.Event_System
         public ArcRoad RoadType { get; set; } = ArcRoad.None;
         public ArcHouse HouseType { get; set; } = ArcHouse.None;
         public ArcActor ActorType { get; set; } = ArcActor.None;
-        
+        private List<string> listOfRumourNames; //contains list of any geoclusters, or loc's, etc. that use this event (archetypes). Used to generate rumours
         
 
         public Event()
-        { }
+        { listOfRumourNames = new List<string>(); }
 
         /// <summary>
         /// base class constructor
@@ -55,7 +55,20 @@ namespace Next_Game.Event_System
         {
             this.Name = name;
             this.Frequency = frequency;
-            
+            listOfRumourNames = new List<string>();
+        }
+
+        internal int GetNumRumourNames()
+        { return listOfRumourNames.Count(); }
+
+        internal List<string> GetRumourNames()
+        { return listOfRumourNames; }
+
+        internal void AddRumourName(string name)
+        {
+            if (String.IsNullOrEmpty(name) == false)
+            { listOfRumourNames.Add(name); Game.logTurn?.Write($"[Event -> Rumour] \"{name}\" added to listOfRumourNames"); }
+            else { Game.SetError(new Error(55, "Invalid name (null)")); }
         }
     }
 

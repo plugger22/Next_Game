@@ -1,6 +1,0 @@
-//Exile Game file ops "LogError.txt" commenced at: 28/05/2017 11:03:04
-ERROR_29 "Location Deleted 3:25"
-Method: LocationSweeper,  Line: 1675,  Object: Map.cs,  Turn: 0,  Local Time: 11:03:04 UTC +10:00
-ERROR_283 "Invalid tag ("geocluster")"
-Method: CheckTagsRumour,  Line: 397,  Object: Utility.cs,  Turn: 0,  Local Time: 11:04:12 UTC +10:00
-//Exile Game file ops "LogError.txt" Completed at: 28/05/2017 11:04:24

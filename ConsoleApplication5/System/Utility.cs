@@ -359,9 +359,10 @@ namespace Next_Game
         /// <summary>
         /// selection of tags used for Rumours (events)
         /// </summary>
-        /// <param name="text"></param>
+        /// <param name="text">Rumour text that may contain tags</param>
+        /// <param name="descriptor">Multipurpose descriptor, could be Forest name, locName, etc. </param>
         /// <returns></returns>
-        public string CheckTagsRumour(string text)
+        public string CheckTagsRumour(string text, string descriptor = "")
         {
             string checkedText = text;
             if (String.IsNullOrEmpty(text) == false)
@@ -391,6 +392,11 @@ namespace Next_Game
                             break;
                         case "oldKingHandle":
                             replaceText = Game.lore.OldKing.Handle;
+                            break;
+                        case "name":
+                            //multipurpose, Initialise Archetypes determines this
+                            if (String.IsNullOrEmpty(descriptor) == false)
+                            { replaceText = descriptor; }
                             break;
                         default:
                             replaceText = "";
