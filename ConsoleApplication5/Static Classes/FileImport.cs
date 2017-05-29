@@ -2228,7 +2228,18 @@ namespace Next_Game
                                             listAllOutcomes.Add(listSubOutcomes);
                                             //add Triggers to a list in same sequential order as options (place a blank trigger in the list if none exists)
                                             if (listSubTriggers.Count > 0)
-                                            { listAllTriggers.Add(listSubTriggers); }
+                                            {
+                                                if (structTrigger.Check > 0)
+                                                {
+                                                    //add remaining trigger to list
+                                                    Trigger trigger = new Trigger(structTrigger.Check, structTrigger.Item, structTrigger.Threshold, structTrigger.Calc);
+                                                    listSubTriggers.Add(trigger);
+                                                    //reset to default value
+                                                    structTrigger.Check = TriggerCheck.None;
+                                                }
+                                                List<Trigger> tempTriggers = new List<Trigger>(listSubTriggers);
+                                                listAllTriggers.Add(tempTriggers);
+                                            }
                                             else
                                             {
                                                 Trigger trigger;
@@ -2244,7 +2255,6 @@ namespace Next_Game
                                                     //otherwise create list with a single blank Trigger (effect = none)
                                                     trigger = new Trigger();
                                                 }
-                                                //create list with a single blank Trigger (effect = none)
                                                 listSubTriggers.Add(trigger);
                                                 List<Trigger> tempTriggers = new List<Trigger>(listSubTriggers);
                                                 listAllTriggers.Add(tempTriggers);

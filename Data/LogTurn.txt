@@ -1,16 +1,205 @@
-//Exile Game file ops "LogTurn.txt" commenced at: 29/05/2017 20:50:36
---- ProcessStartGame (World.cs)
---- AgePassiveCharacters (History.cs)
---- InitialiseGameVars (World.cs)
-[GameVar] View_Index changed from 0 to 1
-[AddVisitedLoc] LocID 21, "The Arbor", turn -3 -> record added to listLocsVisited
-[AddVisitedLoc] LocID 21, "The Arbor", turn -3 -> new record added to dictLocsVisited
-[AddVisitedLoc] LocID 27, "Blackhaven", turn -2 -> record added to listLocsVisited
-[AddVisitedLoc] LocID 27, "Blackhaven", turn -2 -> new record added to dictLocsVisited
-[AddVisitedLoc] LocID 25, "Sodhall", turn -1 -> record added to listLocsVisited
-[AddVisitedLoc] LocID 25, "Sodhall", turn -1 -> new record added to dictLocsVisited
-[AddVisitedLoc] LocID 21, "The Arbor", turn 0 -> record added to listLocsVisited
-[AddVisitedLoc] LocID 21, "The Arbor", turn 0 -> record updated in dictLocsVisited
+//Exile Game File "LogTurn.txt" opened at: 30/05/2017 08:54:11
+--- ProcessStartTurn (World.cs)
+Day 2, Turn 1
+Usurper Brynden Florent, "The Stupid", AtLocation, One Eyed Pete's
+--- UpdateRumours (World.cs)
+dictRumoursTimed (Start) -> 97 records
+RumourID 291 -> TimerExpire decremented, now 19
+RumourID 292 -> TimerExpire decremented, now 19
+RumourID 293 -> TimerExpire decremented, now 19
+RumourID 294 -> TimerExpire decremented, now 19
+RumourID 295 -> TimerExpire decremented, now 19
+RumourID 296 -> TimerExpire decremented, now 19
+RumourID 297 -> TimerExpire decremented, now 19
+RumourID 298 -> TimerExpire decremented, now 19
+RumourID 299 -> TimerExpire decremented, now 19
+RumourID 300 -> TimerExpire decremented, now 19
+RumourID 301 -> TimerExpire decremented, now 19
+RumourID 302 -> TimerExpire decremented, now 19
+RumourID 303 -> TimerExpire decremented, now 19
+RumourID 304 -> TimerExpire decremented, now 19
+RumourID 305 -> TimerExpire decremented, now 19
+RumourID 306 -> TimerExpire decremented, now 19
+RumourID 307 -> TimerExpire decremented, now 19
+RumourID 308 -> TimerExpire decremented, now 19
+RumourID 309 -> TimerExpire decremented, now 19
+RumourID 310 -> TimerExpire decremented, now 19
+RumourID 311 -> TimerExpire decremented, now 19
+RumourID 312 -> TimerExpire decremented, now 19
+RumourID 313 -> TimerExpire decremented, now 19
+RumourID 314 -> TimerExpire decremented, now 19
+RumourID 315 -> TimerExpire decremented, now 19
+RumourID 316 -> TimerExpire decremented, now 19
+RumourID 317 -> TimerExpire decremented, now 19
+RumourID 318 -> TimerExpire decremented, now 19
+RumourID 319 -> TimerExpire decremented, now 19
+RumourID 320 -> TimerExpire decremented, now 19
+RumourID 321 -> TimerExpire decremented, now 19
+RumourID 322 -> TimerExpire decremented, now 19
+RumourID 323 -> TimerExpire decremented, now 19
+RumourID 324 -> TimerExpire decremented, now 19
+RumourID 325 -> TimerExpire decremented, now 19
+RumourID 326 -> TimerExpire decremented, now 19
+RumourID 327 -> TimerExpire decremented, now 19
+RumourID 328 -> TimerExpire decremented, now 19
+RumourID 329 -> TimerExpire decremented, now 19
+RumourID 330 -> TimerExpire decremented, now 19
+RumourID 331 -> TimerExpire decremented, now 19
+RumourID 332 -> TimerExpire decremented, now 19
+RumourID 333 -> TimerExpire decremented, now 19
+RumourID 334 -> TimerExpire decremented, now 19
+RumourID 335 -> TimerExpire decremented, now 19
+RumourID 336 -> TimerExpire decremented, now 19
+RumourID 337 -> TimerExpire decremented, now 19
+RumourID 338 -> TimerExpire decremented, now 19
+RumourID 339 -> TimerExpire decremented, now 19
+RumourID 340 -> TimerExpire decremented, now 19
+RumourID 341 -> TimerExpire decremented, now 19
+RumourID 342 -> TimerExpire decremented, now 19
+RumourID 343 -> TimerExpire decremented, now 19
+RumourID 344 -> TimerExpire decremented, now 19
+RumourID 345 -> TimerExpire decremented, now 19
+RumourID 346 -> TimerExpire decremented, now 19
+RumourID 347 -> TimerExpire decremented, now 19
+RumourID 348 -> TimerExpire decremented, now 19
+RumourID 349 -> TimerExpire decremented, now 19
+RumourID 350 -> TimerExpire decremented, now 19
+RumourID 351 -> TimerExpire decremented, now 19
+RumourID 352 -> TimerExpire decremented, now 19
+RumourID 353 -> TimerExpire decremented, now 19
+RumourID 354 -> TimerExpire decremented, now 19
+RumourID 355 -> TimerExpire decremented, now 19
+RumourID 356 -> TimerExpire decremented, now 19
+RumourID 357 -> TimerExpire decremented, now 19
+RumourID 358 -> TimerExpire decremented, now 19
+RumourID 359 -> TimerExpire decremented, now 19
+RumourID 360 -> TimerExpire decremented, now 19
+RumourID 361 -> TimerExpire decremented, now 19
+RumourID 362 -> TimerExpire decremented, now 19
+RumourID 363 -> TimerExpire decremented, now 19
+RumourID 364 -> TimerExpire decremented, now 19
+RumourID 365 -> TimerExpire decremented, now 19
+RumourID 366 -> TimerExpire decremented, now 19
+RumourID 367 -> TimerExpire decremented, now 19
+RumourID 368 -> TimerExpire decremented, now 19
+RumourID 369 -> TimerExpire decremented, now 19
+RumourID 370 -> TimerExpire decremented, now 19
+RumourID 371 -> TimerExpire decremented, now 19
+RumourID 372 -> TimerExpire decremented, now 19
+RumourID 373 -> TimerExpire decremented, now 19
+RumourID 374 -> TimerExpire decremented, now 19
+RumourID 375 -> TimerExpire decremented, now 19
+RumourID 376 -> TimerExpire decremented, now 19
+RumourID 377 -> TimerExpire decremented, now 19
+RumourID 378 -> TimerExpire decremented, now 19
+RumourID 379 -> TimerExpire decremented, now 19
+RumourID 380 -> TimerExpire decremented, now 19
+RumourID 381 -> TimerExpire decremented, now 19
+RumourID 382 -> TimerExpire decremented, now 19
+RumourID 383 -> TimerExpire decremented, now 19
+RumourID 384 -> TimerExpire decremented, now 19
+RumourID 385 -> TimerExpire decremented, now 19
+RumourID 432 -> TimerExpire decremented, now 2
+RumourID 433 -> TimerExpire decremented, now 2
+--- MoveActors -> 0 Records (World.cs)
+--- UpdatePlayerStatus (World.cs)
+--- UpdateWorldStatus (World.cs)
+--- CheckFollowerActivity (World.cs)
+--- GetRumour (Director.cs)
+arrayOfRumours [0] -> RumourID 113, Strength 4, Scope Global, Type Disguise, Global All
+arrayOfRumours [4] -> RumourID 404, Strength 2, Scope Global, Type HouseRel, Global West
+arrayOfRumours [5] -> RumourID 61, Strength 4, Scope Local, Type Skill, Global All
+RumourID 61 selected from the Pool
+Rumour "Lady Gennevote Greyjoy "The Contriving", ActID 41 at Pyke, is rumoured to be Humane" revealed to ActorID5 on turn 1 -> added to List
+RumourID 61 removed from listRumoursHouse[4]
+Follower The Beast, ActID 5, added RumourID 61
+Lady Gennevote Greyjoy, ActID 41, has their Combat changed to True
+--- GetRumour (Director.cs)
+arrayOfRumours [0] -> RumourID 218, Strength 1, Scope Global, Type Item, Global All
+arrayOfRumours [4] -> RumourID 394, Strength 2, Scope Global, Type HouseRel, Global West
+arrayOfRumours [5] -> RumourID 347, Strength 4, Scope Local, Type Relationship, Global All
+RumourID 347 selected from the Pool
+Rumour "BannerLord Wyman Botley "The Believing", ActID 85 at Lordsport, is whispered to have a poor impression of the Usurper" revealed to ActorID8 on turn 1 -> added to List
+RumourID 347 removed from listRumoursHouse[1]
+Follower The Waif, ActID 8, added RumourID 347
+[Notification] BannerLord Wyman Botley, ActID 85 -> RelKnown changed to True
+[Rumour -> Deleted] Timed RumourID 347 removed from dictRumoursTimed
+--- GetRumour (Director.cs)
+arrayOfRumours [0] -> RumourID 269, Strength 1, Scope Global, Type Item, Global All
+arrayOfRumours [2] -> RumourID 207, Strength 2, Scope Global, Type Desire, Global East
+arrayOfRumours [5] -> RumourID 258, Strength 2, Scope Local, Type Skill, Global All
+RumourID 207 selected from the Pool
+Rumour "It is murmured among friends that BannerLord Andry Penrose, ActID 93 at Parchments, is in thrall to the infamous Book of the Dead" revealed to ActorID9 on turn 1 -> added to List
+RumourID 207 removed from listRumoursEast[3]
+Follower The Crone, ActID 9, added RumourID 207
+[Notification] Knight Ser Roose Hue "The Unconsidered" DesireKnown status changed to "True"
+--- GetMarketView (Director.cs)
+[GameVar] View_Index changed from 1 to 2
+--- CheckStationaryActiveActors (World.cs)
+ [Search -> Stationary] Usurper Brynden Florent, ActID 1 is AtLocation
+--- CheckIfFoundActive (World.cs)
+ [Search -> Debug] Enemy, Brother Amon, ID 136 at 17:15, Active Brynden Florent, ID 1, at 14:8
+ [Search -> Debug] Enemy, Brother Beelzebub, ID 137 at 17:15, Active Brynden Florent, ID 1, at 14:8
+ [Search -> Debug] Enemy, Brother Nergal, ID 138 at 17:15, Active Brynden Florent, ID 1, at 14:8
+ [Search -> Debug] Enemy, Brother Azazel, ID 139 at 17:15, Active Brynden Florent, ID 1, at 14:8
+ [Search -> Debug] Enemy, The Unrelenting, ID 140 at 17:15, Active Brynden Florent, ID 1, at 14:8
+ [Search -> Stationary] Follower The Beast, ActID 5 is AtLocation
+ [Search -> Stationary] Follower The Waif, ActID 8 is AtLocation
+ [Search -> Stationary] Follower The Crone, ActID 9 is AtLocation
+--- UpdateAIController (World.cs)
+ [AI -> Player Unknown] Inquisitor Brother Amon, Act ID 136 Mode -> Normal
+ [AI -> Player Unknown] Inquisitor Brother Beelzebub, Act ID 137 Mode -> Normal
+ [AI -> Player Unknown] Inquisitor Brother Nergal, Act ID 138 Mode -> Normal
+ [AI -> Player Unknown] Inquisitor Brother Azazel, Act ID 139 Mode -> Normal
+ [AI -> Player Unknown] Nemesis The Unrelenting, Act ID 140 Mode -> Normal
+--- SetEnemyActivity (World.cs)
+--- SetEnemyGoal (World.cs)
+ [Goal -> Branch] Brother Amon, ActID 136 Assigned Branch -> 1 Current Branch -> 0
+ [Goal -> New] Brother Amon, ActID 136, (loc 17:15), assigned new Goal -> Hide
+ [Enemy -> Goal] Brother Beelzebub, ActID 137 retains Goal -> Wait
+ [Enemy -> Goal] Brother Nergal, ActID 138 retains Goal -> Wait
+--- SetEnemyGoal (World.cs)
+ [Goal -> Branch] Brother Azazel, ActID 139 Assigned Branch -> 4 Current Branch -> 0
+ [Goal -> New] Brother Azazel, ActID 139, (loc 17:15), assigned new Goal -> Move
+ [Goal -> Move] Brother Azazel, ActID 139 -> Capital to Correct Branch -> One Eyed Pete's, LocID 24
+--- InitiateMoveActor (World.cs)
+--- Move Actor (Director.cs)
+ [Enemy -> Known] The Unrelenting ActID 140 has become KNOWN
+ [Enemy -> Goal] The Unrelenting, ActID 140 retains Goal -> Wait
+--- CheckPlayerEvents (Director.cs)
+- CreateAutoLocEvent (Director.cs)
+[Notification] No entry found in dictOfIntroductions for RefID 1006
+ Chance of Player Location event 75 %
+--- ResolvePlayerEvents (Director.cs)
+ Event "What to do?" Timer Repeat now 999
+ Event "What to do?" Cooldown Timer has been reset to 0
+--- UpdateActiveActors (World.cs)
+ Usurper Brynden Florent has had their TurnsUnknown Timer increased from 100 to 101
+ Follower The Beast has had their TurnsUnknown Timer increased from 0 to 1
+ Follower The Waif has had their TurnsUnknown Timer increased from 0 to 1
+ Follower The Crone has had their TurnsUnknown Timer increased from 0 to 1
+--- ResolveOutcome (Director.cs)
+--- ChangePlayerRumourStatus (Director.cs)
+--- GetRumour (Director.cs)
+[Notification] No house rumours available -> none added to pool
+arrayOfRumours [0] -> RumourID 251, Strength 1, Scope Global, Type Item, Global All
+arrayOfRumours [4] -> RumourID 395, Strength 2, Scope Global, Type HouseRel, Global West
+RumourID 395 selected from the Pool
+Rumour "House Lannister has had good past relations with House Bolton due to their loyalty to the New King" revealed to ActorID1 on turn 1 -> added to List
+RumourID 395 removed from listRumoursWest[17]
+Rumour "House Lannister has had good past relations with House Bolton due to their loyalty to the New King", rumourID 395, added to dictRumoursKnown
+[Notification -> HouseRel] "The King is grateful for the assistance provided during the Revolt" -> Known is True
+House Lannister has had good past relations with House Bolton due to their loyalty to the New King
+--- ChangePlayerRumourStatus (Director.cs)
+--- GetRumour (Director.cs)
+[Notification] No house rumours available -> none added to pool
+arrayOfRumours [0] -> RumourID 144, Strength 4, Scope Global, Type Disguise, Global All
+arrayOfRumours [4] -> RumourID 387, Strength 2, Scope Global, Type HouseRel, Global West
+RumourID 144 selected from the Pool
+Rumour "It is suspected that Disguises can be had from Castellan Gerion Henry, ActID 68 at Riverrun" revealed to ActorID1 on turn 1 -> added to List
+RumourID 144 removed from listRumoursGlobal[6]
+Rumour "It is suspected that Disguises can be had from Castellan Gerion Henry, ActID 68 at Riverrun", rumourID 144, added to dictRumoursKnown
+It is suspected that Disguises can be had from Castellan Gerion Henry, ActID 68 at Riverrun
 --- SetEndGame (Game.cs)
 [Alert] Player chose to exit (pressed 'X')
-//Exile Game file ops "LogTurn.txt" Completed at: 29/05/2017 20:53:05
+//Exile Game file ops "LogTurn.txt" Completed at: 30/05/2017 08:54:25
