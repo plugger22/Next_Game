@@ -2505,6 +2505,15 @@ namespace Next_Game
                                 if (trigger.Compulsory == true) { Game.logTurn?.Write("[Notification] Sex trigger Compulsory fail check"); return false; }
                             }
                             break;
+                        case TriggerCheck.TravelMode:
+                            //Threshold = (int)TravelMode -> None 0, Foot 1, Mounted 2
+                            if (CheckTrigger((int)player.Travel, trigger.Calc, trigger.Threshold) == true) { validCheck = true; }
+                            else
+                            {
+                                Game.logTurn?.Write(" Trigger: Travel Mode, incorrect mode -> Trigger failed");
+                                if (trigger.Compulsory == true) { Game.logTurn?.Write("[Notification] Travel Mode trigger Compulsory fail check"); return false; }
+                            }
+                            break;
                         case TriggerCheck.Disguise:
                             //Passes if Player Does NOT have a current disguise in his Inventory
                             if (player.ConcealDisguise == 0) { validCheck = true; }
@@ -2822,10 +2831,10 @@ namespace Next_Game
                                             if (String.IsNullOrEmpty(outcomeText) == false)
                                             { resultList.Add(new Snippet(outcomeText, foreColor, backColor)); resultList.Add(new Snippet("")); }
                                             break;
-                                        case OutcomeType.Speed:
+                                        case OutcomeType.Travel:
                                             //Change Player's land travel speed
-                                            OutSpeed speedOutcome = outcome as OutSpeed;
-                                            outcomeText = ChangePlayerSpeedStatus(speedOutcome.Mode);
+                                            OutTravel travelOutcome = outcome as OutTravel;
+                                            outcomeText = ChangePlayerSpeedStatus(travelOutcome.Mode);
                                             if (String.IsNullOrEmpty(outcomeText) == false)
                                             {
                                                 resultList.Add(new Snippet(outcomeText, foreColor, backColor)); resultList.Add(new Snippet(""));

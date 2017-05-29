@@ -1883,8 +1883,8 @@ namespace Next_Game
                                         case "rescued":
                                         case "DeathTimer":
                                         case "deathTimer":
-                                        case "speed":
-                                        case "Speed":
+                                        case "travel":
+                                        case "Travel":
                                         case "none":
                                         case "None":
                                             structOutcome.Effect = Game.utility.Capitalise(cleanToken);
@@ -2029,7 +2029,7 @@ namespace Next_Game
                                             break;
                                     }
                                     break;
-                                case "travel":
+                                case "mode":
                                     //travel mode -> for Speed outcomes (changes player's speed & mode of travel)
                                     switch (cleanToken)
                                     {
@@ -2456,8 +2456,8 @@ namespace Next_Game
                                                                 case "Rescued":
                                                                     outObject = new OutRescued(structEvent.EventID, outTemp.boolGeneric);
                                                                     break;
-                                                                case "Speed":
-                                                                    outObject = new OutSpeed(structEvent.EventID, outTemp.Travel);
+                                                                case "Travel":
+                                                                    outObject = new OutTravel(structEvent.EventID, outTemp.Travel);
                                                                     break;
                                                                 case "Condition":
                                                                     if (outTemp.ConditionSkill > SkillType.None && outTemp.ConditionEffect != 0 && String.IsNullOrEmpty(outTemp.ConditionText) == false
@@ -2587,8 +2587,8 @@ namespace Next_Game
                                     OutGameVar tempOutcome_5 = outcomeObject as OutGameVar;
                                     Game.logStart?.Write(string.Format("    {0} -> GameVar {1}, Amount {2}, EventCalc {3}", cleanTag, tempOutcome_5.GameVar, tempOutcome_5.Amount, tempOutcome_5.Calc));
                                     break;
-                                case OutcomeType.Speed:
-                                    OutSpeed tempOutcome_6 = outcomeObject as OutSpeed;
+                                case OutcomeType.Travel:
+                                    OutTravel tempOutcome_6 = outcomeObject as OutTravel;
                                     Game.logStart?.Write(string.Format("    {0} -> Travel Mode {1}", cleanTag, tempOutcome_6.Mode));
                                     break;
                                 default:

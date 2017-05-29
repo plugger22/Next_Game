@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 namespace Next_Game.Event_System
 {
     public enum OutcomeType { None, Delay, Conflict, GameState, GameVar, Known, EventTimer, EventStatus, EventChain, Resource, Condition, Freedom, Item, Passage, VoyageTime, Adrift, DeathTimer, Rescued,
-    Follower, Promise, RelPlyr, Favour, Introduction, SafeHouse, Disguise, Rumour, Speed};
+    Follower, Promise, RelPlyr, Favour, Introduction, SafeHouse, Disguise, Rumour, Travel};
 
     /// <summary>
     /// Option outcome, event system
@@ -463,16 +463,16 @@ namespace Next_Game.Event_System
     }
 
     /// <summary>
-    /// Change Player's speed of (land) travel throughout world
+    /// Change Player's travel mode (foot / mounted)
     /// </summary>
-    class OutSpeed : Outcome
+    class OutTravel : Outcome
     {
         public TravelMode Mode;
 
-        public OutSpeed(int eventID, TravelMode newMode) : base(eventID)
+        public OutTravel(int eventID, TravelMode newMode) : base(eventID)
         {
             Mode = newMode;
-            Type = OutcomeType.Speed;
+            Type = OutcomeType.Travel;
         }
     }
 
