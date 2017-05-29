@@ -1,132 +1,138 @@
-//Exile Game File "LogTurn.txt" opened at: 29/05/2017 11:13:53
+//Exile Game File "LogTurn.txt" opened at: 29/05/2017 12:03:53
 --- ProcessStartTurn (World.cs)
-Day 2, Turn 1
+Day 3, Turn 2
 Usurper Albar Targaryen, "The Prying", AtLocation, Lordsport
 --- UpdateRumours (World.cs)
-dictRumoursTimed (Start) -> 84 records
-RumourID 281 -> TimerExpire decremented, now 19
-RumourID 282 -> TimerExpire decremented, now 19
-RumourID 283 -> TimerExpire decremented, now 19
-RumourID 284 -> TimerExpire decremented, now 19
-RumourID 285 -> TimerExpire decremented, now 19
-RumourID 286 -> TimerExpire decremented, now 19
-RumourID 287 -> TimerExpire decremented, now 19
-RumourID 288 -> TimerExpire decremented, now 19
-RumourID 289 -> TimerExpire decremented, now 19
-RumourID 290 -> TimerExpire decremented, now 19
-RumourID 291 -> TimerExpire decremented, now 19
-RumourID 292 -> TimerExpire decremented, now 19
-RumourID 293 -> TimerExpire decremented, now 19
-RumourID 294 -> TimerExpire decremented, now 19
-RumourID 295 -> TimerExpire decremented, now 19
-RumourID 296 -> TimerExpire decremented, now 19
-RumourID 297 -> TimerExpire decremented, now 19
-RumourID 298 -> TimerExpire decremented, now 19
-RumourID 299 -> TimerExpire decremented, now 19
-RumourID 300 -> TimerExpire decremented, now 19
-RumourID 301 -> TimerExpire decremented, now 19
-RumourID 302 -> TimerExpire decremented, now 19
-RumourID 303 -> TimerExpire decremented, now 19
-RumourID 304 -> TimerExpire decremented, now 19
-RumourID 305 -> TimerExpire decremented, now 19
-RumourID 306 -> TimerExpire decremented, now 19
-RumourID 307 -> TimerExpire decremented, now 19
-RumourID 308 -> TimerExpire decremented, now 19
-RumourID 309 -> TimerExpire decremented, now 19
-RumourID 310 -> TimerExpire decremented, now 19
-RumourID 311 -> TimerExpire decremented, now 19
-RumourID 312 -> TimerExpire decremented, now 19
-RumourID 313 -> TimerExpire decremented, now 19
-RumourID 314 -> TimerExpire decremented, now 19
-RumourID 315 -> TimerExpire decremented, now 19
-RumourID 316 -> TimerExpire decremented, now 19
-RumourID 317 -> TimerExpire decremented, now 19
-RumourID 318 -> TimerExpire decremented, now 19
-RumourID 319 -> TimerExpire decremented, now 19
-RumourID 320 -> TimerExpire decremented, now 19
-RumourID 321 -> TimerExpire decremented, now 19
-RumourID 322 -> TimerExpire decremented, now 19
-RumourID 323 -> TimerExpire decremented, now 19
-RumourID 324 -> TimerExpire decremented, now 19
-RumourID 325 -> TimerExpire decremented, now 19
-RumourID 326 -> TimerExpire decremented, now 19
-RumourID 327 -> TimerExpire decremented, now 19
-RumourID 328 -> TimerExpire decremented, now 19
-RumourID 329 -> TimerExpire decremented, now 19
-RumourID 330 -> TimerExpire decremented, now 19
-RumourID 331 -> TimerExpire decremented, now 19
-RumourID 332 -> TimerExpire decremented, now 19
-RumourID 333 -> TimerExpire decremented, now 19
-RumourID 334 -> TimerExpire decremented, now 19
-RumourID 335 -> TimerExpire decremented, now 19
-RumourID 336 -> TimerExpire decremented, now 19
-RumourID 337 -> TimerExpire decremented, now 19
-RumourID 338 -> TimerExpire decremented, now 19
-RumourID 339 -> TimerExpire decremented, now 19
-RumourID 340 -> TimerExpire decremented, now 19
-RumourID 341 -> TimerExpire decremented, now 19
-RumourID 342 -> TimerExpire decremented, now 19
-RumourID 343 -> TimerExpire decremented, now 19
-RumourID 344 -> TimerExpire decremented, now 19
-RumourID 345 -> TimerExpire decremented, now 19
-RumourID 346 -> TimerExpire decremented, now 19
-RumourID 347 -> TimerExpire decremented, now 19
-RumourID 348 -> TimerExpire decremented, now 19
-RumourID 349 -> TimerExpire decremented, now 19
-RumourID 350 -> TimerExpire decremented, now 19
-RumourID 351 -> TimerExpire decremented, now 19
-RumourID 352 -> TimerExpire decremented, now 19
-RumourID 353 -> TimerExpire decremented, now 19
-RumourID 354 -> TimerExpire decremented, now 19
-RumourID 355 -> TimerExpire decremented, now 19
-RumourID 356 -> TimerExpire decremented, now 19
-RumourID 357 -> TimerExpire decremented, now 19
-RumourID 358 -> TimerExpire decremented, now 19
-RumourID 359 -> TimerExpire decremented, now 19
-RumourID 360 -> TimerExpire decremented, now 19
-RumourID 361 -> TimerExpire decremented, now 19
-RumourID 362 -> TimerExpire decremented, now 19
-RumourID 363 -> TimerExpire decremented, now 19
-RumourID 399 -> TimerExpire decremented, now 2
---- MoveActors -> 0 Records (World.cs)
+dictRumoursTimed (Start) -> 86 records
+RumourID 281 -> TimerExpire decremented, now 18
+RumourID 282 -> TimerExpire decremented, now 18
+RumourID 283 -> TimerExpire decremented, now 18
+RumourID 284 -> TimerExpire decremented, now 18
+RumourID 285 -> TimerExpire decremented, now 18
+RumourID 286 -> TimerExpire decremented, now 18
+RumourID 287 -> TimerExpire decremented, now 18
+RumourID 288 -> TimerExpire decremented, now 18
+RumourID 289 -> TimerExpire decremented, now 18
+RumourID 290 -> TimerExpire decremented, now 18
+RumourID 291 -> TimerExpire decremented, now 18
+RumourID 292 -> TimerExpire decremented, now 18
+RumourID 293 -> TimerExpire decremented, now 18
+RumourID 294 -> TimerExpire decremented, now 18
+RumourID 295 -> TimerExpire decremented, now 18
+RumourID 296 -> TimerExpire decremented, now 18
+RumourID 297 -> TimerExpire decremented, now 18
+RumourID 298 -> TimerExpire decremented, now 18
+RumourID 299 -> TimerExpire decremented, now 18
+RumourID 300 -> TimerExpire decremented, now 18
+RumourID 301 -> TimerExpire decremented, now 18
+RumourID 302 -> TimerExpire decremented, now 18
+RumourID 303 -> TimerExpire decremented, now 18
+RumourID 304 -> TimerExpire decremented, now 18
+RumourID 305 -> TimerExpire decremented, now 18
+RumourID 306 -> TimerExpire decremented, now 18
+RumourID 307 -> TimerExpire decremented, now 18
+RumourID 308 -> TimerExpire decremented, now 18
+RumourID 309 -> TimerExpire decremented, now 18
+RumourID 310 -> TimerExpire decremented, now 18
+RumourID 311 -> TimerExpire decremented, now 18
+RumourID 312 -> TimerExpire decremented, now 18
+RumourID 313 -> TimerExpire decremented, now 18
+RumourID 314 -> TimerExpire decremented, now 18
+RumourID 315 -> TimerExpire decremented, now 18
+RumourID 316 -> TimerExpire decremented, now 18
+RumourID 317 -> TimerExpire decremented, now 18
+RumourID 318 -> TimerExpire decremented, now 18
+RumourID 319 -> TimerExpire decremented, now 18
+RumourID 320 -> TimerExpire decremented, now 18
+RumourID 321 -> TimerExpire decremented, now 18
+RumourID 322 -> TimerExpire decremented, now 18
+RumourID 323 -> TimerExpire decremented, now 18
+RumourID 324 -> TimerExpire decremented, now 18
+RumourID 325 -> TimerExpire decremented, now 18
+RumourID 326 -> TimerExpire decremented, now 18
+RumourID 327 -> TimerExpire decremented, now 18
+RumourID 328 -> TimerExpire decremented, now 18
+RumourID 329 -> TimerExpire decremented, now 18
+RumourID 330 -> TimerExpire decremented, now 18
+RumourID 331 -> TimerExpire decremented, now 18
+RumourID 332 -> TimerExpire decremented, now 18
+RumourID 333 -> TimerExpire decremented, now 18
+RumourID 334 -> TimerExpire decremented, now 18
+RumourID 335 -> TimerExpire decremented, now 18
+RumourID 336 -> TimerExpire decremented, now 18
+RumourID 337 -> TimerExpire decremented, now 18
+RumourID 338 -> TimerExpire decremented, now 18
+RumourID 339 -> TimerExpire decremented, now 18
+RumourID 340 -> TimerExpire decremented, now 18
+RumourID 341 -> TimerExpire decremented, now 18
+RumourID 342 -> TimerExpire decremented, now 18
+RumourID 343 -> TimerExpire decremented, now 18
+RumourID 344 -> TimerExpire decremented, now 18
+RumourID 345 -> TimerExpire decremented, now 18
+RumourID 346 -> TimerExpire decremented, now 18
+RumourID 347 -> TimerExpire decremented, now 18
+RumourID 348 -> TimerExpire decremented, now 18
+RumourID 349 -> TimerExpire decremented, now 18
+RumourID 350 -> TimerExpire decremented, now 18
+RumourID 351 -> TimerExpire decremented, now 18
+RumourID 352 -> TimerExpire decremented, now 18
+RumourID 353 -> TimerExpire decremented, now 18
+RumourID 354 -> TimerExpire decremented, now 18
+RumourID 355 -> TimerExpire decremented, now 18
+RumourID 356 -> TimerExpire decremented, now 18
+RumourID 357 -> TimerExpire decremented, now 18
+RumourID 358 -> TimerExpire decremented, now 18
+RumourID 359 -> TimerExpire decremented, now 18
+RumourID 360 -> TimerExpire decremented, now 18
+RumourID 361 -> TimerExpire decremented, now 18
+RumourID 362 -> TimerExpire decremented, now 18
+RumourID 363 -> TimerExpire decremented, now 18
+RumourID 399 -> TimerExpire decremented, now 1
+RumourID 400 -> TimerExpire decremented, now 2
+RumourID 401 -> TimerExpire decremented, now 2
+--- MoveActors -> 1 Records (World.cs)
+ [Move -> MoveObject] Inquisitor Brother Dagon, ActID 119 travelling to Valyria (current Loc 12:17)
+--- CheckIfFoundEnemy (World.cs)
+ [Search -> Debug] Active Albar Targaryen, ID 1 at 21:17, Enemy at 12:17 (Brother Dagon, ID 119
 --- UpdatePlayerStatus (World.cs)
 --- UpdateWorldStatus (World.cs)
 --- CheckFollowerActivity (World.cs)
 --- GetRumour (Director.cs)
-arrayOfRumours [0] -> RumourID 155, Strength 1, Scope Global, Type Item, Global All
-arrayOfRumours [1] -> RumourID 58, Strength 2, Scope Global, Type Desire, Global North
-arrayOfRumours [5] -> RumourID 196, Strength 4, Scope Local, Type Skill, Global All
-RumourID 58 selected from the Pool
-Rumour "It is whispered that Lady Essylt Florent, ActID 28 at Brightwater Keep, desires that her Son, Heir Mychel Florent "The Graceful", ActID 34, attains a position in the Royal Court" revealed to ActorID2 on turn 1 -> added to List
-RumourID 58 removed from listRumoursNorth[1]
-Follower The Duchess, ActID 2, added RumourID 58
-[Notification] Heir Mychel Florent "The Graceful" DesireKnown status changed to "True"
+arrayOfRumours [0] -> RumourID 117, Strength 1, Scope Global, Type Item, Global All
+arrayOfRumours [1] -> RumourID 380, Strength 2, Scope Global, Type HouseRel, Global North
+arrayOfRumours [5] -> RumourID 198, Strength 2, Scope Local, Type Secret, Global All
+RumourID 380 selected from the Pool
+Rumour "House Greyjoy has had good past relations with their BannerLord at House Karstark due to their reliability in repaying loans" revealed to ActorID2 on turn 2 -> added to List
+RumourID 380 removed from listRumoursNorth[19]
+Follower The Duchess, ActID 2, added RumourID 380
+[Notification -> HouseRel] "Have been meticulous in repaying past loans from our House" -> Known is True
 --- GetRumour (Director.cs)
-arrayOfRumours [0] -> RumourID 399, Strength 3, Scope Global, Type Enemy, Global All
-arrayOfRumours [1] -> RumourID 195, Strength 2, Scope Global, Type Desire, Global North
-arrayOfRumours [5] -> RumourID 194, Strength 4, Scope Local, Type Skill, Global All
-RumourID 194 selected from the Pool
-Rumour "BannerLord Heward Hunt "The Deafening", ActID 82 at Longbow Hall, is rumoured to have a Booming Voice" revealed to ActorID8 on turn 1 -> added to List
-RumourID 194 removed from listRumoursHouse[2]
-Follower The Leper, ActID 8, added RumourID 194
-BannerLord Heward Hunt, ActID 82, has their Leadership changed to True
+arrayOfRumours [0] -> RumourID 199, Strength 1, Scope Global, Type Item, Global All
+arrayOfRumours [1] -> RumourID 102, Strength 2, Scope Global, Type Desire, Global North
+arrayOfRumours [5] -> RumourID 192, Strength 4, Scope Local, Type Skill, Global All
+RumourID 192 selected from the Pool
+Rumour "BannerLord Heward Hunt "The Deafening", ActID 82 at Longbow Hall, is well known to have Dubious Personal Hygiene" revealed to ActorID8 on turn 2 -> added to List
+RumourID 192 removed from listRumoursHouse[0]
+Follower The Leper, ActID 8, added RumourID 192
+BannerLord Heward Hunt, ActID 82, has their Charm changed to True
 --- GetRumour (Director.cs)
-arrayOfRumours [0] -> RumourID 68, Strength 4, Scope Global, Type Disguise, Global All
-arrayOfRumours [1] -> RumourID 234, Strength 2, Scope Global, Type Desire, Global North
+arrayOfRumours [0] -> RumourID 400, Strength 3, Scope Global, Type Enemy, Global All
+arrayOfRumours [1] -> RumourID 69, Strength 2, Scope Global, Type Desire, Global North
 arrayOfRumours [5] -> RumourID 334, Strength 4, Scope Local, Type Relationship, Global All
-RumourID 234 selected from the Pool
-Rumour "It is known by all that BannerLord Gervesin Bolton, ActID 103 at Dreadfort, is fixated upon the fabled Mammoth Cloak" revealed to ActorID4 on turn 1 -> added to List
-RumourID 234 removed from listRumoursNorth[12]
-Follower The Dark Eminence, ActID 4, added RumourID 234
-[Notification] King Christy Lannister "The Tentative" DesireKnown status changed to "True"
+RumourID 334 selected from the Pool
+Rumour "BannerLord Andry Karstark "The Resolute", ActID 80 at Karhold, is said to have a poor view of the Usurper" revealed to ActorID4 on turn 2 -> added to List
+RumourID 334 removed from listRumoursHouse[2]
+Follower The Dark Eminence, ActID 4, added RumourID 334
+[Notification] BannerLord Andry Karstark, ActID 80 -> RelKnown changed to True
+[Rumour -> Deleted] Timed RumourID 334 removed from dictRumoursTimed
 --- GetMarketView (Director.cs)
-[GameVar] View_Index changed from 1 to 2
+[GameVar] View_Index changed from 2 to 3
 --- CheckStationaryActiveActors (World.cs)
  [Search -> Stationary] Usurper Albar Targaryen, ActID 1 is AtLocation
 --- CheckIfFoundActive (World.cs)
  [Search -> Debug] Enemy, Brother Set, ID 117 at 12:16, Active Albar Targaryen, ID 1, at 21:17
  [Search -> Debug] Enemy, Brother Kali, ID 118 at 12:16, Active Albar Targaryen, ID 1, at 21:17
- [Search -> Debug] Enemy, Brother Dagon, ID 119 at 12:16, Active Albar Targaryen, ID 1, at 21:17
+ [Search -> Debug] Enemy, Brother Dagon, ID 119 at 12:18, Active Albar Targaryen, ID 1, at 21:17
  [Search -> Debug] Enemy, Brother Shaitan, ID 120 at 12:16, Active Albar Targaryen, ID 1, at 21:17
  [Search -> Debug] Enemy, The Unrelenting, ID 121 at 12:16, Active Albar Targaryen, ID 1, at 21:17
  [Search -> Stationary] Follower The Duchess, ActID 2 is AtLocation
@@ -135,24 +141,19 @@ Follower The Dark Eminence, ActID 4, added RumourID 234
 --- UpdateAIController (World.cs)
  [AI -> Player Unknown] Inquisitor Brother Set, Act ID 117 Mode -> Normal
  [AI -> Player Unknown] Inquisitor Brother Kali, Act ID 118 Mode -> Normal
- [AI -> Player Unknown] Inquisitor Brother Dagon, Act ID 119 Mode -> Normal
  [AI -> Player Unknown] Inquisitor Brother Shaitan, Act ID 120 Mode -> Normal
  [AI -> Player Unknown] Nemesis The Unrelenting, Act ID 121 Mode -> Normal
 --- SetEnemyActivity (World.cs)
- [Enemy -> Known] Brother Set ActID 117 has become KNOWN
 --- SetEnemyGoal (World.cs)
  [Goal -> Branch] Brother Set, ActID 117 Assigned Branch -> 1 Current Branch -> 0
- [Goal -> New] Brother Set, ActID 117, (loc 12:16), assigned new Goal -> Hide
---- SetEnemyGoal (World.cs)
- [Goal -> Branch] Brother Kali, ActID 118 Assigned Branch -> 2 Current Branch -> 0
- [Enemy -> Known] Brother Dagon ActID 119 has become KNOWN
---- SetEnemyGoal (World.cs)
- [Goal -> Branch] Brother Dagon, ActID 119 Assigned Branch -> 3 Current Branch -> 0
- [Goal -> New] Brother Dagon, ActID 119, (loc 12:16), assigned new Goal -> Move
- [Goal -> Move] Brother Dagon, ActID 119 -> Capital to Correct Branch -> Valyria, LocID 19
+ [Goal -> New] Brother Set, ActID 117, (loc 12:16), assigned new Goal -> Move
+ [Goal -> Move] Brother Set, ActID 117 -> Capital to Correct Branch -> One Eyed Pete's, LocID 2
 --- InitiateMoveActor (World.cs)
 --- Move Actor (Director.cs)
- [Enemy -> Goal] Brother Shaitan, ActID 120 retains Goal -> Wait
+ [Enemy -> Goal] Brother Kali, ActID 118 retains Goal -> Wait
+--- SetEnemyGoal (World.cs)
+ [Goal -> Branch] Brother Shaitan, ActID 120 Assigned Branch -> 4 Current Branch -> 0
+ [Goal -> New] Brother Shaitan, ActID 120, (loc 12:16), assigned new Goal -> Hide
  [Enemy -> Goal] The Unrelenting, ActID 121 retains Goal -> Wait
 --- CheckPlayerEvents (Director.cs)
 - CreateAutoLocEvent (Director.cs)
@@ -168,11 +169,33 @@ Follower The Dark Eminence, ActID 4, added RumourID 234
  Event "What to do?" Timer Repeat now 999
  Event "What to do?" Cooldown Timer has been reset to 0
 --- UpdateActiveActors (World.cs)
- Usurper Albar Targaryen has had their TurnsUnknown Timer increased from 100 to 101
- Follower The Duchess has had their TurnsUnknown Timer increased from 0 to 1
- Follower The Leper has had their TurnsUnknown Timer increased from 0 to 1
- Follower The Dark Eminence has had their TurnsUnknown Timer increased from 0 to 1
+ Usurper Albar Targaryen has had their TurnsUnknown Timer increased from 101 to 102
+ Follower The Duchess has had their TurnsUnknown Timer increased from 1 to 2
+ Follower The Leper has had their TurnsUnknown Timer increased from 1 to 2
+ Follower The Dark Eminence has had their TurnsUnknown Timer increased from 1 to 2
 --- ResolveOutcome (Director.cs)
+--- ChangePlayerRumourStatus (Director.cs)
+--- GetRumour (Director.cs)
+arrayOfRumours [0] -> RumourID 273, Strength 1, Scope Global, Type Item, Global All
+arrayOfRumours [2] -> RumourID 372, Strength 2, Scope Global, Type HouseRel, Global East
+arrayOfRumours [5] -> RumourID 236, Strength 4, Scope Local, Type Skill, Global All
+RumourID 372 selected from the Pool
+Rumour "House Martell has had poor past relations with House Ambrose due to their traitorous actions" revealed to ActorID1 on turn 2 -> added to List
+RumourID 372 removed from listRumoursEast[11]
+Rumour "House Martell has had poor past relations with House Ambrose due to their traitorous actions", rumourID 372, added to dictRumoursKnown
+[Notification -> HouseRel] "Their traitorous actions, while beneficial, leave a bad taste in our mouth" -> Known is True
+House Martell has had poor past relations with House Ambrose due to their traitorous actions
+--- ChangePlayerRumourStatus (Director.cs)
+--- GetRumour (Director.cs)
+arrayOfRumours [0] -> RumourID 398, Strength 3, Scope Global, Type Event, Global All
+arrayOfRumours [2] -> RumourID 231, Strength 2, Scope Global, Type Desire, Global East
+arrayOfRumours [5] -> RumourID 237, Strength 4, Scope Local, Type Skill, Global All
+RumourID 231 selected from the Pool
+Rumour "It is commonly known that BannerLord Haimmon Mullendore, ActID 102 at Uplands, thirsts for Gold" revealed to ActorID1 on turn 2 -> added to List
+RumourID 231 removed from listRumoursEast[2]
+Rumour "It is commonly known that BannerLord Haimmon Mullendore, ActID 102 at Uplands, thirsts for Gold", rumourID 231, added to dictRumoursKnown
+[Notification] BannerLord Haimmon Mullendore "The Dormant" DesireKnown status changed to "True"
+It is commonly known that BannerLord Haimmon Mullendore, ActID 102 at Uplands, thirsts for Gold
 --- SetEndGame (Game.cs)
 [Alert] Player chose to exit (pressed 'X')
-//Exile Game file ops "LogTurn.txt" Completed at: 29/05/2017 11:14:33
+//Exile Game file ops "LogTurn.txt" Completed at: 29/05/2017 12:04:06

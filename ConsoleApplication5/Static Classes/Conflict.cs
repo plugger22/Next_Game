@@ -2026,16 +2026,22 @@ namespace Next_Game
                                 if (refID > 0)
                                 {
                                     House house = Game.world.GetHouse(refID);
-                                    if (refID < 100)
+                                    /*if (refID < 100)
                                     {
                                         //Great house
                                         SetSpecialSituation(ConflictSpecial.Castle_Walls, house.CastleWalls, CardUnique.Effect2X);
                                     }
                                     else if (refID > 99 && refID < 1000)
                                     {
-                                        //BannerLord, weak walls, always 1
-                                        SetSpecialSituation(ConflictSpecial.Castle_Walls, house.CastleWalls, CardUnique.Effect2X);
-                                    }
+                                        
+                                        
+                                    }*/
+
+                                    if (house.Type == LocType.MajorHouse)
+                                    { SetSpecialSituation(ConflictSpecial.Castle_Walls, house.CastleWalls, CardUnique.Effect2X); }
+                                    //BannerLord, weak walls, always 1
+                                    else if (house.Type == LocType.MinorHouse)
+                                    {SetSpecialSituation(ConflictSpecial.Castle_Walls, house.CastleWalls, CardUnique.Effect2X); }
                                 }
                                 else { Game.SetError(new Error(97, "RefID comes back ZERO, no Auto Special Situation created")); }
                             }
