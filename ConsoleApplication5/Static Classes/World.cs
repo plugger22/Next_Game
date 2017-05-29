@@ -126,6 +126,7 @@ namespace Next_Game
             InitialiseAI();
             InitialiseEnemyActors();
             InitialiseWorldDevelopment();
+            InitialiseLocTypes();
             Game.StopTimer(timer_2, "W: InitialiseAI");
         }
 
@@ -4377,7 +4378,7 @@ namespace Next_Game
             Game.logTurn?.Write("--- ProcessStartGame (World.cs)");
             Game.history.AgePassiveCharacters(dictPassiveActors);
             InitialiseGameVars();
-            InitialiseLocTypes();
+            
             CalculateCrows();
 
             //DEBUG -> populate dictionary with sample data

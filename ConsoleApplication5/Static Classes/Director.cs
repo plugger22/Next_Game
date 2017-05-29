@@ -3359,7 +3359,58 @@ namespace Next_Game
                 //location present (excludes capital)
                 if (refID > 0)
                 {
-                    if (refID < 100)
+                    switch (loc.Value.Type)
+                    {
+                        case LocType.MajorHouse:
+                            if (arcMajor != null)
+                            {
+                                //% chance of applying to each instance
+                                if (rnd.Next(100) < arcMajor.Chance)
+                                {
+                                    //copy Archetype event ID's across to GeoCluster
+                                    if (arcMajor.GetNumFollowerEvents() > 0) { loc.Value.SetFollowerEvents(arcMajor.GetFollowerEvents()); }
+                                    if (arcMajor.GetNumPlayerEvents() > 0) { loc.Value.SetPlayerEvents(arcMajor.GetPlayerEvents()); }
+                                    loc.Value.ArcID = arcMajor.ArcID;
+                                    //debug
+                                    Game.logStart?.Write(string.Format("{0}, locID {1}, has been initialised with \"{2}\", arcID {3}", Game.world.GetLocationName(loc.Key), loc.Key, arcMajor.Name, arcMajor.ArcID));
+                                }
+                            }
+                            break;
+                        case LocType.MinorHouse:
+                            if (arcMinor != null)
+                            {
+                                //% chance of applying to each instance
+                                if (rnd.Next(100) < arcMinor.Chance)
+                                {
+                                    //copy Archetype event ID's across to GeoCluster
+                                    if (arcMinor.GetNumFollowerEvents() > 0) { loc.Value.SetFollowerEvents(arcMinor.GetFollowerEvents()); }
+                                    if (arcMinor.GetNumPlayerEvents() > 0) { loc.Value.SetPlayerEvents(arcMajor.GetPlayerEvents()); }
+                                    loc.Value.ArcID = arcMinor.ArcID;
+                                    //debug
+                                    Game.logStart?.Write(string.Format("{0}, locID {1}, has been initialised with \"{2}\", arcID {3}", Game.world.GetLocationName(loc.Key), loc.Key, arcMinor.Name, arcMinor.ArcID));
+                                }
+                            }
+                            break;
+                        case LocType.Inn:
+                            if (arcInn != null)
+                            {
+                                //% chance of applying to each instance
+                                if (rnd.Next(100) < arcInn.Chance)
+                                {
+                                    //copy Archetype event ID's across to GeoCluster
+                                    if (arcInn.GetNumFollowerEvents() > 0) { loc.Value.SetFollowerEvents(arcInn.GetFollowerEvents()); }
+                                    if (arcInn.GetNumPlayerEvents() > 0) { loc.Value.SetPlayerEvents(arcMajor.GetPlayerEvents()); }
+                                    loc.Value.ArcID = arcInn.ArcID;
+                                    //debug
+                                    Game.logStart?.Write(string.Format("{0}, locID {1}, has been initialised with \"{2}\", arcID {3}", Game.world.GetLocationName(loc.Key), loc.Key, arcInn.Name, arcInn.ArcID));
+                                }
+                            }
+                            break;
+                        default:
+                            Game.SetError(new Error(64, $"Invalid LocType \"{loc.Value.Type}\", RefID {refID}"));
+                            break;
+                    }
+                    /*if (refID < 100)
                     {
                         //Major House
                         if (arcMajor != null)
@@ -3410,7 +3461,7 @@ namespace Next_Game
                                 Game.logStart?.Write(string.Format("{0}, locID {1}, has been initialised with \"{2}\", arcID {3}", Game.world.GetLocationName(loc.Key), loc.Key, arcInn.Name, arcInn.ArcID));
                             }
                         }
-                    }
+                    }*/
                     //House specific archetypes
                     House house = Game.world.GetHouse(refID);
                     arcID = house.ArcID;
