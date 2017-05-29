@@ -355,7 +355,25 @@ namespace Next_Game
                     }
                     break;
                 case SpecialMode.PlayerEvent:
+                    //ignore if nothing to display -> Pale yellow background
+                    if (eventList.Count > 0)
+                    {
+                        dynamicBox = new Box(boxWidth, eventList.Count + 2, 10, Color._background1, RLColor.Black);
+                        dynamicBox.SetText(eventList);
+                        //draw box
+                        dynamicBox.Draw(multiConsole);
+                    }
+                    break;
                 case SpecialMode.FollowerEvent:
+                    //ignore if nothing to display
+                    if (eventList.Count > 0)
+                    {
+                        dynamicBox = new Box(boxWidth, eventList.Count + 2, 10, Color._background4, RLColor.Black);
+                        dynamicBox.SetText(eventList);
+                        //draw box
+                        dynamicBox.Draw(multiConsole);
+                    }
+                    break;
                 case SpecialMode.Outcome:
                     //ignore if nothing to display -> Pale yellow background
                     if (eventList.Count > 0)

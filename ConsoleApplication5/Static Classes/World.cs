@@ -6071,7 +6071,7 @@ namespace Next_Game
             Game.logTurn?.Write("--- CheckFollowerActivity (World.cs)");
             int rumourID, refID;
             int numRumours = 0;
-            RLColor backColor = Color._background1;
+            RLColor backColor = Color._background4;
             List<Snippet> listData = new List<Snippet>();
             List<Snippet> listRumours = new List<Snippet>();
             //loop all active actors looking for followers

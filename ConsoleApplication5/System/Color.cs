@@ -33,9 +33,10 @@ namespace Next_Game
         //GUI
         public static RLColor _errorFill = Palette.salmon;
         public static RLColor _background0 = Palette.german;
-        public static RLColor _background1 = Palette.pinacolada;
+        public static RLColor _background1 = Palette.golden;
         public static RLColor _background2 = Palette.nude;
         public static RLColor _background3 = Palette.salmon;
+        public static RLColor _background4 = Palette.butter;
         public static RLColor _goodCard = Palette.jade;
         public static RLColor _badCard = Palette.salmon;
         public static RLColor _neutralCard = Palette.tulip;
@@ -77,6 +78,7 @@ namespace Next_Game
         //yellows
         public static RLColor vacation = new RLColor(253, 202, 15);
         public static RLColor golden = new RLColor(241, 217, 121);
+        public static RLColor butter = new RLColor(253, 244, 185);
         public static RLColor pinacolada = new RLColor(251, 245, 213);
         //grey
         public static RLColor german = new RLColor(204, 204, 204);

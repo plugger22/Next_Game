@@ -718,7 +718,7 @@ namespace Next_Game
         /// Determine which event applies to the Player
         /// </summary>
         /// <param name="actor"></param>
-        private void DeterminePlayerEvent(Active actor, EventType type)
+        private void DeterminePlayerEvent(Active actor, EventType eventType)
         {
             int geoID, terrain, road, locID, refID, houseID;
             string tempText;
@@ -726,7 +726,7 @@ namespace Next_Game
             Cartographic.Position pos = actor.GetActorPosition();
             List<Event> listEventPool = new List<Event>();
             locID = Game.map.GetMapInfo(Cartographic.MapLayer.LocID, pos.PosX, pos.PosY);
-            switch (type)
+            switch (eventType)
             {
                 case EventType.Location:
                     refID = Game.map.GetMapInfo(Cartographic.MapLayer.RefID, pos.PosX, pos.PosY);
@@ -734,10 +734,45 @@ namespace Next_Game
                     Location loc = Game.network.GetLocation(locID);
                     if (loc != null)
                     {
-                        if (locID == 1)
+                        switch(loc.Type)
+                        {
+                            case LocType.Capital:
+                                listEventPool.AddRange(GetValidPlayerEvents(listGenPlyrEventsCapital));
+                                listEventPool.AddRange(GetValidPlayerEvents(listArcPlyrCapitalEvents));
+                                break;
+                            case LocType.MajorHouse:
+                                listEventPool.AddRange(GetValidPlayerEvents(listGenPlyrEventsMajor, houseID));
+                                listEventPool.AddRange(GetValidPlayerEvents(loc.GetPlayerEvents()));
+                                House houseMajor = Game.world.GetHouse(refID);
+                                if (houseMajor != null)
+                                { listEventPool.AddRange(GetValidPlayerEvents(houseMajor.GetPlayerEvents())); }
+                                else { Game.SetError(new Error(72, "Invalid Major House (refID)")); }
+                                break;
+                            case LocType.MinorHouse:
+                                listEventPool.AddRange(GetValidPlayerEvents(listGenPlyrEventsMinor, houseID));
+                                listEventPool.AddRange(GetValidPlayerEvents(loc.GetPlayerEvents()));
+                                House houseMinor = Game.world.GetHouse(refID);
+                                if (houseMinor != null)
+                                { listEventPool.AddRange(GetValidPlayerEvents(houseMinor.GetPlayerEvents())); }
+                                else { Game.SetError(new Error(72, "Invalid Minor House (refID)")); }
+                                break;
+                            case LocType.Inn:
+                                //Special Location - Inn
+                                listEventPool.AddRange(GetValidPlayerEvents(listGenPlyrEventsInn, houseID));
+                                listEventPool.AddRange(GetValidPlayerEvents(loc.GetPlayerEvents()));
+                                House houseInn = Game.world.GetHouse(refID);
+                                if (houseInn != null)
+                                { listEventPool.AddRange(GetValidPlayerEvents(houseInn.GetPlayerEvents())); }
+                                else { Game.SetError(new Error(72, "Invalid Inn (refID)")); }
+                                break;
+                            default:
+                                Game.SetError(new Error(72, $"Invalid loc.Type \"{loc.Type}\" -> Event not created"));
+                                break;
+                        }
+                        /*if (locID == 1)
                         {
                             //capital
-                            if (type == EventType.Location)
+                            if (eventType == EventType.Location)
                             {
                                 listEventPool.AddRange(GetValidPlayerEvents(listGenPlyrEventsCapital));
                                 listEventPool.AddRange(GetValidPlayerEvents(listArcPlyrCapitalEvents));
@@ -746,7 +781,7 @@ namespace Next_Game
                         else if (refID > 0 && refID < 100)
                         {
                             //Major House
-                            if (type == EventType.Location)
+                            if (eventType == EventType.Location)
                             {
                                 listEventPool.AddRange(GetValidPlayerEvents(listGenPlyrEventsMajor, houseID));
                                 listEventPool.AddRange(GetValidPlayerEvents(loc.GetPlayerEvents()));
@@ -777,7 +812,7 @@ namespace Next_Game
                             else { Game.SetError(new Error(72, "Invalid Inn (refID)")); }
                         }
                         else
-                        { Game.SetError(new Error(72, "Invalid Location Event Type")); }
+                        { Game.SetError(new Error(72, "Invalid Location Event Type")); }*/
                     }
                     else { Game.SetError(new Error(72, "Invalid Loc (null)")); }
                     break;
@@ -849,7 +884,7 @@ namespace Next_Game
                     listEventPool.AddRange(GetValidPlayerEvents(listGenPlyrEventsAdrift));
                     break;
                 default:
-                    Game.SetError(new Error(72, $"Invalid type \"{type}\" -> not recognised"));
+                    Game.SetError(new Error(72, $"Invalid type \"{eventType}\" -> not recognised"));
                     break;
             }
             //character specific events
@@ -862,16 +897,16 @@ namespace Next_Game
                 Event eventTemp = listEventPool[rndNum];
                 EventPlayer eventChosen = eventTemp as EventPlayer;
                 Message message = null; tempText = "";
-                switch (type)
+                switch (eventType)
                 {
                     case EventType.Location:
                         tempText = string.Format("{0}, Aid {1} at {2}, [{3} Event] \"{4}\"", actor.Name, actor.ActID, Game.world.GetLocationName(actor.LocID),
-                      type, eventChosen.Name);
+                      eventType, eventChosen.Name);
                         message = new Message(tempText, MessageType.Event);
                         break;
                     case EventType.Travelling:
                         tempText = string.Format("{0}, Aid {1} {2}, [{3} Event] \"{4}\"", actor.Name, actor.ActID, Game.world.ShowLocationCoords(actor.LocID),
-                          type, eventChosen.Name);
+                          eventType, eventChosen.Name);
                         message = new Message(tempText, MessageType.Event);
                         break;
                     case EventType.Sea:
@@ -879,14 +914,14 @@ namespace Next_Game
                         {
                             Active player = actor as Active;
                             tempText = string.Format("{0}, Aid {1} at Sea onboard the S.S \"{2}\", [{3} Event] \"{4}\"", player.Name, player.ActID, player.ShipName,
-                          type, eventChosen.Name);
+                          eventType, eventChosen.Name);
                         }
                         else { tempText = "unknown actor at sea"; }
                         message = new Message(tempText, MessageType.Event);
                         break;
                     case EventType.Dungeon:
                         tempText = string.Format("{0}, Aid {1} incarcerated in the dungeons of {2}, [{3} Event] \"{4}\"", actor.Name, actor.ActID,
-                            Game.world.GetLocationName(actor.LocID), type, eventChosen.Name);
+                            Game.world.GetLocationName(actor.LocID), eventType, eventChosen.Name);
                         message = new Message(tempText, MessageType.Event);
                         break;
                     case EventType.Adrift:
@@ -895,7 +930,7 @@ namespace Next_Game
                         message = new Message(tempText, MessageType.Event);
                         break;
                     default:
-                        Game.SetError(new Error(72, $"Invalid EventType \"{type}\""));
+                        Game.SetError(new Error(72, $"Invalid EventType \"{eventType}\""));
                         break;
                 }
 
@@ -3287,7 +3322,8 @@ namespace Next_Game
                                     {
                                         //copy Archetype event ID's across to GeoCluster
                                         if (arcForest.GetNumFollowerEvents() > 0) { cluster.SetFollowerEvents(arcForest.GetFollowerEvents()); }
-                                        if (arcForest.GetNumPlayerEvents() > 0) { cluster.SetPlayerEvents(arcForest.GetPlayerEvents()); }
+                                        if (arcForest.GetNumPlayerEvents() > 0)
+                                        { cluster.SetPlayerEvents(arcForest.GetPlayerEvents()); }
                                         cluster.Archetype = arcForest.ArcID;
                                         //debug
                                         Game.logStart?.Write(string.Format("{0}, geoID {1}, has been initialised with \"{2}\", arcID {3}", cluster.Name, cluster.GeoID, arcForest.Name, arcForest.ArcID));
@@ -6000,8 +6036,11 @@ namespace Next_Game
                     {
                         rumourText = eventObject.Rumour;
                         rumourText = Game.utility.CheckTagsRumour(rumourText, tempNames[i]);
-                        rumour = new RumourEvent(rumourText, 3, RumourScope.Global, 0, RumourGlobal.All);
-                        AddRumour(rumour);
+                        if (String.IsNullOrEmpty(rumourText) == false)
+                        {
+                            rumour = new RumourEvent(rumourText, 3, RumourScope.Global, 0, RumourGlobal.All);
+                            AddRumour(rumour);
+                        }
                     }
                 }
                 else
@@ -6009,8 +6048,11 @@ namespace Next_Game
                     //normal events
                     rumourText = eventObject.Rumour;
                     rumourText = Game.utility.CheckTagsRumour(rumourText);
-                    rumour = new RumourEvent(rumourText, 3, RumourScope.Global, 0, RumourGlobal.All);
-                    AddRumour(rumour);
+                    if (String.IsNullOrEmpty(rumourText) == false)
+                    {
+                        rumour = new RumourEvent(rumourText, 3, RumourScope.Global, 0, RumourGlobal.All);
+                        AddRumour(rumour);
+                    }
                 }
             }
             else { Game.SetError(new Error(293, "Invalid eventObject (null)")); }

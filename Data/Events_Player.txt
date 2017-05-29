@@ -484,7 +484,7 @@ Freq: High
 Status: Active
 Cool: 3
 Event: The low pitched growling of wolves pierces the night air.
-Rumour: There are Direwolves roaming the murky depths of <name>.
+Rumour: There are Direwolves roaming the shadows of <name>.
 [option]
 text: Light a fire to keep the Wolves at bay
 reply: lkjljlj
@@ -823,6 +823,7 @@ Freq: Low
 Status: Active
 Cool: 10
 Event: The lookout's shout alerts all on deck to a mighty swirl in the ocean ahead. One of the crew nervously whispers 'Kraken'.
+Rumour: Sailors mutter into the their ales about the mythical Kraken that supposedly are to be found in the depths of <name>.
 [option]
 text: Superstitious nonsense. It must have been a whale.
 reply: The nearby crew begin shouting at you. Nobody is buying your whale story. You stand your ground. Sailors are such nervous nellies.

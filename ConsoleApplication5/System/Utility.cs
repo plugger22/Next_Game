@@ -357,7 +357,7 @@ namespace Next_Game
         }
 
         /// <summary>
-        /// selection of tags used for Rumours (events)
+        /// selection of tags used for Rumours (events), Returns null in special circumstances ('name' tag and no descriptor provided)
         /// </summary>
         /// <param name="text">Rumour text that may contain tags</param>
         /// <param name="descriptor">Multipurpose descriptor, could be Forest name, locName, etc. </param>
@@ -365,6 +365,7 @@ namespace Next_Game
         public string CheckTagsRumour(string text, string descriptor = "")
         {
             string checkedText = text;
+            bool abortFlag = false;
             if (String.IsNullOrEmpty(text) == false)
             {
                 string tag, replaceText;
@@ -377,6 +378,7 @@ namespace Next_Game
                     tagFinish = checkedText.IndexOf(">");
                     length = tagFinish - tagStart;
                     tag = checkedText.Substring(tagStart + 1, length - 1);
+
                     //strip brackets
                     replaceText = null;
                     switch (tag)
@@ -397,6 +399,11 @@ namespace Next_Game
                             //multipurpose, Initialise Archetypes determines this
                             if (String.IsNullOrEmpty(descriptor) == false)
                             { replaceText = descriptor; }
+                            else
+                            {
+                                replaceText = "";
+                                abortFlag = true;
+                                Game.logTurn?.Write($"[Alert -> CheckTagsRumour] <name> has no descriptor, Rumour \"{text}\" -> cancelled"); }
                             break;
                         default:
                             replaceText = "";
@@ -413,6 +420,9 @@ namespace Next_Game
             }
             else
             { Game.SetError(new Error(292, "Invalid Input (null or empty)")); }
+            //check for special case of a <name> tag and no descriptor provided
+            if (abortFlag == true)
+            { checkedText = null; }
             return checkedText;
         }
 
