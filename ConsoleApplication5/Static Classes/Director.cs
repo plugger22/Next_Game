@@ -21,10 +21,11 @@ namespace Next_Game
     public enum ConflictResult { None, MinorWin, Win, MajorWin, MinorLoss, Loss, MajorLoss, Count } //result of challenge
     public enum ConflictState { None, Relative_Army_Size, Relative_Fame, Relative_Honour, Relative_Justice, Known_Status } //game specific states that are used for situations
     public enum ResourceLevel { None, Meagre, Moderate, Substantial, Wealthy, Excessive }
-    public enum WorldGroup { None, Noble, Church, Merchant, Craft, Peasant} //main population groupings within world
+    public enum WorldGroup { None, Official, Church, Merchant, Craft, Peasant} //main population groupings within world
     public enum ViewType { JusticeNeutralEduc, JusticeNeutralUned, JusticeGoodEduc, JusticeGoodUned, JusticeBadEduc, JusticeBadUned, LegendNeutralEduc, LegendNeutralUned, LegendGoodEduc, LegendGoodUned,
     LegendBadEduc, LegendBadUned, HonourNeutralEduc, HonourNeutralUned, HonourGoodEduc, HonourGoodUned, HonourBadEduc, HonourBadUned, KnownEduc, KnownUned, UnknownEduc, UnknownUned, Count} //Market View
     public enum Occupation { Offical, Church, Merchant, Craft, PeasantMale, PeasantFemale, Count}
+    public enum TravelMode { None, Foot, Mounted} //default Mounted for all characters
 
 
     /// <summary>
@@ -1031,7 +1032,7 @@ namespace Next_Game
         private void CreateAutoLocEvent(EventAutoFilter filter, int actorID = 0)
         {
             //get player
-            Player player = (Player)Game.world.GetActiveActor(1);
+            Player player = (Player)Game.world.GetPlayer();
             if (player != null)
             {
                 Game.logTurn?.Write("- CreateAutoLocEvent (Director.cs)");
@@ -2110,7 +2111,7 @@ namespace Next_Game
             RLColor foreColor = RLColor.Black;
             RLColor backColor = Color._background1;
             RLColor traitColor;
-            Active player = Game.world.GetActiveActor(1);
+            Player player = Game.world.GetPlayer();
             //loop all triggered events for this turn
             for (int i = 0; i < listFollCurrentEvents.Count; i++)
             {
@@ -2821,6 +2822,13 @@ namespace Next_Game
                                             if (String.IsNullOrEmpty(outcomeText) == false)
                                             { resultList.Add(new Snippet(outcomeText, foreColor, backColor)); resultList.Add(new Snippet("")); }
                                             break;
+                                        case OutcomeType.Speed:
+                                            //Change Player's land travel speed
+                                            OutSpeed speedOutcome = outcome as OutSpeed;
+                                            outcomeText = ChangePlayerSpeedStatus(speedOutcome.Mode);
+                                            if (String.IsNullOrEmpty(outcomeText) == false)
+                                            { resultList.Add(new Snippet(outcomeText, foreColor, backColor)); resultList.Add(new Snippet("")); }
+                                            break;
                                         case OutcomeType.EventStatus:
                                             //change Event Status
                                             OutEventStatus statusOutcome = outcome as OutEventStatus;
@@ -3410,58 +3418,6 @@ namespace Next_Game
                             Game.SetError(new Error(64, $"Invalid LocType \"{loc.Value.Type}\", RefID {refID}"));
                             break;
                     }
-                    /*if (refID < 100)
-                    {
-                        //Major House
-                        if (arcMajor != null)
-                        {
-                            //% chance of applying to each instance
-                            if (rnd.Next(100) < arcMajor.Chance)
-                            {
-                                //copy Archetype event ID's across to GeoCluster
-                                if (arcMajor.GetNumFollowerEvents() > 0) { loc.Value.SetFollowerEvents(arcMajor.GetFollowerEvents()); }
-                                if (arcMajor.GetNumPlayerEvents() > 0) { loc.Value.SetPlayerEvents(arcMajor.GetPlayerEvents()); }
-                                loc.Value.ArcID = arcMajor.ArcID;
-                                //debug
-                                Game.logStart?.Write(string.Format("{0}, locID {1}, has been initialised with \"{2}\", arcID {3}", Game.world.GetLocationName(loc.Key), loc.Key, arcMajor.Name, arcMajor.ArcID));
-                            }
-                        }
-
-                    }
-                    else if (refID >= 100 && refID < 1000)
-                    {
-                        //Minor House
-                        if (arcMinor != null)
-                        {
-                            //% chance of applying to each instance
-                            if (rnd.Next(100) < arcMinor.Chance)
-                            {
-                                //copy Archetype event ID's across to GeoCluster
-                                if (arcMinor.GetNumFollowerEvents() > 0) { loc.Value.SetFollowerEvents(arcMinor.GetFollowerEvents()); }
-                                if (arcMinor.GetNumPlayerEvents() > 0) { loc.Value.SetPlayerEvents(arcMajor.GetPlayerEvents()); }
-                                loc.Value.ArcID = arcMinor.ArcID;
-                                //debug
-                                Game.logStart?.Write(string.Format("{0}, locID {1}, has been initialised with \"{2}\", arcID {3}", Game.world.GetLocationName(loc.Key), loc.Key, arcMinor.Name, arcMinor.ArcID));
-                            }
-                        }
-                    }
-                    else if (refID >= 1000)
-                    {
-                        //Inn
-                        if (arcInn != null)
-                        {
-                            //% chance of applying to each instance
-                            if (rnd.Next(100) < arcInn.Chance)
-                            {
-                                //copy Archetype event ID's across to GeoCluster
-                                if (arcInn.GetNumFollowerEvents() > 0) { loc.Value.SetFollowerEvents(arcInn.GetFollowerEvents()); }
-                                if (arcInn.GetNumPlayerEvents() > 0) { loc.Value.SetPlayerEvents(arcMajor.GetPlayerEvents()); }
-                                loc.Value.ArcID = arcInn.ArcID;
-                                //debug
-                                Game.logStart?.Write(string.Format("{0}, locID {1}, has been initialised with \"{2}\", arcID {3}", Game.world.GetLocationName(loc.Key), loc.Key, arcInn.Name, arcInn.ArcID));
-                            }
-                        }
-                    }*/
                     //House specific archetypes
                     House house = Game.world.GetHouse(refID);
                     arcID = house.ArcID;
@@ -3743,7 +3699,7 @@ namespace Next_Game
         {
             string tempText;
             string resultText = "";
-            Active player = Game.world.GetActiveActor(1);
+            Active player = Game.world.GetPlayer();
             Actor opponent = Game.world.GetAnyActor(oppID);
             if (player != null && opponent != null)
             {
@@ -3804,7 +3760,7 @@ namespace Next_Game
         private string ChangePlayerPromiseStatus(int actorID, PossPromiseType type, int strength)
         {
             string resultText = "";
-            Active player = Game.world.GetActiveActor(1);
+            Active player = Game.world.GetPlayer();
             if (player != null)
             {
                 //check valid NPC character who receives the promise
@@ -3845,7 +3801,7 @@ namespace Next_Game
         private string ChangePlayerFavourStatus(int actorID, int strength)
         {
             string resultText = "";
-            Player player = (Player)Game.world.GetActiveActor(1);
+            Player player = (Player)Game.world.GetPlayer();
             if (player != null)
             {
                 //check valid NPC character who receives the promise
@@ -3883,12 +3839,36 @@ namespace Next_Game
         private string ChangePlayerIntroductionStatus(int refID)
         {
             string resultText = "";
-            Player player = (Player)Game.world.GetActiveActor(1);
+            Player player = (Player)Game.world.GetPlayer();
             if (player != null)
             {
                 player.IntroPresented = true;
                 player.DeleteIntroduction(refID);
                 resultText = $"You have used your introduction to gain access to the court of House \"{Game.world.GetHouseName(refID)}\"";
+            }
+            else { Game.SetError(new Error(239, "Invalid Player (null)")); }
+            return resultText;
+        }
+
+
+        /// <summary>
+        /// changes Player speed of travel over land
+        /// </summary>
+        /// <param name="newSpeed"></param>
+        /// <returns></returns>
+        private string ChangePlayerSpeedStatus(TravelMode newMode)
+        {
+            string resultText = "";
+            Player player = (Player)Game.world.GetPlayer();
+            if (player != null)
+            {
+                TravelMode initialMode = player.Travel;
+                if (initialMode != newMode)
+                {
+                    player.SetTravelMode(newMode);
+                    resultText = $"You have changed your mode of travel from {initialMode} to {newMode}";
+                }
+                else { Game.logTurn?.Write($"[Alert -> Player Speed] Initial mode \"{initialMode}\" is the same as new Mode \"{newMode}\" -> no change made"); }
             }
             else { Game.SetError(new Error(239, "Invalid Player (null)")); }
             return resultText;
@@ -3930,7 +3910,7 @@ namespace Next_Game
         private string ChangePlayerVoyageStatus(int destID, int voyageTime, bool safePassage)
         {
             string resultText = "";
-            Active player = Game.world.GetActiveActor(1);
+            Active player = Game.world.GetPlayer();
             if (player != null)
             {
                 if (destID > 0)
@@ -3968,7 +3948,7 @@ namespace Next_Game
         private string ChangePlayerAdriftStatus(int deathTimer, bool shipSunk)
         {
             string resultText = "";
-            Active player = Game.world.GetActiveActor(1);
+            Active player = Game.world.GetPlayer();
             if (player != null)
             {
                 if (deathTimer > 1)
@@ -4357,7 +4337,7 @@ namespace Next_Game
         private string ChangePlayerVoyageTime(int amount, EventCalc calc)
         {
             string resultText = "";
-            Active player = Game.world.GetActiveActor(1);
+            Active player = Game.world.GetPlayer();
             if (player != null)
             {
                 int voyageTime = player.VoyageTimer;
@@ -4392,7 +4372,7 @@ namespace Next_Game
         private string ChangePlayerDeathTimer(int amount, EventCalc calc)
         {
             string resultText = "";
-            Active player = Game.world.GetActiveActor(1);
+            Active player = Game.world.GetPlayer();
             if (player != null)
             {
                 int deathTime = player.DeathTimer;
@@ -5575,7 +5555,7 @@ namespace Next_Game
             RLColor backColor = Color._background1;
             string streetView = "";
             int viewIndex = Game.variable.GetValue(GameVar.View_Index);
-            WorldGroup[] arrayOfGroupsMale = new WorldGroup[] { WorldGroup.Noble, WorldGroup.Merchant, WorldGroup.Church, WorldGroup.Craft, WorldGroup.Craft,
+            WorldGroup[] arrayOfGroupsMale = new WorldGroup[] { WorldGroup.Official, WorldGroup.Merchant, WorldGroup.Church, WorldGroup.Craft, WorldGroup.Craft,
                 WorldGroup.Peasant, WorldGroup.Peasant };
             WorldGroup group = WorldGroup.None;
             bool proceedFlag = true;
@@ -5614,7 +5594,7 @@ namespace Next_Game
                 }
                 switch (group)
                 {
-                    case WorldGroup.Noble:
+                    case WorldGroup.Official:
                         innerArray = arrayOfOccupations[(int)Occupation.Offical];
                         educated = true;
                         break;

@@ -122,6 +122,8 @@ namespace Next_Game
         public bool boolGeneric { get; set; }
         //OutNone descriptive text
         public string Text { get; set; }
+        //Travel Mode outcome
+        public TravelMode Travel { get; set; }
         //Conflict Outcomes
         //public bool Challenger { get; set; } //is the player the challenger?
         public ConflictType Conflict_Type { get; set; }
@@ -151,6 +153,7 @@ namespace Next_Game
             Timer = outcome.Timer;
             Filter = outcome.Filter;
             Text = outcome.Text;
+            Travel = outcome.Travel;
             //PlayerRes = outcome.PlayerRes;
             boolGeneric = outcome.boolGeneric;
             //Challenger = outcome.Challenger;
@@ -1186,6 +1189,7 @@ namespace Next_Game
                                             structOutcome.Timer = EventTimer.None;
                                             structOutcome.boolGeneric = false;
                                             structOutcome.Text = "";
+                                            structOutcome.Travel = TravelMode.None;
                                             //structOutcome.PlayerRes = false;
                                             //structOutcome.PlayerCondition = true;
                                             structOutcome.ConditionText = "";
@@ -1260,6 +1264,7 @@ namespace Next_Game
                                         structOutcome.Timer = EventTimer.None;
                                         structOutcome.boolGeneric = false;
                                         structOutcome.Text = "";
+                                        structOutcome.Travel = TravelMode.None;
                                         //structOutcome.PlayerRes = false;
                                         //structOutcome.PlayerCondition = true;
                                         structOutcome.ConditionText = "";
@@ -1878,6 +1883,8 @@ namespace Next_Game
                                         case "rescued":
                                         case "DeathTimer":
                                         case "deathTimer":
+                                        case "speed":
+                                        case "Speed":
                                         case "none":
                                         case "None":
                                             structOutcome.Effect = Game.utility.Capitalise(cleanToken);
@@ -2018,6 +2025,28 @@ namespace Next_Game
                                             break;
                                         default:
                                             Game.SetError(new Error(49, string.Format("Invalid Input, Outcome timer, (\"{0}\")", arrayOfEvents[i])));
+                                            validData = false;
+                                            break;
+                                    }
+                                    break;
+                                case "travel":
+                                    //travel mode -> for Speed outcomes (changes player's speed & mode of travel)
+                                    switch (cleanToken)
+                                    {
+                                        case "mounted":
+                                        case "Mounted":
+                                            structOutcome.Travel = TravelMode.Mounted;
+                                            break;
+                                        case "foot":
+                                        case "Foot":
+                                            structOutcome.Travel = TravelMode.Foot;
+                                            break;
+                                        case "none":
+                                        case "None":
+                                            structOutcome.Travel = TravelMode.None;
+                                            break;
+                                        default:
+                                            Game.SetError(new Error(49, string.Format("Invalid Input, Outcome Travel, (\"{0}\")", arrayOfEvents[i])));
                                             validData = false;
                                             break;
                                     }
@@ -2427,6 +2456,9 @@ namespace Next_Game
                                                                 case "Rescued":
                                                                     outObject = new OutRescued(structEvent.EventID, outTemp.boolGeneric);
                                                                     break;
+                                                                case "Speed":
+                                                                    outObject = new OutSpeed(structEvent.EventID, outTemp.Travel);
+                                                                    break;
                                                                 case "Condition":
                                                                     if (outTemp.ConditionSkill > SkillType.None && outTemp.ConditionEffect != 0 && String.IsNullOrEmpty(outTemp.ConditionText) == false
                                                                         && outTemp.ConditionTimer > 0)
@@ -2554,6 +2586,10 @@ namespace Next_Game
                                 case OutcomeType.GameVar:
                                     OutGameVar tempOutcome_5 = outcomeObject as OutGameVar;
                                     Game.logStart?.Write(string.Format("    {0} -> GameVar {1}, Amount {2}, EventCalc {3}", cleanTag, tempOutcome_5.GameVar, tempOutcome_5.Amount, tempOutcome_5.Calc));
+                                    break;
+                                case OutcomeType.Speed:
+                                    OutSpeed tempOutcome_6 = outcomeObject as OutSpeed;
+                                    Game.logStart?.Write(string.Format("    {0} -> Travel Mode {1}", cleanTag, tempOutcome_6.Mode));
                                     break;
                                 default:
                                     Game.logStart?.Write(string.Format("    {0} -> data {1}, amount {2}, apply {3}", cleanTag, outcomeObject.Data, outcomeObject.Amount, outcomeObject.Calc));
@@ -3743,7 +3779,7 @@ namespace Next_Game
             string[][] arrayOfOccupations = new string[(int)Occupation.Count][];
             string tempString;
             //temporary sub lists for each category of geoNames
-            List<string> listNoble = new List<string>();
+            List<string> listOfficial = new List<string>();
             List<string> listChurch = new List<string>();
             List<string> listMerchant = new List<string>();
             List<string> listCraft = new List<string>();
@@ -3771,8 +3807,8 @@ namespace Next_Game
                             //place in the correct list
                             switch (occType)
                             {
-                                case "Noble":
-                                    listNoble.Add(tempString);
+                                case "Official":
+                                    listOfficial.Add(tempString);
                                     break;
                                 case "Church":
                                     listChurch.Add(tempString);
@@ -3797,14 +3833,14 @@ namespace Next_Game
                     }
                 }
                 //size jagged array
-                arrayOfOccupations[(int)Occupation.Offical] = new string[listNoble.Count];
+                arrayOfOccupations[(int)Occupation.Offical] = new string[listOfficial.Count];
                 arrayOfOccupations[(int)Occupation. Church] = new string[listChurch.Count];
                 arrayOfOccupations[(int)Occupation.Merchant] = new string[listMerchant.Count];
                 arrayOfOccupations[(int)Occupation.Craft] = new string[listCraft.Count];
                 arrayOfOccupations[(int)Occupation.PeasantMale] = new string[listPeasantMale.Count];
                 arrayOfOccupations[(int)Occupation.PeasantFemale] = new string[listPeasantFemale.Count];
                 //populate from lists
-                arrayOfOccupations[(int)Occupation.Offical] = listNoble.ToArray();
+                arrayOfOccupations[(int)Occupation.Offical] = listOfficial.ToArray();
                 arrayOfOccupations[(int)Occupation.Church] = listChurch.ToArray();
                 arrayOfOccupations[(int)Occupation.Merchant] = listMerchant.ToArray();
                 arrayOfOccupations[(int)Occupation.Craft] = listCraft.ToArray();

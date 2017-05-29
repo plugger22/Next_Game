@@ -27,7 +27,7 @@ namespace Next_Game
         private Position actorPos;
         public string Name { get; set; }
         public int LocID { get; set; } //current location (if travelling then destination) -> if dead then '0'
-        public int Speed { get; set; } = Game.constant.GetValue(Global.LAND_SPEED); //speed of travel throughout the world
+        public int Speed { get; private set; } //speed of travel throughout the world (depends on Travel Mode)
         public int ActID { get; set; } //set in constructor except in special circumstances (eg, copying actors over in Lore.cs)
         public int Age { get; set; }
         public int Born { get; set; } //year born
@@ -51,6 +51,7 @@ namespace Next_Game
         public ActorGone ReasonGone { get; set; } = 0; //reason gone or missing
         public KingLoyalty Loyalty_AtStart { get; set; } = KingLoyalty.None; //loyalty (prior to uprising)
         public KingLoyalty Loyalty_Current { get; set; } = KingLoyalty.None; //current loyalty
+        public TravelMode Travel { get; private set; } //on foot or mounted or incapacitated?
         public string Handle { get; set; } = null; //eg. Nickname
         //stats 
         public int Combat { get; set; } = 3;
@@ -91,6 +92,7 @@ namespace Next_Game
             relLord = 50; //neutral
             RelKnown = false;
             InitialiseDataCollections();
+            SetTravelMode(TravelMode.Mounted);
             //set title but only if not already set by lower level constructor
             if (String.IsNullOrEmpty(Title) == true) { Title = string.Format("{0}", Type); }
         }
@@ -114,6 +116,7 @@ namespace Next_Game
             relLord = 50; //neutral
             RelKnown = false;
             InitialiseDataCollections();
+            SetTravelMode(TravelMode.Mounted);
             //set title but only if not already set by lower level constructor
             if (String.IsNullOrEmpty(Title) == true) { Title = string.Format("{0}", Type); }
         }
@@ -137,6 +140,25 @@ namespace Next_Game
             listOfRelLord = new List<Relation>();
             listOfRelPlyr = new List<Relation>();
             listOfConditions = new List<Condition>();
+        }
+
+        public void SetTravelMode(TravelMode mode)
+        {
+            switch(mode)
+            {
+                case TravelMode.Mounted:
+                    Travel = TravelMode.Mounted;
+                    Speed = Game.constant.GetValue(Global.MOUNTED_SPEED);
+                    break;
+                case TravelMode.Foot:
+                    Travel = TravelMode.Foot;
+                    Speed = Game.constant.GetValue(Global.FOOT_SPEED);
+                    break;
+                case TravelMode.None:
+                    Travel = TravelMode.None;
+                    Speed = 0;
+                    break;
+            }
         }
 
         public void SetActorPosition(Position posLoc)

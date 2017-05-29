@@ -57,7 +57,7 @@
 
 # [outcome]: Outcome block (can have up to 3 outcome's for each option). Place block header at top
 # outcome -> Each option requires an outcome. For a 'do nothing' outcome use '[outcome]' plus 'effect: None' (out, amount and apply aren't needed)
-# effect: type of outcome Effect ( None, Conflict, EventTimer, EventStatus, GameState, Resource, Condition, Known, Freedom, Item, VoyageTime, Adrift, Rescued, DeathTimer, GameVar)
+# effect: type of outcome Effect ( None, Conflict, EventTimer, EventStatus, GameState, Resource, Condition, Known, Freedom, Item, VoyageTime, Adrift, Rescued, DeathTimer, GameVar, Speed)
 
 # [outcome] effect -> GameState
 # data: multi-purpose outcome type, usually and ID of some form (depends on effect, must be an Integer), default '0'
@@ -68,6 +68,9 @@
 
 # [outcome] effect -> None
 # outText: OPTIONAL short descriptive text (shows up as a message & player record)
+
+# [outcome] effect -> Speed
+# travel: Mode -> None / Foot / Mounted
 
 # [outcome] effect -> Known
 # data: 1 (+ve) sets Actor's status to UNKNOWN, -1 (-ve) sets Actor to KNOWN
@@ -504,7 +507,8 @@ item: Treachery
 thresh: 3
 calc: >=
 [outcome]
-effect: None
+effect: Speed
+travel: Foot
 [option]
 text: That's a Direwolf! Wait till dawn and hunt it down
 reply: kjljlj

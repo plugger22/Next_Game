@@ -13,7 +13,8 @@ namespace Next_Game
         CHILDBIRTH_COMPLICATIONS,
         PREGNANT,
         TOUCHED,
-        LAND_SPEED,
+        MOUNTED_SPEED,
+        FOOT_SPEED,
         SEA_SPEED,
         //Followers
         START_FOLLOWERS,
@@ -121,7 +122,7 @@ namespace Next_Game
             arrayOfGlobals[7] = Global.BATTLE_EVENTS;
             arrayOfGlobals[8] = Global.ADVISOR_REFUSAL;
             arrayOfGlobals[9] = Global.SIBLING_ESCAPE;
-            arrayOfGlobals[10] = Global.LAND_SPEED;
+            arrayOfGlobals[10] = Global.MOUNTED_SPEED;
             arrayOfGlobals[11] = Global.CHILDBIRTH_COMPLICATIONS;
             arrayOfGlobals[12] = Global.CROW_NUMBER;
             arrayOfGlobals[13] = Global.CROW_BONUS;
@@ -187,6 +188,7 @@ namespace Next_Game
             arrayOfGlobals[73] = Global.ENEMY_RUMOURS;
             arrayOfGlobals[74] = Global.ENEMY_RUMOUR_TIME;
             arrayOfGlobals[75] = Global.REL_RUMOUR_TIME;
+            arrayOfGlobals[76] = Global.FOOT_SPEED;
         }
 
         /// <summary>

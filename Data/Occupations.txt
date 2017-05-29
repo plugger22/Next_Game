@@ -2,7 +2,7 @@
 
 # multiple repeat entries are O.K (higher chance of being chosen in a random draw)
 
-[Noble]
+[Official]
 Bailiff 
 Chancellor 
 Diplomat 
@@ -10,9 +10,6 @@ Constable
 Hayward 
 Jailer 
 Judge 
-Nobleman 
-Nobleman 
-Nobleman 
 Pursuivant 
 Sherrif
 
@@ -141,6 +138,9 @@ Monk
  Servant 
  Servant 
  Cook 
+ Cook
+ Cleaner
+ Milk Maid
  Serving Girl
  Story Teller 
  Fortune Teller 
@@ -158,3 +158,4 @@ Monk
  Palmer 
  Hawker 
  Molecatcher
+ Trollop
