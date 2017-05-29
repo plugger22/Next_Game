@@ -1,18 +1,317 @@
-//Exile Game file ops "LogTurn.txt" commenced at: 29/05/2017 14:39:31
---- ProcessStartGame (World.cs)
---- AgePassiveCharacters (History.cs)
---- InitialiseGameVars (World.cs)
-[GameVar] View_Index changed from 0 to 1
-[AddVisitedLoc] LocID 30, "Evenfall", turn -3 -> record added to listLocsVisited
-[AddVisitedLoc] LocID 30, "Evenfall", turn -3 -> new record added to dictLocsVisited
-[AddVisitedLoc] LocID 5, "Bloodkeep", turn -2 -> record added to listLocsVisited
-[AddVisitedLoc] LocID 5, "Bloodkeep", turn -2 -> new record added to dictLocsVisited
-[AddVisitedLoc] LocID 16, "One Eyed Pete's", turn -1 -> record added to listLocsVisited
-[AddVisitedLoc] LocID 16, "One Eyed Pete's", turn -1 -> new record added to dictLocsVisited
-[AddVisitedLoc] LocID 10, "Oldtown", turn 0 -> record added to listLocsVisited
-[AddVisitedLoc] LocID 10, "Oldtown", turn 0 -> new record added to dictLocsVisited
+//Exile Game File "LogTurn.txt" opened at: 29/05/2017 16:53:03
+--- ProcessStartTurn (World.cs)
+Day 32, Turn 31
+Usurper Bertelot Martell, "The Covetous", Travelling, Blackwater
+--- UpdateRumours (World.cs)
+dictRumoursTimed (Start) -> 102 records
+RumourID 616 -> TimerExpire decremented, now 1
+RumourID 618 -> TimerExpire decremented, now 2
+RumourID 514 -> TimerExpire decremented, now 10
+RumourID 515 -> TimerExpire decremented, now 10
+RumourID 516 -> TimerExpire decremented, now 10
+RumourID 517 -> TimerExpire decremented, now 10
+RumourID 518 -> TimerExpire decremented, now 10
+RumourID 519 -> TimerExpire decremented, now 10
+RumourID 520 -> TimerExpire decremented, now 10
+RumourID 521 -> TimerExpire decremented, now 10
+RumourID 522 -> TimerExpire decremented, now 10
+RumourID 523 -> TimerExpire decremented, now 10
+RumourID 524 -> TimerExpire decremented, now 10
+RumourID 525 -> TimerExpire decremented, now 10
+RumourID 526 -> TimerExpire decremented, now 10
+RumourID 527 -> TimerExpire decremented, now 10
+RumourID 528 -> TimerExpire decremented, now 10
+RumourID 529 -> TimerExpire decremented, now 10
+RumourID 530 -> TimerExpire decremented, now 10
+RumourID 531 -> TimerExpire decremented, now 10
+RumourID 532 -> TimerExpire decremented, now 10
+RumourID 533 -> TimerExpire decremented, now 10
+RumourID 534 -> TimerExpire decremented, now 10
+RumourID 535 -> TimerExpire decremented, now 10
+RumourID 536 -> TimerExpire decremented, now 10
+RumourID 537 -> TimerExpire decremented, now 10
+RumourID 538 -> TimerExpire decremented, now 10
+RumourID 539 -> TimerExpire decremented, now 10
+RumourID 540 -> TimerExpire decremented, now 10
+RumourID 541 -> TimerExpire decremented, now 10
+RumourID 542 -> TimerExpire decremented, now 10
+RumourID 543 -> TimerExpire decremented, now 10
+RumourID 544 -> TimerExpire decremented, now 10
+RumourID 545 -> TimerExpire decremented, now 10
+RumourID 546 -> TimerExpire decremented, now 10
+RumourID 547 -> TimerExpire decremented, now 10
+RumourID 548 -> TimerExpire decremented, now 10
+RumourID 549 -> TimerExpire decremented, now 10
+RumourID 550 -> TimerExpire decremented, now 10
+RumourID 551 -> TimerExpire decremented, now 10
+RumourID 552 -> TimerExpire decremented, now 10
+RumourID 553 -> TimerExpire decremented, now 10
+RumourID 554 -> TimerExpire decremented, now 10
+RumourID 555 -> TimerExpire decremented, now 10
+RumourID 556 -> TimerExpire decremented, now 10
+RumourID 557 -> TimerExpire decremented, now 10
+RumourID 558 -> TimerExpire decremented, now 10
+RumourID 559 -> TimerExpire decremented, now 10
+RumourID 560 -> TimerExpire decremented, now 10
+RumourID 561 -> TimerExpire decremented, now 10
+RumourID 562 -> TimerExpire decremented, now 10
+RumourID 563 -> TimerExpire decremented, now 10
+RumourID 564 -> TimerExpire decremented, now 10
+RumourID 565 -> TimerExpire decremented, now 10
+RumourID 566 -> TimerExpire decremented, now 10
+RumourID 567 -> TimerExpire decremented, now 10
+RumourID 568 -> TimerExpire decremented, now 10
+RumourID 569 -> TimerExpire decremented, now 10
+RumourID 570 -> TimerExpire decremented, now 10
+RumourID 571 -> TimerExpire decremented, now 10
+RumourID 572 -> TimerExpire decremented, now 10
+RumourID 573 -> TimerExpire decremented, now 10
+RumourID 574 -> TimerExpire decremented, now 10
+RumourID 617 -> TimerExpire decremented, now 2
+RumourID 576 -> TimerExpire decremented, now 10
+RumourID 577 -> TimerExpire decremented, now 10
+RumourID 578 -> TimerExpire decremented, now 10
+RumourID 579 -> TimerExpire decremented, now 10
+RumourID 580 -> TimerExpire decremented, now 10
+RumourID 581 -> TimerExpire decremented, now 10
+RumourID 582 -> TimerExpire decremented, now 10
+RumourID 583 -> TimerExpire decremented, now 10
+RumourID 584 -> TimerExpire decremented, now 10
+RumourID 585 -> TimerExpire decremented, now 10
+RumourID 586 -> TimerExpire decremented, now 10
+RumourID 587 -> TimerExpire decremented, now 10
+RumourID 588 -> TimerExpire decremented, now 10
+RumourID 589 -> TimerExpire decremented, now 10
+RumourID 590 -> TimerExpire decremented, now 10
+RumourID 591 -> TimerExpire decremented, now 10
+RumourID 592 -> TimerExpire decremented, now 10
+RumourID 593 -> TimerExpire decremented, now 10
+RumourID 594 -> TimerExpire decremented, now 10
+RumourID 595 -> TimerExpire decremented, now 10
+RumourID 596 -> TimerExpire decremented, now 10
+RumourID 597 -> TimerExpire decremented, now 10
+RumourID 598 -> TimerExpire decremented, now 10
+RumourID 599 -> TimerExpire decremented, now 10
+RumourID 600 -> TimerExpire decremented, now 10
+RumourID 601 -> TimerExpire decremented, now 10
+RumourID 602 -> TimerExpire decremented, now 10
+RumourID 603 -> TimerExpire decremented, now 10
+RumourID 604 -> TimerExpire decremented, now 10
+RumourID 605 -> TimerExpire decremented, now 10
+RumourID 606 -> TimerExpire decremented, now 10
+RumourID 607 -> TimerExpire decremented, now 10
+RumourID 608 -> TimerExpire decremented, now 10
+RumourID 609 -> TimerExpire decremented, now 10
+RumourID 513 -> TimerExpire decremented, now 10
+RumourID 610 -> TimerExpire decremented, now 10
+RumourID 611 -> TimerExpire decremented, now 10
+RumourID 615 -> TimerExpire decremented, now 1
+--- MoveActors -> 3 Records (World.cs)
+ [Move -> MoveObject] Usurper Bertelot Martell, ActID 1 travelling to Blackwater (current Loc 11:21)
+--- CheckIfFoundActive (World.cs)
+ [Search -> Debug] Enemy, Brother Haborym, ID 131 at 11:3, Active Bertelot Martell, ID 1, at 11:21
+ [Search -> Debug] Enemy, Brother Mastema, ID 132 at 23:1, Active Bertelot Martell, ID 1, at 11:21
+ [Search -> Debug] Enemy, Brother Amon, ID 133 at 21:17, Active Bertelot Martell, ID 1, at 11:21
+ [Search -> Debug] Enemy, Brother Dagon, ID 134 at 3:15, Active Bertelot Martell, ID 1, at 11:21
+ [Search -> Debug] Enemy, The Unrelenting, ID 135 at 15:14, Active Bertelot Martell, ID 1, at 11:21
+--- CheckIfFoundActive (World.cs)
+ [Search -> Debug] Enemy, Brother Haborym, ID 131 at 11:3, Active Bertelot Martell, ID 1, at 10:21
+ [Search -> Debug] Enemy, Brother Mastema, ID 132 at 23:1, Active Bertelot Martell, ID 1, at 10:21
+ [Search -> Debug] Enemy, Brother Amon, ID 133 at 21:17, Active Bertelot Martell, ID 1, at 10:21
+ [Search -> Debug] Enemy, Brother Dagon, ID 134 at 3:15, Active Bertelot Martell, ID 1, at 10:21
+ [Search -> Debug] Enemy, The Unrelenting, ID 135 at 15:14, Active Bertelot Martell, ID 1, at 10:21
+[AddVisitedLoc] LocID 27, "Blackwater", turn 31 -> record added to listLocsVisited
+[AddVisitedLoc] LocID 27, "Blackwater", turn 31 -> new record added to dictLocsVisited
+ [Move -> MoveObject] Inquisitor Brother Haborym, ActID 131 travelling to Eyrie (current Loc 11:3)
+--- CheckIfFoundEnemy (World.cs)
+ [Search -> Debug] Active Bertelot Martell, ID 1 at 10:21, Enemy at 11:3 (Brother Haborym, ID 131
+--- CheckIfFoundEnemy (World.cs)
+ [Search -> Debug] Active Bertelot Martell, ID 1 at 10:21, Enemy at 11:3 (Brother Haborym, ID 131
+ [Goal -> Arrival] Inquisitor Brother Haborym, ActID 131, currently at Eyrie, new Goal -> Wait
+ [Move -> MoveObject] Inquisitor Brother Amon, ActID 133 travelling to The Raucous Rat (current Loc 21:17)
+--- CheckIfFoundEnemy (World.cs)
+ [Search -> Debug] Active Bertelot Martell, ID 1 at 10:21, Enemy at 21:17 (Brother Amon, ID 133
+--- CheckIfFoundEnemy (World.cs)
+ [Search -> Debug] Active Bertelot Martell, ID 1 at 10:21, Enemy at 20:17 (Brother Amon, ID 133
+ [Goal -> Arrival] Inquisitor Brother Amon, ActID 133, currently at The Raucous Rat, new Goal -> Wait
+--- UpdatePlayerStatus (World.cs)
+--- UpdateWorldStatus (World.cs)
+--- CheckFollowerActivity (World.cs)
+--- GetRumour (Director.cs)
+arrayOfRumours [0] -> RumourID 149, Strength 4, Scope Global, Type Disguise, Global All
+arrayOfRumours [4] -> RumourID 433, Strength 2, Scope Global, Type HouseRel, Global West
+arrayOfRumours [5] -> RumourID 203, Strength 4, Scope Local, Type Skill, Global All
+RumourID 203 selected from the Pool
+Rumour "BannerLord Dick Brax "The Knowing", ActID 87 at Hornvale, is murmured among friends to be Cunning" revealed to ActorID2 on turn 31 -> added to List
+RumourID 203 removed from listRumoursHouse[0]
+Follower The Crone, ActID 2, added RumourID 203
+BannerLord Dick Brax, ActID 87, has their Treachery changed to True
+--- GetRumour (Director.cs)
+arrayOfRumours [0] -> RumourID 475, Strength 3, Scope Global, Type Event, Global All
+ERROR_271 "Invalid rumour (null) for RumourID 512, arrayOfRumours index 4 -> Not added to pool"
+Method: GetRumourUnknown,  Line: 5300,  Object: Director.cs,  Turn: 31,  Local Time: 16:53:03 UTC +10:00
+arrayOfRumours [5] -> RumourID 45, Strength 2, Scope Local, Type Secret, Global All
+RumourID 475 selected from the Pool
+Rumour "Sailors mutter into the their ales about the mythical Kraken that supposedly are to be found in the depths of Serene Bay." revealed to ActorID4 on turn 31 -> added to List
+RumourID 475 removed from listRumoursGlobal[17]
+Follower The Haggler, ActID 4, added RumourID 475
+--- GetRumour (Director.cs)
+[Notification] No house rumours available -> none added to pool
+arrayOfRumours [0] -> RumourID 143, Strength 4, Scope Global, Type Disguise, Global All
+ERROR_271 "Invalid rumour (null) for RumourID 496, arrayOfRumours index 4 -> Not added to pool"
+Method: GetRumourUnknown,  Line: 5300,  Object: Director.cs,  Turn: 31,  Local Time: 16:53:03 UTC +10:00
+RumourID 143 selected from the Pool
+Rumour "It is whispered that Disguises can be had from Castellan Victarion Jankin, ActID 68 at Valyria" revealed to ActorID8 on turn 31 -> added to List
+RumourID 143 removed from listRumoursGlobal[6]
+Follower The Viper, ActID 8, added RumourID 143
+--- GetMarketView (Director.cs)
+listPlayerChoices has 3 records, 30 % needed, rolled 4
+[Player Choice] -> "The old hag thinks she saw the Usurper, Bertelot Martell on the road to Casterly Rock. Sitting high in the saddle, all kingly and imperious like.", record removed at index 0
+--- CheckStationaryActiveActors (World.cs)
+ [Search -> Stationary] Usurper Bertelot Martell, ActID 1 is AtLocation
+--- CheckIfFoundActive (World.cs)
+ [Search -> Debug] Enemy, Brother Haborym, ID 131 at 11:3, Active Bertelot Martell, ID 1, at 10:21
+ [Search -> Debug] Enemy, Brother Mastema, ID 132 at 23:1, Active Bertelot Martell, ID 1, at 10:21
+ [Search -> Debug] Enemy, Brother Amon, ID 133 at 20:17, Active Bertelot Martell, ID 1, at 10:21
+ [Search -> Debug] Enemy, Brother Dagon, ID 134 at 3:15, Active Bertelot Martell, ID 1, at 10:21
+ [Search -> Debug] Enemy, The Unrelenting, ID 135 at 15:14, Active Bertelot Martell, ID 1, at 10:21
+ [Search -> Stationary] Follower The Crone, ActID 2 is AtLocation
+ [Search -> Stationary] Follower The Haggler, ActID 4 is AtLocation
+ [Search -> Stationary] Follower The Viper, ActID 8 is AtLocation
+--- UpdateAIController (World.cs)
+ [AI -> Player Unknown] Inquisitor Brother Haborym, Act ID 131 Mode -> Normal
+ [AI -> Player Unknown] Inquisitor Brother Mastema, Act ID 132 Mode -> Normal
+ [AI -> Player Unknown] Inquisitor Brother Amon, Act ID 133 Mode -> Normal
+ [AI -> Player Unknown] Inquisitor Brother Dagon, Act ID 134 Mode -> Normal
+ [AI -> Player Unknown] Nemesis The Unrelenting, Act ID 135 Mode -> Normal
+--- SetEnemyActivity (World.cs)
+ [Enemy -> Known] Brother Haborym ActID 131 has become KNOWN
+--- SetEnemyGoal (World.cs)
+ [Goal -> Branch] Brother Haborym, ActID 131 Assigned Branch -> 1 Current Branch -> 1
+ [Goal -> New] Brother Haborym, ActID 131, (loc 11:3), assigned new Goal -> Move
+ [Goal -> Move] Brother Haborym, ActID 131 -> Move Inwards -> Starpike, LocID 3
+--- InitiateMoveActor (World.cs)
+--- Move Actor (Director.cs)
+--- SetEnemyGoal (World.cs)
+ [Goal -> Branch] Brother Mastema, ActID 132 Assigned Branch -> 2 Current Branch -> 2
+ [Goal -> New] Brother Mastema, ActID 132, (loc 23:1), assigned new Goal -> Move
+ [Goal -> Alert] Brother Mastema, ActID 132 has reversed their MoveOut status from True to False
+ [Goal -> Move] Brother Mastema, ActID 132 -> Move Inwards -> Dorne, LocID 15
+--- InitiateMoveActor (World.cs)
+--- Move Actor (Director.cs)
+--- SetEnemyGoal (World.cs)
+ [Goal -> Branch] Brother Amon, ActID 133 Assigned Branch -> 3 Current Branch -> 3
+ [Goal -> New] Brother Amon, ActID 133, (loc 20:17), assigned new Goal -> Move
+ [Goal -> Move] Brother Amon, ActID 133 -> Move Inwards -> Kingskeep, LocID 1
+--- InitiateMoveActor (World.cs)
+--- Move Actor (Director.cs)
+ [Enemy -> Goal] Brother Dagon, ActID 134 retains Goal -> Hide
+ [Enemy -> Goal] The Unrelenting, ActID 135 retains Goal -> Wait
+--- CheckPlayerEvents (Director.cs)
+- CreateAutoLocEvent (Director.cs)
+ [AutoEvent -> ActorList] "Willis Ambrose", ID 85 added to list of Actors
+ [AutoEvent -> LocalList] "Willis Ambrose", ID 85 added to list of Locals
+[Notification] No entry found in dictOfIntroductions for RefID 100
+ Chance of Player Location event 75 %
+--- ResolvePlayerEvents (Director.cs)
+ Trigger FAILED on "0" Equals 1
+ Trigger: Player is wrong type of Known status -> Trigger failed
+ Trigger FAILED on "0" Equals 1
+ Trigger: Player is wrong type of Known status -> Trigger failed
+ Event "What to do?" Timer Repeat now 999
+ Event "What to do?" Cooldown Timer has been reset to 0
+--- UpdateActiveActors (World.cs)
+ Usurper Bertelot Martell has had their TurnsUnknown Timer increased from 130 to 131
+ Follower The Crone has had their TurnsUnknown Timer increased from 30 to 31
+ Follower The Haggler has had their TurnsUnknown Timer increased from 30 to 31
+ Follower The Viper has had their TurnsUnknown Timer increased from 30 to 31
+--- ResolveOutcome (Director.cs)
 --- SetEndGame (Game.cs)
 [Alert] Player chose to exit (pressed 'X')
---- SetEndGame (Game.cs)
-[Alert] Player chose to exit (pressed 'X')
-//Exile Game file ops "LogTurn.txt" Completed at: 29/05/2017 14:39:57
+//Exile Game file ops "LogTurn.txt" Completed at: 29/05/2017 16:53:11
+d opinion of the Usurper" -> dict & List
+[Rumour -> Added] RID 570, "BannerLord Wilmot Clegane "The Itchy", ActID 82 at Clegane's Keep, is whispered to have a good view of the Usurper" -> dict & List
+[Rumour -> Added] RID 571, "BannerLord Bertelot Cerwyn "The UnRead", ActID 83 at Cerwyn, is whispered to have a good impression of the Usurper" -> dict & List
+[Rumour -> Added] RID 572, "BannerLord Daven Mooton "The Angular", ActID 84 at Maidenpool, is commonly known to have a poor impression of the Usurper" -> dict & List
+[Rumour -> Added] RID 573, "BannerLord Willis Ambrose "The Mundane", ActID 85 at Blackwater, is rumoured to have an average impression of the Usurper" -> dict & List
+[Rumour -> Added] RID 574, "BannerLord Farlen Fowler "The Average", ActID 86 at Skyreach, is rumoured to have a poor impression of the Usurper" -> dict & List
+[Rumour -> Added] RID 575, "BannerLord Dick Brax "The Knowing", ActID 87 at Hornvale, is well known to have a poor opinion of the Usurper" -> dict & List
+[Rumour -> Added] RID 576, "BannerLord Cristal Flint "The Upstanding", ActID 88 at Widow's Watch, is whispered to have a poor view of the Usurper" -> dict & List
+[Rumour -> Added] RID 577, "BannerLord Rhaegar Mormont "The Elephant", ActID 89 at Bearpit, is suspected to have a poor impression of the Usurper" -> dict & List
+[Rumour -> Added] RID 578, "BannerLord Vortimer Hornwood "The Slipshod", ActID 90 at Hornwood, is said to have a poor opinion of the Usurper" -> dict & List
+[Rumour -> Added] RID 579, "BannerLord Daue Yronwood "The Languid", ActID 91 at Yronwood Castle, is well known to have a very poor impression of the Usurper" -> dict & List
+[Rumour -> Added] RID 580, "BannerLord Gerion Peake "The Literal", ActID 92 at Starpike, is known to have a poor opinion of the Usurper" -> dict & List
+[Rumour -> Added] RID 581, "BannerLord Rodrik Estermont "The Black Rat", ActID 93 at Greenstone, is widely known to have a poor impression of the Usurper" -> dict & List
+[Rumour -> Added] RID 582, "BannerLord Jason Penrose "The Dwarf", ActID 94 at Parchments, is whispered to have an average view of the Usurper" -> dict & List
+[Rumour -> Added] RID 583, "BannerLord Bertelot Tarly "The Unbearable", ActID 95 at Horn Hill, is rumoured to have a poor view of the Usurper" -> dict & List
+[Rumour -> Added] RID 584, "BannerLord Brynden Codd "The Wellborn", ActID 96 at Fishfork, is suspected to have a poor view of the Usurper" -> dict & List
+[Rumour -> Added] RID 585, "BannerLord Daven Umber "The Reliable", ActID 97 at Last Hearth, is well known to have an average view of the Usurper" -> dict & List
+[Rumour -> Added] RID 586, "BannerLord Frederick Westerling "The Affected", ActID 98 at The Crag, is rumoured to have a poor view of the Usurper" -> dict & List
+[Rumour -> Added] RID 587, "BannerLord Cleos Bolton "The Agile", ActID 100 at Dreadfort, is known to have a good impression of the Usurper" -> dict & List
+[Rumour -> Added] RID 588, "BannerLord Houdouyn Tallhart "The Dwarf", ActID 101 at Torrhen's Square, is suspected to have an average view of the Usurper" -> dict & List
+[Rumour -> Added] RID 589, "BannerLord Vardis Mullendore "The Pirate", ActID 102 at Uplands, is whispered to have a very good view of the Usurper" -> dict & List
+[Rumour -> Added] RID 590, "BannerLord Hullen Hunt "The Covetous", ActID 103 at Longbow Hall, is whispered to have a very good impression of the Usurper" -> dict & List
+[Rumour -> Added] RID 591, "Lord Aerys Tarth "The Reasonable", ActID 104 at Dorne, is whispered to have a very poor opinion of the Usurper" -> dict & List
+[Rumour -> Added] RID 592, "BannerLord Hunfridus Leygood "The Whisperer", ActID 113 at Barrow Hill, is rumoured to have a poor view of the Usurper" -> dict & List
+[Rumour -> Added] RID 593, "BannerLord Robert Frey "The Scrawny", ActID 114 at The Twins, is known to have a poor view of the Usurper" -> dict & List
+[Rumour -> Added] RID 594, "BannerLord Urian Wull "The Dynamic", ActID 115 at Evenfall, is murmured among friends to have a very poor opinion of the Usurper" -> dict & List
+[Rumour -> Added] RID 595, "Castellan Davos Timm "The Solid", ActID 116 at Dorne, is known to have an average impression of the Usurper" -> dict & List
+[Rumour -> Added] RID 596, "Maester Marq Richardin "The Erudite", ActID 117 at Dorne, is whispered to have an average opinion of the Usurper" -> dict & List
+[Rumour -> Added] RID 597, "Septon Cristal Henry "The White", ActID 118 at Dorne, is said to have a poor opinion of the Usurper" -> dict & List
+[Rumour -> Added] RID 598, "Knight Ser Davos Jeremiah "The Adjustable", ActID 119 at Dorne, is widely known to have a poor view of the Usurper" -> dict & List
+[Rumour -> Added] RID 599, "Lady Belet Tarth "The Appealing", ActID 120 at Dorne, is suspected to have a very poor view of the Usurper" -> dict & List
+[Rumour -> Added] RID 600, "lady Jeyne Tarth "The Confused", ActID 121 at Dorne, is rumoured to have an average impression of the Usurper" -> dict & List
+[Rumour -> Added] RID 601, "Heir Gilibertus Tarth "Rock Breaker", ActID 122 at Dorne, is whispered to have an average impression of the Usurper" -> dict & List
+[Rumour -> Added] RID 602, "lord Tyrek Tarth "The Definitive", ActID 123 at Dorne, is well known to have an average view of the Usurper" -> dict & List
+[Rumour -> Added] RID 603, "lord David Tarth "The Balanced", ActID 124 at Dorne, is well known to have an average impression of the Usurper" -> dict & List
+[Rumour -> Added] RID 604, "High_Septon Aunger Selles "The Hurt", ActID 105 at Kingskeep, is well known to have an average impression of the Usurper" -> dict & List
+[Rumour -> Added] RID 605, "Master_of_Coin Walcher Manfred "The Fighter", ActID 106 at Kingskeep, is commonly known to have an average opinion of the Usurper" -> dict & List
+[Rumour -> Added] RID 606, "Master_of_Laws Tion Aymeri "The Patrician", ActID 107 at Kingskeep, is known by all to have a good view of the Usurper" -> dict & List
+[Rumour -> Added] RID 607, "Master_of_Ships Dicken Hary "The Unflinching", ActID 108 at Kingskeep, is known to have a very good impression of the Usurper" -> dict & List
+[Rumour -> Added] RID 608, "Master_of_Whisperers Victarion Wyliame "The Cocky", ActID 109 at Kingskeep, is well known to have a poor view of the Usurper" -> dict & List
+[Rumour -> Added] RID 609, "Hand_of_the_King Thomme Dodd "The Breakneck", ActID 125 at Kingskeep, is murmured among friends to have a poor view of the Usurper" -> dict & List
+[Rumour -> Added] RID 610, "Commander_of_Kings_Guard Frederick Reinald "The Monotonous", ActID 126 at Kingskeep, is commonly known to have a poor impression of the Usurper" -> dict & List
+[Rumour -> Added] RID 611, "Commander_of_City_Watch Beves Jeremiah "The Resolute", ActID 127 at Kingskeep, is murmured among friends to have a poor view of the Usurper" -> dict & List
+[Notification] 99 Relationship Rumours have been added to the dictRumoursTimed
+[GameVar] New_RelRumours changed from 21 to 43
+[Notification] A new set of Relationship Rumours is set to be generated on turn 43
+[Rumour -> Added] RID 612, "Inquisitor, Brother Amon, ActID 133 has been seen on the road to The Twins (loc 22:16)" -> dict & List
+--- HouseKeepActors (World.cs)
+[GameStat] "Travelling_Days" -> increased from 21 to 22
+--- HousekeepRumours (World.cs)
+[Notification] There are no rumours in dictRumoursKnown
+
+//Exile Game File "LogTurn.txt" Close completed at: 29/05/2017 16:52:21
+on, ActID 133 Assigned Branch -> 3 Current Branch -> 3
+ [Goal -> New] Brother Amon, ActID 133, (loc 29:17), assigned new Goal -> Move
+ [Goal -> Alert] Brother Amon, ActID 133 has reversed their MoveOut status [end of the Road] from True to False
+ [Goal -> Alert] No valid destination found for Brother Amon, ActID 133. Assigned Random neighbour, The Twins, LocID 20
+--- InitiateMoveActor (World.cs)
+--- Move Actor (Director.cs)
+ [Enemy -> Goal] Brother Dagon, ActID 134 retains Goal -> Wait
+--- SetEnemyGoal (World.cs)
+ [Goal -> Branch] The Unrelenting, ActID 135 Assigned Branch -> 0 Current Branch -> 0
+--- CheckPlayerEvents (Director.cs)
+--- UpdateActiveActors (World.cs)
+ Usurper Bertelot Martell has had their TurnsUnknown Timer increased from 119 to 120
+ Follower The Crone has had their TurnsUnknown Timer increased from 19 to 20
+ Follower The Haggler has had their TurnsUnknown Timer increased from 19 to 20
+ Follower The Viper has had their TurnsUnknown Timer increased from 19 to 20
+--- ProcessEndTurn (World.cs)
+Day 21, Turn 20
+--- CheckEventTimers (Director.cs)
+ Event "Search and Detain" Dormant Timer decremented to 0
+ Event "Search and Detain" Dormant Timer has run down to Zero. Event is now Dormant
+ "Crazy Old Woman" event, Cooldown Timer decremented from 4 to 3
+ "Dire Wolves" event, Cooldown Timer decremented from 3 to 2
+--- InitialiseDynamicRumours (Director.cs)
+[Notification] Turn 20, generate new set of Relationship rumours on turn 21
+[Rumour -> Added] RID 510, "Inquisitor, Brother Haborym, ActID 131 has been spotted wenching at Eyrie (loc 11:3)" -> dict & List
+[Rumour -> Added] RID 511, "Inquisitor, Brother Amon, ActID 133 has been seen on the road to The Twins (loc 22:16)" -> dict & List
+[Rumour -> Added] RID 512, "Inquisitor, Brother Dagon, ActID 134 has been spotted gambling at Valyria (loc 3:15)" -> dict & List
+--- HouseKeepActors (World.cs)
+[GameStat] "Travelling_Days" -> increased from 20 to 21
+--- HousekeepRumours (World.cs)
+[Notification] There are no rumours in dictRumoursKnown
+
+//Exile Game File "LogTurn.txt" Close completed at: 29/05/2017 16:52:20

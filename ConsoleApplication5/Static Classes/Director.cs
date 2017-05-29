@@ -2827,7 +2827,11 @@ namespace Next_Game
                                             OutSpeed speedOutcome = outcome as OutSpeed;
                                             outcomeText = ChangePlayerSpeedStatus(speedOutcome.Mode);
                                             if (String.IsNullOrEmpty(outcomeText) == false)
-                                            { resultList.Add(new Snippet(outcomeText, foreColor, backColor)); resultList.Add(new Snippet("")); }
+                                            {
+                                                resultList.Add(new Snippet(outcomeText, foreColor, backColor)); resultList.Add(new Snippet(""));
+                                                Game.world.SetMessage(new Message(eventText + outcomeText, 1, player.LocID, MessageType.Event));
+                                                Game.world.SetPlayerRecord(new Record(eventText + outcomeText, player.ActID, player.LocID, CurrentActorIncident.Event));
+                                            }
                                             break;
                                         case OutcomeType.EventStatus:
                                             //change Event Status
@@ -3867,6 +3871,27 @@ namespace Next_Game
                 {
                     player.SetTravelMode(newMode);
                     resultText = $"You have changed your mode of travel from {initialMode} to {newMode}";
+                    //need to find Move object with Player and reset speed
+                    if (player.Status == ActorStatus.Travelling)
+                    {
+                        List<Move> listMoveObjects = Game.world.GetMoveObjects();
+                        if (listMoveObjects != null)
+                        {
+                            //loop List of Move objects looking for Player's party
+                            for (int i = 0; i < listMoveObjects.Count; i++)
+                            {
+                                Move moveObject = listMoveObjects[i];
+                                if (moveObject.PlayerInParty == true)
+                                {
+                                    //player found, update speed of party
+                                    moveObject.ChangeSpeed(newMode);
+                                    Game.logTurn?.Write("[Notification -> Speed] Player Move Object updated with new speed");
+                                    break;
+                                }
+                            }
+                        }
+                        else { Game.SetError(new Error(239, "Invalid listMoveObjects (null) -> Player speed not updated")); }
+                    }
                 }
                 else { Game.logTurn?.Write($"[Alert -> Player Speed] Initial mode \"{initialMode}\" is the same as new Mode \"{newMode}\" -> no change made"); }
             }

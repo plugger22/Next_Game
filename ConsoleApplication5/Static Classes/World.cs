@@ -589,10 +589,18 @@ namespace Next_Game
                             
                             Message message = new Message(tempText, person.ActID, locDestination.LocationID, messageType);
                             SetMessage(message);
+                            // Player
                             if (person.ActID == 1)
                             {
                                 SetPlayerRecord(new Record(tempText, person.ActID, person.LocID, CurrentActorIncident.Travel));
                                 Game.director.AddVisitedLoc(locID, Game.gameTurn);
+                                //Player automatically regains mounted mode, if on foot
+                                if (person.Travel != TravelMode.Mounted)
+                                {
+                                    person.SetTravelMode(TravelMode.Mounted);
+                                    Message messageHorse = new Message($"You have procured another horse at {locDestination.LocName}", person.ActID, locDestination.LocationID, MessageType.Move);
+                                    SetMessage(messageHorse);
+                                }
                             }
                             else if (person.ActID > 1)
                             { SetCurrentRecord(new Record(tempText, person.ActID, person.LocID, CurrentActorIncident.Travel)); }
@@ -655,7 +663,7 @@ namespace Next_Game
                             }
                             break;
                         case ActorStatus.Travelling:
-                            locStatus = $"Moving to {locName}";
+                            locStatus = string.Format("{0} to {1}", actor.Value.Travel == TravelMode.Mounted ? "Riding" : "Walking", locName);
                             if (actor.Value is Player)
                             {
                                 Player player = actor.Value as Player;
@@ -1008,8 +1016,8 @@ namespace Next_Game
                             break;
                         case ActorStatus.Travelling:
                             Position pos = person.GetActorPosition();
-                            locString = string.Format("Currently at {0}:{1}, travelling towards {2} {3}, Lid {4}, Rid {5}", pos.PosX, pos.PosY, GetLocationName(locID),
-                                ShowLocationCoords(locID), locID, refID);
+                            locString = string.Format("Currently at {0}:{1}, {2} towards {3} {4}, Lid {5}, Rid {6}", pos.PosX, pos.PosY, person.Travel == TravelMode.Mounted ? "Riding" : "Walking",
+                                GetLocationName(locID), ShowLocationCoords(locID), locID, refID);
                             break;
                         case ActorStatus.AtSea:
                             if (person is Player)
@@ -7087,6 +7095,13 @@ namespace Next_Game
                 else { Game.SetError(new Error(294, $"Invalid Loc (null), LocID \"{locID}\" -> LocType not assigned to house or Loc")); }
             }
         }
+
+        /// <summary>
+        /// Get list of Move objects
+        /// </summary>
+        /// <returns></returns>
+        internal List<Move> GetMoveObjects()
+        { return listMoveObjects; }
 
         //new Methods above here
     }

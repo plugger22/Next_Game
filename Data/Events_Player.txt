@@ -480,9 +480,9 @@ apply: Add
 
 Name: Dire Wolves
 ID: 22
-Type: GeoCluster
-subType: Forest
-Cat: Archetype
+Type: Road
+subType: Normal
+Cat: Generic
 Freq: High
 Status: Active
 Cool: 3

@@ -130,6 +130,23 @@ namespace Next_Game.Cartographic
             return atDestination;
         }
 
+        public void ChangeSpeed(TravelMode mode)
+        {
+            switch (mode)
+            {
+                case TravelMode.Mounted:
+                    speed = Game.constant.GetValue(Global.MOUNTED_SPEED);
+                    break;
+                case TravelMode.Foot:
+                    speed = Game.constant.GetValue(Global.FOOT_SPEED);
+                    break;
+                case TravelMode.None:
+                    speed = 0;
+                    break;
+            }
+            Game.logTurn?.Write($"[Notification -> Move] MoveObject, mapmarker {MapMarker}, changed to TravelMode {mode}, speed {(int)mode}");
+        }
+
         //returns current Position
         public Position GetCurrentPosition()
         {
