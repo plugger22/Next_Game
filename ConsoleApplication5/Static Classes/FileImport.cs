@@ -1735,6 +1735,10 @@ namespace Next_Game
                                         case "Known":
                                             structTrigger.Check = TriggerCheck.Known;
                                             break;
+                                        case "travel":
+                                        case "Travel":
+                                            structTrigger.Check = TriggerCheck.TravelMode;
+                                            break;
                                         default:
                                             Game.SetError(new Error(49, string.Format("Invalid Input, Trigger Check, (\"{0}\")", arrayOfEvents[i])));
                                             validData = false;

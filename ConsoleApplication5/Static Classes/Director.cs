@@ -2507,7 +2507,7 @@ namespace Next_Game
                             break;
                         case TriggerCheck.TravelMode:
                             //Threshold = (int)TravelMode -> None 0, Foot 1, Mounted 2
-                            if (CheckTrigger((int)player.Travel, trigger.Calc, trigger.Threshold) == true) { validCheck = true; }
+                            if (CheckTrigger((int)player.Travel, EventCalc.Equals, trigger.Threshold) == true) { validCheck = true; }
                             else
                             {
                                 Game.logTurn?.Write(" Trigger: Travel Mode, incorrect mode -> Trigger failed");

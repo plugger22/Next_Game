@@ -42,6 +42,10 @@
 # thresh: '0' if Player should be Unknown, '1' if should be Known
 # calc: =
 
+# [trigger] check -> Travel
+# thresh: -> (TravelMode) 0 None, 1 Foot, 2 Mounted
+# calc: =
+
 # [trigger] check -> Trait
 # item -> 1 Combat, 2 Wits, 3 Charm, 4 Treachery, 5 Leadership, 6 Touched (you can use text instead, eg. 'Wits')
 # thresh: 1 to 5
@@ -487,7 +491,7 @@ Freq: High
 Status: Active
 Cool: 3
 Event: The low pitched growling of wolves pierces the night air.
-Rumour: There are Direwolves roaming the shadows of <name>.
+Rumour: There are Dire Wolves roaming the shadows of <name>.
 [option]
 text: Light a fire to keep the Wolves at bay
 reply: lkjljlj
@@ -517,6 +521,10 @@ check: Trait
 item: Wits
 thresh: 3
 calc: >=
+[trigger]
+check: Travel
+thresh: 2
+calc: =
 [outcome]
 effect: None
 [End]
