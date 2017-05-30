@@ -178,6 +178,14 @@ namespace Next_Game
         public EventCalc Calc { get; set; }
     }
 
+    struct EventTriggerStruct
+    {
+        public TriggerCheck Check { get; set; }
+        public int Item { get; set; }
+        public int Threshold { get; set; }
+        public EventCalc Calc { get; set; }
+    }
+
     //archetypes
     struct ArcStruct
     {
@@ -1106,6 +1114,7 @@ namespace Next_Game
             bool optionFlag = false;
             bool outcomeFlag = false;
             bool triggerFlag = false;
+            bool eventTriggerFlag = false;
             string cleanTag;
             string cleanToken;
             bool newEvent = false;
@@ -1120,12 +1129,14 @@ namespace Next_Game
                 OptionStruct structOption = new OptionStruct();
                 OutcomeStruct structOutcome = new OutcomeStruct();
                 TriggerStruct structTrigger = new TriggerStruct();
+                EventTriggerStruct structEventTrigger = new EventTriggerStruct();
                 List<OptionStruct> listOptions = null;
                 List<List<OutcomeStruct>> listAllOutcomes = null; //all outcomes for an event (each option can have multiple outcomes)
                 List<OutcomeStruct> listSubOutcomes = new List<OutcomeStruct>(); //list of outcomes for an individual option
-                List<Trigger> listSubTriggers = new List<Trigger>(); //list of individual triggers specific to an option
+                List<Trigger> listSubTriggers = new List<Trigger>(); //list of individual option triggers
                 List<List<Trigger>> listAllTriggers = null; //all triggers for an event (each option can have multiple triggers)
-                                                            //loop imported array of strings
+                List<Trigger> listEventTriggers = new List<Trigger>(); //list of individual event triggers
+                //loop imported array of strings
                 for (int i = 0; i < arrayOfEvents.Length; i++)
                 {
                     if (arrayOfEvents[i] != "" && !arrayOfEvents[i].StartsWith("#"))
@@ -1141,10 +1152,12 @@ namespace Next_Game
                             listOptions = new List<OptionStruct>();
                             listAllOutcomes = new List<List<OutcomeStruct>>();
                             listAllTriggers = new List<List<Trigger>>();
+                            listEventTriggers = new List<Trigger>();
                             //set flags to false
                             optionFlag = false;
                             outcomeFlag = false;
                             triggerFlag = false;
+                            eventTriggerFlag = false;
                             //zero out option view texts
                             structOption.Test = 0;
                             structOption.ReplyBad = "";
@@ -1172,6 +1185,14 @@ namespace Next_Game
                             switch (cleanTag)
                             {
                                 case "[option]":
+                                    //tidy up last event Trigger, if any
+                                    if (eventTriggerFlag == true)
+                                    {
+                                        //add to list
+                                        Trigger trigger = new Trigger(structEventTrigger.Check, structEventTrigger.Item, structEventTrigger.Threshold, structEventTrigger.Calc);
+                                        listEventTriggers.Add(trigger);
+                                        eventTriggerFlag = false;
+                                    }
                                     //option complete, save
                                     if (optionFlag == true)
                                     {
@@ -1296,6 +1317,24 @@ namespace Next_Game
                                     }
                                     else
                                     { triggerFlag = true; }
+                                    break;
+                                case "[eventTrigger]":
+                                    //event trigger complete, save
+                                    if (eventTriggerFlag == true)
+                                    {
+                                        try
+                                        {
+                                            //add trigger to Event list
+                                            Trigger trigger = new Trigger(structEventTrigger.Check, structEventTrigger.Item, structEventTrigger.Threshold, structEventTrigger.Calc);
+                                            listEventTriggers.Add(trigger);
+                                            //reset to default value
+                                            structEventTrigger.Check = TriggerCheck.None;
+                                        }
+                                        catch (Exception e)
+                                        { Game.SetError(new Error(48, e.Message)); validData = false; }
+                                    }
+                                    else
+                                    { eventTriggerFlag = true; }
                                     break;
                                 case "Name":
                                     structEvent.Name = cleanToken;
@@ -1705,7 +1744,7 @@ namespace Next_Game
                                     }
                                      break;
                                 case "check":
-                                    //Trigger Check
+                                    //Trigger Option Check
                                     switch (cleanToken)
                                     {
                                         case "trait":
@@ -1740,13 +1779,54 @@ namespace Next_Game
                                             structTrigger.Check = TriggerCheck.TravelMode;
                                             break;
                                         default:
-                                            Game.SetError(new Error(49, string.Format("Invalid Input, Trigger Check, (\"{0}\")", arrayOfEvents[i])));
+                                            Game.SetError(new Error(49, string.Format("Invalid Input, Option Trigger Check, (\"{0}\")", arrayOfEvents[i])));
+                                            validData = false;
+                                            break;
+                                    }
+                                    break;
+                                case "eventCheck":
+                                    //Trigger Event Check
+                                    switch (cleanToken)
+                                    {
+                                        case "trait":
+                                        case "Trait":
+                                            structEventTrigger.Check = TriggerCheck.Trait;
+                                            break;
+                                        case "gamevar":
+                                        case "gameVar":
+                                        case "GameVar":
+                                            structEventTrigger.Check = TriggerCheck.GameVar;
+                                            break;
+                                        case "sex":
+                                        case "Sex":
+                                            structEventTrigger.Check = TriggerCheck.Sex;
+                                            break;
+                                        case "resourceplyr":
+                                        case "resourcePlyr":
+                                        case "ResourcePlyr":
+                                            structEventTrigger.Check = TriggerCheck.ResourcePlyr;
+                                            break;
+                                        case "actortype":
+                                        case "actorType":
+                                        case "ActorType":
+                                            structEventTrigger.Check = TriggerCheck.ActorType;
+                                            break;
+                                        case "known":
+                                        case "Known":
+                                            structEventTrigger.Check = TriggerCheck.Known;
+                                            break;
+                                        case "travel":
+                                        case "Travel":
+                                            structEventTrigger.Check = TriggerCheck.TravelMode;
+                                            break;
+                                        default:
+                                            Game.SetError(new Error(49, string.Format("Invalid Input, Event Trigger Check, (\"{0}\")", arrayOfEvents[i])));
                                             validData = false;
                                             break;
                                     }
                                     break;
                                 case "item":
-                                    //Trigger item
+                                    //Trigger Option item
                                     switch (cleanToken)
                                     {
                                         //picks up optional trait specific text
@@ -1796,20 +1876,86 @@ namespace Next_Game
                                                 dataInt = Convert.ToInt32(cleanToken);
                                                 if (dataInt > 0) { structTrigger.Item = dataInt; }
                                                 else
-                                                { Game.SetError(new Error(49, string.Format("Invalid Input, Trigger Item, (value less than 0) \"{0}\"", arrayOfEvents[i]))); validData = false; }
+                                                { Game.SetError(new Error(49, string.Format("Invalid Input, Option Trigger Item, (value less than 0) \"{0}\"", arrayOfEvents[i]))); validData = false; }
                                             }
-                                            catch { Game.SetError(new Error(49, string.Format("Invalid Input, Trigger Item, (Conversion) \"{0}\"", arrayOfEvents[i]))); validData = false; }
+                                            catch { Game.SetError(new Error(49, string.Format("Invalid Input, Option Trigger Item, (Conversion) \"{0}\"", arrayOfEvents[i]))); validData = false; }
+                                            break;
+                                    }
+                                    break;
+                                case "eventItem":
+                                    //Trigger Event item
+                                    switch (cleanToken)
+                                    {
+                                        //picks up optional trait specific text
+                                        case "Combat":
+                                        case "combat":
+                                            structEventTrigger.Item = 1;
+                                            break;
+                                        case "Wits":
+                                        case "wits":
+                                            structEventTrigger.Item = 2;
+                                            break;
+                                        case "Charm":
+                                        case "charm":
+                                            structEventTrigger.Item = 3;
+                                            break;
+                                        case "Treachery":
+                                        case "treachery":
+                                            structEventTrigger.Item = 4;
+                                            break;
+                                        case "Leadership":
+                                        case "leadership":
+                                            structEventTrigger.Item = 5;
+                                            break;
+                                        case "Touched":
+                                        case "touched":
+                                            structEventTrigger.Item = 6;
+                                            break;
+                                        case "Justice":
+                                            structEventTrigger.Item = 1;
+                                            break;
+                                        case "Legend_Urs":
+                                            structEventTrigger.Item = 2;
+                                            break;
+                                        case "Legend_King":
+                                            structEventTrigger.Item = 3;
+                                            break;
+                                        case "Honour_Urs":
+                                            structEventTrigger.Item = 4;
+                                            break;
+                                        case "Honour_King":
+                                            structEventTrigger.Item = 5;
+                                            break;
+                                        default:
+                                            //number entry (multipurpose)
+                                            try
+                                            {
+                                                dataInt = Convert.ToInt32(cleanToken);
+                                                if (dataInt > 0) { structEventTrigger.Item = dataInt; }
+                                                else
+                                                { Game.SetError(new Error(49, string.Format("Invalid Input, Event Trigger Item, (value less than 0) \"{0}\"", arrayOfEvents[i]))); validData = false; }
+                                            }
+                                            catch { Game.SetError(new Error(49, string.Format("Invalid Input, Event Trigger Item, (Conversion) \"{0}\"", arrayOfEvents[i]))); validData = false; }
                                             break;
                                     }
                                     break;
                                 case "thresh":
-                                    //Trigger Threshold
+                                    //Trigger Option Threshold
                                     try
                                     {
                                         dataInt = Convert.ToInt32(cleanToken);
                                         structTrigger.Threshold = dataInt;
                                     }
-                                    catch { Game.SetError(new Error(49, string.Format("Invalid Input, Trigger Item, (Conversion) \"{0}\"", arrayOfEvents[i]))); validData = false; }
+                                    catch { Game.SetError(new Error(49, string.Format("Invalid Input, Option Trigger Item, (Conversion) \"{0}\"", arrayOfEvents[i]))); validData = false; }
+                                    break;
+                                case "EventThresh":
+                                    //Trigger Event Threshold
+                                    try
+                                    {
+                                        dataInt = Convert.ToInt32(cleanToken);
+                                        structEventTrigger.Threshold = dataInt;
+                                    }
+                                    catch { Game.SetError(new Error(49, string.Format("Invalid Input, Event Trigger Item, (Conversion) \"{0}\"", arrayOfEvents[i]))); validData = false; }
                                     break;
                                 case "calc":
                                     //Trigger Comparator
@@ -1825,7 +1971,27 @@ namespace Next_Game
                                             structTrigger.Calc = EventCalc.Equals;
                                             break;
                                         default:
-                                            Game.SetError(new Error(49, string.Format("Invalid Input, Trigger Calc, (\"{0}\")", arrayOfEvents[i])));
+                                            Game.SetError(new Error(49, string.Format("Invalid Input, Option Trigger Calc, (\"{0}\")", arrayOfEvents[i])));
+                                            validData = false;
+                                            break;
+
+                                    }
+                                    break;
+                                case "eventCalc":
+                                    //Trigger Event Comparator
+                                    switch (cleanToken)
+                                    {
+                                        case ">=":
+                                            structEventTrigger.Calc = EventCalc.GreaterThanOrEqual;
+                                            break;
+                                        case "<=":
+                                            structEventTrigger.Calc = EventCalc.LessThanOrEqual;
+                                            break;
+                                        case "=":
+                                            structEventTrigger.Calc = EventCalc.Equals;
+                                            break;
+                                        default:
+                                            Game.SetError(new Error(49, string.Format("Invalid Input, Event Trigger Calc, (\"{0}\")", arrayOfEvents[i])));
                                             validData = false;
                                             break;
 
@@ -2306,6 +2472,9 @@ namespace Next_Game
                                             EventPlayer eventTemp = eventObject as EventPlayer;
                                             eventTemp.Text = structEvent.EventText;
                                             eventTemp.Category = structEvent.Cat;
+                                            //add any Event Triggers
+                                            if (listEventTriggers.Count > 0)
+                                            { eventTemp.SetTriggers(listEventTriggers); }
                                             //status -> default 'active' if not present
                                             if (structEvent.Status == EventStatus.None)
                                             { eventTemp.Status = EventStatus.Active; }

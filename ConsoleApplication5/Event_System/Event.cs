@@ -82,6 +82,17 @@ namespace Next_Game.Event_System
             else { Game.SetError(new Error(295, "Invalid trigger (null) -> not added to list")); }
         }
 
+        internal void SetTriggers(List<Trigger> listOfInputTriggers)
+        {
+            if (listOfInputTriggers!= null)
+            {
+                if (listOfInputTriggers.Count > 0)
+                { listOfTriggers.AddRange(listOfInputTriggers); }
+                else { Game.SetError(new Error(295, "Invalid listOfInputTriggers (Empty) -> not added to list")); }
+            }
+            else { Game.SetError(new Error(295, "Invalid listOfInputTriggers (null) -> not added to list")); }
+        }
+
         internal List<Trigger> GetTriggers()
         { return listOfTriggers; }
 

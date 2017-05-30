@@ -18,6 +18,12 @@
 # Live: (Timer) Number > 0 -> Optional tag (if not shown then default of 0) -> Fixed number of turns before Live event becomes Active
 # Cool: (Timer) Number > 0 -> Optional tag (if not shown then default 0) -> number of turns of cool down before it can fire again
 
+# [eventTrigger]: Optional block (one block that covers the whole event)
+# eventCheck: Trigger Check ( None, Trait, GameVar, ActorType, Sex, ResourcePlyr, Known, Follower, Travel)
+# eventItem: OPTIONAL multi purpose number depending on Trigger Check type, default '0' 
+# eventThresh: Trigger threshold amount to be tested against, eg. < 3
+# eventCalc: Type of comparison for testing trigger (>=, <=, =)
+
 # [option]: Option Block (one block for each option, only use enough blocks for your need. Max 4 option blocks. Place block header at top
 # text: option text. Keep it short and clear.
 # reply: text shown when option selected
@@ -338,6 +344,10 @@ Repeat: 3
 Cool: 5
 Event: A crazy, old woman approaches you, yelling obscenities.
 Rumour: People talk about seeing an old woman on the roads, cursing all those she meets.
+[eventTrigger]
+eventCheck: Travel
+eventThresh: 2
+eventCalc: =
 [option]
 text: Back up, away from the Hag
 reply: You cautiouslly back pedal until the Hag is out of sight before finding a way to bypass her without being seen.
@@ -347,24 +357,6 @@ effect: None
 text: Ride past, ignoring her
 reply: Crazy old hags are best left to themselves.
 view: The old hag thinks she saw the Usurper, <player> on the road to <roadTo>. Sitting high in the saddle, all kingly and imperious like.
-[trigger]
-check: Travel
-thresh: 2
-calc: =
-[outcome]
-effect: EventTimer
-data: 6
-timer: Cool
-amount: 1
-apply: Add
-[option]
-text: Walk past, ignoring her
-reply: Crazy old hags are best left to themselves.
-view: The old hag thinks she saw the Usurper, <player> on the road to <roadTo>. Walking would you believe it, like a farmer off to market.
-[trigger]
-check: Travel
-thresh: 1
-calc: =
 [outcome]
 effect: EventTimer
 data: 6
@@ -373,7 +365,7 @@ amount: 1
 apply: Add
 [option]
 text: Offer assistance
-reply: You approach with a smile on your face only to be assaulted by the incensed hag.
+reply: You dismount and approach with a smile on your face only to be assaulted by the incensed hag.
 view: I overheard the old Hag cackling how she robbed a noble on the road to <roadTo>. Nobody expects a hag to be so fast.
 [outcome]
 effect: GameState
@@ -394,10 +386,6 @@ check: Trait
 item: Treachery
 thresh: 3
 calc: >=
-[trigger]
-check: Travel
-thresh: 2
-calc: =
 [outcome]
 effect: GameState
 data: -5
@@ -424,6 +412,10 @@ Cool: 5
 Repeat: 10
 Event: A dazed, naked woman is limping along the road ahead, leading a donkey.
 Rumour: It's not safe to travel on the roads these days if you're a woman. When was it ever?
+[eventTrigger]
+eventCheck: Travel
+eventThresh: 2
+eventCalc: =
 [option]
 text: Throw her a few coins
 reply: As you overtake her you toss a few small coins in her direction. The woman scrabbles around in the dirt, looking for them.
@@ -437,20 +429,6 @@ apply: Add
 text: Ride past, ignoring her
 reply: You can't save the world, it's too big and mean. The woman pleads for some water as you canter past.
 view: I heard that <randomFemale>'s cousin was having some trouble on the road to <roadTo>. That Usurper, <player>, curse him, ignored her. 
-[trigger]
-check: Travel
-thresh: 2
-calc: =
-[outcome]
-effect: None
-[option]
-text: Keep walking, don't stop
-reply: You can't save the world, it's too big and mean. The woman pleads for some water as you walk past, ignoring her.
-view: I heard that <randomFemale>'s cousin was having some trouble on the road to <roadTo>. That Usurper, <player>, curse him, ignored her. 
-[trigger]
-check: Travel
-thresh: 1
-calc: =
 [outcome]
 effect: None
 [option]
@@ -476,10 +454,6 @@ check: Trait
 item: Treachery
 thresh: 3
 calc: >=
-[trigger]
-check: Travel
-thresh: 2
-calc: =
 [outcome]
 effect: GameState
 data: -4
