@@ -1,147 +1,140 @@
-//Exile Game File "LogTurn.txt" opened at: 30/05/2017 13:43:40
+//Exile Game File "LogTurn.txt" opened at: 30/05/2017 14:32:19
 --- ProcessStartTurn (World.cs)
-Day 15, Turn 14
-Usurper Daue Greyjoy, "The Timid", Travelling, Clegane's Keep
+Day 2, Turn 1
+Usurper Frank Baratheon, "The Double Dealing", AtLocation, Riverrun
 --- UpdateRumours (World.cs)
-dictRumoursTimed (Start) -> 51 records
-[Rumour -> Removal] RID 292, "Nemesis, The Unrelenting, ActID 88 has been spotted flagelatting themself at Kingskeep (loc 13:20)" removed from Global All list
-RumourID 295 -> TimerExpire decremented, now 4
-RumourID 296 -> TimerExpire decremented, now 4
-RumourID 297 -> TimerExpire decremented, now 4
-RumourID 298 -> TimerExpire decremented, now 4
-RumourID 299 -> TimerExpire decremented, now 4
-RumourID 300 -> TimerExpire decremented, now 4
-RumourID 301 -> TimerExpire decremented, now 4
-RumourID 302 -> TimerExpire decremented, now 4
-RumourID 303 -> TimerExpire decremented, now 4
-RumourID 304 -> TimerExpire decremented, now 4
-RumourID 305 -> TimerExpire decremented, now 4
-RumourID 306 -> TimerExpire decremented, now 4
-RumourID 307 -> TimerExpire decremented, now 4
-RumourID 308 -> TimerExpire decremented, now 4
-RumourID 309 -> TimerExpire decremented, now 4
-RumourID 310 -> TimerExpire decremented, now 4
-RumourID 311 -> TimerExpire decremented, now 4
-RumourID 312 -> TimerExpire decremented, now 4
-RumourID 313 -> TimerExpire decremented, now 4
-RumourID 314 -> TimerExpire decremented, now 4
-RumourID 315 -> TimerExpire decremented, now 4
-RumourID 316 -> TimerExpire decremented, now 4
-RumourID 317 -> TimerExpire decremented, now 4
-RumourID 318 -> TimerExpire decremented, now 4
-RumourID 319 -> TimerExpire decremented, now 4
-RumourID 320 -> TimerExpire decremented, now 4
-RumourID 321 -> TimerExpire decremented, now 4
-RumourID 322 -> TimerExpire decremented, now 4
-RumourID 323 -> TimerExpire decremented, now 4
-RumourID 324 -> TimerExpire decremented, now 4
-RumourID 325 -> TimerExpire decremented, now 4
-RumourID 326 -> TimerExpire decremented, now 4
-RumourID 327 -> TimerExpire decremented, now 4
-RumourID 328 -> TimerExpire decremented, now 4
-RumourID 329 -> TimerExpire decremented, now 4
-RumourID 330 -> TimerExpire decremented, now 4
-RumourID 331 -> TimerExpire decremented, now 4
-RumourID 332 -> TimerExpire decremented, now 4
-RumourID 333 -> TimerExpire decremented, now 4
-RumourID 334 -> TimerExpire decremented, now 4
-RumourID 335 -> TimerExpire decremented, now 4
-RumourID 336 -> TimerExpire decremented, now 4
-RumourID 337 -> TimerExpire decremented, now 4
-RumourID 338 -> TimerExpire decremented, now 4
-RumourID 339 -> TimerExpire decremented, now 4
-RumourID 293 -> TimerExpire decremented, now 1
-RumourID 340 -> TimerExpire decremented, now 4
-RumourID 294 -> TimerExpire decremented, now 4
-RumourID 341 -> TimerExpire decremented, now 2
-RumourID 342 -> TimerExpire decremented, now 2
-1 records have expired and been removed
-dictRumoursTimed (End) -> 50 records
---- MoveActors -> 2 Records (World.cs)
- [Move -> MoveObject] Usurper Daue Greyjoy, ActID 1 travelling to Clegane's Keep (current Loc 8:21)
---- CheckIfFoundActive (World.cs)
- [Search -> Debug] Enemy, Brother Mastema, ID 84 at 13:20, Active Daue Greyjoy, ID 1, at 8:21
- [Search -> Debug] Enemy, Brother Damballa, ID 85 at 9:16, Active Daue Greyjoy, ID 1, at 8:21
- [Search -> Debug] Enemy, Brother Nergal, ID 86 at 18:20, Active Daue Greyjoy, ID 1, at 8:21
- [Search -> Debug] Enemy, Brother Gorgo, ID 87 at 4:22, Active Daue Greyjoy, ID 1, at 8:21
- [Search -> Debug] Enemy, The Unrelenting, ID 88 at 13:20, Active Daue Greyjoy, ID 1, at 8:21
---- CheckIfFoundActive (World.cs)
- [Search -> Debug] Enemy, Brother Mastema, ID 84 at 13:20, Active Daue Greyjoy, ID 1, at 9:21
- [Search -> Debug] Enemy, Brother Damballa, ID 85 at 9:16, Active Daue Greyjoy, ID 1, at 9:21
- [Search -> Debug] Enemy, Brother Nergal, ID 86 at 18:20, Active Daue Greyjoy, ID 1, at 9:21
- [Search -> Debug] Enemy, Brother Gorgo, ID 87 at 4:22, Active Daue Greyjoy, ID 1, at 9:21
- [Search -> Debug] Enemy, The Unrelenting, ID 88 at 13:20, Active Daue Greyjoy, ID 1, at 9:21
-[AddVisitedLoc] LocID 16, "Clegane's Keep", turn 14 -> record added to listLocsVisited
-[AddVisitedLoc] LocID 16, "Clegane's Keep", turn 14 -> new record added to dictLocsVisited
- [Move -> MoveObject] Inquisitor Brother Nergal, ActID 86 travelling to Kingskeep (current Loc 18:20)
---- CheckIfFoundEnemy (World.cs)
- [Search -> Debug] Active Daue Greyjoy, ID 1 at 9:21, Enemy at 18:20 (Brother Nergal, ID 86
---- CheckIfFoundEnemy (World.cs)
- [Search -> Debug] Active Daue Greyjoy, ID 1 at 9:21, Enemy at 17:20 (Brother Nergal, ID 86
+dictRumoursTimed (Start) -> 40 records
+RumourID 125 -> TimerExpire decremented, now 4
+RumourID 126 -> TimerExpire decremented, now 4
+RumourID 127 -> TimerExpire decremented, now 4
+RumourID 128 -> TimerExpire decremented, now 4
+RumourID 129 -> TimerExpire decremented, now 4
+RumourID 130 -> TimerExpire decremented, now 4
+RumourID 131 -> TimerExpire decremented, now 4
+RumourID 132 -> TimerExpire decremented, now 4
+RumourID 133 -> TimerExpire decremented, now 4
+RumourID 134 -> TimerExpire decremented, now 4
+RumourID 135 -> TimerExpire decremented, now 4
+RumourID 136 -> TimerExpire decremented, now 4
+RumourID 137 -> TimerExpire decremented, now 4
+RumourID 138 -> TimerExpire decremented, now 4
+RumourID 139 -> TimerExpire decremented, now 4
+RumourID 140 -> TimerExpire decremented, now 4
+RumourID 141 -> TimerExpire decremented, now 4
+RumourID 142 -> TimerExpire decremented, now 4
+RumourID 143 -> TimerExpire decremented, now 4
+RumourID 144 -> TimerExpire decremented, now 4
+RumourID 145 -> TimerExpire decremented, now 4
+RumourID 146 -> TimerExpire decremented, now 4
+RumourID 147 -> TimerExpire decremented, now 4
+RumourID 148 -> TimerExpire decremented, now 4
+RumourID 149 -> TimerExpire decremented, now 4
+RumourID 150 -> TimerExpire decremented, now 4
+RumourID 151 -> TimerExpire decremented, now 4
+RumourID 152 -> TimerExpire decremented, now 4
+RumourID 153 -> TimerExpire decremented, now 4
+RumourID 154 -> TimerExpire decremented, now 4
+RumourID 155 -> TimerExpire decremented, now 4
+RumourID 156 -> TimerExpire decremented, now 4
+RumourID 157 -> TimerExpire decremented, now 4
+RumourID 158 -> TimerExpire decremented, now 4
+RumourID 159 -> TimerExpire decremented, now 4
+RumourID 160 -> TimerExpire decremented, now 4
+RumourID 161 -> TimerExpire decremented, now 4
+RumourID 178 -> TimerExpire decremented, now 2
+RumourID 179 -> TimerExpire decremented, now 2
+RumourID 180 -> TimerExpire decremented, now 2
+--- MoveActors -> 0 Records (World.cs)
 --- UpdatePlayerStatus (World.cs)
 --- UpdateWorldStatus (World.cs)
 --- CheckFollowerActivity (World.cs)
 --- GetRumour (Director.cs)
+arrayOfRumours [0] -> RumourID 104, Strength 1, Scope Global, Type Item, Global All
+arrayOfRumours [4] -> RumourID 168, Strength 3, Scope Global, Type Friends, Global West
+arrayOfRumours [5] -> RumourID 45, Strength 3, Scope Local, Type Skill, Global All
+RumourID 168 selected from the Pool
+Rumour "It is widely known that you have an Friend and many Enemies at Riverrun (House Tully)" revealed to ActorID2 on turn 1 -> added to List
+RumourID 168 removed from listRumoursWest[4]
+Follower The Duchess, ActID 2, added RumourID 168
+[Notification] House Tully FriendsAndEnemies status changed to "True"
+--- GetRumour (Director.cs)
 arrayOfRumours [0] -> RumourID 118, Strength 1, Scope Global, Type Item, Global All
-arrayOfRumours [4] -> RumourID 207, Strength 2, Scope Global, Type HouseRel, Global West
-arrayOfRumours [5] -> RumourID 104, Strength 4, Scope Local, Type Skill, Global All
-RumourID 104 selected from the Pool
-Rumour "BannerLord Aeron Leygood "The Jiggler", ActID 69 at Nightsong, is well known to be Ponderous" revealed to ActorID9 on turn 14 -> added to List
-RumourID 104 removed from listRumoursHouse[0]
-Follower The Waif, ActID 9, added RumourID 104
-BannerLord Aeron Leygood, ActID 69, has their Combat changed to True
+arrayOfRumours [1] -> RumourID 164, Strength 2, Scope Global, Type HouseRel, Global North
+arrayOfRumours [5] -> RumourID 10, Strength 2, Scope Local, Type Skill, Global All
+RumourID 10 selected from the Pool
+Rumour "Maester Stafford Wymare "The Insipid Rodent", ActID 14 at Eyrie, is murmured among friends to have the Morals of a Sewer Rat" revealed to ActorID8 on turn 1 -> added to List
+RumourID 10 removed from listRumoursHouse[1]
+Follower The Jester, ActID 8, added RumourID 10
+Maester Stafford Wymare, ActID 14, has their Treachery changed to True
 --- GetRumour (Director.cs)
-arrayOfRumours [0] -> RumourID 15, Strength 4, Scope Global, Type Disguise, Global All
-arrayOfRumours [1] -> RumourID 214, Strength 2, Scope Global, Type HouseRel, Global North
-arrayOfRumours [5] -> RumourID 321, Strength 4, Scope Local, Type Relationship, Global All
-RumourID 321 selected from the Pool
-Rumour "BannerLord Renoldus Fowler "The Solemn", ActID 65 at Skyreach, is rumoured to have a poor view of the Usurper" revealed to ActorID6 on turn 14 -> added to List
-RumourID 321 removed from listRumoursHouse[3]
-Follower The Jester, ActID 6, added RumourID 321
-[Notification] BannerLord Renoldus Fowler, ActID 65 -> RelKnown changed to True
-[Rumour -> Deleted] Timed RumourID 321 removed from dictRumoursTimed
---- GetRumour (Director.cs)
-arrayOfRumours [0] -> RumourID 136, Strength 2, Scope Global, Type Desire, Global All
-arrayOfRumours [4] -> RumourID 209, Strength 2, Scope Global, Type HouseRel, Global West
-arrayOfRumours [5] -> RumourID 325, Strength 4, Scope Local, Type Relationship, Global All
-RumourID 209 selected from the Pool
-Rumour "House Lannister has had good past relations with their BannerLord at House Leygood due to them being likeminded, sensible, managers" revealed to ActorID3 on turn 14 -> added to List
-RumourID 209 removed from listRumoursWest[6]
-Follower The Leper, ActID 3, added RumourID 209
-[Notification -> HouseRel] "Have managed their lands in a sensible and progressive manner" -> Known is True
+arrayOfRumours [0] -> RumourID 179, Strength 3, Scope Global, Type Enemy, Global All
+arrayOfRumours [2] -> RumourID 86, Strength 2, Scope Global, Type Desire, Global East
+arrayOfRumours [5] -> RumourID 63, Strength 4, Scope Local, Type Skill, Global All
+RumourID 179 selected from the Pool
+Rumour "Inquisitor, Brother Nergal, ActID 64 has been spotted drinking at Kingskeep (loc 16:12)" revealed to ActorID3 on turn 1 -> added to List
+RumourID 179 removed from listRumoursGlobal[16]
+Follower The Crone, ActID 3, added RumourID 179
+[Rumour -> Deleted] Timed RumourID 179 removed from dictRumoursTimed
 --- GetMarketView (Director.cs)
-listPlayerChoices has 1 records, 10 % needed, rolled 7
-[Player Choice] -> "I overheard the old Hag cackling how she robbed a noble on the road to Clegane's Keep. Nobody expects a hag to be so fast.", record removed at index 0
+[GameVar] View_Index changed from 1 to 2
 --- CheckStationaryActiveActors (World.cs)
- [Search -> Stationary] Usurper Daue Greyjoy, ActID 1 is AtLocation
+ [Search -> Stationary] Usurper Frank Baratheon, ActID 1 is AtLocation
 --- CheckIfFoundActive (World.cs)
- [Search -> Debug] Enemy, Brother Mastema, ID 84 at 13:20, Active Daue Greyjoy, ID 1, at 9:21
- [Search -> Debug] Enemy, Brother Damballa, ID 85 at 9:16, Active Daue Greyjoy, ID 1, at 9:21
- [Search -> Debug] Enemy, Brother Nergal, ID 86 at 16:20, Active Daue Greyjoy, ID 1, at 9:21
- [Search -> Debug] Enemy, Brother Gorgo, ID 87 at 4:22, Active Daue Greyjoy, ID 1, at 9:21
- [Search -> Debug] Enemy, The Unrelenting, ID 88 at 13:20, Active Daue Greyjoy, ID 1, at 9:21
- [Search -> Stationary] Follower The Waif, ActID 9 is AtLocation
- [Search -> Stationary] Follower The Jester, ActID 6 is AtLocation
- [Search -> Stationary] Follower The Leper, ActID 3 is AtLocation
+ [Search -> Debug] Enemy, Brother Damballa, ID 63 at 16:12, Active Frank Baratheon, ID 1, at 15:10
+ [Search -> Debug] Enemy, Brother Nergal, ID 64 at 16:12, Active Frank Baratheon, ID 1, at 15:10
+ [Search -> Debug] Enemy, Brother Diabolous, ID 65 at 16:12, Active Frank Baratheon, ID 1, at 15:10
+ [Search -> Debug] Enemy, Brother Shiva, ID 66 at 16:12, Active Frank Baratheon, ID 1, at 15:10
+ [Search -> Debug] Enemy, The Unrelenting, ID 67 at 16:12, Active Frank Baratheon, ID 1, at 15:10
+ [Search -> Stationary] Follower The Duchess, ActID 2 is AtLocation
+ [Search -> Stationary] Follower The Jester, ActID 8 is AtLocation
+ [Search -> Stationary] Follower The Crone, ActID 3 is AtLocation
 --- UpdateAIController (World.cs)
- [AI -> Player Unknown] Inquisitor Brother Mastema, Act ID 84 Mode -> Normal
- [AI -> Player Unknown] Inquisitor Brother Damballa, Act ID 85 Mode -> Normal
- [AI -> Player Unknown] Inquisitor Brother Gorgo, Act ID 87 Mode -> Normal
- [AI -> Player Unknown] Nemesis The Unrelenting, Act ID 88 Mode -> Normal
+ [AI -> Player Unknown] Inquisitor Brother Damballa, Act ID 63 Mode -> Normal
+ [AI -> Player Unknown] Inquisitor Brother Nergal, Act ID 64 Mode -> Normal
+ [AI -> Player Unknown] Inquisitor Brother Diabolous, Act ID 65 Mode -> Normal
+ [AI -> Player Unknown] Inquisitor Brother Shiva, Act ID 66 Mode -> Normal
+ [AI -> Player Unknown] Nemesis The Unrelenting, Act ID 67 Mode -> Normal
 --- SetEnemyActivity (World.cs)
- [Enemy -> Goal] Brother Mastema, ActID 84 retains Goal -> Hide
- [Enemy -> Goal] Brother Damballa, ActID 85 retains Goal -> Wait
- [Enemy -> Unknown] Brother Gorgo ActID 87 has reverted to Unknown status (timer elapsed)
- [Enemy -> Goal] Brother Gorgo, ActID 87 retains Goal -> Wait
 --- SetEnemyGoal (World.cs)
- [Goal -> Branch] The Unrelenting, ActID 88 Assigned Branch -> 0 Current Branch -> 0
+ [Goal -> Branch] Brother Damballa, ActID 63 Assigned Branch -> 0 Current Branch -> 0
+ [Enemy -> Known] Brother Nergal ActID 64 has become KNOWN
+--- SetEnemyGoal (World.cs)
+ [Goal -> Branch] Brother Nergal, ActID 64 Assigned Branch -> 0 Current Branch -> 0
+ [Enemy -> Goal] Brother Diabolous, ActID 65 retains Goal -> Wait
+--- SetEnemyGoal (World.cs)
+ [Goal -> Branch] Brother Shiva, ActID 66 Assigned Branch -> 2 Current Branch -> 0
+ [Goal -> New] Brother Shiva, ActID 66, (loc 16:12), assigned new Goal -> Move
+ [Goal -> Move] Brother Shiva, ActID 66 -> Capital to Correct Branch -> Bloodkeep, LocID 5
+--- InitiateMoveActor (World.cs)
+--- Move Actor (Director.cs)
+--- SetEnemyGoal (World.cs)
+ [Goal -> Branch] The Unrelenting, ActID 67 Assigned Branch -> 0 Current Branch -> 0
 --- CheckPlayerEvents (Director.cs)
+Location event, Need 0, roll 29
 - CreateAutoLocEvent (Director.cs)
- [AutoEvent -> ActorList] "Robett Clegane", ID 44 added to list of Actors
- [AutoEvent -> LocalList] "Robett Clegane", ID 44 added to list of Locals
-[Notification] No entry found in dictOfIntroductions for RefID 2
+ [AutoEvent -> ActorList] "The Duchess", ID 2 added to list of Actors
+ [AutoEvent -> ActorList] "Gualtier Tully", ID 26 added to list of Actors
+ [AutoEvent -> ActorList] "Elizabetha Tully", ID 27 added to list of Actors
+ [AutoEvent -> ActorList] "Daven Tolly", ID 29 added to list of Actors
+ [AutoEvent -> ActorList] "Willem Teodric", ID 30 added to list of Actors
+ [AutoEvent -> ActorList] "Theon Thomassin", ID 31 added to list of Actors
+ [AutoEvent -> ActorList] "Emylyna Tully", ID 32 added to list of Actors
+ [AutoEvent -> ActorList] "Tomard Tully", ID 33 added to list of Actors
+ [AutoEvent -> FollowerList] "The Duchess", ID 2 added to list of Followers
+ [AutoEvent -> LocalList] "Gualtier Tully", ID 26 added to list of Locals
+ [AutoEvent -> LocalList] "Elizabetha Tully", ID 27 added to list of Locals
+ [AutoEvent -> AdvisorList] "Daven Tolly", ID 29 added to list of Advisors
+ [AutoEvent -> AdvisorList] "Willem Teodric", ID 30 added to list of Advisors
+ [AutoEvent -> AdvisorList] "Theon Thomassin", ID 31 added to list of Advisors
+ [AutoEvent -> LocalList] "Emylyna Tully", ID 32 added to list of Locals
+ [AutoEvent -> LocalList] "Tomard Tully", ID 33 added to list of Locals
+[Notification] No entry found in dictOfIntroductions for RefID 9
  Chance of Player Location event 75 %
 --- ResolvePlayerEvents (Director.cs)
+ Trigger FAILED on "0" Equals 1
+ Trigger: Player is wrong type of Known status -> Trigger failed
+ Trigger FAILED on "0" Equals 1
+ Trigger: Player is wrong type of Known status -> Trigger failed
  Trigger FAILED on "0" Equals 1
  Trigger: Player is wrong type of Known status -> Trigger failed
  Trigger FAILED on "0" Equals 1
@@ -149,50 +142,12 @@ listPlayerChoices has 1 records, 10 % needed, rolled 7
  Event "What to do?" Timer Repeat now 999
  Event "What to do?" Cooldown Timer has been reset to 0
 --- UpdateActiveActors (World.cs)
- Usurper Daue Greyjoy has had their TurnsUnknown Timer increased from 113 to 114
- Follower The Waif has had their TurnsUnknown Timer increased from 13 to 14
- Follower The Jester has had their TurnsUnknown Timer increased from 13 to 14
- Follower The Leper has had their TurnsUnknown Timer increased from 13 to 14
+ Usurper Frank Baratheon has had their TurnsUnknown Timer increased from 100 to 101
+ Follower The Duchess has had their TurnsUnknown Timer increased from 0 to 1
+ Follower The Jester has had their TurnsUnknown Timer increased from 0 to 1
+ Follower The Crone has had their TurnsUnknown Timer increased from 0 to 1
 --- ResolveOutcome (Director.cs)
---- ChangePlayerRumourStatus (Director.cs)
---- GetRumour (Director.cs)
-arrayOfRumours [0] -> RumourID 18, Strength 1, Scope Global, Type Item, Global All
-arrayOfRumours [4] -> RumourID 210, Strength 2, Scope Global, Type HouseRel, Global West
-arrayOfRumours [5] -> RumourID 313, Strength 4, Scope Local, Type Relationship, Global All
-RumourID 313 selected from the Pool
-Rumour "BannerLord Robett Clegane "The Mundane", ActID 44 at Clegane's Keep, is commonly known to have a very good impression of the Usurper" revealed to ActorID1 on turn 14 -> added to List
-RumourID 313 removed from listRumoursHouse[0]
-Rumour "BannerLord Robett Clegane "The Mundane", ActID 44 at Clegane's Keep, is commonly known to have a very good impression of the Usurper", rumourID 313, added to dictRumoursKnown
-[Notification] BannerLord Robett Clegane, ActID 44 -> RelKnown changed to True
-BannerLord Robett Clegane "The Mundane", ActID 44 at Clegane's Keep, is commonly known to have a very good impression of the Usurper
---- ChangePlayerRumourStatus (Director.cs)
---- GetRumour (Director.cs)
-[Notification] No house rumours available -> none added to pool
-arrayOfRumours [0] -> RumourID 293, Strength 3, Scope Global, Type Enemy, Global All
-arrayOfRumours [4] -> RumourID 208, Strength 2, Scope Global, Type HouseRel, Global West
-RumourID 293 selected from the Pool
-Rumour "Nemesis, The Unrelenting, ActID 88 has been spotted absolving themself at Kingskeep (loc 13:20)" revealed to ActorID1 on turn 14 -> added to List
-RumourID 293 removed from listRumoursGlobal[18]
-Rumour "Nemesis, The Unrelenting, ActID 88 has been spotted absolving themself at Kingskeep (loc 13:20)", rumourID 293, added to dictRumoursKnown
-Nemesis, The Unrelenting, ActID 88 has been spotted absolving themself at Kingskeep (loc 13:20)
+ Inactive (greyed out) Option chosen for "What to do?", option # 1
 --- SetEndGame (Game.cs)
 [Alert] Player chose to exit (pressed 'X')
-//Exile Game file ops "LogTurn.txt" Completed at: 30/05/2017 13:43:50
-6 at Kingskeep, is known to have an average view of the Usurper" -> dict & List
-[Rumour -> Added] RID 335, "Master_of_Laws Joffery Stephanus "The Degenerate", ActID 78 at Kingskeep, is murmured among friends to have a poor impression of the Usurper" -> dict & List
-[Rumour -> Added] RID 336, "Master_of_Ships Lancel Rolandus "The Simple", ActID 58 at Kingskeep, is murmured among friends to have a very good opinion of the Usurper" -> dict & List
-[Rumour -> Added] RID 337, "Master_of_Whisperers Gerion Cristofre "The Skilled", ActID 59 at Kingskeep, is known to have an average view of the Usurper" -> dict & List
-[Rumour -> Added] RID 338, "Hand_of_the_King Leo Dodd "The Erudite", ActID 79 at Kingskeep, is commonly known to have an average impression of the Usurper" -> dict & List
-[Rumour -> Added] RID 339, "Commander_of_Kings_Guard Gualtier Heimart "The Thirsty", ActID 80 at Kingskeep, is said to have a poor impression of the Usurper" -> dict & List
-[Rumour -> Added] RID 340, "Commander_of_City_Watch Willis Artus "The Thundering", ActID 62 at Kingskeep, is known to have a poor opinion of the Usurper" -> dict & List
-[Notification] 47 Relationship Rumours have been added to the dictRumoursTimed
-[GameVar] New_RelRumours changed from 13 to 27
-[Notification] A new set of Relationship Rumours is set to be generated on turn 27
-[Rumour -> Added] RID 341, "Inquisitor, Brother Damballa, ActID 85 has been spotted doing sword drills at The Raucous Rat (loc 9:16)" -> dict & List
-[Rumour -> Added] RID 342, "Nemesis, The Unrelenting, ActID 88 has been spotted praying at Kingskeep (loc 13:20)" -> dict & List
---- HouseKeepActors (World.cs)
-[GameStat] "Travelling_Days" -> increased from 13 to 14
---- HousekeepRumours (World.cs)
-dictRumoursKnown has 3 records
-
-//Exile Game File "LogTurn.txt" Close completed at: 30/05/2017 13:43:40
+//Exile Game file ops "LogTurn.txt" Completed at: 30/05/2017 14:32:23

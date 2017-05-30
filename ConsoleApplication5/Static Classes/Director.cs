@@ -505,6 +505,7 @@ namespace Next_Game
             if (player != null && player.Status != ActorStatus.Gone && player.Delay == 0)
             {
                 Game.logTurn?.Write("--- CheckPlayerEvents (Director.cs)");
+                int rndNum = rnd.Next(100);
                 //check first if any enemy is about to capture the Player
                 if (player.Capture == true && player.Status != ActorStatus.Captured)
                 { CreateAutoEnemyEvent(); }
@@ -519,7 +520,8 @@ namespace Next_Game
                             //Location event
                             else
                             {
-                                if (rnd.Next(100) <= story.Ev_Player_Loc_Current)
+                                Game.logTurn?.Write($"Location event, Need {story.Ev_Player_Loc_Current}, roll {rndNum}");
+                                if (rndNum <= story.Ev_Player_Loc_Current)
                                 {
                                     DeterminePlayerEvent(player, EventType.Location);
                                     //chance of event halved after each occurence (prevents a long string of random events and gives space for necessary system events)
@@ -547,22 +549,26 @@ namespace Next_Game
                             break;
                         case ActorStatus.Travelling:
                             //travelling event
-                            if (rnd.Next(100) <= story.Ev_Player_Trav_Base)
+                            Game.logTurn?.Write($"Travelling event, Need {story.Ev_Player_Trav_Base}, roll {rndNum}");
+                            if (rndNum <= story.Ev_Player_Trav_Base)
                             { DeterminePlayerEvent(player, EventType.Travelling); }
                             break;
                         case ActorStatus.AtSea:
                             //sea voyage event
-                            if (rnd.Next(100) <= story.Ev_Player_Sea_Base)
+                            Game.logTurn?.Write($"Sea event, Need {story.Ev_Player_Sea_Base}, roll {rndNum}");
+                            if (rndNum <= story.Ev_Player_Sea_Base)
                             { DeterminePlayerEvent(player, EventType.Sea); }
                             break;
                         case ActorStatus.Adrift:
                             //adrift at sea
-                            if (rnd.Next(100) <= story.Ev_Player_Adrift_Base)
+                            Game.logTurn?.Write($"Adrift event, Need {story.Ev_Player_Adrift_Base}, roll {rndNum}");
+                            if (rndNum <= story.Ev_Player_Adrift_Base)
                             { DeterminePlayerEvent(player, EventType.Adrift); }
                             break;
                         case ActorStatus.Captured:
                             //dungeon event
-                            if (rnd.Next(100) <= story.Ev_Player_Dungeon_Base)
+                            Game.logTurn?.Write($"Dungeon event, Need {story.Ev_Player_Dungeon_Base}, roll {rndNum}");
+                            if (rndNum <= story.Ev_Player_Dungeon_Base)
                             { DeterminePlayerEvent(player, EventType.Dungeon); }
                             break;
                         default:
@@ -845,6 +851,7 @@ namespace Next_Game
             if (actor.GetNumPlayerEvents() > 0)
             { listEventPool.AddRange(GetValidPlayerEvents(actor.GetPlayerEvents())); }
             //choose an event
+            Game.logTurn?.Write($"[DeterminePlayerEvent] There are {listEventPool.Count} events in the Pool");
             if (listEventPool.Count > 0)
             {
                 int rndNum = rnd.Next(0, listEventPool.Count);
@@ -2016,6 +2023,7 @@ namespace Next_Game
         private List<Event> GetValidPlayerEvents(List<int> listEventID, int data = 0)
         {
             int frequency;
+            bool proceed;
             List<Event> listEvents = new List<Event>();
             if (listEventID != null)
             {
@@ -2023,31 +2031,47 @@ namespace Next_Game
                 foreach (int eventID in listEventID)
                 {
                     Event eventObject = dictPlayerEvents[eventID];
+                    proceed = true;
                     if (eventObject != null && eventObject.Status == EventStatus.Active && eventObject.TimerCoolDown == 0)
                     {
-                        bool proceed = true;
+                        /* bool proceed = false;
                         //is the event limited in any way?
-                        if (eventObject.SubRef > 0)
+                         if (eventObject.SubRef > 0)
+                         {
+                             //if data > 0 then SubRef must match the HouseID or GeoID in order for event to qualify
+                             if (data > 0)
+                             {
+                                 if (eventObject.LocType > ArcLoc.None)
+                                 {
+                                     if (data != eventObject.SubRef) { proceed = false; Game.logTurn?.Write(string.Format("Event \"{0}\" failed HouseID check", eventObject.Name)); }
+                                     else { Game.logTurn?.Write(string.Format(" Event \"{0}\" PASSED HouseID check", eventObject.Name)); }
+                                 }
+                                 else if (eventObject.GeoType > ArcGeo.None)
+                                 {
+                                     if (data != eventObject.SubRef) { proceed = false; Game.logTurn?.Write(string.Format("Event \"{0}\" failed GeoID check", eventObject.Name)); }
+                                     else { Game.logTurn?.Write(string.Format(" Event \"{0}\" PASSED HouseID check", eventObject.Name)); }
+                                 }
+                             }
+                         }
+                         else { Game.logTurn?.Write(string.Format(" Event \"{0}\" has no attached Conditions", eventObject.Name)); }
+                         if (proceed == true)
+                         {
+                             frequency = (int)eventObject.Frequency;
+                             //add # of events to pool equal to (int)EventFrequency
+                             for (int i = 0; i < frequency; i++)
+                             { listEvents.Add(eventObject); }
+                         }*/
+
+                        //triggers (Conditions)
+                        if (eventObject.GetNumTriggers() > 0)
                         {
-                            //if data > 0 then SubRef must match the HouseID or GeoID in order for event to qualify
-                            if (data > 0)
-                            {
-                                if (eventObject.LocType > ArcLoc.None)
-                                {
-                                    if (data != eventObject.SubRef) { proceed = false; Game.logTurn?.Write(string.Format("Event \"{0}\" failed HouseID check", eventObject.Name)); }
-                                    else { Game.logTurn?.Write(string.Format(" Event \"{0}\" PASSED HouseID check", eventObject.Name)); }
-                                }
-                                else if (eventObject.GeoType > ArcGeo.None)
-                                {
-                                    if (data != eventObject.SubRef) { proceed = false; Game.logTurn?.Write(string.Format("Event \"{0}\" failed GeoID check", eventObject.Name)); }
-                                    else { Game.logTurn?.Write(string.Format(" Event \"{0}\" PASSED HouseID check", eventObject.Name)); }
-                                }
-                            }
+                            if (ResolveTrigger(eventObject.GetTriggers(), eventObject.Text) == false)
+                            { proceed = false; }
                         }
-                        else { Game.logTurn?.Write(string.Format(" Event \"{0}\" has no attached Conditions", eventObject.Name)); }
                         if (proceed == true)
                         {
                             frequency = (int)eventObject.Frequency;
+                            Game.logTurn?.Write($"[Event -> Added] \"{eventObject.Text}\" -> {frequency} records added to pool");
                             //add # of events to pool equal to (int)EventFrequency
                             for (int i = 0; i < frequency; i++)
                             { listEvents.Add(eventObject); }

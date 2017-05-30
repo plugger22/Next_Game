@@ -40,10 +40,14 @@ namespace Next_Game.Event_System
         public ArcHouse HouseType { get; set; } = ArcHouse.None;
         public ArcActor ActorType { get; set; } = ArcActor.None;
         private List<string> listOfRumourNames; //contains list of any geoclusters, or loc's, etc. that use this event (archetypes). Used to generate rumours
+        private List<Trigger> listOfTriggers; //event level triggers that determine if an event is valid, or nots
         
 
         public Event()
-        { listOfRumourNames = new List<string>(); }
+        {
+            listOfRumourNames = new List<string>();
+            listOfTriggers = new List<Trigger>();
+        }
 
         /// <summary>
         /// base class constructor
@@ -70,6 +74,19 @@ namespace Next_Game.Event_System
             { listOfRumourNames.Add(name); Game.logTurn?.Write($"[Event -> Rumour] \"{name}\" added to listOfRumourNames"); }
             else { Game.SetError(new Error(55, "Invalid name (null)")); }
         }
+
+        internal void AddTrigger(Trigger trigger)
+        {
+            if (trigger != null)
+            { listOfTriggers.Add(trigger); }
+            else { Game.SetError(new Error(295, "Invalid trigger (null) -> not added to list")); }
+        }
+
+        internal List<Trigger> GetTriggers()
+        { return listOfTriggers; }
+
+        internal int GetNumTriggers()
+        { return listOfTriggers.Count; }
     }
 
 

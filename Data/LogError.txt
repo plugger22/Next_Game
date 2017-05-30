@@ -1,14 +1,36 @@
-//Exile Game file ops "LogError.txt" commenced at: 30/05/2017 13:41:32
-ERROR_29 "Location Deleted 22:5"
-Method: LocationSweeper,  Line: 1675,  Object: Map.cs,  Turn: 0,  Local Time: 13:41:32 UTC +10:00
-ERROR_29 "Location Deleted 24:5"
-Method: LocationSweeper,  Line: 1675,  Object: Map.cs,  Turn: 0,  Local Time: 13:41:32 UTC +10:00
-ERROR_29 "Location Deleted 26:9"
-Method: LocationSweeper,  Line: 1675,  Object: Map.cs,  Turn: 0,  Local Time: 13:41:32 UTC +10:00
-ERROR_29 "Location Deleted 23:10"
-Method: LocationSweeper,  Line: 1675,  Object: Map.cs,  Turn: 0,  Local Time: 13:41:32 UTC +10:00
-ERROR_29 "Location Deleted 28:11"
-Method: LocationSweeper,  Line: 1675,  Object: Map.cs,  Turn: 0,  Local Time: 13:41:32 UTC +10:00
-ERROR_29 "Location Deleted 29:15"
-Method: LocationSweeper,  Line: 1675,  Object: Map.cs,  Turn: 0,  Local Time: 13:41:32 UTC +10:00
-//Exile Game file ops "LogError.txt" Completed at: 30/05/2017 13:43:50
+//Exile Game file ops "LogError.txt" commenced at: 30/05/2017 14:31:25
+ERROR_29 "Location Deleted 0:10"
+Method: LocationSweeper,  Line: 1675,  Object: Map.cs,  Turn: 0,  Local Time: 14:31:25 UTC +10:00
+ERROR_29 "Location Deleted 18:13"
+Method: LocationSweeper,  Line: 1675,  Object: Map.cs,  Turn: 0,  Local Time: 14:31:25 UTC +10:00
+ERROR_29 "Location Deleted 27:17"
+Method: LocationSweeper,  Line: 1675,  Object: Map.cs,  Turn: 0,  Local Time: 14:31:25 UTC +10:00
+ERROR_29 "Location Deleted 29:17"
+Method: LocationSweeper,  Line: 1675,  Object: Map.cs,  Turn: 0,  Local Time: 14:31:25 UTC +10:00
+ERROR_29 "Location Deleted 9:18"
+Method: LocationSweeper,  Line: 1675,  Object: Map.cs,  Turn: 0,  Local Time: 14:31:25 UTC +10:00
+ERROR_29 "Location Deleted 11:20"
+Method: LocationSweeper,  Line: 1675,  Object: Map.cs,  Turn: 0,  Local Time: 14:31:25 UTC +10:00
+ERROR_29 "Location Deleted 7:23"
+Method: LocationSweeper,  Line: 1675,  Object: Map.cs,  Turn: 0,  Local Time: 14:31:25 UTC +10:00
+ERROR_29 "Location Deleted 0:26"
+Method: LocationSweeper,  Line: 1675,  Object: Map.cs,  Turn: 0,  Local Time: 14:31:25 UTC +10:00
+ERROR_29 "Location Deleted 6:26"
+Method: LocationSweeper,  Line: 1675,  Object: Map.cs,  Turn: 0,  Local Time: 14:31:25 UTC +10:00
+ERROR_29 "Location Deleted 11:27"
+Method: LocationSweeper,  Line: 1675,  Object: Map.cs,  Turn: 0,  Local Time: 14:31:25 UTC +10:00
+ERROR_29 "Location Deleted 19:27"
+Method: LocationSweeper,  Line: 1675,  Object: Map.cs,  Turn: 0,  Local Time: 14:31:25 UTC +10:00
+ERROR_29 "Location Deleted 5:28"
+Method: LocationSweeper,  Line: 1675,  Object: Map.cs,  Turn: 0,  Local Time: 14:31:25 UTC +10:00
+ERROR_29 "Location Deleted 16:28"
+Method: LocationSweeper,  Line: 1675,  Object: Map.cs,  Turn: 0,  Local Time: 14:31:25 UTC +10:00
+ERROR_29 "Location Deleted 27:28"
+Method: LocationSweeper,  Line: 1675,  Object: Map.cs,  Turn: 0,  Local Time: 14:31:25 UTC +10:00
+ERROR_29 "Location Deleted 9:29"
+Method: LocationSweeper,  Line: 1675,  Object: Map.cs,  Turn: 0,  Local Time: 14:31:25 UTC +10:00
+ERROR_63 "No Inns present on Map -> No followers available to recruit"
+Method: InitialiseActiveActors,  Line: 247,  Object: World.cs,  Turn: 0,  Local Time: 14:31:26 UTC +10:00
+ERROR_259 "Invalid numAdvisors (zero) -> No disguises allocated within world"
+Method: InitialiseDisguises,  Line: 6892,  Object: World.cs,  Turn: 0,  Local Time: 14:31:26 UTC +10:00
+//Exile Game file ops "LogError.txt" Completed at: 30/05/2017 14:32:23

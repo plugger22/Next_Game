@@ -629,7 +629,7 @@ namespace Next_Game
                     }
 
                     //Rebel Lords
-                    if (listOfTempRebels.Count > 0)
+                    if (listOfTempRebels.Count > 1)
                     {
                         int rndNum = rnd.Next(10);
                         int listIndex = rnd.Next(1, listOfTempRebels.Count); //don't pick King (index 0)
