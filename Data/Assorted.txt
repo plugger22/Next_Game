@@ -1,0 +1,81 @@
+# AssortedLists.txt -> various general purpose lists
+
+[HorseName]
+Pepper
+Snowball
+Traveller
+Rapunzel
+Blondie
+Little Joe
+Jigsaw
+Pirate
+Trapper
+Peter Pan
+Ebony
+Domino
+Cinnamon
+Brandy
+Autumn
+Russell
+Goliath
+Bolt
+Victory
+Pharaoh
+Trigger
+Buttons
+Misty
+Dolly
+Cookie
+Olaf
+Marquis
+Henrietta
+Queen
+Boots
+Major
+Barnaby
+Whiskers
+Buster
+Flopsy
+Frankie
+Sonny
+Scarlett
+Fred
+Barney
+Diana
+Florence
+Bonnie
+
+# A '<horseType> named <horseName>'
+
+[HorseType]
+Charger
+Courser
+Hunter
+Sumpter Horse
+War Horse
+Saddle Horse
+Thoroughbred
+Quarter Horse
+Mustang
+Trotter
+
+[Curses]
+Sweet Mouldy Cheese!
+Thunder and Lightning!
+By Dragon's Breath!
+Party of Pigs!
+Son of a Wolf!
+Blood and Ashes!
+Rat Brained B*stard!
+
+[AnimalBig]
+Musk Ox
+Mammoth
+Shadowcat
+Direwolf
+Cave Bear
+Snow Bear
+Black Bear
+Elkhound
+Wolfhound
+Giant Boar

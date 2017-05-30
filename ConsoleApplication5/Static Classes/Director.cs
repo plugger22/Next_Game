@@ -26,6 +26,7 @@ namespace Next_Game
     LegendBadEduc, LegendBadUned, HonourNeutralEduc, HonourNeutralUned, HonourGoodEduc, HonourGoodUned, HonourBadEduc, HonourBadUned, KnownEduc, KnownUned, UnknownEduc, UnknownUned, Count} //Market View
     public enum Occupation { Offical, Church, Merchant, Craft, PeasantMale, PeasantFemale, Count}
     public enum TravelMode { None, Foot, Mounted} //default Mounted for all characters
+    public enum Assorted { HorseName, HorseType, Curse, AnimalBig, Count}
 
 
     /// <summary>
@@ -99,6 +100,7 @@ namespace Next_Game
         //View from the Market
         string[][] arrayOfViews;
         string[][] arrayOfOccupations;
+        string[][] arrayOfAssorted; //general purpose lists
         //places visited by the Player
         List<int> listCourtsVisited; //Sequential list of RefID's (NOTE: RefID) -> player needs to 'visit Court' of House to gain an entry to list
         List<int> listLocsVisited; //Sequential list of LocID's
@@ -175,6 +177,7 @@ namespace Next_Game
             //View from the Market
             arrayOfViews = new string[(int)ViewType.Count][];
             arrayOfOccupations = new string[(int)Occupation.Count][];
+            arrayOfAssorted = new string[(int)Assorted.Count][];
             //places the Player has visited
             listCourtsVisited = new List<int>();
             listLocsVisited = new List<int>();
@@ -243,6 +246,8 @@ namespace Next_Game
             arrayOfViews = Game.file.GetViews("ViewLists.txt");
             Game.logStart?.Write("--- InitialiseOccupations (Director.cs)");
             arrayOfOccupations = Game.file.GetOccupations("Occupations.txt");
+            Game.logStart?.Write("--- InitialiseAssorted (Director.cs)");
+            arrayOfAssorted = Game.file.GetAssorted("Assorted.txt");
         }
 
         /// <summary>

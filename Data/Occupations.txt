@@ -29,7 +29,7 @@ Friar
 Monk
 
 [Merchant]
- Innkeeper 
+Innkeeper 
  MoneyLender 
  Trader 
  Brothel Owner 

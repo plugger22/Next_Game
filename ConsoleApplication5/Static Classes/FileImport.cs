@@ -4038,6 +4038,82 @@ namespace Next_Game
             return arrayOfOccupations;
         }
 
+
+        /// <summary>
+        /// Import Assorted general purpose lists (used for all kinds of things)
+        /// </summary>
+        /// <param name="fileName"></param>
+        /// <returns></returns>
+        internal string[][] GetAssorted(string fileName)
+        {
+            //master jagged array which will be returned
+            string[][] arrayOfAssorted = new string[(int)Assorted.Count][];
+            string tempString;
+            //temporary sub lists for each category of geoNames
+            List<string> listHorseName = new List<string>();
+            List<string> listHorseType = new List<string>();
+            List<string> listCurses = new List<string>();
+            List<string> listAnimalBig = new List<string>();
+            //import data from file
+            string[] arrayOfAssortedTexts = ImportDataFile(fileName);
+            if (arrayOfAssortedTexts != null)
+            {
+                //read occupation names from array into list
+                string assortedType = null;
+                char[] charsToTrim = { '[', ']' };
+                for (int i = 0; i < arrayOfAssortedTexts.Length; i++)
+                {
+                    if (arrayOfAssortedTexts[i] != "" && !arrayOfAssortedTexts[i].StartsWith("#"))
+                    {
+                        //which sublist are we dealing with
+                        tempString = arrayOfAssortedTexts[i];
+                        //trim off leading and trailing whitespace
+                        tempString = tempString.Trim();
+                        if (tempString.StartsWith("["))
+                        { assortedType = tempString.Trim(charsToTrim); }
+                        else if (assortedType != null)
+                        {
+                            //place in the correct list
+                            switch (assortedType)
+                            {
+                                case "HorseName":
+                                    listHorseName.Add(tempString);
+                                    break;
+                                case "HorseType":
+                                    listHorseType.Add(tempString);
+                                    break;
+                                case "Curses":
+                                    listCurses.Add(tempString);
+                                    break;
+                                case "AnimalBig":
+                                    listAnimalBig.Add(tempString);
+                                    break;
+                                default:
+                                    Game.SetError(new Error(296, string.Format("Invalid Assorted Category {0}, record {1}", assortedType, i)));
+                                    break;
+                            }
+                        }
+                    }
+                }
+                //size jagged array
+                arrayOfAssorted[(int)Assorted.HorseName] = new string[listHorseName.Count];
+                arrayOfAssorted[(int)Assorted.HorseType] = new string[listHorseType.Count];
+                arrayOfAssorted[(int)Assorted.Curse] = new string[listCurses.Count];
+                arrayOfAssorted[(int)Assorted.AnimalBig] = new string[listAnimalBig.Count];
+                //populate from lists
+                arrayOfAssorted[(int)Assorted.HorseName] = listHorseName.ToArray();
+                arrayOfAssorted[(int)Assorted.HorseType] = listHorseType.ToArray();
+                arrayOfAssorted[(int)Assorted.Curse] = listCurses.ToArray();
+                arrayOfAssorted[(int)Assorted.AnimalBig] = listAnimalBig.ToArray();
+                //output stat data
+                for (int i = 0; i < arrayOfAssorted.Length; i++)
+                { Game.logStart?.Write($"{(Assorted)i} -> {arrayOfAssorted[i].Length} records imported"); }
+            }
+            else
+            { Game.SetError(new Error(296, string.Format("File not found (\"{0}\")", fileName))); }
+            return arrayOfAssorted;
+        }
+
         /// <summary>
         /// Import Followers
         /// </summary>
