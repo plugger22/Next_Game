@@ -2391,7 +2391,7 @@ namespace Next_Game
                         foreach (OptionInteractive option in listOptions)
                         {
                             //check any option triggers 
-                            if (ResolveOptionTrigger(option) == true)
+                            if (ResolveTrigger(option.GetTriggers(), option.Text, option.ActorID) == true)
                             { optionColor = RLColor.Blue; option.Active = true; }
                             else
                             {
@@ -2437,15 +2437,16 @@ namespace Next_Game
 
 
         /// <summary>
-        /// Checks any triggers for the option and determines if it's active (returns true if any trigger passes, fails if any compulsory trigger fails)
+        /// Checks any triggers for Events and Options and determines if it's active (returns true if any trigger passes, fails if any compulsory trigger fails)
         /// </summary>
-        /// <param name="option"></param>
+        /// <param name="text">Name of event or Option</param>
+        /// <param name="actorID">OPTIONAL -> Option actorID</param>
         /// <returns></returns>
-        private bool ResolveOptionTrigger(OptionInteractive option)
+        private bool ResolveTrigger(List<Trigger> listTriggers, string text, int actorID = 0)
         {
             bool validCheck = true;
             int checkValue;
-            List<Trigger> listTriggers = option.GetTriggers();
+            //List<Trigger> listTriggers = option.GetTriggers();
             if (listTriggers.Count > 0)
             {
                 Player player = Game.world.GetPlayer();
@@ -2466,9 +2467,9 @@ namespace Next_Game
                             {
                                 //set to combat to get the job done but generates an error
                                 type = SkillType.Combat;
-                                Game.SetError(new Error(76, string.Format("Invalid Trigger Data (\"{0}\"), default Combat trait used instead, for Option \"{1}\"", trigger.Data, option.Text)));
+                                Game.SetError(new Error(76, string.Format("Invalid Trigger Data (\"{0}\"), default Combat trait used instead, for \"{1}\"", trigger.Data, text)));
                             }
-                            Game.logTurn?.Write(string.Format(" \"{0}\" {1} Trigger, if type {2} is {3} to {4}", option.Text, trigger.Check, trigger.Data, trigger.Calc, trigger.Threshold));
+                            Game.logTurn?.Write(string.Format(" \"{0}\" {1} Trigger, if type {2} is {3} to {4}", text, trigger.Check, trigger.Data, trigger.Calc, trigger.Threshold));
                             if (CheckTrigger(player.GetSkill(type), trigger.Calc, trigger.Threshold) == true) { validCheck = true; }
                             else
                             {
@@ -2488,7 +2489,7 @@ namespace Next_Game
                                     if (trigger.Compulsory == true) { Game.logTurn?.Write("[Notification] GameVar trigger Compulsory fail check"); return false; }
                                 }
                             }
-                            else { Game.SetError(new Error(76, $"Invalid trigger.Data \"{trigger.Data}\" for option {option.Text} -> Trigger Ignored")); }
+                            else { Game.SetError(new Error(76, $"Invalid trigger.Data \"{trigger.Data}\" for {text} -> Trigger Ignored")); }
                             break;
                         case TriggerCheck.RelPlyr:
                             if (CheckTrigger(trigger.Data, trigger.Calc, trigger.Threshold) == true) { validCheck = true; }
@@ -2535,7 +2536,7 @@ namespace Next_Game
                             }
                             break;
                         case TriggerCheck.Desire:
-                            Actor actor = Game.world.GetAnyActor(option.ActorID);
+                            Actor actor = Game.world.GetAnyActor(actorID);
                             if (actor != null && actor is Passive)
                             {
                                 Passive person = actor as Passive;
@@ -2587,7 +2588,7 @@ namespace Next_Game
                             }
                             break;
                         default:
-                            Game.SetError(new Error(76, string.Format("Invalid Trigger Check Type (\"{0}\") for Option \"{1}\" -> Trigger ignored", trigger.Check, option.Text)));
+                            Game.SetError(new Error(76, string.Format("Invalid Trigger Check Type (\"{0}\") for \"{1}\" -> Trigger ignored", trigger.Check, text)));
                             break;
                     }
                 }
