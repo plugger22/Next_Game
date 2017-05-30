@@ -37,3 +37,9 @@ Seed 58635 -> Monday, 29 May 2017 8:39 PM
 Seed 56688 -> Monday, 29 May 2017 8:40 PM
 Seed 55089 -> Monday, 29 May 2017 8:50 PM
 Seed 30833 -> Tuesday, 30 May 2017 8:53 AM
+Seed 14309 -> Tuesday, 30 May 2017 9:12 AM
+Seed 48075 -> Tuesday, 30 May 2017 9:17 AM
+Seed 44525 -> Tuesday, 30 May 2017 9:29 AM
+Seed 13447 -> Tuesday, 30 May 2017 9:41 AM
+Seed 38672 -> Tuesday, 30 May 2017 10:39 AM
+Seed 30771 -> Tuesday, 30 May 2017 11:09 AM

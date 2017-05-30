@@ -774,7 +774,8 @@ namespace Next_Game
                     geoID = Game.map.GetMapInfo(Cartographic.MapLayer.GeoID, pos.PosX, pos.PosY);
                     terrain = Game.map.GetMapInfo(Cartographic.MapLayer.Terrain, pos.PosX, pos.PosY);
                     road = Game.map.GetMapInfo(Cartographic.MapLayer.Road, pos.PosX, pos.PosY);
-                    GeoCluster cluster = Game.world.GetGeoCluster(geoID);
+                    GeoCluster cluster = null;
+                    if (geoID > 0) { cluster = Game.world.GetGeoCluster(geoID); }
                     //get terrain & road events
                     if (locID == 0 && terrain == 1)
                     {
@@ -2266,13 +2267,14 @@ namespace Next_Game
                     break;
                 }
             }
-            if (crowCounter > 0)
+            //show missed message notification but only if the Player is travelling, not at sea, adrift or in jail as these assume you won't get any
+            if (crowCounter > 0 && player.Status == ActorStatus.Travelling)
             {
                 eventList.Clear();
                 eventList.Add(new Snippet(""));
-                eventList.Add(new Snippet("An incoming Crow failed to arrive", RLColor.LightRed, backColor));
+                eventList.Add(new Snippet("An incoming Crow from your Followers failed to arrive", RLColor.LightRed, backColor));
                 eventList.Add(new Snippet(""));
-                eventList.Add(new Snippet(string.Format("You have missed a total of {0} crow{1} today", crowCounter, crowCounter != 1 ? "s" : ""), RLColor.Black, backColor));
+                eventList.Add(new Snippet(string.Format("You have missed {0} crow{1} today", crowCounter, crowCounter != 1 ? "s" : ""), RLColor.Black, backColor));
                 eventList.Add(new Snippet(""));
                 eventList.Add(new Snippet("- o -", RLColor.Gray, backColor));
                 eventList.Add(new Snippet(""));
@@ -4763,7 +4765,7 @@ namespace Next_Game
                                             AddRumour(rumour, house);
                                         }
                                         //
-                                        //Rumours -> Items (one rumour per item possessed, global All)
+                                        //Items (one rumour per item possessed, global All)
                                         //
                                         if (actor.CheckItems() == true)
                                         {
@@ -4800,7 +4802,7 @@ namespace Next_Game
                                             else { Game.SetError(new Error(268, "Invalid listOfItems (null)")); }
                                         }
                                         //
-                                        //Rumours -> Disguises (one rumour regardless of # of disguises, global All)
+                                        //Disguises (one rumour regardless of # of disguises, global All)
                                         //
                                         if(actor is Advisor)
                                         {
@@ -4817,7 +4819,7 @@ namespace Next_Game
                                             }
                                         }
                                         //
-                                        //Rumours -> Desires (one rumour per desire -> global.Branch)
+                                        //Desires (one rumour per desire -> global.Branch)
                                         //
                                         if (actor.Desire > PossPromiseType.None)
                                         {
@@ -4949,7 +4951,7 @@ namespace Next_Game
                 foreach (var house in dictMajorHouses)
                 {
                     //
-                    //Rumours -> Friends and Enemies (one per Major House if any exist, Capital excluded as auto known -> Global.Branches)
+                    //Friends and Enemies (one per Major House if any exist, Capital excluded as auto known -> Global.Branches)
                     //
                     Location loc = Game.network.GetLocation(house.Value.LocID);
                     if (loc != null)
@@ -5003,7 +5005,7 @@ namespace Next_Game
                     }
                     else { Game.SetError(new Error(268, $"Invalid Location (null) from LocID {house.Value.LocID}")); }
                     //
-                    //Rumours -> Past History between Major Houses, other Major Houses and their Minor Houses (one entry per relationship, global.Branch)
+                    //Past History between Major Houses, other Major Houses and their Minor Houses (one entry per relationship, global.Branch)
                     //
                     List<Relation> listOfHouseRelationships = house.Value.GetRelations();
                     if (listOfHouseRelationships != null)
@@ -5067,6 +5069,7 @@ namespace Next_Game
             }
             else { Game.SetError(new Error(268, "Invalid dictOfPassiveActors (null)")); }
         }
+
 
         /// <summary>
         /// Creates Rumours during Game -> adds to dict and places rumourID in relevant pool
@@ -5440,7 +5443,7 @@ namespace Next_Game
                                 {
                                     if (Game.world.CheckRumourKnown(rumour.RumourID) == true)
                                     { Game.logTurn?.Write($"[Notification -> North] RID {rumour.RumourID}, \"{rumour.Text}\" already Known (not removed, but O.K)"); return true; }
-                                    else { Game.SetError(new Error(279, $"RID {rumour.RumourID}, \"{rumour.Text}\" FAILED removed from Global All list")); }
+                                    else { Game.SetError(new Error(279, $"RID {rumour.RumourID}, \"{rumour.Text}\" FAILED removed from Branch North list")); }
                                 }
                                 break;
                             case RumourGlobal.East:
@@ -5450,7 +5453,7 @@ namespace Next_Game
                                 {
                                     if (Game.world.CheckRumourKnown(rumour.RumourID) == true)
                                     { Game.logTurn?.Write($"[Notification -> East] RID {rumour.RumourID}, \"{rumour.Text}\" already Known (not removed, but O.K)"); return true; }
-                                    else { Game.SetError(new Error(279, $"RID {rumour.RumourID}, \"{rumour.Text}\" FAILED removed from Global All list")); }
+                                    else { Game.SetError(new Error(279, $"RID {rumour.RumourID}, \"{rumour.Text}\" FAILED removed from Branch East list")); }
                                 }
                                 break;
                             case RumourGlobal.South:
@@ -5460,17 +5463,17 @@ namespace Next_Game
                                 {
                                     if (Game.world.CheckRumourKnown(rumour.RumourID) == true)
                                     { Game.logTurn?.Write($"[Notification -> South] RID {rumour.RumourID}, \"{rumour.Text}\" already Known (not removed, but O.K)"); return true; }
-                                    else { Game.SetError(new Error(279, $"RID {rumour.RumourID}, \"{rumour.Text}\" FAILED removed from Global All list")); }
+                                    else { Game.SetError(new Error(279, $"RID {rumour.RumourID}, \"{rumour.Text}\" FAILED removed from Branch South list")); }
                                 }
                                 break;
                             case RumourGlobal.West:
-                                if (listRumoursGlobal.Remove(rumour.RumourID) == true)
+                                if (listRumoursWest.Remove(rumour.RumourID) == true)
                                 { Game.logTurn?.Write($"[Rumour -> Removal] RID {rumour.RumourID}, \"{rumour.Text}\" removed from Global West list"); return true; }
                                 else
                                 {
                                     if (Game.world.CheckRumourKnown(rumour.RumourID) == true)
                                     { Game.logTurn?.Write($"[Notification -> West] RID {rumour.RumourID}, \"{rumour.Text}\" already Known (not removed, but O.K)"); return true; }
-                                    else { Game.SetError(new Error(279, $"RID {rumour.RumourID}, \"{rumour.Text}\" FAILED removed from Global All list")); }
+                                    else { Game.SetError(new Error(279, $"RID {rumour.RumourID}, \"{rumour.Text}\" FAILED removed from Branch West list")); }
                                 }
                                 break;
                             default:
@@ -6031,7 +6034,6 @@ namespace Next_Game
                                         opinionText = $"{arrayOfOpinions[rnd.Next(arrayOfOpinions.Length)]}";
                                         rumourText = $"{actor.Title} {actor.Name} \"{actor.Handle}\", ActID {actor.ActID} at {locName}, is {immersionText} to have {view} {opinionText} of the Usurper";
                                         RumourRelationship rumour = new RumourRelationship(rumourText, strength, RumourScope.Local, timerExpire, actor.ActID) { RefID = actor.RefID };
-
                                         //add to dictionary and house list
                                         if (AddRumour(rumour, house) == true)
                                         { counter++; }

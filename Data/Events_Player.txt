@@ -339,9 +339,32 @@ Cool: 5
 Event: A crazy, old woman approaches you, yelling obscenities.
 Rumour: People talk about seeing an old woman on the roads, cursing all those she meets.
 [option]
+text: Back up, away from the Hag
+reply: You cautiouslly back pedal until the Hag is out of sight before finding a way to bypass her without being seen.
+[outcome]
+effect: None
+[option]
 text: Ride past, ignoring her
 reply: Crazy old hags are best left to themselves.
 view: The old hag thinks she saw the Usurper, <player> on the road to <roadTo>. Sitting high in the saddle, all kingly and imperious like.
+[trigger]
+check: Travel
+thresh: 2
+calc: =
+[outcome]
+effect: EventTimer
+data: 6
+timer: Cool
+amount: 1
+apply: Add
+[option]
+text: Walk past, ignoring her
+reply: Crazy old hags are best left to themselves.
+view: The old hag thinks she saw the Usurper, <player> on the road to <roadTo>. Walking would you believe it, like a farmer off to market.
+[trigger]
+check: Travel
+thresh: 1
+calc: =
 [outcome]
 effect: EventTimer
 data: 6
@@ -350,7 +373,7 @@ amount: 1
 apply: Add
 [option]
 text: Offer assistance
-reply: You immediately dismount and approach her on foot only to be assaulted by the incensed hag.
+reply: You approach with a smile on your face only to be assaulted by the incensed hag.
 view: I overheard the old Hag cackling how she robbed a noble on the road to <roadTo>. Nobody expects a hag to be so fast.
 [outcome]
 effect: GameState
@@ -371,6 +394,10 @@ check: Trait
 item: Treachery
 thresh: 3
 calc: >=
+[trigger]
+check: Travel
+thresh: 2
+calc: =
 [outcome]
 effect: GameState
 data: -5
@@ -393,13 +420,37 @@ subType: Normal
 Cat: Generic
 Freq: Low
 Status: Dormant
+Cool: 5
 Repeat: 10
 Event: A dazed, naked woman is limping along the road ahead, leading a donkey.
 Rumour: It's not safe to travel on the roads these days if you're a woman. When was it ever?
 [option]
+text: Throw her a few coins
+reply: As you overtake her you toss a few small coins in her direction. The woman scrabbles around in the dirt, looking for them.
+view: It's a sad day when pretend Kings, like <player>, hurl coins at a poor woman in distress instead of helping them.
+[outcome]
+effect: GameState
+data: -4
+amount: 1
+apply: Add
+[option]
 text: Ride past, ignoring her
 reply: You can't save the world, it's too big and mean. The woman pleads for some water as you canter past.
 view: I heard that <randomFemale>'s cousin was having some trouble on the road to <roadTo>. That Usurper, <player>, curse him, ignored her. 
+[trigger]
+check: Travel
+thresh: 2
+calc: =
+[outcome]
+effect: None
+[option]
+text: Keep walking, don't stop
+reply: You can't save the world, it's too big and mean. The woman pleads for some water as you walk past, ignoring her.
+view: I heard that <randomFemale>'s cousin was having some trouble on the road to <roadTo>. That Usurper, <player>, curse him, ignored her. 
+[trigger]
+check: Travel
+thresh: 1
+calc: =
 [outcome]
 effect: None
 [option]
@@ -425,6 +476,10 @@ check: Trait
 item: Treachery
 thresh: 3
 calc: >=
+[trigger]
+check: Travel
+thresh: 2
+calc: =
 [outcome]
 effect: GameState
 data: -4
