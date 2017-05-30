@@ -416,6 +416,10 @@ Rumour: It's not safe to travel on the roads these days if you're a woman. When 
 eventCheck: Travel
 eventThresh: 2
 eventCalc: =
+[eventTrigger]
+eventCheck: Known
+eventThresh: 0
+eventCalc: =
 [option]
 text: Throw her a few coins
 reply: As you overtake her you toss a few small coins in her direction. The woman scrabbles around in the dirt, looking for them.

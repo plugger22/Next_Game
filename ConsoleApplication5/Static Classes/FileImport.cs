@@ -1948,7 +1948,7 @@ namespace Next_Game
                                     }
                                     catch { Game.SetError(new Error(49, string.Format("Invalid Input, Option Trigger Item, (Conversion) \"{0}\"", arrayOfEvents[i]))); validData = false; }
                                     break;
-                                case "EventThresh":
+                                case "eventThresh":
                                     //Trigger Event Threshold
                                     try
                                     {
@@ -2699,7 +2699,7 @@ namespace Next_Game
                                     { Game.SetError(new Error(49, string.Format("Event, (\"{0}\" EventID {1}), not Imported", structEvent.Name, structEvent.EventID))); }
                                     break;
                                 default:
-                                    Game.SetError(new Error(49, "Invalid Input, CleanTag"));
+                                    Game.SetError(new Error(49, $"Invalid Input, \"{cleanToken}\""));
                                     break;
                             }
                         }

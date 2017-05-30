@@ -60,6 +60,7 @@ namespace Next_Game.Event_System
             this.Name = name;
             this.Frequency = frequency;
             listOfRumourNames = new List<string>();
+            listOfTriggers = new List<Trigger>();
         }
 
         internal int GetNumRumourNames()
