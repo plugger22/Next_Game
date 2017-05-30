@@ -2031,9 +2031,9 @@ namespace Next_Game
                 foreach (int eventID in listEventID)
                 {
                     Event eventObject = dictPlayerEvents[eventID];
-                    proceed = true;
                     if (eventObject != null && eventObject.Status == EventStatus.Active && eventObject.TimerCoolDown == 0)
                     {
+                        proceed = true;
                         /* bool proceed = false;
                         //is the event limited in any way?
                          if (eventObject.SubRef > 0)

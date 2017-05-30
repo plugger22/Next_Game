@@ -350,7 +350,7 @@ eventThresh: 2
 eventCalc: =
 [option]
 text: Back up, away from the Hag
-reply: You cautiouslly back pedal until the Hag is out of sight before finding a way to bypass her without being seen.
+reply: You cautiously back pedal until the Hag is out of sight before finding a way to bypass her without being seen.
 [outcome]
 effect: None
 [option]
@@ -521,23 +521,22 @@ Type: GeoCluster
 subType: Forest
 Cat: Archetype
 Freq: High
-Status: Active
 Cool: 3
 Event: The low pitched growling of wolves pierces the night air.
 Rumour: There are Dire Wolves roaming the shadows of <name>.
 [option]
 text: Light a fire to keep the Wolves at bay
-reply: lkjljlj
+reply: The crackling flames and dancing light reassures you.
 [outcome]
 effect: None
 [option]
 text: Keep moving, but as fast as you can
-reply: ljljlkj
+reply: Wolves are dangerous. Best to keep moving and clear the area.
 [outcome]
 effect: None
 [option]
 text: Murder your horse and leave it for the wolves 
-reply: ljljlkj
+reply: Yes, poor old Trigger. A good old sport, was Trigger. Dire Wolf dinner now. 
 [trigger]
 check: Trait
 item: Treachery
@@ -548,7 +547,7 @@ effect: Travel
 mode: Foot
 [option]
 text: That's a Direwolf! Wait till dawn and hunt it down
-reply: kjljlj
+reply: You recognise the growl. A Dire Wolf is a rare beast. They'll be tracks nearby. First light won't be long.
 [trigger]
 check: Trait
 item: Wits

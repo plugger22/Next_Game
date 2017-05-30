@@ -53,3 +53,6 @@ Seed 63744 -> Tuesday, 30 May 2017 4:21 PM
 Seed 10872 -> Tuesday, 30 May 2017 4:25 PM
 Seed 1064 -> Tuesday, 30 May 2017 4:31 PM
 Seed 13550 -> Tuesday, 30 May 2017 4:32 PM
+Seed 13318 -> Tuesday, 30 May 2017 4:47 PM
+Seed 8002 -> Tuesday, 30 May 2017 4:51 PM
+Seed 35623 -> Tuesday, 30 May 2017 4:52 PM
