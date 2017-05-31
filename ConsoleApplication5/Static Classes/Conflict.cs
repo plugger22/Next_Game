@@ -2000,54 +2000,61 @@ namespace Next_Game
         private void CheckSpecialSituations()
         {
             //get player as they are involved in all conflicts
-            Active player = Game.world.GetActiveActor(1);
+            Active player = Game.world.GetPlayer();
             if (player != null)
             {
-                //Only check for conflict types where automatic special situations are possible
-                if (Conflict_Type == ConflictType.Combat)
+                Position pos = player.GetActorPosition();
+                if (pos != null)
                 {
-                    //Battles are terrain dependant
-                    if (Combat_Type == ConflictCombat.Battle)
+                    //get terrain type (1 - Mountain, 2 - Forest)
+                    int terrain = Game.map.GetMapInfo(MapLayer.Terrain, pos.PosX, pos.PosY);
+                    //Only check for conflict types where automatic special situations are possible
+                    switch (Conflict_Type)
                     {
-                        Position pos = player.GetActorPosition();
-                        if (player.Status == ActorStatus.Travelling)
-                        {
-                            //get terrain type (1 - Mountain, 2 - Forest)
-                            int terrain = Game.map.GetMapInfo(MapLayer.Terrain, pos.PosX, pos.PosY);
-                            if (terrain == 1) { SetSpecialSituation(ConflictSpecial.Mountain_Country, 0); }
-                            else if (terrain == 2) { SetSpecialSituation(ConflictSpecial.Forest_Country, 0); }
-                        }
-                        else if (player.Status == ActorStatus.AtLocation)
-                        {
-                            if (player.LocID == 1) { SetSpecialSituation(ConflictSpecial.Castle_Walls, 5); } //Kings keep, max castle walls
-                            else
+                        case ConflictType.Combat:
+                            //what type of combat?
+                            switch (Combat_Type)
                             {
-                                int refID = Game.map.GetMapInfo(MapLayer.RefID, pos.PosX, pos.PosY);
-                                if (refID > 0)
-                                {
-                                    House house = Game.world.GetHouse(refID);
-                                    /*if (refID < 100)
+                                case ConflictCombat.Battle:
+                                    //Battles are terrain dependant
+                                    if (player.Status == ActorStatus.Travelling)
                                     {
-                                        //Great house
-                                        SetSpecialSituation(ConflictSpecial.Castle_Walls, house.CastleWalls, CardUnique.Effect2X);
+                                        if (terrain == 1) { SetSpecialSituation(ConflictSpecial.Mountain_Battle, 0); }
+                                        else if (terrain == 2) { SetSpecialSituation(ConflictSpecial.Forest_Battle, 0); }
                                     }
-                                    else if (refID > 99 && refID < 1000)
+                                    else if (player.Status == ActorStatus.AtLocation)
                                     {
-                                        
-                                        
-                                    }*/
-
-                                    if (house.Type == LocType.MajorHouse)
-                                    { SetSpecialSituation(ConflictSpecial.Castle_Walls, house.CastleWalls, CardUnique.Effect2X); }
-                                    //BannerLord, weak walls, always 1
-                                    else if (house.Type == LocType.MinorHouse)
-                                    {SetSpecialSituation(ConflictSpecial.Castle_Walls, house.CastleWalls, CardUnique.Effect2X); }
-                                }
-                                else { Game.SetError(new Error(97, "RefID comes back ZERO, no Auto Special Situation created")); }
+                                        //castle walls
+                                        if (player.LocID == 1) { SetSpecialSituation(ConflictSpecial.Castle_Walls, 5); } //Kings keep, max castle walls
+                                        else
+                                        {
+                                            int refID = Game.map.GetMapInfo(MapLayer.RefID, pos.PosX, pos.PosY);
+                                            if (refID > 0)
+                                            {
+                                                House house = Game.world.GetHouse(refID);
+                                                if (house.Type == LocType.MajorHouse)
+                                                { SetSpecialSituation(ConflictSpecial.Castle_Walls, house.CastleWalls, CardUnique.Effect2X); }
+                                                //BannerLord, weak walls, always 1
+                                                else if (house.Type == LocType.MinorHouse)
+                                                { SetSpecialSituation(ConflictSpecial.Castle_Walls, house.CastleWalls, CardUnique.Effect2X); }
+                                            }
+                                            else { Game.SetError(new Error(97, "RefID comes back ZERO, no Auto Special Situation created")); }
+                                        }
+                                    }
+                                    break;
+                                case ConflictCombat.Hunting:
+                                    //Beasts have a home territory advantage
+                                    if (player.Status == ActorStatus.Travelling)
+                                    {
+                                        if (terrain == 1) { SetSpecialSituation(ConflictSpecial.Mountain_Beast, 0); }
+                                        else if (terrain == 2) { SetSpecialSituation(ConflictSpecial.Forest_Beast, 0); }
+                                    }
+                                    break;
                             }
-                        }
+                            break;
                     }
                 }
+                else { Game.SetError(new Error(97, "Invalid Player Pos (null)")); }
             }
             else { Game.SetError(new Error(97, "Player not found (null), no Auto Special Situation created")); }
         }

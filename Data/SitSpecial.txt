@@ -3,7 +3,7 @@
 # NOTE: All fields must have a value
 # Name: Situation descriptor -> no more than four or five words
 # Type: 'Special'
-# SubType: ConflictSpecial -> FortifiedPosition, MountainCountry, ForestCountry, CastleWalls
+# SubType: ConflictSpecial -> FortifiedPosition, MountainBattle, ForestBattle, CastleWalls, MountainBeast, ForestBeast
 # SitNum: NO sitNum as all cards are assumed to be defender advantage, sitnum 0, cards.
 # PlyrDef: '1' if player is the defender, '-1' if opponent 
 # Data: multi purpose integer, default 0
@@ -46,7 +46,7 @@ Bad3: Where did <name> find the time and expertise to construct such wickedly ef
 
 Name: Mountain Terrain
 Type: Special
-SubType: MountainCountry
+SubType: MountainBattle
 PlyrDef: 1
 Data: 0
 Good1: High ground, mountain passes and steep valley walls all work to your favour.
@@ -59,7 +59,7 @@ Bad3: Why, if you've got the high ground, did you not place your archers where t
 
 Name: Mountain Terrain
 Type: Special
-SubType: MountainCountry
+SubType: MountainBattle
 PlyrDef: -1
 Data: 0
 Good1: <name> is basking in a false sense of security from the safety of his mountain perch. You're about to prove him wrong.
@@ -74,7 +74,7 @@ Bad3: Who in their right mind would want to fight in the mountains? Only a man w
 
 Name: Forest Terrain
 Type: Special
-SubType: ForestCountry
+SubType: ForestBattle
 PlyrDef: 1
 Data: 0
 Good1: Plenty of greenery and tall, climbable, trees allow your archers to pick of <men> one by one.
@@ -87,7 +87,7 @@ Bad3: The trees and undergrowth have made it impossible for your knights to figh
 
 Name: Forest Terrain
 Type: Special
-SubType: ForestCountry
+SubType: ForestBattle
 PlyrDef: -1
 Data: 0
 Good1: Dense greenery works both ways. Your men manage to quietly move around the enemies flank, unseen.
@@ -124,4 +124,34 @@ Good3: Your Trebuchets slam rocks into one part of the wall. There are already c
 Bad1: The walls are solid and appear impregnable. Each time you order your men forward they get mowed down by crossbowmen on the ramparts.
 Bad2: You're losing a lot of men to the archers and crossbowmen a-high on the ramparts. All you can do is grind your teeth.
 Bad3: Your ladder teams were met with boiling oil. They are refusing to give it one more try. Nobody wants their flesh sluiced off their bones.
+[End]
+
+# Forest Beast Home Territory --- (Player always the challenger in a hunting conflict)
+
+Name: Home Ground
+Type: Special
+SubType: ForestBeast
+PlyrDef: -1
+Data: 0
+Good1: You are in the home territory of the <beast> but you do your best to make the beast come to you.
+Good2: <geocluster> might be a green jungle but you can sense the rough outline of the paths throughout.
+Good3: There is a pattern to the chaos that resides within <geocluster>. The <beast> has already decoded it but you're not far behind.
+Bad1: The <beast> knows <geocluster>. <He> lives and hunts here. <He> can use the terrain to <his> advantage.
+Bad2: <geocluster> is a confusing green maze with ever shifting light and shadow. The <beast> lives here.
+Bad3: It's hard to know where to go within <geocluster>. You feel at a distinct disadvantage to the <beast> who hunts daily here.
+[End]
+
+# Mountain Beast Home Territory --- (Player always the challenger in a hunting conflict)
+
+Name: Home Ground
+Type: Special
+SubType: MountainBeast
+PlyrDef: -1
+Data: 0
+Good1: You find a high point of ground with a good alround view and settle down to wait for the <beast>.
+Good2: <geocluster>'s are a jumbled confusion of rock but you manage to pick your way through the worst of it.
+Good3: You slow down and take your time. <geocluster> is the home territory of the <beast>. Best not to rush it.
+Bad1: The <beast> knows <geocluster>. <He> lives and hunts here. <He> can use the verticality to <his> advantage.
+Bad2: It's all about the high ground. Everywhere there are ridges and ledges. The <beast> lives here. <He> knows them all.
+Bad3: You're getting a sore neck from constantly scanning above you. There are so many places that the <beast> could be lurking.
 [End]

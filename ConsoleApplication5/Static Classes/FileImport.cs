@@ -4599,101 +4599,111 @@ namespace Next_Game
                                         case "Tournament":
                                             if (structSituation.Type == ConflictType.Combat)
                                             { structSituation.Type_Combat = ConflictCombat.Tournament; }
-                                            else { Game.SetError(new Error(98, string.Format("Invalid Input, SubType (\"{0}\") Doesn't match Type", arrayOfSituations[i]))); }
+                                            else { Game.SetError(new Error(98, string.Format("Invalid Tournament Input, SubType (\"{0}\") Doesn't match Type", arrayOfSituations[i]))); }
                                             break;
                                         case "Personal":
                                             if (structSituation.Type == ConflictType.Combat)
                                             { structSituation.Type_Combat = ConflictCombat.Personal; }
-                                            else { Game.SetError(new Error(98, string.Format("Invalid Input, SubType (\"{0}\") Doesn't match Type", arrayOfSituations[i]))); }
+                                            else { Game.SetError(new Error(98, string.Format("Invalid Personal Input, SubType (\"{0}\") Doesn't match Type", arrayOfSituations[i]))); }
                                             break;
                                         case "Battle":
                                             if (structSituation.Type == ConflictType.Combat)
                                             { structSituation.Type_Combat = ConflictCombat.Battle; }
-                                            else { Game.SetError(new Error(98, string.Format("Invalid Input, SubType (\"{0}\") Doesn't match Type", arrayOfSituations[i]))); }
+                                            else { Game.SetError(new Error(98, string.Format("Invalid Battle Input, SubType (\"{0}\") Doesn't match Type", arrayOfSituations[i]))); }
                                             break;
                                         case "Hunting":
                                             if (structSituation.Type == ConflictType.Combat)
                                             { structSituation.Type_Combat = ConflictCombat.Hunting; }
-                                            else { Game.SetError(new Error(98, string.Format("Invalid Input, SubType (\"{0}\") Doesn't match Type", arrayOfSituations[i]))); }
+                                            else { Game.SetError(new Error(98, string.Format("Invalid Hunting Input, SubType (\"{0}\") Doesn't match Type", arrayOfSituations[i]))); }
                                             break;
                                         //...Social
                                         case "Blackmail":
                                             if (structSituation.Type == ConflictType.Social)
                                             { structSituation.Type_Social = ConflictSocial.Blackmail; }
-                                            else { Game.SetError(new Error(98, string.Format("Invalid Input, SubType (\"{0}\") Doesn't match Type", arrayOfSituations[i]))); }
+                                            else { Game.SetError(new Error(98, string.Format("Invalid Blackmail Input, SubType (\"{0}\") Doesn't match Type", arrayOfSituations[i]))); }
                                             break;
                                         case "Seduce":
                                             if (structSituation.Type == ConflictType.Social)
                                             { structSituation.Type_Social = ConflictSocial.Seduce; }
-                                            else { Game.SetError(new Error(98, string.Format("Invalid Input, SubType (\"{0}\") Doesn't match Type", arrayOfSituations[i]))); }
+                                            else { Game.SetError(new Error(98, string.Format("Invalid Seduce Input, SubType (\"{0}\") Doesn't match Type", arrayOfSituations[i]))); }
                                             break;
                                         case "Befriend":
                                             if (structSituation.Type == ConflictType.Social)
                                             { structSituation.Type_Social = ConflictSocial.Befriend; }
-                                            else { Game.SetError(new Error(98, string.Format("Invalid Input, SubType (\"{0}\") Doesn't match Type", arrayOfSituations[i]))); }
+                                            else { Game.SetError(new Error(98, string.Format("Invalid Befriend Input, SubType (\"{0}\") Doesn't match Type", arrayOfSituations[i]))); }
                                             break;
                                         //...Stealth
                                         case "Infiltrate":
                                             if (structSituation.Type == ConflictType.Stealth)
                                             { structSituation.Type_Stealth = ConflictStealth.Infiltrate; }
-                                            else { Game.SetError(new Error(98, string.Format("Invalid Input, SubType (\"{0}\") Doesn't match Type", arrayOfSituations[i]))); }
+                                            else { Game.SetError(new Error(98, string.Format("Invalid Infiltrate Input, SubType (\"{0}\") Doesn't match Type", arrayOfSituations[i]))); }
                                             break;
                                         case "Evade":
                                             if (structSituation.Type == ConflictType.Stealth)
                                             { structSituation.Type_Stealth = ConflictStealth.Evade; }
-                                            else { Game.SetError(new Error(98, string.Format("Invalid Input, SubType (\"{0}\") Doesn't match Type", arrayOfSituations[i]))); }
+                                            else { Game.SetError(new Error(98, string.Format("Invalid Evade Input, SubType (\"{0}\") Doesn't match Type", arrayOfSituations[i]))); }
                                             break;
                                         case "Escape":
                                             if (structSituation.Type == ConflictType.Stealth)
                                             { structSituation.Type_Stealth = ConflictStealth.Escape; }
-                                            else { Game.SetError(new Error(98, string.Format("Invalid Input, SubType (\"{0}\") Doesn't match Type", arrayOfSituations[i]))); }
+                                            else { Game.SetError(new Error(98, string.Format("Invalid Escape Input, SubType (\"{0}\") Doesn't match Type", arrayOfSituations[i]))); }
                                             break;
                                         //...State (Game)
                                         case "ArmySize":
                                             if (structSituation.Type == ConflictType.None)
                                             { structSituation.State = ConflictState.Relative_Army_Size; }
-                                            else { Game.SetError(new Error(98, string.Format("Invalid Input, SubType (\"{0}\") Doesn't match Type", arrayOfSituations[i]))); }
+                                            else { Game.SetError(new Error(98, string.Format("Invalid ArmySize Input, SubType (\"{0}\") Doesn't match Type", arrayOfSituations[i]))); }
                                             break;
                                         case "Fame":
                                             if (structSituation.Type == ConflictType.None)
                                             { structSituation.State = ConflictState.Relative_Fame; }
-                                            else { Game.SetError(new Error(98, string.Format("Invalid Input, SubType (\"{0}\") Doesn't match Type", arrayOfSituations[i]))); }
+                                            else { Game.SetError(new Error(98, string.Format("Invalid Fame Input, SubType (\"{0}\") Doesn't match Type", arrayOfSituations[i]))); }
                                             break;
                                         case "Honour":
                                             if (structSituation.Type == ConflictType.None)
                                             { structSituation.State = ConflictState.Relative_Honour; }
-                                            else { Game.SetError(new Error(98, string.Format("Invalid Input, SubType (\"{0}\") Doesn't match Type", arrayOfSituations[i]))); }
+                                            else { Game.SetError(new Error(98, string.Format("Invalid Honour Input, SubType (\"{0}\") Doesn't match Type", arrayOfSituations[i]))); }
                                             break;
                                         case "Justice":
                                             if (structSituation.Type == ConflictType.None)
                                             { structSituation.State = ConflictState.Relative_Justice; }
-                                            else { Game.SetError(new Error(98, string.Format("Invalid Input, SubType (\"{0}\") Doesn't match Type", arrayOfSituations[i]))); }
+                                            else { Game.SetError(new Error(98, string.Format("Invalid Justice Input, SubType (\"{0}\") Doesn't match Type", arrayOfSituations[i]))); }
                                             break;
                                         case "Known":
                                             if (structSituation.Type == ConflictType.None)
                                             { structSituation.State = ConflictState.Known_Status; }
-                                            else { Game.SetError(new Error(98, string.Format("Invalid Input, SubType (\"{0}\") Doesn't match Type", arrayOfSituations[i]))); }
+                                            else { Game.SetError(new Error(98, string.Format("Invalid Known Input, SubType (\"{0}\") Doesn't match Type", arrayOfSituations[i]))); }
                                             break;
                                         //...Special
                                         case "FortifiedPosition":
                                             if (structSituation.Type == ConflictType.None)
                                             { structSituation.Special = ConflictSpecial.Fortified_Position; }
-                                            else { Game.SetError(new Error(98, string.Format("Invalid Input, SubType (\"{0}\") Doesn't match Type", arrayOfSituations[i]))); }
+                                            else { Game.SetError(new Error(98, string.Format("Invalid FortifiedPosition Input, SubType (\"{0}\") Doesn't match Type", arrayOfSituations[i]))); }
                                             break;
-                                        case "MountainCountry":
+                                        case "MountainBattle":
                                             if (structSituation.Type == ConflictType.None)
-                                            { structSituation.Special = ConflictSpecial.Mountain_Country; }
-                                            else { Game.SetError(new Error(98, string.Format("Invalid Input, SubType (\"{0}\") Doesn't match Type", arrayOfSituations[i]))); }
+                                            { structSituation.Special = ConflictSpecial.Mountain_Battle; }
+                                            else { Game.SetError(new Error(98, string.Format("Invalid MountainBattle Input, SubType (\"{0}\") Doesn't match Type", arrayOfSituations[i]))); }
                                             break;
-                                        case "ForestCountry":
+                                        case "ForestBattle":
                                             if (structSituation.Type == ConflictType.None)
-                                            { structSituation.Special = ConflictSpecial.Forest_Country; }
-                                            else { Game.SetError(new Error(98, string.Format("Invalid Input, SubType (\"{0}\") Doesn't match Type", arrayOfSituations[i]))); }
+                                            { structSituation.Special = ConflictSpecial.Forest_Battle; }
+                                            else { Game.SetError(new Error(98, string.Format("Invalid ForestBattle Input, SubType (\"{0}\") Doesn't match Type", arrayOfSituations[i]))); }
+                                            break;
+                                        case "MountainBeast":
+                                            if (structSituation.Type == ConflictType.None)
+                                            { structSituation.Special = ConflictSpecial.Mountain_Beast; }
+                                            else { Game.SetError(new Error(98, string.Format("Invalid MountainBeast Input, SubType (\"{0}\") Doesn't match Type", arrayOfSituations[i]))); }
+                                            break;
+                                        case "ForestBeast":
+                                            if (structSituation.Type == ConflictType.None)
+                                            { structSituation.Special = ConflictSpecial.Forest_Beast; }
+                                            else { Game.SetError(new Error(98, string.Format("Invalid ForestBeast Input, SubType (\"{0}\") Doesn't match Type", arrayOfSituations[i]))); }
                                             break;
                                         case "CastleWalls":
                                             if (structSituation.Type == ConflictType.None)
                                             { structSituation.Special = ConflictSpecial.Castle_Walls; }
-                                            else { Game.SetError(new Error(98, string.Format("Invalid Input, SubType (\"{0}\") Doesn't match Type", arrayOfSituations[i]))); }
+                                            else { Game.SetError(new Error(98, string.Format("Invalid CastleWalls Input, SubType (\"{0}\") Doesn't match Type", arrayOfSituations[i]))); }
                                             break;
                                         default:
                                             Game.SetError(new Error(98, string.Format("Invalid Input, SubType unknown (\"{0}\")", arrayOfSituations[i])));

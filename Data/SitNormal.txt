@@ -173,7 +173,46 @@ Bad3: You're having to fight with one eye on the uneven ground. It's treacherous
 
 # Hunting a Beast
 
+Name: Down Wind
+Type: Combat
+SubType: Hunting
+SitNum: 0
+PlyrDef: -1
+Data: 0
+Good1: The wind is behind you. Reaching down you quickly rub mud over your exposed skin. It's not much but it'll cut down your scent.
+Good2: Luckily the wind drops for a short while. Being down wind is temporarily no longer a disadvantage.
+Good3: You reach into your pocket and pull out a bundle of salt. Throwing it into the wind you hope that'll negate your scent.
+Bad1: The <beast> is down wind. <He> can smell your scent. <He> knows where you are.
+Bad2: The wind is against you. The <beast> has picked up your scent.
+Bad3: The <beast> has circled around and gained the down wind position. Your scent gives you away.
+[end]   
 
+Name: Dense Undergrowth
+Type: Combat
+SubType: Hunting
+SitNum: 0
+PlyrDef: -1
+Data: 0
+Good1: 
+Good2: 
+Good3: 
+Bad1: <geocluster> has pockets of horizontal scrub that block the path of anything on two legs. But not the <beast>, <he> can still find a way.
+Bad2: You struggle to disentangle yourself from the vines and branches that cling to you. Are you being watched by the <beast>?
+Bad3: There must be a way past the dense tangle of undergrowth but you can't find it. The <beast> would know which to go.
+[end] 
+
+Name: Wet Ground
+Type: Combat
+SubType: Hunting
+SitNum: 1
+Data: 0
+Good1: 
+Good2: 
+Good3: 
+Bad1: 
+Bad2: 
+Bad3: 
+[end] 
 
 # Blackmail Social
 
