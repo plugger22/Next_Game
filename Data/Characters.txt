@@ -1,12 +1,12 @@
 # Characters.txt -> special characters used in Events
 
 # NOTE: All fields must have a value
-# ID: 1+, must be unique (SpecialID)
+# ID: 1+, must be unique (SpecialID) NOTE: must be < 1000 as 1000+ are reserved for Beasts (also Special characters but use Beasts.txt for input)
 # Sex: Male / Female
 # Description: paint a picture of the character. No default, compulsory.
 # Resources: Starting amount of resources, default value of '1', range 1 to 5
 # ..._Mod -> +ve gives a higher trait value, -ve gives a lower, '0' is neutral (could go either way)
-# ..._Auto -> 1  / 0 (default), if '1' then a trait is automatically assigned, if '0' then there is the normal chance of trait
+# ..._Auto -> 1  / 0 (default), if '1' then a trait is automatically assigned, if '0' then there is the normal, low, chance of trait
 # [End] -> Don't forget!
 
 

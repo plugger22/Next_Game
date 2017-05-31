@@ -1,0 +1,29 @@
+# Beasts.txt -> All beasts used in the game for conflicts (hunting). Treated as Special actors but use Followers.txt format for input.
+# NOTE: All fields must have a value
+# SID: (Special ID) unique number, 1000+
+# Sex: Male / Female
+# Description: paint a picture of the Beast. No default, compulsory.
+# ...._Effect: Description of Effect, eg. "Puzzled" (keep short). Use default of 'Normal' if nothing unusual. Tie in with Effect system if possible.
+# ...._Effect: A number (range +/- 1 or 2), eg. '+1' which gives a value of '4'. Default of '0' gives an average Effect of 3 (or none for 'Touched')
+# Touched Effect: is different, default of '0' gives a value of '0'. To be touched you must give a value of between -2 to +2 (excluding '0')
+
+
+
+Name: Direwolf
+SID: 1000
+Sex: Male
+Description: An oversized wolf with a rapacious appetite matched to a cunning, predatory, mind and an extraordinary sense of smell.
+Age: 15
+Combat_Effect: +2
+Combat_Trait: Fast and Powerful
+Wits_Effect: +2
+Wits_Trait: Acute Sense of Smell
+Charm_Effect: 0
+Charm_Trait: Normal
+Treachery_Effect: +2
+Treachery_Trait: Cunning
+Leadership_Effect: 0
+Leadership_Trait: Normal
+Touched_Effect: 0
+Touched_Trait: Normal
+[End]

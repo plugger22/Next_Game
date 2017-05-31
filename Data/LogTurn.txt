@@ -1,16 +1,215 @@
-//Exile Game file ops "LogTurn.txt" commenced at: 30/05/2017 20:56:17
---- ProcessStartGame (World.cs)
---- AgePassiveCharacters (History.cs)
---- InitialiseGameVars (World.cs)
-[GameVar] View_Index changed from 0 to 1
-[AddVisitedLoc] LocID 4, "Maidenpool", turn -3 -> record added to listLocsVisited
-[AddVisitedLoc] LocID 4, "Maidenpool", turn -3 -> new record added to dictLocsVisited
-[AddVisitedLoc] LocID 11, "The Arbor", turn -2 -> record added to listLocsVisited
-[AddVisitedLoc] LocID 11, "The Arbor", turn -2 -> new record added to dictLocsVisited
-[AddVisitedLoc] LocID 21, "Uplands", turn -1 -> record added to listLocsVisited
-[AddVisitedLoc] LocID 21, "Uplands", turn -1 -> new record added to dictLocsVisited
-[AddVisitedLoc] LocID 26, "Hornvale", turn 0 -> record added to listLocsVisited
-[AddVisitedLoc] LocID 26, "Hornvale", turn 0 -> new record added to dictLocsVisited
+//Exile Game File "LogTurn.txt" opened at: 31/05/2017 11:50:59
+--- ProcessStartTurn (World.cs)
+Day 3, Turn 2
+Usurper Anderewe Baratheon, "The All Thumbs", AtLocation, Valyria
+--- UpdateRumours (World.cs)
+dictRumoursTimed (Start) -> 100 records
+RumourID 311 -> TimerExpire decremented, now 18
+RumourID 312 -> TimerExpire decremented, now 18
+RumourID 313 -> TimerExpire decremented, now 18
+RumourID 314 -> TimerExpire decremented, now 18
+RumourID 315 -> TimerExpire decremented, now 18
+RumourID 316 -> TimerExpire decremented, now 18
+RumourID 317 -> TimerExpire decremented, now 18
+RumourID 318 -> TimerExpire decremented, now 18
+RumourID 319 -> TimerExpire decremented, now 18
+RumourID 320 -> TimerExpire decremented, now 18
+RumourID 321 -> TimerExpire decremented, now 18
+RumourID 322 -> TimerExpire decremented, now 18
+RumourID 323 -> TimerExpire decremented, now 18
+RumourID 324 -> TimerExpire decremented, now 18
+RumourID 325 -> TimerExpire decremented, now 18
+RumourID 326 -> TimerExpire decremented, now 18
+RumourID 327 -> TimerExpire decremented, now 18
+RumourID 328 -> TimerExpire decremented, now 18
+RumourID 329 -> TimerExpire decremented, now 18
+RumourID 330 -> TimerExpire decremented, now 18
+RumourID 331 -> TimerExpire decremented, now 18
+RumourID 332 -> TimerExpire decremented, now 18
+RumourID 333 -> TimerExpire decremented, now 18
+RumourID 334 -> TimerExpire decremented, now 18
+RumourID 335 -> TimerExpire decremented, now 18
+RumourID 336 -> TimerExpire decremented, now 18
+RumourID 337 -> TimerExpire decremented, now 18
+RumourID 338 -> TimerExpire decremented, now 18
+RumourID 339 -> TimerExpire decremented, now 18
+RumourID 340 -> TimerExpire decremented, now 18
+RumourID 341 -> TimerExpire decremented, now 18
+RumourID 342 -> TimerExpire decremented, now 18
+RumourID 343 -> TimerExpire decremented, now 18
+RumourID 344 -> TimerExpire decremented, now 18
+RumourID 345 -> TimerExpire decremented, now 18
+RumourID 346 -> TimerExpire decremented, now 18
+RumourID 347 -> TimerExpire decremented, now 18
+RumourID 348 -> TimerExpire decremented, now 18
+RumourID 349 -> TimerExpire decremented, now 18
+RumourID 350 -> TimerExpire decremented, now 18
+RumourID 351 -> TimerExpire decremented, now 18
+RumourID 352 -> TimerExpire decremented, now 18
+RumourID 353 -> TimerExpire decremented, now 18
+RumourID 354 -> TimerExpire decremented, now 18
+RumourID 355 -> TimerExpire decremented, now 18
+RumourID 356 -> TimerExpire decremented, now 18
+RumourID 357 -> TimerExpire decremented, now 18
+RumourID 358 -> TimerExpire decremented, now 18
+RumourID 359 -> TimerExpire decremented, now 18
+RumourID 360 -> TimerExpire decremented, now 18
+RumourID 361 -> TimerExpire decremented, now 18
+RumourID 362 -> TimerExpire decremented, now 18
+RumourID 363 -> TimerExpire decremented, now 18
+RumourID 364 -> TimerExpire decremented, now 18
+RumourID 365 -> TimerExpire decremented, now 18
+RumourID 366 -> TimerExpire decremented, now 18
+RumourID 367 -> TimerExpire decremented, now 18
+RumourID 368 -> TimerExpire decremented, now 18
+RumourID 369 -> TimerExpire decremented, now 18
+RumourID 370 -> TimerExpire decremented, now 18
+RumourID 371 -> TimerExpire decremented, now 18
+RumourID 372 -> TimerExpire decremented, now 18
+RumourID 373 -> TimerExpire decremented, now 18
+RumourID 374 -> TimerExpire decremented, now 18
+RumourID 375 -> TimerExpire decremented, now 18
+RumourID 376 -> TimerExpire decremented, now 18
+RumourID 377 -> TimerExpire decremented, now 18
+RumourID 378 -> TimerExpire decremented, now 18
+RumourID 379 -> TimerExpire decremented, now 18
+RumourID 380 -> TimerExpire decremented, now 18
+RumourID 381 -> TimerExpire decremented, now 18
+RumourID 382 -> TimerExpire decremented, now 18
+RumourID 383 -> TimerExpire decremented, now 18
+RumourID 384 -> TimerExpire decremented, now 18
+RumourID 385 -> TimerExpire decremented, now 18
+RumourID 386 -> TimerExpire decremented, now 18
+RumourID 387 -> TimerExpire decremented, now 18
+RumourID 388 -> TimerExpire decremented, now 18
+RumourID 389 -> TimerExpire decremented, now 18
+RumourID 390 -> TimerExpire decremented, now 18
+RumourID 391 -> TimerExpire decremented, now 18
+RumourID 392 -> TimerExpire decremented, now 18
+RumourID 393 -> TimerExpire decremented, now 18
+RumourID 394 -> TimerExpire decremented, now 18
+RumourID 395 -> TimerExpire decremented, now 18
+RumourID 396 -> TimerExpire decremented, now 18
+RumourID 397 -> TimerExpire decremented, now 18
+RumourID 398 -> TimerExpire decremented, now 18
+RumourID 399 -> TimerExpire decremented, now 18
+RumourID 400 -> TimerExpire decremented, now 18
+RumourID 401 -> TimerExpire decremented, now 18
+RumourID 402 -> TimerExpire decremented, now 18
+RumourID 403 -> TimerExpire decremented, now 18
+RumourID 404 -> TimerExpire decremented, now 18
+RumourID 460 -> TimerExpire decremented, now 1
+RumourID 464 -> TimerExpire decremented, now 2
+RumourID 462 -> TimerExpire decremented, now 1
+RumourID 463 -> TimerExpire decremented, now 1
+RumourID 465 -> TimerExpire decremented, now 2
+RumourID 466 -> TimerExpire decremented, now 2
+--- MoveActors -> 0 Records (World.cs)
+--- UpdatePlayerStatus (World.cs)
+--- UpdateWorldStatus (World.cs)
+--- CheckFollowerActivity (World.cs)
+--- GetRumour (Director.cs)
+arrayOfRumours [0] -> RumourID 449, Strength 3, Scope Global, Type Event, Global All
+arrayOfRumours [1] -> RumourID 429, Strength 2, Scope Global, Type HouseRel, Global North
+arrayOfRumours [5] -> RumourID 27, Strength 2, Scope Local, Type Skill, Global All
+RumourID 449 selected from the Pool
+Rumour "People talk about seeing an old woman on the roads, cursing all those she meets." revealed to ActorID3 on turn 2 -> added to List
+RumourID 449 removed from listRumoursGlobal[21]
+Follower The Crone, ActID 3, added RumourID 449
+--- GetRumour (Director.cs)
+arrayOfRumours [0] -> RumourID 152, Strength 1, Scope Global, Type Item, Global All
+arrayOfRumours [1] -> RumourID 431, Strength 2, Scope Global, Type HouseRel, Global North
+arrayOfRumours [5] -> RumourID 219, Strength 4, Scope Local, Type Skill, Global All
+RumourID 219 selected from the Pool
+Rumour "BannerLord Galbart Hunt "The Crafty", ActID 94 at Longbow Hall, is whispered to be Alert" revealed to ActorID2 on turn 2 -> added to List
+RumourID 219 removed from listRumoursHouse[0]
+Follower The Waif, ActID 2, added RumourID 219
+BannerLord Galbart Hunt, ActID 94, has their Combat changed to True
+--- GetRumour (Director.cs)
+[Notification] No house rumours available -> none added to pool
+arrayOfRumours [0] -> RumourID 241, Strength 1, Scope Global, Type Item, Global All
+arrayOfRumours [3] -> RumourID 406, Strength 2, Scope Global, Type HouseRel, Global South
+RumourID 406 selected from the Pool
+Rumour "House Lannister has had good past relations with House Greyjoy due to their political support" revealed to ActorID8 on turn 2 -> added to List
+RumourID 406 removed from listRumoursSouth[12]
+Follower The Haggler, ActID 8, added RumourID 406
+[Notification -> HouseRel] "Provided valuable Political support in previous councils" -> Known is True
+--- GetMarketView (Director.cs)
+[GameVar] View_Index changed from 2 to 3
+--- CheckStationaryActiveActors (World.cs)
+ [Search -> Stationary] Usurper Anderewe Baratheon, ActID 1 is AtLocation
+--- CheckIfFoundActive (World.cs)
+ [Search -> Debug] Enemy, Brother Gorgo, ID 129 at 18:16, Active Anderewe Baratheon, ID 1, at 2:29
+ [Search -> Debug] Enemy, Brother Shiva, ID 130 at 18:16, Active Anderewe Baratheon, ID 1, at 2:29
+ [Search -> Debug] Enemy, Brother Damballa, ID 131 at 18:16, Active Anderewe Baratheon, ID 1, at 2:29
+ [Search -> Debug] Enemy, Brother Shaitan, ID 132 at 18:16, Active Anderewe Baratheon, ID 1, at 2:29
+ [Search -> Debug] Enemy, The Unrelenting, ID 133 at 18:16, Active Anderewe Baratheon, ID 1, at 2:29
+ [Search -> Stationary] Follower The Crone, ActID 3 is AtLocation
+ [Search -> Stationary] Follower The Waif, ActID 2 is AtLocation
+ [Search -> Stationary] Follower The Haggler, ActID 8 is AtLocation
+--- UpdateAIController (World.cs)
+ [AI -> Player Unknown] Inquisitor Brother Gorgo, Act ID 129 Mode -> Normal
+ [AI -> Player Unknown] Inquisitor Brother Shiva, Act ID 130 Mode -> Normal
+ [AI -> Player Unknown] Inquisitor Brother Damballa, Act ID 131 Mode -> Normal
+ [AI -> Player Unknown] Inquisitor Brother Shaitan, Act ID 132 Mode -> Normal
+ [AI -> Player Unknown] Nemesis The Unrelenting, Act ID 133 Mode -> Normal
+--- SetEnemyActivity (World.cs)
+--- SetEnemyGoal (World.cs)
+ [Goal -> Branch] Brother Gorgo, ActID 129 Assigned Branch -> 1 Current Branch -> 0
+ [Goal -> New] Brother Gorgo, ActID 129, (loc 18:16), assigned new Goal -> Hide
+--- SetEnemyGoal (World.cs)
+ [Goal -> Branch] Brother Shiva, ActID 130 Assigned Branch -> 1 Current Branch -> 0
+ [Enemy -> Goal] Brother Damballa, ActID 131 retains Goal -> Wait
+ [Enemy -> Goal] Brother Shaitan, ActID 132 retains Goal -> Wait
+--- SetEnemyGoal (World.cs)
+ [Goal -> Branch] The Unrelenting, ActID 133 Assigned Branch -> 0 Current Branch -> 0
+--- CheckPlayerEvents (Director.cs)
+Location event, Need 75, roll 90
+- CreateAutoLocEvent (Director.cs)
+ [AutoEvent -> ActorList] "Jon Targaryen", ID 66 added to list of Actors
+ [AutoEvent -> ActorList] "Swetiue Targaryen", ID 67 added to list of Actors
+ [AutoEvent -> ActorList] "Ser Sagard Teodric", ID 68 added to list of Actors
+ [AutoEvent -> ActorList] "Varamyr Dodd", ID 69 added to list of Actors
+ [AutoEvent -> ActorList] "Hervey Arnoldus", ID 70 added to list of Actors
+ [AutoEvent -> ActorList] "Oggery Samm", ID 71 added to list of Actors
+ [AutoEvent -> ActorList] "Gerbertus Targaryen", ID 72 added to list of Actors
+ [AutoEvent -> ActorList] "Mina Targaryen", ID 73 added to list of Actors
+ [AutoEvent -> LocalList] "Jon Targaryen", ID 66 added to list of Locals
+ [AutoEvent -> LocalList] "Swetiue Targaryen", ID 67 added to list of Locals
+ [AutoEvent -> LocalList] "Ser Sagard Teodric", ID 68 added to list of Locals
+ [AutoEvent -> AdvisorList] "Varamyr Dodd", ID 69 added to list of Advisors
+ [AutoEvent -> AdvisorList] "Hervey Arnoldus", ID 70 added to list of Advisors
+ [AutoEvent -> AdvisorList] "Oggery Samm", ID 71 added to list of Advisors
+ [AutoEvent -> LocalList] "Gerbertus Targaryen", ID 72 added to list of Locals
+ [AutoEvent -> LocalList] "Mina Targaryen", ID 73 added to list of Locals
+[Notification] No entry found in dictOfIntroductions for RefID 11
+ Chance of Player Location event 75 %
+--- ResolvePlayerEvents (Director.cs)
+ Trigger FAILED on "0" Equals 1
+ Trigger: Player is wrong type of Known status -> Trigger failed
+ Trigger FAILED on "0" Equals 1
+ Trigger: Player is wrong type of Known status -> Trigger failed
+ Trigger FAILED on "0" Equals 1
+ Trigger: Player is wrong type of Known status -> Trigger failed
+ Trigger FAILED on "0" Equals 1
+ Trigger: Player is wrong type of Known status -> Trigger failed
+ Event "What to do?" Timer Repeat now 999
+ Event "What to do?" Cooldown Timer has been reset to 0
+--- UpdateActiveActors (World.cs)
+ Usurper Anderewe Baratheon has had their TurnsUnknown Timer increased from 101 to 102
+ Follower The Crone has had their TurnsUnknown Timer increased from 1 to 2
+ Follower The Waif has had their TurnsUnknown Timer increased from 1 to 2
+ Follower The Haggler has had their TurnsUnknown Timer increased from 1 to 2
+--- ResolveOutcome (Director.cs)
 --- SetEndGame (Game.cs)
 [Alert] Player chose to exit (pressed 'X')
-//Exile Game file ops "LogTurn.txt" Completed at: 30/05/2017 20:56:53
+//Exile Game file ops "LogTurn.txt" Completed at: 31/05/2017 11:51:06
+c 18:16)" -> dict & List
+[Rumour -> Added] RID 465, "Inquisitor, Brother Shaitan, ActID 132 has been spotted relaxing at Kingskeep (loc 18:16)" -> dict & List
+[Rumour -> Added] RID 466, "Nemesis, The Unrelenting, ActID 133 has been spotted absolving themself at Kingskeep (loc 18:16)" -> dict & List
+--- HouseKeepActors (World.cs)
+[GameStat] "Location_Days" -> increased from 1 to 2
+--- HousekeepRumours (World.cs)
+dictRumoursKnown has 3 records
+
+//Exile Game File "LogTurn.txt" Close completed at: 31/05/2017 11:50:59

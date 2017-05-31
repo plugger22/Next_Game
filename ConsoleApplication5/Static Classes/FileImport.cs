@@ -4115,7 +4115,7 @@ namespace Next_Game
         }
 
         /// <summary>
-        /// Import Followers
+        /// Import Followers (also used for Beasts)
         /// </summary>
         /// <param name="fileName"></param>
         /// <returns></returns>
@@ -4168,6 +4168,7 @@ namespace Next_Game
                                 case "Name":
                                     structFollower.Name = cleanToken;
                                     break;
+                                case "SID":
                                 case "FID":
                                     try { structFollower.FID = Convert.ToInt32(cleanToken); }
                                     catch (Exception e)

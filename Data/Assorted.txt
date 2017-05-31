@@ -54,10 +54,6 @@ Hunter
 Sumpter Horse
 War Horse
 Saddle Horse
-Thoroughbred
-Quarter Horse
-Mustang
-Trotter
 
 [Curses]
 Sweet Mouldy Cheese!

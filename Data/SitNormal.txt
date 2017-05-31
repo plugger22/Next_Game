@@ -171,6 +171,10 @@ Bad2: Your ankle skews outwards as your slip on a rock.
 Bad3: You're having to fight with one eye on the uneven ground. It's treacherous footing.
 [end]
 
+# Hunting a Beast
+
+
+
 # Blackmail Social
 
 Name: Take the Moral High Ground

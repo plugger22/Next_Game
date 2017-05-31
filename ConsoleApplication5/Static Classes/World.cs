@@ -113,6 +113,7 @@ namespace Next_Game
             Game.history.InitialisePastHistoryHouses();
             Game.history.InitialiseLordRelations();
             Game.history.InitialiseSpecialCharacters(Game.file.GetCharacters("Characters.txt"));
+            Game.history.InitialiseBeasts(Game.file.GetFollowers("Beasts.txt"));
             Game.StopTimer(timer_2, "W: InitialiseHistory");
             timer_2.Start();
             InitialiseConversionDicts(); //needs to be after history methods (above) & before InitialiseEnemyActors (below)

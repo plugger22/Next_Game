@@ -435,6 +435,54 @@ namespace Next_Game
             else { Game.SetError(new Error(59, "Insufficient Follower Structures available (less than the Eight rqr'd)")); }
         }
 
+
+        /// <summary>
+        /// creates beast actors, uses Follower data structure (txt & file import)
+        /// </summary>
+        /// <param name="listOfStructs"></param>
+        internal void InitialiseBeasts(List<FollowerStruct> listOfStructs)
+        {
+            Game.logStart?.Write("---  InitialiseBeasts (History.cs)");
+            int age = (int)SkillAge.Fifteen;
+            //loop structs and add all beasts
+            for (int i = 0; i < listOfStructs.Count; i++)
+            {
+                FollowerStruct data = listOfStructs[i];
+                //Convert FollowerStructs into Beast objects (data.FID is actually SpecialID)
+                if (data.FID < 1000) { data.FID += 1000; } // should be in range 1000+
+                Special special = new Special("Beast", data.Name, data.FID, data.Sex);
+
+                if (special != null)
+                {
+                    //copy data across from struct to object
+                    special.Description = data.Description;
+                    special.Resources = data.Resources;
+                    special.Age = data.Age;
+                    special.Born = Game.gameStart - data.Age;
+                    //trait effects
+                    special.arrayOfTraitEffects[age, (int)SkillType.Combat] = data.Combat_Effect;
+                    special.arrayOfTraitEffects[age, (int)SkillType.Wits] = data.Wits_Effect;
+                    special.arrayOfTraitEffects[age, (int)SkillType.Charm] = data.Charm_Effect;
+                    special.arrayOfTraitEffects[age, (int)SkillType.Treachery] = data.Treachery_Effect;
+                    special.arrayOfTraitEffects[age, (int)SkillType.Leadership] = data.Leadership_Effect;
+                    special.arrayOfTraitEffects[age, (int)SkillType.Touched] = data.Touched_Effect;
+                    if (data.Touched_Effect != 0) { special.Touched = 3; }
+                    //trait names
+                    special.arrayOfTraitNames[(int)SkillType.Combat] = data.Combat_Trait;
+                    special.arrayOfTraitNames[(int)SkillType.Wits] = data.Wits_Trait;
+                    special.arrayOfTraitNames[(int)SkillType.Charm] = data.Charm_Trait;
+                    special.arrayOfTraitNames[(int)SkillType.Treachery] = data.Treachery_Trait;
+                    special.arrayOfTraitNames[(int)SkillType.Leadership] = data.Leadership_Trait;
+                    special.arrayOfTraitNames[(int)SkillType.Touched] = data.Touched_Trait;
+                    special.SetAllSkillsKnownStatus(true);
+                    //trait ID's not needed
+                    //add to list
+                    Game.world.SetSpecialActor(special);
+                    Game.logStart?.Write(string.Format("{0}, Aid {1}, specID {2} -> initialised O.K", special.Name, special.ActID, special.SpecialID));
+                }
+            }
+        }
+
         /// <summary>
         /// take list of structs from fileimport.GetCharacters and generate actors that are stored in dictPassiveActors
         /// </summary>
