@@ -850,6 +850,12 @@ namespace Next_Game
         public int ConcealLevel { get; set; } //number of stars the current type of concealment offers
         public int ConcealDisguise { get; set; } //possID of current disguise (can only have one at any time)
         public string ConcealText { get; set; } //short descriptive text giving name of Safe house or type of disguise
+        public string HorseName { get; set; }
+        public string HorseType { get; set; }
+        public int HorseHealth { get; set; } //if health reaches 0, horse is dead, range 1 to 5
+        public int HorseMaxHealth { get; set; } //health can't rise above this
+        public int HorseDays { get; set; } //number of days you've had this horse
+        public HorseStatus horseStatus { get; set; } //if no horse then HorseStatus.Gone
         private SortedDictionary<int, ActorRelation> dictFamily; //stores list of all relations (keyed off actorID)
         private List<int> listOfFavours; //stores possessionId of favours granted to Player
         //private List<int> listOfIntroductions; //stores possessionId of introductions granted to the Player
@@ -882,6 +888,8 @@ namespace Next_Game
 
         public List<int> GetFavours()
         { return listOfFavours; }
+
+
 
         /*public void AddIntroduction(int possID)
         { if (possID > 0) { listOfIntroductions.Add(possID); } }

@@ -595,13 +595,6 @@ namespace Next_Game
                             {
                                 SetPlayerRecord(new Record(tempText, person.ActID, person.LocID, CurrentActorIncident.Travel));
                                 Game.director.AddVisitedLoc(locID, Game.gameTurn);
-                                //Player automatically regains mounted mode, if on foot
-                                if (person.Travel != TravelMode.Mounted)
-                                {
-                                    person.SetTravelMode(TravelMode.Mounted);
-                                    Message messageHorse = new Message($"You have procured another horse at {locDestination.LocName}", person.ActID, locDestination.LocationID, MessageType.Move);
-                                    SetMessage(messageHorse);
-                                }
                             }
                             else if (person.ActID > 1)
                             { SetCurrentRecord(new Record(tempText, person.ActID, person.LocID, CurrentActorIncident.Travel)); }
@@ -1366,6 +1359,18 @@ namespace Next_Game
                         { listToDisplay.Add(new Snippet(string.Format("Item ID {0}, \"{1}\", {2}", item.ItemID, item.Description, item.ItemType))); }
                         else { listToDisplay.Add(new Snippet(string.Format("Item ID {0}, \"{1}\", {2}", item.ItemID, item.Description, item.ItemType), unknownColor, RLColor.Black)); }
                     }
+                }
+                //Horse
+                if (person is Player)
+                {
+                    listToDisplay.Add(new Snippet("Horse", RLColor.Brown, RLColor.Black));
+                    if (player.horseStatus != HorseStatus.Gone)
+                    {
+                        string horseText = string.Format("A {0} named \"{1}\" (strength {2}) Status -> {3}, owned for {4} day{5}", player.HorseType, player.HorseName,
+                            player.HorseHealth, player.horseStatus, player.HorseDays, player.HorseDays != 1 ? "s" : "");
+                        listToDisplay.Add(new Snippet(horseText, RLColor.White, RLColor.Black));
+                    }
+                    else { listToDisplay.Add(new Snippet("None", RLColor.White, RLColor.Black)); }
                 }
                 //Desires 
                 if (person is Passive)
@@ -4387,16 +4392,13 @@ namespace Next_Game
             Game.logTurn?.Write("--- ProcessStartGame (World.cs)");
             Game.history.AgePassiveCharacters(dictPassiveActors);
             InitialiseGameVars();
-            
             CalculateCrows();
 
             //DEBUG -> populate dictionary with sample data
             for (int i = 3; i > 0; i--)
             { Game.director.AddVisitedLoc(Game.network.GetRandomLocation(), i * -1); }
 
-            //Player's start location added to dict & list
-            Player player = GetPlayer();
-            Game.director.AddVisitedLoc(player.LocID, 0);
+            InitialiseFinalPlayer();
         }
 
         /// <summary>
@@ -4866,28 +4868,63 @@ namespace Next_Game
                 {
                     Player player = actor.Value as Player;
                     //incarcerated?
-                    if (actor.Value.Status == ActorStatus.Captured)
+                    switch (player.Status)
                     {
-                        actor.Value.Known = true; actor.Value.Revert = 2;
-                        //raise Legend_King each turn player is held in dungeon
-                        int legendLoss = Game.constant.GetValue(Global.LOSS_OF_LEGEND);
-                        int currentValue = Game.director.GetGameState(GameState.Legend_King, DataState.Good);
-                        int newValue = Math.Abs(Game.director.ChangeData(currentValue, legendLoss, Event_System.EventCalc.Add));
-                        Game.director.SetGameState(GameState.Legend_King, DataState.Good, newValue, true);
-                        //message
-                        string description = string.Format("The Legend of {0} {1} grows (+{2}) while the Usurper is incarcerated", Game.lore.NewKing.Title, Game.lore.NewKing.Name, legendLoss);
-                        SetMessage(new Message(description, MessageType.Incarceration));
-                        
+                        case ActorStatus.Captured:
+                            //stats
+                            Game.statistic.AddStat(GameStatistic.Dungeon_Days);
+                            actor.Value.Known = true; actor.Value.Revert = 2;
+                            //raise Legend_King each turn player is held in dungeon
+                            int legendLoss = Game.constant.GetValue(Global.LOSS_OF_LEGEND);
+                            int currentValue = Game.director.GetGameState(GameState.Legend_King, DataState.Good);
+                            int newValue = Math.Abs(Game.director.ChangeData(currentValue, legendLoss, Event_System.EventCalc.Add));
+                            Game.director.SetGameState(GameState.Legend_King, DataState.Good, newValue, true);
+                            //message
+                            string description = string.Format("The Legend of {0} {1} grows (+{2}) while the Usurper is incarcerated", Game.lore.NewKing.Title, Game.lore.NewKing.Name, legendLoss);
+                            SetMessage(new Message(description, MessageType.Incarceration));
+                            break;
+                        case ActorStatus.AtLocation:
+                            //stats
+                            Game.statistic.AddStat(GameStatistic.Location_Days);
+                            //horse matters
+                            switch (player.horseStatus)
+                            {
+                                case HorseStatus.Normal:
+                                    player.horseStatus = HorseStatus.Stabled;
+                                    player.HorseDays++;
+                                    break;
+                                case HorseStatus.Stabled:
+                                    player.HorseDays++;
+                                    break;
+                                case HorseStatus.Lame:
+                                case HorseStatus.Exhausted:
+                                case HorseStatus.Gone:
+                                    //player automatically gets a new horse
+                                    GetNewHorse();
+                                    
+                                    break;
+                            }
+                            break;
+                        case ActorStatus.Travelling:
+                            //stats
+                            Game.statistic.AddStat(GameStatistic.Travelling_Days);
+                            //horse matters
+                            if (player.horseStatus != HorseStatus.Gone) { player.HorseDays++; }
+                            break;
+                        case ActorStatus.AtSea:
+                            //stats
+                            Game.statistic.AddStat(GameStatistic.AtSea_Days);
+                            break;
+                        case ActorStatus.Adrift:
+                            //stats
+                            Game.statistic.AddStat(GameStatistic.Adrift_Days);
+                            break;
                     }
+
                     //stats
                     if (player.Known == true) { Game.statistic.AddStat(GameStatistic.Known_Days); }
                     if (player.Conceal == ActorConceal.Disguise) { Game.statistic.AddStat(GameStatistic.Disguise_Days); }
                     if (player.Conceal == ActorConceal.SafeHouse) { Game.statistic.AddStat(GameStatistic.SafeHouse_Days); }
-                    if (player.Status == ActorStatus.AtLocation) { Game.statistic.AddStat(GameStatistic.Location_Days); }
-                    if (player.Status == ActorStatus.Travelling) { Game.statistic.AddStat(GameStatistic.Travelling_Days); }
-                    if (player.Status == ActorStatus.AtSea) { Game.statistic.AddStat(GameStatistic.AtSea_Days); }
-                    if (player.Status == ActorStatus.Adrift) { Game.statistic.AddStat(GameStatistic.Adrift_Days); }
-                    if (player.Status == ActorStatus.Captured) { Game.statistic.AddStat(GameStatistic.Dungeon_Days); }
                 }
             }
         }
@@ -7103,6 +7140,44 @@ namespace Next_Game
         /// <returns></returns>
         internal List<Move> GetMoveObjects()
         { return listMoveObjects; }
+
+        /// <summary>
+        /// Run from ProcessGameStart -> handles all the last minute player stuff
+        /// </summary>
+        private void InitialiseFinalPlayer()
+        {
+            Game.logTurn?.Write("--- InitialiseFinalPlayer (World.cs)");
+            //Player's start location added to dict & list
+            Player player = GetPlayer();
+            Game.director.AddVisitedLoc(player.LocID, 0);
+            //Horse
+            GetNewHorse();
+        }
+
+        /// <summary>
+        /// get Player a new horse and take care of all the details
+        /// </summary>
+        public void GetNewHorse()
+        {
+            Player player = Game.world.GetPlayer();
+            if (player != null)
+            {
+                player.HorseName = Game.director.GetAssortedRandom(Assorted.HorseName);
+                player.HorseType = Game.director.GetAssortedRandom(Assorted.HorseType);
+                int health = rnd.Next(1, 10);
+                health = Math.Min(5, health); //max capped at 5, min capped at 1
+                player.HorseHealth = health;
+                player.HorseMaxHealth = health;
+                if (player.Status == ActorStatus.AtLocation) { player.horseStatus = HorseStatus.Stabled; }
+                else { player.horseStatus = HorseStatus.Normal; }
+                player.HorseDays = 1;
+                player.SetTravelMode(TravelMode.Mounted);
+                //admin
+                string text = $"{player.Name} has acquired a new horse (a {player.HorseType} named \"{player.HorseName}\" (stamina {player.HorseHealth})";
+                SetMessage(new Message(text, 1, player.LocID, MessageType.Horse));
+                SetPlayerRecord(new Record(text, 1, player.LocID, CurrentActorIncident.Horse));
+            }
+        }
 
         //new Methods above here
     }

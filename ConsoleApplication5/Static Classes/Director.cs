@@ -27,6 +27,8 @@ namespace Next_Game
     public enum Occupation { Offical, Church, Merchant, Craft, PeasantMale, PeasantFemale, Count}
     public enum TravelMode { None, Foot, Mounted} //default Mounted for all characters
     public enum Assorted { HorseName, HorseType, Curse, AnimalBig, Count}
+    public enum HorseStatus { Normal, Stabled, Lame, Exhausted, Gone}
+    public enum HorseGone { Stolen, RunOff, Abandoned, Drowned, PutDown, Eaten, Murdered, Killed}
 
 
     /// <summary>
@@ -5867,6 +5869,41 @@ namespace Next_Game
         }
 
         /// <summary>
+        /// Returns a random string from the appropriate Assorted Type list -> returns Empty if nothing found
+        /// </summary>
+        /// <param name="type"></param>
+        /// <returns></returns>
+        public string GetAssortedRandom(Assorted type)
+        {
+            string text = "";
+            string[] innerArray = null;
+            switch (type)
+            {
+                case Assorted.HorseName:
+                    innerArray = arrayOfAssorted[(int)type];
+                    break;
+                case Assorted.HorseType:
+                    innerArray = arrayOfAssorted[(int)type];
+                    break;
+                case Assorted.Curse:
+                    innerArray = arrayOfAssorted[(int)type];
+                    break;
+                case Assorted.AnimalBig:
+                    innerArray = arrayOfAssorted[(int)type];
+                    break;
+            }
+            //select a random string from the chosen list
+            if (innerArray != null)
+            {
+                if (innerArray.Length > 0)
+                { text = innerArray[rnd.Next(innerArray.Length)]; }
+                else { Game.logTurn?.Write($"[Alert] No data in innerArray for Assorted {type} -> String returned MT"); }
+            }
+            else { Game.SetError(new Error(297, "Invalid innerArray (null) for Assorted -> String returned MT")); }
+            return text;
+        }
+
+        /// <summary>
         /// Add a loc to dict & list, auto handles visiting of an existing location within dictionary -> returns true if successful
         /// </summary>
         /// <param name="locID"></param>
@@ -6138,6 +6175,10 @@ namespace Next_Game
 
             }
         }
+        
+
+
+
         //place new methods above here
     }
 }

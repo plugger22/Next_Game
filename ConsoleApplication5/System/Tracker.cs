@@ -11,8 +11,8 @@ namespace Next_Game
     public enum HistHouseIncident { None, Allegiance, Ownership }
     public enum HistKingdomIncident { None, Battle, Siege }
     //categorires -> Used for Messages & current Records
-    public enum MessageType { None, System, God, Error, Move, Crow, Activation, Event, Conflict, Known, Search, Incarceration }
-    public enum CurrentActorIncident { None, Condition, Event, Challenge, Travel, Resource, Known, Search }
+    public enum MessageType { None, System, God, Error, Move, Crow, Activation, Event, Conflict, Known, Search, Incarceration, Horse }
+    public enum CurrentActorIncident { None, Condition, Event, Challenge, Travel, Resource, Known, Search, Horse }
     //Relationship List Categories
     public enum RelListType { HousePastGood, HousePastBad, BannerPastGood, BannerPastBad, Lord_1, Lord_2, Lord_3, Lord_4, Lord_5, Count }
 
