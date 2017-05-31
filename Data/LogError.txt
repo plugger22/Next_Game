@@ -1,2 +1,10 @@
-//Exile Game file ops "LogError.txt" commenced at: 31/05/2017 11:45:58
-//Exile Game file ops "LogError.txt" Completed at: 31/05/2017 11:51:06
+//Exile Game file ops "LogError.txt" commenced at: 31/05/2017 16:13:35
+ERROR_101 "Invalid tag ("geocluster")"
+Method: CheckTagsActor,  Line: 142,  Object: Utility.cs,  Turn: 16,  Local Time: 16:18:00 UTC +10:00
+ERROR_101 "Invalid tag ("beast")"
+Method: CheckTagsActor,  Line: 142,  Object: Utility.cs,  Turn: 16,  Local Time: 16:18:00 UTC +10:00
+ERROR_101 "Invalid tag ("beast")"
+Method: CheckTagsActor,  Line: 142,  Object: Utility.cs,  Turn: 20,  Local Time: 16:20:32 UTC +10:00
+ERROR_101 "Invalid tag ("beast")"
+Method: CheckTagsActor,  Line: 142,  Object: Utility.cs,  Turn: 20,  Local Time: 16:20:32 UTC +10:00
+//Exile Game file ops "LogError.txt" Completed at: 31/05/2017 16:20:55

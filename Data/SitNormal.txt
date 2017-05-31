@@ -193,9 +193,9 @@ SubType: Hunting
 SitNum: 0
 PlyrDef: -1
 Data: 0
-Good1: 
-Good2: 
-Good3: 
+Good1: The undergrowth is so thick that not even the <beast> could manage. It's blocked the both of you.
+Good2: It doesn't take much imagination to see the mess you'll be in if you try and keep pushing into the undergrowth. Time to back out.
+Good3: The best way to deal with the tangled mess of foliage is to avoid it.
 Bad1: <geocluster> has pockets of horizontal scrub that block the path of anything on two legs. But not the <beast>, <he> can still find a way.
 Bad2: You struggle to disentangle yourself from the vines and branches that cling to you. Are you being watched by the <beast>?
 Bad3: There must be a way past the dense tangle of undergrowth but you can't find it. The <beast> would know which to go.
@@ -206,12 +206,12 @@ Type: Combat
 SubType: Hunting
 SitNum: 1
 Data: 0
-Good1: 
-Good2: 
-Good3: 
-Bad1: 
-Bad2: 
-Bad3: 
+Good1: The ground is wet in places but it allows you to clearly see the tracks of the <beast>.
+Good2: Being careful to stay out of the mire, you follow the easily visible tracks of the <beast>.
+Good3: If it wasn't for the wet patches you'd have trouble spotting the tracks of the <beast>.
+Bad1: The patches of wet ground make it difficult to move through <geocluster>. It doesn't hinder the <beast>.
+Bad2: It's slow going in the soggy sections of <geocluster>. You struggle to pull each foot out of the sticky mire.
+Bad3: Your pursuit of the <beast> founders in the sticky mud of the tiny bog. The <beast> skirts the area and disappears.
 [end] 
 
 # Blackmail Social
