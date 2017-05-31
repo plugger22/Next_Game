@@ -106,49 +106,72 @@ namespace Next_Game
                 int tagStart, tagFinish, length; //indexes
                 if (opponent != null)
                 {
-                    //loop whilever tags are present
-                    while (checkedText.Contains("<") == true)
+                    Player player = Game.world.GetPlayer();
+                    if (player != null)
                     {
-                        tagStart = checkedText.IndexOf("<");
-                        tagFinish = checkedText.IndexOf(">");
-                        length = tagFinish - tagStart;
-                        tag = checkedText.Substring(tagStart + 1, length - 1);
-                        //strip brackets
-                        replaceText = null;
-                        switch (tag)
+                        //loop whilever tags are present
+                        while (checkedText.Contains("<") == true)
                         {
-                            case "men":
-                                replaceText = string.Format("{0} {1}'s Men-At-Arms", opponent.Title, opponent.Name);
-                                break;
-                            case "name":
-                                replaceText = string.Format("{0} {1}", opponent.Title, opponent.Name);
-                                break;
-                            case "him":
-                                replaceText = string.Format("{0}", opponent.Sex == ActorSex.Male ? "him" : "her");
-                                break;
-                            case "she":
-                            case "he":
-                                replaceText = string.Format("{0}", opponent.Sex == ActorSex.Male ? "he" : "she");
-                                break;
-                            case "She":
-                            case "He":
-                                replaceText = string.Format("{0}", opponent.Sex == ActorSex.Male ? "He" : "She");
-                                break;
-                            case "his":
-                                replaceText = string.Format("{0}", opponent.Sex == ActorSex.Male ? "his" : "her");
-                                break;
-                            default:
-                                replaceText = "";
-                                Game.SetError(new Error(101, string.Format("Invalid tag (\"{0}\")", tag)));
-                                break;
-                        }
-                        if (replaceText != null)
-                        {
-                            //swap tag for text
-                            checkedText = checkedText.Remove(tagStart, length + 1);
-                            checkedText = checkedText.Insert(tagStart, replaceText);
+                            tagStart = checkedText.IndexOf("<");
+                            tagFinish = checkedText.IndexOf(">");
+                            length = tagFinish - tagStart;
+                            tag = checkedText.Substring(tagStart + 1, length - 1);
+                            //strip brackets
+                            replaceText = null;
+                            switch (tag)
+                            {
+                                case "men":
+                                    replaceText = string.Format("{0} {1}'s Men-At-Arms", opponent.Title, opponent.Name);
+                                    break;
+                                case "name":
+                                    replaceText = string.Format("{0} {1}", opponent.Title, opponent.Name);
+                                    break;
+                                case "beast":
+                                    replaceText = $"{opponent.Name}";
+                                    break;
+                                case "him":
+                                    replaceText = string.Format("{0}", opponent.Sex == ActorSex.Male ? "him" : "her");
+                                    break;
+                                case "she":
+                                case "he":
+                                    replaceText = string.Format("{0}", opponent.Sex == ActorSex.Male ? "he" : "she");
+                                    break;
+                                case "She":
+                                case "He":
+                                    replaceText = string.Format("{0}", opponent.Sex == ActorSex.Male ? "He" : "She");
+                                    break;
+                                case "his":
+                                    replaceText = string.Format("{0}", opponent.Sex == ActorSex.Male ? "his" : "her");
+                                    break;
+                                case "geocluster":
+                                    Position pos = player.GetActorPosition();
+                                    if (pos != null)
+                                    {
+                                        int data = Game.map.GetMapInfo(MapLayer.GeoID, pos.PosX, pos.PosY);
+                                        if (data > 0)
+                                        {
+                                            GeoCluster geocluster = Game.world.GetGeoCluster(data);
+                                            if (geocluster != null)
+                                            { replaceText = geocluster.Name; }
+                                            else { Game.SetError(new Error(283, "Invalid geocluster (null) for forest/mountain/sea")); }
+                                        }
+                                    }
+                                    else { Game.SetError(new Error(283, "Invalid position (null) for forest/mountain/sea")); }
+                                    break;
+                                default:
+                                    replaceText = "";
+                                    Game.SetError(new Error(101, string.Format("Invalid tag (\"{0}\")", tag)));
+                                    break;
+                            }
+                            if (replaceText != null)
+                            {
+                                //swap tag for text
+                                checkedText = checkedText.Remove(tagStart, length + 1);
+                                checkedText = checkedText.Insert(tagStart, replaceText);
+                            }
                         }
                     }
+                    else { Game.SetError(new Error(101, "Invalid Player (null)")); }
                 }
                 else { Game.SetError(new Error(101, "Invalid opponent (null) in CheckTagsActor")); }
             }

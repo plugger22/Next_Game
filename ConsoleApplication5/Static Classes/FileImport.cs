@@ -239,6 +239,7 @@ namespace Next_Game
         public string Role { get; set; }
         public string Description { get; set; }
         public int Age { get; set; }
+        public string Handle { get; set; }
         public string Special { get; set; } //weakness or strength peculiar to the follower
         public int ArcID { get; set; } //archetype for events tied into the Special trait
         public int Resources { get; set; } //any starting resources
@@ -262,6 +263,7 @@ namespace Next_Game
     {
         public string Title { get; set; }
         public string Name { get; set; }
+        public string Handle { get; set; }
         public int ID { get; set; } //special ID -> unique & allows events access to character
         public ActorSex Sex { get; set; }
         public string Description { get; set; }
@@ -4205,6 +4207,10 @@ namespace Next_Game
                                     //NOTE: not yet sure of what special field will represent
                                     structFollower.Special = cleanToken;
                                     break;
+                                case "Handle":
+                                    //NOTE: used for Beasts only, not followers
+                                    structFollower.Handle = cleanToken;
+                                    break;
                                 case "ArcID":
                                     try { structFollower.ArcID = Convert.ToInt32(cleanToken); }
                                     catch (Exception e)
@@ -4374,6 +4380,9 @@ namespace Next_Game
                                     }
                                     catch (Exception e)
                                     { Game.SetError(new Error(208, e.Message)); validData = false; }
+                                    break;
+                                case "Handle":
+                                    structCharacter.Handle = cleanToken;
                                     break;
                                 case "Sex":
                                     switch (cleanToken)

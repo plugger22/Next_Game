@@ -2,6 +2,7 @@
 # NOTE: All fields must have a value
 # SID: (Special ID) unique number, 1000+
 # Sex: Male / Female
+# Handle: eg. "The Grey Death"
 # Description: paint a picture of the Beast. No default, compulsory.
 # ...._Effect: Description of Effect, eg. "Puzzled" (keep short). Use default of 'Normal' if nothing unusual. Tie in with Effect system if possible.
 # ...._Effect: A number (range +/- 1 or 2), eg. '+1' which gives a value of '4'. Default of '0' gives an average Effect of 3 (or none for 'Touched')
@@ -14,6 +15,7 @@ SID: 1000
 Sex: Male
 Description: An oversized wolf with a rapacious appetite matched to a cunning, predatory, mind and an extraordinary sense of smell.
 Age: 15
+Handle: The Grey Ghost
 Combat_Effect: +2
 Combat_Trait: Fast and Powerful
 Wits_Effect: +2

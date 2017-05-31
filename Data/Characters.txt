@@ -4,6 +4,7 @@
 # ID: 1+, must be unique (SpecialID) NOTE: must be < 1000 as 1000+ are reserved for Beasts (also Special characters but use Beasts.txt for input)
 # Sex: Male / Female
 # Description: paint a picture of the character. No default, compulsory.
+# Handle: short tag, eg. "The Greaser"
 # Resources: Starting amount of resources, default value of '1', range 1 to 5
 # ..._Mod -> +ve gives a higher trait value, -ve gives a lower, '0' is neutral (could go either way)
 # ..._Auto -> 1  / 0 (default), if '1' then a trait is automatically assigned, if '0' then there is the normal, low, chance of trait
@@ -15,6 +16,7 @@ ID: 1
 Sex: Male
 Title: Bandit Boss
 Description: A large, scarred man dressed in ragged clothing but well armed and muscled.
+Handle: The Scarred
 Age: 40
 Resources: 1
 Combat_Mod: 1
@@ -37,6 +39,7 @@ ID: 2
 Sex: Female
 Title: Old Lady
 Description: A wizened, bent over, old crone with missing teeth and few remaining wisps of hair.
+Handle: The Prune
 Age: 80
 Resources: 1
 Combat_Mod: -1
@@ -58,6 +61,7 @@ ID: 3
 Sex: Male
 Title: Seaman
 Description: A gnarly, muscled, hardened sailor who stares at you will squinting eyes and an angry scowl.
+Handle: The Hard
 Age: 40
 Resources: 1
 Combat_Mod: 1

@@ -456,7 +456,7 @@ namespace Next_Game
                 {
                     //copy data across from struct to object
                     special.Description = data.Description;
-                    special.Resources = data.Resources;
+                    special.Handle = data.Handle;
                     special.Age = data.Age;
                     special.Born = Game.gameStart - data.Age;
                     //trait effects
@@ -505,6 +505,7 @@ namespace Next_Game
                         special.Resources = data.Resources;
                         special.Age = data.Age;
                         special.Born = Game.gameStart - data.Age;
+                        special.Handle = data.Handle;
                         //skills
                         InitialiseManualSkills(special, data.arrayOfSkillMods);
                         //add to list
