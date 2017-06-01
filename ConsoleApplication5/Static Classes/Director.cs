@@ -5870,6 +5870,7 @@ namespace Next_Game
 
         /// <summary>
         /// Returns a random string from the appropriate Assorted Type list -> returns Empty if nothing found
+        /// NOTE: The lists are permanent, eg. a selection is deleted once chosen.
         /// </summary>
         /// <param name="type"></param>
         /// <returns></returns>

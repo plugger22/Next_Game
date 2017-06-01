@@ -388,10 +388,14 @@ namespace Next_Game
                                     else { Game.logTurn?.Write($"[God Mode] Player teleports from {originLocation} to {destinationLocation}");}
                                 }
                                 //show route (Player only)
-                                if (person is Active)
+                                if (person is Player)
                                 {
                                     Game.map.UpdateMap();
                                     Game.map.DrawRoutePath(path);
+                                    //update Horse status
+                                    Player player = person as Player;
+                                    if (player.horseStatus != HorseStatus.Gone)
+                                    { player.horseStatus = HorseStatus.Normal; }
                                 }
                             }
                             else
@@ -468,42 +472,7 @@ namespace Next_Game
                         {
                             if (CharacterAtDestination(posDestination, charID) == false)
                             { Game.SetError(new Error(42, $"ActorID {actorID} has not had their details updated upon arriving at their Destination")); }
-                            /*
-                            //Add to destination
-                            loc.AddActor(charID);
-                            //find character and update details
-                            if (dictAllActors.ContainsKey(charID))
-                            {
-                                Actor person = new Actor();
-                                person = dictAllActors[charID];
-                                person.Status = ActorStatus.AtLocation;
-                                person.SetActorPosition(posDestination);
-                                person.LocID = locID;
-                                int refID = ConvertLocToRef(locID);
-                                string tempText = string.Format("{0}, Aid {1}, has arrived safely at {2}", person.Name, person.ActID, loc.LocName);
-                                Message message = new Message(tempText, person.ActID, loc.LocationID, MessageType.Move);
-                                SetMessage(message);
-                                if (person.ActID == 1)
-                                { SetPlayerRecord(new Record(tempText, person.ActID, person.LocID, refID, CurrentActorIncident.Travel)); }
-                                else if (person.ActID > 1)
-                                { SetCurrentRecord(new Record(tempText, person.ActID, person.LocID, refID, CurrentActorIncident.Travel)); }
-                                //enemy -> arrives at destination, assign goal
-                                if (person is Enemy)
-                                {
-                                    Enemy enemy = person as Enemy;
-                                    if (enemy.HuntMode == true) { enemy.Goal = ActorAIGoal.Search; }
-                                    else { enemy.Goal = ActorAIGoal.Wait; }
-                                    Game.logTurn?.Write(string.Format(" [Goal -> Arrival] {0} {1}, ActID {2}, currently at {3}, new Goal -> {4}", enemy.Title, enemy.Name, enemy.ActID, loc.LocName, enemy.Goal));
-                                }
-                            }
-                            else
-                            { Game.SetError(new Error(42, "Character not found")); }
-                        */
                         }
-                        //}
-                        //else
-                        //{ Game.SetError(new Error(42, "Character not found")); }
-                        //update Party status to enable deletion of moveObject from list (below)
                         moveObject.Status = PartyStatus.Done;
                     }
                     else
@@ -595,6 +564,18 @@ namespace Next_Game
                             {
                                 SetPlayerRecord(new Record(tempText, person.ActID, person.LocID, CurrentActorIncident.Travel));
                                 Game.director.AddVisitedLoc(locID, Game.gameTurn);
+                                Player player = person as Player;
+                                switch (player.horseStatus)
+                                {
+                                    case HorseStatus.Normal:
+                                        player.horseStatus = HorseStatus.Stabled;
+                                        break;
+                                    case HorseStatus.Exhausted:
+                                    case HorseStatus.Lame:
+                                    case HorseStatus.Gone:
+                                        GetNewHorse();
+                                        break;
+                                }
                             }
                             else if (person.ActID > 1)
                             { SetCurrentRecord(new Record(tempText, person.ActID, person.LocID, CurrentActorIncident.Travel)); }
@@ -663,6 +644,8 @@ namespace Next_Game
                                 Player player = actor.Value as Player;
                                 if (player.Conceal == ActorConceal.Disguise)
                                 { concealText = string.Format("In Disguise ({0} star{1})", player.ConcealLevel, player.ConcealLevel != 1 ? "s" : ""); }
+                                else if (player.Travel == TravelMode.Mounted)
+                                { concealText = GetStars(player.HorseHealth); }
                             }
                             break;
                         case ActorStatus.AtSea:
@@ -675,8 +658,6 @@ namespace Next_Game
                             locStatus = string.Format("Held at {0}. Survival time {1} day{2}", locName, actor.Value.DeathTimer, actor.Value.DeathTimer != 1 ? "s" : "");
                             break;
                     }
-                    /*//get location coords
-                    Location loc = Game.network.GetLocation(locID);*/
                     //only show chosen characters (at Location or not depending on parameter)
                     if (locationsOnly == true && status == ActorStatus.AtLocation || !locationsOnly)
                     {
@@ -1366,9 +1347,11 @@ namespace Next_Game
                     listToDisplay.Add(new Snippet("Horse", RLColor.Brown, RLColor.Black));
                     if (player.horseStatus != HorseStatus.Gone)
                     {
-                        string horseText = string.Format("A {0} named \"{1}\" (strength {2}) Status -> {3}, owned for {4} day{5}", player.HorseType, player.HorseName,
-                            player.HorseHealth, player.horseStatus, player.HorseDays, player.HorseDays != 1 ? "s" : "");
-                        listToDisplay.Add(new Snippet(horseText, RLColor.White, RLColor.Black));
+                        string horseText = string.Format("A {0}, {1}, owned for {2} day{3}", player.HorseType, player.horseStatus, player.HorseDays, player.HorseDays != 1 ? "s" : "");
+                        string horseName = $"\"{player.HorseName}\"";
+                        listToDisplay.Add(new Snippet(string.Format("{0, -16}", horseName), false));
+                        listToDisplay.Add(new Snippet(string.Format("{0, -12}", GetStars(player.HorseHealth)), RLColor.LightRed, RLColor.Black, false));
+                        listToDisplay.Add(new Snippet(horseText, true));
                     }
                     else { listToDisplay.Add(new Snippet("None", RLColor.White, RLColor.Black)); }
                 }
@@ -4890,18 +4873,13 @@ namespace Next_Game
                             switch (player.horseStatus)
                             {
                                 case HorseStatus.Normal:
-                                    player.horseStatus = HorseStatus.Stabled;
-                                    player.HorseDays++;
-                                    break;
-                                case HorseStatus.Stabled:
-                                    player.HorseDays++;
-                                    break;
                                 case HorseStatus.Lame:
                                 case HorseStatus.Exhausted:
                                 case HorseStatus.Gone:
-                                    //player automatically gets a new horse
-                                    GetNewHorse();
-                                    
+                                    Game.SetError(new Error(298, $"A Horse can't be \"{player.horseStatus}\" Status while at a Location"));
+                                    break;
+                                case HorseStatus.Stabled:
+                                    player.HorseDays++;
                                     break;
                             }
                             break;
