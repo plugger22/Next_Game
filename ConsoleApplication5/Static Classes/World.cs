@@ -54,6 +54,7 @@ namespace Next_Game
             listMoveObjects = new List<Move>();
             listTempActiveActors = new List<ActorSpy>();
             listTempEnemyActors = new List<ActorSpy>();
+            listHorses = new List<HorseRecord>();
             arrayAI = new int[3, 5];
             messageQueue = new Queue<Snippet>();
             dictActiveActors = new Dictionary<int, Active>();
@@ -5756,9 +5757,10 @@ namespace Next_Game
             int rndNum, threshold;
             bool found = false;
             int knownDM = 0; //modifier for search if active character known
-            int onFootDM = 20; //modifier for search if player is travelling and on foot
+            int onFootDM = 0; //modifier for search if player is travelling and on foot
             int known_revert = Game.constant.GetValue(Global.KNOWN_REVERT);
             int ai_known = Game.constant.GetValue(Global.AI_SEARCH_KNOWN);
+            int ai_foot = Game.constant.GetValue(Global.AI_SEARCH_FOOT);
             int ai_hide = Game.constant.GetValue(Global.AI_SEARCH_HIDE);
             int ai_move = Game.constant.GetValue(Global.AI_SEARCH_MOVE);
             int ai_search = Game.constant.GetValue(Global.AI_SEARCH_SEARCH);
@@ -5794,7 +5796,7 @@ namespace Next_Game
                                         //add DM if actor Known
                                         if (active.Known == true) { knownDM = ai_known; }
                                         //add DM if Player and on foot (travelling)
-                                        if (active is Player && active.Travel == TravelMode.Foot) { onFootDM = 20; }
+                                        if (active is Player && active.Travel == TravelMode.Foot) { onFootDM = ai_foot; }
                                         rndNum = rnd.Next(100);
                                         threshold = 0;
                                         //chance varies depending on current enemy activity
@@ -5814,8 +5816,8 @@ namespace Next_Game
                                                 break;
                                         }
                                         if (rndNum < threshold) { found = true; }
-                                        Game.logTurn?.Write(string.Format(" [SEARCH -> Active] Random {0} < {1} (ai {2} + known {3}) -> {4} ", rndNum, threshold, threshold - knownDM, knownDM,
-                                            rndNum < threshold ? "Success" : "Fail"));
+                                        Game.logTurn?.Write(string.Format(" [SEARCH -> Active] Random {0} < {1} (ai {2} + known {3} + foot {4}) -> {5} ", rndNum, threshold, threshold - knownDM, knownDM,
+                                            onFootDM, rndNum < threshold ? "Success" : "Fail"));
                                         //add to list of searched to prevent same enemy making multiple searches per turn
                                         if (active.AddSearched(enemy.Value.ActID) == true)
                                         { Game.logTurn?.Write(string.Format(" [Search -> ListSearched] {0} {1}, ActID {2} Searched -> Enemy ActID {3} added", active.Title, active.Name, active.ActID, enemy.Value.ActID)); }
@@ -5927,6 +5929,7 @@ namespace Next_Game
             bool found = false;
             int known_revert = Game.constant.GetValue(Global.KNOWN_REVERT);
             int ai_known = Game.constant.GetValue(Global.AI_SEARCH_KNOWN);
+            int ai_foot = Game.constant.GetValue(Global.AI_SEARCH_FOOT);
             int ai_hide = Game.constant.GetValue(Global.AI_SEARCH_HIDE);
             int ai_move = Game.constant.GetValue(Global.AI_SEARCH_MOVE);
             int ai_search = Game.constant.GetValue(Global.AI_SEARCH_SEARCH);
@@ -5965,7 +5968,7 @@ namespace Next_Game
                                         //figure out if spotted and handle disguise and safe house star reduction
                                         if (active.Value.Known == true) { knownDM = ai_known; }
                                         //add DM if Player and on foot (travelling)
-                                        if (actor is Player && actor.Travel == TravelMode.Foot) { onFootDM = 20; }
+                                        if (actor is Player && actor.Travel == TravelMode.Foot) { onFootDM = ai_foot; }
                                         rndNum = rnd.Next(100);
                                         threshold = 0;
                                         //chance depends on enemies current activity
@@ -5986,8 +5989,8 @@ namespace Next_Game
                                         }
                                         if (rndNum < threshold)
                                         { found = true; }
-                                        Game.logTurn?.Write(string.Format(" [SEARCH -> Active] Random {0} < {1} (ai {2} + known {3}) -> {4} ", rndNum, threshold, threshold - knownDM, knownDM,
-                                            rndNum < threshold ? "Success" : "Fail"));
+                                        Game.logTurn?.Write(string.Format(" [SEARCH -> Active] Random {0} < {1} (ai {2} + known {3} + foot {4}) -> {5} ", rndNum, threshold, threshold - knownDM, knownDM,
+                                            onFootDM, rndNum < threshold ? "Success" : "Fail"));
                                         //add to list of Searched to prevent same enemy making multiple search attempts on this actor per turn
                                         if (active.Value.AddSearched(enemy.ActID) == true)
                                         { Game.logTurn?.Write(string.Format(" [Search -> ListSearched] {0} {1}, ActID {2} Searched -> Enemy ActID {3} added", active.Value.Title, active.Value.Name, active.Value.ActID, enemy.ActID)); }
@@ -7180,7 +7183,7 @@ namespace Next_Game
                 player.HorseDays = 1;
                 player.SetTravelMode(TravelMode.Mounted);
                 //admin
-                string text = $"{player.Name} has acquired a new horse (a {player.HorseType} named \"{player.HorseName}\" (stamina {player.HorseHealth})";
+                string text = $"{player.Name} has acquired a new horse, a {player.HorseType} named \"{player.HorseName}\" (stamina {player.HorseHealth})";
                 SetMessage(new Message(text, 1, player.LocID, MessageType.Horse));
                 SetPlayerRecord(new Record(text, 1, player.LocID, CurrentActorIncident.Horse));
             }

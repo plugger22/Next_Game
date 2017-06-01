@@ -55,14 +55,16 @@ Sumpter Horse
 War Horse
 Saddle Horse
 
+# What in ...<curse>... is that
+
 [Curses]
-Sweet Mouldy Cheese!
-Thunder and Lightning!
-By Dragon's Breath!
-Party of Pigs!
-Son of a Wolf!
-Blood and Ashes!
-Rat Brained B*stard!
+Sweet Mouldy Cheese
+Thunder and Lightning
+a Dragon's Sulpurous Breath
+a Party of Poxy Pigs
+a Wolfskin worth of Worms
+Blood and Ashes
+Seven Hells
 
 [AnimalBig]
 Musk Ox

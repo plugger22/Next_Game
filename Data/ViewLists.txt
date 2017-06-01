@@ -10,6 +10,8 @@
 # <courtRandom> -> A court that the Usurper has visited, returns House name, eg. "Lannister"
 # <randomMale> <randomFemale> -> random first names
 # <ship> -> name of the ship that the player is on
+# <animalBig> -> random big animal
+# <curse> -> random curse
 
 [JusticeNeutralEduc]
 Does <player> have a right to be King? Hard to say.
@@ -17,7 +19,7 @@ Justice is a relative term. I'd consider that both <player> and King <newKing> h
 
 [JusticeNeutralUned]
 Kings are all the same. Who cares if it's <player> or King <newKing>?
-Justice, what in Seven Hells is that? Why should I care about <player> and <his> crown?
+Justice, what in <curse> is that? Why should I care about <player> and <his> crown?
 So <player> thinks that <he> has a just cause? What about mine? Who's helping me?
 
 [JusticeGoodEduc]
@@ -55,7 +57,7 @@ It's said that <player> is a geniune legend but nobody can state why?
 [LegendGoodUned]
 That heir, <player>, <he> will chew King <newKing>'s balls off before breakfast
 They say that <he> sh*ts arrows and farts bolts. <player> sure is a legend around here.
-Yeah, <player> is a legend. Ask <randomMale> 'cause he saw <him> kill a full grown Musk Ox with <his> bare hands.
+Yeah, <player> is a legend. Ask <randomMale> 'cause he saw <him> kill a full grown <animalBig> with <his> bare hands.
 
 [LegendBadEduc]
 <player>, the so called Usurper, I heard the <he> was frightened to crawk out of <his> bed in the morning.

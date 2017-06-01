@@ -1790,6 +1790,10 @@ namespace Next_Game
                                         case "Travel":
                                             structTrigger.Check = TriggerCheck.TravelMode;
                                             break;
+                                        case "horse":
+                                        case "Horse":
+                                            structTrigger.Check = TriggerCheck.HorseStatus;
+                                            break;
                                         default:
                                             Game.SetError(new Error(49, string.Format("Invalid Input, Option Trigger Check, (\"{0}\")", arrayOfEvents[i])));
                                             validData = false;
@@ -2810,7 +2814,7 @@ namespace Next_Game
                         List<Trigger> listTempTriggers = optionObject.GetTriggers();
                         //triggers
                         foreach (Trigger triggerObject in listTempTriggers)
-                        { Game.logStart?.Write(string.Format("   {0} -> if {1} {2} is {3} to {4}", "Trigger", triggerObject.Check, triggerObject.Data, triggerObject.Calc, triggerObject.Threshold)); }
+                        { Game.logStart?.Write(string.Format("   {0} -> if {1}, Data {2}, is Calc \"{3}\" to Threshold {4}", "Trigger", triggerObject.Check, triggerObject.Data, triggerObject.Calc, triggerObject.Threshold)); }
                         //outcomes
                         foreach (Outcome outcomeObject in listTempOutcomes)
                         {

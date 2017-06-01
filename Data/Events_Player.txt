@@ -39,7 +39,7 @@
 # there is NO need to put 'bad: No' for the good outcome
 
 # [trigger]: Trigger block (optional, can have multiple triggers for each option or event). There must be at least one option with no triggers.
-# check: Trigger Check ( None, Trait, GameVar, ActorType, Sex, ResourcePlyr, Known, Follower, Travel)
+# check: Trigger Check ( None, Trait, GameVar, ActorType, Sex, ResourcePlyr, Known, Follower, Travel, Horse)
 # item: OPTIONAL multi purpose number depending on Trigger Check type, default '0' 
 # thresh: Trigger threshold amount to be tested against, eg. < 3
 # calc: Type of comparison for testing trigger (>=, <=, =)
@@ -51,6 +51,10 @@
 # [trigger] check -> Travel
 # thresh: -> (TravelMode) 0 None, 1 Foot, 2 Mounted
 # calc: =
+
+# [trigger] check -> Horse 
+# thresh: -> (HorseStatus) 0 None, 1 Normal, 2 Stabled, 3 Lame, 4 Exhausted
+# calc: = 
 
 # [trigger] check -> Trait
 # item -> 1 Combat, 2 Wits, 3 Charm, 4 Treachery, 5 Leadership, 6 Touched (you can use text instead, eg. 'Wits')
@@ -362,6 +366,10 @@ effect: None
 text: Ride past, ignoring her
 reply: Crazy old hags are best left to themselves.
 view: The old hag thinks she saw the Usurper, <player> on the road to <roadTo>. Sitting high in the saddle, all kingly and imperious like.
+[trigger]
+check: Horse
+thresh: 1
+calc: =
 [outcome]
 effect: EventTimer
 data: 6

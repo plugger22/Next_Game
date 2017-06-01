@@ -79,6 +79,7 @@ namespace Next_Game
         AI_CONTINUE_HIDE,
         AI_CONTINUE_WAIT,
         AI_SEARCH_KNOWN,
+        AI_SEARCH_FOOT,
         AI_SEARCH_HIDE,
         AI_SEARCH_MOVE,
         AI_SEARCH_SEARCH,
@@ -189,6 +190,7 @@ namespace Next_Game
             arrayOfGlobals[74] = Global.ENEMY_RUMOUR_TIME;
             arrayOfGlobals[75] = Global.REL_RUMOUR_TIME;
             arrayOfGlobals[76] = Global.FOOT_SPEED;
+            arrayOfGlobals[77] = Global.AI_SEARCH_FOOT;
         }
 
         /// <summary>

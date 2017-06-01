@@ -2548,6 +2548,15 @@ namespace Next_Game
                                 if (trigger.Compulsory == true) { Game.logTurn?.Write("[Notification] Travel Mode trigger Compulsory fail check"); return false; }
                             }
                             break;
+                        case TriggerCheck.HorseStatus:
+                            //Threshold = (int)HorseStatus -> None 0, Normal 1, Stabled 2, Lame 3, Exhausted 4
+                            if (CheckTrigger((int)player.horseStatus, EventCalc.Equals, trigger.Threshold) == true) { validCheck = true; }
+                            else
+                            {
+                                Game.logTurn?.Write(" Trigger: Horse Status, incorrect mode -> Trigger failed");
+                                if (trigger.Compulsory == true) { Game.logTurn?.Write("[Notification] Horse Status trigger Compulsory fail check"); return false; }
+                            }
+                            break;
                         case TriggerCheck.Disguise:
                             //Passes if Player Does NOT have a current disguise in his Inventory
                             if (player.ConcealDisguise == 0) { validCheck = true; }
@@ -2889,7 +2898,7 @@ namespace Next_Game
                                         case OutcomeType.HorseStatus:
                                             //Change Player's land travel speed
                                             OutHorseStatus horseOutcome = outcome as OutHorseStatus;
-                                            outcomeText = ChangeHorseStatus(horseOutcome.Status);
+                                            outcomeText = ChangeHorseStatus(horseOutcome.Status, horseOutcome.Gone);
                                             if (String.IsNullOrEmpty(outcomeText) == false)
                                             {
                                                 resultList.Add(new Snippet(outcomeText, foreColor, backColor)); resultList.Add(new Snippet(""));
@@ -4018,20 +4027,19 @@ namespace Next_Game
                                     break;
                             }
                             Game.world.CreateHorseRecord(goneStatus, locText);
+                            resultText = $"\"{player.HorseName}\" has been {goneStatus} {locText}. {player.Name} is now on Foot";
                         }
                         else { Game.SetError(new Error(300, "Horse status is Gone but no HorseGone enum provided -> No change")); }
                         break;
                 }
-
-                resultText = $"";
             }
             else { Game.SetError(new Error(300, "Invalid Player (null)")); }
             return resultText;
         }
 
 
-        /*/// <summary>
-        /// changes Player speed of travel over land
+        /// <summary>
+        /// changes Player speed of travel over land (finds move object and adjusts speed within)
         /// </summary>
         /// <param name="newSpeed"></param>
         /// <returns></returns>
@@ -4072,7 +4080,7 @@ namespace Next_Game
             }
             else { Game.SetError(new Error(239, "Invalid Player (null)")); }
             return resultText;
-        }*/
+        }
 
         /// <summary>
         /// Change an NPC actor's relationship with Player

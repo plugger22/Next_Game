@@ -358,6 +358,12 @@ namespace Next_Game
                             case "ship":
                                 replaceText = player.ShipName;
                                 break;
+                            case "curse":
+                                replaceText = Game.director.GetAssortedRandom(Assorted.Curse);
+                                break;
+                            case "animalBig":
+                                replaceText = Game.director.GetAssortedRandom(Assorted.AnimalBig);
+                                break;
                             default:
                                 replaceText = "";
                                 Game.SetError(new Error(283, string.Format("Invalid tag (\"{0}\")", tag)));

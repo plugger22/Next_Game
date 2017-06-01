@@ -679,7 +679,7 @@ namespace Next_Game
                     break;
                 case EventCalc.Subtract:
                     Resources -= amount;
-                    messageText = string.Format("{0} {1}'s Resources reduced by {2} to {3} (min. 1)", Title, Name, amount, Resources);
+                    messageText = string.Format("{0} {1}'s Resources reduced by {2} to {3} (min. 0)", Title, Name, amount, Resources);
                     break;
                 case EventCalc.Equals:
                     Resources = amount;

@@ -169,6 +169,8 @@
 52: 60 @ 5 @ 80
 # AI_SEARCH_WAIT -> % chance to find active character when enemy has the Wait goal
 53: 20 @ 5 @ 80
+# AI_SEARCH_FOOT -> % DM to add to search chance (improves) when Player is on foot while Travelling
+77: 25 @ 20 @ 40
 # AI_CAPITAL -> Min % of total Enemies who should remain in the Capital during normal operations (player location unknown)
 54: 20 @ 10 @ 50
 # AI_CONNECTOR -> num of bonus Loc's on a branch (priority array) whenever a Connector is present (more flexibility -> greater value as a branch)
@@ -201,4 +203,4 @@
 # REL_RUMOUR_TIME -> how many tunrs a relationship rumour exists for and the interval (time + 1) before initialising new ones.
 75: 20 @ 5 @ 30
 
-# Next valid number -> 77
+# Next valid number -> 78
