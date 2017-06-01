@@ -16,6 +16,22 @@ namespace Next_Game
     //Relationship List Categories
     public enum RelListType { HousePastGood, HousePastBad, BannerPastGood, BannerPastBad, Lord_1, Lord_2, Lord_3, Lord_4, Lord_5, Count }
 
+
+    /// <summary>
+    /// used to keep records of all horse losses
+    /// </summary>
+    public struct HorseRecord
+    {
+        public string Name { get; set; }
+        public string Type { get; set; }
+        public string LocText { get; set; } //'on the road to ...', 'at ...', etc.
+        public int Days { get; set;  } // number of days the horse was owned by the player
+        public int Health { get; set; } // original horse health (eg. HorseHealthMax)
+        public int Turn { get; set; }
+        public HorseGone Gone { get; set; } // reason gone
+    }
+
+
     /// <summary>
     /// Base class (not used directly)
     /// </summary>

@@ -3932,15 +3932,26 @@ namespace Next_Game
             int oldValue, newValue;
             if (player != null)
             {
-                oldValue = player.HorseHealth;
-                newValue = ChangeData(oldValue, outcome.Amount, outcome.Calc);
-                //minmax caps at 0 & 5 & maxHealth
-                newValue = Math.Min(5, newValue);
-                newValue = Math.Min(player.HorseMaxHealth, newValue);
-                newValue = Math.Max(0, newValue);
-                player.HorseHealth = newValue;
-                resultText = $"Horse \"{player.HorseName}\" has had their stamina level changed from {oldValue} to {newValue}";
-                Game.logTurn?.Write(resultText);
+                if (outcome.Calc == EventCalc.Add || outcome.Calc == EventCalc.Subtract)
+                {
+                    oldValue = player.HorseHealth;
+                    newValue = ChangeData(oldValue, outcome.Amount, outcome.Calc);
+                    //minmax caps at 0 & 5 & maxHealth
+                    newValue = Math.Min(5, newValue);
+                    newValue = Math.Min(player.HorseMaxHealth, newValue);
+                    newValue = Math.Max(0, newValue);
+                    player.HorseHealth = newValue;
+                    //horse exhausted?
+                    if (newValue == 0)
+                    {
+                        player.horseStatus = HorseStatus.Exhausted;
+                        player.SetTravelMode(TravelMode.Foot);
+                        resultText = $"Horse \"{player.HorseName}\" has had their stamina level lowered from {oldValue} to {newValue} and is Exhausted. {player.Name} is now on Foot";
+                    }
+                    else { resultText = $"Horse \"{player.HorseName}\" has had their stamina level changed from {oldValue} to {newValue}"; }
+                    Game.logTurn?.Write(resultText);
+                }
+                else { Game.SetError(new Error(299, $"Invalid outcome.Calc type \"{outcome.Calc}\" (Add or Subtract only)")); }
             }
             else { Game.SetError(new Error(299, "Invalid Player (null)")); }
             return resultText;
@@ -3966,6 +3977,11 @@ namespace Next_Game
                         if (oldStatus != HorseStatus.Normal || oldStatus != HorseStatus.Stabled)
                         { Game.world.GetNewHorse(); }
                         break;
+                    case HorseStatus.Stabled:
+                        if (player.Status == ActorStatus.AtLocation)
+                        { player.horseStatus = newStatus; }
+                        else { Game.SetError(new Error(300, "Horse status is Stabled but Player isn't at a Location -> No change")); }
+                        break;
                     case HorseStatus.Exhausted:
                         player.horseStatus = newStatus;
                         player.SetTravelMode(TravelMode.Foot);
@@ -3982,8 +3998,28 @@ namespace Next_Game
                             player.horseStatus = newStatus;
                             player.SetTravelMode(TravelMode.Foot);
                             resultText = $"\"{player.HorseName}\" is gone {goneStatus}.{player.Name} is now on Foot";
+                            string locText = "";
+                            switch (player.Status)
+                            {
+                                case ActorStatus.AtLocation:
+                                    locText = $"at {Game.world.GetLocationName(player.LocID)}";
+                                    break;
+                                case ActorStatus.Travelling:
+                                    locText = $"on the road to {Game.world.GetLocationName(player.LocID)}";
+                                    break;
+                                case ActorStatus.AtSea:
+                                    locText = $"while sailing {player.SeaName}";
+                                    break;
+                                case ActorStatus.Adrift:
+                                    locText = $"while adrift in {player.SeaName}";
+                                    break;
+                                default:
+                                    Game.SetError(new Error(300, $"Invalid player.Status \"{player.Status}\""));
+                                    break;
+                            }
+                            Game.world.CreateHorseRecord(goneStatus, locText);
                         }
-                        else { Game.SetError(new Error(300, "Horse status in Gone but no HorseGone enum provided -> No change")); }
+                        else { Game.SetError(new Error(300, "Horse status is Gone but no HorseGone enum provided -> No change")); }
                         break;
                 }
 
@@ -3994,7 +4030,7 @@ namespace Next_Game
         }
 
 
-        /// <summary>
+        /*/// <summary>
         /// changes Player speed of travel over land
         /// </summary>
         /// <param name="newSpeed"></param>
@@ -4036,7 +4072,7 @@ namespace Next_Game
             }
             else { Game.SetError(new Error(239, "Invalid Player (null)")); }
             return resultText;
-        }
+        }*/
 
         /// <summary>
         /// Change an NPC actor's relationship with Player

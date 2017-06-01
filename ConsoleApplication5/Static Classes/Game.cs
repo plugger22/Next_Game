@@ -699,6 +699,11 @@ namespace Next_Game
                                         _inputState = 1;
                                         _mouseOn = true;
                                         break;
+                                    case MenuMode.Reference:
+                                        //Show Horse list
+                                        infoChannel.SetInfoList(world.ShowHorsesRL(), ConsoleDisplay.Multi);
+                                        infoChannel.InsertHeader(new Snippet("--- Horse ALL", RLColor.Yellow, RLColor.Black), ConsoleDisplay.Multi);
+                                        break;
                                     case MenuMode.Debug:
                                         //Show House Relations
                                         List<string> tempList = history.GetHouseMasterRels();

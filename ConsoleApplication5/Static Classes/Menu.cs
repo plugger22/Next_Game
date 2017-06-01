@@ -124,6 +124,7 @@ namespace Next_Game
                     menuArrayText[0, 2] = "[D] Dead Actors";
                     menuArrayText[0, 3] = "[G] Marriages";
                     menuArrayText[0, 4] = "[K] Kingdom Events";
+                    menuArrayText[0, 5] = "[H] Horses";
                     //Rumours menu commands
                     menuArrayText[1, 0] = "[R] All";
                     menuArrayText[1, 1] = "[S] Show Rumour";

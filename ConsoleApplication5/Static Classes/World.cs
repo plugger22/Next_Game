@@ -14,6 +14,7 @@ namespace Next_Game
         private List<Move> listMoveObjects; //actors moving through the world
         private List<ActorSpy> listTempActiveActors; //bloodhound temp lists
         private List<ActorSpy> listTempEnemyActors; //bloodhound temp lists
+        private List<HorseRecord> listHorses; //record of all Player's past horses
         private int[,] arrayAI; //'0' -> # enemies at capital, '1,2,3,4' -> # enemies patrolling each branch, [0,] -> actual, [1,] -> desired [2,] -> temp data
         private readonly Queue<Snippet> messageQueue; //short term queue to display recent messages
         private Dictionary<int, Active> dictActiveActors; //list of all Player controlled actors keyed off actorID (non-activated followers aren't in dictionary)
@@ -573,6 +574,7 @@ namespace Next_Game
                                     case HorseStatus.Exhausted:
                                     case HorseStatus.Lame:
                                     case HorseStatus.Gone:
+                                        CreateHorseRecord(HorseGone.Abandoned, $"at {GetLocationName(player.LocID)}");
                                         GetNewHorse();
                                         break;
                                 }
@@ -4125,6 +4127,25 @@ namespace Next_Game
         }
 
         /// <summary>
+        /// Generate a list of all the horses the Player has had
+        /// </summary>
+        /// <returns></returns>
+        public List<Snippet> ShowHorsesRL()
+        {
+            List<Snippet> listData = new List<Snippet>();
+            string description;
+            for(int i = 0; i < listHorses.Count; i++)
+            {
+                HorseRecord record = listHorses[i];
+                description = string.Format("\"{0}\", a {1}, was {2} {3} on turn {4} after being owned for {5} day{6}", record.Name, record.Type, record.Gone, record.LocText, record.Turn,
+                    record.Days, record.Days != 1 ? "s" : "");
+                listData.Add(new Snippet(description));
+            }
+            return listData;
+        }
+
+
+        /// <summary>
         /// Generate a list of all Bloodhound Actor info grouped by turns
         /// </summary>
         /// <returns></returns>
@@ -7158,6 +7179,42 @@ namespace Next_Game
                 SetPlayerRecord(new Record(text, 1, player.LocID, CurrentActorIncident.Horse));
             }
         }
+
+        /// <summary>
+        /// create a new record of a dead/gone horse and add to list
+        /// </summary>
+        /// <param name="gone"></param>
+        /// <param name="locText">descriptive -> 'On the road to...', 'At ....', etc.</param>
+        internal void CreateHorseRecord(HorseGone gone, string locText)
+        {
+            if (gone != HorseGone.None)
+            {
+                if (String.IsNullOrEmpty(locText) == false)
+                {
+                    Player player = GetPlayer();
+                    if (player != null)
+                    {
+                        HorseRecord horseRec = new HorseRecord();
+                        horseRec.Name = player.HorseName;
+                        horseRec.Type = player.HorseType;
+                        horseRec.Health = player.HorseMaxHealth;
+                        horseRec.Days = player.HorseDays;
+                        horseRec.Gone = gone;
+                        horseRec.Turn = Game.gameTurn;
+                        horseRec.LocText = locText;
+                        //add to list
+                        listHorses.Add(horseRec);
+                        Game.logTurn?.Write($"[Horse Record Added] \"{horseRec.Name}\" was {horseRec.Gone} {horseRec.LocText} on turn {horseRec.Turn}");
+                    }
+                    else { Game.SetError(new Error(301, "Invalid Player (null) -> No record created")); }
+                }
+                else { Game.SetError(new Error(301, "Invalid locText (null or MT) -> No record created")); }
+            }
+            else { Game.SetError(new Error(301, "Invalid HorseGone reason ('None') -> No record created")); }
+        }
+
+
+
 
         //new Methods above here
     }
