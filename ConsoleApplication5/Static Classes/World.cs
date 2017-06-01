@@ -5756,6 +5756,7 @@ namespace Next_Game
             int rndNum, threshold;
             bool found = false;
             int knownDM = 0; //modifier for search if active character known
+            int onFootDM = 20; //modifier for search if player is travelling and on foot
             int known_revert = Game.constant.GetValue(Global.KNOWN_REVERT);
             int ai_known = Game.constant.GetValue(Global.AI_SEARCH_KNOWN);
             int ai_hide = Game.constant.GetValue(Global.AI_SEARCH_HIDE);
@@ -5792,6 +5793,8 @@ namespace Next_Game
                                     {
                                         //add DM if actor Known
                                         if (active.Known == true) { knownDM = ai_known; }
+                                        //add DM if Player and on foot (travelling)
+                                        if (active is Player && active.Travel == TravelMode.Foot) { onFootDM = 20; }
                                         rndNum = rnd.Next(100);
                                         threshold = 0;
                                         //chance varies depending on current enemy activity
@@ -5801,10 +5804,10 @@ namespace Next_Game
                                                 threshold = ai_hide + knownDM;
                                                 break;
                                             case ActorAIGoal.Move:
-                                                threshold = ai_move + knownDM;
+                                                threshold = ai_move + knownDM + onFootDM;
                                                 break;
                                             case ActorAIGoal.Search:
-                                                threshold = ai_search + knownDM;
+                                                threshold = ai_search + knownDM ;
                                                 break;
                                             case ActorAIGoal.Wait:
                                                 threshold = ai_wait + knownDM;
@@ -5929,6 +5932,7 @@ namespace Next_Game
             int ai_search = Game.constant.GetValue(Global.AI_SEARCH_SEARCH);
             int ai_wait = Game.constant.GetValue(Global.AI_SEARCH_WAIT);
             int knownDM = 0; //modifier for search if player known
+            int onFootDM = 20; //modifier for search if player is travelling and on foot
             //get enemy
             Actor actor = GetAnyActor(charID);
             if (actor != null && actor.Status != ActorStatus.Gone)
@@ -5960,6 +5964,8 @@ namespace Next_Game
                                     {
                                         //figure out if spotted and handle disguise and safe house star reduction
                                         if (active.Value.Known == true) { knownDM = ai_known; }
+                                        //add DM if Player and on foot (travelling)
+                                        if (actor is Player && actor.Travel == TravelMode.Foot) { onFootDM = 20; }
                                         rndNum = rnd.Next(100);
                                         threshold = 0;
                                         //chance depends on enemies current activity
@@ -5969,7 +5975,7 @@ namespace Next_Game
                                                 threshold = ai_hide + knownDM;
                                                 break;
                                             case ActorAIGoal.Move:
-                                                threshold = ai_move + knownDM;
+                                                threshold = ai_move + knownDM + onFootDM;
                                                 break;
                                             case ActorAIGoal.Search:
                                                 threshold = ai_search + knownDM;
