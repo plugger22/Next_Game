@@ -122,8 +122,8 @@ namespace Next_Game
         public bool boolGeneric { get; set; }
         //OutNone descriptive text
         public string Text { get; set; }
-        //Travel Mode outcome
-        public TravelMode Travel { get; set; }
+        /*//Travel Mode outcome
+        public TravelMode Travel { get; set; }*/
         //Conflict Outcomes
         //public bool Challenger { get; set; } //is the player the challenger?
         public ConflictType Conflict_Type { get; set; }
@@ -137,6 +137,9 @@ namespace Next_Game
         public SkillType ConditionSkill { get; set; } //Combat, Charm, Wits etc.
         public int ConditionEffect { get; set; } //+/- 1 or 2
         public int ConditionTimer { get; set; } //set to 999 for a permanent condition, otherwise equal to the number of days that condition applies for
+        //HorseStatus Outcomes
+        public HorseStatus StatusHorse { get; set; }
+        public HorseGone StatusGone { get; set; }
 
         /// <summary>
         /// copy constructor
@@ -153,7 +156,7 @@ namespace Next_Game
             Timer = outcome.Timer;
             Filter = outcome.Filter;
             Text = outcome.Text;
-            Travel = outcome.Travel;
+            /*Travel = outcome.Travel;*/
             //PlayerRes = outcome.PlayerRes;
             boolGeneric = outcome.boolGeneric;
             //Challenger = outcome.Challenger;
@@ -167,6 +170,9 @@ namespace Next_Game
             ConditionSkill = outcome.ConditionSkill;
             ConditionEffect = outcome.ConditionEffect;
             ConditionTimer = outcome.ConditionTimer;
+            //Horse
+            StatusHorse = outcome.StatusHorse;
+            StatusGone = outcome.StatusGone;
         }
     }
 
@@ -1212,13 +1218,15 @@ namespace Next_Game
                                             structOutcome.Timer = EventTimer.None;
                                             structOutcome.boolGeneric = false;
                                             structOutcome.Text = "";
-                                            structOutcome.Travel = TravelMode.None;
+                                            //structOutcome.Travel = TravelMode.None;
                                             //structOutcome.PlayerRes = false;
                                             //structOutcome.PlayerCondition = true;
                                             structOutcome.ConditionText = "";
                                             structOutcome.ConditionSkill = SkillType.None;
                                             structOutcome.ConditionEffect = 0;
                                             structOutcome.ConditionTimer = 0;
+                                            structOutcome.StatusHorse = HorseStatus.None;
+                                            structOutcome.StatusGone = HorseGone.None;
                                         }
                                         listAllOutcomes.Add(listSubOutcomes);
                                         OptionStruct structOptionCopy = new OptionStruct(structOption);
@@ -1287,13 +1295,15 @@ namespace Next_Game
                                         structOutcome.Timer = EventTimer.None;
                                         structOutcome.boolGeneric = false;
                                         structOutcome.Text = "";
-                                        structOutcome.Travel = TravelMode.None;
+                                        //structOutcome.Travel = TravelMode.None;
                                         //structOutcome.PlayerRes = false;
                                         //structOutcome.PlayerCondition = true;
                                         structOutcome.ConditionText = "";
                                         structOutcome.ConditionSkill = SkillType.None;
                                         structOutcome.ConditionEffect = 0;
                                         structOutcome.ConditionTimer = 0;
+                                        structOutcome.StatusHorse = HorseStatus.None;
+                                        structOutcome.StatusGone = HorseGone.None;
                                     }
                                     else
                                     {
@@ -2055,8 +2065,10 @@ namespace Next_Game
                                         case "rescued":
                                         case "DeathTimer":
                                         case "deathTimer":
-                                        case "travel":
-                                        case "Travel":
+                                        case "horseStatus":
+                                        case "HorseStatus":
+                                        case "horseHealth":
+                                        case "HorseHealth":
                                         case "none":
                                         case "None":
                                             structOutcome.Effect = Game.utility.Capitalise(cleanToken);
@@ -2114,9 +2126,67 @@ namespace Next_Game
                                         case "RandomMinus":
                                             structOutcome.Calc = EventCalc.RandomMinus;
                                             break;
-
                                         default:
                                             Game.SetError(new Error(49, string.Format("Invalid Input, Outcome Apply, (\"{0}\")", arrayOfEvents[i])));
+                                            validData = false;
+                                            break;
+                                    }
+                                    break;
+                                case "StatusHorse":
+                                case "statusHorse":
+                                    switch (cleanToken)
+                                    {
+                                        case "Normal":
+                                            structOutcome.StatusHorse = HorseStatus.Normal;
+                                            break;
+                                        case "Stabled":
+                                            structOutcome.StatusHorse = HorseStatus.Stabled;
+                                            break;
+                                        case "Lame":
+                                            structOutcome.StatusHorse = HorseStatus.Lame;
+                                            break;
+                                        case "Exhausted":
+                                            structOutcome.StatusHorse = HorseStatus.Exhausted;
+                                            break;
+                                        case "Gone":
+                                            structOutcome.StatusHorse = HorseStatus.Gone;
+                                            break;
+                                        default:
+                                            Game.SetError(new Error(49, string.Format("Invalid Input, Outcome statusHealth, (\"{0}\")", arrayOfEvents[i])));
+                                            validData = false;
+                                            break;
+                                    }
+                                    break;
+                                case "StatusGone":
+                                case "statusGone":
+                                    switch (cleanToken)
+                                    {
+                                        case "Stolen":
+                                            structOutcome.StatusGone = HorseGone.Stolen;
+                                            break;
+                                        case "RunOff":
+                                            structOutcome.StatusGone = HorseGone.RunOff;
+                                            break;
+                                        case "Abandoned":
+                                            structOutcome.StatusGone = HorseGone.Abandoned;
+                                            break;
+                                        case "Drowned":
+                                            structOutcome.StatusGone = HorseGone.Drowned;
+                                            break;
+                                        case "PutDown":
+                                            structOutcome.StatusGone = HorseGone.PutDown;
+                                            break;
+                                        case "Eaten":
+                                            structOutcome.StatusGone = HorseGone.Eaten;
+                                            break;
+                                        case "Murdered":
+                                            structOutcome.StatusGone = HorseGone.Murdered;
+                                            break;
+                                        case "Killed":
+                                            structOutcome.StatusGone = HorseGone.Killed;
+                                            break;
+                                        default:
+                                            Game.SetError(new Error(49, string.Format("Invalid Input, Outcome statusGone, (\"{0}\")", arrayOfEvents[i])));
                                             validData = false;
                                             break;
                                     }
@@ -2201,7 +2271,7 @@ namespace Next_Game
                                             break;
                                     }
                                     break;
-                                case "mode":
+                                /*case "mode":
                                     //travel mode -> for Speed outcomes (changes player's speed & mode of travel)
                                     switch (cleanToken)
                                     {
@@ -2222,7 +2292,7 @@ namespace Next_Game
                                             validData = false;
                                             break;
                                     }
-                                    break;
+                                    break;*/
                                 case "conText":
                                     //Condition outcomes - name of condition, eg. "Old Age"
                                     structOutcome.ConditionText = cleanToken;
@@ -2641,8 +2711,14 @@ namespace Next_Game
                                                                 case "Rescued":
                                                                     outObject = new OutRescued(structEvent.EventID, outTemp.boolGeneric);
                                                                     break;
-                                                                case "Travel":
+                                                                /*case "Travel":
                                                                     outObject = new OutTravel(structEvent.EventID, outTemp.Travel);
+                                                                    break;*/
+                                                                case "HorseStatus":
+                                                                    outObject = new OutHorseStatus(structEvent.EventID, outTemp.StatusHorse, outTemp.StatusGone);
+                                                                    break;
+                                                                case "HorseHealth":
+                                                                    outObject = new OutHorseHealth(structEvent.EventID, outTemp.Amount, outTemp.Calc);
                                                                     break;
                                                                 case "Condition":
                                                                     if (outTemp.ConditionSkill > SkillType.None && outTemp.ConditionEffect != 0 && String.IsNullOrEmpty(outTemp.ConditionText) == false
@@ -2772,10 +2848,14 @@ namespace Next_Game
                                     OutGameVar tempOutcome_5 = outcomeObject as OutGameVar;
                                     Game.logStart?.Write(string.Format("    {0} -> GameVar {1}, Amount {2}, EventCalc {3}", cleanTag, tempOutcome_5.GameVar, tempOutcome_5.Amount, tempOutcome_5.Calc));
                                     break;
-                                case OutcomeType.Travel:
+                                case OutcomeType.HorseStatus:
+                                    OutHorseStatus tempOutcome_6 = outcomeObject as OutHorseStatus;
+                                    Game.logStart?.Write(string.Format("   {0} -> HorseStatus {1}, HorseGone {2}", cleanTag, tempOutcome_6.Status, tempOutcome_6.Gone));
+                                    break;
+                                /*case OutcomeType.Travel:
                                     OutTravel tempOutcome_6 = outcomeObject as OutTravel;
                                     Game.logStart?.Write(string.Format("    {0} -> Travel Mode {1}", cleanTag, tempOutcome_6.Mode));
-                                    break;
+                                    break;*/
                                 default:
                                     Game.logStart?.Write(string.Format("    {0} -> data {1}, amount {2}, apply {3}", cleanTag, outcomeObject.Data, outcomeObject.Amount, outcomeObject.Calc));
                                     break;

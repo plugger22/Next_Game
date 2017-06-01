@@ -67,7 +67,7 @@
 
 # [outcome]: Outcome block (can have up to 3 outcome's for each option). Place block header at top
 # outcome -> Each option requires an outcome. For a 'do nothing' outcome use '[outcome]' plus 'effect: None' (out, amount and apply aren't needed)
-# effect: type of outcome Effect ( None, Conflict, EventTimer, EventStatus, GameState, Resource, Condition, Known, Freedom, Item, VoyageTime, Adrift, Rescued, DeathTimer, GameVar, Travel)
+# effect: type of outcome Effect ( None, Conflict, EventTimer, EventStatus, GameState, Resource, Condition, Known, Freedom, Item, VoyageTime, Adrift, Rescued, DeathTimer, GameVar, HorseStatus, HorseHealth)
 
 # [outcome] effect -> GameState
 # data: multi-purpose outcome type, usually and ID of some form (depends on effect, must be an Integer), default '0'
@@ -79,11 +79,16 @@
 # [outcome] effect -> None
 # outText: OPTIONAL short descriptive text (shows up as a message & player record)
 
-# [outcome] effect -> Travel
-# mode: TravelMode -> None / Foot / Mounted
-
 # [outcome] effect -> Known
 # data: 1 (+ve) sets Actor's status to UNKNOWN, -1 (-ve) sets Actor to KNOWN
+
+# [outcome] effect -> HorseStatus
+# statusHorse: HorseStatus -> Normal / Stabled / Lame / Exhausted / Gone
+# statusGone: OPTIONAL, only if statusHorse is 5 Gone 'HorseGone' -> Stolen / RunOff / Abandoned / Drowned / PutDown / Eaten / Murdered / Killed
+
+# [outcome] effect -> HorseHealth
+# amount: any number > 0, amount to change by (keep in mind health stays within a range of 0 to 5)
+# apply: Add / Subtract
 
 # [outcome] effect -> GameVar
 # data: index of GameVar variable
@@ -396,6 +401,10 @@ effect: Conflict
 data: 2
 bool: Yes
 CsubType: Personal
+[outcome]
+effect: HorseHealth
+amount: 1
+apply: Subtract
 [End]
 
 
@@ -543,8 +552,9 @@ item: Treachery
 thresh: 3
 calc: >=
 [outcome]
-effect: Travel
-mode: Foot
+effect: HorseStatus
+statusHorse: Gone
+statusGone: Murdered
 [option]
 text: That's a Direwolf! Wait till dawn and hunt it down
 reply: You recognise the growl. A Direwolf is a rare beast. They'll be tracks nearby. First light won't be long.

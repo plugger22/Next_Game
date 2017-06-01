@@ -27,7 +27,7 @@ namespace Next_Game
     public enum Occupation { Offical, Church, Merchant, Craft, PeasantMale, PeasantFemale, Count}
     public enum TravelMode { None, Foot, Mounted} //default Mounted for all characters
     public enum Assorted { HorseName, HorseType, Curse, AnimalBig, Count}
-    public enum HorseStatus { Normal, Stabled, Lame, Exhausted, Gone}
+    public enum HorseStatus { None, Normal, Stabled, Lame, Exhausted, Gone}
     public enum HorseGone { None, Stolen, RunOff, Abandoned, Drowned, PutDown, Eaten, Murdered, Killed}
 
 
@@ -2865,7 +2865,7 @@ namespace Next_Game
                                             if (String.IsNullOrEmpty(outcomeText) == false)
                                             { resultList.Add(new Snippet(outcomeText, foreColor, backColor)); resultList.Add(new Snippet("")); }
                                             break;
-                                        case OutcomeType.Travel:
+                                        /*case OutcomeType.Travel:
                                             //Change Player's land travel speed
                                             OutTravel travelOutcome = outcome as OutTravel;
                                             outcomeText = ChangePlayerSpeedStatus(travelOutcome.Mode);
@@ -2875,10 +2875,10 @@ namespace Next_Game
                                                 Game.world.SetMessage(new Message(eventText + outcomeText, 1, player.LocID, MessageType.Event));
                                                 Game.world.SetPlayerRecord(new Record(eventText + outcomeText, player.ActID, player.LocID, CurrentActorIncident.Event));
                                             }
-                                            break;
-                                        case OutcomeType.HorseStamina:
+                                            break;*/
+                                        case OutcomeType.HorseHealth:
                                             //Change Player's horse stamina level
-                                            outcomeText = ChangeHorseStamina(outcome);
+                                            outcomeText = ChangeHorseHealth(outcome);
                                             if (String.IsNullOrEmpty(outcomeText) == false)
                                             {
                                                 resultList.Add(new Snippet(outcomeText, foreColor, backColor)); resultList.Add(new Snippet(""));
@@ -3920,12 +3920,12 @@ namespace Next_Game
 
 
         /// <summary>
-        /// Change Player's horse's stamina level
+        /// Change Player's horse's health level
         /// </summary>
         /// <param name="amount"></param>
         /// <param name="calc"></param>
         /// <returns></returns>
-        private string ChangeHorseStamina(Outcome outcome)
+        private string ChangeHorseHealth(Outcome outcome)
         {
             string resultText = "";
             Player player = (Player)Game.world.GetPlayer();
