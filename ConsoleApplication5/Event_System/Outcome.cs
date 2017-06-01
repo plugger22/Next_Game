@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 namespace Next_Game.Event_System
 {
     public enum OutcomeType { None, Delay, Conflict, GameState, GameVar, Known, EventTimer, EventStatus, EventChain, Resource, Condition, Freedom, Item, Passage, VoyageTime, Adrift, DeathTimer, Rescued,
-    Follower, Promise, RelPlyr, Favour, Introduction, SafeHouse, Disguise, Rumour, Travel};
+    Follower, Promise, RelPlyr, Favour, Introduction, SafeHouse, Disguise, Rumour, Travel, HorseStamina, HorseStatus};
 
     /// <summary>
     /// Option outcome, event system
@@ -474,6 +474,38 @@ namespace Next_Game.Event_System
             Mode = newMode;
             Type = OutcomeType.Travel;
         }
+    }
+
+    /// <summary>
+    /// Change Player's horse stamina level (range 0 to 5)
+    /// </summary>
+    class OutHorseStamina : Outcome
+    {
+        //Amount and Calc for change in Stamina
+
+        public OutHorseStamina(int eventID, int amount, EventCalc calc) : base(eventID)
+        {
+            this.Amount = amount;
+            this.Calc = calc;
+            Type = OutcomeType.HorseStamina;
+        }
+    }
+
+    /// <summary>
+    /// Change Player's horse status
+    /// </summary>
+    class OutHorseStatus : Outcome
+    {
+        public HorseStatus Status { get; set; }
+        public HorseGone Gone { get; set; }
+
+        public OutHorseStatus(int eventID, HorseStatus newStatus, HorseGone goneStatus = HorseGone.None) : base(eventID)
+        {
+            Status = newStatus;
+            Gone = goneStatus;
+            Type = OutcomeType.HorseStatus;
+        }
+
     }
 
     /// <summary>

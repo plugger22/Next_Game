@@ -28,7 +28,7 @@ namespace Next_Game
     public enum TravelMode { None, Foot, Mounted} //default Mounted for all characters
     public enum Assorted { HorseName, HorseType, Curse, AnimalBig, Count}
     public enum HorseStatus { Normal, Stabled, Lame, Exhausted, Gone}
-    public enum HorseGone { Stolen, RunOff, Abandoned, Drowned, PutDown, Eaten, Murdered, Killed}
+    public enum HorseGone { None, Stolen, RunOff, Abandoned, Drowned, PutDown, Eaten, Murdered, Killed}
 
 
     /// <summary>
@@ -2876,6 +2876,27 @@ namespace Next_Game
                                                 Game.world.SetPlayerRecord(new Record(eventText + outcomeText, player.ActID, player.LocID, CurrentActorIncident.Event));
                                             }
                                             break;
+                                        case OutcomeType.HorseStamina:
+                                            //Change Player's horse stamina level
+                                            outcomeText = ChangeHorseStamina(outcome);
+                                            if (String.IsNullOrEmpty(outcomeText) == false)
+                                            {
+                                                resultList.Add(new Snippet(outcomeText, foreColor, backColor)); resultList.Add(new Snippet(""));
+                                                Game.world.SetMessage(new Message(eventText + outcomeText, 1, player.LocID, MessageType.Event));
+                                                Game.world.SetPlayerRecord(new Record(eventText + outcomeText, player.ActID, player.LocID, CurrentActorIncident.Event));
+                                            }
+                                            break;
+                                        case OutcomeType.HorseStatus:
+                                            //Change Player's land travel speed
+                                            OutHorseStatus horseOutcome = outcome as OutHorseStatus;
+                                            outcomeText = ChangeHorseStatus(horseOutcome.Status);
+                                            if (String.IsNullOrEmpty(outcomeText) == false)
+                                            {
+                                                resultList.Add(new Snippet(outcomeText, foreColor, backColor)); resultList.Add(new Snippet(""));
+                                                Game.world.SetMessage(new Message(eventText + outcomeText, 1, player.LocID, MessageType.Event));
+                                                Game.world.SetPlayerRecord(new Record(eventText + outcomeText, player.ActID, player.LocID, CurrentActorIncident.Event));
+                                            }
+                                            break;
                                         case OutcomeType.EventStatus:
                                             //change Event Status
                                             OutEventStatus statusOutcome = outcome as OutEventStatus;
@@ -3894,6 +3915,81 @@ namespace Next_Game
                 resultText = $"You have used your introduction to gain access to the court of House \"{Game.world.GetHouseName(refID)}\"";
             }
             else { Game.SetError(new Error(239, "Invalid Player (null)")); }
+            return resultText;
+        }
+
+
+        /// <summary>
+        /// Change Player's horse's stamina level
+        /// </summary>
+        /// <param name="amount"></param>
+        /// <param name="calc"></param>
+        /// <returns></returns>
+        private string ChangeHorseStamina(Outcome outcome)
+        {
+            string resultText = "";
+            Player player = (Player)Game.world.GetPlayer();
+            int oldValue, newValue;
+            if (player != null)
+            {
+                oldValue = player.HorseHealth;
+                newValue = ChangeData(oldValue, outcome.Amount, outcome.Calc);
+                //minmax caps at 0 & 5 & maxHealth
+                newValue = Math.Min(5, newValue);
+                newValue = Math.Min(player.HorseMaxHealth, newValue);
+                newValue = Math.Max(0, newValue);
+                player.HorseHealth = newValue;
+                resultText = $"Horse \"{player.HorseName}\" has had their stamina level changed from {oldValue} to {newValue}";
+                Game.logTurn?.Write(resultText);
+            }
+            else { Game.SetError(new Error(299, "Invalid Player (null)")); }
+            return resultText;
+        }
+
+
+        /// <summary>
+        /// Changes horseStatus and adjusts Player.TravelMode if required. Will Aquire a new Horse if newStatus is Normal and current status is NOT normal/Stabled
+        /// </summary>
+        /// <param name="newStatus"></param>
+        /// <returns></returns>
+        private string ChangeHorseStatus(HorseStatus newStatus, HorseGone goneStatus = HorseGone.None)
+        {
+            string resultText = "";
+            Player player = (Player)Game.world.GetPlayer();
+            HorseStatus oldStatus;
+            if (player != null)
+            {
+                oldStatus = player.horseStatus;
+                switch (newStatus)
+                {
+                    case HorseStatus.Normal:
+                        if (oldStatus != HorseStatus.Normal || oldStatus != HorseStatus.Stabled)
+                        { Game.world.GetNewHorse(); }
+                        break;
+                    case HorseStatus.Exhausted:
+                        player.horseStatus = newStatus;
+                        player.SetTravelMode(TravelMode.Foot);
+                        resultText = $"\"{player.HorseName}\" is exhausted.{player.Name} is now on Foot";
+                        break;
+                    case HorseStatus.Lame:
+                        player.horseStatus = newStatus;
+                        player.SetTravelMode(TravelMode.Foot);
+                        resultText = $"\"{player.HorseName}\" has gone Lame.{player.Name} is now on Foot";
+                        break;
+                    case HorseStatus.Gone:
+                        if (goneStatus > HorseGone.None)
+                        {
+                            player.horseStatus = newStatus;
+                            player.SetTravelMode(TravelMode.Foot);
+                            resultText = $"\"{player.HorseName}\" is gone {goneStatus}.{player.Name} is now on Foot";
+                        }
+                        else { Game.SetError(new Error(300, "Horse status in Gone but no HorseGone enum provided -> No change")); }
+                        break;
+                }
+
+                resultText = $"";
+            }
+            else { Game.SetError(new Error(300, "Invalid Player (null)")); }
             return resultText;
         }
 

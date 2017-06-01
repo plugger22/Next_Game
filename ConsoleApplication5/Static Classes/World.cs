@@ -4880,6 +4880,8 @@ namespace Next_Game
                                     break;
                                 case HorseStatus.Stabled:
                                     player.HorseDays++;
+                                    if (player.HorseHealth < player.HorseMaxHealth)
+                                    { player.HorseHealth++; SetMessage(new Message($"\"{player.HorseName}\" is recovering while stabled", 1, player.LocID, MessageType.Horse)); }
                                     break;
                             }
                             break;
