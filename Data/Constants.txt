@@ -101,6 +101,8 @@
 44: 4 @ 1 @ 6
 # INQUISITORS -> base number of inquisitors at game start (normal difficulty)
 45: 4 @ 2 @ 8
+# HORSE_HEALTH -> max cap for horsehealth random roll -> health = rnd.Next(1, HORSE_HEALTH) & health = Math.Min(5, health)
+78: 4 @ 3 @ 12
 
 # Events ---
 
@@ -203,4 +205,4 @@
 # REL_RUMOUR_TIME -> how many tunrs a relationship rumour exists for and the interval (time + 1) before initialising new ones.
 75: 20 @ 5 @ 30
 
-# Next valid number -> 78
+# Next valid number -> 79

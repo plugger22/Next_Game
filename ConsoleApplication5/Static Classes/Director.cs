@@ -3953,6 +3953,7 @@ namespace Next_Game
                     //horse exhausted?
                     if (newValue == 0)
                     {
+                        ChangePlayerMoveSpeed(TravelMode.Foot);
                         player.horseStatus = HorseStatus.Exhausted;
                         player.SetTravelMode(TravelMode.Foot);
                         resultText = $"Horse \"{player.HorseName}\" has had their stamina level lowered from {oldValue} to {newValue} and is Exhausted. {player.Name} is now on Foot";
@@ -3984,7 +3985,10 @@ namespace Next_Game
                 {
                     case HorseStatus.Normal:
                         if (oldStatus != HorseStatus.Normal || oldStatus != HorseStatus.Stabled)
-                        { Game.world.GetNewHorse(); }
+                        {
+                            ChangePlayerMoveSpeed(TravelMode.Mounted);
+                            Game.world.GetNewHorse();
+                        }
                         break;
                     case HorseStatus.Stabled:
                         if (player.Status == ActorStatus.AtLocation)
@@ -3992,11 +3996,13 @@ namespace Next_Game
                         else { Game.SetError(new Error(300, "Horse status is Stabled but Player isn't at a Location -> No change")); }
                         break;
                     case HorseStatus.Exhausted:
+                        ChangePlayerMoveSpeed(TravelMode.Foot);
                         player.horseStatus = newStatus;
                         player.SetTravelMode(TravelMode.Foot);
                         resultText = $"\"{player.HorseName}\" is exhausted.{player.Name} is now on Foot";
                         break;
                     case HorseStatus.Lame:
+                        ChangePlayerMoveSpeed(TravelMode.Foot);
                         player.horseStatus = newStatus;
                         player.SetTravelMode(TravelMode.Foot);
                         resultText = $"\"{player.HorseName}\" has gone Lame.{player.Name} is now on Foot";
@@ -4005,6 +4011,7 @@ namespace Next_Game
                         if (goneStatus > HorseGone.None)
                         {
                             player.horseStatus = newStatus;
+                            ChangePlayerMoveSpeed(TravelMode.Foot);
                             player.SetTravelMode(TravelMode.Foot);
                             resultText = $"\"{player.HorseName}\" is gone {goneStatus}.{player.Name} is now on Foot";
                             string locText = "";
@@ -4039,21 +4046,18 @@ namespace Next_Game
 
 
         /// <summary>
-        /// changes Player speed of travel over land (finds move object and adjusts speed within)
+        /// Internal method (ChangeHorseStatus) -> changes Player moveObject speed of travel over land (finds move object and adjusts speed within)
         /// </summary>
         /// <param name="newSpeed"></param>
         /// <returns></returns>
-        private string ChangePlayerSpeedStatus(TravelMode newMode)
+        private void ChangePlayerMoveSpeed(TravelMode newMode)
         {
-            string resultText = "";
             Player player = (Player)Game.world.GetPlayer();
             if (player != null)
             {
                 TravelMode initialMode = player.Travel;
                 if (initialMode != newMode)
                 {
-                    player.SetTravelMode(newMode);
-                    resultText = $"You have changed your mode of travel from {initialMode} to {newMode}";
                     //need to find Move object with Player and reset speed
                     if (player.Status == ActorStatus.Travelling)
                     {
@@ -4079,7 +4083,6 @@ namespace Next_Game
                 else { Game.logTurn?.Write($"[Alert -> Player Speed] Initial mode \"{initialMode}\" is the same as new Mode \"{newMode}\" -> no change made"); }
             }
             else { Game.SetError(new Error(239, "Invalid Player (null)")); }
-            return resultText;
         }
 
         /// <summary>

@@ -4557,6 +4557,7 @@ namespace Next_Game
             //Timed Rumours
             if (dictRumoursTimed.Count > 0)
             {
+                int counter = 0;
                 foreach (var rumour in dictRumoursTimed)
                 {
                     //countdown expire timers
@@ -4565,10 +4566,11 @@ namespace Next_Game
                     {
                         //Rumour Expired -> remove from list
                         if (Game.director.RemoveRumourFromList(rumour.Value) == true)
-                        { rumourRemoved = true;}
+                        { rumourRemoved = true; }
                     }
-                    else { Game.logTurn?.Write($"RumourID {rumour.Value.RumourID} -> TimerExpire decremented, now {rumour.Value.TimerExpire}"); }
+                    else { counter++; }
                 }
+                if (dictRumoursTimed.Count > 0) { Game.logTurn?.Write($"{counter} rumours -> TimerExpire decremented"); }
                 if (rumourRemoved == true)
                 {
                     //loop dict backwards and remove any rumours with TimerExpire <= 0
@@ -7175,7 +7177,7 @@ namespace Next_Game
                 player.HorseName = Game.director.GetAssortedRandom(Assorted.HorseName);
                 player.HorseType = Game.director.GetAssortedRandom(Assorted.HorseType);
                 int health = rnd.Next(1, 10);
-                health = Math.Min(5, health); //max capped at 5, min capped at 1
+                health = Math.Min(5, Game.constant.GetValue(Global.HORSE_HEALTH)); //max capped at 5, min capped at 1
                 player.HorseHealth = health;
                 player.HorseMaxHealth = health;
                 if (player.Status == ActorStatus.AtLocation) { player.horseStatus = HorseStatus.Stabled; }

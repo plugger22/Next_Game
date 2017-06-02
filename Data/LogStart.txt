@@ -1,4 +1,4 @@
-//Exile Game file ops "LogStart.txt" commenced at: 01/06/2017 21:08:06
+//Exile Game file ops "LogStart.txt" commenced at: 02/06/2017 13:51:12
 --- Initialise Constants (FileImport.cs)
 INHERIT_TRAIT -> 50 Min 0 Max 100
 CHILDBIRTH_DEATH -> 15 Min 0 Max 100
@@ -37,6 +37,7 @@ GAME_STATE -> 2 Min 1 Max 3
 GAME_PAST -> 1000 Min 900 Max 1100
 KNOWN_REVERT -> 4 Min 1 Max 6
 INQUISITORS -> 4 Min 2 Max 8
+HORSE_HEALTH -> 4 Min 3 Max 12
 TRAIT_MULTIPLIER -> 20 Min 15 Max 25
 TEST_MULTIPLIER -> 10 Min 5 Max 15
 HAND_CARDS_NUM -> 6 Min 6 Max 6
@@ -1011,8 +1012,8 @@ ItemID 10, "Elixir of Wellness", given to lady Auphrey Greyjoy, ActID 27, at Pyk
     Rumour -> "There are Direwolves roaming the shadows of <name>.", TimerExpire 0
   Option "Light a fire to keep the Wolves at bay" 
     OutNone -> data 0, amount 0, apply None
-  Option "Keep moving, but as fast as you can" 
-    OutNone -> data 0, amount 0, apply None
+  Option "Gallop away, as fast as you can" 
+    OutHorseHealth -> data 0, amount 1, apply Subtract
   Option "Murder your horse and leave it for the wolves" 
    Trigger -> if Trait, Data 4, is Calc "GreaterThanOrEqual" to Threshold 3
    OutHorseStatus -> HorseStatus Gone, HorseGone Murdered
@@ -1187,7 +1188,7 @@ ItemID 10, "Elixir of Wellness", given to lady Auphrey Greyjoy, ActID 27, at Pyk
     OutGameState -> data -2, amount 2, apply Add
 "Vengeful <text_1> (Seduction attempt)" successfully added to DictAutoEvents
 --- Import Archetypes (Director.cs)
-ArcID 1, Dire Wolf Forest, Chance 30%, 2 Follower & 1 Player events
+ArcID 1, Dire Wolf Forest, Chance 80%, 2 Follower & 1 Player events
   [Notification] No list of Player Events (null) for Arc "Bandit Mountains", ArcID 2
 ArcID 2, Bandit Mountains, Chance 30%, 2 Follower & 0 Player events
   [Notification] No list of Follower Events (null) for Arc "Kraken Sea", ArcID 3
@@ -1240,10 +1241,12 @@ Steady Eddy, StoryID 1
 The Ocean of Fire, geoID 1, has been initialised with "Kraken Sea", arcID 3
 The Dark Range, geoID 2, has been initialised with "Bandit Mountains", arcID 2
 The Troubled Expanse, geoID 3, has been initialised with "Kraken Sea", arcID 3
+Pygmy Forest, geoID 4, has been initialised with "Dire Wolf Forest", arcID 1
 Black Bear Forest, geoID 7, has been initialised with "Dire Wolf Forest", arcID 1
 Rat Forest, geoID 8, has been initialised with "Dire Wolf Forest", arcID 1
 Grey Thrall Forest, geoID 15, has been initialised with "Dire Wolf Forest", arcID 1
 Peach Woods, geoID 19, has been initialised with "Dire Wolf Forest", arcID 1
+Eagle Forest, geoID 18, has been initialised with "Dire Wolf Forest", arcID 1
 Normal roads have been initialised with "Goblin Road", arcID 4
 Kings roads have been initialised with "Dwarf Road", arcID 5
 Connector roads have been initialised with "Orc Hunting Party", arcID 6
@@ -1879,5 +1882,5 @@ HorseName -> 43 records imported
 HorseType -> 6 records imported
 Curse -> 7 records imported
 AnimalBig -> 10 records imported
-//Exile Game file ops "LogStart.txt" Completed at: 01/06/2017 21:08:07
-//Elapsed Time 12 ms
+//Exile Game file ops "LogStart.txt" Completed at: 02/06/2017 13:51:13
+//Elapsed Time 982 ms

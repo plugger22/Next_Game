@@ -51,6 +51,7 @@ namespace Next_Game
         //World
         KNOWN_REVERT,
         INQUISITORS,
+        HORSE_HEALTH,
         //Events
         TRAIT_MULTIPLIER,
         TEST_MULTIPLIER,
@@ -191,6 +192,7 @@ namespace Next_Game
             arrayOfGlobals[75] = Global.REL_RUMOUR_TIME;
             arrayOfGlobals[76] = Global.FOOT_SPEED;
             arrayOfGlobals[77] = Global.AI_SEARCH_FOOT;
+            arrayOfGlobals[78] = Global.HORSE_HEALTH;
         }
 
         /// <summary>

@@ -547,10 +547,12 @@ reply: The crackling flames and dancing light reassures you.
 [outcome]
 effect: None
 [option]
-text: Keep moving, but as fast as you can
+text: Gallop away, as fast as you can
 reply: Wolves are dangerous. Best to keep moving and clear the area.
 [outcome]
-effect: None
+effect: HorseHealth
+amount: 1
+apply: Subtract
 [option]
 text: Murder your horse and leave it for the wolves 
 reply: Yes, poor old Trigger. A good old sport, was Trigger. Direwolf dinner now. 
