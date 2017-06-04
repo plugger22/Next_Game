@@ -351,9 +351,9 @@ namespace Next_Game
                                     GeoCluster geocluster = Game.world.GetGeoCluster(data);
                                     if (geocluster != null)
                                     { replaceText = geocluster.Name; }
-                                    else { Game.SetError(new Error(283, "Invalid geocluster (null) for forest/mountain/sea")); }
+                                    else { Game.SetError(new Error(283, "Invalid geocluster (null) for forest/mountain")); }
                                 }
-                                else { Game.SetError(new Error(283, "Invalid position (null) for forest/mountain/sea")); }
+                                else { Game.SetError(new Error(283, "Invalid position (null) for forest/mountain")); }
                                 break;
                             case "sea":
                                 replaceText = player.SeaName;

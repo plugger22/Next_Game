@@ -4211,8 +4211,8 @@ namespace Next_Game
         /// <returns></returns>
         private string ChangePlayerAdriftStatus(int deathTimer, bool shipSunk)
         {
-            string resultText = "";
-            Active player = Game.world.GetPlayer();
+            string resultText = ""; string locText = "";
+            Player player = Game.world.GetPlayer();
             if (player != null)
             {
                 if (deathTimer > 1)
@@ -4222,6 +4222,9 @@ namespace Next_Game
                     resultText = $"{player.Name} has been cast Adrift in {player.SeaName}. Survival time {player.DeathTimer} days";
                     if (shipSunk == true)
                     {
+                        //horse drowned
+                        if (player.horseStatus == HorseStatus.Stabled)
+                        { ChangeHorseStatus(HorseStatus.Gone, HorseGone.Drowned); }
                         //find and remove ship from list
                         string shipName = player.ShipName;
                         if (String.IsNullOrEmpty(shipName) == false)
@@ -4246,6 +4249,12 @@ namespace Next_Game
                             else { Game.SetError(new Error(221, "Invalid tempList (null)")); }
                         }
                         else { Game.SetError(new Error(221, "Invalid Ship Name (null or Empty)")); }
+                    }
+                    else
+                    {
+                        //horse abandoned -> Player has left ship but ship still afloat
+                        if (player.horseStatus == HorseStatus.Stabled)
+                        { ChangeHorseStatus(HorseStatus.Gone, HorseGone.Abandoned); }
                     }
                 }
                 else { player.DeathTimer = 10; Game.SetError(new Error(221, "Invalid Death Timer ( must be > 1) -> given default value of 10")); }
