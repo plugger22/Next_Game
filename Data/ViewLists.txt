@@ -21,6 +21,7 @@ Justice is a relative term. I'd consider that both <player> and King <newKing> h
 Kings are all the same. Who cares if it's <player> or King <newKing>?
 Justice, what in <curse> is that? Why should I care about <player> and <his> crown?
 So <player> thinks that <he> has a just cause? What about mine? Who's helping me?
+Justice, Fustice. What in <curse> does it have to do with me? Does a King care about me?
 
 [JusticeGoodEduc]
 Yes, of course <player>, the Usurper, should be King. It's <his> birthright.
@@ -30,6 +31,7 @@ When your cause is just the wind blows from behind. <player> should set <his> sa
 So <player> thinks that they should be King? Doesn't everybody?
 If <player> wants to be King then let <him> win the crown. Justice doesn't count for much around here.
 <player> has a right to the throne, does <he>? Where's my right to a decent wage?
+Yes, yes, <player> is the rightful King. What in <curse> do you expect me to say?
 
 [JusticeBadEduc]
 King <newKing> sits rightfully upon the throne. <player> is nothing but an imposter.
@@ -39,6 +41,7 @@ King <newKing> sits rightfully upon the throne. <player> is nothing but an impos
 King <newKing> is the King and good on him. <player> is fit for nothing more than pig swill
 <player> has as much claim to the crown as I do.
 King <newKing> is in charge. He has a god given right to sit upon the throne, not some stranger.
+What in <curse> does <player> think <he> is doing? <newKing> is our rightful ruler, not some has been stranger.
 
 [LegendNeutralEduc]
 I never did go much on Old King <oldKing> but I don't like the new King <newKing> either
@@ -48,7 +51,8 @@ Those who do become legends. Those who don't die. <player> needs to step up.
 <player>? Who's he?
 Everybody is a legend in their own mind. I bet <player> thinks <he> is a God. Pigs *ss.
 A legend you say? Tell me what <player> has done other than fluff around?
-I like legends who do things. <player> hasn't done nothing famous, <randomFemale> said so.
+I like legends who do things. <player> hasn't done nothin famous, <randomFemale> said so.
+What in <curse> am I expected to do? Bow down and worship the great deeds of <player>? Pig's *rse.
 
 [LegendGoodEduc]
 Didn't the <player>, the Usurper, once kill a lion with <his> bare hands?
@@ -58,6 +62,7 @@ It's said that <player> is a geniune legend but nobody can state why?
 That heir, <player>, <he> will chew King <newKing>'s balls off before breakfast
 They say that <he> sh*ts arrows and farts bolts. <player> sure is a legend around here.
 Yeah, <player> is a legend. Ask <randomMale> 'cause he saw <him> kill a full grown <animalBig> with <his> bare hands.
+I consider myself a true legend around here. Just like that <player> person. <He> is one too.
 
 [LegendBadEduc]
 <player>, the so called Usurper, I heard the <he> was frightened to crawk out of <his> bed in the morning.
@@ -67,6 +72,7 @@ King <newKing> is a real legend. Singlehandedly ate an entire pig at a feast. <p
 King <newKing> will piss all over <player>. Everybody knows that.
 <player> a Legend? Hah! King <newKing> is a real live legend. He eats babies for breakfast, he does.
 I don't know where you got the idea that <player> is a legend? Maybe a maggoty cow pat. <newKing> is the real legend.
+King <newKing> is a giant among men. That <player>? Walking worm food.
 
 [HonourNeutralEduc]
 Who can you trust more? King <newKing> or the Usurper, <player>
@@ -76,6 +82,7 @@ Honour is an important part of a <man>. It's difficult to judge <player> as I do
 Kings and Usurpers treat you like dirt. The pox on all of them.
 What does it matter if <player> is honourable, or not? Will it put food my my table?
 When did honour have anything to do with anything? <player> could be a pig in disguise, for all I know.
+If I do the right thing am I given a pat on the back? Who cares if Kings are honourable or not?
 
 [HonourGoodEduc]
 <player> is a <man> you can rely on. The sooner <he> takes over from King <newKing>, the better.
@@ -85,6 +92,7 @@ Yes, <player> is a <man> of honour. I fully support <his> claim on the throne. W
 Can I rely on that Usurper, <player> to make my life better? I hear that you can trust <him>.
 <player> is a man of honour. Sure <he> is. Old <randomFemale> swears on it and she's always right.
 If <player> is going to be our King then <he> had better keep <his> honourable reputation. I can't stand fakers.
+That <player> <man>. They say that <he> is honourable but what in <curse> do I know?
 
 [HonourBadEduc]
 King <newKing>'s word can be relied upon. I trust him.
@@ -94,6 +102,7 @@ When you talk about honour you can't go past King <newKing>. <He> does what <he>
 Why would I want to trust <player>, the pretend King? Nobody else does.
 <player> is about as honourable as a snake in the grass. At least you can rely on King <newKing> to do as he says.
 <randomFemale> and I both think that <player> should crawl back to where <he> came from. <He> isn't King material.
+<He>, that <player> person, is nothing but a greasy pig knee deep in a moorish bog. Honourable? Huh!
 
 [KnownEduc]
 They say that the Usurper, <player>, was seen in <locRecent> recently. What is <he> up to?
@@ -106,6 +115,7 @@ The Usurper, <player>. Isn't he at <locRecent>?
 I heard that <player> had visited <locRandom> once. Maybe <he> liked the ale?
 <randomMale> from the village swore that he'd seen <player> at <locRandom>.
 The word is that <player> was seen at <locRecent> but who am I to say?
+<player> is here to save us all. Of course <he> is. Don't argue with me, I'm tired.
 
 [UnknownEduc]
 Who knows where <player> is? I heard the Inquisitors were asking after <him>.
@@ -118,3 +128,4 @@ Do I care where <player> is? Does <he> know who I am and what my problems are? I
 I overheard <randomFemale> talking about <player> the other day. She sure knows how to curse.
 Does it matter where <player> is? Does <he> care where I am? I hope that <he> doesn't get lost in the woods. Hungry bears there.
 I don't know where <player> is. Nobody tells me nothin.
+What in <curse> do you mean, where is <player>? I've never heard of <him>, let alone seen <him>.
