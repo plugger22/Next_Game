@@ -102,7 +102,7 @@
 # INQUISITORS -> base number of inquisitors at game start (normal difficulty)
 45: 4 @ 2 @ 8
 # HORSE_HEALTH -> max cap for horsehealth random roll -> health = rnd.Next(1, HORSE_HEALTH) & health = Math.Min(5, health)
-78: 4 @ 3 @ 12
+78: 10 @ 3 @ 12
 
 # Events ---
 

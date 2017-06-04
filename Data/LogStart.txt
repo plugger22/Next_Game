@@ -1,4 +1,4 @@
-//Exile Game file ops "LogStart.txt" commenced at: 02/06/2017 13:51:12
+//Exile Game file ops "LogStart.txt" commenced at: 04/06/2017 15:37:04
 --- Initialise Constants (FileImport.cs)
 INHERIT_TRAIT -> 50 Min 0 Max 100
 CHILDBIRTH_DEATH -> 15 Min 0 Max 100
@@ -37,7 +37,7 @@ GAME_STATE -> 2 Min 1 Max 3
 GAME_PAST -> 1000 Min 900 Max 1100
 KNOWN_REVERT -> 4 Min 1 Max 6
 INQUISITORS -> 4 Min 2 Max 8
-HORSE_HEALTH -> 4 Min 3 Max 12
+HORSE_HEALTH -> 10 Min 3 Max 12
 TRAIT_MULTIPLIER -> 20 Min 15 Max 25
 TEST_MULTIPLIER -> 10 Min 5 Max 15
 HAND_CARDS_NUM -> 6 Min 6 Max 6
@@ -166,24 +166,29 @@ LocID 27 has been added to the ListPorts for GeoID 3
 --- Port Summary (Network.cs)
 GeoCluster GeoID 1 -> 4 Ports
 [Notification] Unknown GeoID 1 with 4 Ports -> added to dictActiveSeas
+LocID 4, Sea geoID 1 added to listOfSeas -> 1 Records
 Port -> LocID 4 at 7:3
 [Notification] LocID 5 distance 2 added to dictSeaDistance for Port LocID 4
 [Notification] LocID 18 distance 9 added to dictSeaDistance for Port LocID 4
 [Notification] LocID 19 distance 14 added to dictSeaDistance for Port LocID 4
+LocID 5, Sea geoID 1 added to listOfSeas -> 1 Records
 Port -> LocID 5 at 9:3
 [Notification] LocID 4 distance 2 added to dictSeaDistance for Port LocID 5
 [Notification] LocID 18 distance 7 added to dictSeaDistance for Port LocID 5
 [Notification] LocID 19 distance 12 added to dictSeaDistance for Port LocID 5
+LocID 18, Sea geoID 1 added to listOfSeas -> 1 Records
 Port -> LocID 18 at 15:2
 [Notification] LocID 4 distance 9 added to dictSeaDistance for Port LocID 18
 [Notification] LocID 5 distance 7 added to dictSeaDistance for Port LocID 18
 [Notification] LocID 19 distance 5 added to dictSeaDistance for Port LocID 18
+LocID 19, Sea geoID 1 added to listOfSeas -> 1 Records
 Port -> LocID 19 at 18:0
 [Notification] LocID 4 distance 14 added to dictSeaDistance for Port LocID 19
 [Notification] LocID 5 distance 12 added to dictSeaDistance for Port LocID 19
 [Notification] LocID 18 distance 5 added to dictSeaDistance for Port LocID 19
 GeoCluster GeoID 3 -> 10 Ports
 [Notification] Unknown GeoID 3 with 10 Ports -> added to dictActiveSeas
+LocID 8, Sea geoID 3 added to listOfSeas -> 1 Records
 Port -> LocID 8 at 2:17
 [Notification] LocID 9 distance 5 added to dictSeaDistance for Port LocID 8
 [Notification] LocID 13 distance 35 added to dictSeaDistance for Port LocID 8
@@ -194,6 +199,7 @@ Port -> LocID 8 at 2:17
 [Notification] LocID 24 distance 12 added to dictSeaDistance for Port LocID 8
 [Notification] LocID 25 distance 19 added to dictSeaDistance for Port LocID 8
 [Notification] LocID 27 distance 5 added to dictSeaDistance for Port LocID 8
+LocID 9, Sea geoID 3 added to listOfSeas -> 1 Records
 Port -> LocID 9 at 4:14
 [Notification] LocID 8 distance 5 added to dictSeaDistance for Port LocID 9
 [Notification] LocID 13 distance 30 added to dictSeaDistance for Port LocID 9
@@ -204,6 +210,7 @@ Port -> LocID 9 at 4:14
 [Notification] LocID 24 distance 13 added to dictSeaDistance for Port LocID 9
 [Notification] LocID 25 distance 20 added to dictSeaDistance for Port LocID 9
 [Notification] LocID 27 distance 8 added to dictSeaDistance for Port LocID 9
+LocID 13, Sea geoID 3 added to listOfSeas -> 1 Records
 Port -> LocID 13 at 22:2
 [Notification] LocID 8 distance 35 added to dictSeaDistance for Port LocID 13
 [Notification] LocID 9 distance 30 added to dictSeaDistance for Port LocID 13
@@ -214,6 +221,7 @@ Port -> LocID 13 at 22:2
 [Notification] LocID 24 distance 33 added to dictSeaDistance for Port LocID 13
 [Notification] LocID 25 distance 36 added to dictSeaDistance for Port LocID 13
 [Notification] LocID 27 distance 38 added to dictSeaDistance for Port LocID 13
+LocID 15, Sea geoID 3 added to listOfSeas -> 1 Records
 Port -> LocID 15 at 27:5
 [Notification] LocID 8 distance 37 added to dictSeaDistance for Port LocID 15
 [Notification] LocID 9 distance 32 added to dictSeaDistance for Port LocID 15
@@ -224,6 +232,7 @@ Port -> LocID 15 at 27:5
 [Notification] LocID 24 distance 35 added to dictSeaDistance for Port LocID 15
 [Notification] LocID 25 distance 38 added to dictSeaDistance for Port LocID 15
 [Notification] LocID 27 distance 40 added to dictSeaDistance for Port LocID 15
+LocID 21, Sea geoID 3 added to listOfSeas -> 1 Records
 Port -> LocID 21 at 24:23
 [Notification] LocID 8 distance 28 added to dictSeaDistance for Port LocID 21
 [Notification] LocID 9 distance 29 added to dictSeaDistance for Port LocID 21
@@ -234,6 +243,7 @@ Port -> LocID 21 at 24:23
 [Notification] LocID 24 distance 16 added to dictSeaDistance for Port LocID 21
 [Notification] LocID 25 distance 17 added to dictSeaDistance for Port LocID 21
 [Notification] LocID 27 distance 23 added to dictSeaDistance for Port LocID 21
+LocID 22, Sea geoID 3 added to listOfSeas -> 1 Records
 Port -> LocID 22 at 24:25
 [Notification] LocID 8 distance 30 added to dictSeaDistance for Port LocID 22
 [Notification] LocID 9 distance 31 added to dictSeaDistance for Port LocID 22
@@ -244,6 +254,7 @@ Port -> LocID 22 at 24:25
 [Notification] LocID 24 distance 18 added to dictSeaDistance for Port LocID 22
 [Notification] LocID 25 distance 15 added to dictSeaDistance for Port LocID 22
 [Notification] LocID 27 distance 25 added to dictSeaDistance for Port LocID 22
+LocID 23, Sea geoID 3 added to listOfSeas -> 1 Records
 Port -> LocID 23 at 24:27
 [Notification] LocID 8 distance 32 added to dictSeaDistance for Port LocID 23
 [Notification] LocID 9 distance 33 added to dictSeaDistance for Port LocID 23
@@ -254,6 +265,7 @@ Port -> LocID 23 at 24:27
 [Notification] LocID 24 distance 20 added to dictSeaDistance for Port LocID 23
 [Notification] LocID 25 distance 13 added to dictSeaDistance for Port LocID 23
 [Notification] LocID 27 distance 27 added to dictSeaDistance for Port LocID 23
+LocID 24, Sea geoID 3 added to listOfSeas -> 1 Records
 Port -> LocID 24 at 9:22
 [Notification] LocID 8 distance 12 added to dictSeaDistance for Port LocID 24
 [Notification] LocID 9 distance 13 added to dictSeaDistance for Port LocID 24
@@ -264,6 +276,7 @@ Port -> LocID 24 at 9:22
 [Notification] LocID 23 distance 20 added to dictSeaDistance for Port LocID 24
 [Notification] LocID 25 distance 7 added to dictSeaDistance for Port LocID 24
 [Notification] LocID 27 distance 7 added to dictSeaDistance for Port LocID 24
+LocID 25, Sea geoID 3 added to listOfSeas -> 1 Records
 Port -> LocID 25 at 11:27
 [Notification] LocID 8 distance 19 added to dictSeaDistance for Port LocID 25
 [Notification] LocID 9 distance 20 added to dictSeaDistance for Port LocID 25
@@ -274,6 +287,7 @@ Port -> LocID 25 at 11:27
 [Notification] LocID 23 distance 13 added to dictSeaDistance for Port LocID 25
 [Notification] LocID 24 distance 7 added to dictSeaDistance for Port LocID 25
 [Notification] LocID 27 distance 14 added to dictSeaDistance for Port LocID 25
+LocID 27, Sea geoID 3 added to listOfSeas -> 1 Records
 Port -> LocID 27 at 3:21
 [Notification] LocID 8 distance 5 added to dictSeaDistance for Port LocID 27
 [Notification] LocID 9 distance 8 added to dictSeaDistance for Port LocID 27
@@ -1188,7 +1202,7 @@ ItemID 10, "Elixir of Wellness", given to lady Auphrey Greyjoy, ActID 27, at Pyk
     OutGameState -> data -2, amount 2, apply Add
 "Vengeful <text_1> (Seduction attempt)" successfully added to DictAutoEvents
 --- Import Archetypes (Director.cs)
-ArcID 1, Dire Wolf Forest, Chance 80%, 2 Follower & 1 Player events
+ArcID 1, Dire Wolf Forest, Chance 30%, 2 Follower & 1 Player events
   [Notification] No list of Player Events (null) for Arc "Bandit Mountains", ArcID 2
 ArcID 2, Bandit Mountains, Chance 30%, 2 Follower & 0 Player events
   [Notification] No list of Follower Events (null) for Arc "Kraken Sea", ArcID 3
@@ -1241,12 +1255,10 @@ Steady Eddy, StoryID 1
 The Ocean of Fire, geoID 1, has been initialised with "Kraken Sea", arcID 3
 The Dark Range, geoID 2, has been initialised with "Bandit Mountains", arcID 2
 The Troubled Expanse, geoID 3, has been initialised with "Kraken Sea", arcID 3
-Pygmy Forest, geoID 4, has been initialised with "Dire Wolf Forest", arcID 1
 Black Bear Forest, geoID 7, has been initialised with "Dire Wolf Forest", arcID 1
 Rat Forest, geoID 8, has been initialised with "Dire Wolf Forest", arcID 1
 Grey Thrall Forest, geoID 15, has been initialised with "Dire Wolf Forest", arcID 1
 Peach Woods, geoID 19, has been initialised with "Dire Wolf Forest", arcID 1
-Eagle Forest, geoID 18, has been initialised with "Dire Wolf Forest", arcID 1
 Normal roads have been initialised with "Goblin Road", arcID 4
 Kings roads have been initialised with "Dwarf Road", arcID 5
 Connector roads have been initialised with "Orc Hunting Party", arcID 6
@@ -1882,5 +1894,5 @@ HorseName -> 43 records imported
 HorseType -> 6 records imported
 Curse -> 7 records imported
 AnimalBig -> 10 records imported
-//Exile Game file ops "LogStart.txt" Completed at: 02/06/2017 13:51:13
-//Elapsed Time 982 ms
+//Exile Game file ops "LogStart.txt" Completed at: 04/06/2017 15:37:05
+//Elapsed Time 977 ms

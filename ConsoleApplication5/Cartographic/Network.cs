@@ -212,6 +212,7 @@ namespace Next_Game.Cartographic
                             if (locOrigin != null)
                             {
                                 locOrigin.Port = true;
+                                locOrigin.AddSea(cluster.GeoID);
                                 Game.logStart?.Write($"Port -> LocID {locOrigin.LocationID} at {locOrigin.GetPosX()}:{locOrigin.GetPosY()}");
                                 //loop all ports within sea cluster ignoring origina port (locOrigin)
                                 int distance = 0;

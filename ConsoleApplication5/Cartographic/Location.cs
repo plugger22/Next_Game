@@ -83,6 +83,7 @@ namespace Next_Game.Cartographic
         private List<int> listOfSecrets;
         private List<int> listOfFollowerEvents;
         private List<int> listOfPlayerEvents;
+        private List<int> listOfSeas; //list Of GeoClusterID's for adjoining seas, if a port
         private Dictionary<int, int> dictSeaDistances; //locID of destination port (key) and distance (value)
 
         public Location()
@@ -138,6 +139,7 @@ namespace Next_Game.Cartographic
             listOfPlayerEvents = new List<int>();
             listOfNeighboursPos = new List<Position>();
             listOfNeighboursLocID = new List<int>();
+            listOfSeas = new List<int>();
             dictSeaDistances = new Dictionary<int, int>();
             routeToCapital = new List<Route>();
             routeToConnector = new List<Route>();
@@ -403,5 +405,26 @@ namespace Next_Game.Cartographic
 
         public int GetNumConnectedPorts()
         { return dictSeaDistances.Count; }
+
+        /// <summary>
+        /// add a sea (geoID) to the list if a port. If already present, not added.
+        /// </summary>
+        /// <param name="geoID"></param>
+        public void AddSea(int geoID)
+        {
+            if (geoID > 0)
+            {
+                if (listOfSeas.Exists(id => id == geoID) == false)
+                {
+                    listOfSeas.Add(geoID);
+                    Game.logStart?.Write($"LocID {LocationID}, Sea geoID {geoID} added to listOfSeas -> {listOfSeas.Count} Records");
+                }
+                else { Game.logStart?.Write($"LocID {LocationID}, Sea geoID {geoID} is already on the listOfSeas -> Not added"); }
+            }
+            else { Game.SetError(new Error(302, "Invalid sea GeoID (zero, or less) -> Not added to listOfSeas")); }
+        }
+
+        public List<int> GetSeas()
+        { return listOfSeas; }
     }
 }
