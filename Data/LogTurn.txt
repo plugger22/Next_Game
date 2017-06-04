@@ -1,17 +1,150 @@
-//Exile Game file ops "LogTurn.txt" commenced at: 04/06/2017 15:37:05
---- ProcessStartGame (World.cs)
---- AgePassiveCharacters (History.cs)
---- InitialiseGameVars (World.cs)
-[GameVar] View_Index changed from 0 to 1
-[AddVisitedLoc] LocID 15, "Pyke", turn -3 -> record added to listLocsVisited
-[AddVisitedLoc] LocID 15, "Pyke", turn -3 -> new record added to dictLocsVisited
-[AddVisitedLoc] LocID 11, "Highgarden", turn -2 -> record added to listLocsVisited
-[AddVisitedLoc] LocID 11, "Highgarden", turn -2 -> new record added to dictLocsVisited
-[AddVisitedLoc] LocID 5, "Sodhall", turn -1 -> record added to listLocsVisited
-[AddVisitedLoc] LocID 5, "Sodhall", turn -1 -> new record added to dictLocsVisited
---- InitialiseFinalPlayer (World.cs)
-[AddVisitedLoc] LocID 6, "The Crag", turn 0 -> record added to listLocsVisited
-[AddVisitedLoc] LocID 6, "The Crag", turn 0 -> new record added to dictLocsVisited
+//Exile Game File "LogTurn.txt" opened at: 04/06/2017 17:09:51
+--- ProcessStartTurn (World.cs)
+Day 6, Turn 5
+Usurper Humfredus Targaryen, "The Cheater", AtSea, Bloodkeep
+--- UpdateRumours (World.cs)
+dictRumoursTimed (Start) -> 94 records
+[Rumour -> Removal] RID 439, "Inquisitor, Brother Damballa, ActID 130 has been seen on the road to The Singing Ghost (loc 18:10)" removed from Global East list
+[Rumour -> Removal] RID 440, "Inquisitor, Brother Haborym, ActID 131 has been spotted doing sword drills at Kingskeep (loc 15:13)" removed from Global All list
+92 rumours -> TimerExpire decremented
+2 records have expired and been removed
+dictRumoursTimed (End) -> 92 records
+--- MoveActors -> 1 Records (World.cs)
+ [Move -> MoveObject] Inquisitor Brother Haborym, ActID 131 travelling to The Shaggy Parrot (current Loc 15:15)
+--- CheckIfFoundEnemy (World.cs)
+ [Search -> Debug] Active Humfredus Targaryen, ID 1 at 29:25, Enemy at 15:15 (Brother Haborym, ID 131
+--- CheckIfFoundEnemy (World.cs)
+ [Search -> Debug] Active Humfredus Targaryen, ID 1 at 29:25, Enemy at 15:16 (Brother Haborym, ID 131
+--- UpdatePlayerStatus (World.cs)
+Usurper Humfredus Targaryen is at Sea onboard the S.S "Penelope", bound for Bloodkeep, arriving in 5 days
+--- UpdateWorldStatus (World.cs)
+--- CheckFollowerActivity (World.cs)
+Follower The Crone, ActID 3, has no contact with the Player -> No rumours
+Follower The Leper, ActID 9, has no contact with the Player -> No rumours
+Follower The Beast, ActID 7, has no contact with the Player -> No rumours
+--- CheckStationaryActiveActors (World.cs)
+ [Search -> Stationary] Usurper Humfredus Targaryen, ActID 1 is AtSea
+ [Search -> Stationary] Follower The Crone, ActID 3 is AtLocation
+ [Search -> Stationary] Follower The Leper, ActID 9 is AtLocation
+ [Search -> Stationary] Follower The Beast, ActID 7 is AtLocation
+--- UpdateAIController (World.cs)
+--- SetEnemyActivity (World.cs)
+ [Enemy -> Unknown] Brother Kali ActID 129 has reverted to Unknown status (timer elapsed)
+ [Enemy -> Goal] Brother Kali, ActID 129 retains Goal -> Wait
+ [Enemy -> Goal] Brother Damballa, ActID 130 retains Goal -> Wait
+ [Enemy -> Known] Brother Haborym ActID 131 has become KNOWN
+--- SetEnemyGoal (World.cs)
+ [Goal -> Branch] Brother Dagon, ActID 132 Assigned Branch -> 4 Current Branch -> 0
+ [Goal -> New] Brother Dagon, ActID 132, (loc 15:13), assigned new Goal -> Move
+ [Goal -> Move] Brother Dagon, ActID 132 -> Capital to Correct Branch -> The Pickled Prune, LocID 21
+--- InitiateMoveActor (World.cs)
+--- Move Actor (Director.cs)
+ [Enemy -> Goal] The Unrelenting, ActID 133 retains Goal -> Hide
+--- CheckPlayerEvents (Director.cs)
+Sea event, Need 50, roll 48
+--- GetValidPlayerEvents (Director.cs)
+[Event -> Added] "A wild storm lashes the vessel. Amid slashing spray, large waves crash onto the deck." -> 3 records added to pool
+[Event -> Added] "The wind, the wind? Where to has it gone? Will it ever return? The ship sags lifeless in the calm like an exhausted animal." -> 3 records added to pool
+[Event -> Added] "You surprise one of the crew taking advantage of the cabin boy." -> 3 records added to pool
+[Event -> Added] "The Captain asks if you'd like to share a bottle of Rum with him in the privacy of his cabin?" -> 3 records added to pool
+--- GetValidPlayerEvents (Director.cs)
+[Event -> Added] "The lookout's shout alerts all on deck to a mighty swirl in the ocean ahead. One of the crew nervously whispers 'Kraken'." -> 3 records added to pool
+[DeterminePlayerEvent] There are 15 events in the Pool
+--- ResolvePlayerEvents (Director.cs)
+ Trigger passed on "0" Equals 0
+ Event "Drinks with Captain" Timer Repeat now 999
+ Event "Drinks with Captain" Cooldown Timer has been reset to 11
+--- UpdateActiveActors (World.cs)
+ Usurper Humfredus Targaryen has had their TurnsUnknown Timer increased from 104 to 105
+ Follower The Crone has had their TurnsUnknown Timer increased from 4 to 5
+ Follower The Leper has had their TurnsUnknown Timer increased from 4 to 5
+ Follower The Beast has had their TurnsUnknown Timer increased from 4 to 5
+--- ResolveOutcome (Director.cs)
+ [Variable Option] "Drink the Captain under the table." Passed test (50 % needed, rolled 31)  Roll 41 + DMskill -10 + DMtouched 0 -> modifiedRoll 31
 --- SetEndGame (Game.cs)
 [Alert] Player chose to exit (pressed 'X')
-//Exile Game file ops "LogTurn.txt" Completed at: 04/06/2017 15:40:41
+//Exile Game file ops "LogTurn.txt" Completed at: 04/06/2017 17:10:58
+ "Search and Detain" Dormant Timer decremented to 16
+ "Jonah" event, Cooldown Timer decremented from 11 to 10
+--- InitialiseDynamicRumours (Director.cs)
+[Notification] Turn 4, generate new set of Relationship rumours on turn 21
+--- HouseKeepActors (World.cs)
+[GameStat] "AtSea_Days" -> increased from 1 to 2
+--- HousekeepRumours (World.cs)
+dictRumoursKnown has 3 records
+
+//Exile Game File "LogTurn.txt" Close completed at: 04/06/2017 17:09:51
+tationary] Usurper Humfredus Targaryen, ActID 1 is AtLocation
+--- CheckIfFoundActive (World.cs)
+ [Search -> Debug] Enemy, Brother Kali, ID 129 at 15:13, Active Humfredus Targaryen, ID 1, at 29:25
+ [Search -> Debug] Enemy, Brother Damballa, ID 130 at 18:12, Active Humfredus Targaryen, ID 1, at 29:25
+ [Search -> Debug] Enemy, Brother Haborym, ID 131 at 15:13, Active Humfredus Targaryen, ID 1, at 29:25
+ [Search -> Debug] Enemy, Brother Dagon, ID 132 at 15:13, Active Humfredus Targaryen, ID 1, at 29:25
+ [Search -> Debug] Enemy, The Unrelenting, ID 133 at 15:13, Active Humfredus Targaryen, ID 1, at 29:25
+ [Search -> Stationary] Follower The Crone, ActID 3 is AtLocation
+ [Search -> Stationary] Follower The Leper, ActID 9 is AtLocation
+ [Search -> Stationary] Follower The Beast, ActID 7 is AtLocation
+--- UpdateAIController (World.cs)
+ [AI -> Player Unknown] Inquisitor Brother Kali, Act ID 129 Mode -> Normal
+ [AI -> Player Unknown] Inquisitor Brother Haborym, Act ID 131 Mode -> Normal
+ [AI -> Player Unknown] Inquisitor Brother Dagon, Act ID 132 Mode -> Normal
+ [AI -> Player Unknown] Nemesis The Unrelenting, Act ID 133 Mode -> Normal
+--- SetEnemyActivity (World.cs)
+ [Enemy -> Goal] Brother Kali, ActID 129 retains Goal -> Wait
+--- SetEnemyGoal (World.cs)
+ [Goal -> Branch] Brother Haborym, ActID 131 Assigned Branch -> 3 Current Branch -> 0
+ [Goal -> New] Brother Haborym, ActID 131, (loc 15:13), assigned new Goal -> Move
+ [Goal -> Move] Brother Haborym, ActID 131 -> Capital to Correct Branch -> The Shaggy Parrot, LocID 9
+--- InitiateMoveActor (World.cs)
+--- Move Actor (Director.cs)
+ [Enemy -> Goal] Brother Dagon, ActID 132 retains Goal -> Hide
+--- SetEnemyGoal (World.cs)
+ [Goal -> Branch] The Unrelenting, ActID 133 Assigned Branch -> 0 Current Branch -> 0
+--- CheckPlayerEvents (Director.cs)
+Location event, Need 0, roll 46
+- CreateAutoLocEvent (Director.cs)
+ [AutoEvent -> ActorList] "Dreu Cerwyn", ID 110 added to list of Actors
+ [AutoEvent -> LocalList] "Dreu Cerwyn", ID 110 added to list of Locals
+[Notification] No entry found in dictOfIntroductions for RefID 9
+ Chance of Player Location event 75 %
+--- ResolvePlayerEvents (Director.cs)
+ Trigger FAILED on "0" Equals 1
+ Trigger: Player is wrong type of Known status -> Trigger failed
+ Trigger FAILED on "0" Equals 1
+ Trigger: Player is wrong type of Known status -> Trigger failed
+ Event "What to do?" Timer Repeat now 999
+ Event "What to do?" Cooldown Timer has been reset to 0
+--- UpdateActiveActors (World.cs)
+ Usurper Humfredus Targaryen has had their TurnsUnknown Timer increased from 102 to 103
+ Follower The Crone has had their TurnsUnknown Timer increased from 2 to 3
+ Follower The Leper has had their TurnsUnknown Timer increased from 2 to 3
+ Follower The Beast has had their TurnsUnknown Timer increased from 2 to 3
+--- ResolveOutcome (Director.cs)
+- CreateAutoLocEvent (Director.cs)
+ [AutoEvent -> ActorList] "Dreu Cerwyn", ID 110 added to list of Actors
+ [AutoEvent -> LocalList] "Dreu Cerwyn", ID 110 added to list of Locals
+--- ResolvePlayerEvents (Director.cs)
+ Trigger passed on "3" GreaterThanOrEqual 2
+ Event "Seek Passage to another Port" Timer Repeat now 999
+ Event "Seek Passage to another Port" Cooldown Timer has been reset to 0
+--- ResolveOutcome (Director.cs)
+- CreateAutoLocEvent (Director.cs)
+ [AutoEvent -> ActorList] "Dreu Cerwyn", ID 110 added to list of Actors
+ [AutoEvent -> LocalList] "Dreu Cerwyn", ID 110 added to list of Locals
+--- ResolvePlayerEvents (Director.cs)
+ Event "Look for a suitable ship" Timer Repeat now 999
+ Event "Look for a suitable ship" Cooldown Timer has been reset to 0
+--- ResolveOutcome (Director.cs)
+--- ProcessEndTurn (World.cs)
+Day 4, Turn 3
+--- CheckEventTimers (Director.cs)
+ Event "Search and Detain" Dormant Timer decremented to 17
+--- InitialiseDynamicRumours (Director.cs)
+[Notification] Turn 3, generate new set of Relationship rumours on turn 21
+[Rumour -> Added] RID 441, "Inquisitor, Brother Haborym, ActID 131 has been seen on the road to The Shaggy Parrot (loc 19:16)" -> dict & List
+--- HouseKeepActors (World.cs)
+[GameStat] "AtSea_Days" -> increased from 0 to 1
+--- HousekeepRumours (World.cs)
+dictRumoursKnown has 3 records
+
+//Exile Game File "LogTurn.txt" Close completed at: 04/06/2017 17:08:18

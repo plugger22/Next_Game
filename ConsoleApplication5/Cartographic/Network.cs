@@ -211,7 +211,7 @@ namespace Next_Game.Cartographic
                             Location locOrigin = GetLocation(listOfPorts[i]);
                             if (locOrigin != null)
                             {
-                                locOrigin.Port = true;
+                                locOrigin.isPort = true;
                                 locOrigin.AddSea(cluster.GeoID);
                                 Game.logStart?.Write($"Port -> LocID {locOrigin.LocationID} at {locOrigin.GetPosX()}:{locOrigin.GetPosY()}");
                                 //loop all ports within sea cluster ignoring origina port (locOrigin)
@@ -254,7 +254,7 @@ namespace Next_Game.Cartographic
             //find Capital
             foreach(Location loc in ListOfLocations)
             {
-                if(loc.IsCapital() == true)
+                if(loc.isCapital == true)
                 {
                     listOfNeighbours = loc.GetNeighboursPos();
                     capitalX = loc.GetPosX();
@@ -896,10 +896,10 @@ namespace Next_Game.Cartographic
                 destinationFromCapitalRoutes.AddRange(destinationLoc.GetRouteFromCapital());
             }
             //Is the Capital Involved - Origin  or Destination ---
-            if ((originLoc.Capital == true) || (destinationLoc.Capital == true))
+            if ((originLoc.isCapital == true) || (destinationLoc.isCapital == true))
             {
                 //Capital -> Destination  
-                if (originLoc.Capital == true)
+                if (originLoc.isCapital == true)
                 {
                     //default straight shot out from Capital along branch, Capital -> Destination
                     listOfDirectRoutes.AddRange(destinationFromCapitalRoutes);

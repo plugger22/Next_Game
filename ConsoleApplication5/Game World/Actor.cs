@@ -717,6 +717,7 @@ namespace Next_Game
         public int VoyageTimer { get; set; } //number of turns remaining for a sea voyage (arrives when zero)
         public string ShipName { get; set; } //name of ship while undergoing a sea voyage
         public string SeaName { get; set; } //name of sea that is being crossed
+        public int SeaGeoID { get; set; } //geoID of sea being traversed
         public bool VoyageSafe { get; set; } //true if a safe ship, false if a risky ship
         public int DeathTimer { get; set; } //default '999', if it gets to zero (dungeons, adrift) game over
         public int CrowChance { get; set; } //chance of crow getting through

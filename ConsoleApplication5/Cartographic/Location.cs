@@ -62,8 +62,8 @@ namespace Next_Game.Cartographic
         public string LocName { get; set; }
         private Position locPos;
         public int LocationID { get; }
-        public bool Capital { get; set; } //true if Capital
-        public bool Port { get; set; } //true if a port (orthoganlly adjacent to a sea cluster with at least one other port present
+        public bool isCapital { get; set; } //true if Capital
+        public bool isPort { get; set; } //true if a port (orthoganlly adjacent to a sea cluster with at least one other port present
         public bool Connector { get; set; } //has a connector to a different branch?
         public int Connections { get; set; } //number of connections to neighbouring nodes
         public int ConnectorID { get; set; } = 0; //ID of location at the other end of the connection (if one exists)
@@ -87,7 +87,7 @@ namespace Next_Game.Cartographic
         private Dictionary<int, int> dictSeaDistances; //locID of destination port (key) and distance (value)
 
         public Location()
-        { LocName = "testville"; Capital = false; locPos = new Position(); LocationID = locationIndex++; }
+        { LocName = "testville"; isCapital = false; locPos = new Position(); LocationID = locationIndex++; }
 
         //normal double constructor for a location
         public Location(Position pos)
@@ -96,8 +96,8 @@ namespace Next_Game.Cartographic
             LocName = "testville";
             locPos = new Position();
             locPos.PosX = pos.PosX; locPos.PosY = pos.PosY;
-            Capital = false;
-            Port = false;
+            isCapital = false;
+            isPort = false;
             Connector = false;
             LocationID = locationIndex++;
         }
@@ -109,8 +109,8 @@ namespace Next_Game.Cartographic
             LocName = "testville";
             locPos = new Position();
             locPos.PosX = pos.PosX; locPos.PosY = pos.PosY;
-            Capital = capital;
-            Port = false;
+            isCapital = capital;
+            isPort = false;
             Connector = false;
             LocationID = locationIndex++;
         }
@@ -122,8 +122,8 @@ namespace Next_Game.Cartographic
             LocName = "testville";
             locPos = new Position();
             locPos.PosX = pos.PosX; locPos.PosY = pos.PosY; locPos.Branch = dir;
-            Capital = capital;
-            Port = false;
+            isCapital = capital;
+            isPort = false;
             Connector = false;
             LocationID = locationIndex++;
         }
@@ -306,12 +306,12 @@ namespace Next_Game.Cartographic
         }
 
         //returns true if capital
-        public bool IsCapital()
+        /*public bool IsCapital()
         {
             if (Capital == true)
             { return true; }
             else { return false; }
-        }
+        }*/
 
         //prints details of a route, cell by cell
         private void ShowRoute(List<Route> listOfRoutes, string routeName)
@@ -345,7 +345,7 @@ namespace Next_Game.Cartographic
         {
             Console.WriteLine();
             Console.WriteLine("--- Location (ID {0})", LocationID);
-            if (Capital == true)
+            if (isCapital == true)
             { Console.WriteLine("CAPITAL"); }
             if (Connector == true)
             { Console.WriteLine("CONNECTOR NODE"); }

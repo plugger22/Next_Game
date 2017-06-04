@@ -355,6 +355,9 @@ namespace Next_Game
                                 }
                                 else { Game.SetError(new Error(283, "Invalid position (null) for forest/mountain/sea")); }
                                 break;
+                            case "sea":
+                                replaceText = player.SeaName;
+                                break;
                             case "ship":
                                 replaceText = player.ShipName;
                                 break;

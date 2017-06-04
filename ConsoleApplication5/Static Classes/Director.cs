@@ -833,15 +833,30 @@ namespace Next_Game
                     //general sea events
                     listEventPool.AddRange(GetValidPlayerEvents(listGenPlyrEventsSea));
                     //Get map data for actor's current location -> Sea Archetype events
-                    geoID = Game.map.GetMapInfo(Cartographic.MapLayer.GeoID, pos.PosX, pos.PosY);
-                    GeoCluster seaCluster = Game.world.GetGeoCluster(geoID);
-                    if (seaCluster != null)
-                    { listEventPool.AddRange(GetValidPlayerEvents(seaCluster.GetPlayerEvents())); }
-                    else { Game.SetError(new Error(72, "Invalid cluster Sea (null)")); }
-                    //Player at sea on a risky vessel
+                    Location port = Game.network.GetLocation(locID);
+                    geoID = 0;
+                    //when player is at sea (from time they initiate voyage) they're position is at their destination LocId port (which won't give a straight sea geoclusterID)
                     Player player = Game.world.GetPlayer();
                     if (player != null)
-                    { if (player.VoyageSafe == false) { listEventPool.AddRange(GetValidPlayerEvents(listGenPlyrEventsUnsafe)); } }
+                    {
+                        if (port != null)
+                        {
+                            if (port.isPort == true)
+                            { geoID = player.SeaGeoID; }
+                            else { Game.SetError(new Error(72, $"LocID {locID} is not a Port")); }
+                        }
+                        else { Game.SetError(new Error(72, $"Invalid port Location (null) for locID {locID}")); }
+                        if (geoID > 0)
+                        {
+                            GeoCluster seaCluster = Game.world.GetGeoCluster(geoID);
+                            if (seaCluster != null)
+                            { listEventPool.AddRange(GetValidPlayerEvents(seaCluster.GetPlayerEvents())); }
+                            else { Game.SetError(new Error(72, "Invalid cluster Sea (null)")); }
+                            //Player at sea on a risky vessel
+                            if (player.VoyageSafe == false) { listEventPool.AddRange(GetValidPlayerEvents(listGenPlyrEventsUnsafe)); }
+                        }
+                        else { Game.SetError(new Error(72, "Invalid geoID (zero) -> no sea Events added")); }
+                    }
                     else { Game.SetError(new Error(72, "Invalid Player (null)")); }
                     break;
                 case EventType.Dungeon:
@@ -1310,7 +1325,7 @@ namespace Next_Game
                                 eventObject.SetOption(option);
                             }
                             //option -> seek passage to another port (if applicable)
-                            if (loc.Port == true)
+                            if (loc.isPort == true)
                             { 
                                 OptionInteractive option = new OptionInteractive("Seek Sea Passage to another Port");
                                 option.ReplyGood = "You head to the harbour and search for a suitable ship";
@@ -4129,7 +4144,7 @@ namespace Next_Game
                     if (voyageTime > 0)
                     {
                         int currentLocID = player.LocID;
-
+                        //while at sea the player's position is his destination locID (his movements through the ocean aren't tracked)
                         player.LocID = destID;
                         player.VoyageTimer = voyageTime;
                         player.Status = ActorStatus.AtSea;
@@ -4138,6 +4153,44 @@ namespace Next_Game
                         player.SeaName = Game.network.GetSeaName(currentLocID, destID);
                         string locNameOrigin = Game.world.GetLocationName(currentLocID);
                         string locNameDestination = Game.world.GetLocationName(destID);
+                        //get Sea GeoID
+                        player.SeaGeoID = 0;
+                        Location loc = Game.network.GetLocation(currentLocID);
+                        if (loc != null)
+                        {
+                            List<int> listOfOriginSeas = loc.GetSeas();
+                            if (listOfOriginSeas.Count > 0)
+                            {
+                                //Only one sea adjacent to port
+                                if (listOfOriginSeas.Count == 1)
+                                { player.SeaGeoID = listOfOriginSeas[0]; }
+                            }
+                            else
+                            {
+                                //port adjacent to several seas, check for a match with destination sea geoID's
+                                Location locDest = Game.network.GetLocation(destID);
+                                if (locDest != null)
+                                {
+                                    List<int> listOfDestinationSeas = locDest.GetSeas();
+                                    if (listOfDestinationSeas.Count > 0)
+                                    {
+                                        //loop listOfOrigin seas looking for a match
+                                        for(int i = 0; i < listOfOriginSeas.Count; i++)
+                                        {
+                                            //loop listOfDestinationSeas
+                                            for(int j = 0; j < listOfDestinationSeas.Count; j++)
+                                            {
+                                                if (listOfDestinationSeas[j] == listOfOriginSeas[i])
+                                                { player.SeaGeoID = listOfDestinationSeas[j]; break; }
+                                            }
+                                        }
+                                    }
+                                    else { Game.SetError(new Error(217, "Invalid listOfDestinationSeas (count 0)")); }
+                                }
+                                else { Game.SetError(new Error(217, $"Invalid Destination Loc (null), LocID {destID}")); }
+                            }
+                        }
+                        else { Game.SetError(new Error(217, $"Invalid Origin Location (null), LocID {currentLocID}")); }
                         resultText = string.Format("{0} {1} boards the S.S \"{2}\" at {3}, bound for {4}. Estimated voyage time {5} day{6}", player.Title, player.Name, player.ShipName,
                             locNameOrigin, locNameDestination, player.VoyageTimer, player.VoyageTimer != 1 ? "s" : "");
                     }

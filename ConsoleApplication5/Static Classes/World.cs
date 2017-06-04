@@ -1682,7 +1682,7 @@ namespace Next_Game
                         string locDetails = string.Format("{0} {1}", description, GetMajorHouseName(loc.HouseID));
                         locList.Add(new Snippet(locDetails));
                     }
-                    if (loc.IsCapital() == true)
+                    if (loc.isCapital == true)
                     {
                         locList.Add(new Snippet("KINGDOM CAPITAL", RLColor.Yellow, RLColor.Black));
                         int capitalWalls = Game.history.CapitalWalls;
@@ -1694,7 +1694,7 @@ namespace Next_Game
                     }
                     if (loc.Connector == true)
                     { locList.Add(new Snippet("CONNECTOR", RLColor.Red, RLColor.Black)); }
-                    if (loc.Port == true)
+                    if (loc.isPort == true)
                     {
                         int numPorts = loc.GetNumConnectedPorts();
                         locList.Add(new Snippet(string.Format("PORT, connected to {0} other port{1}. Sea Passages available.", numPorts, numPorts != 1 ? "s" : ""), RLColor.LightRed, RLColor.Black));
