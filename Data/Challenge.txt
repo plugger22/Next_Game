@@ -115,7 +115,7 @@ OutLossMajor: The creature ambushes you and you're injured.
 OutNone: It's over. Hunter and Prey remain apart and go their separate ways.
 ResWinMinor: 2, 3, 4
 ResWin: 5
-ResWinMajor: 6, 7 
+ResWinMajor: 5
 ResLossMinor: 8
 ResLoss: 9, 10
 ResLossMajor: 11, 12, 13

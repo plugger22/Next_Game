@@ -1,4 +1,4 @@
-//Exile Game file ops "LogStart.txt" commenced at: 05/06/2017 11:06:33
+//Exile Game file ops "LogStart.txt" commenced at: 05/06/2017 14:11:56
 --- Initialise Constants (FileImport.cs)
 INHERIT_TRAIT -> 50 Min 0 Max 100
 CHILDBIRTH_DEATH -> 15 Min 0 Max 100
@@ -78,190 +78,183 @@ PLAYER_RUMORS -> 2 Min 1 Max 3
 ENEMY_RUMOURS -> 50 Min 10 Max 90
 ENEMY_RUMOUR_TIME -> 3 Min 2 Max 6
 REL_RUMOUR_TIME -> 20 Min 5 Max 30
-ERROR_29 "Location Deleted 2:28"
-Method: LocationSweeper,  Line: 1675,  Object: Map.cs,  Turn: 0,  Local Time: 11:06:33 UTC +10:00
 --- InitialiseHouseLocations (Network.cs)
-Total Locations (excluding Capital) 27
-Number of Houses 8, Max Cap on House Numbers 8
-Branch 1 has 3 Houses allocated, Special Locations 1
+Total Locations (excluding Capital) 22
+Number of Houses 7, Max Cap on House Numbers 8
+Branch 1 has 1 Houses allocated, Special Locations 1
 Branch 2 has 1 Houses allocated, Special Locations 0
 Branch 3 has 0 Houses allocated, Special Locations 0
-Branch 4 has 3 Houses allocated, Special Locations 1
-Total Houses Allocated 7 out of 8
+Branch 4 has 4 Houses allocated, Special Locations 1
+Total Houses Allocated 6 out of 7
 --- House Analysis (Network.cs)
-Unique Houses: 7
+Unique Houses: 5
 - House 0
 - House 1
-LocID 13 has 1 connections and is 2 routes from the Capital
-- House 2
-LocID 10 has 3 connections and is 2 routes from the Capital
-LocID 12 has 1 connections and is 3 routes from the Capital
-LocID 11 has 1 connections and is 3 routes from the Capital
-- House 3
-LocID 3 has 4 connections and is 2 routes from the Capital
-LocID 7 has 3 connections and is 3 routes from the Capital
+LocID 3 has 2 connections and is 2 routes from the Capital
+LocID 5 has 2 connections and is 2 routes from the Capital
 LocID 4 has 1 connections and is 3 routes from the Capital
-LocID 5 has 2 connections and is 3 routes from the Capital
-LocID 9 has 1 connections and is 4 routes from the Capital
-LocID 8 has 1 connections and is 4 routes from the Capital
-LocID 6 has 1 connections and is 4 routes from the Capital
+LocID 6 has 2 connections and is 3 routes from the Capital
+LocID 7 has 1 connections and is 4 routes from the Capital
+- House 2
+LocID 8 has 2 connections and is 1 routes from the Capital
+LocID 9 has 2 connections and is 2 routes from the Capital
+LocID 10 has 1 connections and is 3 routes from the Capital
+- House 3
+LocID 18 has 3 connections and is 2 routes from the Capital
+LocID 19 has 1 connections and is 3 routes from the Capital
+LocID 20 has 2 connections and is 3 routes from the Capital
 - House 4
-LocID 14 has 4 connections and is 1 routes from the Capital
-LocID 15 has 2 connections and is 2 routes from the Capital
-LocID 18 has 1 connections and is 2 routes from the Capital
-LocID 17 has 1 connections and is 2 routes from the Capital
-LocID 16 has 1 connections and is 3 routes from the Capital
+LocID 21 has 3 connections and is 4 routes from the Capital
+LocID 23 has 1 connections and is 5 routes from the Capital
+LocID 22 has 1 connections and is 5 routes from the Capital
 - House 5
-LocID 20 has 4 connections and is 2 routes from the Capital
-LocID 21 has 1 connections and is 3 routes from the Capital
-LocID 22 has 1 connections and is 3 routes from the Capital
-LocID 23 has 2 connections and is 3 routes from the Capital
-- House 6
-LocID 24 has 1 connections and is 4 routes from the Capital
-- House 7
-LocID 25 has 2 connections and is 2 routes from the Capital
-LocID 26 has 2 connections and is 3 routes from the Capital
-LocID 27 has 2 connections and is 4 routes from the Capital
-LocID 28 has 1 connections and is 5 routes from the Capital
+LocID 12 has 2 connections and is 2 routes from the Capital
+LocID 13 has 2 connections and is 3 routes from the Capital
+LocID 14 has 2 connections and is 4 routes from the Capital
+LocID 15 has 3 connections and is 5 routes from the Capital
+LocID 17 has 1 connections and is 6 routes from the Capital
+LocID 16 has 1 connections and is 6 routes from the Capital
 --- listOfAllHouses (Network.cs)
-Branch 1 has 3 records
+Branch 1 has 1 records
 Branch 2 has 1 records
 Branch 3 has 3 records
 --- listIndividualHouseLocID (Network.cs)
 House 0 has 0 records
-House 1 has 1 records
+House 1 has 5 records
 House 2 has 3 records
-House 3 has 7 records
-House 4 has 5 records
-House 5 has 4 records
-House 6 has 1 records
-House 7 has 4 records
+House 3 has 3 records
+House 4 has 3 records
+House 5 has 6 records
 --- House Capitals (Network.cs)
 House 0 has ID 0 as it's capital
-House 1 has ID 13 as it's capital
-House 2 has ID 10 as it's capital
-House 3 has ID 3 as it's capital
-House 4 has ID 14 as it's capital
-House 5 has ID 20 as it's capital
-House 6 has ID 24 as it's capital
-House 7 has ID 27 as it's capital
---- InitialisePorts (Network.cs)
-LocID 5 has been added to the ListPorts for GeoID 12
-LocID 6 has been added to the ListPorts for GeoID 1
-[Notification] LocID 6 is already present in ListPorts for GeoID 1
-LocID 9 has been added to the ListPorts for GeoID 1
-[Notification] LocID 9 is already present in ListPorts for GeoID 1
-LocID 11 has been added to the ListPorts for GeoID 4
-LocID 16 has been added to the ListPorts for GeoID 4
-LocID 17 has been added to the ListPorts for GeoID 4
-LocID 18 has been added to the ListPorts for GeoID 4
-[Notification] LocID 18 is already present in ListPorts for GeoID 4
-LocID 21 has been added to the ListPorts for GeoID 4
-LocID 22 has been added to the ListPorts for GeoID 4
-[Notification] LocID 22 is already present in ListPorts for GeoID 4
-LocID 27 has been added to the ListPorts for GeoID 17
-LocID 28 has been added to the ListPorts for GeoID 4
-[Notification] LocID 28 is already present in ListPorts for GeoID 4
---- Port Summary (Network.cs)
-GeoCluster GeoID 1 -> 2 Ports
-[Notification] Unknown GeoID 1 with 2 Ports -> added to dictActiveSeas
-LocID 6, Sea geoID 1 added to listOfSeas -> 1 Records
-Port -> LocID 6 at 1:6
-[Notification] LocID 9 distance 6 added to dictSeaDistance for Port LocID 6
-LocID 9, Sea geoID 1 added to listOfSeas -> 1 Records
-Port -> LocID 9 at 4:3
-[Notification] LocID 6 distance 6 added to dictSeaDistance for Port LocID 9
-GeoCluster GeoID 4 -> 7 Ports
-[Notification] Unknown GeoID 4 with 7 Ports -> added to dictActiveSeas
-LocID 11, Sea geoID 4 added to listOfSeas -> 1 Records
-Port -> LocID 11 at 19:1
-[Notification] LocID 16 distance 19 added to dictSeaDistance for Port LocID 11
-[Notification] LocID 17 distance 22 added to dictSeaDistance for Port LocID 11
-[Notification] LocID 18 distance 21 added to dictSeaDistance for Port LocID 11
-[Notification] LocID 21 distance 32 added to dictSeaDistance for Port LocID 11
-[Notification] LocID 22 distance 35 added to dictSeaDistance for Port LocID 11
-[Notification] LocID 28 distance 36 added to dictSeaDistance for Port LocID 11
-LocID 16, Sea geoID 4 added to listOfSeas -> 1 Records
-Port -> LocID 16 at 26:13
-[Notification] LocID 11 distance 19 added to dictSeaDistance for Port LocID 16
-[Notification] LocID 17 distance 17 added to dictSeaDistance for Port LocID 16
-[Notification] LocID 18 distance 16 added to dictSeaDistance for Port LocID 16
-[Notification] LocID 21 distance 27 added to dictSeaDistance for Port LocID 16
-[Notification] LocID 22 distance 30 added to dictSeaDistance for Port LocID 16
-[Notification] LocID 28 distance 31 added to dictSeaDistance for Port LocID 16
-LocID 17, Sea geoID 4 added to listOfSeas -> 1 Records
-Port -> LocID 17 at 18:22
-[Notification] LocID 11 distance 22 added to dictSeaDistance for Port LocID 17
-[Notification] LocID 16 distance 17 added to dictSeaDistance for Port LocID 17
-[Notification] LocID 18 distance 3 added to dictSeaDistance for Port LocID 17
-[Notification] LocID 21 distance 10 added to dictSeaDistance for Port LocID 17
-[Notification] LocID 22 distance 13 added to dictSeaDistance for Port LocID 17
-[Notification] LocID 28 distance 20 added to dictSeaDistance for Port LocID 17
-LocID 18, Sea geoID 4 added to listOfSeas -> 1 Records
-Port -> LocID 18 at 17:20
-[Notification] LocID 11 distance 21 added to dictSeaDistance for Port LocID 18
-[Notification] LocID 16 distance 16 added to dictSeaDistance for Port LocID 18
-[Notification] LocID 17 distance 3 added to dictSeaDistance for Port LocID 18
-[Notification] LocID 21 distance 11 added to dictSeaDistance for Port LocID 18
-[Notification] LocID 22 distance 14 added to dictSeaDistance for Port LocID 18
-[Notification] LocID 28 distance 17 added to dictSeaDistance for Port LocID 18
-LocID 21, Sea geoID 4 added to listOfSeas -> 1 Records
-Port -> LocID 21 at 12:26
-[Notification] LocID 11 distance 32 added to dictSeaDistance for Port LocID 21
-[Notification] LocID 16 distance 27 added to dictSeaDistance for Port LocID 21
-[Notification] LocID 17 distance 10 added to dictSeaDistance for Port LocID 21
-[Notification] LocID 18 distance 11 added to dictSeaDistance for Port LocID 21
-[Notification] LocID 22 distance 3 added to dictSeaDistance for Port LocID 21
-[Notification] LocID 28 distance 18 added to dictSeaDistance for Port LocID 21
-LocID 22, Sea geoID 4 added to listOfSeas -> 1 Records
-Port -> LocID 22 at 11:28
-[Notification] LocID 11 distance 35 added to dictSeaDistance for Port LocID 22
-[Notification] LocID 16 distance 30 added to dictSeaDistance for Port LocID 22
-[Notification] LocID 17 distance 13 added to dictSeaDistance for Port LocID 22
-[Notification] LocID 18 distance 14 added to dictSeaDistance for Port LocID 22
-[Notification] LocID 21 distance 3 added to dictSeaDistance for Port LocID 22
-[Notification] LocID 28 distance 19 added to dictSeaDistance for Port LocID 22
-LocID 28, Sea geoID 4 added to listOfSeas -> 1 Records
-Port -> LocID 28 at 1:19
-[Notification] LocID 11 distance 36 added to dictSeaDistance for Port LocID 28
-[Notification] LocID 16 distance 31 added to dictSeaDistance for Port LocID 28
-[Notification] LocID 17 distance 20 added to dictSeaDistance for Port LocID 28
-[Notification] LocID 18 distance 17 added to dictSeaDistance for Port LocID 28
-[Notification] LocID 21 distance 18 added to dictSeaDistance for Port LocID 28
-[Notification] LocID 22 distance 19 added to dictSeaDistance for Port LocID 28
+House 1 has ID 6 as it's capital
+House 2 has ID 9 as it's capital
+House 3 has ID 18 as it's capital
+House 4 has ID 21 as it's capital
+House 5 has ID 15 as it's capital
+--- InitialiseSurroundings (Network.cs)
+Terrain LocID 1, Loc 17:16 -> Plains 1, Forest 4, Mountain 4, Sea 0 Check: 9
+Terrain LocID 2, Loc 17:11 -> Plains 4, Forest 4, Mountain 0, Sea 1 Check: 9
+LocID 3 has been added to the ListPorts for GeoID 1
+[Notification] LocID 3 is already present in ListPorts for GeoID 1
+Terrain LocID 3, Loc 18:8 -> Plains 1, Forest 4, Mountain 0, Sea 4 Check: 9
+LocID 4 has been added to the ListPorts for GeoID 1
+Terrain LocID 4, Loc 22:3 -> Plains 0, Forest 6, Mountain 0, Sea 3 Check: 9
+LocID 5 has been added to the ListPorts for GeoID 1
+Terrain LocID 5, Loc 14:10 -> Plains 3, Forest 4, Mountain 0, Sea 2 Check: 9
+Terrain LocID 6, Loc 6:14 -> Plains 0, Forest 9, Mountain 0, Sea 0 Check: 9
+Terrain LocID 7, Loc 3:13 -> Plains 5, Forest 4, Mountain 0, Sea 0 Check: 9
+Terrain LocID 8, Loc 21:15 -> Plains 0, Forest 9, Mountain 0, Sea 0 Check: 9
+Terrain LocID 9, Loc 23:11 -> Plains 7, Forest 2, Mountain 0, Sea 0 Check: 9
+Terrain LocID 10, Loc 26:6 -> Plains 0, Forest 9, Mountain 0, Sea 0 Check: 9
+Terrain LocID 11, Loc 13:20 -> Plains 8, Forest 0, Mountain 0, Sea 1 Check: 9
+LocID 12 has been added to the ListPorts for GeoID 12
+Terrain LocID 12, Loc 14:24 -> Plains 0, Forest 6, Mountain 0, Sea 3 Check: 9
+Terrain LocID 13, Loc 21:29 -> Plains 6, Forest 0, Mountain 0, Sea 0 Check: 6
+LocID 14 has been added to the ListPorts for GeoID 7
+Terrain LocID 14, Loc 29:28 -> Plains 1, Forest 3, Mountain 0, Sea 2 Check: 6
+Terrain LocID 15, Loc 26:20 -> Plains 1, Forest 0, Mountain 8, Sea 0 Check: 9
+LocID 16 has been added to the ListPorts for GeoID 7
+Terrain LocID 16, Loc 25:16 -> Plains 0, Forest 7, Mountain 0, Sea 2 Check: 9
+Terrain LocID 17, Loc 25:18 -> Plains 2, Forest 4, Mountain 3, Sea 0 Check: 9
+Terrain LocID 18, Loc 5:22 -> Plains 1, Forest 7, Mountain 0, Sea 1 Check: 9
+LocID 19 has been added to the ListPorts for GeoID 14
+Terrain LocID 19, Loc 6:29 -> Plains 3, Forest 0, Mountain 1, Sea 2 Check: 6
+LocID 20 has been added to the ListPorts for GeoID 1
+Terrain LocID 20, Loc 0:15 -> Plains 5, Forest 0, Mountain 0, Sea 1 Check: 6
+Terrain LocID 21, Loc 2:7 -> Plains 2, Forest 5, Mountain 0, Sea 2 Check: 9
+LocID 22 has been added to the ListPorts for GeoID 1
+[Notification] LocID 22 is already present in ListPorts for GeoID 1
+Terrain LocID 22, Loc 3:1 -> Plains 4, Forest 0, Mountain 0, Sea 5 Check: 9
+LocID 23 has been added to the ListPorts for GeoID 1
+[Notification] LocID 23 is already present in ListPorts for GeoID 1
+Terrain LocID 23, Loc 5:5 -> Plains 1, Forest 3, Mountain 0, Sea 5 Check: 9
+--- InitialiseSeaDistances (Network.cs)
+GeoCluster GeoID 1 -> 6 Ports
+[Notification] Unknown GeoID 1 with 6 Ports -> added to dictActiveSeas
+LocID 3, Sea geoID 1 added to listOfSeas -> 1 Records
+Port -> LocID 3 at 18:8
+[Notification] LocID 4 distance 9 added to dictSeaDistance for Port LocID 3
+[Notification] LocID 5 distance 6 added to dictSeaDistance for Port LocID 3
+[Notification] LocID 20 distance 25 added to dictSeaDistance for Port LocID 3
+[Notification] LocID 22 distance 22 added to dictSeaDistance for Port LocID 3
+[Notification] LocID 23 distance 16 added to dictSeaDistance for Port LocID 3
+LocID 4, Sea geoID 1 added to listOfSeas -> 1 Records
+Port -> LocID 4 at 22:3
+[Notification] LocID 3 distance 9 added to dictSeaDistance for Port LocID 4
+[Notification] LocID 5 distance 15 added to dictSeaDistance for Port LocID 4
+[Notification] LocID 20 distance 34 added to dictSeaDistance for Port LocID 4
+[Notification] LocID 22 distance 21 added to dictSeaDistance for Port LocID 4
+[Notification] LocID 23 distance 19 added to dictSeaDistance for Port LocID 4
+LocID 5, Sea geoID 1 added to listOfSeas -> 1 Records
+Port -> LocID 5 at 14:10
+[Notification] LocID 3 distance 6 added to dictSeaDistance for Port LocID 5
+[Notification] LocID 4 distance 15 added to dictSeaDistance for Port LocID 5
+[Notification] LocID 20 distance 19 added to dictSeaDistance for Port LocID 5
+[Notification] LocID 22 distance 20 added to dictSeaDistance for Port LocID 5
+[Notification] LocID 23 distance 14 added to dictSeaDistance for Port LocID 5
+LocID 20, Sea geoID 1 added to listOfSeas -> 1 Records
+Port -> LocID 20 at 0:15
+[Notification] LocID 3 distance 25 added to dictSeaDistance for Port LocID 20
+[Notification] LocID 4 distance 34 added to dictSeaDistance for Port LocID 20
+[Notification] LocID 5 distance 19 added to dictSeaDistance for Port LocID 20
+[Notification] LocID 22 distance 17 added to dictSeaDistance for Port LocID 20
+[Notification] LocID 23 distance 15 added to dictSeaDistance for Port LocID 20
+LocID 22, Sea geoID 1 added to listOfSeas -> 1 Records
+Port -> LocID 22 at 3:1
+[Notification] LocID 3 distance 22 added to dictSeaDistance for Port LocID 22
+[Notification] LocID 4 distance 21 added to dictSeaDistance for Port LocID 22
+[Notification] LocID 5 distance 20 added to dictSeaDistance for Port LocID 22
+[Notification] LocID 20 distance 17 added to dictSeaDistance for Port LocID 22
+[Notification] LocID 23 distance 6 added to dictSeaDistance for Port LocID 22
+LocID 23, Sea geoID 1 added to listOfSeas -> 1 Records
+Port -> LocID 23 at 5:5
+[Notification] LocID 3 distance 16 added to dictSeaDistance for Port LocID 23
+[Notification] LocID 4 distance 19 added to dictSeaDistance for Port LocID 23
+[Notification] LocID 5 distance 14 added to dictSeaDistance for Port LocID 23
+[Notification] LocID 20 distance 15 added to dictSeaDistance for Port LocID 23
+[Notification] LocID 22 distance 6 added to dictSeaDistance for Port LocID 23
+GeoCluster GeoID 7 -> 2 Ports
+[Notification] Unknown GeoID 7 with 2 Ports -> added to dictActiveSeas
+LocID 14, Sea geoID 7 added to listOfSeas -> 1 Records
+Port -> LocID 14 at 29:28
+[Notification] LocID 16 distance 16 added to dictSeaDistance for Port LocID 14
+LocID 16, Sea geoID 7 added to listOfSeas -> 1 Records
+Port -> LocID 16 at 25:16
+[Notification] LocID 14 distance 16 added to dictSeaDistance for Port LocID 16
 --- Network Analysis (Network.cs)
 Dir 0         1 Locations     0 Connections     0 Houses     0 Specials
-Dir 1        12 Locations     4 Connections     3 Houses     1 Specials
-Dir 2         5 Locations     4 Connections     1 Houses     0 Specials
+Dir 1         6 Locations     3 Connections     1 Houses     1 Specials
+Dir 2         3 Locations     2 Connections     1 Houses     0 Specials
 Dir 3         0 Locations     0 Connections     0 Houses     0 Specials
-Dir 4        10 Locations     3 Connections     3 Houses     1 Specials
+Dir 4        13 Locations     3 Connections     4 Houses     1 Specials
 ---  InitialiseMajorHouses (History.cs)
-Great House Tyrell removed
-Great House Greyjoy removed
 Great House Targaryen removed
+Great House Greyjoy removed
+Great House Tyrell removed
+Great House Florent removed
+Great House Stark removed
 -0-
 Major House Lannister added at Casterly Rock, RefID 2, ArcID 14
 Major House Martell added at Dorne, RefID 3, ArcID 18
-Major House Florent added at Brightwater Keep, RefID 4, ArcID 12
 Major House Arryn added at Eyrie, RefID 6, ArcID 16
 Major House Baratheon added at Bloodkeep, RefID 7, ArcID 19
-Major House Stark added at Winterfell, RefID 8, ArcID 11
 Major House Tully added at Riverrun, RefID 9, ArcID 13
 ---  InitialiseGeoClusters (History.cs)
-22 Geoclusters initialised
+20 Geoclusters initialised
 ---  InitialisePlayer (History.cs)
 Usurper William Tell, ActID William Tell, Resources 1
 ---  InitialiseCapital (History.cs)
-CapitalWalls 5, CapitalTreasury 2
+CapitalWalls 5, CapitalTreasury 3
 ---  InitialiseFollowers (History.cs)
-The Waif, Aid 2, FID 10, ArcID 23, "Lost Child" Loyalty 57
-The Leper, Aid 3, FID 4, ArcID 23, "Beggar" Loyalty 55
-The Haggler, Aid 4, FID 9, ArcID 23, "Merchant" Loyalty 56
-The Crone, Aid 5, FID 8, ArcID 23, "Old Woman" Loyalty 58
-The Beast, Aid 6, FID 7, ArcID 23, "Enforcer" Loyalty 95
-The Dark Eminence, Aid 7, FID 5, ArcID 23, "Manipulator" Loyalty 35
-The Duchess, Aid 8, FID 6, ArcID 23, "Seductress" Loyalty 75
-The Jester, Aid 9, FID 2, ArcID 23, "Entertainer" Loyalty 50
+The Crone, Aid 2, FID 8, ArcID 23, "Old Woman" Loyalty 58
+The Spider, Aid 3, FID 1, ArcID 23, "Spy" Loyalty 60
+The Duchess, Aid 4, FID 6, ArcID 23, "Seductress" Loyalty 75
+The Waif, Aid 5, FID 10, ArcID 23, "Lost Child" Loyalty 57
+The Viper, Aid 6, FID 3, ArcID 23, "Assassin" Loyalty 55
+The Jester, Aid 7, FID 2, ArcID 23, "Entertainer" Loyalty 50
+The Beast, Aid 8, FID 7, ArcID 23, "Enforcer" Loyalty 95
+The Haggler, Aid 9, FID 9, ArcID 23, "Merchant" Loyalty 56
 --- Import Relation Texts (History.cs)
 HousePastGood -> 12 records imported
 HousePastBad -> 11 records imported
@@ -274,68 +267,54 @@ Lord_4 -> 16 records imported
 Lord_5 -> 10 records imported
 --- InitialiseWorld (World.cs)
 ---  UpdateHouses (Network.cs)
-House Lannister assigned LocID 13 and HouseID 3
-House Martell assigned LocID 10 and HouseID 7
-House Florent assigned LocID 3 and HouseID 4
-House Arryn assigned LocID 14 and HouseID 2
-House Baratheon assigned LocID 20 and HouseID 5
-House Stark assigned LocID 24 and HouseID 1
-House Tully assigned LocID 27 and HouseID 6
+House Lannister assigned LocID 6 and HouseID 2
+House Martell assigned LocID 9 and HouseID 5
+House Arryn assigned LocID 18 and HouseID 3
+House Baratheon assigned LocID 21 and HouseID 4
+House Tully assigned LocID 15 and HouseID 1
 - Initialise BannerLords for House Lannister
-Minor House Flint added at Widow's Watch, RefID 136, LocID 7, ArcID 0
-Minor House Tarly added at Horn Hill, RefID 129, LocID 4, ArcID 0
-Minor House Penrose added at Parchments, RefID 125, LocID 5, ArcID 0
-Minor House Glover added at Deepwood Motte, RefID 114, LocID 9, ArcID 0
-Minor House Frey added at The Twins, RefID 113, LocID 8, ArcID 0
-Minor House Harlaw added at Ten Towers, RefID 115, LocID 6, ArcID 0
+Minor House Cerwyn added at Cerwyn, RefID 106, LocID 8, ArcID 0
+Minor House Flint added at Widow's Watch, RefID 136, LocID 10, ArcID 0
 - Initialise BannerLords for House Martell
-Minor House Hornwood added at Hornwood, RefID 117, LocID 25, ArcID 0
-Minor House Estermont added at Greenstone, RefID 111, LocID 26, ArcID 0
-Minor House Fowler added at Skyreach, RefID 112, LocID 28, ArcID 0
-- Initialise BannerLords for House Florent
-Minor House Mullendore added at Uplands, RefID 123, LocID 15, ArcID 0
-Minor House Westerling added at The Crag, RefID 132, LocID 18, ArcID 0
-Minor House Peake added at Starpike, RefID 134, LocID 17, ArcID 0
-Minor House Oakheart added at Old Oak, RefID 124, LocID 16, ArcID 0
+Minor House Clegane added at Clegane's Keep, RefID 107, LocID 12, ArcID 0
+Minor House Dondarrion added at Blackhaven, RefID 110, LocID 13, ArcID 0
+Minor House Wull added at Sodhall, RefID 133, LocID 14, ArcID 0
+Minor House Hunt added at Longbow Hall, RefID 118, LocID 17, ArcID 0
+Minor House Tarly added at Horn Hill, RefID 129, LocID 16, ArcID 0
 - Initialise BannerLords for House Arryn
-Minor House Redwyne added at The Arbor, RefID 126, LocID 12, ArcID 0
-Minor House Brax added at Hornvale, RefID 104, LocID 11, ArcID 0
+Minor House Frey added at The Twins, RefID 113, LocID 19, ArcID 0
+Minor House Peake added at Starpike, RefID 134, LocID 20, ArcID 0
 - Initialise BannerLords for House Baratheon
-Minor House Botley added at Lordsport, RefID 102, LocID 21, ArcID 0
-Minor House Tarth added at Evenfall, RefID 130, LocID 22, ArcID 0
-Minor House Bracken added at Stone Hedge, RefID 103, LocID 23, ArcID 0
-- Initialise BannerLords for House Stark
+Minor House Yronwood added at Yronwood Castle, RefID 135, LocID 23, ArcID 0
+Minor House Fowler added at Skyreach, RefID 112, LocID 22, ArcID 0
 - Initialise BannerLords for House Tully
+Minor House Slynt added at Harrenhal, RefID 127, LocID 3, ArcID 0
+Minor House Codd added at Fishfork, RefID 108, LocID 5, ArcID 0
+Minor House Bracken added at Stone Hedge, RefID 103, LocID 4, ArcID 0
+Minor House Brax added at Hornvale, RefID 104, LocID 7, ArcID 0
 ---  InitialiseHouses (World.cs) ---
 --- InitialiseSpecialHouse (History.cs)
 "The Pickled Prune" Inn initialised, RefID 1005, LocID 2, HouseID 99
-"The Raucous Rat" Inn initialised, RefID 1001, LocID 19, HouseID 99
+"The Yellow Huntress" Inn initialised, RefID 1003, LocID 11, HouseID 99
 - House Genetics (add Lords and Ladies)
 Inherited Combat trait, Actor ID 16, Parent ID 11
-Inherited Wits trait, Actor ID 16, Parent ID 11
-Inherited Combat trait, Actor ID 18, Parent ID 11
-Inherited Wits trait, Actor ID 18, Parent ID 11
-Inherited Leadership trait, Actor ID 18, Parent ID 11
-Inherited Combat trait, Actor ID 26, Parent ID 20
-Inherited Charm trait, Actor ID 26, Parent ID 20
-Inherited Combat trait, Actor ID 27, Parent ID 20
-Inherited Charm trait, Actor ID 27, Parent ID 20
-Inherited Combat trait, Actor ID 28, Parent ID 20
-Inherited Treachery trait, Actor ID 28, Parent ID 20
-Inherited Charm trait, Actor ID 29, Parent ID 20
-Inherited Combat trait, Actor ID 43, Parent ID 38
-Inherited Wits trait, Actor ID 43, Parent ID 38
-Inherited Wits trait, Actor ID 44, Parent ID 38
-Inherited Treachery trait, Actor ID 44, Parent ID 38
-Inherited Leadership trait, Actor ID 44, Parent ID 38
-Inherited Treachery trait, Actor ID 45, Parent ID 37
-Inherited Treachery trait, Actor ID 52, Parent ID 47
-Inherited Wits trait, Actor ID 59, Parent ID 54
-Inherited Combat trait, Actor ID 66, Parent ID 60
-Inherited Charm trait, Actor ID 67, Parent ID 46
-Inherited Leadership trait, Actor ID 67, Parent ID 46
-Tion Stark, Aid 68 is Touched
-Wyman Tarth, Aid 85 is Touched
+Inherited Leadership trait, Actor ID 16, Parent ID 11
+Inherited Leadership trait, Actor ID 17, Parent ID 11
+Inherited Leadership trait, Actor ID 18, Parent ID 10
+Inherited Wits trait, Actor ID 19, Parent ID 10
+Inherited Leadership trait, Actor ID 19, Parent ID 10
+Inherited Combat trait, Actor ID 27, Parent ID 22
+Inherited Leadership trait, Actor ID 27, Parent ID 22
+Inherited Treachery trait, Actor ID 29, Parent ID 21
+Inherited Treachery trait, Actor ID 30, Parent ID 21
+Inherited Treachery trait, Actor ID 38, Parent ID 33
+Inherited Charm trait, Actor ID 39, Parent ID 32
+Inherited Combat trait, Actor ID 46, Parent ID 40
+Inherited Wits trait, Actor ID 46, Parent ID 40
+Inherited Charm trait, Actor ID 46, Parent ID 40
+Inherited Wits trait, Actor ID 53, Parent ID 48
+Inherited Combat trait, Actor ID 54, Parent ID 47
+Inherited Treachery trait, Actor ID 55, Parent ID 47
 --- InitialiseItems (World.cs)
 The fearsome Head Lopper, ItemID 2, A great sword forged hundreds of years ago from Valyrian steel by skilled craftsmen., Year 100
 The legendary Mage Ring, ItemID 3, An enchanted ring made by the mute, Hermoine the Horrible, which glows brightly when enemies are near, Year 250
@@ -348,458 +327,376 @@ The greatly desired Amulet of Passion, ItemID 8, Whoever wears the Amulet has th
 The infamous Book of the Dead, ItemID 9, An ancient tome that possesses the secret to Eternal Life. Scholars have been searching for this book for hundreds of years., Year -1500
 The lusted after Elixir of Wellness, ItemID 10, Those who drink from the Exilir have their digestive systems purged, cleaned and cured. Greatly valued by Gastronomes., Year 300
 --- InitialiseActiveActors (World.cs)
-[Item] Head Lopper, PossID 5, ItemID 2 added to Player's Inventory
-Follower The Beast, ActorID 6, added and placed at Riverrun, LocID 24
-Follower The Waif, ActorID 2, added and placed at Hornwood, LocID 25
-Follower The Dark Eminence, ActorID 7, added and placed at Widow's Watch, LocID 7
+[Item] Mage Ring, PossID 2, ItemID 3 added to Player's Inventory
+Follower The Duchess, ActorID 4, added and placed at Fishfork, LocID 5
+Follower The Haggler, ActorID 9, added and placed at Harrenhal, LocID 3
+Follower The Waif, ActorID 5, added and placed at Clegane's Keep, LocID 12
 --- Assign LeftOver Followers to Inns (World.cs)
-Inn "The Pickled Prune" -> Follower ActID 3 added
-Inn "The Raucous Rat" -> Follower ActID 4 added
-Inn "The Pickled Prune" -> Follower ActID 5 added
-Inn "The Raucous Rat" -> Follower ActID 8 added
-Inn "The Pickled Prune" -> Follower ActID 9 added
+Inn "The Pickled Prune" -> Follower ActID 2 added
+Inn "The Yellow Huntress" -> Follower ActID 3 added
+Inn "The Pickled Prune" -> Follower ActID 6 added
+Inn "The Yellow Huntress" -> Follower ActID 7 added
+Inn "The Pickled Prune" -> Follower ActID 8 added
 --- CreateOldKingBackStory (Lore.cs)
-Old King Wits 3, Aid 30, Davos Florent
-New King Treachery 3, Aid 10, Hodgkin Lannister
+Old King Wits 3, Aid 47, Dickory Tully
+New King Treachery 4, Aid 21, Benjen Martell
 WhyRevolt: External_Event
-King Davos Florent was tolerated by his people
-His Queen, Daenerys Florent, was tolerated by the common folk
+King Dickory Tully was liked by his people
+His Queen, Arwyn Tully, was tolerated by the common folk
 In 1200 there was a great Revolt
 --- Royalist Army -> CreateOldKingBackStory (Lore.cs)
-Aid 30, Davos Florent has provided 7200 men
-Aid 78, Marq Mullendore has provided 3600 men
-Aid 79, Guntard Westerling has provided 4800 men
-Aid 80, Pereret Peake has provided 2400 men
-Aid 81, Luwin Oakheart has provided 3600 men
-Aid 46, Pereret Baratheon has provided 7200 men
-Aid 84, Hodgkin Botley has provided 3600 men
-Aid 85, Wyman Tarth has provided 2400 men
-Aid 86, Morton Bracken has provided 3600 men
-Aid 53, Cayn Stark has provided 7200 men
-The Royalists fielded 45,600 Men At Arms
+Aid 47, Dickory Tully has provided 4800 men
+Aid 67, Dicken Slynt has provided 3600 men
+Aid 68, Elyes Codd has provided 4800 men
+Aid 69, Jonos Bracken has provided 3600 men
+Aid 70, Frank Brax has provided 3600 men
+Aid 32, Aeron Arryn has provided 7200 men
+Aid 63, Leyton Frey has provided 3600 men
+Aid 64, Anderewe Peake has provided 3600 men
+The Royalists fielded 34,800 Men At Arms
 --- Rebel Army -> CreateOldKingBackStory (Lore.cs)
-Aid 10, Hodgkin Lannister has provided 7200 men
-Aid 69, Marq Flint has provided 3600 men
-Aid 70, Eddard Tarly has provided 3600 men
-Aid 71, Walcher Penrose has provided 1200 men
-Aid 72, Pate Glover has provided 2400 men
-Aid 73, Hunfridus Frey has provided 6000 men
-Aid 74, Morton Harlaw has provided 3600 men
-Aid 20, Azer Martell has provided 9600 men
-Aid 75, Martyn Hornwood has provided 4800 men
-Aid 76, Gib Estermont has provided 3600 men
-Aid 77, Jaques Fowler has provided 3600 men
-Aid 37, Helies Arryn has provided 4800 men
-Aid 82, Davos Redwyne has provided 3600 men
-Aid 83, Viserys Brax has provided 3600 men
-Aid 60, Andry Tully has provided 7200 men
-The Rebels fielded 68,400 Men At Arms
-King Hodgkin Lannister was tolerated by his people
-His Queen, Molt Lannister, was disliked by the common folk
+Aid 21, Benjen Martell has provided 4800 men
+Aid 58, Kevan Clegane has provided 2400 men
+Aid 59, Gilibertus Dondarrion has provided 3600 men
+Aid 60, Rowan Wull has provided 4800 men
+Aid 61, Jason Hunt has provided 3600 men
+Aid 62, Rickard Tarly has provided 3600 men
+Aid 10, Tolly Lannister has provided 7200 men
+Aid 56, Forley Cerwyn has provided 2400 men
+Aid 57, Warnerus Flint has provided 4800 men
+Aid 40, Tolly Baratheon has provided 9600 men
+Aid 65, Dick Yronwood has provided 2400 men
+Aid 66, Wyman Fowler has provided 4800 men
+The Rebels fielded 54,000 Men At Arms
+King Benjen Martell was tolerated by his people
+His Queen, Elizabetha Martell, was tolerated by the common folk
 --- Royalist Locations -> CreateOldKingBackStory (Lore.cs)
 Capital -> Kingskeep, distance 0
-Florent -> Brightwater Keep, distance 7
-Stark -> Winterfell, distance 7
-Florent -> Uplands, distance 10
-Baratheon -> Bloodkeep, distance 10
-Florent -> The Crag, distance 14
-Florent -> Starpike, distance 15
-Baratheon -> Lordsport, distance 17
-Baratheon -> Evenfall, distance 18
-Florent -> Old Oak, distance 20
-Baratheon -> Stone Hedge, distance 21
+Tully -> Harrenhal, distance 9
+Tully -> Fishfork, distance 9
+Tully -> Stone Hedge, distance 18
+Arryn -> Eyrie, distance 18
+Tully -> Riverrun, distance 21
+Tully -> Hornvale, distance 25
+Arryn -> The Twins, distance 26
+Arryn -> Starpike, distance 30
 --- Battles -> CreateOldKingBackStory (Lore.cs)
-1199 The Battle of Bloodkeep (loc 10:21)
-Under the unexpectional leadership of the Rebel Lord Hodgkin Lannister his 34,200 men at arms launched themselves at a Royalist force of 15,200 at The Battle of Bloodkeep. 
-King Davos Florent's insipid and uninspiring direction was unable to rally his men and suffered heavy losses.
+1199 The Siege of Stone Hedge (loc 22:3)
+Under the unexpectional leadership of the Rebel Lord Benjen Martell his 27,000 men at arms invested a Royalist stronghold at The Siege of Stone Hedge. 
+King Dickory Tully's firm direction saw the stronghold stand firm and the rebels repulsed.
 --- Events -> CreateOldKingBackStory (Lore.cs)
-Knight Ser Wyl Aymeri, Aid 62, was wounded by the Royalists during The Battle of Bloodkeep
-BannerLord Hodgkin Botley, Aid 84, was captured by the Rebels during The Battle of Bloodkeep
-Gib Estermont, Aid 76, led from the front and set a fine example during The Battle of Bloodkeep
-Knight Ser Daven Vauquelin, Aid 12, was wounded by the Royalists during The Battle of Bloodkeep
-Lord Cayn Stark, Aid 53, was captured by the Rebels during The Battle of Bloodkeep
-BannerLord Eddard Tarly, Aid 70, was wounded by the Royalists during The Battle of Bloodkeep
-Knight Ser Amory Hervy, Aid 22, was wounded by the Royalists during The Battle of Bloodkeep
-Morton Bracken, Aid 86, shored up a crumbling line with his presence during The Battle of Bloodkeep
-Morton Bracken, Aid 86, cowardly stole somebody else's glory during The Battle of Bloodkeep
-Lord Andry Tully, Aid 60, was wounded by the Royalists during The Battle of Bloodkeep
-Ser Cleos Peares, Aid 48, was seen to turn and gallop away from the enemy during The Battle of Bloodkeep
-BannerLord Wyman Tarth, Aid 85, was wounded by the Rebels during The Battle of Bloodkeep
-Morton Harlaw, Aid 74, led from the front and set a fine example during The Battle of Bloodkeep
-1199 The Battle of Winterfell (loc 11:9)
-The Battle of Winterfell, resulted in an inconclusive outcome with heavy losses on both sides. 
-King Davos Florent was thrown onto the defensive from this day forward.
+Knight Ser Andry Samm, Aid 23, was captured by the Royalists during The Siege of Stone Hedge
+BannerLord Frank Brax, Aid 70, was captured by the Rebels during The Siege of Stone Hedge
+Tolly Baratheon, Aid 40, charged with his men in a ferocious counterattack during The Siege of Stone Hedge
+Knight Ser Martyn Hodgkin, Aid 42, was captured by the Royalists during The Siege of Stone Hedge
+Anderewe Peake, Aid 64, charged with his men in a ferocious counterattack during The Siege of Stone Hedge
+BannerLord Rickard Tarly, Aid 62, was absent when needed during The Siege of Stone Hedge
+Knight Ser Wyl Digory, Aid 34, was wounded by the Rebels during The Siege of Stone Hedge
+BannerLord Leyton Frey, Aid 63, was killed by the Rebels during The Siege of Stone Hedge
+New Bannerlord for House Frey -> Urien Frey, Aid 79
+BannerLord Forley Cerwyn, Aid 56, was captured by the Royalists during The Siege of Stone Hedge
+Ser Danyll Charlot, Aid 12, fought with great honour and heroism during The Siege of Stone Hedge
+BannerLord Anderewe Peake, Aid 64, was captured by the Rebels during The Siege of Stone Hedge
+Gilibertus Dondarrion, Aid 59, shored up a crumbling line with his presence during The Siege of Stone Hedge
+1199 The Battle of Harrenhal (loc 18:8)
+The Battle of Harrenhal, a defeat of the King forces that extinguished any hope of a victory. 
+King Dickory Tully could only wait and pray from this day forward.
 --- Events -> CreateOldKingBackStory (Lore.cs)
-Knight Ser Ingrannus Hewerald, Aid 55, was killed by the Rebels during The Battle of Winterfell
-BannerLord Pereret Peake, Aid 80, was wounded by the Rebels during The Battle of Winterfell
-BannerLord Viserys Brax, Aid 83, was killed by the Royalists during The Battle of Winterfell
-New Bannerlord for House Brax -> Martyn Brax, Aid 95
-Knight Ser Wyl Aymeri, Aid 62, was wounded by the Royalists during The Battle of Winterfell
-BannerLord Marq Mullendore, Aid 78, went missing, along with his men, during The Battle of Winterfell
-Moved to Rebel List
-Davos Redwyne, Aid 82, stiffened the resolve of all around him with his bravery during The Battle of Winterfell
-Knight Ser Cleos Peares, Aid 48, was killed by the Rebels during The Battle of Winterfell
-Lord Pereret Baratheon, Aid 46, was killed by the Rebels during The Battle of Winterfell
-BannerLord Morton Harlaw, Aid 74, was wounded by the Royalists during The Battle of Winterfell
-Ser Daven Vauquelin, Aid 12, slaughtered untold enemies in a frenzied attack during The Battle of Winterfell
-BannerLord Morton Bracken, Aid 86, was captured by the Rebels during The Battle of Winterfell
-BannerLord Martyn Hornwood, Aid 75, was wounded by the Royalists during The Battle of Winterfell
-1199 The Siege of Kingskeep (loc 13:14)
-King Davos Florent, with naught but hope remaining, made a last stand with his remaining 11,400 loyal men at arms at The Siege of Kingskeep. Like voice of doom, Lord Hodgkin Lannister thrust a Royalist force 68,400 strong straight at them. 
-The King fought  savagely but it was a lost cause. The rebel Lord Hodgkin Lannister entered Kingskeep, slaughtering all those he deemed unworthy, before proclaiming himself King of the Iron Throne and ruler of the Seven Kingdoms. Long live the King!
+Knight Ser Danyll Charlot, Aid 12, was killed by the Royalists during The Battle of Harrenhal
+Elyes Codd, Aid 68, exhibited outstanding leadership during The Battle of Harrenhal
+Jason Hunt, Aid 61, stiffened the resolve of all around him with his bravery during The Battle of Harrenhal
+Jason Hunt, Aid 61, cowardly stole somebody else's glory during The Battle of Harrenhal
+Knight Ser Wyl Digory, Aid 34, was killed by the Rebels during The Battle of Harrenhal
+Aeron Arryn, Aid 32, exhibited outstanding leadership during The Battle of Harrenhal
+Lord Tolly Baratheon, Aid 40, was captured by the Royalists during The Battle of Harrenhal
+BannerLord Elyes Codd, Aid 68, was captured by the Rebels during The Battle of Harrenhal
+Tolly Lannister, Aid 10, shored up a crumbling line with his presence during The Battle of Harrenhal
+Lord Aeron Arryn, Aid 32, was captured and forced to fight for the enemy during The Battle of Harrenhal
+BannerLord Dick Yronwood, Aid 65, was wounded by the Royalists during The Battle of Harrenhal
+1199 The Siege of Kingskeep (loc 17:16)
+King Dickory Tully, with an air of desperation, made a last stand with his remaining 8,700 loyal men at arms at The Siege of Kingskeep. Like a rabid, howling hyena, Lord Benjen Martell flung a Royalist force 54,000 strong straight at them. 
+The King fought tenanciously but it was inexorably ground down. The rebel Lord Benjen Martell entered Kingskeep, impaling anyone who refused to swear fealty to him, before proclaiming himself King of the Iron Throne and ruler of the Seven Kingdoms. Long live the King!
 --- Events -> CreateOldKingBackStory (Lore.cs)
-Knight Ser Amory Hervy, Aid 22, was wounded by the Royalists during The Siege of Kingskeep
-BannerLord Wyman Tarth, Aid 85, was wounded by the Rebels during The Siege of Kingskeep
-BannerLord Martyn Hornwood, Aid 75, was killed by the Royalists during The Siege of Kingskeep
-New Bannerlord for House Hornwood -> Walder Hornwood, Aid 96
-Knight Ser Wyl Aymeri, Aid 62, was wounded by the Royalists during The Siege of Kingskeep
-BannerLord Wyman Tarth, Aid 85, was captured by the Rebels during The Siege of Kingskeep
-Lord Andry Tully, Aid 60, was captured by the Royalists during The Siege of Kingskeep
-Knight Ser Robert Jehan, Aid 39, was captured by the Royalists during The Siege of Kingskeep
-Pereret Peake, Aid 80, stiffened the resolve of all around him with his bravery during The Siege of Kingskeep
-Pereret Peake, Aid 80, cowardly stole somebody else's glory during The Siege of Kingskeep
-BannerLord Eddard Tarly, Aid 70, was wounded by the Royalists during The Siege of Kingskeep
-Knight Ser Amory Hervy, Aid 22, was killed by the Royalists during The Siege of Kingskeep
-BannerLord Guntard Westerling, Aid 79,  inexplicably stood off and refused to participate during The Siege of Kingskeep
-BannerLord Marq Flint, Aid 69, was captured by the Royalists during The Siege of Kingskeep
-New Bannerlord for House Tarth -> Victarion Tarth, Aid 97
-New Bannerlord for House Flint -> Tomard Flint, Aid 98
+BannerLord Dicken Slynt, Aid 67, was killed by the Rebels during The Siege of Kingskeep
+New Bannerlord for House Slynt -> Herriot Slynt, Aid 80
+Lord Tolly Lannister, Aid 10, was wounded by the Royalists during The Siege of Kingskeep
+BannerLord Wyman Fowler, Aid 66, was killed by the Royalists during The Siege of Kingskeep
+New Bannerlord for House Fowler -> Walcher Fowler, Aid 81
+Aeron Arryn, Aid 32, led from the front and set a fine example during The Siege of Kingskeep
+BannerLord Gilibertus Dondarrion, Aid 59, was wounded by the Royalists during The Siege of Kingskeep
+New Bannerlord for House Cerwyn -> Jarvis Cerwyn, Aid 82
+New Bannerlord for House Peake -> Preston Peake, Aid 83
 --- CreateNewMajorHouse (Lore.cs)
-turncoatActor Luwin Oakheart, The Lively, ActID: 81 RefID: 124 Loc: Old Oak
-Old King House Florent, Never forget, never forgive
-loc 19:15, houseID: 8, refID: 99
-Karstark, The Sun of Winter, RefID: 119
-bannerlord comes from Old Oak, LocID: 16 (26:13)
-new Bannerlord Charles Karstark, ActID: 99
-Liege Lord House Oakheart
-Remove index: 3, Add RefID: 119
-BannerLord loc 20:17, houseID: 8
-BannerLord loc 17:20, houseID: 8
-BannerLord loc 18:22, houseID: 8
-BannerLord loc 26:13, houseID: 8
-Updating MapLayer -> loc 26:13, refID: 119
-Inherited Combat trait, Actor ID 106, Parent ID 104
-Inherited Leadership trait, Actor ID 106, Parent ID 104
-Inherited Combat trait, Actor ID 108, Parent ID 104
-Inherited Combat trait, Actor ID 110, Parent ID 104
-Inherited Wits trait, Actor ID 110, Parent ID 104
-Inherited Leadership trait, Actor ID 110, Parent ID 104
-Inherited Combat trait, Actor ID 111, Parent ID 104
-Inherited Wits trait, Actor ID 111, Parent ID 104
-Inherited Leadership trait, Actor ID 111, Parent ID 104
+turncoatActor Jonos Bracken, The Concentrated, ActID: 69 RefID: 103 Loc: Stone Hedge
+Old King House Tully, Family, Duty, Honour
+loc 6:14, houseID: 6, refID: 99
+Umber, Unchained and Untamed, RefID: 131
+bannerlord comes from Stone Hedge, LocID: 4 (22:3)
+new Bannerlord Godet Umber, ActID: 84
+Liege Lord House Bracken
+Remove index: 2, Add RefID: 131
+BannerLord loc 18:8, houseID: 6
+BannerLord loc 14:10, houseID: 6
+BannerLord loc 22:3, houseID: 6
+BannerLord loc 3:13, houseID: 6
+Updating MapLayer -> loc 22:3, refID: 131
+Inherited Combat trait, Actor ID 90, Parent ID 89
+Inherited Wits trait, Actor ID 90, Parent ID 89
+Inherited Treachery trait, Actor ID 90, Parent ID 89
+Inherited Leadership trait, Actor ID 90, Parent ID 89
+Inherited Wits trait, Actor ID 91, Parent ID 69
+Frank Bracken, Aid 91 is Touched
+Inherited Combat trait, Actor ID 92, Parent ID 69
+Inherited Wits trait, Actor ID 92, Parent ID 69
+Inherited Charm trait, Actor ID 93, Parent ID 69
+Inherited Charm trait, Actor ID 94, Parent ID 69
+[Notification] Repeating Name in house 6: Tyrion Bracken II
+Inherited Combat trait, Actor ID 95, Parent ID 69
 --- InitialisePastHistoryHouses (History.cs)
-- House Florent, refID 4, "A strong friendship existed between past Lords of both Houses" +23 in 1066
-MASTER: 1066 Lannister -> Florent, "A strong friendship existed between past Lords of both Houses", rel +23
+- House Baratheon, refID 7, "An ancestral Lord was humiliated by their daughter being spurned at the Altar" -23 in 1148
+MASTER: 1148 Lannister -> Baratheon, "An ancestral Lord was humiliated by their daughter being spurned at the Altar", rel -23
+- House Arryn, refID 6, "Contested our claim of ownership to a valuable parcel of land" -6 in 1078
+MASTER: 1078 Lannister -> Arryn, "Contested our claim of ownership to a valuable parcel of land", rel -6
 House Lannister, refID 2, Relations
-- Minor House Flint, refID 136, "Have proven to be fickle and wayward allies in our times of need" -20 in 1017
-MASTER: 1017 Lannister -> (Minor) Flint, "Have proven to be fickle and wayward allies in our times of need", rel -20
-- Minor House Tarly, refID 129, "Saved our Ancestral Lord from dying of the Bloody Flux" +1 in 1092
-MASTER: 1092 Lannister -> (Minor) Tarly, "Saved our Ancestral Lord from dying of the Bloody Flux", rel +1
-- Minor House Penrose, refID 125, "Practise interbreeding and marry their own Sisters" -1 in 1110
-MASTER: 1110 Lannister -> (Minor) Penrose, "Practise interbreeding and marry their own Sisters", rel -1
-- Minor House Frey, refID 113, "Our past Lord was forced to hang a recalcitrant BannerLord which they haven't forgotten" -18 in 1003
-MASTER: 1003 Lannister -> (Minor) Frey, "Our past Lord was forced to hang a recalcitrant BannerLord which they haven't forgotten", rel -18
-- Minor House Harlaw, refID 115, "Have produced many fine and fertile wives for our sons" +16 in 1119
-MASTER: 1119 Lannister -> (Minor) Harlaw, "Have produced many fine and fertile wives for our sons", rel +16
-- House Stark, refID 8, "Fought a small skirmish with us over disputed land" -4 in 1109
-MASTER: 1109 Martell -> Stark, "Fought a small skirmish with us over disputed land", rel -4
+- Minor House Cerwyn, refID 106, "Rescued our Ancestral Lord from marauding Sell Swords" +13 in 1088
+MASTER: 1088 Lannister -> (Minor) Cerwyn, "Rescued our Ancestral Lord from marauding Sell Swords", rel +13
+- Minor House Flint, refID 136, "Deliberately breed Dire Wolves and let them feed on our livestock" -5 in 1053
+MASTER: 1053 Lannister -> (Minor) Flint, "Deliberately breed Dire Wolves and let them feed on our livestock", rel -5
+- House Tully, refID 9, "The child ward of a past Lord was murdered while in their care" -7 in 1068
+MASTER: 1068 Martell -> Tully, "The child ward of a past Lord was murdered while in their care", rel -7
+- House Tully, refID 9, "Raided our lands and carried off women from our villages" -28 in 1085
+MASTER: 1085 Martell -> Tully, "Raided our lands and carried off women from our villages", rel -28
 House Martell, refID 3, Relations
-- Minor House Estermont, refID 111, "Have been meticulous in repaying past loans from our House" +23 in 1024
-MASTER: 1024 Martell -> (Minor) Estermont, "Have been meticulous in repaying past loans from our House", rel +23
-- House Baratheon, refID 7, "Provided valuable Political support in previous councils" +6 in 1081
-MASTER: 1081 Florent -> Baratheon, "Provided valuable Political support in previous councils", rel +6
-- House Lannister, refID 2, "Blood bonds forged between past Lords" +27 in 1067
-MASTER: 1067 Florent -> Lannister, "Blood bonds forged between past Lords", rel +27
-House Florent, refID 4, Relations
-- House Baratheon, refID 7, "Abandoned a past Lord, in his time of need, on the field of Battle" -29 in 1084
-MASTER: 1084 Arryn -> Baratheon, "Abandoned a past Lord, in his time of need, on the field of Battle", rel -29
-- House Tully, refID 9, "Rumoured to mate with livestock as a disgusting rite-of-passage" -11 in 1056
-MASTER: 1056 Arryn -> Tully, "Rumoured to mate with livestock as a disgusting rite-of-passage", rel -11
+- Minor House Clegane, refID 107, "Reliable and proven Men-At-Arms in past battles" +9 in 1134
+MASTER: 1134 Martell -> (Minor) Clegane, "Reliable and proven Men-At-Arms in past battles", rel +9
+- Minor House Wull, refID 133, "Refused to recognise the authority of our past Ancestral Lord" -12 in 1069
+MASTER: 1069 Martell -> (Minor) Wull, "Refused to recognise the authority of our past Ancestral Lord", rel -12
+- Minor House Hunt, refID 118, "Our past Lord was forced to hang a recalcitrant BannerLord which they haven't forgotten" -7 in 1070
+MASTER: 1070 Martell -> (Minor) Hunt, "Our past Lord was forced to hang a recalcitrant BannerLord which they haven't forgotten", rel -7
+- Minor House Tarly, refID 129, "Illegally graze their animals on neighbouring land" -16 in 1102
+MASTER: 1102 Martell -> (Minor) Tarly, "Illegally graze their animals on neighbouring land", rel -16
+- House Baratheon, refID 7, "Saved the day in a past Battle" +15 in 1056
+MASTER: 1056 Arryn -> Baratheon, "Saved the day in a past Battle", rel +15
+- House Tully, refID 9, "Engaged in a long standing blood feud" -15 in 1054
+MASTER: 1054 Arryn -> Tully, "Engaged in a long standing blood feud", rel -15
 House Arryn, refID 6, Relations
-- Minor House Redwyne, refID 126, "Spread disease to neighbouring lands through poor sanitation practices" -14 in 1125
-MASTER: 1125 Arryn -> (Minor) Redwyne, "Spread disease to neighbouring lands through poor sanitation practices", rel -14
-- Minor House Brax, refID 104, "Provided a safe haven for Witches on occasion" -12 in 1133
-MASTER: 1133 Arryn -> (Minor) Brax, "Provided a safe haven for Witches on occasion", rel -12
-- House Tully, refID 9, "Claim our Title by virtue of a distant, dubious, marriage" -28 in 1121
-MASTER: 1121 Baratheon -> Tully, "Claim our Title by virtue of a distant, dubious, marriage", rel -28
-- House Stark, refID 8, "Saved the life of one of our Ancestral Lords on a hunting trip" +6 in 1143
-MASTER: 1143 Baratheon -> Stark, "Saved the life of one of our Ancestral Lords on a hunting trip", rel +6
+- Minor House Frey, refID 113, "Rescued our Ancestral Lord from a raging River" +16 in 1080
+MASTER: 1080 Arryn -> (Minor) Frey, "Rescued our Ancestral Lord from a raging River", rel +16
+- Minor House Peake, refID 134, "Have managed their lands in a sensible and progressive manner" +15 in 1125
+MASTER: 1125 Arryn -> (Minor) Peake, "Have managed their lands in a sensible and progressive manner", rel +15
+- House Tully, refID 9, "Rumoured to mate with livestock as a disgusting rite-of-passage" -1 in 1026
+MASTER: 1026 Baratheon -> Tully, "Rumoured to mate with livestock as a disgusting rite-of-passage", rel -1
 House Baratheon, refID 7, Relations
-- Minor House Botley, refID 102, "A past misunderstanding was resolved amicably without Bad Blood" +11 in 1089
-MASTER: 1089 Baratheon -> (Minor) Botley, "A past misunderstanding was resolved amicably without Bad Blood", rel +11
-- Minor House Tarth, refID 130, "Deliberately breed Dire Wolves and let them feed on our livestock" -29 in 1122
-MASTER: 1122 Baratheon -> (Minor) Tarth, "Deliberately breed Dire Wolves and let them feed on our livestock", rel -29
-- Minor House Bracken, refID 103, "Rescued our Ancestral Lord from marauding Sell Swords" +14 in 1025
-MASTER: 1025 Baratheon -> (Minor) Bracken, "Rescued our Ancestral Lord from marauding Sell Swords", rel +14
-- House Florent, refID 4, "Proved to be a reliable ally on many past occasions" +26 in 1118
-MASTER: 1118 Stark -> Florent, "Proved to be a reliable ally on many past occasions", rel +26
-- House Arryn, refID 6, "Engaged in a long standing blood feud" -15 in 1009
-MASTER: 1009 Stark -> Arryn, "Engaged in a long standing blood feud", rel -15
-House Stark, refID 8, Relations
-- House Martell, refID 3, "Provided a good education to wards of the House" +28 in 1113
-MASTER: 1113 Tully -> Martell, "Provided a good education to wards of the House", rel +28
-- House Arryn, refID 6, "Raided our lands and carried off women from our villages" -8 in 1051
-MASTER: 1051 Tully -> Arryn, "Raided our lands and carried off women from our villages", rel -8
+- Minor House Yronwood, refID 135, "A past BannerLord displayed exceptional Loyalty to our House" +16 in 1120
+MASTER: 1120 Baratheon -> (Minor) Yronwood, "A past BannerLord displayed exceptional Loyalty to our House", rel +16
+- Minor House Fowler, refID 112, "Have produced many fine and fertile wives for our sons" +19 in 1012
+MASTER: 1012 Baratheon -> (Minor) Fowler, "Have produced many fine and fertile wives for our sons", rel +19
+- House Arryn, refID 6, "A strong friendship existed between past Lords of both Houses" +13 in 1007
+MASTER: 1007 Tully -> Arryn, "A strong friendship existed between past Lords of both Houses", rel +13
+- House Baratheon, refID 7, "Abandoned a past Lord, in his time of need, on the field of Battle" -9 in 1113
+MASTER: 1113 Tully -> Baratheon, "Abandoned a past Lord, in his time of need, on the field of Battle", rel -9
 House Tully, refID 9, Relations
 -Turncoat Relations
-1200 Lannister -> (Major) Oakheart, "The King is grateful for the assistance provided during the Revolt", rel +15
-1200 Martell -> (Major) Oakheart, "Their traitorous actions, while beneficial, leave a bad taste in our mouth", rel -3
-1200 Florent -> (Major) Oakheart, "The Turncoat Traitor and his House should burn in Hell", rel -17
-1200 Arryn -> (Major) Oakheart, "Their traitorous actions, while beneficial, leave a bad taste in our mouth", rel -7
-1200 Baratheon -> (Major) Oakheart, "The Turncoat Traitor and his House should burn in Hell", rel -16
-1200 Stark -> (Major) Oakheart, "The Turncoat Traitor and his House should burn in Hell", rel -10
-1200 Tully -> (Major) Oakheart, "Their traitorous actions, while beneficial, leave a bad taste in our mouth", rel -12
+1200 Lannister -> (Major) Bracken, "Their traitorous actions, while beneficial, leave a bad taste in our mouth", rel -7
+1200 Martell -> (Major) Bracken, "The King is grateful for the assistance provided during the Revolt", rel +22
+1200 Arryn -> (Major) Bracken, "The Turncoat Traitor and his House should burn in Hell", rel -16
+1200 Baratheon -> (Major) Bracken, "Their traitorous actions, while beneficial, leave a bad taste in our mouth", rel -6
+1200 Tully -> (Major) Bracken, "The Turncoat Traitor and his House should burn in Hell", rel -27
 --- InitialiseLordRelations (History.cs)
-King Hodgkin Lannister, The Average, actID 10, Treachery 3, "Lannister", houseID 3
-  Queen Molt Lannister, actID 11, houseID 3
-   Relationship with Lord 28 
-  Knight Ser Daven Vauquelin, actID 12, houseID 3
-   Relationship with Lord 66 
-  Castellan Helies Drake, actID 13, houseID 3
-   Relationship with Lord 73 
-  Maester Dickory Harry, actID 14, houseID 3
-   Relationship with Lord 31 
-  Septon Rainald Arnald, actID 15, houseID 3
-   Relationship with Lord 41 
-  lady Malina Lannister, actID 16, houseID 3
-   Relationship with Lord 28 
-  Heir Aeron Lannister, actID 17, houseID 3
-   Relationship with Lord 29 
-  lady Genna Lannister, actID 18, houseID 3
-   Relationship with Lord 32 
-  lady Geue Lannister, actID 19, houseID 3
-   Relationship with Lord 38 
-  BannerLord Eddard Tarly, actID 70, houseID 3
-   Relationship with Lord 65 
-  BannerLord Walcher Penrose, actID 71, houseID 3
-   Relationship with Lord 66 
-  BannerLord Pate Glover, actID 72, houseID 3
-   Relationship with Lord 35 
-  BannerLord Hunfridus Frey, actID 73, houseID 3
-   Relationship with Lord 67 
-  BannerLord Morton Harlaw, actID 74, houseID 3
-   Relationship with Lord 50 
-  BannerLord Tomard Flint, actID 98, houseID 3
-   Relationship with Lord 71 
-  High_Septon Willis Walcher, actID 87, houseID 9999
-   Relationship with Lord 41 
-  Master_of_Coin Bertelot Wymon, actID 88, houseID 9999
-   Relationship with Lord 37 
-  Master_of_Laws Wyl Tybout, actID 112, houseID 9999
-   Relationship with Lord 61 
-  Master_of_Ships Varamyr Walchelin, actID 113, houseID 9999
-   Relationship with Lord 69 
-  Master_of_Whisperers Jaime Ouin, actID 91, houseID 9999
-   Relationship with Lord 57 
-  Hand_of_the_King Tolly Wyliame, actID 114, houseID 9999
-   Relationship with Lord 56 
-  Commander_of_Kings_Guard Jaime Peares, actID 115, houseID 9999
-   Relationship with Lord 77 
-  Commander_of_City_Watch Gerbertus Drake, actID 94, houseID 9999
-   Relationship with Lord 37 
-Lord Azer Martell, The Animal Lover, actID 20, Treachery 2, "Martell", houseID 7
-  Castellan Anderewe Wyon, actID 23, houseID 7
-   Relationship with Lord 28 
-  Maester Nestor Saunsum, actID 24, houseID 7
-   Relationship with Lord 26 
-  Septon Varamyr Humpty, actID 25, houseID 7
+Lord Tolly Lannister, The Definite, actID 10, Treachery 3, "Lannister", houseID 2
+  Lady Grizzel Lannister, actID 11, houseID 2
+   Relationship with Lord 25 
+  Castellan Roose Josse, actID 13, houseID 2
    Relationship with Lord 20 
-  Heir Hunfridus Martell, actID 26, houseID 7
-   Relationship with Lord 55 
-  lord Stafford Martell, actID 27, houseID 7
-   Relationship with Lord 29 
-  lord Preston Martell, actID 28, houseID 7
-   Relationship with Lord 48 
-  lord Martyn Martell, actID 29, houseID 7
-   Relationship with Lord 72 
-  BannerLord Gib Estermont, actID 76, houseID 7
-   Relationship with Lord 31 
-  BannerLord Jaques Fowler, actID 77, houseID 7
+  Maester Charles Maukolum, actID 14, houseID 2
    Relationship with Lord 75 
-  BannerLord Walder Hornwood, actID 96, houseID 7
-   Relationship with Lord 68 
-Lord Luwin Oakheart, The Lively, actID 81, Treachery 3, "Oakheart", houseID 8
-  BannerLord Marq Mullendore, actID 78, houseID 8
-   Relationship with Lord 49 
-  BannerLord Guntard Westerling, actID 79, houseID 8
-   Relationship with Lord 52 
-  BannerLord Pereret Peake, actID 80, houseID 8
-   Relationship with Lord 58 
-  BannerLord Charles Karstark, actID 99, houseID 8
-   Relationship with Lord 24 
-  Castellan Ferri Audri, actID 100, houseID 8
-   Relationship with Lord 28 
-  Maester Wilmot Rolandus, actID 101, houseID 8
-   Relationship with Lord 44 
-  Septon Hodgkin Beneger, actID 102, houseID 8
-   Relationship with Lord 26 
-  Knight Ser Fraunk Mikael, actID 103, houseID 8
-   Relationship with Lord 62 
-  Lady Arya Oakheart, actID 104, houseID 8
-   Relationship with Lord 28 
-  Heir Paxter Oakheart, actID 105, houseID 8
-   Relationship with Lord 26 
-  lady Phrowenia Oakheart, actID 106, houseID 8
-   Relationship with Lord 79 
-  lord Helies Oakheart, actID 107, houseID 8
-   Relationship with Lord 69 
-  lady Margaret Oakheart, actID 108, houseID 8
-   Relationship with Lord 72 
-  lord Eon Oakheart, actID 109, houseID 8
-   Relationship with Lord 83 ***
-  lady Brienne Oakheart, actID 110, houseID 8
-   Relationship with Lord 78 
-  lady Jeyne Oakheart, actID 111, houseID 8
-   Relationship with Lord 26 
-Lord Helies Arryn, The Insipid Rodent, actID 37, Treachery 4, "Arryn", houseID 2
-  Lady Lolly Arryn, actID 38, houseID 2
-   Relationship with Lord 55 
-  Knight Ser Robert Jehan, actID 39, houseID 2
-   Relationship with Lord 26 
-  Castellan Raymun Charles, actID 40, houseID 2
-   Relationship with Lord 73 
-  Maester Morton Gervasius, actID 41, houseID 2
+  Septon Jaques Vauquelin, actID 15, houseID 2
    Relationship with Lord 38 
-  Septon Raymun Anselet, actID 42, houseID 2
-   Relationship with Lord 93 ***
-  lady Cristene Arryn, actID 43, houseID 2
-   Relationship with Lord 74 
-  lady Moll Arryn, actID 44, houseID 2
-   Relationship with Lord 74 
-  Heir Robert Arryn, actID 45, houseID 2
-   Relationship with Lord 36 
-  BannerLord Davos Redwyne, actID 82, houseID 2
-   Relationship with Lord 31 
-  BannerLord Martyn Brax, actID 95, houseID 2
-   Relationship with Lord 100 ***
-Lord Doran Baratheon, The Rogue, actID 67, Treachery 4, "Baratheon", houseID 5
-  Lady Murienne Baratheon, actID 47, houseID 5
+  lady Argaery Lannister, actID 16, houseID 2
+   Relationship with Lord 25 
+  lady Auelin Lannister, actID 17, houseID 2
    Relationship with Lord 58 
-  Castellan Houdouyn Artus, actID 49, houseID 5
-   Relationship with Lord 51 
-  Maester Gerbertus Gervasius, actID 50, houseID 5
-   Relationship with Lord 39 
-  Septon Willas Saunsum, actID 51, houseID 5
-   Relationship with Lord 71 
-  lady Catrain Baratheon, actID 52, houseID 5
-   Relationship with Lord 85 ***
-  BannerLord Hodgkin Botley, actID 84, houseID 5
-   Relationship with Lord 24 
-  BannerLord Morton Bracken, actID 86, houseID 5
-   Relationship with Lord 62 
-  BannerLord Victarion Tarth, actID 97, houseID 5
-   Relationship with Lord 27 
-Lord Tion Stark, The Shrewd, actID 68, Treachery 2, "Stark", houseID 1
-  Lady Sapphire Stark, actID 54, houseID 1
+  Heir Paulinus Lannister, actID 18, houseID 2
+   Relationship with Lord 33 
+  lord Frederick Lannister, actID 19, houseID 2
    Relationship with Lord 29 
-  Castellan Frederick Frideric, actID 56, houseID 1
-   Relationship with Lord 28 
-  Maester Hervey Foucaud, actID 57, houseID 1
-   Relationship with Lord 71 
-  Septon Mandon Rodbertus, actID 58, houseID 1
-   Relationship with Lord 31 
-  lady Darlessa Stark, actID 59, houseID 1
-   Relationship with Lord 50 
-Lord Andry Tully, The Sane, actID 60, Treachery 3, "Tully", houseID 6
-  Lady Beleite Tully, actID 61, houseID 6
-   Relationship with Lord 55 
-  Knight Ser Wyl Aymeri, actID 62, houseID 6
-   Relationship with Lord 40 
-  Castellan Dick Audri, actID 63, houseID 6
-   Relationship with Lord 53 
-  Maester Aldis Hervy, actID 64, houseID 6
-   Relationship with Lord 51 
-  Septon Lancel Hary, actID 65, houseID 6
-   Relationship with Lord 63 
-  Heir Samwell Tully, actID 66, houseID 6
+  lord Dickory Lannister, actID 20, houseID 2
+   Relationship with Lord 65 
+  BannerLord Warnerus Flint, actID 57, houseID 2
+   Relationship with Lord 62 
+  BannerLord Jarvis Cerwyn, actID 82, houseID 2
+   Relationship with Lord 60 
+King Benjen Martell, The Erudite, actID 21, Treachery 4, "Martell", houseID 5
+  Castellan Tion Richemanus, actID 24, houseID 5
+   Relationship with Lord 88 ***
+  Maester Martyn Josse, actID 25, houseID 5
    Relationship with Lord 46 
+  Septon Eon Powle, actID 26, houseID 5
+   Relationship with Lord 66 
+  lady Brienne Martell, actID 27, houseID 5
+   Relationship with Lord 78 
+  lady Sully Martell, actID 28, houseID 5
+   Relationship with Lord 45 
+  Heir Aerys Martell, actID 29, houseID 5
+   Relationship with Lord 93 ***
+  lord Ilyn Martell, actID 30, houseID 5
+   Relationship with Lord 65 
+  lady Joanna Martell, actID 31, houseID 5
+   Relationship with Lord 63 
+  BannerLord Kevan Clegane, actID 58, houseID 5
+   Relationship with Lord 34 
+  BannerLord Gilibertus Dondarrion, actID 59, houseID 5
+   Relationship with Lord 61 
+  BannerLord Rowan Wull, actID 60, houseID 5
+   Relationship with Lord 27 
+  BannerLord Jason Hunt, actID 61, houseID 5
+   Relationship with Lord 75 
+  BannerLord Rickard Tarly, actID 62, houseID 5
+   Relationship with Lord 73 
+  High_Septon Harding Maukolum, actID 71, houseID 9999
+   Relationship with Lord 65 
+  Master_of_Coin Wilmot Beneger, actID 72, houseID 9999
+   Relationship with Lord 64 
+  Master_of_Laws Doran Ran, actID 73, houseID 9999
+   Relationship with Lord 91 ***
+  Master_of_Ships Trystane Oudin, actID 74, houseID 9999
+   Relationship with Lord 38 
+  Master_of_Whisperers Frank Guy, actID 75, houseID 9999
+   Relationship with Lord 100 ***
+  Hand_of_the_King Audry Michell, actID 96, houseID 9999
+   Relationship with Lord 78 
+  Commander_of_Kings_Guard Donnel Engerran, actID 97, houseID 9999
+   Relationship with Lord 75 
+  Commander_of_City_Watch Fraunk Tankard, actID 78, houseID 9999
+   Relationship with Lord 95 ***
+Lord Aeron Arryn, The Charmed, actID 32, Treachery 3, "Arryn", houseID 3
+  Castellan Jory Hodgkin, actID 35, houseID 3
+   Relationship with Lord 61 
+  Maester Gerion Ivo, actID 36, houseID 3
+   Relationship with Lord 65 
+  Septon Vortimer Hugelin, actID 37, houseID 3
+   Relationship with Lord 78 
+  lady Sari Arryn, actID 38, houseID 3
+   Relationship with Lord 21 
+  Heir Cayn Arryn, actID 39, houseID 3
+   Relationship with Lord 63 
+  BannerLord Urien Frey, actID 79, houseID 3
+   Relationship with Lord 63 
+  BannerLord Preston Peake, actID 83, houseID 3
+   Relationship with Lord 47 
+Lord Tyrion Baratheon, The Unruffled, actID 46, Treachery 4, "Baratheon", houseID 4
+  Lady Geue Baratheon, actID 41, houseID 4
+   Relationship with Lord 80 
+  Castellan Kevan Daw, actID 43, houseID 4
+   Relationship with Lord 62 
+  Maester Frank Ferrand, actID 44, houseID 4
+   Relationship with Lord 100 ***
+  Septon Giradin Rab, actID 45, houseID 4
+   Relationship with Lord 100 ***
+  BannerLord Dick Yronwood, actID 65, houseID 4
+   Relationship with Lord 63 
+  BannerLord Walcher Fowler, actID 81, houseID 4
+   Relationship with Lord 56 
+Lord Jonos Bracken, The Concentrated, actID 69, Treachery 3, "Bracken", houseID 6
+  BannerLord Elyes Codd, actID 68, houseID 6
+   Relationship with Lord 31 
+  BannerLord Frank Brax, actID 70, houseID 6
+   Relationship with Lord 48 
+  BannerLord Herriot Slynt, actID 80, houseID 6
+   Relationship with Lord 60 
+  BannerLord Godet Umber, actID 84, houseID 6
+   Relationship with Lord 54 
+  Castellan Jack Colinus, actID 85, houseID 6
+   Relationship with Lord 59 
+  Maester Aegon Edon, actID 86, houseID 6
+   Relationship with Lord 42 
+  Septon Jaques Guy, actID 87, houseID 6
+   Relationship with Lord 39 
+  Knight Ser Lancel Thomassin, actID 88, houseID 6
+   Relationship with Lord 61 
+  Lady Adhelina Bracken, actID 89, houseID 6
+   Relationship with Lord 25 
+  lady Emme Bracken, actID 90, houseID 6
+   Relationship with Lord 72 
+  Heir Frank Bracken, actID 91, houseID 6
+   Relationship with Lord 29 
+  lord Lancel Bracken, actID 92, houseID 6
+   Relationship with Lord 36 
+  lord Tyrion Bracken, actID 93, houseID 6
+   Relationship with Lord 63 
+  lord Bernier Bracken, actID 94, houseID 6
+   Relationship with Lord 29 
+  lord Tyrion Bracken II, actID 95, houseID 6
+   Relationship with Lord 39 
 ---  InitialiseCharacters (History.cs)
 Bandit Boss Luigi HandsUp has a confirmed Combat trait
-Luigi HandsUp, Aid 116, specID 1 -> initialised O.K
+Luigi HandsUp, Aid 98, specID 1 -> initialised O.K
 Old Lady Holy Haggard has a confirmed Combat trait
-Holy Haggard, Aid 117, specID 2 -> initialised O.K
-Saladin Kinghit, Aid 118, specID 3 -> initialised O.K
+Holy Haggard, Aid 99, specID 2 -> initialised O.K
+Saladin Kinghit, Aid 100, specID 3 -> initialised O.K
 ---  InitialiseBeasts (History.cs)
-Direwolf, Aid 119, specID 1000 -> initialised O.K
+Direwolf, Aid 101, specID 1000 -> initialised O.K
 --- InitialiseDesires (World.cs)
-Queen Molt Lannister ActID 11 wants the marriage of their daughter, Genna Lannister "The Bard" ActID 18, to the one true King -> Desire: Marriage, DesireData: 18
-There are enough houses on branch 4 for "Martell" to desire Land
-[Alert -> Out Neighbour] MinorHouse "Bracken", RefID 103, added to listOfMinorHouses
-[Alert -> In Neighbour] MinorHouse "Tarth", RefID 130, added to listOfMinorHouses
-There are two minor houses, furthest will be eliminated
-[Alert -> Distance] MinorHouse "Bracken", RefID 103, (Loc 5:15) -> Distance 32
-[Alert -> Distance] MinorHouse "Tarth", RefID 130, (Loc 11:28) -> Distance 29
-Minor House RefID 130 retained, others deleted
-Lord Azer Martell ActID 20 wants a court position for their son Martyn Martell "The Laborious" ActID 29 -> Desire: Court, DesireData: 29
-There are enough houses on branch 1 for "Arryn" to desire Land
-[Alert -> Out Neighbour] MinorHouse "Flint", RefID 136, added to listOfMinorHouses
-Lord Helies Arryn ActID 37 wants to have BannerLord Tomard Flint of House Flint at Widow's Watch (Loc 7:7) swear allegiance -> Desire: Land, DesireData: 136
-Lady Lolly Arryn ActID 38 wants the marriage of their daughter, Moll Arryn "The Repugnant" ActID 44, to the one true King -> Desire: Marriage, DesireData: 44
-Maester Morton Gervasius ActID 41 wants more Gold -> Desire: Gold, DesireData: 41
-Lady Murienne Baratheon ActID 47 wants a court position for their son Doran Baratheon "The Rogue" ActID 67 -> Desire: Court, DesireData: 67
-Lady Sapphire Stark ActID 54 wants a court position for their son Tion Stark "The Shrewd" ActID 68 -> Desire: Court, DesireData: 68
-Maester Hervey Foucaud ActID 57 wants more Gold -> Desire: Gold, DesireData: 57
-There are enough houses on branch 4 for "Tully" to desire Land
-[Alert -> Out Neighbour] MinorHouse "Fowler", RefID 112, added to listOfMinorHouses
-[Alert -> In Neighbour] MinorHouse "Bracken", RefID 103, added to listOfMinorHouses
-There are two minor houses, furthest will be eliminated
-[Alert -> Distance] MinorHouse "Fowler", RefID 112, (Loc 1:19) -> Distance 42
-[Alert -> Distance] MinorHouse "Bracken", RefID 103, (Loc 5:15) -> Distance 4
-Minor House RefID 103 retained, others deleted
-Lord Andry Tully ActID 60 wants to have BannerLord Morton Bracken of House Bracken at Stone Hedge (Loc 5:15) swear allegiance -> Desire: Land, DesireData: 103
-Lady Beleite Tully ActID 61 wants a court position for their son Samwell Tully "The Vigorous" ActID 66 -> Desire: Court, DesireData: 66
-Maester Aldis Hervy ActID 64 wants more Gold -> Desire: Gold, DesireData: 64
-There are enough houses on branch 4 for "Baratheon" to desire Land
-[Alert -> Out Neighbour] MinorHouse "Estermont", RefID 111, added to listOfMinorHouses
-[Alert -> In Neighbour] MinorHouse "Hornwood", RefID 117, added to listOfMinorHouses
-There are two minor houses, furthest will be eliminated
-[Alert -> Distance] MinorHouse "Estermont", RefID 111, (Loc 6:13) -> Distance 14
-[Alert -> Distance] MinorHouse "Hornwood", RefID 117, (Loc 9:12) -> Distance 10
-Minor House RefID 117 retained, others deleted
-Lord Doran Baratheon ActID 67 wants more Gold -> Desire: Gold, DesireData: 67
-There are enough houses on branch 1 for "Stark" to desire Land
-[Alert -> Out Neighbour] MinorHouse "Flint", RefID 136, added to listOfMinorHouses
-Lord Tion Stark ActID 68 wants to have BannerLord Tomard Flint of House Flint at Widow's Watch (Loc 7:7) swear allegiance -> Desire: Land, DesireData: 136
-[Alert -> Royal] Bannerlord House "Tarly" is a member of the Royal Household -> Lordship desire not valid
-BannerLord Eddard Tarly ActID 70 wants the Elixir of Wellness because it belongs to their house -> Desire: Item, DesireData: 14
-[Alert -> Royal] Bannerlord House "Penrose" is a member of the Royal Household -> Lordship desire not valid
-BannerLord Walcher Penrose ActID 71 wants more Gold -> Desire: Gold, DesireData: 71
-[Alert -> Royal] Bannerlord House "Glover" is a member of the Royal Household -> Lordship desire not valid
-BannerLord Pate Glover ActID 72 wants nothing -> Desire: None, DesireData: 72
-[Alert -> Royal] Bannerlord House "Frey" is a member of the Royal Household -> Lordship desire not valid
-BannerLord Hunfridus Frey ActID 73 wants the Lion Dagger because it belongs to their house -> Desire: Item, DesireData: 10
-[Alert -> Royal] Bannerlord House "Harlaw" is a member of the Royal Household -> Lordship desire not valid
-BannerLord Morton Harlaw ActID 74 wants more Gold -> Desire: Gold, DesireData: 74
-BannerLord Gib Estermont ActID 76 wants nothing -> Desire: None, DesireData: 76
-BannerLord Jaques Fowler ActID 77 wants nothing -> Desire: None, DesireData: 77
-BannerLord Marq Mullendore ActID 78 wants more Gold -> Desire: Gold, DesireData: 78
-BannerLord Guntard Westerling ActID 79 wants the Chalice of Pain because it is their destiny -> Desire: Item, DesireData: 11
-BannerLord Pereret Peake ActID 80 wants more Gold -> Desire: Gold, DesireData: 80
-Insufficient houses for "Oakheart", branch 2 -> totalLoc 5 MajorH 1 Specials 0 ActorH 4
+Insufficient houses for "Lannister", branch 2 -> totalLoc 3 MajorH 1 Specials 0 ActorH 2
 [Alert] Connection exists between branch 2 and 1
-[Alert -> Connector] Minor House "Redwyne" exists at end of Connector
-Lord Luwin Oakheart ActID 81 wants the marriage of their daughter, Jeyne Oakheart "The Performer" ActID 111, to the one true King -> Desire: Marriage, DesireData: 111
-BannerLord Davos Redwyne ActID 82 wants nothing -> Desire: None, DesireData: 82
-BannerLord Hodgkin Botley ActID 84 wants nothing -> Desire: None, DesireData: 84
-BannerLord Morton Bracken ActID 86 wants more Gold -> Desire: Gold, DesireData: 86
-BannerLord Martyn Brax ActID 95 wants the Amulet of Passion because it has been predicted by prophecy -> Desire: Item, DesireData: 12
-BannerLord Walder Hornwood ActID 96 wants more Gold -> Desire: Gold, DesireData: 96
-BannerLord Victarion Tarth ActID 97 wants nothing -> Desire: None, DesireData: 97
-[Alert -> Royal] Bannerlord House "Flint" is a member of the Royal Household -> Lordship desire not valid
-BannerLord Tomard Flint ActID 98 wants more Gold -> Desire: Gold, DesireData: 98
-BannerLord Charles Karstark ActID 99 wants the Dragon Egg because it might help their enemies -> Desire: Item, DesireData: 7
-Maester Wilmot Rolandus ActID 101 wants more Gold -> Desire: Gold, DesireData: 101
-Lady Arya Oakheart ActID 104 wants the marriage of their daughter, Brienne Oakheart "The Literal" ActID 110, to the one true King -> Desire: Marriage, DesireData: 110
-Master_of_Coin Bertelot Wymon ActID 88 wants more Gold -> Desire: Gold, DesireData: 88
+[Alert -> Connector] Minor House "Umber" exists at end of Connector
+Lord Tolly Lannister ActID 10 wants the marriage of their daughter, Argaery Lannister "The Distraught" ActID 16, to the one true King -> Desire: Marriage, DesireData: 16
+Lady Grizzel Lannister ActID 11 wants a court position for their son Paulinus Lannister "The Tight" ActID 18 -> Desire: Court, DesireData: 18
+Maester Charles Maukolum ActID 14 wants more Gold -> Desire: Gold, DesireData: 14
+There are enough houses on branch 4 for "Arryn" to desire Land
+[Alert -> Out Neighbour] MinorHouse "Dondarrion", RefID 110, added to listOfMinorHouses
+[Alert -> In Neighbour] MinorHouse "Clegane", RefID 107, added to listOfMinorHouses
+There are two minor houses, furthest will be eliminated
+[Alert -> Distance] MinorHouse "Dondarrion", RefID 110, (Loc 21:29) -> Distance 27
+[Alert -> Distance] MinorHouse "Clegane", RefID 107, (Loc 14:24) -> Distance 15
+Minor House RefID 107 retained, others deleted
+Lord Aeron Arryn ActID 32 wants to have BannerLord Kevan Clegane of House Clegane at Clegane's Keep (Loc 14:24) swear allegiance -> Desire: Land, DesireData: 107
+Maester Gerion Ivo ActID 36 wants more Gold -> Desire: Gold, DesireData: 36
+Lady Geue Baratheon ActID 41 wants a court position for their son Tyrion Baratheon "The Unruffled" ActID 46 -> Desire: Court, DesireData: 46
+Maester Frank Ferrand ActID 44 wants more Gold -> Desire: Gold, DesireData: 44
+There are enough houses on branch 4 for "Baratheon" to desire Land
+[Alert -> Out Neighbour] MinorHouse "Hunt", RefID 118, added to listOfMinorHouses
+[Alert -> In Neighbour] MinorHouse "Wull", RefID 133, added to listOfMinorHouses
+There are two minor houses, furthest will be eliminated
+[Alert -> Distance] MinorHouse "Hunt", RefID 118, (Loc 25:18) -> Distance 72
+[Alert -> Distance] MinorHouse "Wull", RefID 133, (Loc 29:28) -> Distance 58
+Minor House RefID 133 retained, others deleted
+Lord Tyrion Baratheon ActID 46 wants to have BannerLord Rowan Wull of House Wull at Sodhall (Loc 29:28) swear allegiance -> Desire: Land, DesireData: 133
+BannerLord Warnerus Flint ActID 57 wants more Gold -> Desire: Gold, DesireData: 57
+[Alert -> Royal] Bannerlord House "Clegane" is a member of the Royal Household -> Lordship desire not valid
+BannerLord Kevan Clegane ActID 58 wants nothing -> Desire: None, DesireData: 58
+[Alert -> Royal] Bannerlord House "Dondarrion" is a member of the Royal Household -> Lordship desire not valid
+BannerLord Gilibertus Dondarrion ActID 59 wants the Goblin Mug because it might help their enemies -> Desire: Item, DesireData: 4
+[Alert -> Royal] Bannerlord House "Wull" is a member of the Royal Household -> Lordship desire not valid
+BannerLord Rowan Wull ActID 60 wants more Gold -> Desire: Gold, DesireData: 60
+[Alert -> Royal] Bannerlord House "Hunt" is a member of the Royal Household -> Lordship desire not valid
+BannerLord Jason Hunt ActID 61 wants the Mammoth Cloak because it belongs to their house -> Desire: Item, DesireData: 5
+[Alert -> Royal] Bannerlord House "Tarly" is a member of the Royal Household -> Lordship desire not valid
+BannerLord Rickard Tarly ActID 62 wants more Gold -> Desire: Gold, DesireData: 62
+BannerLord Dick Yronwood ActID 65 wants more Gold -> Desire: Gold, DesireData: 65
+BannerLord Elyes Codd ActID 68 wants the Mammoth Cloak because it is an ancestral heirloom -> Desire: Item, DesireData: 5
+Insufficient houses for "Bracken", branch 1 -> totalLoc 6 MajorH 1 Specials 1 ActorH 4
+[Alert] Connection exists between branch 1 and 2
+[Alert -> Connector] Minor House "Flint" exists at end of Connector
+Lord Jonos Bracken ActID 69 wants more Gold -> Desire: Gold, DesireData: 69
+BannerLord Frank Brax ActID 70 wants nothing -> Desire: None, DesireData: 70
+BannerLord Urien Frey ActID 79 wants the Lordship of House Arryn -> Desire: Lordship, DesireData: 3
+BannerLord Herriot Slynt ActID 80 wants the Book of the Dead because it belongs to their house -> Desire: Item, DesireData: 9
+BannerLord Walcher Fowler ActID 81 wants the Lordship of House Baratheon -> Desire: Lordship, DesireData: 4
+BannerLord Jarvis Cerwyn ActID 82 wants nothing -> Desire: None, DesireData: 82
+BannerLord Preston Peake ActID 83 wants the Elixir of Wellness because it is an ancestral heirloom -> Desire: Item, DesireData: 10
+BannerLord Godet Umber ActID 84 wants more Gold -> Desire: Gold, DesireData: 84
+Lady Adhelina Bracken ActID 89 wants a court position for their son Bernier Bracken "The Deceiver" ActID 94 -> Desire: Court, DesireData: 94
+Master_of_Coin Wilmot Beneger ActID 72 wants more Gold -> Desire: Gold, DesireData: 72
+Master_of_Whisperers Frank Guy ActID 75 wants more Gold -> Desire: Gold, DesireData: 75
+Commander_of_City_Watch Fraunk Tankard ActID 78 wants more Gold -> Desire: Gold, DesireData: 78
 --- InitialiseSafeHouse (World.cs)
-House Baratheon at "Bloodkeep" has a SafeHouse rating of 4 stars
-House Stark at "Winterfell" has a SafeHouse rating of 3 stars
-BannerLord House Mullendore at "Uplands" has a SafeHouse rating of 2 stars
-BannerLord House Westerling at "The Crag" has a SafeHouse rating of 1 stars
+House Arryn at "Eyrie" has a SafeHouse rating of 3 stars
+BannerLord House Frey at "The Twins" has a SafeHouse rating of 2 stars
 BannerLord House Peake at "Starpike" has a SafeHouse rating of 1 stars
-BannerLord House Botley at "Lordsport" has a SafeHouse rating of 2 stars
-BannerLord House Tarth at "Evenfall" has a SafeHouse rating of 2 stars
-BannerLord House Bracken at "Stone Hedge" has a SafeHouse rating of 1 stars
+BannerLord House Slynt at "Harrenhal" has a SafeHouse rating of 1 stars
+BannerLord House Codd at "Fishfork" has a SafeHouse rating of 1 stars
+BannerLord House Brax at "Hornvale" has a SafeHouse rating of 2 stars
 --- InitialiseDisguises (World.cs)
 Disguise "a Lamp Oil Dispenser", Strength 4, Type Maester -> successfully Imported
 Disguise "a Frocked Scribe", Strength 4, Type Maester -> successfully Imported
@@ -810,56 +707,56 @@ Disguise "a limping Old Soldier", Strength 5, Type Castellan -> successfully Imp
 Disguise "a Novice of a Holy Order", Strength 2, Type Septon -> successfully Imported
 Disguise "a Pious Priest", Strength 3, Type Septon -> successfully Imported
 Disguise "a Weeping Prayer Acolyte", Strength 3, Type Septon -> successfully Imported
-listLoyalAdvisors -> 6 records
-listOfMaesters -> 2 records
-listOfCastellans -> 2 records
-listOfSeptons -> 2 records
-Maester Hervey Foucaud, ActID 57 assigned Disguise "a Lamp Oil Dispenser", PossID 25
-Maester Gerbertus Gervasius, ActID 50 assigned Disguise "a Frocked Scribe", PossID 26
-Maester Gerbertus Gervasius, ActID 50 assigned Disguise "a Wandering Wick Trader", PossID 27
-Castellan Frederick Frideric, ActID 56 assigned Disguise "a Pardoned Criminal", PossID 28
-Castellan Houdouyn Artus, ActID 49 assigned Disguise "a SellSword Squire", PossID 29
-Castellan Houdouyn Artus, ActID 49 assigned Disguise "a limping Old Soldier", PossID 30
-Septon Mandon Rodbertus, ActID 58 assigned Disguise "a Novice of a Holy Order", PossID 31
-Septon Mandon Rodbertus, ActID 58 assigned Disguise "a Pious Priest", PossID 32
-Septon Mandon Rodbertus, ActID 58 assigned Disguise "a Weeping Prayer Acolyte", PossID 33
+listLoyalAdvisors -> 3 records
+listOfMaesters -> 1 records
+listOfCastellans -> 1 records
+listOfSeptons -> 1 records
+Maester Gerion Ivo, ActID 36 assigned Disguise "a Lamp Oil Dispenser", PossID 21
+Maester Gerion Ivo, ActID 36 assigned Disguise "a Frocked Scribe", PossID 22
+Maester Gerion Ivo, ActID 36 assigned Disguise "a Wandering Wick Trader", PossID 23
+Castellan Jory Hodgkin, ActID 35 assigned Disguise "a Pardoned Criminal", PossID 24
+Castellan Jory Hodgkin, ActID 35 assigned Disguise "a SellSword Squire", PossID 25
+Castellan Jory Hodgkin, ActID 35 assigned Disguise "a limping Old Soldier", PossID 26
+Septon Vortimer Hugelin, ActID 37 assigned Disguise "a Novice of a Holy Order", PossID 27
+Septon Vortimer Hugelin, ActID 37 assigned Disguise "a Pious Priest", PossID 28
+Septon Vortimer Hugelin, ActID 37 assigned Disguise "a Weeping Prayer Acolyte", PossID 29
 --- InitialiseAI (World.cs)
  Capital 0 -> Current 0 -> Desired 1 -> adjusted Loc's 0
- Branch  1 -> Current 0 -> Desired 1 -> adjusted Loc's 16
- Branch  2 -> Current 0 -> Desired 1 -> adjusted Loc's 9
+ Branch  1 -> Current 0 -> Desired 1 -> adjusted Loc's 10
+ Branch  2 -> Current 0 -> Desired 1 -> adjusted Loc's 7
  Branch  3 -> Current 0 -> Desired 0 -> adjusted Loc's 0
- Branch  4 -> Current 0 -> Desired 1 -> adjusted Loc's 10
+ Branch  4 -> Current 0 -> Desired 1 -> adjusted Loc's 13
 --- InitialiseEnemyActors (World.cs)
-Inquisitor Brother Shiva has a confirmed Treachery trait
-Inquisitor Brother Amon has a confirmed Treachery trait
-Inquisitor Brother Azazel has a confirmed Treachery trait
-Inquisitor Brother Set has a confirmed Treachery trait
+Inquisitor Brother Adramalech has a confirmed Treachery trait
+Inquisitor Brother Diabolous has a confirmed Treachery trait
+Inquisitor Brother Mormo has a confirmed Treachery trait
+Inquisitor Brother Damballa has a confirmed Treachery trait
 ---  CreateNemesis (History.cs)
 Nemesis The Unrelenting has a confirmed Treachery trait
 Nemesis The Unrelenting has a confirmed Touched trait
 - Assign Enemies
- [Goal -> Inquisitor] Brother Shiva, ActID 120 Branch -> 0
- [Goal -> Inquisitor] Brother Amon, ActID 121 Branch -> 1
- [Goal -> Inquisitor] Brother Azazel, ActID 122 Branch -> 2
- [Goal -> Inquisitor] Brother Set, ActID 123 Branch -> 4
- [Goal -> Nemesis] The Unrelenting, ActID 124 Branch -> 0
+ [Goal -> Inquisitor] Brother Adramalech, ActID 102 Branch -> 0
+ [Goal -> Inquisitor] Brother Diabolous, ActID 103 Branch -> 1
+ [Goal -> Inquisitor] Brother Mormo, ActID 104 Branch -> 2
+ [Goal -> Inquisitor] Brother Damballa, ActID 105 Branch -> 4
+ [Goal -> Nemesis] The Unrelenting, ActID 106 Branch -> 0
 --- InitialiseWorldDevelopment (World.cs)
-ItemID 1, "Dragon Egg", given to Master_of_Coin Bertelot Wymon, ActID 88, at Kingskeep (loc 13:14)
-[Secret -> Item] Bertelot Wymon, ActID 88, has been entrusted with keeping the Dragon Egg, ItemID 1, safe from harm
-ItemID 4, "Goblin Mug", given to lord Martyn Martell, ActID 29, at Dorne (loc 0:14)
-[Secret -> Item] Martyn Martell, ActID 29, has stolen the Goblin Mug, ItemID 4, and is desperate to keep it quiet
-ItemID 5, "Mammoth Cloak", given to Castellan Raymun Charles, ActID 40, at Eyrie (loc 16:8)
-[Secret -> Item] Raymun Charles, ActID 40, has stolen the Mammoth Cloak, ItemID 5, and is desperate to keep it quiet
-ItemID 6, "Lion Dagger", given to lady Brienne Oakheart, ActID 110, at Brightwater Keep (loc 19:15)
-[Secret -> Item] Brienne Oakheart, ActID 110, is hording the Lion Dagger, ItemID 6, safe from pyring eyes
-ItemID 7, "Chalice of Pain", given to Heir Hunfridus Martell, ActID 26, at Dorne (loc 0:14)
-[Secret -> Item] Hunfridus Martell, ActID 26, is hording the Chalice of Pain, ItemID 7, safe from pyring eyes
-ItemID 8, "Amulet of Passion", given to Castellan Helies Drake, ActID 13, at Casterly Rock (loc 10:7)
-[Secret -> Item] Helies Drake, ActID 13, has stolen the Amulet of Passion, ItemID 8, and is desperate to keep it quiet
-ItemID 9, "Book of the Dead", given to lord Helies Oakheart, ActID 107, at Brightwater Keep (loc 19:15)
-[Secret -> Item] Helies Oakheart, ActID 107, has stolen the Book of the Dead, ItemID 9, and is desperate to keep it quiet
-ItemID 10, "Elixir of Wellness", given to lord Eon Oakheart, ActID 109, at Brightwater Keep (loc 19:15)
-[Secret -> Item] Eon Oakheart, ActID 109, has come into possession of the Elixir of Wellness, ItemID 10, in mysterious circumstances
+ItemID 1, "Dragon Egg", given to BannerLord Herriot Slynt, ActID 80, at Harrenhal (loc 18:8)
+[Secret -> Item] Herriot Slynt, ActID 80, has come into possession of the Dragon Egg, ItemID 1, in mysterious circumstances
+ItemID 4, "Goblin Mug", given to lord Lancel Bracken, ActID 92, at Riverrun (loc 6:14)
+[Secret -> Item] Lancel Bracken, ActID 92, has been entrusted with keeping the Goblin Mug, ItemID 4, safe from harm
+ItemID 5, "Mammoth Cloak", given to Heir Aerys Martell, ActID 29, at Kingskeep (loc 17:16)
+[Secret -> Item] Aerys Martell, ActID 29, has been entrusted with keeping the Mammoth Cloak, ItemID 5, safe from harm
+ItemID 6, "Lion Dagger", given to Maester Gerion Ivo, ActID 36, at Eyrie (loc 5:22)
+[Secret -> Item] Gerion Ivo, ActID 36, has come into possession of the Lion Dagger, ItemID 6, in mysterious circumstances
+ItemID 7, "Chalice of Pain", given to High_Septon Harding Maukolum, ActID 71, at Kingskeep (loc 17:16)
+[Secret -> Item] Harding Maukolum, ActID 71, has come into possession of the Chalice of Pain, ItemID 7, in mysterious circumstances
+ItemID 8, "Amulet of Passion", given to BannerLord Rowan Wull, ActID 60, at Sodhall (loc 29:28)
+[Secret -> Item] Rowan Wull, ActID 60, has come into possession of the Amulet of Passion, ItemID 8, in mysterious circumstances
+ItemID 9, "Book of the Dead", given to BannerLord Urien Frey, ActID 79, at The Twins (loc 6:29)
+[Secret -> Item] Urien Frey, ActID 79, is hording the Book of the Dead, ItemID 9, safe from pyring eyes
+ItemID 10, "Elixir of Wellness", given to Maester Charles Maukolum, ActID 14, at Casterly Rock (loc 23:11)
+[Secret -> Item] Charles Maukolum, ActID 14, has come into possession of the Elixir of Wellness, ItemID 10, in mysterious circumstances
 --- Import Follower Events (Director.cs)
 "Spiders", FID 1, [GeoCluster, Generic], Freq Low, Status Active, Trait Wits, Delay 2
 "Wolves", FID 2, [GeoCluster, Generic], Freq Normal, Status Active, Trait Combat, Delay 2
@@ -1217,28 +1114,25 @@ ArcID 23, The Ghosts Within, Chance 100%, 2 Follower & 0 Player events
 --- Import Stories (Director.cs)
 Steady Eddy, StoryID 1
 --- Initialise Archetypes (Director.cs)
-Thunder Deep, geoID 4, has been initialised with "Kraken Sea", arcID 3
-The Moaning Peaks, geoID 7, has been initialised with "Bandit Mountains", arcID 2
-Pygmy Forest, geoID 15, has been initialised with "Dire Wolf Forest", arcID 1
+The Charmed Sea, geoID 7, has been initialised with "Kraken Sea", arcID 3
+The Dangerous Slopes, geoID 6, has been initialised with "Bandit Mountains", arcID 2
+Barren Mountains, geoID 9, has been initialised with "Bandit Mountains", arcID 2
+The Neverending Mountains, geoID 15, has been initialised with "Bandit Mountains", arcID 2
 Normal roads have been initialised with "Goblin Road", arcID 4
 Kings roads have been initialised with "Dwarf Road", arcID 5
 Connector roads have been initialised with "Orc Hunting Party", arcID 6
 The Capital at KingsKeep has been initialised with "Entertainers", arcID 9
-The Pickled Prune, locID 2, has been initialised with "Willowy Wenches", arcID 10
 House The Pickled Prune, refID 1005, has been initialised with "Evil Tavern", arcID 22
+Harrenhal, locID 3, has been initialised with "Attentive Guards", arcID 8
 House Lannister, refID 2, has been initialised with "Lazy Lions", arcID 14
-Horn Hill, locID 4, has been initialised with "Attentive Guards", arcID 8
-The Twins, locID 8, has been initialised with "Attentive Guards", arcID 8
-House Arryn, refID 6, has been initialised with "Cloud Climbers", arcID 16
-Hornvale, locID 11, has been initialised with "Attentive Guards", arcID 8
-House Stark, refID 8, has been initialised with "Crazy Starks", arcID 11
-House The Raucous Rat, refID 1001, has been initialised with "Evil Tavern", arcID 22
-House Baratheon, refID 7, has been initialised with "Lusty Stags", arcID 19
-House Tully, refID 9, has been initialised with "Leaping Trout", arcID 13
+House The Yellow Huntress, refID 1003, has been initialised with "Evil Tavern", arcID 22
 House Martell, refID 3, has been initialised with "Sunny Sons", arcID 18
-"The Beast", AiD 6, has been initialised with "The Ghosts Within", arcID 23
-"The Waif", AiD 2, has been initialised with "The Ghosts Within", arcID 23
-"The Dark Eminence", AiD 7, has been initialised with "The Ghosts Within", arcID 23
+House Arryn, refID 6, has been initialised with "Cloud Climbers", arcID 16
+Bloodkeep, locID 21, has been initialised with "Attentive Guards", arcID 7
+House Baratheon, refID 7, has been initialised with "Lusty Stags", arcID 19
+"The Duchess", AiD 4, has been initialised with "The Ghosts Within", arcID 23
+"The Haggler", AiD 9, has been initialised with "The Ghosts Within", arcID 23
+"The Waif", AiD 5, has been initialised with "The Ghosts Within", arcID 23
 --- Initialise Normal Situations (Director.cs)
 "A Defendable Hill", a Battle conflict, 3 good records & 3 bad, SitNum 0, Def 1, Data 0
 "A Defendable Hill", a Battle conflict, 3 good records & 3 bad, SitNum 0, Def -1, Data 0
@@ -1388,7 +1282,7 @@ RecordID 1 ("Blend in More")
 RecordID 2 ("Been Spotted!")
 RecordID 3 ("The Cause is Just")
 RecordID 4 ("Unjustly Accused!")
-RecordID 5 ("We're Famous")
+RecordID 5 ("You're Famous")
 RecordID 6 ("Nobody heard the news")
 RecordID 7 ("Long Live the King")
 RecordID 8 ("Down with the King")
@@ -1446,405 +1340,317 @@ Evade Challenge (Stealth)
 Escape Challenge (Stealth)
 --- InitialiseGameStates (Director.cs)
 --- InitialiseRumours (Director.cs)
-[Rumour -> Added] RID 1, "It is murmured among friends that King Hodgkin Lannister "The Average", ActID 10 at Kingskeep, has hidden secrets carefully kept from view" -> dict & List
-[Rumour -> Added] RID 2, "Queen Molt Lannister "The Bumbling", ActID 11 at Kingskeep, is whispered to be a Harp Player" -> dict & List
-[Rumour -> Added] RID 3, "Queen Molt Lannister "The Bumbling", ActID 11 at Kingskeep, is widely known to be Strong Willed" -> dict & List
-[Rumour -> Added] RID 4, "Queen Molt Lannister "The Bumbling", ActID 11 at Kingskeep, is rumoured to be Awkward" -> dict & List
-[Rumour -> Added] RID 5, "Queen Molt Lannister "The Bumbling", ActID 11 at Kingskeep, is whispered to be Compassionate" -> dict & List
-[Rumour -> Added] RID 6, "Queen Molt Lannister "The Bumbling", ActID 11 at Kingskeep, is rumoured to be Womanly" -> dict & List
-[Rumour -> Added] RID 7, "It is whispered that Queen Molt Lannister, ActID 11 at Kingskeep, desires that her Daughter, lady Genna Lannister "The Bard", ActID 18, is betrothed to the Ursurper" -> dict & List
-[Rumour -> Added] RID 8, "Knight Ser Daven Vauquelin "The Bewildered", ActID 12 at Casterly Rock, is widely known to be Eagle Eyed" -> dict & List
-[Rumour -> Added] RID 9, "Knight Ser Daven Vauquelin "The Bewildered", ActID 12 at Casterly Rock, is said to be Clueless" -> dict & List
-[Rumour -> Added] RID 10, "It is said that Knight Ser Daven Vauquelin "The Bewildered", ActID 12 at Casterly Rock, conceals a dark truth" -> dict & List
-[Rumour -> Added] RID 11, "Castellan Helies Drake "The Steady", ActID 13 at Casterly Rock, is murmured among friends to be Clueless" -> dict & List
-[Rumour -> Added] RID 12, "Castellan Helies Drake "The Steady", ActID 13 at Casterly Rock, is commonly known to be Innocent" -> dict & List
-[Rumour -> Added] RID 13, "Castellan Helies Drake "The Steady", ActID 13 at Casterly Rock, is commonly known to be Level Headed" -> dict & List
-[Rumour -> Added] RID 14, "It is said that Castellan Helies Drake "The Steady", ActID 13 at Casterly Rock, conceals a dark truth" -> dict & List
-[Rumour -> Added] RID 15, "It is whispered that the greatly desired Amulet of Passion (Passive Item) is to be found at Casterly Rock" -> dict & List
-[Rumour -> Added] RID 16, "Maester Dickory Harry "The Ignorant", ActID 14 at Casterly Rock, is murmured among friends to be Illiterate" -> dict & List
-[Rumour -> Added] RID 17, "Maester Dickory Harry "The Ignorant", ActID 14 at Casterly Rock, is suspected to possess a Strong Moral Code" -> dict & List
-[Rumour -> Added] RID 18, "Septon Rainald Arnald "The Decent", ActID 15 at Casterly Rock, is said to be Honest" -> dict & List
-[Rumour -> Added] RID 19, "lady Malina Lannister "The Player", ActID 16 at Kingskeep, is suspected to be a Harp Player" -> dict & List
-[Rumour -> Added] RID 20, "lady Malina Lannister "The Player", ActID 16 at Kingskeep, is commonly known to be Strong Willed" -> dict & List
-[Rumour -> Added] RID 21, "Heir Aeron Lannister "The Bumbling", ActID 17 at Kingskeep, is rumoured to be Awkward" -> dict & List
-[Rumour -> Added] RID 22, "Heir Aeron Lannister "The Bumbling", ActID 17 at Kingskeep, is whispered to be Honest" -> dict & List
-[Rumour -> Added] RID 23, "Heir Aeron Lannister "The Bumbling", ActID 17 at Kingskeep, is rumoured to be Impatient" -> dict & List
-[Rumour -> Added] RID 24, "lady Genna Lannister "The Bard", ActID 18 at Kingskeep, is well known to be a Harp Player" -> dict & List
-[Rumour -> Added] RID 25, "lady Genna Lannister "The Bard", ActID 18 at Kingskeep, is commonly known to be Strong Willed" -> dict & List
-[Rumour -> Added] RID 26, "lady Genna Lannister "The Bard", ActID 18 at Kingskeep, is known by all to be Womanly" -> dict & List
-[Rumour -> Added] RID 27, "lady Geue Lannister "The Self-Serving", ActID 19 at Kingskeep, is suspected to be a Lute Player" -> dict & List
-[Rumour -> Added] RID 28, "lady Geue Lannister "The Self-Serving", ActID 19 at Kingskeep, is known by all to have a Good Memory" -> dict & List
-[Rumour -> Added] RID 29, "lady Geue Lannister "The Self-Serving", ActID 19 at Kingskeep, is rumoured to be Self-Centred" -> dict & List
-[Rumour -> Added] RID 30, "Lord Azer Martell "The Animal Lover", ActID 20 at Dorne, is known to have the power of Analgesia (Ignores Pain)" -> dict & List
-[Rumour -> Added] RID 31, "Lord Azer Martell "The Animal Lover", ActID 20 at Dorne, is well known to be a Beast Lover" -> dict & List
-[Rumour -> Added] RID 32, "Lord Azer Martell "The Animal Lover", ActID 20 at Dorne, is known by all to be Pious" -> dict & List
-[Rumour -> Added] RID 33, "It is well known that Lord Azer Martell, ActID 20 at Dorne, desires that his Son, lord Martyn Martell "The Laborious", ActID 29, attains a position in the Royal Court" -> dict & List
-[Rumour -> Added] RID 34, "Castellan Anderewe Wyon "The Fearless", ActID 23 at Dorne, is murmured among friends to be Athletic" -> dict & List
-[Rumour -> Added] RID 35, "Castellan Anderewe Wyon "The Fearless", ActID 23 at Dorne, is said to be Learned" -> dict & List
-[Rumour -> Added] RID 36, "Castellan Anderewe Wyon "The Fearless", ActID 23 at Dorne, is rumoured to be Bold" -> dict & List
-[Rumour -> Added] RID 37, "Maester Nestor Saunsum "The Book Lover", ActID 24 at Dorne, is rumoured to be Learned" -> dict & List
-[Rumour -> Added] RID 38, "Septon Varamyr Humpty "The Tractable", ActID 25 at Dorne, is whispered to be Adaptable" -> dict & List
-[Rumour -> Added] RID 39, "Septon Varamyr Humpty "The Tractable", ActID 25 at Dorne, is whispered to be Stubborn" -> dict & List
-[Rumour -> Added] RID 40, "Heir Hunfridus Martell "The Stiff Necked", ActID 26 at Dorne, is well known to have the power of Analgesia (Ignores Pain)" -> dict & List
-[Rumour -> Added] RID 41, "Heir Hunfridus Martell "The Stiff Necked", ActID 26 at Dorne, is known by all to be a Beast Lover" -> dict & List
-[Rumour -> Added] RID 42, "Heir Hunfridus Martell "The Stiff Necked", ActID 26 at Dorne, is widely known to be Stubborn" -> dict & List
-[Rumour -> Added] RID 43, "It is said that Heir Hunfridus Martell "The Stiff Necked", ActID 26 at Dorne, is keeping something private" -> dict & List
-[Rumour -> Added] RID 44, "It is whispered that the dreaded Chalice of Pain (Passive Item) is to be found at Dorne" -> dict & List
-[Rumour -> Added] RID 45, "lord Stafford Martell "The Intrepid", ActID 27 at Dorne, is rumoured to have the power of Analgesia (Ignores Pain)" -> dict & List
-[Rumour -> Added] RID 46, "lord Stafford Martell "The Intrepid", ActID 27 at Dorne, is whispered to be a Beast Lover" -> dict & List
-[Rumour -> Added] RID 47, "lord Stafford Martell "The Intrepid", ActID 27 at Dorne, is murmured among friends to be Born To Lead" -> dict & List
-[Rumour -> Added] RID 48, "lord Preston Martell "The Loud", ActID 28 at Dorne, is widely known to have the power of Analgesia (Ignores Pain)" -> dict & List
-[Rumour -> Added] RID 49, "lord Preston Martell "The Loud", ActID 28 at Dorne, is well known to be Pious" -> dict & List
-[Rumour -> Added] RID 50, "lord Preston Martell "The Loud", ActID 28 at Dorne, is well known to have a Booming Voice" -> dict & List
-[Rumour -> Added] RID 51, "lord Martyn Martell "The Laborious", ActID 29 at Dorne, is whispered to be Ponderous" -> dict & List
-[Rumour -> Added] RID 52, "lord Martyn Martell "The Laborious", ActID 29 at Dorne, is murmured among friends to be a Beast Lover" -> dict & List
-[Rumour -> Added] RID 53, "lord Martyn Martell "The Laborious", ActID 29 at Dorne, is commonly known to be Battle Hardened" -> dict & List
-[Rumour -> Added] RID 54, "It is whispered that lord Martyn Martell "The Laborious", ActID 29 at Dorne, jealously guards a secret" -> dict & List
-[Rumour -> Added] RID 55, "It is known that the infamous Goblin Mug (Passive Item) is to be found at Dorne" -> dict & List
-[Rumour -> Added] RID 56, "Lord Helies Arryn "The Insipid Rodent", ActID 37 at Eyrie, is rumoured to have the Morals of a Sewer Rat" -> dict & List
-[Rumour -> Added] RID 57, "It is said that Lord Helies Arryn, ActID 37 at Eyrie, desires the neighbouring lands belonging to the Bannerlord at Flint" -> dict & List
-[Rumour -> Added] RID 58, "Lady Lolly Arryn "The Fragile Rose", ActID 38 at Eyrie, is widely known to be of a Delicate Disposition" -> dict & List
-[Rumour -> Added] RID 59, "Lady Lolly Arryn "The Fragile Rose", ActID 38 at Eyrie, is murmured among friends to be Illiterate" -> dict & List
-[Rumour -> Added] RID 60, "Lady Lolly Arryn "The Fragile Rose", ActID 38 at Eyrie, is murmured among friends to be Compassionate" -> dict & List
-[Rumour -> Added] RID 61, "Lady Lolly Arryn "The Fragile Rose", ActID 38 at Eyrie, is well known to be Womanly" -> dict & List
-[Rumour -> Added] RID 62, "It is widely known that Lady Lolly Arryn, ActID 38 at Eyrie, desires that her Daughter, lady Moll Arryn "The Repugnant", ActID 44, is betrothed to the Ursurper" -> dict & List
-[Rumour -> Added] RID 63, "Knight Ser Robert Jehan "The Ogress", ActID 39 at Eyrie, is whispered to be Hideously Ugly" -> dict & List
-[Rumour -> Added] RID 64, "Castellan Raymun Charles "The Fleet", ActID 40 at Eyrie, is known to be Athletic" -> dict & List
-[Rumour -> Added] RID 65, "It is commonly known that Castellan Raymun Charles "The Fleet", ActID 40 at Eyrie, knows more than they let on" -> dict & List
-[Rumour -> Added] RID 66, "It is rumoured that the fabled Mammoth Cloak (Passive Item) is to be found at Eyrie" -> dict & List
-[Rumour -> Added] RID 67, "Maester Morton Gervasius "The Hypocritical", ActID 41 at Eyrie, is whispered to be Deceitful" -> dict & List
-[Rumour -> Added] RID 68, "Maester Morton Gervasius "The Hypocritical", ActID 41 at Eyrie, is widely known to be Level Headed" -> dict & List
-[Rumour -> Added] RID 69, "It is well known that Maester Morton Gervasius, ActID 41 at Eyrie, lusts after Gold" -> dict & List
-[Rumour -> Added] RID 70, "Septon Raymun Anselet "The Unable", ActID 42 at Eyrie, is rumoured to have No Common Sense" -> dict & List
-[Rumour -> Added] RID 71, "Septon Raymun Anselet "The Unable", ActID 42 at Eyrie, is commonly known to be Honest" -> dict & List
-[Rumour -> Added] RID 72, "lady Cristene Arryn "The Ignorant", ActID 43 at Eyrie, is commonly known to be of a Delicate Disposition" -> dict & List
-[Rumour -> Added] RID 73, "lady Cristene Arryn "The Ignorant", ActID 43 at Eyrie, is whispered to be Illiterate" -> dict & List
-[Rumour -> Added] RID 74, "lady Cristene Arryn "The Ignorant", ActID 43 at Eyrie, is murmured among friends to be Self-Centred" -> dict & List
-[Rumour -> Added] RID 75, "lady Cristene Arryn "The Ignorant", ActID 43 at Eyrie, is known by all to be Compassionate" -> dict & List
-[Rumour -> Added] RID 76, "lady Cristene Arryn "The Ignorant", ActID 43 at Eyrie, is well known to be Womanly" -> dict & List
-[Rumour -> Added] RID 77, "lady Moll Arryn "The Repugnant", ActID 44 at Eyrie, is widely known to be a Dancer" -> dict & List
-[Rumour -> Added] RID 78, "lady Moll Arryn "The Repugnant", ActID 44 at Eyrie, is known by all to be Illiterate" -> dict & List
-[Rumour -> Added] RID 79, "lady Moll Arryn "The Repugnant", ActID 44 at Eyrie, is whispered to be Hideously Ugly" -> dict & List
-[Rumour -> Added] RID 80, "lady Moll Arryn "The Repugnant", ActID 44 at Eyrie, is suspected to be Compassionate" -> dict & List
-[Rumour -> Added] RID 81, "lady Moll Arryn "The Repugnant", ActID 44 at Eyrie, is said to be Womanly" -> dict & List
-[Rumour -> Added] RID 82, "Heir Robert Arryn "The Hesitant", ActID 45 at Eyrie, is suspected to have the Morals of a Sewer Rat" -> dict & List
-[Rumour -> Added] RID 83, "Heir Robert Arryn "The Hesitant", ActID 45 at Eyrie, is murmured among friends to be Timid" -> dict & List
-[Rumour -> Added] RID 84, "Lady Murienne Baratheon "The Plaid", ActID 47 at Bloodkeep, is rumoured to be a Crazy Quilter" -> dict & List
-[Rumour -> Added] RID 85, "Lady Murienne Baratheon "The Plaid", ActID 47 at Bloodkeep, is rumoured to be Suspicious" -> dict & List
-[Rumour -> Added] RID 86, "Lady Murienne Baratheon "The Plaid", ActID 47 at Bloodkeep, is whispered to be Womanly" -> dict & List
-[Rumour -> Added] RID 87, "It is murmured among friends that Lady Murienne Baratheon "The Plaid", ActID 47 at Bloodkeep, knows more than they let on" -> dict & List
-[Rumour -> Added] RID 88, "It is rumoured that Lady Murienne Baratheon, ActID 47 at Bloodkeep, desires that her Son, Lord Doran Baratheon "The Rogue", ActID 67, attains a position in the Royal Court" -> dict & List
-[Rumour -> Added] RID 89, "Castellan Houdouyn Artus "The Surly", ActID 49 at Bloodkeep, is murmured among friends to be Athletic" -> dict & List
-[Rumour -> Added] RID 90, "Castellan Houdouyn Artus "The Surly", ActID 49 at Bloodkeep, is rumoured to be Bad Tempered" -> dict & List
-[Rumour -> Added] RID 91, "It is commonly known that Disguises can be had from Castellan Houdouyn Artus, ActID 49 at Bloodkeep" -> dict & List
-[Rumour -> Added] RID 92, "Maester Gerbertus Gervasius "The Chubby", ActID 50 at Bloodkeep, is whispered to be Overweight" -> dict & List
-[Rumour -> Added] RID 93, "Maester Gerbertus Gervasius "The Chubby", ActID 50 at Bloodkeep, is known to have a Good Memory" -> dict & List
-[Rumour -> Added] RID 94, "Maester Gerbertus Gervasius "The Chubby", ActID 50 at Bloodkeep, is whispered to have a Booming Voice" -> dict & List
-[Rumour -> Added] RID 95, "It is known that Disguises can be had from Maester Gerbertus Gervasius, ActID 50 at Bloodkeep" -> dict & List
-[Rumour -> Added] RID 96, "Septon Willas Saunsum "The Imperious", ActID 51 at Bloodkeep, is rumoured to be an Optimist" -> dict & List
-[Rumour -> Added] RID 97, "Septon Willas Saunsum "The Imperious", ActID 51 at Bloodkeep, is murmured among friends to be Despotic" -> dict & List
-[Rumour -> Added] RID 98, "lady Catrain Baratheon "The Spartan", ActID 52 at Bloodkeep, is commonly known to be a Crazy Quilter" -> dict & List
-[Rumour -> Added] RID 99, "lady Catrain Baratheon "The Spartan", ActID 52 at Bloodkeep, is known by all to be Homely" -> dict & List
-[Rumour -> Added] RID 100, "lady Catrain Baratheon "The Spartan", ActID 52 at Bloodkeep, is widely known to be Suspicious" -> dict & List
-[Rumour -> Added] RID 101, "Lady Sapphire Stark "The Uneducated", ActID 54 at Winterfell, is murmured among friends to be Illiterate" -> dict & List
-[Rumour -> Added] RID 102, "It is rumoured that Lady Sapphire Stark "The Uneducated", ActID 54 at Winterfell, has a dark secret" -> dict & List
-[Rumour -> Added] RID 103, "It is murmured among friends that Lady Sapphire Stark, ActID 54 at Winterfell, desires that her Son, Lord Tion Stark "The Shrewd", ActID 68, attains a position in the Royal Court" -> dict & List
-[Rumour -> Added] RID 104, "Castellan Frederick Frideric "The Listless", ActID 56 at Winterfell, is commonly known to be Lethargic" -> dict & List
-[Rumour -> Added] RID 105, "Castellan Frederick Frideric "The Listless", ActID 56 at Winterfell, is murmured among friends to be Clever" -> dict & List
-[Rumour -> Added] RID 106, "Castellan Frederick Frideric "The Listless", ActID 56 at Winterfell, is murmured among friends to be cursed with Hogs Breath (Halitosis)" -> dict & List
-[Rumour -> Added] RID 107, "It is known by all that Disguises can be had from Castellan Frederick Frideric, ActID 56 at Winterfell" -> dict & List
-[Rumour -> Added] RID 108, "Maester Hervey Foucaud "The Instinctive", ActID 57 at Winterfell, is known to have a Sixth Sense" -> dict & List
-[Rumour -> Added] RID 109, "Maester Hervey Foucaud "The Instinctive", ActID 57 at Winterfell, is well known to be Vengeful" -> dict & List
-[Rumour -> Added] RID 110, "It is murmured among friends that Disguises can be had from Maester Hervey Foucaud, ActID 57 at Winterfell" -> dict & List
-[Rumour -> Added] RID 111, "It is said that Maester Hervey Foucaud, ActID 57 at Winterfell, is in thrall to Gold" -> dict & List
-[Rumour -> Added] RID 112, "Septon Mandon Rodbertus "The Proficient", ActID 58 at Winterfell, is commonly known to be Competent" -> dict & List
-[Rumour -> Added] RID 113, "It is murmured among friends that Disguises can be had from Septon Mandon Rodbertus, ActID 58 at Winterfell" -> dict & List
-[Rumour -> Added] RID 114, "lady Darlessa Stark "The Ignorant", ActID 59 at Winterfell, is whispered to be a Crumhorn Player" -> dict & List
-[Rumour -> Added] RID 115, "lady Darlessa Stark "The Ignorant", ActID 59 at Winterfell, is murmured among friends to be Illiterate" -> dict & List
-[Rumour -> Added] RID 116, "Lord Andry Tully "The Sane", ActID 60 at Riverrun, is rumoured to be Athletic" -> dict & List
-[Rumour -> Added] RID 117, "Lord Andry Tully "The Sane", ActID 60 at Riverrun, is well known to be Level Headed" -> dict & List
-[Rumour -> Added] RID 118, "It is known by all that Lord Andry Tully, ActID 60 at Riverrun, desires the neighbouring lands belonging to the Bannerlord at Bracken" -> dict & List
-[Rumour -> Added] RID 119, "Lady Beleite Tully "The Pliable", ActID 61 at Riverrun, is murmured among friends to be Gentle" -> dict & List
-[Rumour -> Added] RID 120, "Lady Beleite Tully "The Pliable", ActID 61 at Riverrun, is widely known to be Adaptable" -> dict & List
-[Rumour -> Added] RID 121, "Lady Beleite Tully "The Pliable", ActID 61 at Riverrun, is known to be Womanly" -> dict & List
-[Rumour -> Added] RID 122, "It is commonly known that Lady Beleite Tully, ActID 61 at Riverrun, desires that her Son, Heir Samwell Tully "The Vigorous", ActID 66, attains a position in the Royal Court" -> dict & List
-[Rumour -> Added] RID 123, "Knight Ser Wyl Aymeri "The Devil", ActID 62 at Riverrun, is said to be Athletic" -> dict & List
-[Rumour -> Added] RID 124, "Knight Ser Wyl Aymeri "The Devil", ActID 62 at Riverrun, is well known to be Illiterate" -> dict & List
-[Rumour -> Added] RID 125, "Knight Ser Wyl Aymeri "The Devil", ActID 62 at Riverrun, is rumoured to be a Sadist" -> dict & List
-[Rumour -> Added] RID 126, "It is said that Knight Ser Wyl Aymeri "The Devil", ActID 62 at Riverrun, has a mysterious past" -> dict & List
-[Rumour -> Added] RID 127, "Castellan Dick Audri "The Principled", ActID 63 at Riverrun, is whispered to be Honourable" -> dict & List
-[Rumour -> Added] RID 128, "Maester Aldis Hervy "The Preacher", ActID 64 at Riverrun, is widely known to be Myopic" -> dict & List
-[Rumour -> Added] RID 129, "Maester Aldis Hervy "The Preacher", ActID 64 at Riverrun, is murmured among friends to be a person who Mumbles" -> dict & List
-[Rumour -> Added] RID 130, "Maester Aldis Hervy "The Preacher", ActID 64 at Riverrun, is commonly known to be Paranoid" -> dict & List
-[Rumour -> Added] RID 131, "Maester Aldis Hervy "The Preacher", ActID 64 at Riverrun, is rumoured to be an excellent Speech Giver" -> dict & List
-[Rumour -> Added] RID 132, "It is murmured among friends that Maester Aldis Hervy, ActID 64 at Riverrun, is in thrall to Gold" -> dict & List
-[Rumour -> Added] RID 133, "Septon Lancel Hary "The Dedicated", ActID 65 at Riverrun, is rumoured to have Sharp Reflexes" -> dict & List
-[Rumour -> Added] RID 134, "Septon Lancel Hary "The Dedicated", ActID 65 at Riverrun, is known by all to be Careless" -> dict & List
-[Rumour -> Added] RID 135, "Septon Lancel Hary "The Dedicated", ActID 65 at Riverrun, is well known to be Gullible" -> dict & List
-[Rumour -> Added] RID 136, "Septon Lancel Hary "The Dedicated", ActID 65 at Riverrun, is well known to be Steadfast" -> dict & List
-[Rumour -> Added] RID 137, "Heir Samwell Tully "The Vigorous", ActID 66 at Riverrun, is whispered to be Athletic" -> dict & List
-[Rumour -> Added] RID 138, "Heir Samwell Tully "The Vigorous", ActID 66 at Riverrun, is rumoured to be Arrogant" -> dict & List
-[Rumour -> Added] RID 139, "Lord Doran Baratheon "The Rogue", ActID 67 at Bloodkeep, is widely known to be Athletic" -> dict & List
-[Rumour -> Added] RID 140, "Lord Doran Baratheon "The Rogue", ActID 67 at Bloodkeep, is whispered to be Fickle" -> dict & List
-[Rumour -> Added] RID 141, "Lord Doran Baratheon "The Rogue", ActID 67 at Bloodkeep, is said to be Eccentric" -> dict & List
-[Rumour -> Added] RID 142, "Lord Doran Baratheon "The Rogue", ActID 67 at Bloodkeep, is whispered to be a Schemer" -> dict & List
-[Rumour -> Added] RID 143, "Lord Doran Baratheon "The Rogue", ActID 67 at Bloodkeep, is known to be Overconfident" -> dict & List
-[Rumour -> Added] RID 144, "It is widely known that Lord Doran Baratheon "The Rogue", ActID 67 at Bloodkeep, knows more than they let on" -> dict & List
-[Rumour -> Added] RID 145, "It is rumoured that Lord Doran Baratheon, ActID 67 at Bloodkeep, hungers for Gold" -> dict & List
-[Rumour -> Added] RID 146, "Lord Tion Stark "The Shrewd", ActID 68 at Winterfell, is known to be Clever" -> dict & List
-[Rumour -> Added] RID 147, "Lord Tion Stark "The Shrewd", ActID 68 at Winterfell, is suspected to be Gaseous" -> dict & List
-[Rumour -> Added] RID 148, "Lord Tion Stark "The Shrewd", ActID 68 at Winterfell, is widely known to be Noble" -> dict & List
-[Rumour -> Added] RID 149, "Lord Tion Stark "The Shrewd", ActID 68 at Winterfell, is known to be Nervous" -> dict & List
-[Rumour -> Added] RID 150, "It is whispered that Lord Tion Stark "The Shrewd", ActID 68 at Winterfell, knows more than they let on" -> dict & List
-[Rumour -> Added] RID 151, "It is whispered that Lord Tion Stark, ActID 68 at Winterfell, desires the neighbouring lands belonging to the Bannerlord at Flint" -> dict & List
-[Rumour -> Added] RID 152, "BannerLord Eddard Tarly "The Definite", ActID 70 at Horn Hill, is commonly known to be Decisive" -> dict & List
-[Rumour -> Added] RID 153, "It is murmured among friends that BannerLord Eddard Tarly "The Definite", ActID 70 at Horn Hill, is keeping something private" -> dict & List
-[Rumour -> Added] RID 154, "It is known by all that BannerLord Eddard Tarly, ActID 70 at Horn Hill, hungers for the lusted after Elixir of Wellness" -> dict & List
-[Rumour -> Added] RID 155, "BannerLord Walcher Penrose "Frog Tongue", ActID 71 at Parchments, is well known to be Alert" -> dict & List
-[Rumour -> Added] RID 156, "BannerLord Walcher Penrose "Frog Tongue", ActID 71 at Parchments, is rumoured to be Illiterate" -> dict & List
-[Rumour -> Added] RID 157, "BannerLord Walcher Penrose "Frog Tongue", ActID 71 at Parchments, is rumoured to be a person who Lisps" -> dict & List
-[Rumour -> Added] RID 158, "BannerLord Walcher Penrose "Frog Tongue", ActID 71 at Parchments, is known to be Predator" -> dict & List
-[Rumour -> Added] RID 159, "BannerLord Walcher Penrose "Frog Tongue", ActID 71 at Parchments, is widely known to be Impulsive" -> dict & List
-[Rumour -> Added] RID 160, "It is well known that BannerLord Walcher Penrose, ActID 71 at Parchments, has an unquenched hunger for Gold" -> dict & List
-[Rumour -> Added] RID 161, "BannerLord Pate Glover "The Insipid Rodent", ActID 72 at Deepwood Motte, is commonly known to be a Beast Lover" -> dict & List
-[Rumour -> Added] RID 162, "BannerLord Pate Glover "The Insipid Rodent", ActID 72 at Deepwood Motte, is murmured among friends to have the Morals of a Sewer Rat" -> dict & List
-[Rumour -> Added] RID 163, "BannerLord Hunfridus Frey "The Springy", ActID 73 at The Twins, is rumoured to be Double Jointed" -> dict & List
-[Rumour -> Added] RID 164, "BannerLord Hunfridus Frey "The Springy", ActID 73 at The Twins, is widely known to be a person who Lisps" -> dict & List
-[Rumour -> Added] RID 165, "BannerLord Hunfridus Frey "The Springy", ActID 73 at The Twins, is well known to be Guileless" -> dict & List
-[Rumour -> Added] RID 166, "It is widely known that BannerLord Hunfridus Frey, ActID 73 at The Twins, is fixated upon the beautifully crafted Lion Dagger" -> dict & List
-[Rumour -> Added] RID 167, "BannerLord Morton Harlaw "The Hisser", ActID 74 at Ten Towers, is known by all to be a person who Lisps" -> dict & List
-[Rumour -> Added] RID 168, "BannerLord Morton Harlaw "The Hisser", ActID 74 at Ten Towers, is widely known to be an excellent Speech Giver" -> dict & List
-[Rumour -> Added] RID 169, "It is suspected that BannerLord Morton Harlaw, ActID 74 at Ten Towers, hungers for Gold" -> dict & List
-[Rumour -> Added] RID 170, "BannerLord Gib Estermont "The Wanton", ActID 76 at Greenstone, is whispered to be Illiterate" -> dict & List
-[Rumour -> Added] RID 171, "BannerLord Gib Estermont "The Wanton", ActID 76 at Greenstone, is known to be Lecherous" -> dict & List
-[Rumour -> Added] RID 172, "BannerLord Gib Estermont "The Wanton", ActID 76 at Greenstone, is known by all to be Impulsive" -> dict & List
-[Rumour -> Added] RID 173, "BannerLord Jaques Fowler "The Bruised", ActID 77 at Skyreach, is rumoured to be Lame" -> dict & List
-[Rumour -> Added] RID 174, "BannerLord Marq Mullendore "The Boisterous", ActID 78 at Uplands, is said to be Multilingual" -> dict & List
-[Rumour -> Added] RID 175, "BannerLord Marq Mullendore "The Boisterous", ActID 78 at Uplands, is whispered to have a Booming Voice" -> dict & List
-[Rumour -> Added] RID 176, "It is whispered that BannerLord Marq Mullendore "The Boisterous", ActID 78 at Uplands, conceals a dark truth" -> dict & List
-[Rumour -> Added] RID 177, "It is known that BannerLord Marq Mullendore, ActID 78 at Uplands, has an unquenched hunger for Gold" -> dict & List
-[Rumour -> Added] RID 178, "BannerLord Guntard Westerling "The Orator", ActID 79 at The Crag, is whispered to be Athletic" -> dict & List
-[Rumour -> Added] RID 179, "BannerLord Guntard Westerling "The Orator", ActID 79 at The Crag, is rumoured to be Clueless" -> dict & List
-[Rumour -> Added] RID 180, "BannerLord Guntard Westerling "The Orator", ActID 79 at The Crag, is rumoured to be a person who Stutters" -> dict & List
-[Rumour -> Added] RID 181, "BannerLord Guntard Westerling "The Orator", ActID 79 at The Crag, is known by all to be Loyal" -> dict & List
-[Rumour -> Added] RID 182, "BannerLord Guntard Westerling "The Orator", ActID 79 at The Crag, is said to be an excellent Speech Giver" -> dict & List
-[Rumour -> Added] RID 183, "It is widely known that BannerLord Guntard Westerling, ActID 79 at The Crag, has an unquenched hunger for the dreaded Chalice of Pain" -> dict & List
-[Rumour -> Added] RID 184, "BannerLord Pereret Peake "The Runt", ActID 80 at Starpike, is rumoured to be a Dwarf" -> dict & List
-[Rumour -> Added] RID 185, "BannerLord Pereret Peake "The Runt", ActID 80 at Starpike, is rumoured to have No Common Sense" -> dict & List
-[Rumour -> Added] RID 186, "BannerLord Pereret Peake "The Runt", ActID 80 at Starpike, is murmured among friends to be Deceitful" -> dict & List
-[Rumour -> Added] RID 187, "It is well known that BannerLord Pereret Peake "The Runt", ActID 80 at Starpike, jealously guards a secret" -> dict & List
-[Rumour -> Added] RID 188, "It is known that BannerLord Pereret Peake, ActID 80 at Starpike, hungers for Gold" -> dict & List
-[Rumour -> Added] RID 189, "Lord Luwin Oakheart "The Lively", ActID 81 at Brightwater Keep, is rumoured  Energetic" -> dict & List
-[Rumour -> Added] RID 190, "Lord Luwin Oakheart "The Lively", ActID 81 at Brightwater Keep, is suspected  Speech Giver" -> dict & List
-[Rumour -> Added] RID 191, "It is murmured among friends that Lord Luwin Oakheart, ActID 81 at Brightwater Keep, desires that his Daughter, lady Jeyne Oakheart "The Performer", ActID 111, is betrothed to the Ursurper" -> dict & List
-[Rumour -> Added] RID 192, "BannerLord Hodgkin Botley "The Spirited", ActID 84 at Lordsport, is known by all to be Energetic" -> dict & List
-[Rumour -> Added] RID 193, "It is rumoured that BannerLord Morton Bracken "The Mediocre", ActID 86 at Stone Hedge, jealously guards a secret" -> dict & List
-[Rumour -> Added] RID 194, "It is murmured among friends that BannerLord Morton Bracken, ActID 86 at Stone Hedge, has an unquenched hunger for Gold" -> dict & List
-[Rumour -> Added] RID 195, "BannerLord Martyn Brax "The Shaky", ActID 95 at Hornvale, is said to be Nervous" -> dict & List
-[Rumour -> Added] RID 196, "It is known that BannerLord Martyn Brax, ActID 95 at Hornvale, has an unquenched hunger for the greatly desired Amulet of Passion" -> dict & List
-[Rumour -> Added] RID 197, "BannerLord Walder Hornwood "The Crafty", ActID 96 at Hornwood, is known by all to have the power of Analgesia (Ignores Pain)" -> dict & List
-[Rumour -> Added] RID 198, "BannerLord Walder Hornwood "The Crafty", ActID 96 at Hornwood, is rumoured to be Astute" -> dict & List
-[Rumour -> Added] RID 199, "It is whispered that BannerLord Walder Hornwood, ActID 96 at Hornwood, is fixated upon Gold" -> dict & List
-[Rumour -> Added] RID 200, "BannerLord Victarion Tarth "The Abnormal", ActID 97 at Evenfall, is rumoured to be Eccentric" -> dict & List
-[Rumour -> Added] RID 201, "BannerLord Tomard Flint "The Leopard", ActID 98 at Widow's Watch, is suspected to be Fleet of Foot" -> dict & List
-[Rumour -> Added] RID 202, "BannerLord Tomard Flint "The Leopard", ActID 98 at Widow's Watch, is whispered to be Precise" -> dict & List
-[Rumour -> Added] RID 203, "BannerLord Tomard Flint "The Leopard", ActID 98 at Widow's Watch, is commonly known to be Noble" -> dict & List
-[Rumour -> Added] RID 204, "It is whispered that BannerLord Tomard Flint, ActID 98 at Widow's Watch, is fixated upon Gold" -> dict & List
-[Rumour -> Added] RID 205, "BannerLord Charles Karstark "The Spooked", ActID 99 at Old Oak, is known to have a Nervous Twitch" -> dict & List
-[Rumour -> Added] RID 206, "BannerLord Charles Karstark "The Spooked", ActID 99 at Old Oak, is commonly known to be Pious" -> dict & List
-[Rumour -> Added] RID 207, "It is commonly known that BannerLord Charles Karstark, ActID 99 at Old Oak, hungers for the mysterious Dragon Egg" -> dict & List
-[Rumour -> Added] RID 208, "Castellan Ferri Audri "The Divine", ActID 100 at Brightwater Keep, is murmured among friends to be Godlike Handsome" -> dict & List
-[Rumour -> Added] RID 209, "Castellan Ferri Audri "The Divine", ActID 100 at Brightwater Keep, is murmured among friends to be Pious" -> dict & List
-[Rumour -> Added] RID 210, "Castellan Ferri Audri "The Divine", ActID 100 at Brightwater Keep, is said to be Heroic" -> dict & List
-[Rumour -> Added] RID 211, "Maester Wilmot Rolandus "The Relentless", ActID 101 at Brightwater Keep, is widely known to be Fragile" -> dict & List
-[Rumour -> Added] RID 212, "Maester Wilmot Rolandus "The Relentless", ActID 101 at Brightwater Keep, is suspected to be Curious" -> dict & List
-[Rumour -> Added] RID 213, "Maester Wilmot Rolandus "The Relentless", ActID 101 at Brightwater Keep, is whispered to be Vengeful" -> dict & List
-[Rumour -> Added] RID 214, "Maester Wilmot Rolandus "The Relentless", ActID 101 at Brightwater Keep, is suspected to be Tenacious" -> dict & List
-[Rumour -> Added] RID 215, "It is rumoured that Maester Wilmot Rolandus, ActID 101 at Brightwater Keep, is fixated upon Gold" -> dict & List
-[Rumour -> Added] RID 216, "Septon Hodgkin Beneger "The Blessed", ActID 102 at Brightwater Keep, is commonly known to be Castellan Trained" -> dict & List
-[Rumour -> Added] RID 217, "Septon Hodgkin Beneger "The Blessed", ActID 102 at Brightwater Keep, is whispered to be Lucky" -> dict & List
-[Rumour -> Added] RID 218, "Septon Hodgkin Beneger "The Blessed", ActID 102 at Brightwater Keep, is said to be Truthful" -> dict & List
-[Rumour -> Added] RID 219, "Septon Hodgkin Beneger "The Blessed", ActID 102 at Brightwater Keep, is rumoured to be Decisive" -> dict & List
-[Rumour -> Added] RID 220, "Knight Ser Fraunk Mikael "The Respectable", ActID 103 at Brightwater Keep, is known to be Castellan Trained" -> dict & List
-[Rumour -> Added] RID 221, "Knight Ser Fraunk Mikael "The Respectable", ActID 103 at Brightwater Keep, is murmured among friends to be Honourable" -> dict & List
-[Rumour -> Added] RID 222, "Lady Arya Oakheart "The Minstrel", ActID 104 at Brightwater Keep, is rumoured to be a Flute Player" -> dict & List
-[Rumour -> Added] RID 223, "Lady Arya Oakheart "The Minstrel", ActID 104 at Brightwater Keep, is suspected to be Precise" -> dict & List
-[Rumour -> Added] RID 224, "Lady Arya Oakheart "The Minstrel", ActID 104 at Brightwater Keep, is widely known to be Womanly" -> dict & List
-[Rumour -> Added] RID 225, "It is whispered that Lady Arya Oakheart, ActID 104 at Brightwater Keep, desires that her Daughter, lady Brienne Oakheart "The Literal", ActID 110, is betrothed to the Ursurper" -> dict & List
-[Rumour -> Added] RID 226, "Heir Paxter Oakheart "The Shrewd", ActID 105 at Brightwater Keep, is whispered to be Alert" -> dict & List
-[Rumour -> Added] RID 227, "Heir Paxter Oakheart "The Shrewd", ActID 105 at Brightwater Keep, is known by all to be Clever" -> dict & List
-[Rumour -> Added] RID 228, "Heir Paxter Oakheart "The Shrewd", ActID 105 at Brightwater Keep, is murmured among friends to be a Seducer" -> dict & List
-[Rumour -> Added] RID 229, "Heir Paxter Oakheart "The Shrewd", ActID 105 at Brightwater Keep, is rumoured to be Mischievous" -> dict & List
-[Rumour -> Added] RID 230, "lady Phrowenia Oakheart "The Crafty", ActID 106 at Brightwater Keep, is whispered to be a Flute Player" -> dict & List
-[Rumour -> Added] RID 231, "lady Phrowenia Oakheart "The Crafty", ActID 106 at Brightwater Keep, is suspected to be Astute" -> dict & List
-[Rumour -> Added] RID 232, "lady Phrowenia Oakheart "The Crafty", ActID 106 at Brightwater Keep, is known to be Homely" -> dict & List
-[Rumour -> Added] RID 233, "lady Phrowenia Oakheart "The Crafty", ActID 106 at Brightwater Keep, is rumoured to be Mischievous" -> dict & List
-[Rumour -> Added] RID 234, "lady Phrowenia Oakheart "The Crafty", ActID 106 at Brightwater Keep, is suspected to be Womanly" -> dict & List
-[Rumour -> Added] RID 235, "lord Helies Oakheart "The Adjustable", ActID 107 at Brightwater Keep, is whispered to be Skinny" -> dict & List
-[Rumour -> Added] RID 236, "lord Helies Oakheart "The Adjustable", ActID 107 at Brightwater Keep, is whispered to be Adaptable" -> dict & List
-[Rumour -> Added] RID 237, "It is whispered that lord Helies Oakheart "The Adjustable", ActID 107 at Brightwater Keep, is keeping something private" -> dict & List
-[Rumour -> Added] RID 238, "It is rumoured that the infamous Book of the Dead (Passive Item) is to be found at Brightwater Keep" -> dict & List
-[Rumour -> Added] RID 239, "lady Margaret Oakheart "The Offhand", ActID 108 at Brightwater Keep, is whispered to be a Flute Player" -> dict & List
-[Rumour -> Added] RID 240, "lady Margaret Oakheart "The Offhand", ActID 108 at Brightwater Keep, is widely known to be Careless" -> dict & List
-[Rumour -> Added] RID 241, "lady Margaret Oakheart "The Offhand", ActID 108 at Brightwater Keep, is murmured among friends to be Compassionate" -> dict & List
-[Rumour -> Added] RID 242, "lady Margaret Oakheart "The Offhand", ActID 108 at Brightwater Keep, is murmured among friends to be Womanly" -> dict & List
-[Rumour -> Added] RID 243, "lord Eon Oakheart "The Perceptive", ActID 109 at Brightwater Keep, is rumoured to have a Sixth Sense" -> dict & List
-[Rumour -> Added] RID 244, "lord Eon Oakheart "The Perceptive", ActID 109 at Brightwater Keep, is murmured among friends to be Overconfident" -> dict & List
-[Rumour -> Added] RID 245, "It is known by all that lord Eon Oakheart "The Perceptive", ActID 109 at Brightwater Keep, is keeping something private" -> dict & List
-[Rumour -> Added] RID 246, "It is rumoured that the lusted after Elixir of Wellness (Passive Item) is to be found at Brightwater Keep" -> dict & List
-[Rumour -> Added] RID 247, "lady Brienne Oakheart "The Literal", ActID 110 at Brightwater Keep, is rumoured to be a Flute Player" -> dict & List
-[Rumour -> Added] RID 248, "lady Brienne Oakheart "The Literal", ActID 110 at Brightwater Keep, is suspected to be Precise" -> dict & List
-[Rumour -> Added] RID 249, "lady Brienne Oakheart "The Literal", ActID 110 at Brightwater Keep, is commonly known to be Glamorous" -> dict & List
-[Rumour -> Added] RID 250, "lady Brienne Oakheart "The Literal", ActID 110 at Brightwater Keep, is said to be Womanly" -> dict & List
-[Rumour -> Added] RID 251, "It is murmured among friends that lady Brienne Oakheart "The Literal", ActID 110 at Brightwater Keep, conceals a dark truth" -> dict & List
-[Rumour -> Added] RID 252, "It is suspected that the beautifully crafted Lion Dagger (Passive Item) is to be found at Brightwater Keep" -> dict & List
-[Rumour -> Added] RID 253, "lady Jeyne Oakheart "The Performer", ActID 111 at Brightwater Keep, is suspected to be a Flute Player" -> dict & List
-[Rumour -> Added] RID 254, "lady Jeyne Oakheart "The Performer", ActID 111 at Brightwater Keep, is whispered to be Precise" -> dict & List
-[Rumour -> Added] RID 255, "lady Jeyne Oakheart "The Performer", ActID 111 at Brightwater Keep, is rumoured to be Womanly" -> dict & List
-[Rumour -> Added] RID 256, "High_Septon Willis Walcher "The Decent", ActID 87 at Kingskeep, is widely known to be Generous" -> dict & List
-[Rumour -> Added] RID 257, "High_Septon Willis Walcher "The Decent", ActID 87 at Kingskeep, is well known to be Honest" -> dict & List
-[Rumour -> Added] RID 258, "Master_of_Coin Bertelot Wymon "The Skilled", ActID 88 at Kingskeep, is widely known to be Talented" -> dict & List
-[Rumour -> Added] RID 259, "Master_of_Coin Bertelot Wymon "The Skilled", ActID 88 at Kingskeep, is rumoured to be Mischievous" -> dict & List
-[Rumour -> Added] RID 260, "Master_of_Coin Bertelot Wymon "The Skilled", ActID 88 at Kingskeep, is suspected to be Impatient" -> dict & List
-[Rumour -> Added] RID 261, "It is rumoured that Master_of_Coin Bertelot Wymon "The Skilled", ActID 88 at Kingskeep, has hidden secrets carefully kept from view" -> dict & List
-[Rumour -> Added] RID 262, "It is said that the mysterious Dragon Egg (Passive Item) is to be found at Kingskeep" -> dict & List
-[Rumour -> Added] RID 263, "It is rumoured that Master_of_Coin Bertelot Wymon, ActID 88 at Kingskeep, thinks only of Gold" -> dict & List
-[Rumour -> Added] RID 264, "Master_of_Laws Wyl Tybout "The Head Strong", ActID 112 at Kingskeep, is known to be Strong Willed" -> dict & List
-[Rumour -> Added] RID 265, "Master_of_Ships Varamyr Walchelin "The Stingy", ActID 113 at Kingskeep, is known by all to be Precise" -> dict & List
-[Rumour -> Added] RID 266, "Master_of_Ships Varamyr Walchelin "The Stingy", ActID 113 at Kingskeep, is said to be Mean" -> dict & List
-[Rumour -> Added] RID 267, "Master_of_Whisperers Jaime Ouin "The Educated", ActID 91 at Kingskeep, is known to be Learned" -> dict & List
-[Rumour -> Added] RID 268, "Master_of_Whisperers Jaime Ouin "The Educated", ActID 91 at Kingskeep, is widely known to be Generous" -> dict & List
-[Rumour -> Added] RID 269, "Master_of_Whisperers Jaime Ouin "The Educated", ActID 91 at Kingskeep, is whispered to be Competent" -> dict & List
-[Rumour -> Added] RID 270, "Hand_of_the_King Tolly Wyliame "The Timorous", ActID 114 at Kingskeep, is rumoured to be Ponderous" -> dict & List
-[Rumour -> Added] RID 271, "Hand_of_the_King Tolly Wyliame "The Timorous", ActID 114 at Kingskeep, is rumoured to be Multilingual" -> dict & List
-[Rumour -> Added] RID 272, "Hand_of_the_King Tolly Wyliame "The Timorous", ActID 114 at Kingskeep, is whispered to be a Chronic Nail Biter" -> dict & List
-[Rumour -> Added] RID 273, "Hand_of_the_King Tolly Wyliame "The Timorous", ActID 114 at Kingskeep, is known by all to be Guileless" -> dict & List
-[Rumour -> Added] RID 274, "Hand_of_the_King Tolly Wyliame "The Timorous", ActID 114 at Kingskeep, is rumoured to be Inspirational" -> dict & List
-[Rumour -> Added] RID 275, "Commander_of_Kings_Guard Jaime Peares "The Shaky", ActID 115 at Kingskeep, is known by all to be Alert" -> dict & List
-[Rumour -> Added] RID 276, "Commander_of_Kings_Guard Jaime Peares "The Shaky", ActID 115 at Kingskeep, is commonly known to be Multilingual" -> dict & List
-[Rumour -> Added] RID 277, "Commander_of_Kings_Guard Jaime Peares "The Shaky", ActID 115 at Kingskeep, is whispered to be a person who Stutters" -> dict & List
-[Rumour -> Added] RID 278, "Commander_of_Kings_Guard Jaime Peares "The Shaky", ActID 115 at Kingskeep, is known to be Nervous" -> dict & List
-[Rumour -> Added] RID 279, "Commander_of_City_Watch Gerbertus Drake "The Respectable", ActID 94 at Kingskeep, is whispered to have a Sixth Sense" -> dict & List
-[Rumour -> Added] RID 280, "Commander_of_City_Watch Gerbertus Drake "The Respectable", ActID 94 at Kingskeep, is commonly known to be Honourable" -> dict & List
-[Rumour -> Added] RID 281, "King Hodgkin Lannister "The Average", ActID 10 at Kingskeep, is murmured among friends to have a poor impression of the Usurper" -> dict & List
-[Rumour -> Added] RID 282, "Queen Molt Lannister "The Bumbling", ActID 11 at Kingskeep, is said to have a very poor impression of the Usurper" -> dict & List
-[Rumour -> Added] RID 283, "Knight Ser Daven Vauquelin "The Bewildered", ActID 12 at Casterly Rock, is said to have a poor opinion of the Usurper" -> dict & List
-[Rumour -> Added] RID 284, "Castellan Helies Drake "The Steady", ActID 13 at Casterly Rock, is known by all to have a very poor opinion of the Usurper" -> dict & List
-[Rumour -> Added] RID 285, "Maester Dickory Harry "The Ignorant", ActID 14 at Casterly Rock, is whispered to have a poor view of the Usurper" -> dict & List
-[Rumour -> Added] RID 286, "Septon Rainald Arnald "The Decent", ActID 15 at Casterly Rock, is commonly known to have a poor view of the Usurper" -> dict & List
-[Rumour -> Added] RID 287, "lady Malina Lannister "The Player", ActID 16 at Kingskeep, is known by all to have a very poor view of the Usurper" -> dict & List
-[Rumour -> Added] RID 288, "Heir Aeron Lannister "The Bumbling", ActID 17 at Kingskeep, is suspected to have a very poor view of the Usurper" -> dict & List
-[Rumour -> Added] RID 289, "lady Genna Lannister "The Bard", ActID 18 at Kingskeep, is suspected to have a very poor opinion of the Usurper" -> dict & List
-[Rumour -> Added] RID 290, "lady Geue Lannister "The Self-Serving", ActID 19 at Kingskeep, is suspected to have a very poor view of the Usurper" -> dict & List
-[Rumour -> Added] RID 291, "Lord Azer Martell "The Animal Lover", ActID 20 at Dorne, is known by all to have a very poor opinion of the Usurper" -> dict & List
-[Rumour -> Added] RID 292, "Castellan Anderewe Wyon "The Fearless", ActID 23 at Dorne, is suspected to have a poor opinion of the Usurper" -> dict & List
-[Rumour -> Added] RID 293, "Maester Nestor Saunsum "The Book Lover", ActID 24 at Dorne, is widely known to have a poor view of the Usurper" -> dict & List
-[Rumour -> Added] RID 294, "Septon Varamyr Humpty "The Tractable", ActID 25 at Dorne, is rumoured to have an average view of the Usurper" -> dict & List
-[Rumour -> Added] RID 295, "Heir Hunfridus Martell "The Stiff Necked", ActID 26 at Dorne, is suspected to have a very poor impression of the Usurper" -> dict & List
-[Rumour -> Added] RID 296, "lord Stafford Martell "The Intrepid", ActID 27 at Dorne, is widely known to have a very poor opinion of the Usurper" -> dict & List
-[Rumour -> Added] RID 297, "lord Preston Martell "The Loud", ActID 28 at Dorne, is whispered to have a very poor view of the Usurper" -> dict & List
-[Rumour -> Added] RID 298, "lord Martyn Martell "The Laborious", ActID 29 at Dorne, is suspected to have a poor impression of the Usurper" -> dict & List
-[Rumour -> Added] RID 299, "Lord Helies Arryn "The Insipid Rodent", ActID 37 at Eyrie, is whispered to have a very poor opinion of the Usurper" -> dict & List
-[Rumour -> Added] RID 300, "Lady Lolly Arryn "The Fragile Rose", ActID 38 at Eyrie, is said to have an average impression of the Usurper" -> dict & List
-[Rumour -> Added] RID 301, "Knight Ser Robert Jehan "The Ogress", ActID 39 at Eyrie, is said to have a very poor opinion of the Usurper" -> dict & List
-[Rumour -> Added] RID 302, "Castellan Raymun Charles "The Fleet", ActID 40 at Eyrie, is whispered to have a very poor view of the Usurper" -> dict & List
-[Rumour -> Added] RID 303, "Maester Morton Gervasius "The Hypocritical", ActID 41 at Eyrie, is well known to have a very poor view of the Usurper" -> dict & List
-[Rumour -> Added] RID 304, "Septon Raymun Anselet "The Unable", ActID 42 at Eyrie, is well known to have a poor impression of the Usurper" -> dict & List
-[Rumour -> Added] RID 305, "lady Cristene Arryn "The Ignorant", ActID 43 at Eyrie, is murmured among friends to have a poor opinion of the Usurper" -> dict & List
-[Rumour -> Added] RID 306, "lady Moll Arryn "The Repugnant", ActID 44 at Eyrie, is whispered to have an average impression of the Usurper" -> dict & List
-[Rumour -> Added] RID 307, "Heir Robert Arryn "The Hesitant", ActID 45 at Eyrie, is murmured among friends to have a poor view of the Usurper" -> dict & List
-[Rumour -> Added] RID 308, "Lady Murienne Baratheon "The Plaid", ActID 47 at Bloodkeep, is well known to have an average opinion of the Usurper" -> dict & List
-[Rumour -> Added] RID 309, "Castellan Houdouyn Artus "The Surly", ActID 49 at Bloodkeep, is well known to have a good view of the Usurper" -> dict & List
-[Rumour -> Added] RID 310, "Maester Gerbertus Gervasius "The Chubby", ActID 50 at Bloodkeep, is whispered to have a very good impression of the Usurper" -> dict & List
-[Rumour -> Added] RID 311, "Septon Willas Saunsum "The Imperious", ActID 51 at Bloodkeep, is well known to have a very good view of the Usurper" -> dict & List
-[Rumour -> Added] RID 312, "lady Catrain Baratheon "The Spartan", ActID 52 at Bloodkeep, is rumoured to have a very good opinion of the Usurper" -> dict & List
-[Rumour -> Added] RID 313, "Lady Sapphire Stark "The Uneducated", ActID 54 at Winterfell, is suspected to have a good impression of the Usurper" -> dict & List
-[Rumour -> Added] RID 314, "Castellan Frederick Frideric "The Listless", ActID 56 at Winterfell, is rumoured to have a good view of the Usurper" -> dict & List
-[Rumour -> Added] RID 315, "Maester Hervey Foucaud "The Instinctive", ActID 57 at Winterfell, is said to have an average opinion of the Usurper" -> dict & List
-[Rumour -> Added] RID 316, "Septon Mandon Rodbertus "The Proficient", ActID 58 at Winterfell, is whispered to have an average view of the Usurper" -> dict & List
-[Rumour -> Added] RID 317, "lady Darlessa Stark "The Ignorant", ActID 59 at Winterfell, is suspected to have a good opinion of the Usurper" -> dict & List
-[Rumour -> Added] RID 318, "Lord Andry Tully "The Sane", ActID 60 at Riverrun, is known by all to have an average impression of the Usurper" -> dict & List
-[Rumour -> Added] RID 319, "Lady Beleite Tully "The Pliable", ActID 61 at Riverrun, is known by all to have a very poor view of the Usurper" -> dict & List
-[Rumour -> Added] RID 320, "Knight Ser Wyl Aymeri "The Devil", ActID 62 at Riverrun, is whispered to have a very poor opinion of the Usurper" -> dict & List
-[Rumour -> Added] RID 321, "Castellan Dick Audri "The Principled", ActID 63 at Riverrun, is suspected to have a poor view of the Usurper" -> dict & List
-[Rumour -> Added] RID 322, "Maester Aldis Hervy "The Preacher", ActID 64 at Riverrun, is murmured among friends to have a very poor view of the Usurper" -> dict & List
-[Rumour -> Added] RID 323, "Septon Lancel Hary "The Dedicated", ActID 65 at Riverrun, is suspected to have a poor impression of the Usurper" -> dict & List
-[Rumour -> Added] RID 324, "Heir Samwell Tully "The Vigorous", ActID 66 at Riverrun, is widely known to have a poor view of the Usurper" -> dict & List
-[Rumour -> Added] RID 325, "Lord Doran Baratheon "The Rogue", ActID 67 at Bloodkeep, is known to have a very good impression of the Usurper" -> dict & List
-[Rumour -> Added] RID 326, "Lord Tion Stark "The Shrewd", ActID 68 at Winterfell, is well known to have a very good impression of the Usurper" -> dict & List
-[Rumour -> Added] RID 327, "BannerLord Eddard Tarly "The Definite", ActID 70 at Horn Hill, is whispered to have an average view of the Usurper" -> dict & List
-[Rumour -> Added] RID 328, "BannerLord Walcher Penrose "Frog Tongue", ActID 71 at Parchments, is suspected to have an average opinion of the Usurper" -> dict & List
-[Rumour -> Added] RID 329, "BannerLord Pate Glover "The Insipid Rodent", ActID 72 at Deepwood Motte, is widely known to have a poor impression of the Usurper" -> dict & List
-[Rumour -> Added] RID 330, "BannerLord Hunfridus Frey "The Springy", ActID 73 at The Twins, is known to have a poor impression of the Usurper" -> dict & List
-[Rumour -> Added] RID 331, "BannerLord Morton Harlaw "The Hisser", ActID 74 at Ten Towers, is commonly known to have a very poor view of the Usurper" -> dict & List
-[Rumour -> Added] RID 332, "BannerLord Gib Estermont "The Wanton", ActID 76 at Greenstone, is murmured among friends to have a poor opinion of the Usurper" -> dict & List
-[Rumour -> Added] RID 333, "BannerLord Jaques Fowler "The Bruised", ActID 77 at Skyreach, is whispered to have a very poor view of the Usurper" -> dict & List
-[Rumour -> Added] RID 334, "BannerLord Marq Mullendore "The Boisterous", ActID 78 at Uplands, is whispered to have a good opinion of the Usurper" -> dict & List
-[Rumour -> Added] RID 335, "BannerLord Guntard Westerling "The Orator", ActID 79 at The Crag, is known to have a very good opinion of the Usurper" -> dict & List
-[Rumour -> Added] RID 336, "BannerLord Pereret Peake "The Runt", ActID 80 at Starpike, is whispered to have an average view of the Usurper" -> dict & List
-[Rumour -> Added] RID 337, "Lord Luwin Oakheart "The Lively", ActID 81 at Brightwater Keep, is murmured among friends to have a very poor impression of the Usurper" -> dict & List
-[Rumour -> Added] RID 338, "BannerLord Davos Redwyne "The Common", ActID 82 at The Arbor, is whispered to have an average opinion of the Usurper" -> dict & List
-[Rumour -> Added] RID 339, "BannerLord Hodgkin Botley "The Spirited", ActID 84 at Lordsport, is whispered to have an average impression of the Usurper" -> dict & List
-[Rumour -> Added] RID 340, "BannerLord Morton Bracken "The Mediocre", ActID 86 at Stone Hedge, is said to have a good impression of the Usurper" -> dict & List
-[Rumour -> Added] RID 341, "BannerLord Martyn Brax "The Shaky", ActID 95 at Hornvale, is murmured among friends to have a poor impression of the Usurper" -> dict & List
-[Rumour -> Added] RID 342, "BannerLord Walder Hornwood "The Crafty", ActID 96 at Hornwood, is suspected to have a poor impression of the Usurper" -> dict & List
-[Rumour -> Added] RID 343, "BannerLord Victarion Tarth "The Abnormal", ActID 97 at Evenfall, is whispered to have a poor view of the Usurper" -> dict & List
-[Rumour -> Added] RID 344, "BannerLord Tomard Flint "The Leopard", ActID 98 at Widow's Watch, is rumoured to have a poor opinion of the Usurper" -> dict & List
-[Rumour -> Added] RID 345, "BannerLord Charles Karstark "The Spooked", ActID 99 at Old Oak, is murmured among friends to have a very poor impression of the Usurper" -> dict & List
-[Rumour -> Added] RID 346, "Castellan Ferri Audri "The Divine", ActID 100 at Brightwater Keep, is whispered to have a very poor opinion of the Usurper" -> dict & List
-[Rumour -> Added] RID 347, "Maester Wilmot Rolandus "The Relentless", ActID 101 at Brightwater Keep, is widely known to have a poor view of the Usurper" -> dict & List
-[Rumour -> Added] RID 348, "Septon Hodgkin Beneger "The Blessed", ActID 102 at Brightwater Keep, is whispered to have a very poor view of the Usurper" -> dict & List
-[Rumour -> Added] RID 349, "Knight Ser Fraunk Mikael "The Respectable", ActID 103 at Brightwater Keep, is murmured among friends to have a very poor opinion of the Usurper" -> dict & List
-[Rumour -> Added] RID 350, "Lady Arya Oakheart "The Minstrel", ActID 104 at Brightwater Keep, is murmured among friends to have a poor opinion of the Usurper" -> dict & List
-[Rumour -> Added] RID 351, "Heir Paxter Oakheart "The Shrewd", ActID 105 at Brightwater Keep, is suspected to have an average view of the Usurper" -> dict & List
-[Rumour -> Added] RID 352, "lady Phrowenia Oakheart "The Crafty", ActID 106 at Brightwater Keep, is known by all to have a very poor view of the Usurper" -> dict & List
-[Rumour -> Added] RID 353, "lord Helies Oakheart "The Adjustable", ActID 107 at Brightwater Keep, is known to have a very poor view of the Usurper" -> dict & List
-[Rumour -> Added] RID 354, "lady Margaret Oakheart "The Offhand", ActID 108 at Brightwater Keep, is rumoured to have a poor opinion of the Usurper" -> dict & List
-[Rumour -> Added] RID 355, "lord Eon Oakheart "The Perceptive", ActID 109 at Brightwater Keep, is rumoured to have an average view of the Usurper" -> dict & List
-[Rumour -> Added] RID 356, "lady Brienne Oakheart "The Literal", ActID 110 at Brightwater Keep, is whispered to have an average impression of the Usurper" -> dict & List
-[Rumour -> Added] RID 357, "lady Jeyne Oakheart "The Performer", ActID 111 at Brightwater Keep, is murmured among friends to have a poor impression of the Usurper" -> dict & List
-[Rumour -> Added] RID 358, "High_Septon Willis Walcher "The Decent", ActID 87 at Kingskeep, is known to have a good opinion of the Usurper" -> dict & List
-[Rumour -> Added] RID 359, "Master_of_Coin Bertelot Wymon "The Skilled", ActID 88 at Kingskeep, is known to have an average view of the Usurper" -> dict & List
-[Rumour -> Added] RID 360, "Master_of_Laws Wyl Tybout "The Head Strong", ActID 112 at Kingskeep, is known by all to have an average impression of the Usurper" -> dict & List
-[Rumour -> Added] RID 361, "Master_of_Ships Varamyr Walchelin "The Stingy", ActID 113 at Kingskeep, is whispered to have an average impression of the Usurper" -> dict & List
-[Rumour -> Added] RID 362, "Master_of_Whisperers Jaime Ouin "The Educated", ActID 91 at Kingskeep, is known by all to have an average impression of the Usurper" -> dict & List
-[Rumour -> Added] RID 363, "Hand_of_the_King Tolly Wyliame "The Timorous", ActID 114 at Kingskeep, is known by all to have a poor opinion of the Usurper" -> dict & List
-[Rumour -> Added] RID 364, "Commander_of_Kings_Guard Jaime Peares "The Shaky", ActID 115 at Kingskeep, is suspected to have an average impression of the Usurper" -> dict & List
-[Rumour -> Added] RID 365, "Commander_of_City_Watch Gerbertus Drake "The Respectable", ActID 94 at Kingskeep, is known to have a good impression of the Usurper" -> dict & List
-[Rumour -> Added] RID 366, "It is commonly known that you have no Friends and a handful of Enemies at Casterly Rock (House Lannister)" -> dict & List
-[Rumour -> Added] RID 367, "House Lannister has had good past relations with House Florent due to their strong friendship" -> dict & List
-[Rumour -> Added] RID 368, "House Lannister has had poor past relations with their BannerLord at House Flint due to their fickleness as allies" -> dict & List
-[Rumour -> Added] RID 369, "House Lannister has had good past relations with their BannerLord at House Tarly due to them saving a Lord" -> dict & List
-[Rumour -> Added] RID 370, "House Lannister has had poor past relations with their BannerLord at House Penrose due to their incestuous interbreeding" -> dict & List
-[Rumour -> Added] RID 371, "House Lannister has had poor past relations with their BannerLord at House Frey due to a unforgotten injustice" -> dict & List
-[Rumour -> Added] RID 372, "House Lannister has had good past relations with their BannerLord at House Harlaw due to their especially fertile wives" -> dict & List
-[Rumour -> Added] RID 373, "House Lannister has had good past relations with House Oakheart due to their loyalty to the New King" -> dict & List
-[Rumour -> Added] RID 374, "It is rumoured that you have no Friends and many Enemies at Dorne (House Martell)" -> dict & List
-[Rumour -> Added] RID 375, "House Martell has had poor past relations with House Stark due to a skirmish" -> dict & List
-[Rumour -> Added] RID 376, "House Martell has had good past relations with their BannerLord at House Estermont due to their reliability in repaying loans" -> dict & List
-[Rumour -> Added] RID 377, "House Martell has had poor past relations with House Oakheart due to their traitorous actions" -> dict & List
-[Rumour -> Added] RID 378, "It is known that you have no Friends and many Enemies at Brightwater Keep (House Oakheart)" -> dict & List
-[Rumour -> Added] RID 379, "It is widely known that you have no Friends and many Enemies at Eyrie (House Arryn)" -> dict & List
-[Rumour -> Added] RID 380, "House Arryn has had poor past relations with House Baratheon due to their cowardice in battle" -> dict & List
-[Rumour -> Added] RID 381, "House Arryn has had poor past relations with House Tully due to them being sheep humpers" -> dict & List
-[Rumour -> Added] RID 382, "House Arryn has had poor past relations with their BannerLord at House Redwyne due to them spreading disease" -> dict & List
-[Rumour -> Added] RID 383, "House Arryn has had poor past relations with their BannerLord at House Brax due to them providing safe haven for Witches" -> dict & List
-[Rumour -> Added] RID 384, "House Arryn has had poor past relations with House Oakheart due to their traitorous actions" -> dict & List
-[Rumour -> Added] RID 385, "It is commonly known that you have many Friends and no Enemies at Bloodkeep (House Baratheon)" -> dict & List
-[Rumour -> Added] RID 386, "House Baratheon has had poor past relations with House Tully due to their claim on a title" -> dict & List
-[Rumour -> Added] RID 387, "House Baratheon has had good past relations with House Stark due to their rescuing a Lord" -> dict & List
-[Rumour -> Added] RID 388, "House Baratheon has had good past relations with their BannerLord at House Botley due to their amiable disposition" -> dict & List
-[Rumour -> Added] RID 389, "House Baratheon has had poor past relations with their BannerLord at House Tarth due to them breeding Dire Wolves" -> dict & List
-[Rumour -> Added] RID 390, "House Baratheon has had good past relations with their BannerLord at House Bracken due to them rescuing a Lord" -> dict & List
-[Rumour -> Added] RID 391, "House Baratheon has had poor past relations with House Oakheart due to them betraying the Old King" -> dict & List
-[Rumour -> Added] RID 392, "It is whispered that you have many Friends and no Enemies at Winterfell (House Stark)" -> dict & List
-[Rumour -> Added] RID 393, "House Stark has had good past relations with House Florent due to their longstanding support" -> dict & List
-[Rumour -> Added] RID 394, "House Stark has had poor past relations with House Arryn due to a longstanding blood feud" -> dict & List
-[Rumour -> Added] RID 395, "House Stark has had poor past relations with House Oakheart due to them betraying the Old King" -> dict & List
-[Rumour -> Added] RID 396, "It is commonly known that you have an Friend and many Enemies at Riverrun (House Tully)" -> dict & List
-[Rumour -> Added] RID 397, "House Tully has had good past relations with House Martell due to them taking and educating family wards" -> dict & List
-[Rumour -> Added] RID 398, "House Tully has had poor past relations with House Arryn due to their incessant raiding" -> dict & List
-[Rumour -> Added] RID 399, "House Tully has had poor past relations with House Oakheart due to their traitorous actions" -> dict & List
+[Rumour -> Added] RID 1, "Lord Tolly Lannister "The Definite", ActID 10 at Casterly Rock, is known to have a Good Memory" -> dict & List
+[Rumour -> Added] RID 2, "Lord Tolly Lannister "The Definite", ActID 10 at Casterly Rock, is known by all to be Decisive" -> dict & List
+[Rumour -> Added] RID 3, "It is said that Lord Tolly Lannister, ActID 10 at Casterly Rock, desires that his Daughter, lady Argaery Lannister "The Distraught", ActID 16, is betrothed to the Ursurper" -> dict & List
+[Rumour -> Added] RID 4, "Lady Grizzel Lannister "The Sparrow", ActID 11 at Casterly Rock, is murmured among friends to be a Timbrel Player" -> dict & List
+[Rumour -> Added] RID 5, "Lady Grizzel Lannister "The Sparrow", ActID 11 at Casterly Rock, is said to be Womanly" -> dict & List
+[Rumour -> Added] RID 6, "It is said that Lady Grizzel Lannister, ActID 11 at Casterly Rock, desires that her Son, Heir Paulinus Lannister "The Tight", ActID 18, attains a position in the Royal Court" -> dict & List
+[Rumour -> Added] RID 7, "Castellan Roose Josse "The Unsophisticated", ActID 13 at Casterly Rock, is whispered to be an Albino" -> dict & List
+[Rumour -> Added] RID 8, "Castellan Roose Josse "The Unsophisticated", ActID 13 at Casterly Rock, is suspected to be Guileless" -> dict & List
+[Rumour -> Added] RID 9, "Castellan Roose Josse "The Unsophisticated", ActID 13 at Casterly Rock, is whispered to be Tenacious" -> dict & List
+[Rumour -> Added] RID 10, "Maester Charles Maukolum "The Short Sighted", ActID 14 at Casterly Rock, is widely known to be Myopic" -> dict & List
+[Rumour -> Added] RID 11, "Maester Charles Maukolum "The Short Sighted", ActID 14 at Casterly Rock, is murmured among friends to be Suspicious" -> dict & List
+[Rumour -> Added] RID 12, "It is murmured among friends that Maester Charles Maukolum "The Short Sighted", ActID 14 at Casterly Rock, knows something important" -> dict & List
+[Rumour -> Added] RID 13, "It is known by all that the lusted after Elixir of Wellness (Passive Item) is to be found at Casterly Rock" -> dict & List
+[Rumour -> Added] RID 14, "It is commonly known that Maester Charles Maukolum, ActID 14 at Casterly Rock, thirsts for Gold" -> dict & List
+[Rumour -> Added] RID 15, "Septon Jaques Vauquelin "The Adjustable", ActID 15 at Casterly Rock, is rumoured to be Brawny" -> dict & List
+[Rumour -> Added] RID 16, "Septon Jaques Vauquelin "The Adjustable", ActID 15 at Casterly Rock, is said to be Adaptable" -> dict & List
+[Rumour -> Added] RID 17, "Septon Jaques Vauquelin "The Adjustable", ActID 15 at Casterly Rock, is whispered to have Hives" -> dict & List
+[Rumour -> Added] RID 18, "Septon Jaques Vauquelin "The Adjustable", ActID 15 at Casterly Rock, is said to possess a Strong Moral Code" -> dict & List
+[Rumour -> Added] RID 19, "lady Argaery Lannister "The Distraught", ActID 16 at Casterly Rock, is known by all to be a Timbrel Player" -> dict & List
+[Rumour -> Added] RID 20, "lady Argaery Lannister "The Distraught", ActID 16 at Casterly Rock, is known by all to be a person who Hears Voices" -> dict & List
+[Rumour -> Added] RID 21, "lady Argaery Lannister "The Distraught", ActID 16 at Casterly Rock, is widely known to be Compassionate" -> dict & List
+[Rumour -> Added] RID 22, "lady Argaery Lannister "The Distraught", ActID 16 at Casterly Rock, is commonly known to be Womanly" -> dict & List
+[Rumour -> Added] RID 23, "lady Auelin Lannister "The Romancer", ActID 17 at Casterly Rock, is commonly known to be a Compulsive Knitter" -> dict & List
+[Rumour -> Added] RID 24, "lady Auelin Lannister "The Romancer", ActID 17 at Casterly Rock, is known to be an Optimist" -> dict & List
+[Rumour -> Added] RID 25, "lady Auelin Lannister "The Romancer", ActID 17 at Casterly Rock, is suspected to be Womanly" -> dict & List
+[Rumour -> Added] RID 26, "Heir Paulinus Lannister "The Tight", ActID 18 at Casterly Rock, is commonly known to be an Imbecile" -> dict & List
+[Rumour -> Added] RID 27, "Heir Paulinus Lannister "The Tight", ActID 18 at Casterly Rock, is murmured among friends to be Mean" -> dict & List
+[Rumour -> Added] RID 28, "Heir Paulinus Lannister "The Tight", ActID 18 at Casterly Rock, is said to be Decisive" -> dict & List
+[Rumour -> Added] RID 29, "lord Frederick Lannister "The Retentive", ActID 19 at Casterly Rock, is widely known to have a Good Memory" -> dict & List
+[Rumour -> Added] RID 30, "lord Frederick Lannister "The Retentive", ActID 19 at Casterly Rock, is murmured among friends to be Trustworthy" -> dict & List
+[Rumour -> Added] RID 31, "lord Frederick Lannister "The Retentive", ActID 19 at Casterly Rock, is whispered to be Decisive" -> dict & List
+[Rumour -> Added] RID 32, "lord Dickory Lannister "The Vigorous", ActID 20 at Casterly Rock, is murmured among friends to be Athletic" -> dict & List
+[Rumour -> Added] RID 33, "King Benjen Martell "The Erudite", ActID 21 at Kingskeep, is widely known to be Double Jointed" -> dict & List
+[Rumour -> Added] RID 34, "King Benjen Martell "The Erudite", ActID 21 at Kingskeep, is rumoured to be Learned" -> dict & List
+[Rumour -> Added] RID 35, "King Benjen Martell "The Erudite", ActID 21 at Kingskeep, is murmured among friends to have the Morals of a Sewer Rat" -> dict & List
+[Rumour -> Added] RID 36, "It is whispered that King Benjen Martell "The Erudite", ActID 21 at Kingskeep, jealously guards a secret" -> dict & List
+[Rumour -> Added] RID 37, "Castellan Tion Richemanus "The Squatter", ActID 24 at Dorne, is commonly known to have a Delicate Stomach" -> dict & List
+[Rumour -> Added] RID 38, "Castellan Tion Richemanus "The Squatter", ActID 24 at Dorne, is known by all to be Bold" -> dict & List
+[Rumour -> Added] RID 39, "Maester Martyn Josse "The Stunted", ActID 25 at Dorne, is rumoured to be Short" -> dict & List
+[Rumour -> Added] RID 40, "Maester Martyn Josse "The Stunted", ActID 25 at Dorne, is well known to have a Good Memory" -> dict & List
+[Rumour -> Added] RID 41, "Septon Eon Powle "The Languid", ActID 26 at Dorne, is known by all to be Lethargic" -> dict & List
+[Rumour -> Added] RID 42, "Septon Eon Powle "The Languid", ActID 26 at Dorne, is whispered to be an Optimist" -> dict & List
+[Rumour -> Added] RID 43, "Septon Eon Powle "The Languid", ActID 26 at Dorne, is murmured among friends to be Tenacious" -> dict & List
+[Rumour -> Added] RID 44, "lady Brienne Martell "The Entrancing", ActID 27 at Kingskeep, is whispered to be a Timbrel Player" -> dict & List
+[Rumour -> Added] RID 45, "lady Brienne Martell "The Entrancing", ActID 27 at Kingskeep, is suspected to possess a Woman's Intuition" -> dict & List
+[Rumour -> Added] RID 46, "lady Brienne Martell "The Entrancing", ActID 27 at Kingskeep, is rumoured to be Bewitching" -> dict & List
+[Rumour -> Added] RID 47, "lady Brienne Martell "The Entrancing", ActID 27 at Kingskeep, is widely known to be Womanly" -> dict & List
+[Rumour -> Added] RID 48, "lady Sully Martell "The Soft Hearted", ActID 28 at Kingskeep, is widely known to be Gentle" -> dict & List
+[Rumour -> Added] RID 49, "Heir Aerys Martell "The Serene", ActID 29 at Kingskeep, is known to have the Morals of a Sewer Rat" -> dict & List
+[Rumour -> Added] RID 50, "Heir Aerys Martell "The Serene", ActID 29 at Kingskeep, is known to have Nerves of Steel" -> dict & List
+[Rumour -> Added] RID 51, "It is widely known that Heir Aerys Martell "The Serene", ActID 29 at Kingskeep, jealously guards a secret" -> dict & List
+[Rumour -> Added] RID 52, "It is widely known that the fabled Mammoth Cloak (Passive Item) is to be found at Kingskeep" -> dict & List
+[Rumour -> Added] RID 53, "lord Ilyn Martell "The Erudite", ActID 30 at Kingskeep, is well known to be Multilingual" -> dict & List
+[Rumour -> Added] RID 54, "lord Ilyn Martell "The Erudite", ActID 30 at Kingskeep, is murmured among friends to be cursed with Hogs Breath (Halitosis)" -> dict & List
+[Rumour -> Added] RID 55, "lord Ilyn Martell "The Erudite", ActID 30 at Kingskeep, is commonly known to have the Morals of a Sewer Rat" -> dict & List
+[Rumour -> Added] RID 56, "lady Joanna Martell "The Artless", ActID 31 at Kingskeep, is known by all to be a Lyre Player" -> dict & List
+[Rumour -> Added] RID 57, "lady Joanna Martell "The Artless", ActID 31 at Kingskeep, is whispered to be Awkward" -> dict & List
+[Rumour -> Added] RID 58, "lady Joanna Martell "The Artless", ActID 31 at Kingskeep, is known to be Cunning" -> dict & List
+[Rumour -> Added] RID 59, "Lord Aeron Arryn "The Charmed", ActID 32 at Eyrie, is widely known to be Illiterate" -> dict & List
+[Rumour -> Added] RID 60, "Lord Aeron Arryn "The Charmed", ActID 32 at Eyrie, is whispered to be Lucky" -> dict & List
+[Rumour -> Added] RID 61, "It is well known that Lord Aeron Arryn "The Charmed", ActID 32 at Eyrie, has a mysterious past" -> dict & List
+[Rumour -> Added] RID 62, "It is whispered that Lord Aeron Arryn, ActID 32 at Eyrie, desires the neighbouring lands belonging to the Bannerlord at Clegane" -> dict & List
+[Rumour -> Added] RID 63, "Castellan Jory Hodgkin "The Hulking", ActID 35 at Eyrie, is known to be a Giant" -> dict & List
+[Rumour -> Added] RID 64, "Castellan Jory Hodgkin "The Hulking", ActID 35 at Eyrie, is known by all to be Fickle" -> dict & List
+[Rumour -> Added] RID 65, "Castellan Jory Hodgkin "The Hulking", ActID 35 at Eyrie, is whispered to be Gullible" -> dict & List
+[Rumour -> Added] RID 66, "It is commonly known that Disguises can be had from Castellan Jory Hodgkin, ActID 35 at Eyrie" -> dict & List
+[Rumour -> Added] RID 67, "Maester Gerion Ivo "The Wary", ActID 36 at Eyrie, is rumoured to be Short" -> dict & List
+[Rumour -> Added] RID 68, "Maester Gerion Ivo "The Wary", ActID 36 at Eyrie, is whispered to be Precise" -> dict & List
+[Rumour -> Added] RID 69, "Maester Gerion Ivo "The Wary", ActID 36 at Eyrie, is rumoured to be Suspicious" -> dict & List
+[Rumour -> Added] RID 70, "It is known that Maester Gerion Ivo "The Wary", ActID 36 at Eyrie, conceals a dark truth" -> dict & List
+[Rumour -> Added] RID 71, "It is whispered that the beautifully crafted Lion Dagger (Passive Item) is to be found at Eyrie" -> dict & List
+[Rumour -> Added] RID 72, "It is suspected that Disguises can be had from Maester Gerion Ivo, ActID 36 at Eyrie" -> dict & List
+[Rumour -> Added] RID 73, "It is well known that Maester Gerion Ivo, ActID 36 at Eyrie, thirsts for Gold" -> dict & List
+[Rumour -> Added] RID 74, "Septon Vortimer Hugelin "The Authentic", ActID 37 at Eyrie, is widely known to be Precise" -> dict & List
+[Rumour -> Added] RID 75, "Septon Vortimer Hugelin "The Authentic", ActID 37 at Eyrie, is known to be Honest" -> dict & List
+[Rumour -> Added] RID 76, "It is whispered that Disguises can be had from Septon Vortimer Hugelin, ActID 37 at Eyrie" -> dict & List
+[Rumour -> Added] RID 77, "lady Sari Arryn "The Discreet", ActID 38 at Eyrie, is said to be a Lute Player" -> dict & List
+[Rumour -> Added] RID 78, "lady Sari Arryn "The Discreet", ActID 38 at Eyrie, is known by all to be Manipulative" -> dict & List
+[Rumour -> Added] RID 79, "Heir Cayn Arryn "The Properous", ActID 39 at Eyrie, is said to be Lucky" -> dict & List
+[Rumour -> Added] RID 80, "Lady Geue Baratheon "The Vexatious", ActID 41 at Bloodkeep, is known to be Humane" -> dict & List
+[Rumour -> Added] RID 81, "Lady Geue Baratheon "The Vexatious", ActID 41 at Bloodkeep, is whispered to be Mischievous" -> dict & List
+[Rumour -> Added] RID 82, "It is murmured among friends that Lady Geue Baratheon, ActID 41 at Bloodkeep, desires that her Son, Lord Tyrion Baratheon "The Unruffled", ActID 46, attains a position in the Royal Court" -> dict & List
+[Rumour -> Added] RID 83, "Castellan Kevan Daw "The Inquiring", ActID 43 at Bloodkeep, is whispered to be Curious" -> dict & List
+[Rumour -> Added] RID 84, "Castellan Kevan Daw "The Inquiring", ActID 43 at Bloodkeep, is suspected to be Level Headed" -> dict & List
+[Rumour -> Added] RID 85, "Maester Frank Ferrand "The Word Master", ActID 44 at Bloodkeep, is said to be Multilingual" -> dict & List
+[Rumour -> Added] RID 86, "Maester Frank Ferrand "The Word Master", ActID 44 at Bloodkeep, is known by all to be Cunning" -> dict & List
+[Rumour -> Added] RID 87, "It is whispered that Maester Frank Ferrand, ActID 44 at Bloodkeep, thinks only of Gold" -> dict & List
+[Rumour -> Added] RID 88, "Septon Giradin Rab "The Book Lover", ActID 45 at Bloodkeep, is widely known to be Learned" -> dict & List
+[Rumour -> Added] RID 89, "Septon Giradin Rab "The Book Lover", ActID 45 at Bloodkeep, is whispered to be Gullible" -> dict & List
+[Rumour -> Added] RID 90, "Lord Tyrion Baratheon "The Unruffled", ActID 46 at Bloodkeep, is well known to be Eagle Eyed" -> dict & List
+[Rumour -> Added] RID 91, "Lord Tyrion Baratheon "The Unruffled", ActID 46 at Bloodkeep, is whispered to have a Sixth Sense" -> dict & List
+[Rumour -> Added] RID 92, "Lord Tyrion Baratheon "The Unruffled", ActID 46 at Bloodkeep, is known to be Horribly Disfigured" -> dict & List
+[Rumour -> Added] RID 93, "Lord Tyrion Baratheon "The Unruffled", ActID 46 at Bloodkeep, is said to be Cynical" -> dict & List
+[Rumour -> Added] RID 94, "Lord Tyrion Baratheon "The Unruffled", ActID 46 at Bloodkeep, is well known to have Nerves of Steel" -> dict & List
+[Rumour -> Added] RID 95, "It is said that Lord Tyrion Baratheon, ActID 46 at Bloodkeep, desires the neighbouring lands belonging to the Bannerlord at Wull" -> dict & List
+[Rumour -> Added] RID 96, "BannerLord Warnerus Flint "The Ignorant", ActID 57 at Widow's Watch, is known to be Short" -> dict & List
+[Rumour -> Added] RID 97, "BannerLord Warnerus Flint "The Ignorant", ActID 57 at Widow's Watch, is suspected to have No Common Sense" -> dict & List
+[Rumour -> Added] RID 98, "BannerLord Warnerus Flint "The Ignorant", ActID 57 at Widow's Watch, is whispered to be Noble" -> dict & List
+[Rumour -> Added] RID 99, "It is said that BannerLord Warnerus Flint, ActID 57 at Widow's Watch, is in thrall to Gold" -> dict & List
+[Rumour -> Added] RID 100, "BannerLord Kevan Clegane "The Snarly", ActID 58 at Clegane's Keep, is commonly known to be Athletic" -> dict & List
+[Rumour -> Added] RID 101, "BannerLord Kevan Clegane "The Snarly", ActID 58 at Clegane's Keep, is whispered to be Bad Tempered" -> dict & List
+[Rumour -> Added] RID 102, "BannerLord Kevan Clegane "The Snarly", ActID 58 at Clegane's Keep, is whispered to be Lucky" -> dict & List
+[Rumour -> Added] RID 103, "BannerLord Kevan Clegane "The Snarly", ActID 58 at Clegane's Keep, is rumoured to be Manipulative" -> dict & List
+[Rumour -> Added] RID 104, "BannerLord Gilibertus Dondarrion "The Disciplinarian", ActID 59 at Blackhaven, is widely known to be Skinny" -> dict & List
+[Rumour -> Added] RID 105, "BannerLord Gilibertus Dondarrion "The Disciplinarian", ActID 59 at Blackhaven, is rumoured to be Illiterate" -> dict & List
+[Rumour -> Added] RID 106, "BannerLord Gilibertus Dondarrion "The Disciplinarian", ActID 59 at Blackhaven, is whispered to be Despotic" -> dict & List
+[Rumour -> Added] RID 107, "It is well known that BannerLord Gilibertus Dondarrion, ActID 59 at Blackhaven, has an unquenched hunger for the infamous Goblin Mug" -> dict & List
+[Rumour -> Added] RID 108, "BannerLord Rowan Wull "The Twister", ActID 60 at Sodhall, is commonly known to be Acrobatic" -> dict & List
+[Rumour -> Added] RID 109, "BannerLord Rowan Wull "The Twister", ActID 60 at Sodhall, is well known to be cursed with Hogs Breath (Halitosis)" -> dict & List
+[Rumour -> Added] RID 110, "BannerLord Rowan Wull "The Twister", ActID 60 at Sodhall, is murmured among friends to be Noble" -> dict & List
+[Rumour -> Added] RID 111, "It is murmured among friends that BannerLord Rowan Wull "The Twister", ActID 60 at Sodhall, knows something important" -> dict & List
+[Rumour -> Added] RID 112, "It is known by all that the greatly desired Amulet of Passion (Passive Item) is to be found at Sodhall" -> dict & List
+[Rumour -> Added] RID 113, "It is whispered that BannerLord Rowan Wull, ActID 60 at Sodhall, has an unquenched hunger for Gold" -> dict & List
+[Rumour -> Added] RID 114, "BannerLord Jason Hunt "The Concentrated", ActID 61 at Longbow Hall, is known by all to be Short" -> dict & List
+[Rumour -> Added] RID 115, "BannerLord Jason Hunt "The Concentrated", ActID 61 at Longbow Hall, is widely known to be Focused" -> dict & List
+[Rumour -> Added] RID 116, "BannerLord Jason Hunt "The Concentrated", ActID 61 at Longbow Hall, is murmured among friends to be a Seducer" -> dict & List
+[Rumour -> Added] RID 117, "It is commonly known that BannerLord Jason Hunt "The Concentrated", ActID 61 at Longbow Hall, has hidden secrets carefully kept from view" -> dict & List
+[Rumour -> Added] RID 118, "It is rumoured that BannerLord Jason Hunt, ActID 61 at Longbow Hall, thirsts for the fabled Mammoth Cloak" -> dict & List
+[Rumour -> Added] RID 119, "BannerLord Rickard Tarly "The Sword Man", ActID 62 at Horn Hill, is well known to be Castellan Trained" -> dict & List
+[Rumour -> Added] RID 120, "It is whispered that BannerLord Rickard Tarly, ActID 62 at Horn Hill, lusts after Gold" -> dict & List
+[Rumour -> Added] RID 121, "BannerLord Dick Yronwood "The Hefty", ActID 65 at Yronwood Castle, is whispered to be Brawny" -> dict & List
+[Rumour -> Added] RID 122, "BannerLord Dick Yronwood "The Hefty", ActID 65 at Yronwood Castle, is rumoured to be Bad Tempered" -> dict & List
+[Rumour -> Added] RID 123, "BannerLord Dick Yronwood "The Hefty", ActID 65 at Yronwood Castle, is commonly known to be Jealous" -> dict & List
+[Rumour -> Added] RID 124, "BannerLord Dick Yronwood "The Hefty", ActID 65 at Yronwood Castle, is said to be Battle Hardened" -> dict & List
+[Rumour -> Added] RID 125, "It is said that BannerLord Dick Yronwood "The Hefty", ActID 65 at Yronwood Castle, knows something important" -> dict & List
+[Rumour -> Added] RID 126, "It is suspected that BannerLord Dick Yronwood, ActID 65 at Yronwood Castle, is fixated upon Gold" -> dict & List
+[Rumour -> Added] RID 127, "BannerLord Elyes Codd "The Saintly", ActID 68 at Fishfork, is commonly known to be Illiterate" -> dict & List
+[Rumour -> Added] RID 128, "BannerLord Elyes Codd "The Saintly", ActID 68 at Fishfork, is suspected to be Eccentric" -> dict & List
+[Rumour -> Added] RID 129, "BannerLord Elyes Codd "The Saintly", ActID 68 at Fishfork, is suspected to possess a Strong Moral Code" -> dict & List
+[Rumour -> Added] RID 130, "It is whispered that BannerLord Elyes Codd, ActID 68 at Fishfork, thinks only of the fabled Mammoth Cloak" -> dict & List
+[Rumour -> Added] RID 131, "Lord Jonos Bracken "The Concentrated", ActID 69 at Riverrun, is rumoured  Castellan Trained" -> dict & List
+[Rumour -> Added] RID 132, "Lord Jonos Bracken "The Concentrated", ActID 69 at Riverrun, is known by all  Focused" -> dict & List
+[Rumour -> Added] RID 133, "Lord Jonos Bracken "The Concentrated", ActID 69 at Riverrun, is widely known  Lisps" -> dict & List
+[Rumour -> Added] RID 134, "It is rumoured that Lord Jonos Bracken, ActID 69 at Riverrun, is in thrall to Gold" -> dict & List
+[Rumour -> Added] RID 135, "BannerLord Frank Brax "The Selfish", ActID 70 at Hornvale, is whispered to be Mean" -> dict & List
+[Rumour -> Added] RID 136, "It is suspected that BannerLord Frank Brax "The Selfish", ActID 70 at Hornvale, conceals a dark truth" -> dict & List
+[Rumour -> Added] RID 137, "BannerLord Urien Frey "The Possessive", ActID 79 at The Twins, is rumoured to be Ambidextrous" -> dict & List
+[Rumour -> Added] RID 138, "BannerLord Urien Frey "The Possessive", ActID 79 at The Twins, is commonly known to be Jealous" -> dict & List
+[Rumour -> Added] RID 139, "It is rumoured that BannerLord Urien Frey "The Possessive", ActID 79 at The Twins, jealously guards a secret" -> dict & List
+[Rumour -> Added] RID 140, "It is said that the infamous Book of the Dead (Passive Item) is to be found at The Twins" -> dict & List
+[Rumour -> Added] RID 141, "It is murmured among friends that BannerLord Urien Frey, ActID 79 at The Twins, desires to become Lord of House Arryn" -> dict & List
+[Rumour -> Added] RID 142, "BannerLord Herriot Slynt "The Resonant", ActID 80 at Harrenhal, is suspected to be Gullible" -> dict & List
+[Rumour -> Added] RID 143, "BannerLord Herriot Slynt "The Resonant", ActID 80 at Harrenhal, is rumoured to have a Booming Voice" -> dict & List
+[Rumour -> Added] RID 144, "It is known that BannerLord Herriot Slynt "The Resonant", ActID 80 at Harrenhal, has a dark secret" -> dict & List
+[Rumour -> Added] RID 145, "It is known that the mysterious Dragon Egg (Passive Item) is to be found at Harrenhal" -> dict & List
+[Rumour -> Added] RID 146, "It is rumoured that BannerLord Herriot Slynt, ActID 80 at Harrenhal, thinks only of the infamous Book of the Dead" -> dict & List
+[Rumour -> Added] RID 147, "BannerLord Walcher Fowler "The Green Eyed", ActID 81 at Skyreach, is whispered to be Overweight" -> dict & List
+[Rumour -> Added] RID 148, "BannerLord Walcher Fowler "The Green Eyed", ActID 81 at Skyreach, is rumoured to be Jealous" -> dict & List
+[Rumour -> Added] RID 149, "It is murmured among friends that BannerLord Walcher Fowler, ActID 81 at Skyreach, desires to become Lord of House Baratheon" -> dict & List
+[Rumour -> Added] RID 150, "BannerLord Jarvis Cerwyn "The Ennobling", ActID 82 at Cerwyn, is known by all to be Precise" -> dict & List
+[Rumour -> Added] RID 151, "BannerLord Jarvis Cerwyn "The Ennobling", ActID 82 at Cerwyn, is known to be Inspirational" -> dict & List
+[Rumour -> Added] RID 152, "BannerLord Preston Peake "The Bumbling", ActID 83 at Starpike, is widely known to be Lame of Leg" -> dict & List
+[Rumour -> Added] RID 153, "BannerLord Preston Peake "The Bumbling", ActID 83 at Starpike, is well known to be a person who Hears Voices" -> dict & List
+[Rumour -> Added] RID 154, "BannerLord Preston Peake "The Bumbling", ActID 83 at Starpike, is known to be Awkward" -> dict & List
+[Rumour -> Added] RID 155, "BannerLord Preston Peake "The Bumbling", ActID 83 at Starpike, is whispered to be Honourable" -> dict & List
+[Rumour -> Added] RID 156, "It is whispered that BannerLord Preston Peake, ActID 83 at Starpike, has an unquenched hunger for the lusted after Elixir of Wellness" -> dict & List
+[Rumour -> Added] RID 157, "BannerLord Godet Umber "The Principled", ActID 84 at Stone Hedge, is rumoured to be a Dwarf" -> dict & List
+[Rumour -> Added] RID 158, "BannerLord Godet Umber "The Principled", ActID 84 at Stone Hedge, is whispered to be an Imbecile" -> dict & List
+[Rumour -> Added] RID 159, "BannerLord Godet Umber "The Principled", ActID 84 at Stone Hedge, is said to be Imposing" -> dict & List
+[Rumour -> Added] RID 160, "BannerLord Godet Umber "The Principled", ActID 84 at Stone Hedge, is commonly known to be Honourable" -> dict & List
+[Rumour -> Added] RID 161, "It is rumoured that BannerLord Godet Umber, ActID 84 at Stone Hedge, is fixated upon Gold" -> dict & List
+[Rumour -> Added] RID 162, "Castellan Jack Colinus "The Illustrious", ActID 85 at Riverrun, is well known to be Honourable" -> dict & List
+[Rumour -> Added] RID 163, "Maester Aegon Edon "The Steady", ActID 86 at Riverrun, is whispered to be Skinny" -> dict & List
+[Rumour -> Added] RID 164, "Maester Aegon Edon "The Steady", ActID 86 at Riverrun, is rumoured to have a Sixth Sense" -> dict & List
+[Rumour -> Added] RID 165, "Maester Aegon Edon "The Steady", ActID 86 at Riverrun, is widely known to be Generous" -> dict & List
+[Rumour -> Added] RID 166, "Maester Aegon Edon "The Steady", ActID 86 at Riverrun, is widely known to be Loyal" -> dict & List
+[Rumour -> Added] RID 167, "Maester Aegon Edon "The Steady", ActID 86 at Riverrun, is rumoured to be Despotic" -> dict & List
+[Rumour -> Added] RID 168, "Septon Jaques Guy "The Unquestioning", ActID 87 at Riverrun, is well known to be Strong Willed" -> dict & List
+[Rumour -> Added] RID 169, "Septon Jaques Guy "The Unquestioning", ActID 87 at Riverrun, is rumoured to be Naive" -> dict & List
+[Rumour -> Added] RID 170, "Septon Jaques Guy "The Unquestioning", ActID 87 at Riverrun, is whispered to be Steadfast" -> dict & List
+[Rumour -> Added] RID 171, "Knight Ser Lancel Thomassin "The Mace Man", ActID 88 at Riverrun, is widely known to be Castellan Trained" -> dict & List
+[Rumour -> Added] RID 172, "Knight Ser Lancel Thomassin "The Mace Man", ActID 88 at Riverrun, is known to be Near Deaf" -> dict & List
+[Rumour -> Added] RID 173, "Knight Ser Lancel Thomassin "The Mace Man", ActID 88 at Riverrun, is suspected to be Gullible" -> dict & List
+[Rumour -> Added] RID 174, "Lady Adhelina Bracken "The Neglectful", ActID 89 at Riverrun, is whispered to be of a Delicate Disposition" -> dict & List
+[Rumour -> Added] RID 175, "Lady Adhelina Bracken "The Neglectful", ActID 89 at Riverrun, is said to be Absent Minded" -> dict & List
+[Rumour -> Added] RID 176, "Lady Adhelina Bracken "The Neglectful", ActID 89 at Riverrun, is whispered to be Unworldly" -> dict & List
+[Rumour -> Added] RID 177, "Lady Adhelina Bracken "The Neglectful", ActID 89 at Riverrun, is known by all to be Womanly" -> dict & List
+[Rumour -> Added] RID 178, "It is murmured among friends that Lady Adhelina Bracken, ActID 89 at Riverrun, desires that her Son, lord Bernier Bracken "The Deceiver", ActID 94, attains a position in the Royal Court" -> dict & List
+[Rumour -> Added] RID 179, "lady Emme Bracken "The Oblivious", ActID 90 at Riverrun, is whispered to be of a Delicate Disposition" -> dict & List
+[Rumour -> Added] RID 180, "lady Emme Bracken "The Oblivious", ActID 90 at Riverrun, is murmured among friends to be Absent Minded" -> dict & List
+[Rumour -> Added] RID 181, "lady Emme Bracken "The Oblivious", ActID 90 at Riverrun, is commonly known to be Unworldly" -> dict & List
+[Rumour -> Added] RID 182, "lady Emme Bracken "The Oblivious", ActID 90 at Riverrun, is said to be Womanly" -> dict & List
+[Rumour -> Added] RID 183, "Heir Frank Bracken "The Squirmer", ActID 91 at Riverrun, is commonly known  Focused" -> dict & List
+[Rumour -> Added] RID 184, "Heir Frank Bracken "The Squirmer", ActID 91 at Riverrun, is rumoured to have a Nervous Twitch" -> dict & List
+[Rumour -> Added] RID 185, "It is known that Heir Frank Bracken "The Squirmer", ActID 91 at Riverrun, has a dark secret" -> dict & List
+[Rumour -> Added] RID 186, "lord Lancel Bracken "The Centered", ActID 92 at Riverrun, is rumoured  Castellan Trained" -> dict & List
+[Rumour -> Added] RID 187, "lord Lancel Bracken "The Centered", ActID 92 at Riverrun, is widely known  Focused" -> dict & List
+[Rumour -> Added] RID 188, "lord Lancel Bracken "The Centered", ActID 92 at Riverrun, is suspected to be Loyal" -> dict & List
+[Rumour -> Added] RID 189, "It is rumoured that lord Lancel Bracken "The Centered", ActID 92 at Riverrun, has a mysterious past" -> dict & List
+[Rumour -> Added] RID 190, "It is suspected that the infamous Goblin Mug (Passive Item) is to be found at Riverrun" -> dict & List
+[Rumour -> Added] RID 191, "lord Tyrion Bracken "The Hisser", ActID 93 at Riverrun, is known  Lisps" -> dict & List
+[Rumour -> Added] RID 192, "lord Bernier Bracken "The Deceiver", ActID 94 at Riverrun, is whispered  Lisps" -> dict & List
+[Rumour -> Added] RID 193, "lord Bernier Bracken "The Deceiver", ActID 94 at Riverrun, is murmured among friends to be a Compulsive Liar" -> dict & List
+[Rumour -> Added] RID 194, "lord Bernier Bracken "The Deceiver", ActID 94 at Riverrun, is commonly known to be an excellent Speech Giver" -> dict & List
+[Rumour -> Added] RID 195, "lord Tyrion Bracken II "The Axe Man", ActID 95 at Riverrun, is rumoured  Castellan Trained" -> dict & List
+[Rumour -> Added] RID 196, "High_Septon Harding Maukolum "The Clement", ActID 71 at Kingskeep, is well known to be Lethargic" -> dict & List
+[Rumour -> Added] RID 197, "High_Septon Harding Maukolum "The Clement", ActID 71 at Kingskeep, is well known to be Forgiving" -> dict & List
+[Rumour -> Added] RID 198, "It is said that High_Septon Harding Maukolum "The Clement", ActID 71 at Kingskeep, knows more than they let on" -> dict & List
+[Rumour -> Added] RID 199, "It is suspected that the dreaded Chalice of Pain (Passive Item) is to be found at Kingskeep" -> dict & List
+[Rumour -> Added] RID 200, "Master_of_Coin Wilmot Beneger "The Gracious", ActID 72 at Kingskeep, is commonly known to be Lethargic" -> dict & List
+[Rumour -> Added] RID 201, "Master_of_Coin Wilmot Beneger "The Gracious", ActID 72 at Kingskeep, is rumoured to be Adaptable" -> dict & List
+[Rumour -> Added] RID 202, "Master_of_Coin Wilmot Beneger "The Gracious", ActID 72 at Kingskeep, is commonly known to be Diplomatic" -> dict & List
+[Rumour -> Added] RID 203, "Master_of_Coin Wilmot Beneger "The Gracious", ActID 72 at Kingskeep, is said to be Cynical" -> dict & List
+[Rumour -> Added] RID 204, "It is suspected that Master_of_Coin Wilmot Beneger, ActID 72 at Kingskeep, has an unquenched hunger for Gold" -> dict & List
+[Rumour -> Added] RID 205, "Master_of_Laws Doran Ran "The Divine", ActID 73 at Kingskeep, is known to be Boring" -> dict & List
+[Rumour -> Added] RID 206, "Master_of_Laws Doran Ran "The Divine", ActID 73 at Kingskeep, is well known to be Pious" -> dict & List
+[Rumour -> Added] RID 207, "Master_of_Ships Trystane Oudin "The Ductile", ActID 74 at Kingskeep, is rumoured to be Adaptable" -> dict & List
+[Rumour -> Added] RID 208, "Master_of_Ships Trystane Oudin "The Ductile", ActID 74 at Kingskeep, is said to be a person who Mumbles" -> dict & List
+[Rumour -> Added] RID 209, "Master_of_Whisperers Frank Guy "The Untrue", ActID 75 at Kingskeep, is rumoured to be Fickle" -> dict & List
+[Rumour -> Added] RID 210, "Master_of_Whisperers Frank Guy "The Untrue", ActID 75 at Kingskeep, is suspected to be Mean" -> dict & List
+[Rumour -> Added] RID 211, "Master_of_Whisperers Frank Guy "The Untrue", ActID 75 at Kingskeep, is murmured among friends to be Paranoid" -> dict & List
+[Rumour -> Added] RID 212, "Master_of_Whisperers Frank Guy "The Untrue", ActID 75 at Kingskeep, is known by all to be Indecisive" -> dict & List
+[Rumour -> Added] RID 213, "It is whispered that Master_of_Whisperers Frank Guy, ActID 75 at Kingskeep, is in thrall to Gold" -> dict & List
+[Rumour -> Added] RID 214, "Hand_of_the_King Audry Michell "The Saintly", ActID 96 at Kingskeep, is said to have a Sixth Sense" -> dict & List
+[Rumour -> Added] RID 215, "Hand_of_the_King Audry Michell "The Saintly", ActID 96 at Kingskeep, is murmured among friends to be Pious" -> dict & List
+[Rumour -> Added] RID 216, "Hand_of_the_King Audry Michell "The Saintly", ActID 96 at Kingskeep, is whispered to be Despotic" -> dict & List
+[Rumour -> Added] RID 217, "Commander_of_Kings_Guard Donnel Engerran "The Pure", ActID 97 at Kingskeep, is rumoured to be Innocent" -> dict & List
+[Rumour -> Added] RID 218, "Commander_of_City_Watch Fraunk Tankard "The Fleet", ActID 78 at Kingskeep, is said to be Athletic" -> dict & List
+[Rumour -> Added] RID 219, "Commander_of_City_Watch Fraunk Tankard "The Fleet", ActID 78 at Kingskeep, is commonly known to be Careless" -> dict & List
+[Rumour -> Added] RID 220, "Commander_of_City_Watch Fraunk Tankard "The Fleet", ActID 78 at Kingskeep, is known to be Suspicious" -> dict & List
+[Rumour -> Added] RID 221, "It is widely known that Commander_of_City_Watch Fraunk Tankard, ActID 78 at Kingskeep, has an unquenched hunger for Gold" -> dict & List
+[Rumour -> Added] RID 222, "Lord Tolly Lannister "The Definite", ActID 10 at Casterly Rock, is said to have a very poor view of the Usurper" -> dict & List
+[Rumour -> Added] RID 223, "Lady Grizzel Lannister "The Sparrow", ActID 11 at Casterly Rock, is murmured among friends to have a poor opinion of the Usurper" -> dict & List
+[Rumour -> Added] RID 224, "Castellan Roose Josse "The Unsophisticated", ActID 13 at Casterly Rock, is rumoured to have a poor opinion of the Usurper" -> dict & List
+[Rumour -> Added] RID 225, "Maester Charles Maukolum "The Short Sighted", ActID 14 at Casterly Rock, is widely known to have an average opinion of the Usurper" -> dict & List
+[Rumour -> Added] RID 226, "Septon Jaques Vauquelin "The Adjustable", ActID 15 at Casterly Rock, is said to have a poor opinion of the Usurper" -> dict & List
+[Rumour -> Added] RID 227, "lady Argaery Lannister "The Distraught", ActID 16 at Casterly Rock, is rumoured to have a poor impression of the Usurper" -> dict & List
+[Rumour -> Added] RID 228, "lady Auelin Lannister "The Romancer", ActID 17 at Casterly Rock, is rumoured to have a poor view of the Usurper" -> dict & List
+[Rumour -> Added] RID 229, "Heir Paulinus Lannister "The Tight", ActID 18 at Casterly Rock, is widely known to have a poor opinion of the Usurper" -> dict & List
+[Rumour -> Added] RID 230, "lord Frederick Lannister "The Retentive", ActID 19 at Casterly Rock, is said to have a poor view of the Usurper" -> dict & List
+[Rumour -> Added] RID 231, "lord Dickory Lannister "The Vigorous", ActID 20 at Casterly Rock, is widely known to have a poor opinion of the Usurper" -> dict & List
+[Rumour -> Added] RID 232, "King Benjen Martell "The Erudite", ActID 21 at Kingskeep, is widely known to have a very poor view of the Usurper" -> dict & List
+[Rumour -> Added] RID 233, "Castellan Tion Richemanus "The Squatter", ActID 24 at Dorne, is commonly known to have a poor view of the Usurper" -> dict & List
+[Rumour -> Added] RID 234, "Maester Martyn Josse "The Stunted", ActID 25 at Dorne, is commonly known to have an average impression of the Usurper" -> dict & List
+[Rumour -> Added] RID 235, "Septon Eon Powle "The Languid", ActID 26 at Dorne, is whispered to have an average impression of the Usurper" -> dict & List
+[Rumour -> Added] RID 236, "lady Brienne Martell "The Entrancing", ActID 27 at Kingskeep, is commonly known to have a very poor impression of the Usurper" -> dict & List
+[Rumour -> Added] RID 237, "lady Sully Martell "The Soft Hearted", ActID 28 at Kingskeep, is said to have a poor opinion of the Usurper" -> dict & List
+[Rumour -> Added] RID 238, "Heir Aerys Martell "The Serene", ActID 29 at Kingskeep, is well known to have a very poor view of the Usurper" -> dict & List
+[Rumour -> Added] RID 239, "lord Ilyn Martell "The Erudite", ActID 30 at Kingskeep, is murmured among friends to have a very poor impression of the Usurper" -> dict & List
+[Rumour -> Added] RID 240, "lady Joanna Martell "The Artless", ActID 31 at Kingskeep, is whispered to have a very poor view of the Usurper" -> dict & List
+[Rumour -> Added] RID 241, "Lord Aeron Arryn "The Charmed", ActID 32 at Eyrie, is said to have an average view of the Usurper" -> dict & List
+[Rumour -> Added] RID 242, "Castellan Jory Hodgkin "The Hulking", ActID 35 at Eyrie, is well known to have a good view of the Usurper" -> dict & List
+[Rumour -> Added] RID 243, "Maester Gerion Ivo "The Wary", ActID 36 at Eyrie, is well known to have an average opinion of the Usurper" -> dict & List
+[Rumour -> Added] RID 244, "Septon Vortimer Hugelin "The Authentic", ActID 37 at Eyrie, is murmured among friends to have a very good view of the Usurper" -> dict & List
+[Rumour -> Added] RID 245, "lady Sari Arryn "The Discreet", ActID 38 at Eyrie, is rumoured to have an average view of the Usurper" -> dict & List
+[Rumour -> Added] RID 246, "Heir Cayn Arryn "The Properous", ActID 39 at Eyrie, is widely known to have a very good view of the Usurper" -> dict & List
+[Rumour -> Added] RID 247, "Lady Geue Baratheon "The Vexatious", ActID 41 at Bloodkeep, is rumoured to have a poor impression of the Usurper" -> dict & List
+[Rumour -> Added] RID 248, "Castellan Kevan Daw "The Inquiring", ActID 43 at Bloodkeep, is rumoured to have an average view of the Usurper" -> dict & List
+[Rumour -> Added] RID 249, "Maester Frank Ferrand "The Word Master", ActID 44 at Bloodkeep, is widely known to have a poor opinion of the Usurper" -> dict & List
+[Rumour -> Added] RID 250, "Septon Giradin Rab "The Book Lover", ActID 45 at Bloodkeep, is rumoured to have a very poor impression of the Usurper" -> dict & List
+[Rumour -> Added] RID 251, "Lord Tyrion Baratheon "The Unruffled", ActID 46 at Bloodkeep, is whispered to have a poor impression of the Usurper" -> dict & List
+[Rumour -> Added] RID 252, "BannerLord Warnerus Flint "The Ignorant", ActID 57 at Widow's Watch, is commonly known to have a poor impression of the Usurper" -> dict & List
+[Rumour -> Added] RID 253, "BannerLord Kevan Clegane "The Snarly", ActID 58 at Clegane's Keep, is whispered to have a poor view of the Usurper" -> dict & List
+[Rumour -> Added] RID 254, "BannerLord Gilibertus Dondarrion "The Disciplinarian", ActID 59 at Blackhaven, is suspected to have a very poor opinion of the Usurper" -> dict & List
+[Rumour -> Added] RID 255, "BannerLord Rowan Wull "The Twister", ActID 60 at Sodhall, is well known to have a very poor impression of the Usurper" -> dict & List
+[Rumour -> Added] RID 256, "BannerLord Jason Hunt "The Concentrated", ActID 61 at Longbow Hall, is whispered to have a very poor impression of the Usurper" -> dict & List
+[Rumour -> Added] RID 257, "BannerLord Rickard Tarly "The Sword Man", ActID 62 at Horn Hill, is whispered to have a poor opinion of the Usurper" -> dict & List
+[Rumour -> Added] RID 258, "BannerLord Dick Yronwood "The Hefty", ActID 65 at Yronwood Castle, is well known to have an average opinion of the Usurper" -> dict & List
+[Rumour -> Added] RID 259, "BannerLord Elyes Codd "The Saintly", ActID 68 at Fishfork, is whispered to have an average opinion of the Usurper" -> dict & List
+[Rumour -> Added] RID 260, "Lord Jonos Bracken "The Concentrated", ActID 69 at Riverrun, is said to have a very poor opinion of the Usurper" -> dict & List
+[Rumour -> Added] RID 261, "BannerLord Frank Brax "The Selfish", ActID 70 at Hornvale, is whispered to have an average view of the Usurper" -> dict & List
+[Rumour -> Added] RID 262, "BannerLord Urien Frey "The Possessive", ActID 79 at The Twins, is murmured among friends to have a poor impression of the Usurper" -> dict & List
+[Rumour -> Added] RID 263, "BannerLord Herriot Slynt "The Resonant", ActID 80 at Harrenhal, is whispered to have a poor view of the Usurper" -> dict & List
+[Rumour -> Added] RID 264, "BannerLord Walcher Fowler "The Green Eyed", ActID 81 at Skyreach, is rumoured to have a poor view of the Usurper" -> dict & List
+[Rumour -> Added] RID 265, "BannerLord Jarvis Cerwyn "The Ennobling", ActID 82 at Cerwyn, is suspected to have a poor view of the Usurper" -> dict & List
+[Rumour -> Added] RID 266, "BannerLord Preston Peake "The Bumbling", ActID 83 at Starpike, is suspected to have a poor opinion of the Usurper" -> dict & List
+[Rumour -> Added] RID 267, "BannerLord Godet Umber "The Principled", ActID 84 at Stone Hedge, is rumoured to have a very poor view of the Usurper" -> dict & List
+[Rumour -> Added] RID 268, "Castellan Jack Colinus "The Illustrious", ActID 85 at Riverrun, is whispered to have a poor impression of the Usurper" -> dict & List
+[Rumour -> Added] RID 269, "Maester Aegon Edon "The Steady", ActID 86 at Riverrun, is rumoured to have a very poor opinion of the Usurper" -> dict & List
+[Rumour -> Added] RID 270, "Septon Jaques Guy "The Unquestioning", ActID 87 at Riverrun, is rumoured to have an average opinion of the Usurper" -> dict & List
+[Rumour -> Added] RID 271, "Knight Ser Lancel Thomassin "The Mace Man", ActID 88 at Riverrun, is whispered to have a very poor opinion of the Usurper" -> dict & List
+[Rumour -> Added] RID 272, "Lady Adhelina Bracken "The Neglectful", ActID 89 at Riverrun, is said to have a poor view of the Usurper" -> dict & List
+[Rumour -> Added] RID 273, "lady Emme Bracken "The Oblivious", ActID 90 at Riverrun, is whispered to have an average impression of the Usurper" -> dict & List
+[Rumour -> Added] RID 274, "Heir Frank Bracken "The Squirmer", ActID 91 at Riverrun, is rumoured to have a very poor opinion of the Usurper" -> dict & List
+[Rumour -> Added] RID 275, "lord Lancel Bracken "The Centered", ActID 92 at Riverrun, is known by all to have an average opinion of the Usurper" -> dict & List
+[Rumour -> Added] RID 276, "lord Tyrion Bracken "The Hisser", ActID 93 at Riverrun, is whispered to have a very poor view of the Usurper" -> dict & List
+[Rumour -> Added] RID 277, "lord Bernier Bracken "The Deceiver", ActID 94 at Riverrun, is rumoured to have a very poor opinion of the Usurper" -> dict & List
+[Rumour -> Added] RID 278, "lord Tyrion Bracken II "The Axe Man", ActID 95 at Riverrun, is rumoured to have an average view of the Usurper" -> dict & List
+[Rumour -> Added] RID 279, "High_Septon Harding Maukolum "The Clement", ActID 71 at Kingskeep, is rumoured to have a good view of the Usurper" -> dict & List
+[Rumour -> Added] RID 280, "Master_of_Coin Wilmot Beneger "The Gracious", ActID 72 at Kingskeep, is said to have a good impression of the Usurper" -> dict & List
+[Rumour -> Added] RID 281, "Master_of_Laws Doran Ran "The Divine", ActID 73 at Kingskeep, is whispered to have a very poor opinion of the Usurper" -> dict & List
+[Rumour -> Added] RID 282, "Master_of_Ships Trystane Oudin "The Ductile", ActID 74 at Kingskeep, is rumoured to have a good view of the Usurper" -> dict & List
+[Rumour -> Added] RID 283, "Master_of_Whisperers Frank Guy "The Untrue", ActID 75 at Kingskeep, is whispered to have a very good impression of the Usurper" -> dict & List
+[Rumour -> Added] RID 284, "Hand_of_the_King Audry Michell "The Saintly", ActID 96 at Kingskeep, is said to have a poor impression of the Usurper" -> dict & List
+[Rumour -> Added] RID 285, "Commander_of_Kings_Guard Donnel Engerran "The Pure", ActID 97 at Kingskeep, is commonly known to have a poor opinion of the Usurper" -> dict & List
+[Rumour -> Added] RID 286, "Commander_of_City_Watch Fraunk Tankard "The Fleet", ActID 78 at Kingskeep, is widely known to have a poor opinion of the Usurper" -> dict & List
+[Rumour -> Added] RID 287, "It is known that you have no Friends and many Enemies at Casterly Rock (House Lannister)" -> dict & List
+[Rumour -> Added] RID 288, "House Lannister has had poor past relations with House Baratheon due to their deliberate humilation" -> dict & List
+[Rumour -> Added] RID 289, "House Lannister has had poor past relations with House Arryn due to a claim of contested lands" -> dict & List
+[Rumour -> Added] RID 290, "House Lannister has had good past relations with their BannerLord at House Cerwyn due to them rescuing a Lord" -> dict & List
+[Rumour -> Added] RID 291, "House Lannister has had poor past relations with their BannerLord at House Flint due to them breeding Dire Wolves" -> dict & List
+[Rumour -> Added] RID 292, "House Lannister has had poor past relations with House Bracken due to their traitorous actions" -> dict & List
+[Rumour -> Added] RID 293, "House Martell has had poor past relations with House Tully due to their murdering of a ward" -> dict & List
+[Rumour -> Added] RID 294, "House Martell has had poor past relations with House Tully due to their incessant raiding" -> dict & List
+[Rumour -> Added] RID 295, "House Martell has had good past relations with their BannerLord at House Clegane due to their reliability in battle" -> dict & List
+[Rumour -> Added] RID 296, "House Martell has had poor past relations with their BannerLord at House Wull due to their refusal to bow to authority" -> dict & List
+[Rumour -> Added] RID 297, "House Martell has had poor past relations with their BannerLord at House Hunt due to a unforgotten injustice" -> dict & List
+[Rumour -> Added] RID 298, "House Martell has had poor past relations with their BannerLord at House Tarly due to their illegal grazing" -> dict & List
+[Rumour -> Added] RID 299, "House Martell has had good past relations with House Bracken due to their loyalty to the New King" -> dict & List
+[Rumour -> Added] RID 300, "It is suspected that you have a few Friends and no Enemies at Eyrie (House Arryn)" -> dict & List
+[Rumour -> Added] RID 301, "House Arryn has had good past relations with House Baratheon due to them saving the day in a battle" -> dict & List
+[Rumour -> Added] RID 302, "House Arryn has had poor past relations with House Tully due to a longstanding blood feud" -> dict & List
+[Rumour -> Added] RID 303, "House Arryn has had good past relations with their BannerLord at House Frey due to them rescuing a Lord" -> dict & List
+[Rumour -> Added] RID 304, "House Arryn has had good past relations with their BannerLord at House Peake due to them being likeminded, sensible, managers" -> dict & List
+[Rumour -> Added] RID 305, "House Arryn has had poor past relations with House Bracken due to them betraying the Old King" -> dict & List
+[Rumour -> Added] RID 306, "It is rumoured that you have no Friends and a handful of Enemies at Bloodkeep (House Baratheon)" -> dict & List
+[Rumour -> Added] RID 307, "House Baratheon has had poor past relations with House Tully due to them being sheep humpers" -> dict & List
+[Rumour -> Added] RID 308, "House Baratheon has had good past relations with their BannerLord at House Yronwood due to their exceptional loyalty" -> dict & List
+[Rumour -> Added] RID 309, "House Baratheon has had good past relations with their BannerLord at House Fowler due to their especially fertile wives" -> dict & List
+[Rumour -> Added] RID 310, "House Baratheon has had poor past relations with House Bracken due to their traitorous actions" -> dict & List
+[Rumour -> Added] RID 311, "It is commonly known that you have no Friends and many Enemies at Riverrun (House Bracken)" -> dict & List
 --- InitialiseViewTexts (Director.cs)
 JusticeNeutralEduc -> 2 records imported
 JusticeNeutralUned -> 4 records imported
@@ -1880,5 +1686,5 @@ HorseName -> 43 records imported
 HorseType -> 6 records imported
 Curse -> 7 records imported
 AnimalBig -> 10 records imported
-//Exile Game file ops "LogStart.txt" Completed at: 05/06/2017 11:06:34
-//Elapsed Time 892 ms
+//Exile Game file ops "LogStart.txt" Completed at: 05/06/2017 14:11:57
+//Elapsed Time 869 ms

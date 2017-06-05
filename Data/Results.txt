@@ -77,7 +77,7 @@ Calc: Random
 Amount: 10
 [End]
 
-Name: We're Famous
+Name: You're Famous
 RID: 5
 Type: GameState
 GameState: Legend_Usurper

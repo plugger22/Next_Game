@@ -1,122 +1,17 @@
-//Exile Game File "LogTurn.txt" opened at: 05/06/2017 11:10:40
---- ProcessStartTurn (World.cs)
-Day 8, Turn 7
-Usurper Vargo Florent, "The Impetuous", AtLocation, Hornwood
---- UpdateRumours (World.cs)
-dictRumoursTimed (Start) -> 83 records
-83 rumours -> TimerExpire decremented
---- MoveActors -> 2 Records (World.cs)
- [Move -> MoveObject] Inquisitor Brother Azazel, ActID 122 travelling to Brightwater Keep (current Loc 19:14)
---- CheckIfFoundEnemy (World.cs)
- [Search -> Debug] Active Vargo Florent, ID 1 at 9:12, Enemy at 19:14 (Brother Azazel, ID 122
---- CheckIfFoundEnemy (World.cs)
- [Search -> Debug] Active Vargo Florent, ID 1 at 9:12, Enemy at 19:15 (Brother Azazel, ID 122
- [Goal -> Arrival] Inquisitor Brother Azazel, ActID 122, currently at Brightwater Keep, new Goal -> Wait
- [Move -> MoveObject] Inquisitor Brother Amon, ActID 121 travelling to The Pickled Prune (current Loc 13:12)
---- CheckIfFoundEnemy (World.cs)
- [Search -> Debug] Active Vargo Florent, ID 1 at 9:12, Enemy at 13:12 (Brother Amon, ID 121
---- CheckIfFoundEnemy (World.cs)
- [Search -> Debug] Active Vargo Florent, ID 1 at 9:12, Enemy at 13:11 (Brother Amon, ID 121
- [Goal -> Arrival] Inquisitor Brother Amon, ActID 121, currently at The Pickled Prune, new Goal -> Wait
---- UpdatePlayerStatus (World.cs)
---- UpdateWorldStatus (World.cs)
---- CheckFollowerActivity (World.cs)
---- GetRumour (Director.cs)
-arrayOfRumours [0] -> RumourID 15, Strength 1, Scope Global, Type Item, Global All
-arrayOfRumours [4] -> RumourID 387, Strength 2, Scope Global, Type HouseRel, Global West
-arrayOfRumours [5] -> RumourID 117, Strength 5, Scope Local, Type Skill, Global All
-RumourID 117 selected from the Pool
-Rumour "Lord Andry Tully "The Sane", ActID 60 at Riverrun, is well known to be Level Headed" revealed to ActorID6 on turn 7 -> added to List
-RumourID 117 removed from listRumoursHouse[0]
-Follower The Beast, ActID 6, added RumourID 117
-Lord Andry Tully, ActID 60, has their Leadership changed to True
---- GetRumour (Director.cs)
-arrayOfRumours [0] -> RumourID 246, Strength 1, Scope Global, Type Item, Global All
-arrayOfRumours [4] -> RumourID 375, Strength 2, Scope Global, Type HouseRel, Global West
-arrayOfRumours [5] -> RumourID 198, Strength 4, Scope Local, Type Skill, Global All
-RumourID 198 selected from the Pool
-Rumour "BannerLord Walder Hornwood "The Crafty", ActID 96 at Hornwood, is rumoured to be Astute" revealed to ActorID2 on turn 7 -> added to List
-RumourID 198 removed from listRumoursHouse[0]
-Follower The Waif, ActID 2, added RumourID 198
-BannerLord Walder Hornwood, ActID 96, has their Wits changed to True
---- GetRumour (Director.cs)
-arrayOfRumours [0] -> RumourID 262, Strength 1, Scope Global, Type Item, Global All
-arrayOfRumours [1] -> RumourID 366, Strength 3, Scope Global, Type Friends, Global North
-arrayOfRumours [5] -> RumourID 203, Strength 4, Scope Local, Type Skill, Global All
-RumourID 366 selected from the Pool
-Rumour "It is commonly known that you have no Friends and a handful of Enemies at Casterly Rock (House Lannister)" revealed to ActorID7 on turn 7 -> added to List
-RumourID 366 removed from listRumoursNorth[12]
-Follower The Dark Eminence, ActID 7, added RumourID 366
-[Notification] House Lannister FriendsAndEnemies status changed to "True"
---- GetMarketView (Director.cs)
-listPlayerChoices has 2 records, 20 % needed, rolled 58
-[GameVar] View_Index changed from 1 to 2
---- CheckStationaryActiveActors (World.cs)
- [Search -> Stationary] Usurper Vargo Florent, ActID 1 is AtLocation
---- CheckIfFoundActive (World.cs)
- [Search -> Debug] Enemy, Brother Shiva, ID 120 at 13:14, Active Vargo Florent, ID 1, at 9:12
- [Search -> Debug] Enemy, Brother Amon, ID 121 at 13:11, Active Vargo Florent, ID 1, at 9:12
- [Search -> Debug] Enemy, Brother Azazel, ID 122 at 19:15, Active Vargo Florent, ID 1, at 9:12
- [Search -> Debug] Enemy, Brother Set, ID 123 at 10:15, Active Vargo Florent, ID 1, at 9:12
- [Search -> Debug] Enemy, The Unrelenting, ID 124 at 13:14, Active Vargo Florent, ID 1, at 9:12
- [Search -> Stationary] Follower The Beast, ActID 6 is AtLocation
- [Search -> Stationary] Follower The Waif, ActID 2 is AtLocation
- [Search -> Stationary] Follower The Dark Eminence, ActID 7 is AtLocation
---- UpdateAIController (World.cs)
- [AI -> Player Unknown] Inquisitor Brother Shiva, Act ID 120 Mode -> Normal
- [AI -> Player Unknown] Inquisitor Brother Amon, Act ID 121 Mode -> Normal
- [AI -> Player Unknown] Inquisitor Brother Azazel, Act ID 122 Mode -> Normal
- [AI -> Player Unknown] Inquisitor Brother Set, Act ID 123 Mode -> Normal
- [AI -> Player Unknown] Nemesis The Unrelenting, Act ID 124 Mode -> Normal
---- SetEnemyActivity (World.cs)
- [Enemy -> Goal] Brother Shiva, ActID 120 retains Goal -> Wait
- [Enemy -> Goal] Brother Amon, ActID 121 retains Goal -> Wait
---- SetEnemyGoal (World.cs)
- [Goal -> Branch] Brother Azazel, ActID 122 Assigned Branch -> 2 Current Branch -> 2
- [Goal -> New] Brother Azazel, ActID 122, (loc 19:15), assigned new Goal -> Move
- [Goal -> Move] Brother Azazel, ActID 122 -> Move Outwards -> The Crag, LocID 18
---- InitiateMoveActor (World.cs)
---- Move Actor (Director.cs)
- [Enemy -> Goal] Brother Set, ActID 123 retains Goal -> Hide
- [Enemy -> Known] The Unrelenting ActID 124 has become KNOWN
---- SetEnemyGoal (World.cs)
- [Goal -> Branch] The Unrelenting, ActID 124 Assigned Branch -> 0 Current Branch -> 0
---- CheckPlayerEvents (Director.cs)
-Location event, Need 18, roll 41
-- CreateAutoLocEvent (Director.cs)
- [AutoEvent -> ActorList] "The Waif", ID 2 added to list of Actors
- [AutoEvent -> ActorList] "Walder Hornwood", ID 96 added to list of Actors
- [AutoEvent -> FollowerList] "The Waif", ID 2 added to list of Followers
- [AutoEvent -> LocalList] "Walder Hornwood", ID 96 added to list of Locals
-[Notification] No entry found in dictOfIntroductions for RefID 3
- Chance of Player Location event 75 %
---- ResolvePlayerEvents (Director.cs)
- Trigger FAILED on "0" Equals 1
- Trigger: Player is wrong type of Known status -> Trigger failed
- Trigger FAILED on "0" Equals 1
- Trigger: Player is wrong type of Known status -> Trigger failed
- Event "What to do?" Timer Repeat now 999
- Event "What to do?" Cooldown Timer has been reset to 0
---- UpdateActiveActors (World.cs)
- Usurper Vargo Florent has had their TurnsUnknown Timer increased from 106 to 107
- Follower The Beast has had their TurnsUnknown Timer increased from 6 to 7
- Follower The Waif has had their TurnsUnknown Timer increased from 6 to 7
- Follower The Dark Eminence has had their TurnsUnknown Timer increased from 6 to 7
---- ResolveOutcome (Director.cs)
---- ChangePlayerRumourStatus (Director.cs)
-[Notification] RumourID zero or less -> not added to dictRumoursKnown
---- ChangePlayerRumourStatus (Director.cs)
-[Notification] RumourID zero or less -> not added to dictRumoursKnown
+//Exile Game file ops "LogTurn.txt" commenced at: 05/06/2017 14:11:57
+--- ProcessStartGame (World.cs)
+--- AgePassiveCharacters (History.cs)
+--- InitialiseGameVars (World.cs)
+[GameVar] View_Index changed from 0 to 1
+[AddVisitedLoc] LocID 4, "Stone Hedge", turn -3 -> record added to listLocsVisited
+[AddVisitedLoc] LocID 4, "Stone Hedge", turn -3 -> new record added to dictLocsVisited
+[AddVisitedLoc] LocID 12, "Clegane's Keep", turn -2 -> record added to listLocsVisited
+[AddVisitedLoc] LocID 12, "Clegane's Keep", turn -2 -> new record added to dictLocsVisited
+[AddVisitedLoc] LocID 20, "Starpike", turn -1 -> record added to listLocsVisited
+[AddVisitedLoc] LocID 20, "Starpike", turn -1 -> new record added to dictLocsVisited
+--- InitialiseFinalPlayer (World.cs)
+[AddVisitedLoc] LocID 23, "Yronwood Castle", turn 0 -> record added to listLocsVisited
+[AddVisitedLoc] LocID 23, "Yronwood Castle", turn 0 -> new record added to dictLocsVisited
 --- SetEndGame (Game.cs)
 [Alert] Player chose to exit (pressed 'X')
-//Exile Game file ops "LogTurn.txt" Completed at: 05/06/2017 11:11:07
- Detain" Dormant Timer decremented to 15
---- InitialiseDynamicRumours (Director.cs)
-[Notification] Turn 5, generate new set of Relationship rumours on turn 21
-[Rumour -> Added] RID 411, "Inquisitor, Brother Azazel, ActID 122 has been seen on the road to Brightwater Keep (loc 19:15)" -> dict & List
---- HouseKeepActors (World.cs)
-[GameStat] "Location_Days" -> increased from 5 to 6
---- HousekeepRumours (World.cs)
-dictRumoursKnown has 15 records
-
-//Exile Game File "LogTurn.txt" Close completed at: 05/06/2017 11:10:36
+//Exile Game file ops "LogTurn.txt" Completed at: 05/06/2017 14:22:54

@@ -126,6 +126,6 @@ The court of House <court>? Was <player> there recently? Who can tell?
 [UnknownUned]
 Do I care where <player> is? Does <he> know who I am and what my problems are? If you see <him> make sure you tell <him>.
 I overheard <randomFemale> talking about <player> the other day. She sure knows how to curse.
-Does it matter where <player> is? Does <he> care where I am? I hope that <he> doesn't get lost in the woods. Hungry bears there.
+Does it matter where <player> is? Does <he> care where I am?
 I don't know where <player> is. Nobody tells me nothin.
 What in <curse> do you mean, where is <player>? I've never heard of <him>, let alone seen <him>.

@@ -34,6 +34,7 @@ namespace Next_Game.Cartographic
         private int uniqueHouses;
         private List<List<int>> listUniqueHousesByBranch;
         private List<List<int>> listIndividualHouseLocID;
+        private List<GeoCluster> listOfSeaClusters; //list of all sea clusters on map
         private int[] arrayOfCapitals; //locID of capitals, indexed by houseID #, eg. houseID #2 is arrayOfCapital[2]
         private int numSpecialLocations;
 
@@ -57,6 +58,7 @@ namespace Next_Game.Cartographic
             listWestBranch = new List<Location>();
             listUniqueHousesByBranch = new List<List<int>>();
             listIndividualHouseLocID = new List<List<int>>();
+            listOfSeaClusters = new List<GeoCluster>();
         }
 
         /// <summary>
@@ -99,17 +101,19 @@ namespace Next_Game.Cartographic
                 InitialiseRoutesToCapital();
                 InitialiseRoutesToConnectors();
                 InitialiseHouseLocations(8, 3);
-                InitialisePorts();
+                InitialiseSurroundings();
+                InitialiseSeaDistances();
+                InitialiseLocTerrain();
                 ShowNetworkAnalysis();
             }
         }
 
         /// <summary>
-        /// Identifies and sets up Ports
+        /// Identifies and sets up Ports &  Works out surrounding terrain (3 x 3 cell grid with loc at centre)
         /// </summary>
-        private void InitialisePorts()
+        private void InitialiseSurroundings()
         {
-            Game.logStart?.Write("--- InitialisePorts (Network.cs)");
+            Game.logStart?.Write("--- InitialiseSurroundings (Network.cs)");
             List<GeoCluster> listGeoClusters = Game.map.GetGeoCluster();
             //need to filter down to a straight list of SeaClusters
             List<GeoCluster> listSeaClusters = new List<GeoCluster>();
@@ -118,31 +122,57 @@ namespace Next_Game.Cartographic
                 where cluster.Terrain == Cluster.Sea
                 select cluster;
             listSeaClusters = seaClusters.ToList();
-
+            //surrounding terrain of loc (number of cells of a given type in the 3 x 3 grid, loc at centre)
+            int numPlain, numForest, numMountain, numSea, terrain;
             int coord_X, coord_Y, tempX, tempY, geoID;
-            int limit = Game.map.GetMapSize();
+            int limit = Game.map.GetMapSize(); //map assumed to be square
             //loop Locations searching for Ports (orthoganally adjacent to sea cluster - NOT diagonally)
-            for(int i = 0; i < ListOfLocations.Count; i++)
+            for (int i = 0; i < ListOfLocations.Count; i++)
             {
                 Location loc = ListOfLocations[i];
                 if (loc != null)
                 {
+                    numPlain = 0; numForest = 0; numMountain = 0; numSea = 0;
                     coord_X = loc.GetPosX();
                     coord_Y = loc.GetPosY();
-                    //check East
+                    //
+                    //check East ---
+                    //
                     tempX = coord_X + 1;
                     if (tempX < limit)
                     {
-                       if (Game.map.GetMapInfo(MapLayer.Geography, tempX, coord_Y) == 1)
+                        if (Game.map.GetMapInfo(MapLayer.Geography, tempX, coord_Y) == 1)
                         {
+                            //sea
                             geoID = Game.map.GetMapInfo(MapLayer.GeoID, tempX, coord_Y);
                             //need to AddPort to relevant geoCluster
                             GeoCluster cluster = listSeaClusters.Find(x => x.GeoID == geoID);
                             if (cluster != null)
                             { cluster.AddPort(loc.LocationID); }
+                            //terrain
+                            numSea++;
+                        }
+                        else
+                        {
+                            //land
+                            terrain = Game.map.GetMapInfo(MapLayer.Terrain, tempX, coord_Y);
+                            switch (terrain)
+                            {
+                                case 0: //plains
+                                    numPlain++; break;
+                                case 1: //mountains
+                                    numMountain++; break;
+                                case 2: //forest
+                                    numForest++; break;
+                                default:
+                                    Game.SetError(new Error(215, $"Invalid MapLayer.Terrain \"{terrain}\" -> East"));
+                                    break;
+                            }
                         }
                     }
-                    //check West
+                    //
+                    //check West ---
+                    //
                     tempX = coord_X - 1;
                     if (tempX >= 0)
                     {
@@ -153,9 +183,30 @@ namespace Next_Game.Cartographic
                             GeoCluster cluster = listSeaClusters.Find(x => x.GeoID == geoID);
                             if (cluster != null)
                             { cluster.AddPort(loc.LocationID); }
+                            //terrain
+                            numSea++;
+                        }
+                        else
+                        {
+                            //land
+                            terrain = Game.map.GetMapInfo(MapLayer.Terrain, tempX, coord_Y);
+                            switch (terrain)
+                            {
+                                case 0: //plains
+                                    numPlain++; break;
+                                case 1: //mountains
+                                    numMountain++; break;
+                                case 2: //forest
+                                    numForest++; break;
+                                default:
+                                    Game.SetError(new Error(215, $"Invalid MapLayer.Terrain \"{terrain}\" -> West"));
+                                    break;
+                            }
                         }
                     }
-                    //check North
+                    //
+                    //check South ---
+                    //
                     tempY = coord_Y + 1;
                     if (tempY < limit)
                     {
@@ -166,9 +217,30 @@ namespace Next_Game.Cartographic
                             GeoCluster cluster = listSeaClusters.Find(x => x.GeoID == geoID);
                             if (cluster != null)
                             { cluster.AddPort(loc.LocationID); }
+                            //terrain
+                            numSea++;
+                        }
+                        else
+                        {
+                            //land
+                            terrain = Game.map.GetMapInfo(MapLayer.Terrain, coord_X, tempY);
+                            switch (terrain)
+                            {
+                                case 0: //plains
+                                    numPlain++; break;
+                                case 1: //mountains
+                                    numMountain++; break;
+                                case 2: //forest
+                                    numForest++; break;
+                                default:
+                                    Game.SetError(new Error(215, $"Invalid MapLayer.Terrain \"{terrain}\" -> South"));
+                                    break;
+                            }
                         }
                     }
-                    //check South
+                    //
+                    //check North ---
+                    //
                     tempY = coord_Y - 1;
                     if (tempY >= 0)
                     {
@@ -179,67 +251,236 @@ namespace Next_Game.Cartographic
                             GeoCluster cluster = listSeaClusters.Find(x => x.GeoID == geoID);
                             if (cluster != null)
                             { cluster.AddPort(loc.LocationID); }
+                            //terrain
+                            numSea++;
+                        }
+                        else
+                        {
+                            //land
+                            terrain = Game.map.GetMapInfo(MapLayer.Terrain, coord_X, tempY);
+                            switch (terrain)
+                            {
+                                case 0: //plains
+                                    numPlain++; break;
+                                case 1: //mountains
+                                    numMountain++; break;
+                                case 2: //forest
+                                    numForest++; break;
+                                default:
+                                    Game.SetError(new Error(215, $"Invalid MapLayer.Terrain \"{terrain}\" -> North"));
+                                    break;
+                            }
                         }
                     }
+                    //
+                    //check Center - automatically land 'cause it's where the location is
+                    //
+                    terrain = Game.map.GetMapInfo(MapLayer.Terrain, coord_X, coord_Y);
+                    switch (terrain)
+                    {
+                        case 0: //plains
+                            numPlain++; break;
+                        case 1: //mountains
+                            numMountain++; break;
+                        case 2: //forest
+                            numForest++; break;
+                        default:
+                            Game.SetError(new Error(215, $"Invalid MapLayer.Terrain \"{terrain}\" -> Centre"));
+                            break;
+                    }
+                    //
+                    //check South East
+                    //
+                    tempY = coord_Y + 1;
+                    tempX = coord_X + 1;
+                    if (tempY < limit && tempX < limit)
+                    {
+                        if (Game.map.GetMapInfo(MapLayer.Geography, tempX, tempY) == 1)
+                        { numSea++; }
+                        else
+                        {
+                            //land
+                            terrain = Game.map.GetMapInfo(MapLayer.Terrain, tempX, tempY);
+                            switch (terrain)
+                            {
+                                case 0: //plains
+                                    numPlain++; break;
+                                case 1: //mountains
+                                    numMountain++; break;
+                                case 2: //forest
+                                    numForest++; break;
+                                default:
+                                    Game.SetError(new Error(215, $"Invalid MapLayer.Terrain \"{terrain}\" -> South East"));
+                                    break;
+                            }
+                        }
+                    }
+                    //
+                    //check South West
+                    //
+                    tempY = coord_Y + 1;
+                    tempX = coord_X - 1;
+                    if (tempY < limit && tempX >= 0)
+                    {
+                        if (Game.map.GetMapInfo(MapLayer.Geography, tempX, tempY) == 1)
+                        { numSea++; }
+                        else
+                        {
+                            //land
+                            terrain = Game.map.GetMapInfo(MapLayer.Terrain, tempX, tempY);
+                            switch (terrain)
+                            {
+                                case 0: //plains
+                                    numPlain++; break;
+                                case 1: //mountains
+                                    numMountain++; break;
+                                case 2: //forest
+                                    numForest++; break;
+                                default:
+                                    Game.SetError(new Error(215, $"Invalid MapLayer.Terrain \"{terrain}\" -> South West"));
+                                    break;
+                            }
+                        }
+                    }
+                    //
+                    //check North West
+                    //
+                    tempY = coord_Y - 1;
+                    tempX = coord_X - 1;
+                    if (tempY >= 0 && tempX >= 0)
+                    {
+                        if (Game.map.GetMapInfo(MapLayer.Geography, tempX, tempY) == 1)
+                        { numSea++; }
+                        else
+                        {
+                            //land
+                            terrain = Game.map.GetMapInfo(MapLayer.Terrain, tempX, tempY);
+                            switch (terrain)
+                            {
+                                case 0: //plains
+                                    numPlain++; break;
+                                case 1: //mountains
+                                    numMountain++; break;
+                                case 2: //forest
+                                    numForest++; break;
+                                default:
+                                    Game.SetError(new Error(215, $"Invalid MapLayer.Terrain \"{terrain}\" -> North West"));
+                                    break;
+                            }
+                        }
+                    }
+                    //
+                    //check North East
+                    //
+                    tempY = coord_Y - 1;
+                    tempX = coord_X + 1;
+                    if (tempY >= 0 && tempX < limit)
+                    {
+                        if (Game.map.GetMapInfo(MapLayer.Geography, tempX, tempY) == 1)
+                        { numSea++; }
+                        else
+                        {
+                            //land
+                            terrain = Game.map.GetMapInfo(MapLayer.Terrain, tempX, tempY);
+                            switch (terrain)
+                            {
+                                case 0: //plains
+                                    numPlain++; break;
+                                case 1: //mountains
+                                    numMountain++; break;
+                                case 2: //forest
+                                    numForest++; break;
+                                default:
+                                    Game.SetError(new Error(215, $"Invalid MapLayer.Terrain \"{terrain}\" -> North East"));
+                                    break;
+                            }
+                        }
+                    }
+                    //Location Terrain
+                    Game.logStart?.Write($"Terrain LocID {loc.LocationID}, Loc {loc.GetPosX()}:{loc.GetPosY()} -> Plains {numPlain}, Forest {numForest}, Mountain {numMountain}, Sea {numSea} Check: {numPlain + numForest + numMountain + numSea}");
                 }
                 else { Game.SetError(new Error(215, "Invalid Location (null)")); }
             }
-            Game.logStart?.Write("--- Port Summary (Network.cs)");
+            //sea clusters
+            if (listSeaClusters.Count > 0)
+            { listOfSeaClusters.AddRange(listSeaClusters); }
+        }
+
+
+
+        /// <summary>
+        /// work out distances between individual ports
+        /// </summary>
+        private void InitialiseSeaDistances()
+        { 
+            Game.logStart?.Write("--- InitialiseSeaDistances (Network.cs)");
             int num = 0;
-            //only sea clusters with 1+ ports can have sea travel 
-            foreach(GeoCluster cluster in listSeaClusters)
+            if (listOfSeaClusters.Count > 0)
             {
-                num = cluster.GetNumPorts();
-                if (num > 1)
+                //only sea clusters with 1+ ports can have sea travel 
+                foreach (GeoCluster cluster in listOfSeaClusters)
                 {
-                    Game.logStart?.Write($"GeoCluster GeoID {cluster.GeoID} -> {num} Ports");
-                    //Set all locations adjoing cluster to Ports
-                    List<int> listOfPorts = cluster.GetPorts();
-                    if (listOfPorts != null)
+                    num = cluster.GetNumPorts();
+                    if (num > 1)
                     {
-                        //add to dictActiveSeas
-                        try
+                        Game.logStart?.Write($"GeoCluster GeoID {cluster.GeoID} -> {num} Ports");
+                        //Set all locations adjoing cluster to Ports
+                        List<int> listOfPorts = cluster.GetPorts();
+                        if (listOfPorts != null)
                         {
-                            dictActiveSeas.Add(cluster.GeoID, listOfPorts);
-                            Game.logStart?.Write($"[Notification] {cluster.Name} GeoID {cluster.GeoID} with {listOfPorts.Count} Ports -> added to dictActiveSeas");
-                        }
-                        catch (ArgumentException)
-                        { Game.SetError(new Error(215, $"Invalid GeoID \"{cluster.GeoID}\" (duplicate record in dictActiveSeas)")); }
-                        //work out distances from port to port within sea zone
-                        for(int i = 0; i < listOfPorts.Count; i++)
-                        {
-                            Location locOrigin = GetLocation(listOfPorts[i]);
-                            if (locOrigin != null)
+                            //add to dictActiveSeas
+                            try
                             {
-                                locOrigin.isPort = true;
-                                locOrigin.AddSea(cluster.GeoID);
-                                Game.logStart?.Write($"Port -> LocID {locOrigin.LocationID} at {locOrigin.GetPosX()}:{locOrigin.GetPosY()}");
-                                //loop all ports within sea cluster ignoring origina port (locOrigin)
-                                int distance = 0;
-                                for (int k = 0; k < listOfPorts.Count; k++)
+                                dictActiveSeas.Add(cluster.GeoID, listOfPorts);
+                                Game.logStart?.Write($"[Notification] {cluster.Name} GeoID {cluster.GeoID} with {listOfPorts.Count} Ports -> added to dictActiveSeas");
+                            }
+                            catch (ArgumentException)
+                            { Game.SetError(new Error(215, $"Invalid GeoID \"{cluster.GeoID}\" (duplicate record in dictActiveSeas)")); }
+                            //work out distances from port to port within sea zone
+                            for (int i = 0; i < listOfPorts.Count; i++)
+                            {
+                                Location locOrigin = GetLocation(listOfPorts[i]);
+                                if (locOrigin != null)
                                 {
-                                    if (listOfPorts[k] != listOfPorts[i])
+                                    locOrigin.isPort = true;
+                                    locOrigin.AddSea(cluster.GeoID);
+                                    Game.logStart?.Write($"Port -> LocID {locOrigin.LocationID} at {locOrigin.GetPosX()}:{locOrigin.GetPosY()}");
+                                    //loop all ports within sea cluster ignoring origina port (locOrigin)
+                                    int distance = 0;
+                                    for (int k = 0; k < listOfPorts.Count; k++)
                                     {
-                                        //work out and add distance to loc dictSeaDistances
-                                        Location locDestination = GetLocation(listOfPorts[k]);
-                                        if (locDestination != null)
+                                        if (listOfPorts[k] != listOfPorts[i])
                                         {
-                                            //distance calc is straight knight move distance (ignores obstacles)
-                                            distance = Math.Abs(locDestination.GetPosX() - locOrigin.GetPosX()) + Math.Abs(locDestination.GetPosY() - locOrigin.GetPosY());
-                                            if (distance > 0)
-                                            { locOrigin.AddSeaDistance(locDestination.LocationID, distance); }
-                                            else { Game.SetError(new Error(215, "Invalid distance (zero, or less)")); }
+                                            //work out and add distance to loc dictSeaDistances
+                                            Location locDestination = GetLocation(listOfPorts[k]);
+                                            if (locDestination != null)
+                                            {
+                                                //distance calc is straight knight move distance (ignores obstacles)
+                                                distance = Math.Abs(locDestination.GetPosX() - locOrigin.GetPosX()) + Math.Abs(locDestination.GetPosY() - locOrigin.GetPosY());
+                                                if (distance > 0)
+                                                { locOrigin.AddSeaDistance(locDestination.LocationID, distance); }
+                                                else { Game.SetError(new Error(215, "Invalid distance (zero, or less)")); }
+                                            }
+                                            else { Game.SetError(new Error(215, "Invalid locDestination (null)")); }
                                         }
-                                        else { Game.SetError(new Error(215, "Invalid locDestination (null)")); }
                                     }
                                 }
+                                else { Game.SetError(new Error(215, $"Invalid locTemp (null) from LocID {listOfPorts[i]}")); }
                             }
-                            else { Game.SetError(new Error(215, $"Invalid locTemp (null) from LocID {listOfPorts[i]}")); }
                         }
+                        else { Game.SetError(new Error(215, "Invalid listOfPorts (null) from cluster.GetPorts")); }
                     }
-                    else { Game.SetError(new Error(215, "Invalid listOfPorts (null) from cluster.GetPorts")); }
                 }
             }
+            else { Game.SetError(new Error(215, "[Notification] There are no sea clusters present on the map")); }
+        }
+
+        /// <summary>
+        /// For each loc gives # plains / forest / mtn / sea cells within the 3 x 3 grid that it's centered on (loc cell is always plains)
+        /// </summary>
+        private void InitialiseLocTerrain()
+        {
+
         }
 
         /// <summary>
