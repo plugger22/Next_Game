@@ -1,0 +1,4 @@
+//Exile Game file ops "LogError.txt" commenced at: 05/06/2017 10:26:52
+ERROR_279 "RID 383, "BannerLord Gerbertus Tallhart "The Unexceptional", ActID 88 at Torrhen's Square, is well known to have a poor view of the Usurper" FAILED removed from House list"
+Method: RemoveRumourFromList,  Line: 5640,  Object: Director.cs,  Turn: 20,  Local Time: 10:30:47 UTC +10:00
+//Exile Game file ops "LogError.txt" Completed at: 05/06/2017 10:38:38

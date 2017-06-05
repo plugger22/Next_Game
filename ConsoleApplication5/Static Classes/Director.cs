@@ -2889,17 +2889,6 @@ namespace Next_Game
                                             if (String.IsNullOrEmpty(outcomeText) == false)
                                             { resultList.Add(new Snippet(outcomeText, foreColor, backColor)); resultList.Add(new Snippet("")); }
                                             break;
-                                        /*case OutcomeType.Travel:
-                                            //Change Player's land travel speed
-                                            OutTravel travelOutcome = outcome as OutTravel;
-                                            outcomeText = ChangePlayerSpeedStatus(travelOutcome.Mode);
-                                            if (String.IsNullOrEmpty(outcomeText) == false)
-                                            {
-                                                resultList.Add(new Snippet(outcomeText, foreColor, backColor)); resultList.Add(new Snippet(""));
-                                                Game.world.SetMessage(new Message(eventText + outcomeText, 1, player.LocID, MessageType.Event));
-                                                Game.world.SetPlayerRecord(new Record(eventText + outcomeText, player.ActID, player.LocID, CurrentActorIncident.Event));
-                                            }
-                                            break;*/
                                         case OutcomeType.HorseHealth:
                                             //Change Player's horse stamina level
                                             outcomeText = ChangeHorseHealth(outcome);
