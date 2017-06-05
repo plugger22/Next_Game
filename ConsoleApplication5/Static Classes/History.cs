@@ -163,7 +163,7 @@ namespace Next_Game
                 house.ArcID = listHousePool[i].ArcID;
                 house.RefID = listHousePool[i].RefID;
                 house.LocName = listHousePool[i].Capital;
-                house.MenAtArms = Game.constant.GetValue(Global.MEN_AT_ARMS);
+                //house.MenAtArms = Game.constant.GetValue(Global.MEN_AT_ARMS);
                 house.CastleWalls = listHousePool[i].Castle;
                 //placeholder
                 house.Resources = rnd.Next(1, 5);
@@ -196,7 +196,7 @@ namespace Next_Game
             house.CastleWalls = listHousePool[index].Castle;
             house.LocID = locID;
             house.HouseID = houseID;
-            house.MenAtArms = Game.constant.GetValue(Global.MEN_AT_ARMS) / 2;
+            //house.MenAtArms = Game.constant.GetValue(Global.MEN_AT_ARMS) / 2;
             //placeholder
             house.Resources = rnd.Next(1, 3);
             //add house to listOfHouses

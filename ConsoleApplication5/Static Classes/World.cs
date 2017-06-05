@@ -126,9 +126,10 @@ namespace Next_Game
             
             Game.StopTimer(timer_2, "W: InitialiseVarious");
             timer_2.Start();
+            InitialiseHouseData();
             InitialiseAI();
             InitialiseEnemyActors();
-            InitialiseWorldDevelopment();
+            InitialiseItemPlacement();
             InitialiseLocTypes();
             Game.StopTimer(timer_2, "W: InitialiseAI");
         }
@@ -1817,6 +1818,8 @@ namespace Next_Game
                 houseList.Add(new Snippet(seat));
                 string loyalty = string.Format("Loyal to the {0} (originally: {1})", majorHouse.Loyalty_Current, majorHouse.Loyalty_AtStart);
                 houseList.Add(new Snippet(loyalty));
+                string population = string.Format("Populatinn {0:N0} at {1}", majorHouse.Population, majorHouse.LocName);
+                houseList.Add(new Snippet(population));
                 int bannerTotal = listLordLocations.Count * Game.constant.GetValue(Global.MEN_AT_ARMS) / 2;
                 int armyTotal = bannerTotal + majorHouse.MenAtArms;
                 string army = string.Format("Can call upon {0:N0} Men At Arms in Total ({1:N0} from Lord, {2:N0} from Bannerlords)", armyTotal, majorHouse.MenAtArms, bannerTotal);
@@ -6550,11 +6553,11 @@ namespace Next_Game
         }
 
         /// <summary>
-        /// seeds procgen world with all the interesting stuff -> Items
+        /// Places items within world
         /// </summary>
-        private void InitialiseWorldDevelopment()
+        private void InitialiseItemPlacement()
         {
-            Game.logStart?.Write("--- InitialiseWorldDevelopment (World.cs)");
+            Game.logStart?.Write("--- InitialiseItemPlacement (World.cs)");
             //List of all Passive Items
             IEnumerable<Item> listItems =
                 from items in dictPossessions.Values.OfType<Item>()
@@ -7224,8 +7227,30 @@ namespace Next_Game
             else { Game.SetError(new Error(301, "Invalid HorseGone reason ('None') -> No record created")); }
         }
 
+        /// <summary>
+        /// gives houses population, Men At Arms and food data
+        /// </summary>
+        private void InitialiseHouseData()
+        {
+            //Men at Arms drives all pop matters. Assumed to be 4 other people for every able bodied man
+            int menAtArms = Game.constant.GetValue(Global.MEN_AT_ARMS);
+            int popFactor = Game.constant.GetValue(Global.POPULATION_FACTOR);
+            foreach (var house in dictAllHouses)
+            {
+                if (house.Value is MajorHouse)
+                {
+                    house.Value.MenAtArms = menAtArms;
+                    house.Value.Population = house.Value.MenAtArms * popFactor;
+                }
+                else if (house.Value is MinorHouse)
+                {
+                    house.Value.MenAtArms = menAtArms / 2;
+                    house.Value.Population = house.Value.MenAtArms * popFactor;
+                }
+            }
 
-
+            //Kingskeep
+        }
 
         //new Methods above here
     }

@@ -25,6 +25,7 @@ namespace Next_Game
         public int ArcID { get; set; } //unique archetype for house (specified in House import files)
         public int Branch { get; set; } //branch # House on -> 0 is Capital, 1 is North, 2 is East, 3 is South, 4 is West
         public int MenAtArms { get; set; }
+        public int Population { get; set; }
         public int CastleWalls { get; set; } //strength of castle walls (1 to 5)
         public int LordID { get; set; } //actorID of noble Lord currently in charge of house
         public int Resources { get; set; } //same as actor resources (0 to 5). Head of house has access to this level of resources.

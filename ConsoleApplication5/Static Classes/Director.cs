@@ -4205,7 +4205,7 @@ namespace Next_Game
         /// <returns></returns>
         private string ChangePlayerAdriftStatus(int deathTimer, bool shipSunk)
         {
-            string resultText = ""; string locText = "";
+            string resultText = "";
             Player player = Game.world.GetPlayer();
             if (player != null)
             {

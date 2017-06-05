@@ -23,6 +23,7 @@ namespace Next_Game
         //Houses
         MEN_AT_ARMS,
         CASTLE_CAPITAL,
+        POPULATION_FACTOR,
         //History
         BATTLE_EVENTS,
         ADVISOR_REFUSAL,
@@ -193,6 +194,7 @@ namespace Next_Game
             arrayOfGlobals[76] = Global.FOOT_SPEED;
             arrayOfGlobals[77] = Global.AI_SEARCH_FOOT;
             arrayOfGlobals[78] = Global.HORSE_HEALTH;
+            arrayOfGlobals[79] = Global.POPULATION_FACTOR;
         }
 
         /// <summary>

@@ -37,9 +37,11 @@
 # Houses ---
 
 # MEN_AT_ARMS -> number of men of arms a Major house starts with. Bannerlords have half this number.
-6: 12000 @ 1000 @ 20000
+6: 1200 @ 1000 @ 2000
 # CASTLE_CAPITAL -> strength of castle walls (defences) for the capital (0 to value)
 36: 5 @ 5 @ 5
+# POPULATION_FACTOR -> multiply this factor by MEN_AT_ARMS to get a houses total population
+79: 5 @ 4 @ 6
 
 # History ---
 
@@ -205,4 +207,4 @@
 # REL_RUMOUR_TIME -> how many tunrs a relationship rumour exists for and the interval (time + 1) before initialising new ones.
 75: 20 @ 5 @ 30
 
-# Next valid number -> 79
+# Next valid number -> 80
