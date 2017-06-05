@@ -233,6 +233,17 @@ namespace Next_Game
 
     }
     
+    /// <summary>
+    /// Capital House (Kingskeep)
+    /// </summary>
+    /// 
+    class CapitalHouse : House
+    {
+        public CapitalHouse()
+        {
+
+        }
+    }
 
     //
     // Major (Great) house ---

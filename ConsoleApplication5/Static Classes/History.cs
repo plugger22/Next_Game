@@ -25,6 +25,7 @@ namespace Next_Game
         //house names
         private List<MajorHouse> listOfMajorHouses;
         private List<House> listOfMinorHouses;
+        private List<CapitalHouse> listOfCapitalHouses; //there's only ever one
         private List<House> listOfSpecialHouses;
         private List<HouseStruct> listHousePool; //used for text file imports and random choice of houses
         private List<HouseStruct> listSpecialHousePool; //used for special house imports and random choice
@@ -67,6 +68,7 @@ namespace Next_Game
             listOfInquisitors = new List<string>();
             listOfMajorHouses = new List<MajorHouse>();
             listOfMinorHouses = new List<House>();
+            listOfCapitalHouses = new List<CapitalHouse>();
             listOfSpecialHouses = new List<House>();
             listHousePool = new List<HouseStruct>();
             listSpecialHousePool = new List<HouseStruct>();
@@ -368,9 +370,20 @@ namespace Next_Game
         private void InitialiseCapital()
         {
             Game.logStart?.Write("---  InitialiseCapital (History.cs)");
+            CapitalHouse capital = new CapitalHouse();
+            capital.HouseID = 9999;
+            capital.RefID = 9999;
+            capital.LocID = 1;
+            capital.CastleWalls = Game.constant.GetValue(Global.CASTLE_CAPITAL);
+            capital.Resources = rnd.Next(2, 6); ;
+            
+            //need to remove these once references are taken care of elsewhere
             CapitalWalls = Game.constant.GetValue(Global.CASTLE_CAPITAL);
             CapitalTreasury = rnd.Next(2, 6); //placeholder
+
             Game.logStart?.Write(string.Format("CapitalWalls {0}, CapitalTreasury {1}", CapitalWalls, CapitalTreasury));
+
+            listOfCapitalHouses.Add(capital);
         }
 
         /// <summary>
@@ -2040,6 +2053,9 @@ namespace Next_Game
         /// <returns></returns>
         internal List<House> GetMinorHouses()
         { return listOfMinorHouses; }
+
+        internal List<CapitalHouse> GetCapitalHouses()
+        { return listOfCapitalHouses; }
 
         internal List<GeoCluster> GetGeoClusters()
         { return listOfGeoClusters; }

@@ -2462,6 +2462,10 @@ namespace Next_Game
             List<House> listOfMinorHouses = Game.history.GetMinorHouses();
             foreach (House house in listOfMinorHouses)
             { dictAllHouses.Add(house.RefID, house); }
+            //capital
+            List<CapitalHouse> listOfCapitalHouses = Game.history.GetCapitalHouses();
+            foreach (House house in listOfCapitalHouses)
+            { dictAllHouses.Add(house.RefID, house); }
             //initialise Special Locations
             Game.history.InitialiseSpecialHouses();
             //update Map layer for RefID
@@ -3349,7 +3353,7 @@ namespace Next_Game
             int numRumours = dictRumoursNormal.Count;
             int numTimedRumours = dictRumoursTimed.Count;
             //checksum
-            if (numLocs != numGreatHouses + numSpecialLocs + numBannerLords + 1)
+            if (numLocs != numGreatHouses + numSpecialLocs + numBannerLords)
             { Game.SetError(new Error(25, "Locations don't tally")); }
             int numErrors = Game.GetErrorCount();
             //data
@@ -7246,6 +7250,11 @@ namespace Next_Game
                 {
                     house.Value.MenAtArms = menAtArms / 2;
                     house.Value.Population = house.Value.MenAtArms * popFactor;
+                }
+                else if (house.Value is CapitalHouse)
+                {
+                    house.Value.MenAtArms = menAtArms; //City Watch
+                    house.Value.Population = house.Value.MenAtArms * popFactor * 3;
                 }
             }
 
