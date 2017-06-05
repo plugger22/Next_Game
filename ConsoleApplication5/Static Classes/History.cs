@@ -13,8 +13,8 @@ namespace Next_Game
     {
         static Random rnd;
         //Capital
-        public int CapitalWalls { get; set; } //strength of capital walls (1 to 5)
-        public int CapitalTreasury { get; set; } //size of capital treasury (resources to run the kingdom) (1 to 5)
+        //public int CapitalWalls { get; set; } //strength of capital walls (1 to 5)
+        //public int CapitalTreasury { get; set; } //size of capital treasury (resources to run the kingdom) (1 to 5)
         //actor names
         private List<Active> listOfPlayerActors;
         //private List<string> listOfPlayerNames;
@@ -333,6 +333,32 @@ namespace Next_Game
         }
 
         /// <summary>
+        /// Sets up all relevant details for the capital 
+        /// </summary>
+        private void InitialiseCapital()
+        {
+            Game.logStart?.Write("---  InitialiseCapital (History.cs)");
+            CapitalHouse capital = new CapitalHouse();
+            Location loc = Game.network.GetLocation(1);
+            capital.HouseID = 9999;
+            capital.RefID = 9999;
+            capital.LocID = 1;
+            capital.CastleWalls = Game.constant.GetValue(Global.CASTLE_CAPITAL);
+            capital.Resources = rnd.Next(2, 6);
+            capital.LocName = "Kingskeep";
+            if (loc != null)
+            {
+                loc.RefID = 9999;
+                loc.LocName = "Kingskeep";
+                loc.Type = LocType.Capital;
+            }
+            Game.logStart?.Write(string.Format("CapitalWalls {0}, CapitalTreasury {1}", capital.CastleWalls, capital.Resources));
+
+            listOfCapitalHouses.Add(capital);
+        }
+
+
+        /// <summary>
         /// Sets up a place holder character with Actor ID 1
         /// </summary>
         private void InitialisePlayer()
@@ -364,27 +390,6 @@ namespace Next_Game
             else { Game.SetError(new Error(178, "Invalid Loc (null)")); }
         }
 
-        /// <summary>
-        /// Sets up all relevant details for the capital 
-        /// </summary>
-        private void InitialiseCapital()
-        {
-            Game.logStart?.Write("---  InitialiseCapital (History.cs)");
-            CapitalHouse capital = new CapitalHouse();
-            capital.HouseID = 9999;
-            capital.RefID = 9999;
-            capital.LocID = 1;
-            capital.CastleWalls = Game.constant.GetValue(Global.CASTLE_CAPITAL);
-            capital.Resources = rnd.Next(2, 6); ;
-            
-            //need to remove these once references are taken care of elsewhere
-            CapitalWalls = Game.constant.GetValue(Global.CASTLE_CAPITAL);
-            CapitalTreasury = rnd.Next(2, 6); //placeholder
-
-            Game.logStart?.Write(string.Format("CapitalWalls {0}, CapitalTreasury {1}", CapitalWalls, CapitalTreasury));
-
-            listOfCapitalHouses.Add(capital);
-        }
 
         /// <summary>
         /// add followers to listofActiveActors from imported data. We want 8 followers from the pool (assigned ActID 2 to 9). World.cs InitialiseActiveActors chooses which ones to start with.

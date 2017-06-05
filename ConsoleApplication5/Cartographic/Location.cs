@@ -71,7 +71,11 @@ namespace Next_Game.Cartographic
         public int DistanceToConnector { get; set; }
         public int HouseID { get; set; } //location house ID if applicable
         public int RefID { get; set; } //location ref ID if applicable
-        public int ArcID { get; set; } //location archetype ID if applicable      
+        public int ArcID { get; set; } //location archetype ID if applicable    
+        public int NumPlain { get; set; }  // 3 x 3 grid with Loc at centre, number of different cell types plain/forest/mountain/sea (should all add up to 9 if a full 3 x 3 grid, eg. not on map edge)
+        public int NumForest { get; set; }
+        public int NumMountain { get; set; }
+        public int NumSea { get; set; }
         public LocType Type { get; set; }  
         private List<Position> listOfNeighboursPos; //list of immediate neighbours, by Position
         private List<int> listOfNeighboursLocID; //list of immediate neighbours, by LocID

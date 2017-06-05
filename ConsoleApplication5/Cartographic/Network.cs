@@ -398,6 +398,11 @@ namespace Next_Game.Cartographic
                     }
                     //Location Terrain
                     Game.logStart?.Write($"Terrain LocID {loc.LocationID}, Loc {loc.GetPosX()}:{loc.GetPosY()} -> Plains {numPlain}, Forest {numForest}, Mountain {numMountain}, Sea {numSea} Check: {numPlain + numForest + numMountain + numSea}");
+                    //Update loc data
+                    loc.NumPlain = numPlain;
+                    loc.NumForest = numForest;
+                    loc.NumMountain = numMountain;
+                    loc.NumSea = numSea;
                 }
                 else { Game.SetError(new Error(215, "Invalid Location (null)")); }
             }

@@ -123,7 +123,7 @@ namespace Next_Game
             InitialiseDesires();
             InitialiseSafeHouses();
             InitialiseDisguises();
-            
+
             Game.StopTimer(timer_2, "W: InitialiseVarious");
             timer_2.Start();
             InitialiseHouseData();
@@ -388,7 +388,7 @@ namespace Next_Game
                                     //place character at destination
                                     if (CharacterAtDestination(posDestination, charID) == false)
                                     { Game.SetError(new Error(175, $"ActorID {charID} has not had their details updated upon arriving at their Destination")); }
-                                    else { Game.logTurn?.Write($"[God Mode] Player teleports from {originLocation} to {destinationLocation}");}
+                                    else { Game.logTurn?.Write($"[God Mode] Player teleports from {originLocation} to {destinationLocation}"); }
                                 }
                                 //show route (Player only)
                                 if (person is Player)
@@ -554,12 +554,12 @@ namespace Next_Game
                             person.LocID = locID;
                             int refID = ConvertLocToRef(locID);
                             string tempText = string.Format("{0}, Aid {1}, has arrived safely at {2}", person.Name, person.ActID, locDestination.LocName);
-                            if(Game._menuMode == MenuMode.God && actorID < 10)
+                            if (Game._menuMode == MenuMode.God && actorID < 10)
                             {
                                 tempText = string.Format("[GodMode] {0}, Aid {1}, has teleported safely to {2}", person.Name, person.ActID, locDestination.LocName);
                                 messageType = MessageType.God;
                             }
-                            
+
                             Message message = new Message(tempText, person.ActID, locDestination.LocationID, messageType);
                             SetMessage(message);
                             // Player
@@ -1059,7 +1059,7 @@ namespace Next_Game
                 RLColor traitColor;
                 RLColor starColor;
                 RLColor skillColor;
-                
+
                 SkillType trait;
                 //age of actor
                 SkillAge age = SkillAge.Fifteen;
@@ -1079,7 +1079,7 @@ namespace Next_Game
                     else { traitColor = Color._goodTrait; }
                     //Combat skill known?
                     if (person.GetSkillKnown(SkillType.Combat) == true) { starColor = Color._star; skillColor = RLColor.White; }
-                    else { skillColor = unknownColor; traitColor = unknownColor; starColor = unknownColor;  }
+                    else { skillColor = unknownColor; traitColor = unknownColor; starColor = unknownColor; }
                     //display
                     newLine = true;
                     if (abilityStars != 3)
@@ -1239,7 +1239,7 @@ namespace Next_Game
                 if (!(person is Player || person is Special) && person.Status != ActorStatus.Gone)
                 {
                     listToDisplay.Add(new Snippet("Relationships", RLColor.Brown, RLColor.Black));
-                    
+
                     //with Player
                     int relStars = person.GetRelPlyrStars();
                     listToDisplay.Add(new Snippet(string.Format("{0, -16}", "Player"), false));
@@ -1311,7 +1311,7 @@ namespace Next_Game
                         List<int> listOfDisguises = advisor.GetDisguises();
                         if (listOfDisguises != null)
                         {
-                            foreach(var costume in listOfDisguises)
+                            foreach (var costume in listOfDisguises)
                             {
                                 Possession possession = GetPossession(costume);
                                 if (possession != null)
@@ -1610,6 +1610,7 @@ namespace Next_Game
         /// <param name="pos"></param>
         internal List<Snippet> ShowLocationRL(int locID, int mouseX, int mouseY)
         {
+
             int relFriends = Game.constant.GetValue(Global.FRIEND_THRESHOLD);
             int relEnemies = Game.constant.GetValue(Global.ENEMY_THRESHOLD);
             int numFriends = 0; int numEnemies = 0; int relPlyr = 0;
@@ -1624,70 +1625,76 @@ namespace Next_Game
                 if (loc != null)
                 {
                     House house = GetHouse(loc.RefID);
-                    //if a House Capital show in Yellow
-                    if (Game.map.GetMapInfo(MapLayer.Capitals, loc.GetPosX(), loc.GetPosY()) > 0)
-                    { color = RLColor.Yellow; houseCapital = true; }
-                    //ignore the capital and special locations for the moment until they are included in dictAllHouses
-                    if (house != null)
+                    if (!(house is CapitalHouse))
                     {
-                        int eventCount = house.GetNumFollowerEvents();
-                        if (loc.HouseID != 99)
+                        //if a House Capital show in Yellow
+                        //if (Game.map.GetMapInfo(MapLayer.Capitals, loc.GetPosX(), loc.GetPosY()) > 0)
+
+                        //ignore the capital and special locations for the moment until they are included in dictAllHouses
+                        if (house != null)
                         {
-                            int resources = house.Resources;
-                            //normal houses - major / minor / capital 
-                            locList.Add(new Snippet(string.Format("House {0} of {1}, Lid {2}, Rid {3}, Hid {4}, Branch {5}", house.Name, loc.LocName, loc.LocationID, loc.RefID,
-                                loc.HouseID, loc.GetBranch()), color, RLColor.Black));
-                            locList.Add(new Snippet(string.Format("Motto \"{0}\"", house.Motto)));
-                            locList.Add(new Snippet(string.Format("Banner \"{0}\"", house.Banner)));
-                            locList.Add(new Snippet(string.Format("Seated at {0} {1}", house.LocName, ShowLocationCoords(locID))));
-                            RLColor loyaltyColor = Color._goodTrait;
-                            if (house.Loyalty_Current == KingLoyalty.New_King) { loyaltyColor = Color._badTrait; }
-                            locList.Add(new Snippet(string.Format("Loyal to the {0}", house.Loyalty_Current), loyaltyColor, RLColor.Black));
-                            if (house.SafeHouse > 0) {
-                                locList.Add(new Snippet($"Safe House available ", false));
-                                locList.Add(new Snippet(string.Format("{0}", GetStars(house.SafeHouse)), RLColor.LightRed, RLColor.Black)); }
-                            locList.Add(new Snippet(string.Format("Strength of Castle Walls ({0}) ", (CastleDefences)house.CastleWalls), false));
-                            locList.Add(new Snippet(string.Format("{0}", GetStars((int)house.CastleWalls)), RLColor.LightRed, RLColor.Black));
-                            locList.Add(new Snippet(string.Format("House Resources ({0}) ", (ResourceLevel)resources), false));
-                            locList.Add(new Snippet(string.Format("{0}", GetStars((int)resources)), RLColor.LightRed, RLColor.Black));
-                            if (eventCount > 0)
+                            int eventCount = house.GetNumFollowerEvents();
+                            if (loc.HouseID != 99)
                             {
-                                locList.Add(new Snippet(string.Format("Archetype \"{0}\" with {1} events", Game.director.GetArchetypeName(house.ArcID), eventCount),
-                                  RLColor.LightGray, RLColor.Black));
+                                int resources = house.Resources;
+                                //normal houses - major / minor / capital 
+                                locList.Add(new Snippet(string.Format("House {0} of {1}, Lid {2}, Rid {3}, Hid {4}, Branch {5}", house.Name, loc.LocName, loc.LocationID, loc.RefID,
+                                    loc.HouseID, loc.GetBranch()), color, RLColor.Black));
+                                locList.Add(new Snippet(string.Format("Motto \"{0}\"", house.Motto)));
+                                locList.Add(new Snippet(string.Format("Banner \"{0}\"", house.Banner)));
+                                locList.Add(new Snippet(string.Format("Seated at {0} {1}", house.LocName, ShowLocationCoords(locID))));
+                                RLColor loyaltyColor = Color._goodTrait;
+                                if (house.Loyalty_Current == KingLoyalty.New_King) { loyaltyColor = Color._badTrait; }
+                                locList.Add(new Snippet(string.Format("Loyal to the {0}", house.Loyalty_Current), loyaltyColor, RLColor.Black));
+                                if (house.SafeHouse > 0)
+                                {
+                                    locList.Add(new Snippet($"Safe House available ", false));
+                                    locList.Add(new Snippet(string.Format("{0}", GetStars(house.SafeHouse)), RLColor.LightRed, RLColor.Black));
+                                }
+                                locList.Add(new Snippet(string.Format("Strength of Castle Walls ({0}) ", (CastleDefences)house.CastleWalls), false));
+                                locList.Add(new Snippet(string.Format("{0}", GetStars((int)house.CastleWalls)), RLColor.LightRed, RLColor.Black));
+                                locList.Add(new Snippet(string.Format("House Resources ({0}) ", (ResourceLevel)resources), false));
+                                locList.Add(new Snippet(string.Format("{0}", GetStars((int)resources)), RLColor.LightRed, RLColor.Black));
+                                if (eventCount > 0)
+                                {
+                                    locList.Add(new Snippet(string.Format("Archetype \"{0}\" with {1} events", Game.director.GetArchetypeName(house.ArcID), eventCount),
+                                      RLColor.LightGray, RLColor.Black));
+                                }
+                            }
+                            else
+                            {
+                                //special Inn
+                                locList.Add(new Snippet(string.Format("{0} Inn, LocID {1}, RefID {2}, Branch {3}", house.Name, loc.LocationID, loc.RefID, loc.GetBranch(), color, RLColor.Black)));
+                                locList.Add(new Snippet(string.Format("Motto \"{0}\"", house.Motto)));
+                                locList.Add(new Snippet(string.Format("Signage \"{0}\"", house.Banner)));
+                                locList.Add(new Snippet(string.Format("Found at {0}", ShowLocationCoords(locID))));
+                                if (eventCount > 0)
+                                {
+                                    locList.Add(new Snippet(string.Format("Archetype \"{0}\" with {1} events", Game.director.GetArchetypeName(house.ArcID), eventCount),
+                                      RLColor.LightGray, RLColor.Black));
+                                }
                             }
                         }
-                        else
+                        //correct location description
+                        if (loc.HouseID == 99)
+                        { description = "A homely Inn"; }
+                        else if (loc.LocationID == 1)
+                        { description = loc.LocName + ": the Home of the King"; }
+                        else if (Game.map.GetMapInfo(MapLayer.Capitals, loc.GetPosX(), loc.GetPosY()) == 0)
+                        { description = "BannerLord of House"; }
+                        //bannerlord details if applicable
+                        if (houseCapital == false)
                         {
-                            //special Inn
-                            locList.Add(new Snippet(string.Format("{0} Inn, LocID {1}, RefID {2}, Branch {3}", house.Name, loc.LocationID, loc.RefID, loc.GetBranch(), color, RLColor.Black)));
-                            locList.Add(new Snippet(string.Format("Motto \"{0}\"", house.Motto)));
-                            locList.Add(new Snippet(string.Format("Signage \"{0}\"", house.Banner)));
-                            locList.Add(new Snippet(string.Format("Found at {0}", ShowLocationCoords(locID))));
-                            if (eventCount > 0)
-                            {
-                                locList.Add(new Snippet(string.Format("Archetype \"{0}\" with {1} events", Game.director.GetArchetypeName(house.ArcID), eventCount),
-                                  RLColor.LightGray, RLColor.Black));
-                            }
+                            string locDetails = string.Format("{0} {1}", description, GetMajorHouseName(loc.HouseID));
+                            locList.Add(new Snippet(locDetails));
                         }
-                    }
-                    //correct location description
-                    if (loc.HouseID == 99)
-                    { description = "A homely Inn"; }
-                    else if (loc.LocationID == 1)
-                    { description = loc.LocName + ": the Home of the King"; }
-                    else if (Game.map.GetMapInfo(MapLayer.Capitals, loc.GetPosX(), loc.GetPosY()) == 0)
-                    { description = "BannerLord of House"; }
-                    //bannerlord details if applicable
-                    if (houseCapital == false)
-                    {
-                        string locDetails = string.Format("{0} {1}", description, GetMajorHouseName(loc.HouseID));
-                        locList.Add(new Snippet(locDetails));
                     }
                     if (loc.isCapital == true)
                     {
+                        CapitalHouse capital = house as CapitalHouse;
                         locList.Add(new Snippet("KINGDOM CAPITAL", RLColor.Yellow, RLColor.Black));
-                        int capitalWalls = Game.history.CapitalWalls;
-                        int capitalResources = Game.history.CapitalTreasury;
+                        int capitalWalls = capital.CastleWalls;
+                        int capitalResources = capital.Resources;
                         locList.Add(new Snippet(string.Format("Strength of Castle Walls ({0}) ", (CastleDefences)capitalWalls), false));
                         locList.Add(new Snippet(string.Format("{0}", GetStars(capitalWalls)), RLColor.LightRed, RLColor.Black));
                         locList.Add(new Snippet(string.Format("House Resources ({0}) ", (ResourceLevel)capitalResources), false));
@@ -1972,10 +1979,16 @@ namespace Next_Game
         /// <returns></returns>
         public List<Snippet> ShowCapitalRL()
         {
+            CapitalHouse capital = GetCapital();
             List<Snippet> capitalList = new List<Snippet>();
+
             capitalList.Add(new Snippet(string.Format("Kingskeep, Kingdom Capital {0}", ShowLocationCoords(1)), RLColor.Yellow, RLColor.Black));
-            int capitalWalls = Game.history.CapitalWalls;
-            int capitalResources = Game.history.CapitalTreasury;
+            //int capitalWalls = Game.history.CapitalWalls;
+            //int capitalResources = Game.history.CapitalTreasury;
+            int capitalWalls = capital.CastleWalls;
+            int capitalResources = capital.Resources;
+            capitalList.Add(new Snippet(string.Format("Populatinn {0:N0} at {1}", capital.Population, capital.LocName)));
+            capitalList.Add(new Snippet(string.Format("City Watch has {0:N0} Men At Arms", capital.MenAtArms)));
             capitalList.Add(new Snippet(string.Format("Strength of Castle Walls ({0}) ", (CastleDefences)capitalWalls), false));
             capitalList.Add(new Snippet(string.Format("{0}", GetStars(capitalWalls)), RLColor.LightRed, RLColor.Black));
             //placeholder
@@ -1983,12 +1996,11 @@ namespace Next_Game
             capitalList.Add(new Snippet(string.Format("{0}", GetStars(capitalResources)), RLColor.LightRed, RLColor.Black));
             //ROYAL FAMILY
             capitalList.Add(new Snippet("Royal Family", RLColor.Brown, RLColor.Black));
-            int royalRefID = Game.lore.RoyalRefIDCurrent;
             //query royal family members at capital
             List<Passive> royalFamily = new List<Passive>();
             IEnumerable<Passive> listOfNobles =
                 from actor in dictPassiveActors
-                where actor.Value.LocID == 1 && actor.Value.RefID == royalRefID && actor.Value is Noble && actor.Value.Status == ActorStatus.AtLocation
+                where actor.Value.LocID == 1 && actor.Value is Noble && actor.Value.Status == ActorStatus.AtLocation
                 orderby actor.Value.ActID
                 select actor.Value;
             royalFamily = listOfNobles.ToList();
@@ -2634,7 +2646,7 @@ namespace Next_Game
             { Game.SetError(new Error(123, string.Format("Invalid possessionID (duplicate ID), possID {0}", possID))); }
             return false;
         }
-  
+
 
         /// <summary>
         /// Add a rumour to the dictRumoursKnown (to Player), returns true if successful
@@ -2929,7 +2941,7 @@ namespace Next_Game
                                                                 {
                                                                     if (searchHouse is MinorHouse)
                                                                     {
-                                                                        listOfMinorHouses.Add(searchHouse.RefID); 
+                                                                        listOfMinorHouses.Add(searchHouse.RefID);
                                                                         Game.logStart?.Write($"[Alert -> Out Neighbour] MinorHouse \"{searchHouse.Name}\", RefID {searchHouse.RefID}, added to listOfMinorHouses");
                                                                         break;
                                                                     }
@@ -2968,7 +2980,7 @@ namespace Next_Game
                                                         Game.logStart?.Write("There are two minor houses, furthest will be eliminated");
                                                         Location locMajor = Game.network.GetLocation(majorHouse.LocID);
                                                         int[] arrayDistance = new int[listOfMinorHouses.Count];
-                                                        for(int p = 0; p < listOfMinorHouses.Count; p++)
+                                                        for (int p = 0; p < listOfMinorHouses.Count; p++)
                                                         {
                                                             //work out distances
                                                             House checkHouse = GetHouse(listOfMinorHouses[p]);
@@ -2983,7 +2995,7 @@ namespace Next_Game
                                                         //find shortest distance
                                                         int minDistance = 999;
                                                         int minIndex = 999;
-                                                        for(int q = 0; q < arrayDistance.Length; q++)
+                                                        for (int q = 0; q < arrayDistance.Length; q++)
                                                         {
                                                             if (arrayDistance[q] < minDistance)
                                                             {
@@ -3364,7 +3376,7 @@ namespace Next_Game
             listStats.Add(new Snippet(string.Format("{0} Special Locations", numSpecialLocs)));
             listStats.Add(new Snippet("1 Capital"));
             listStats.Add(new Snippet(string.Format("{0} Actors ({1} Children)", numActors, numChildren)));
-            listStats.Add(new Snippet(string.Format("{0} Secrets", numSecrets))); 
+            listStats.Add(new Snippet(string.Format("{0} Secrets", numSecrets)));
             listStats.Add(new Snippet(string.Format("{0} Total Rumours  ({1} Normal, {2} Timed)", numRumours + numTimedRumours, numRumours, numTimedRumours)));
             if (numErrors > 0) { listStats.Add(new Snippet(string.Format("{0} Errors", numErrors), RLColor.LightRed, RLColor.Black)); }
             //list of all Greathouses by power
@@ -3531,6 +3543,21 @@ namespace Next_Game
             House house = new House();
             if (dictAllHouses.TryGetValue(refID, out house))
             { return house; }
+            return null;
+        }
+
+        /// <summary>
+        /// Return capital, null if not found
+        /// </summary>
+        /// <returns></returns>
+        internal CapitalHouse GetCapital()
+        {
+            House house = new House();
+            if (dictAllHouses.TryGetValue(9999, out house))
+            {
+                CapitalHouse capital = house as CapitalHouse;
+                return capital;
+            }
             return null;
         }
 

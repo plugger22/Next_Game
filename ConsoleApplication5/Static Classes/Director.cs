@@ -3500,6 +3500,8 @@ namespace Next_Game
                                 }
                             }
                             break;
+                        case LocType.Capital:
+                            break;
                         default:
                             Game.SetError(new Error(64, $"Invalid LocType \"{loc.Value.Type}\", RefID {refID}"));
                             break;
