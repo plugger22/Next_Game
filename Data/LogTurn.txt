@@ -1,197 +1,122 @@
-//Exile Game File "LogTurn.txt" opened at: 05/06/2017 10:38:26
+//Exile Game File "LogTurn.txt" opened at: 05/06/2017 11:10:40
 --- ProcessStartTurn (World.cs)
-Day 42, Turn 41
-Usurper Benjen Arryn, "The Impetuous", AtLocation, Torrhen's Square
+Day 8, Turn 7
+Usurper Vargo Florent, "The Impetuous", AtLocation, Hornwood
 --- UpdateRumours (World.cs)
-dictRumoursTimed (Start) -> 93 records
-[Rumour -> Removal] RID 502, "Castellan Willis Eden "The Deafening", ActID 13 at Casterly Rock, is murmured among friends to have a very good impression of the Usurper" removed from House list
-[Rumour -> Removal] RID 503, "Maester Tion Lambard "The Buff", ActID 14 at Casterly Rock, is rumoured to have a good view of the Usurper" removed from House list
-[Rumour -> Removal] RID 504, "Septon Trystane Hamelin "The Insipid Rodent", ActID 15 at Casterly Rock, is murmured among friends to have a very good view of the Usurper" removed from House list
-[Rumour -> Removal] RID 505, "Heir Theon Lannister "The Locked", ActID 16 at Casterly Rock, is whispered to have a good view of the Usurper" removed from House list
-[Rumour -> Removal] RID 506, "Lady Mina Martell "The Goddess", ActID 18 at Dorne, is well known to have a poor impression of the Usurper" removed from House list
-[Rumour -> Removal] RID 507, "Knight Ser Cleos Rolandus "The Unexceptional", ActID 19 at Dorne, is rumoured to have a very poor view of the Usurper" removed from House list
-[Rumour -> Removal] RID 508, "Castellan Dickory Jeff "The Believing", ActID 20 at Dorne, is whispered to have a poor view of the Usurper" removed from House list
-[Rumour -> Removal] RID 509, "Maester Geoff Colley "The Literal", ActID 21 at Dorne, is suspected to have an average opinion of the Usurper" removed from House list
-[Rumour -> Removal] RID 510, "Septon Vortimer Galeran "The Patrician", ActID 22 at Dorne, is whispered to have a poor impression of the Usurper" removed from House list
-[Rumour -> Removal] RID 511, "lady Arya Martell "The Unchanging", ActID 23 at Dorne, is well known to have a poor view of the Usurper" removed from House list
-[Rumour -> Removal] RID 512, "lady Molt Martell "The Insane", ActID 24 at Dorne, is known by all to have a poor opinion of the Usurper" removed from House list
-[Rumour -> Removal] RID 513, "Heir Aldis Martell "The Deer Stalker", ActID 25 at Dorne, is rumoured to have an average view of the Usurper" removed from House list
-[Rumour -> Removal] RID 514, "lady Geue Martell "The Green Eyed", ActID 26 at Dorne, is whispered to have a poor opinion of the Usurper" removed from House list
-[Rumour -> Removal] RID 515, "Lord Jon Martell "The Non Violent", ActID 27 at Dorne, is commonly known to have a poor view of the Usurper" removed from House list
-[Rumour -> Removal] RID 516, "lady Catrain Martell "The Goddess", ActID 28 at Dorne, is whispered to have an average opinion of the Usurper" removed from House list
-[Rumour -> Removal] RID 517, "Lord Mandon Florent "The Dreamy", ActID 29 at Brightwater Keep, is suspected to have a good impression of the Usurper" removed from House list
-[Rumour -> Removal] RID 518, "Castellan Dickory Jeff "The Stygian Rat", ActID 32 at Brightwater Keep, is rumoured to have a good impression of the Usurper" removed from House list
-[Rumour -> Removal] RID 519, "Maester Jory Tankard "The Thin", ActID 33 at Brightwater Keep, is rumoured to have a good impression of the Usurper" removed from House list
-[Rumour -> Removal] RID 520, "Septon Tion Harding "The Purposeless", ActID 34 at Brightwater Keep, is said to have a good opinion of the Usurper" removed from House list
-[Rumour -> Removal] RID 521, "Heir Areo Florent "The Ironic", ActID 35 at Brightwater Keep, is rumoured to have a good impression of the Usurper" removed from House list
-[Rumour -> Removal] RID 522, "King Brandon Greyjoy "The Covetous", ActID 36 at Kingskeep, is whispered to have a very poor impression of the Usurper" removed from Capital list
-[Rumour -> Removal] RID 523, "Queen Sansa Greyjoy "The Uncivilised", ActID 37 at Kingskeep, is rumoured to have a very poor opinion of the Usurper" removed from Capital list
-[Rumour -> Removal] RID 621, "Inquisitor, Brother Kali, ActID 140 has been spotted doing sword drills at The Clumsy Hog (loc 11:14)" removed from Global West list
-[Rumour -> Removal] RID 526, "Heir Ivo Greyjoy "The Muddled", ActID 42 at Kingskeep, is known to have a poor view of the Usurper" removed from Capital list
-[Rumour -> Removal] RID 501, "Lady Grizzel Lannister "The Sunny", ActID 11 at Casterly Rock, is widely known to have an average impression of the Usurper" removed from House list
-[Rumour -> Removal] RID 527, "lady Wantliana Greyjoy "The Brocader", ActID 43 at Kingskeep, is rumoured to have a poor view of the Usurper" removed from Capital list
-[Rumour -> Removal] RID 528, "lord Randyll Greyjoy "The Speaker Of Tongues", ActID 44 at Kingskeep, is murmured among friends to have a very poor opinion of the Usurper" removed from Capital list
-[Rumour -> Removal] RID 529, "lady Sapphire Greyjoy "The Disfigured", ActID 45 at Kingskeep, is commonly known to have a very poor opinion of the Usurper" removed from Capital list
-[Rumour -> Removal] RID 530, "lady Sephare Greyjoy "The Sublime", ActID 46 at Kingskeep, is said to have a very poor impression of the Usurper" removed from Capital list
-[Rumour -> Removal] RID 531, "lord David Greyjoy "The Green Eyed", ActID 47 at Kingskeep, is rumoured to have a very poor opinion of the Usurper" removed from Capital list
-[Rumour -> Removal] RID 532, "lord Tyrion Greyjoy "The Imposing", ActID 48 at Kingskeep, is said to have a very poor view of the Usurper" removed from Capital list
-[Rumour -> Removal] RID 533, "Lord Beuves Baratheon "The Disturbed", ActID 59 at Bloodkeep, is rumoured to have an average view of the Usurper" removed from House list
-[Rumour -> Removal] RID 534, "Lady Catelyn Baratheon "The Selfish", ActID 60 at Bloodkeep, is whispered to have a poor view of the Usurper" removed from House list
-[Rumour -> Removal] RID 535, "Castellan Galot Richemanus "The Unyielding", ActID 62 at Bloodkeep, is whispered to have a poor opinion of the Usurper" removed from House list
-[Rumour -> Removal] RID 536, "Maester Morton Heylot "The Charmer", ActID 63 at Bloodkeep, is commonly known to have a poor impression of the Usurper" removed from House list
-[Rumour -> Removal] RID 537, "Septon Beves Tybout "The Tolerant", ActID 64 at Bloodkeep, is widely known to have a very poor opinion of the Usurper" removed from House list
-[Rumour -> Removal] RID 538, "lady Auisia Baratheon "The Self-Absorbed", ActID 65 at Bloodkeep, is murmured among friends to have an average opinion of the Usurper" removed from House list
-[Rumour -> Removal] RID 539, "Lord Vardis Stark "The Upstanding", ActID 66 at Winterfell, is said to have an average opinion of the Usurper" removed from House list
-[Rumour -> Removal] RID 540, "Lady Gaynore Stark "The Second Sight", ActID 67 at Winterfell, is suspected to have a good opinion of the Usurper" removed from House list
-[Rumour -> Removal] RID 541, "Castellan Jack Engerran "The Middling", ActID 69 at Winterfell, is rumoured to have a good opinion of the Usurper" removed from House list
-[Rumour -> Removal] RID 542, "Maester Cristal Vauquelin "The Undistinguished", ActID 70 at Winterfell, is widely known to have an average impression of the Usurper" removed from House list
-[Rumour -> Removal] RID 543, "Septon Amory Hugue "The Crippled", ActID 71 at Winterfell, is known by all to have an average view of the Usurper" removed from House list
-[Rumour -> Removal] RID 544, "Heir Varamyr Stark "The Reliable", ActID 72 at Winterfell, is well known to have a good opinion of the Usurper" removed from House list
-[Rumour -> Removal] RID 545, "lord Frederick Stark "The Trickster", ActID 73 at Winterfell, is said to have a good opinion of the Usurper" removed from House list
-[Rumour -> Removal] RID 546, "Lady Selyse Tyrell "The Troubadour", ActID 75 at Highgarden, is well known to have a poor opinion of the Usurper" removed from House list
-[Rumour -> Removal] RID 547, "Knight Ser Herriot Cristofre "The Capable", ActID 76 at Highgarden, is rumoured to have an average impression of the Usurper" removed from House list
-[Rumour -> Removal] RID 548, "Castellan Tion Nicholaus "The Stygian Rat", ActID 77 at Highgarden, is known to have a poor opinion of the Usurper" removed from House list
-[Rumour -> Removal] RID 549, "Maester Guarnier Ferrand "The Puffed Up", ActID 78 at Highgarden, is whispered to have a poor view of the Usurper" removed from House list
-[Rumour -> Removal] RID 550, "Septon Morton Gervase "The Unconsidered", ActID 79 at Highgarden, is murmured among friends to have a poor impression of the Usurper" removed from House list
-[Rumour -> Removal] RID 551, "lady Elia Tyrell "The Jongleur", ActID 80 at Highgarden, is suspected to have an average view of the Usurper" removed from House list
-[Rumour -> Removal] RID 552, "lady Marekyn Tyrell "The Player", ActID 81 at Highgarden, is well known to have a very poor opinion of the Usurper" removed from House list
-[Rumour -> Removal] RID 553, "Heir Raff Baratheon "The Puppet Master", ActID 82 at Bloodkeep, is whispered to have a poor impression of the Usurper" removed from House list
-[Rumour -> Removal] RID 554, "Lord Walder Tyrell "The Loud", ActID 83 at Highgarden, is well known to have an average opinion of the Usurper" removed from House list
-[Rumour -> Removal] RID 555, "Lord Paxter Codd "The Hazy", ActID 84 at Eyrie, is murmured among friends to have a very poor opinion of the Usurper" removed from House list
-[Rumour -> Removal] RID 556, "BannerLord Druettus Umber "The Soaring", ActID 85 at Last Hearth, is said to have a poor impression of the Usurper" removed from House list
-[Rumour -> Removal] RID 557, "BannerLord Tyrion Flint "The Headlong", ActID 87 at Widow's Watch, is murmured among friends to have a poor opinion of the Usurper" removed from House list
-[Rumour -> Removal] RID 558, "BannerLord Luwin Leygood "The Aloof", ActID 90 at Barrow Hill, is murmured among friends to have a very poor view of the Usurper" removed from House list
-[Rumour -> Removal] RID 559, "BannerLord Jaques Dondarrion "The Eager", ActID 91 at Blackhaven, is rumoured to have an average impression of the Usurper" removed from House list
-[Rumour -> Removal] RID 560, "BannerLord Jarvis Fowler "The Droll", ActID 92 at Skyreach, is known to have a very poor impression of the Usurper" removed from House list
-[Rumour -> Removal] RID 561, "BannerLord Aegon Peake "The Ominous", ActID 93 at Starpike, is widely known to have a very poor opinion of the Usurper" removed from House list
-[Rumour -> Removal] RID 562, "BannerLord Gerbertus Caron "The Odious", ActID 97 at Nightsong, is known by all to have a very good impression of the Usurper" removed from House list
-[Rumour -> Removal] RID 563, "BannerLord Heward Glover "The Lion Hearted", ActID 98 at Deepwood Motte, is murmured among friends to have a good impression of the Usurper" removed from House list
-[Rumour -> Removal] RID 564, "BannerLord Raff Frey "The Well-Dressed", ActID 99 at The Twins, is rumoured to have a good impression of the Usurper" removed from House list
-[Rumour -> Removal] RID 565, "BannerLord Merrett Mormont "The Adventurous", ActID 100 at Bearpit, is said to have an average opinion of the Usurper" removed from House list
-[Rumour -> Removal] RID 566, "BannerLord Audry Harlaw "The Resolute", ActID 101 at Ten Towers, is known by all to have a poor opinion of the Usurper" removed from House list
-[Rumour -> Removal] RID 567, "BannerLord Beves Botley "The Misshapen", ActID 103 at Lordsport, is known by all to have a very good impression of the Usurper" removed from House list
-[Rumour -> Removal] RID 568, "BannerLord Cristal Bolton "The Adventurous", ActID 104 at Dreadfort, is rumoured to have a very good impression of the Usurper" removed from House list
-[Rumour -> Removal] RID 569, "BannerLord Hullen Penrose "The Devout", ActID 106 at Parchments, is whispered to have an average view of the Usurper" removed from House list
-[Rumour -> Removal] RID 570, "BannerLord Gervesin Brax "The Feeling", ActID 115 at Hornvale, is said to have a poor opinion of the Usurper" removed from House list
-[Rumour -> Removal] RID 500, "Lord Huchon Lannister "The Inflexible", ActID 10 at Casterly Rock, is rumoured to have a good opinion of the Usurper" removed from House list
-[Rumour -> Removal] RID 571, "BannerLord Pate Slynt "The Pitiless", ActID 116 at Harrenhal, is known to have a poor view of the Usurper" removed from House list
-[Rumour -> Removal] RID 572, "BannerLord Rhaegar Estermont "The Unforgiving", ActID 117 at Greenstone, is suspected to have a poor view of the Usurper" removed from House list
-[Rumour -> Removal] RID 573, "BannerLord Forley Yronwood "The Ignorant", ActID 118 at Yronwood Castle, is widely known to have a poor opinion of the Usurper" removed from House list
-[Rumour -> Removal] RID 574, "BannerLord Hallis Bracken "The Distinguished", ActID 119 at Stone Hedge, is well known to have a poor opinion of the Usurper" removed from House list
-[Rumour -> Removal] RID 575, "BannerLord Hodgkin Ambrose "The Benign", ActID 120 at Fishfork, is said to have a very poor opinion of the Usurper" removed from House list
-[Rumour -> Removal] RID 576, "Castellan Stannis Ferrand "The Plain Spoken", ActID 121 at Eyrie, is suspected to have a poor view of the Usurper" removed from House list
-[Rumour -> Removal] RID 577, "Maester Rowan Powle "The Prodigious", ActID 122 at Eyrie, is well known to have a poor view of the Usurper" removed from House list
-[Rumour -> Removal] RID 578, "Septon Ivo Hugue "The Genuine", ActID 123 at Eyrie, is whispered to have a poor impression of the Usurper" removed from House list
-[Rumour -> Removal] RID 579, "Knight Ser Jack Oudin "The Fighter", ActID 124 at Eyrie, is widely known to have a poor impression of the Usurper" removed from House list
-[Rumour -> Removal] RID 580, "Lady Jonett Codd "The Dove", ActID 125 at Eyrie, is suspected to have an average view of the Usurper" removed from House list
-[Rumour -> Removal] RID 581, "lady Shireen Codd "The Charmed", ActID 126 at Eyrie, is rumoured to have a poor impression of the Usurper" removed from House list
-[Rumour -> Removal] RID 582, "lady Geue Codd "The Dove", ActID 127 at Eyrie, is suspected to have a poor opinion of the Usurper" removed from House list
-[Rumour -> Removal] RID 583, "Heir Jory Codd "The Blank", ActID 128 at Eyrie, is whispered to have a very poor view of the Usurper" removed from House list
-[Rumour -> Removal] RID 584, "lady Catrain Codd "The Trickster", ActID 129 at Eyrie, is well known to have a very poor view of the Usurper" removed from House list
-[Rumour -> Removal] RID 585, "High_Septon Gervesin Gill "The Decent", ActID 107 at Kingskeep, is suspected to have a good view of the Usurper" removed from Capital list
-[Rumour -> Removal] RID 586, "Master_of_Coin Rowan Timm "The Bothered", ActID 108 at Kingskeep, is whispered to have a very poor impression of the Usurper" removed from Capital list
-[Rumour -> Removal] RID 587, "Master_of_Laws Leyton Hue "The Dull", ActID 109 at Kingskeep, is whispered to have a poor view of the Usurper" removed from Capital list
-[Rumour -> Removal] RID 588, "Master_of_Ships Donnel Ancelmus "The Shrewd", ActID 130 at Kingskeep, is whispered to have an average opinion of the Usurper" removed from Capital list
-[Rumour -> Removal] RID 589, "Master_of_Whisperers Jack Segar "The Halting", ActID 111 at Kingskeep, is murmured among friends to have an average view of the Usurper" removed from Capital list
-[Rumour -> Removal] RID 590, "Hand_of_the_King Willis Tybout "The Saintly", ActID 131 at Kingskeep, is whispered to have a poor opinion of the Usurper" removed from Capital list
-[Rumour -> Removal] RID 591, "Commander_of_Kings_Guard Tybaut Rab "The Rash", ActID 132 at Kingskeep, is well known to have a very poor opinion of the Usurper" removed from Capital list
-[Rumour -> Removal] RID 592, "Commander_of_City_Watch Doran Wilkin "The Canny", ActID 114 at Kingskeep, is rumoured to have a good opinion of the Usurper" removed from Capital list
-1 rumours -> TimerExpire decremented
-92 records have expired and been removed
-dictRumoursTimed (End) -> 1 records
+dictRumoursTimed (Start) -> 83 records
+83 rumours -> TimerExpire decremented
 --- MoveActors -> 2 Records (World.cs)
- [Move -> MoveObject] Inquisitor Brother Shiva, ActID 138 travelling to Kingskeep (current Loc 16:11)
+ [Move -> MoveObject] Inquisitor Brother Azazel, ActID 122 travelling to Brightwater Keep (current Loc 19:14)
 --- CheckIfFoundEnemy (World.cs)
- [Search -> Debug] Active Benjen Arryn, ID 1 at 3:16, Enemy at 16:11 (Brother Shiva, ID 138
- [Move -> MoveObject] Inquisitor Brother Kali, ActID 140 travelling to Kingskeep (current Loc 11:15)
+ [Search -> Debug] Active Vargo Florent, ID 1 at 9:12, Enemy at 19:14 (Brother Azazel, ID 122
 --- CheckIfFoundEnemy (World.cs)
- [Search -> Debug] Active Benjen Arryn, ID 1 at 3:16, Enemy at 11:15 (Brother Kali, ID 140
+ [Search -> Debug] Active Vargo Florent, ID 1 at 9:12, Enemy at 19:15 (Brother Azazel, ID 122
+ [Goal -> Arrival] Inquisitor Brother Azazel, ActID 122, currently at Brightwater Keep, new Goal -> Wait
+ [Move -> MoveObject] Inquisitor Brother Amon, ActID 121 travelling to The Pickled Prune (current Loc 13:12)
+--- CheckIfFoundEnemy (World.cs)
+ [Search -> Debug] Active Vargo Florent, ID 1 at 9:12, Enemy at 13:12 (Brother Amon, ID 121
+--- CheckIfFoundEnemy (World.cs)
+ [Search -> Debug] Active Vargo Florent, ID 1 at 9:12, Enemy at 13:11 (Brother Amon, ID 121
+ [Goal -> Arrival] Inquisitor Brother Amon, ActID 121, currently at The Pickled Prune, new Goal -> Wait
 --- UpdatePlayerStatus (World.cs)
 --- UpdateWorldStatus (World.cs)
 --- CheckFollowerActivity (World.cs)
 --- GetRumour (Director.cs)
-[Notification] No house rumours available -> none added to pool
-[Notification] No Branch North rumours available  -> none added to pool
-arrayOfRumours [0] -> RumourID 622, Strength 3, Scope Global, Type Enemy, Global All
-RumourID 622 selected from the Pool
-Rumour "Inquisitor, Brother Kali, ActID 140 has been seen on the road to Kingskeep (loc 16:16)" revealed to ActorID6 on turn 41 -> added to List
-RumourID 622 removed from listRumoursGlobal[0]
-Follower The Jester, ActID 6, added RumourID 622
-[Rumour -> Deleted] Timed RumourID 622 removed from dictRumoursTimed
+arrayOfRumours [0] -> RumourID 15, Strength 1, Scope Global, Type Item, Global All
+arrayOfRumours [4] -> RumourID 387, Strength 2, Scope Global, Type HouseRel, Global West
+arrayOfRumours [5] -> RumourID 117, Strength 5, Scope Local, Type Skill, Global All
+RumourID 117 selected from the Pool
+Rumour "Lord Andry Tully "The Sane", ActID 60 at Riverrun, is well known to be Level Headed" revealed to ActorID6 on turn 7 -> added to List
+RumourID 117 removed from listRumoursHouse[0]
+Follower The Beast, ActID 6, added RumourID 117
+Lord Andry Tully, ActID 60, has their Leadership changed to True
 --- GetRumour (Director.cs)
-[Notification] No house rumours available -> none added to pool
-[Notification] No Global rumours available -> none added to pool
-[Notification] No Branch North rumours available  -> none added to pool
-[Notification] No rumours available (listRumourPool empty)  -> none selected
-[Notification] No rumour returned for The Waif at Pyke
+arrayOfRumours [0] -> RumourID 246, Strength 1, Scope Global, Type Item, Global All
+arrayOfRumours [4] -> RumourID 375, Strength 2, Scope Global, Type HouseRel, Global West
+arrayOfRumours [5] -> RumourID 198, Strength 4, Scope Local, Type Skill, Global All
+RumourID 198 selected from the Pool
+Rumour "BannerLord Walder Hornwood "The Crafty", ActID 96 at Hornwood, is rumoured to be Astute" revealed to ActorID2 on turn 7 -> added to List
+RumourID 198 removed from listRumoursHouse[0]
+Follower The Waif, ActID 2, added RumourID 198
+BannerLord Walder Hornwood, ActID 96, has their Wits changed to True
 --- GetRumour (Director.cs)
-[Notification] No house rumours available -> none added to pool
-[Notification] No Global rumours available -> none added to pool
-[Notification] No Branch South rumours available  -> none added to pool
-[Notification] No rumours available (listRumourPool empty)  -> none selected
-[Notification] No rumour returned for The Dark Eminence at Old Oak
+arrayOfRumours [0] -> RumourID 262, Strength 1, Scope Global, Type Item, Global All
+arrayOfRumours [1] -> RumourID 366, Strength 3, Scope Global, Type Friends, Global North
+arrayOfRumours [5] -> RumourID 203, Strength 4, Scope Local, Type Skill, Global All
+RumourID 366 selected from the Pool
+Rumour "It is commonly known that you have no Friends and a handful of Enemies at Casterly Rock (House Lannister)" revealed to ActorID7 on turn 7 -> added to List
+RumourID 366 removed from listRumoursNorth[12]
+Follower The Dark Eminence, ActID 7, added RumourID 366
+[Notification] House Lannister FriendsAndEnemies status changed to "True"
 --- GetMarketView (Director.cs)
-listPlayerChoices has 2 records, 20 % needed, rolled 52
+listPlayerChoices has 2 records, 20 % needed, rolled 58
 [GameVar] View_Index changed from 1 to 2
 --- CheckStationaryActiveActors (World.cs)
- [Search -> Stationary] Usurper Benjen Arryn, ActID 1 is AtLocation
+ [Search -> Stationary] Usurper Vargo Florent, ActID 1 is AtLocation
 --- CheckIfFoundActive (World.cs)
- [Search -> Debug] Enemy, Brother Dagon, ID 137 at 16:16, Active Benjen Arryn, ID 1, at 3:16
- [Search -> Debug] Enemy, Brother Shiva, ID 138 at 16:12, Active Benjen Arryn, ID 1, at 3:16
- [Search -> Debug] Enemy, Brother Beelzebub, ID 139 at 8:27, Active Benjen Arryn, ID 1, at 3:16
- [Search -> Debug] Enemy, Brother Kali, ID 140 at 11:16, Active Benjen Arryn, ID 1, at 3:16
- [Search -> Debug] Enemy, The Unrelenting, ID 141 at 16:16, Active Benjen Arryn, ID 1, at 3:16
- [Search -> Stationary] Follower The Jester, ActID 6 is AtLocation
- [Search -> Stationary] Follower The Waif, ActID 9 is AtLocation
+ [Search -> Debug] Enemy, Brother Shiva, ID 120 at 13:14, Active Vargo Florent, ID 1, at 9:12
+ [Search -> Debug] Enemy, Brother Amon, ID 121 at 13:11, Active Vargo Florent, ID 1, at 9:12
+ [Search -> Debug] Enemy, Brother Azazel, ID 122 at 19:15, Active Vargo Florent, ID 1, at 9:12
+ [Search -> Debug] Enemy, Brother Set, ID 123 at 10:15, Active Vargo Florent, ID 1, at 9:12
+ [Search -> Debug] Enemy, The Unrelenting, ID 124 at 13:14, Active Vargo Florent, ID 1, at 9:12
+ [Search -> Stationary] Follower The Beast, ActID 6 is AtLocation
+ [Search -> Stationary] Follower The Waif, ActID 2 is AtLocation
  [Search -> Stationary] Follower The Dark Eminence, ActID 7 is AtLocation
 --- UpdateAIController (World.cs)
- [AI -> Player Unknown] Inquisitor Brother Dagon, Act ID 137 Mode -> Normal
- [AI -> Player Unknown] Inquisitor Brother Beelzebub, Act ID 139 Mode -> Normal
- [AI -> Player Unknown] Nemesis The Unrelenting, Act ID 141 Mode -> Normal
+ [AI -> Player Unknown] Inquisitor Brother Shiva, Act ID 120 Mode -> Normal
+ [AI -> Player Unknown] Inquisitor Brother Amon, Act ID 121 Mode -> Normal
+ [AI -> Player Unknown] Inquisitor Brother Azazel, Act ID 122 Mode -> Normal
+ [AI -> Player Unknown] Inquisitor Brother Set, Act ID 123 Mode -> Normal
+ [AI -> Player Unknown] Nemesis The Unrelenting, Act ID 124 Mode -> Normal
 --- SetEnemyActivity (World.cs)
- [Enemy -> Goal] Brother Dagon, ActID 137 retains Goal -> Hide
- [Enemy -> Goal] Brother Beelzebub, ActID 139 retains Goal -> Hide
- [Enemy -> Unknown] The Unrelenting ActID 141 has reverted to Unknown status (timer elapsed)
+ [Enemy -> Goal] Brother Shiva, ActID 120 retains Goal -> Wait
+ [Enemy -> Goal] Brother Amon, ActID 121 retains Goal -> Wait
 --- SetEnemyGoal (World.cs)
- [Goal -> Branch] The Unrelenting, ActID 141 Assigned Branch -> 0 Current Branch -> 0
+ [Goal -> Branch] Brother Azazel, ActID 122 Assigned Branch -> 2 Current Branch -> 2
+ [Goal -> New] Brother Azazel, ActID 122, (loc 19:15), assigned new Goal -> Move
+ [Goal -> Move] Brother Azazel, ActID 122 -> Move Outwards -> The Crag, LocID 18
+--- InitiateMoveActor (World.cs)
+--- Move Actor (Director.cs)
+ [Enemy -> Goal] Brother Set, ActID 123 retains Goal -> Hide
+ [Enemy -> Known] The Unrelenting ActID 124 has become KNOWN
+--- SetEnemyGoal (World.cs)
+ [Goal -> Branch] The Unrelenting, ActID 124 Assigned Branch -> 0 Current Branch -> 0
 --- CheckPlayerEvents (Director.cs)
-Location event, Need 18, roll 16
---- GetValidPlayerEvents (Director.cs)
---- GetValidPlayerEvents (Director.cs)
---- GetValidPlayerEvents (Director.cs)
-[DeterminePlayerEvent] There are 0 events in the Pool
- Chance of Player Location event 9 %
+Location event, Need 18, roll 41
+- CreateAutoLocEvent (Director.cs)
+ [AutoEvent -> ActorList] "The Waif", ID 2 added to list of Actors
+ [AutoEvent -> ActorList] "Walder Hornwood", ID 96 added to list of Actors
+ [AutoEvent -> FollowerList] "The Waif", ID 2 added to list of Followers
+ [AutoEvent -> LocalList] "Walder Hornwood", ID 96 added to list of Locals
+[Notification] No entry found in dictOfIntroductions for RefID 3
+ Chance of Player Location event 75 %
+--- ResolvePlayerEvents (Director.cs)
+ Trigger FAILED on "0" Equals 1
+ Trigger: Player is wrong type of Known status -> Trigger failed
+ Trigger FAILED on "0" Equals 1
+ Trigger: Player is wrong type of Known status -> Trigger failed
+ Event "What to do?" Timer Repeat now 999
+ Event "What to do?" Cooldown Timer has been reset to 0
 --- UpdateActiveActors (World.cs)
- Usurper Benjen Arryn has had their TurnsUnknown Timer increased from 140 to 141
- Follower The Jester has had their TurnsUnknown Timer increased from 40 to 41
- Follower The Waif has had their TurnsUnknown Timer increased from 40 to 41
- Follower The Dark Eminence has had their TurnsUnknown Timer increased from 40 to 41
+ Usurper Vargo Florent has had their TurnsUnknown Timer increased from 106 to 107
+ Follower The Beast has had their TurnsUnknown Timer increased from 6 to 7
+ Follower The Waif has had their TurnsUnknown Timer increased from 6 to 7
+ Follower The Dark Eminence has had their TurnsUnknown Timer increased from 6 to 7
+--- ResolveOutcome (Director.cs)
+--- ChangePlayerRumourStatus (Director.cs)
+[Notification] RumourID zero or less -> not added to dictRumoursKnown
+--- ChangePlayerRumourStatus (Director.cs)
+[Notification] RumourID zero or less -> not added to dictRumoursKnown
 --- SetEndGame (Game.cs)
 [Alert] Player chose to exit (pressed 'X')
-//Exile Game file ops "LogTurn.txt" Completed at: 05/06/2017 10:38:38
-ected to have a poor view of the Usurper" -> dict & List
-[Rumour -> Added] RID 577, "Maester Rowan Powle "The Prodigious", ActID 122 at Eyrie, is well known to have a poor view of the Usurper" -> dict & List
-[Rumour -> Added] RID 578, "Septon Ivo Hugue "The Genuine", ActID 123 at Eyrie, is whispered to have a poor impression of the Usurper" -> dict & List
-[Rumour -> Added] RID 579, "Knight Ser Jack Oudin "The Fighter", ActID 124 at Eyrie, is widely known to have a poor impression of the Usurper" -> dict & List
-[Rumour -> Added] RID 580, "Lady Jonett Codd "The Dove", ActID 125 at Eyrie, is suspected to have an average view of the Usurper" -> dict & List
-[Rumour -> Added] RID 581, "lady Shireen Codd "The Charmed", ActID 126 at Eyrie, is rumoured to have a poor impression of the Usurper" -> dict & List
-[Rumour -> Added] RID 582, "lady Geue Codd "The Dove", ActID 127 at Eyrie, is suspected to have a poor opinion of the Usurper" -> dict & List
-[Rumour -> Added] RID 583, "Heir Jory Codd "The Blank", ActID 128 at Eyrie, is whispered to have a very poor view of the Usurper" -> dict & List
-[Rumour -> Added] RID 584, "lady Catrain Codd "The Trickster", ActID 129 at Eyrie, is well known to have a very poor view of the Usurper" -> dict & List
-[Rumour -> Added] RID 585, "High_Septon Gervesin Gill "The Decent", ActID 107 at Kingskeep, is suspected to have a good view of the Usurper" -> dict & List
-[Rumour -> Added] RID 586, "Master_of_Coin Rowan Timm "The Bothered", ActID 108 at Kingskeep, is whispered to have a very poor impression of the Usurper" -> dict & List
-[Rumour -> Added] RID 587, "Master_of_Laws Leyton Hue "The Dull", ActID 109 at Kingskeep, is whispered to have a poor view of the Usurper" -> dict & List
-[Rumour -> Added] RID 588, "Master_of_Ships Donnel Ancelmus "The Shrewd", ActID 130 at Kingskeep, is whispered to have an average opinion of the Usurper" -> dict & List
-[Rumour -> Added] RID 589, "Master_of_Whisperers Jack Segar "The Halting", ActID 111 at Kingskeep, is murmured among friends to have an average view of the Usurper" -> dict & List
-[Rumour -> Added] RID 590, "Hand_of_the_King Willis Tybout "The Saintly", ActID 131 at Kingskeep, is whispered to have a poor opinion of the Usurper" -> dict & List
-[Rumour -> Added] RID 591, "Commander_of_Kings_Guard Tybaut Rab "The Rash", ActID 132 at Kingskeep, is well known to have a very poor opinion of the Usurper" -> dict & List
-[Rumour -> Added] RID 592, "Commander_of_City_Watch Doran Wilkin "The Canny", ActID 114 at Kingskeep, is rumoured to have a good opinion of the Usurper" -> dict & List
-[Notification] 93 Relationship Rumours have been added to the dictRumoursTimed
-[GameVar] New_RelRumours changed from 21 to 43
-[Notification] A new set of Relationship Rumours is set to be generated on turn 43
+//Exile Game file ops "LogTurn.txt" Completed at: 05/06/2017 11:11:07
+ Detain" Dormant Timer decremented to 15
+--- InitialiseDynamicRumours (Director.cs)
+[Notification] Turn 5, generate new set of Relationship rumours on turn 21
+[Rumour -> Added] RID 411, "Inquisitor, Brother Azazel, ActID 122 has been seen on the road to Brightwater Keep (loc 19:15)" -> dict & List
 --- HouseKeepActors (World.cs)
-[GameStat] "Location_Days" -> increased from 21 to 22
+[GameStat] "Location_Days" -> increased from 5 to 6
 --- HousekeepRumours (World.cs)
-dictRumoursKnown has 84 records
+dictRumoursKnown has 15 records
 
-//Exile Game File "LogTurn.txt" Close completed at: 05/06/2017 10:33:26
+//Exile Game File "LogTurn.txt" Close completed at: 05/06/2017 11:10:36

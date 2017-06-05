@@ -2859,7 +2859,12 @@ namespace Next_Game
                                             //message
                                             if (rumourCount > 0)
                                             { outcomeText = string.Format("{0}, \"{1}\", has learned of {2} new rumour{3}", player.Name, player.Handle, rumourCount, rumourCount != 1 ? "s" : ""); }
-                                            else { outcomeText = $"{player.Name}, \"{player.Handle}\", heard only old news and stale, out-of-date, rumours"; }
+                                            else
+                                            {
+                                                outcomeText = $"{player.Name}, \"{player.Handle}\", hears only old news and stale, out-of-date, rumours";
+                                                resultList.Add(new Snippet(""));
+                                                resultList.Add(new Snippet(outcomeText, foreColor, backColor)); resultList.Add(new Snippet(""));
+                                            }
                                             Game.world.SetMessage(new Message(outcomeText, 1, 0, MessageType.Event));
                                             Game.world.SetPlayerRecord(new Record(outcomeText, player.ActID, player.LocID, CurrentActorIncident.Event));
                                             break;
@@ -4390,12 +4395,12 @@ namespace Next_Game
         }
 
         /// <summary>
-        /// Player gains  a single rumour from 'asking around for information'
+        /// Player gains single rumour from 'asking around for information'
         /// </summary>
         /// <returns></returns>
         private string ChangePlayerRumourStatus()
         {
-            int rumourID;
+            int rumourID = 0;
             Game.logTurn?.Write("--- ChangePlayerRumourStatus (Director.cs)");
             string resultText = "";
             Rumour rumour = null;
