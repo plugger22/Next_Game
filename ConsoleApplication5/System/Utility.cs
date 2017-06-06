@@ -1,4 +1,5 @@
 ﻿using System;
+using RLNET;
 using System.Collections.Generic;
 using Next_Game.Cartographic;
 
@@ -12,11 +13,12 @@ namespace Next_Game
     {
 
         /// <summary>
-        /// utility function
+        /// utility function, returns a two line date format and harvest/winter countdown
         /// </summary>
         /// <returns></returns>
-        public string ShowDate()
+        public List<Snippet> ShowDate()
         {
+            List<Snippet> tempList = new List<Snippet>();
             string dateReturn = "Unknown";
             int moonDay = (Game.gameTurn % 30) + 1;
             int moonCycle = (Game.gameTurn / 30) + 1;
@@ -29,9 +31,12 @@ namespace Next_Game
             { moonSuffix = "rd"; }
             string harvestText = string.Format("Harvest in {0} day{1}", Game.HarvestTimer, Game.HarvestTimer != 1 ? "s" : "");
             string winterText = string.Format("Winter in {0} day{1}", Game.WinterTimer, Game.WinterTimer != 1 ? "s" : "");
-            dateReturn = string.Format("Day {0} of the {1}{2} Moon in the Year of our Gods {3}  (Turn {4}) {5} {6}", moonDay, moonCycle, moonSuffix, 
-                Game.gameYear, Game.gameTurn + 1, Game.HarvestTimer > 0 ? harvestText : "", Game.WinterTimer > 0 ? winterText : "");
-            return dateReturn;
+            dateReturn = string.Format("Day {0} of the {1}{2} Moon in the Year of our Gods {3}  (Turn {4}) ", moonDay, moonCycle, moonSuffix, 
+                Game.gameYear, Game.gameTurn + 1);
+            string timerText = string.Format("{0}{1} {2}", Game.HarvestTimer > 0 ? harvestText : "", Game.WinterTimer > 0 ? "," : "", Game.WinterTimer > 0 ? winterText : "");
+            tempList.Add(new Snippet(dateReturn, RLColor.Yellow, RLColor.Gray));
+            tempList.Add(new Snippet(timerText, RLColor.Yellow, RLColor.Gray));
+            return tempList;
         }
 
         /// <summary>

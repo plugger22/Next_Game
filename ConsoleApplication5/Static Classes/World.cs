@@ -3444,7 +3444,7 @@ namespace Next_Game
             RLColor decrease = Color._decrease;
             RLColor foreground;
             //Date
-            listStats.Add(new Snippet(Game.utility.ShowDate(), RLColor.Yellow, RLColor.Black));
+            listStats.AddRange(Game.utility.ShowDate());
             //justice
             data = Game.director.CheckGameState(GameState.Justice);
             good = Game.director.GetGameState(GameState.Justice, DataState.Good);

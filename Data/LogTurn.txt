@@ -1,17 +1,121 @@
-//Exile Game file ops "LogTurn.txt" commenced at: 06/06/2017 16:22:37
---- ProcessStartGame (World.cs)
---- AgePassiveCharacters (History.cs)
---- InitialiseGameVars (World.cs)
-[GameVar] View_Index changed from 0 to 1
-[AddVisitedLoc] LocID 24, "Greenstone", turn -3 -> record added to listLocsVisited
-[AddVisitedLoc] LocID 24, "Greenstone", turn -3 -> new record added to dictLocsVisited
-[AddVisitedLoc] LocID 28, "Fishfork", turn -2 -> record added to listLocsVisited
-[AddVisitedLoc] LocID 28, "Fishfork", turn -2 -> new record added to dictLocsVisited
-[AddVisitedLoc] LocID 2, "Brightwater Keep", turn -1 -> record added to listLocsVisited
-[AddVisitedLoc] LocID 2, "Brightwater Keep", turn -1 -> new record added to dictLocsVisited
---- InitialiseFinalPlayer (World.cs)
-[AddVisitedLoc] LocID 4, "Hornwood", turn 0 -> record added to listLocsVisited
-[AddVisitedLoc] LocID 4, "Hornwood", turn 0 -> new record added to dictLocsVisited
+//Exile Game File "LogTurn.txt" opened at: 06/06/2017 19:57:54
+--- ProcessStartTurn (World.cs)
+Day 5, Turn 4, Harvest in 189 days, Winter in 204 days
+Usurper Will Lannister, "The Whiffy", AtLocation, Longbow Hall
+--- UpdateRumours (World.cs)
+dictRumoursTimed (Start) -> 89 records
+[Rumour -> Removal] RID 423, "Inquisitor, Brother Amon, ActID 127 has been seen on the road to The Raucous Rat (loc 20:19)" removed from Global South list
+88 rumours -> TimerExpire decremented
+1 records have expired and been removed
+dictRumoursTimed (End) -> 88 records
+--- MoveActors -> 3 Records (World.cs)
+ [Move -> MoveObject] Inquisitor Brother Amon, ActID 127 travelling to The Raucous Rat (current Loc 15:19)
+--- CheckIfFoundEnemy (World.cs)
+ [Search -> Debug] Active Will Lannister, ID 1 at 0:24, Enemy at 15:19 (Brother Amon, ID 127
+--- CheckIfFoundEnemy (World.cs)
+ [Search -> Debug] Active Will Lannister, ID 1 at 0:24, Enemy at 16:19 (Brother Amon, ID 127
+ [Move -> MoveObject] Inquisitor Brother Shaitan, ActID 125 travelling to The Yellow Huntress (current Loc 13:16)
+--- CheckIfFoundEnemy (World.cs)
+ [Search -> Debug] Active Will Lannister, ID 1 at 0:24, Enemy at 13:16 (Brother Shaitan, ID 125
+ [Move -> MoveObject] Inquisitor Brother Kali, ActID 126 travelling to The Shaggy Parrot (current Loc 14:17)
+--- CheckIfFoundEnemy (World.cs)
+ [Search -> Debug] Active Will Lannister, ID 1 at 0:24, Enemy at 14:17 (Brother Kali, ID 126
+--- UpdatePlayerStatus (World.cs)
+--- UpdateWorldStatus (World.cs)
+--- CheckFollowerActivity (World.cs)
+--- GetRumour (Director.cs)
+arrayOfRumours [0] -> RumourID 264, Strength 1, Scope Global, Type Item, Global All
+arrayOfRumours [1] -> RumourID 187, Strength 2, Scope Global, Type Desire, Global North
+arrayOfRumours [5] -> RumourID 184, Strength 4, Scope Local, Type Skill, Global All
+RumourID 187 selected from the Pool
+Rumour "It is commonly known that BannerLord Cleos Slynt, ActID 88 at Harrenhal, is in thrall to the beautifully crafted Lion Dagger" revealed to ActorID3 on turn 4 -> added to List
+RumourID 187 removed from listRumoursNorth[2]
+Follower The Jester, ActID 3, added RumourID 187
+[Notification] Castellan Beves Arnoldus "The Apathetic" DesireKnown status changed to "True"
+--- GetRumour (Director.cs)
+arrayOfRumours [0] -> RumourID 83, Strength 1, Scope Global, Type Item, Global All
+arrayOfRumours [2] -> RumourID 382, Strength 2, Scope Global, Type HouseRel, Global East
+arrayOfRumours [5] -> RumourID 145, Strength 3, Scope Local, Type Skill, Global All
+RumourID 145 selected from the Pool
+Rumour "Heir Beuves Florent "The Mild", ActID 74 at Brightwater Keep, is well known to have Nerves of Steel" revealed to ActorID8 on turn 4 -> added to List
+RumourID 145 removed from listRumoursHouse[18]
+Follower The Dark Eminence, ActID 8, added RumourID 145
+Heir Beuves Florent, ActID 74, has their Leadership changed to True
+--- GetRumour (Director.cs)
+arrayOfRumours [0] -> RumourID 114, Strength 1, Scope Global, Type Item, Global All
+arrayOfRumours [4] -> RumourID 399, Strength 3, Scope Global, Type Friends, Global West
+arrayOfRumours [5] -> RumourID 203, Strength 4, Scope Local, Type Skill, Global All
+RumourID 399 selected from the Pool
+Rumour "It is rumoured that you have no Friends and a handful of Enemies at Winterfell (House Stark)" revealed to ActorID2 on turn 4 -> added to List
+RumourID 399 removed from listRumoursWest[13]
+Follower The Haggler, ActID 2, added RumourID 399
+[Notification] House Stark FriendsAndEnemies status changed to "True"
+--- GetMarketView (Director.cs)
+listPlayerChoices has 1 records, 10 % needed, rolled 41
+[GameVar] View_Index changed from 4 to 1
+--- CheckStationaryActiveActors (World.cs)
+ [Search -> Stationary] Usurper Will Lannister, ActID 1 is AtLocation
+--- CheckIfFoundActive (World.cs)
+ [Search -> Debug] Enemy, Brother Shaitan, ID 125 at 13:15, Active Will Lannister, ID 1, at 0:24
+ [Search -> Debug] Enemy, Brother Kali, ID 126 at 15:17, Active Will Lannister, ID 1, at 0:24
+ [Search -> Debug] Enemy, Brother Amon, ID 127 at 17:19, Active Will Lannister, ID 1, at 0:24
+ [Search -> Debug] Enemy, Brother Diabolous, ID 128 at 10:18, Active Will Lannister, ID 1, at 0:24
+ [Search -> Debug] Enemy, The Unrelenting, ID 129 at 13:17, Active Will Lannister, ID 1, at 0:24
+ [Search -> Stationary] Follower The Jester, ActID 3 is AtLocation
+ [Search -> Stationary] Follower The Dark Eminence, ActID 8 is AtLocation
+ [Search -> Stationary] Follower The Haggler, ActID 2 is AtLocation
+--- UpdateAIController (World.cs)
+ [AI -> Notification] Inquisitor Brother Shaitan, ActID 125 is Travelling to The Yellow Huntress
+ [AI -> Notification] Inquisitor Brother Kali, ActID 126 is Travelling to The Shaggy Parrot
+ [AI -> Notification] Inquisitor Brother Amon, ActID 127 is Travelling to The Raucous Rat
+ [AI -> Mode] enemyID 128,  distance -> 18  Threshold (turns) -> 4  Mode -> Normal
+ [AI -> Mode] enemyID 129,  distance -> 22  Threshold (turns) -> 8  Mode -> Normal
+--- SetEnemyActivity (World.cs)
+ [Enemy -> Unknown] Brother Shaitan ActID 125 has reverted to Unknown status (timer elapsed)
+ [Enemy -> Unknown] Brother Diabolous ActID 128 has reverted to Unknown status (timer elapsed)
+ [Enemy -> Goal] Brother Diabolous, ActID 128 retains Goal -> Wait
+ [Enemy -> Goal] The Unrelenting, ActID 129 retains Goal -> Wait
+--- CheckPlayerEvents (Director.cs)
+Location event, Need 75, roll 16
+--- GetValidPlayerEvents (Director.cs)
+[Event -> Added] "A hooded figure crosses your path, piercing eyes glancing in your direction." -> 3 records added to pool
+--- GetValidPlayerEvents (Director.cs)
+--- GetValidPlayerEvents (Director.cs)
+[DeterminePlayerEvent] There are 3 events in the Pool
+ Chance of Player Location event 37 %
+--- ResolvePlayerEvents (Director.cs)
+ "Talk to them" Trait Trigger, if type 3 is GreaterThanOrEqual to 3
+ Trigger FAILED on "2" GreaterThanOrEqual 3
+Trait trigger failed
+[Notification] Trait trigger Compulsory fail check
+ "Curse all strangers" Trait Trigger, if type 4 is GreaterThanOrEqual to 3
+ Trigger passed on "4" GreaterThanOrEqual 3
+ Event "Mysterious Stranger" Timer Repeat now 8
+ Event "Mysterious Stranger" Cooldown Timer has been reset to 0
+--- UpdateActiveActors (World.cs)
+ Usurper Will Lannister has had their Revert Timer reduced from 2 to 1
+ Follower The Jester has had their TurnsUnknown Timer increased from 3 to 4
+ Follower The Dark Eminence has had their TurnsUnknown Timer increased from 3 to 4
+ Follower The Haggler has had their TurnsUnknown Timer increased from 3 to 4
+--- ResolveOutcome (Director.cs)
+[Player Choice View -> Added] "Remember that stranger? The scary one? Says he bumped into Will Lannister at Longbow Hall recently."
+[Notification] listPlayerChoices now has 2 records
+--- ResolveFollowerEvents (Director.cs)
 --- SetEndGame (Game.cs)
 [Alert] Player chose to exit (pressed 'X')
-//Exile Game file ops "LogTurn.txt" Completed at: 06/06/2017 16:22:56
+//Exile Game file ops "LogTurn.txt" Completed at: 06/06/2017 19:57:58
+ their TurnsUnknown Timer increased from 2 to 3
+--- ResolveOutcome (Director.cs)
+--- ProcessEndTurn (World.cs)
+Day 4, Turn 3
+--- CheckEventTimers (Director.cs)
+ Event "Search and Detain" Dormant Timer decremented to 17
+--- InitialiseDynamicRumours (Director.cs)
+[Notification] Turn 3, generate new set of Relationship rumours on turn 21
+--- HouseKeepActors (World.cs)
+[GameStat] "Location_Days" -> increased from 3 to 4
+[GameStat] "Known_Days" -> increased from 2 to 3
+--- HousekeepRumours (World.cs)
+dictRumoursKnown has 9 records
+
+//Exile Game File "LogTurn.txt" Close completed at: 06/06/2017 19:57:54
