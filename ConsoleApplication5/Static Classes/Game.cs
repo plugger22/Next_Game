@@ -59,7 +59,7 @@ namespace Next_Game
 
         private static int _updateTimer = 0; //controls redraws
 
-        public static int gameTurn, gameGeneration, gameStart, gameRevolt, gameExile, gameYear, mapSize;
+        public static int gameTurn, gameGeneration, gameStart, gameRevolt, gameExile, gameYear, mapSize, HarvestTimer, WinterTimer;
 
         //core objects
         public static Menu menu;
@@ -1821,6 +1821,8 @@ namespace Next_Game
             gameYear = gameStart;
             gameGeneration = 1; //current generation (25 years each)
             mapSize = constant.GetValue(Global.MAP_SIZE);
+            HarvestTimer = 135 + rnd.Next(60); //harvest is 135 days plus a random amount.
+            WinterTimer = HarvestTimer + 15;
         }
 
         /// <summary>

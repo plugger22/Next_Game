@@ -4489,7 +4489,7 @@ namespace Next_Game
             bool notificationStatus = false; //is a notification msg needed?
             Game.infoChannel.ClearConsole(ConsoleDisplay.Event);
             Game.logTurn?.Write("--- ProcessStartTurn (World.cs)");
-            Game.logTurn?.Write($"Day {Game.gameTurn + 1}, Turn {Game.gameTurn}");
+            Game.logTurn?.Write($"Day {Game.gameTurn + 1}, Turn {Game.gameTurn}, Harvest in {Game.HarvestTimer} days, Winter in {Game.WinterTimer} days");
             Game.logTurn?.Write($"{GetPlayerStatusReport()}");
             UpdateRumours();
             UpdateActorMoveStatus(MoveActors());
@@ -4545,7 +4545,8 @@ namespace Next_Game
             Game.director.InitialiseDynamicRumours();
             HousekeepActors();
             HousekeepRumours();
-            Game.gameTurn++;
+            HouseKeepGame();
+            
         }
 
         /// <summary>
@@ -7451,6 +7452,17 @@ namespace Next_Game
                     break;
             }
             return tempList;
+        }
+
+        /// <summary>
+        /// End of Game Turn Game housekeeping
+        /// </summary>
+        public void HouseKeepGame()
+        {
+            //update Game timers
+            Game.gameTurn++;
+            Game.HarvestTimer--;
+            Game.WinterTimer--;
         }
 
         //new Methods above here

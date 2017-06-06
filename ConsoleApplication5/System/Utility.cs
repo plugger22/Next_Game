@@ -27,7 +27,10 @@ namespace Next_Game
             { moonSuffix = "nd"; }
             else if (moonCycle == 3)
             { moonSuffix = "rd"; }
-            dateReturn = string.Format("Day {0} of the {1}{2} Moon in the Year of our Gods {3}  (Turn {4})", moonDay, moonCycle, moonSuffix, Game.gameYear, Game.gameTurn + 1);
+            string harvestText = string.Format("Harvest in {0} day{1}", Game.HarvestTimer, Game.HarvestTimer != 1 ? "s" : "");
+            string winterText = string.Format("Winter in {0} day{1}", Game.WinterTimer, Game.WinterTimer != 1 ? "s" : "");
+            dateReturn = string.Format("Day {0} of the {1}{2} Moon in the Year of our Gods {3}  (Turn {4}) {5} {6}", moonDay, moonCycle, moonSuffix, 
+                Game.gameYear, Game.gameTurn + 1, Game.HarvestTimer > 0 ? harvestText : "", Game.WinterTimer > 0 ? winterText : "");
             return dateReturn;
         }
 
