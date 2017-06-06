@@ -4337,6 +4337,24 @@ namespace Next_Game
         }
 
 
+        public List<Snippet> ShowFoodRL(FoodInfo mode)
+        {
+            List<Snippet> tempList = new List<Snippet>();
+            if (mode != FoodInfo.None)
+            {
+                List<String> listOfFoodInfo = GetFoodInfo(mode);
+                tempList.Add(new Snippet($"--- {mode} Food Info", RLColor.Yellow, RLColor.Black));
+                if (listOfFoodInfo.Count > 0)
+                {
+                    foreach (var text in listOfFoodInfo)
+                    { tempList.Add(new Snippet(text)); }
+                }
+                else { tempList.Add(new Snippet($"No records have been returned for FoodInfo mode \"{mode}\"", RLColor.LightRed, RLColor.Black)); }
+            }
+            else { tempList.Add(new Snippet("ERROR -> Invalid FoodInfo mode provided", RLColor.LightRed, RLColor.Black)); }
+            return tempList;
+        }
+
         /// <summary>
         /// gets the correct advisor type and returns as a string for display purposes
         /// </summary>

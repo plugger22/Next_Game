@@ -94,6 +94,7 @@ namespace Next_Game
                     menuArrayText[3, 1] = "[D] Debug MENU";
                     menuArrayText[3, 2] = "[O] God MENU";
                     menuArrayText[3, 3] = "[R] Reference MENU";
+                    menuArrayText[3, 4] = "[B] Balance MENU";
                     //menuArrayText[3, 4] = "[L] Lore MENU";
                     menuArrayText[3, 5] = "[X] Quit";
                     break;
@@ -146,6 +147,21 @@ namespace Next_Game
                     //Main God Menu
                     menuArrayText[1, 0] = "[P] Move Player";
                     menuArrayText[1, 1] = "[K] Known Status";
+                    //Switch commands
+                    menuArrayText[3, 0] = "[ESC] Main Menu";
+                    menuArrayText[3, 1] = "[ENTER] End Turn";
+                    break;
+                case MenuMode.Balance:
+                    menuColorFore = RLColor.LightBlue;
+                    menuColorBack = RLColor.LightGray;
+                    //input categories
+                    menuArrayCategories[0] = "Food MENU ---";
+                    menuArrayCategories[3] = "Switch ---";
+                    //Food menu commands
+                    menuArrayText[0, 0] = "[A] Surpluses";
+                    menuArrayText[0, 1] = "[B] Deficits";
+                    menuArrayText[0, 2] = "[C} Houses";
+                    menuArrayText[0, 3] = "[D] Branches";
                     //Switch commands
                     menuArrayText[3, 0] = "[ESC] Main Menu";
                     menuArrayText[3, 1] = "[ENTER] End Turn";

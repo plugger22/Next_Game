@@ -1,17 +1,112 @@
-//Exile Game file ops "LogTurn.txt" commenced at: 06/06/2017 11:09:25
---- ProcessStartGame (World.cs)
---- AgePassiveCharacters (History.cs)
---- InitialiseGameVars (World.cs)
-[GameVar] View_Index changed from 0 to 1
-[AddVisitedLoc] LocID 25, "Valyria", turn -3 -> record added to listLocsVisited
-[AddVisitedLoc] LocID 25, "Valyria", turn -3 -> new record added to dictLocsVisited
-[AddVisitedLoc] LocID 27, "Sodhall", turn -2 -> record added to listLocsVisited
-[AddVisitedLoc] LocID 27, "Sodhall", turn -2 -> new record added to dictLocsVisited
-[AddVisitedLoc] LocID 16, "Torrhen's Square", turn -1 -> record added to listLocsVisited
-[AddVisitedLoc] LocID 16, "Torrhen's Square", turn -1 -> new record added to dictLocsVisited
---- InitialiseFinalPlayer (World.cs)
-[AddVisitedLoc] LocID 21, "Maidenpool", turn 0 -> record added to listLocsVisited
-[AddVisitedLoc] LocID 21, "Maidenpool", turn 0 -> new record added to dictLocsVisited
+//Exile Game File "LogTurn.txt" opened at: 06/06/2017 11:23:07
+--- ProcessStartTurn (World.cs)
+Day 2, Turn 1
+Usurper Joffery Targaryen, "The Lively", AtLocation, Widow's Watch
+--- UpdateRumours (World.cs)
+dictRumoursTimed (Start) -> 89 records
+89 rumours -> TimerExpire decremented
+--- MoveActors -> 0 Records (World.cs)
+--- UpdatePlayerStatus (World.cs)
+--- UpdateWorldStatus (World.cs)
+--- CheckFollowerActivity (World.cs)
+--- GetRumour (Director.cs)
+arrayOfRumours [0] -> RumourID 412, Strength 3, Scope Global, Type Event, Global All
+arrayOfRumours [1] -> RumourID 408, Strength 3, Scope Global, Type Friends, Global North
+arrayOfRumours [5] -> RumourID 298, Strength 1, Scope Local, Type Relationship, Global All
+RumourID 408 selected from the Pool
+Rumour "It is whispered that you have no Friends and many Enemies at Valyria (House Hightower)" revealed to ActorID9 on turn 1 -> added to List
+RumourID 408 removed from listRumoursNorth[12]
+Follower The Duchess, ActID 9, added RumourID 408
+[Notification] House Hightower FriendsAndEnemies status changed to "True"
+--- GetRumour (Director.cs)
+arrayOfRumours [0] -> RumourID 414, Strength 3, Scope Global, Type Event, Global All
+arrayOfRumours [2] -> RumourID 399, Strength 3, Scope Global, Type Friends, Global East
+arrayOfRumours [5] -> RumourID 211, Strength 4, Scope Local, Type Skill, Global All
+RumourID 211 selected from the Pool
+Rumour "BannerLord Charles Wull "The Inept", ActID 84 at Sodhall, is rumoured to be Clumsy" revealed to ActorID8 on turn 1 -> added to List
+RumourID 211 removed from listRumoursHouse[0]
+Follower The Beast, ActID 8, added RumourID 211
+BannerLord Charles Wull, ActID 84, has their Combat changed to True
+--- GetRumour (Director.cs)
+arrayOfRumours [0] -> RumourID 27, Strength 1, Scope Global, Type Item, Global All
+arrayOfRumours [4] -> RumourID 395, Strength 3, Scope Global, Type Friends, Global West
+arrayOfRumours [5] -> RumourID 210, Strength 4, Scope Local, Type Skill, Global All
+RumourID 27 selected from the Pool
+Rumour "It is said that the lusted after Elixir of Wellness (Passive Item) is to be found at Casterly Rock" revealed to ActorID5 on turn 1 -> added to List
+RumourID 27 removed from listRumoursGlobal[4]
+Follower The Crone, ActID 5, added RumourID 27
+--- GetMarketView (Director.cs)
+[GameVar] View_Index changed from 1 to 2
+--- CheckStationaryActiveActors (World.cs)
+ [Search -> Stationary] Usurper Joffery Targaryen, ActID 1 is AtLocation
+--- CheckIfFoundActive (World.cs)
+ [Search -> Debug] Enemy, Brother Gorgo, ID 117 at 16:16, Active Joffery Targaryen, ID 1, at 4:2
+ [Search -> Debug] Enemy, Brother Kali, ID 118 at 16:16, Active Joffery Targaryen, ID 1, at 4:2
+ [Search -> Debug] Enemy, Brother Dagon, ID 119 at 16:16, Active Joffery Targaryen, ID 1, at 4:2
+ [Search -> Debug] Enemy, Brother Amon, ID 120 at 16:16, Active Joffery Targaryen, ID 1, at 4:2
+ [Search -> Debug] Enemy, The Unrelenting, ID 121 at 16:16, Active Joffery Targaryen, ID 1, at 4:2
+ [Search -> Stationary] Follower The Duchess, ActID 9 is AtLocation
+ [Search -> Stationary] Follower The Beast, ActID 8 is AtLocation
+ [Search -> Stationary] Follower The Crone, ActID 5 is AtLocation
+--- UpdateAIController (World.cs)
+ [AI -> Player Unknown] Inquisitor Brother Gorgo, Act ID 117 Mode -> Normal
+ [AI -> Player Unknown] Inquisitor Brother Kali, Act ID 118 Mode -> Normal
+ [AI -> Player Unknown] Inquisitor Brother Dagon, Act ID 119 Mode -> Normal
+ [AI -> Player Unknown] Inquisitor Brother Amon, Act ID 120 Mode -> Normal
+ [AI -> Player Unknown] Nemesis The Unrelenting, Act ID 121 Mode -> Normal
+--- SetEnemyActivity (World.cs)
+ [Enemy -> Known] Brother Gorgo ActID 117 has become KNOWN
+ [Enemy -> Goal] Brother Gorgo, ActID 117 retains Goal -> Wait
+--- SetEnemyGoal (World.cs)
+ [Goal -> Branch] Brother Kali, ActID 118 Assigned Branch -> 2 Current Branch -> 0
+ [Enemy -> Goal] Brother Dagon, ActID 119 retains Goal -> Wait
+ [Enemy -> Goal] Brother Amon, ActID 120 retains Goal -> Wait
+--- SetEnemyGoal (World.cs)
+ [Goal -> Branch] The Unrelenting, ActID 121 Assigned Branch -> 0 Current Branch -> 0
+ [Goal -> New] The Unrelenting, ActID 121, (loc 16:16), assigned new Goal -> Hide
+--- CheckPlayerEvents (Director.cs)
+Location event, Need 0, roll 97
+- CreateAutoLocEvent (Director.cs)
+ [AutoEvent -> ActorList] "Areo Flint", ID 77 added to list of Actors
+ [AutoEvent -> LocalList] "Areo Flint", ID 77 added to list of Locals
+[Notification] No entry found in dictOfIntroductions for RefID 4
+ Chance of Player Location event 75 %
+--- ResolvePlayerEvents (Director.cs)
+ Trigger FAILED on "0" Equals 1
+ Trigger: Player is wrong type of Known status -> Trigger failed
+ Trigger FAILED on "0" Equals 1
+ Trigger: Player is wrong type of Known status -> Trigger failed
+ Event "What to do?" Timer Repeat now 999
+ Event "What to do?" Cooldown Timer has been reset to 0
+--- UpdateActiveActors (World.cs)
+ Usurper Joffery Targaryen has had their TurnsUnknown Timer increased from 100 to 101
+ Follower The Duchess has had their TurnsUnknown Timer increased from 0 to 1
+ Follower The Beast has had their TurnsUnknown Timer increased from 0 to 1
+ Follower The Crone has had their TurnsUnknown Timer increased from 0 to 1
+--- ResolveOutcome (Director.cs)
+--- ChangePlayerRumourStatus (Director.cs)
+--- GetRumour (Director.cs)
+arrayOfRumours [0] -> RumourID 416, Strength 3, Scope Global, Type Enemy, Global All
+arrayOfRumours [4] -> RumourID 68, Strength 2, Scope Global, Type Desire, Global West
+arrayOfRumours [5] -> RumourID 342, Strength 4, Scope Local, Type Relationship, Global All
+RumourID 68 selected from the Pool
+Rumour "It is whispered that Maester Sagard Maukolum, ActID 30 at Brightwater Keep, lusts after Gold" revealed to ActorID1 on turn 1 -> added to List
+RumourID 68 removed from listRumoursWest[2]
+Rumour "It is whispered that Maester Sagard Maukolum, ActID 30 at Brightwater Keep, lusts after Gold", rumourID 68, added to dictRumoursKnown
+[Notification] Maester Sagard Maukolum "The Direct" DesireKnown status changed to "True"
+It is whispered that Maester Sagard Maukolum, ActID 30 at Brightwater Keep, lusts after Gold
+--- ChangePlayerRumourStatus (Director.cs)
+--- GetRumour (Director.cs)
+arrayOfRumours [0] -> RumourID 415, Strength 3, Scope Global, Type Enemy, Global All
+arrayOfRumours [4] -> RumourID 186, Strength 2, Scope Global, Type Desire, Global West
+arrayOfRumours [5] -> RumourID 342, Strength 4, Scope Local, Type Relationship, Global All
+RumourID 186 selected from the Pool
+Rumour "It is known by all that BannerLord Houdouyn Crane, ActID 75 at Red Lake, hungers for the dreaded Chalice of Pain" revealed to ActorID1 on turn 1 -> added to List
+RumourID 186 removed from listRumoursWest[4]
+Rumour "It is known by all that BannerLord Houdouyn Crane, ActID 75 at Red Lake, hungers for the dreaded Chalice of Pain", rumourID 186, added to dictRumoursKnown
+[Notification] Lord Donnel Lannister "The Fixed" DesireKnown status changed to "True"
+It is known by all that BannerLord Houdouyn Crane, ActID 75 at Red Lake, hungers for the dreaded Chalice of Pain
+--- ResolveFollowerEvents (Director.cs)
 --- SetEndGame (Game.cs)
 [Alert] Player chose to exit (pressed 'X')
-//Exile Game file ops "LogTurn.txt" Completed at: 06/06/2017 11:11:02
+//Exile Game file ops "LogTurn.txt" Completed at: 06/06/2017 11:23:47

@@ -12,7 +12,7 @@ using System.IO;
 
 namespace Next_Game
 {
-    public enum MenuMode {Main, Actor_Active, Actor_Passive, Debug, Reference, Special, God} //distinct menu sets (Menu.cs)
+    public enum MenuMode {Main, Actor_Active, Actor_Passive, Debug, Reference, Special, God, Balance} //distinct menu sets (Menu.cs)
     public enum ConsoleDisplay {Status, Input, Multi, Message, Event, Conflict} //different console windows (Menu window handled independently by Menu.cs) -> Event & Conflict are within Multi
     public enum InputMode {Normal, MultiKey, Scrolling} //special input modes
     public enum SpecialMode {None, FollowerEvent, PlayerEvent, Conflict, Outcome, Notification, Confirm} //if MenuMode.Special then -> type of special (Notification -> msg, Confirm -> Y/N)
@@ -580,6 +580,15 @@ namespace Next_Game
                                     case MenuMode.Debug:
                                         //ShowGameVars
                                         infoChannel.SetInfoList(world.ShowGameVarsRL(), ConsoleDisplay.Multi);
+                                        break;
+                                }
+                                break;
+                            case RLKey.B:
+                                switch (_menuMode)
+                                {
+                                    case MenuMode.Main:
+                                        //switch to Balance menu
+                                        _menuMode = menu.SwitchMenuMode(MenuMode.Balance);
                                         break;
                                 }
                                 break;
