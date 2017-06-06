@@ -329,13 +329,13 @@ namespace Next_Game
                 else
                 { kingdomEvent = HistKingdomIncident.Battle; descriptor = string.Format("The Battle of {0}", loc.LocName); }
                 //create record
-                string details = string.Format("{0} {1}", descriptor, Game.world.ShowLocationCoords(loc.LocationID));
+                string details = string.Format("{0} {1}", descriptor, Game.world.GetLocationCoords(loc.LocationID));
                 Record record = new Record(details, loc.LocationID, loc.RefID, year, kingdomEvent);
                 Game.world.SetHistoricalRecord(record);
                 //add to list of battles to enable actor events to be fleshed out
                 listOfUprisingBattles.Add(descriptor);
                 //debug
-                Game.logStart?.Write(string.Format("{0} {1} {2}", year, descriptor, Game.world.ShowLocationCoords(loc.LocationID)));
+                Game.logStart?.Write(string.Format("{0} {1} {2}", year, descriptor, Game.world.GetLocationCoords(loc.LocationID)));
 
                 //Battle descriptions - first (rebels always prevail, battle is smallest, rebel forces larger than royalists)
                 string text_1 = null;

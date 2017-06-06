@@ -541,7 +541,7 @@ namespace Next_Game
                                     Location loc = Game.network.GetLocation(player.LocID);
                                     if (loc != null)
                                     {
-                                        string tempText = $"Ursurper {player.Name} at {loc.LocName}, {Game.world.ShowLocationCoords(loc.LocationID)}, [Event] \"What to do?\"";
+                                        string tempText = $"Ursurper {player.Name} at {loc.LocName}, {Game.world.GetLocationCoords(loc.LocationID)}, [Event] \"What to do?\"";
                                         Record recordEvent = new Record(tempText, 1, loc.LocationID, CurrentActorIncident.Event);
                                         Game.world.SetPlayerRecord(recordEvent);
                                         Game.world.SetMessage(new Message(tempText, MessageType.Event));
@@ -701,7 +701,7 @@ namespace Next_Game
                 Message message = null; tempText = "";
                 if (type == EventType.Travelling)
                 {
-                    tempText = string.Format("{0}, Aid {1} {2}, [{3} Event] \"{4}\"", actor.Name, actor.ActID, Game.world.ShowLocationCoords(actor.LocID),
+                    tempText = string.Format("{0}, Aid {1} {2}, [{3} Event] \"{4}\"", actor.Name, actor.ActID, Game.world.GetLocationCoords(actor.LocID),
                       type, eventChosen.Name);
                     message = new Message(tempText, MessageType.Event);
                 }
@@ -888,7 +888,7 @@ namespace Next_Game
                         message = new Message(tempText, MessageType.Event);
                         break;
                     case EventType.Travelling:
-                        tempText = string.Format("{0}, Aid {1} {2}, [{3} Event] \"{4}\"", actor.Name, actor.ActID, Game.world.ShowLocationCoords(actor.LocID),
+                        tempText = string.Format("{0}, Aid {1} {2}, [{3} Event] \"{4}\"", actor.Name, actor.ActID, Game.world.GetLocationCoords(actor.LocID),
                           eventType, eventChosen.Name);
                         message = new Message(tempText, MessageType.Event);
                         break;
@@ -1594,7 +1594,7 @@ namespace Next_Game
                                     chance = (rnd.Next(1, 10) - 1) * 10;
                                     chance = Math.Max(10, chance);
                                     optionText = string.Format("Obtain passage to {0} {1}, a voyage of {2} day{3}. {4}% chance of success.", locDestination.LocName,
-                                        Game.world.ShowLocationCoords(locDestination.LocationID), voyageTime, voyageTime != 1 ? "s" : "", chance);
+                                        Game.world.GetLocationCoords(locDestination.LocationID), voyageTime, voyageTime != 1 ? "s" : "", chance);
                                     OptionInteractive option = new OptionInteractive(optionText) { LocID = locDestination.LocationID, Test = chance };
                                     option.ReplyGood = "A suitable ship is available. You board immediately";
                                     option.ReplyBad = $"No ship is available to take you to {locDestination.LocName} today";
@@ -1655,7 +1655,7 @@ namespace Next_Game
                                     voyageTime = passage.Value / fastSpeed;
                                     voyageTime = Math.Max(1, voyageTime);
                                     optionText = string.Format("Buy a fast passage to {0} {1}, a voyage of {2} day{3} (costs a Resource)", locDestination.LocName,
-                                        Game.world.ShowLocationCoords(locDestination.LocationID), voyageTime, voyageTime != 1 ? "s" : "");
+                                        Game.world.GetLocationCoords(locDestination.LocationID), voyageTime, voyageTime != 1 ? "s" : "");
                                     OptionInteractive option = new OptionInteractive(optionText) { LocID = locDestination.LocationID };
                                     option.ReplyGood = "Money talks. The Captain pockets the gold and bids you come aboard";
                                     OutResource outResource = new OutResource(eventObject.EventPID, true, 1, EventCalc.Subtract);
@@ -1931,13 +1931,10 @@ namespace Next_Game
                     listPlyrCurrentEvents.Add(package);
                     //if more than the current event present the original one (autocreated) needs to be deleted
                     if (listPlyrCurrentEvents.Count > 1) { listPlyrCurrentEvents.RemoveAt(0); }
-
                     //add to Player dictionary (ResolveOutcome looks for it there) -> check not an instance present already
                     if (dictPlayerEvents.ContainsKey(1000)) { dictPlayerEvents.Remove(1000); }
                     dictPlayerEvents.Add(1000, eventObject);
                     //message
-                    //tempText = string.Format("{0}, Aid {1} at {2} {3}, [{4} Event] \"{5}\"", player.Name, player.ActID, locName, Game.world.ShowLocationCoords(player.LocID),
-                    //eventObject.Type, eventObject.Name);
                     if (tempText.Length > 0)
                     {
                         Game.world.SetMessage(new Message(tempText, MessageType.Event));
@@ -5356,7 +5353,7 @@ namespace Next_Game
                                         //halved chance for an enemy in hiding -> hunt mode not possible
                                         if (rndNum < (chanceOfRumour / 2))
                                         { rumourText = string.Format("{0}, {1}, ActID {2} has been spotted hiding at {3} {4}", enemy.Value.Title, enemy.Value.Name,
-                                             enemy.Value.ActID, loc.LocName, Game.world.ShowLocationCoords(loc.LocationID)); }
+                                             enemy.Value.ActID, loc.LocName, Game.world.GetLocationCoords(loc.LocationID)); }
                                         break;
                                     case ActorAIGoal.Wait:
                                         //hunt mode not possible for 'wait'
@@ -5367,7 +5364,7 @@ namespace Next_Game
                                             else
                                             { waitText = arrayOfInquisitorWaitTexts[rnd.Next(arrayOfInquisitorWaitTexts.Length)]; }
                                             rumourText = string.Format("{0}, {1}, ActID {2} has been spotted {3} at {4} {5}", enemy.Value.Title, enemy.Value.Name,
-                                                  enemy.Value.ActID, waitText, loc.LocName, Game.world.ShowLocationCoords(loc.LocationID));
+                                                  enemy.Value.ActID, waitText, loc.LocName, Game.world.GetLocationCoords(loc.LocationID));
                                         }
                                         break;
                                     case ActorAIGoal.Search:
@@ -5375,10 +5372,10 @@ namespace Next_Game
                                         {
                                             if (enemy.Value.HuntMode == true)
                                             { rumourText = string.Format("{0}, {1}, ActID {2} has been spotted asking about the Usurper's whereabouts at {3} {4} with {5} sword at the ready", enemy.Value.Title, enemy.Value.Name,
-                                                  enemy.Value.ActID, loc.LocName, Game.world.ShowLocationCoords(loc.LocationID), enemy.Value.Sex == ActorSex.Male ? "his" : "her"); }
+                                                  enemy.Value.ActID, loc.LocName, Game.world.GetLocationCoords(loc.LocationID), enemy.Value.Sex == ActorSex.Male ? "his" : "her"); }
                                             else
                                             { rumourText = string.Format("{0}, {1}, ActID {2} has been spotted asking about the Usurper's whereabouts at {3} {4}", enemy.Value.Title, enemy.Value.Name,
-                                             enemy.Value.ActID, loc.LocName, Game.world.ShowLocationCoords(loc.LocationID)); }
+                                             enemy.Value.ActID, loc.LocName, Game.world.GetLocationCoords(loc.LocationID)); }
                                         }
                                         break;
                                     case ActorAIGoal.Move:
@@ -5386,10 +5383,10 @@ namespace Next_Game
                                         {
                                             if (enemy.Value.HuntMode == true)
                                             { rumourText = string.Format("{0}, {1}, ActID {2} has been seen on the road to {3} {4} with {5} sword at the ready", enemy.Value.Title, enemy.Value.Name,
-                                                    enemy.Value.ActID, loc.LocName, Game.world.ShowLocationCoords(loc.LocationID), enemy.Value.Sex == ActorSex.Male ? "his" : "her"); }
+                                                    enemy.Value.ActID, loc.LocName, Game.world.GetLocationCoords(loc.LocationID), enemy.Value.Sex == ActorSex.Male ? "his" : "her"); }
                                             else
                                             { rumourText = string.Format("{0}, {1}, ActID {2} has been seen on the road to {3} {4}", enemy.Value.Title, enemy.Value.Name,
-                                               enemy.Value.ActID, loc.LocName, Game.world.ShowLocationCoords(loc.LocationID)); }
+                                               enemy.Value.ActID, loc.LocName, Game.world.GetLocationCoords(loc.LocationID)); }
                                         }
                                         break;
                                 }

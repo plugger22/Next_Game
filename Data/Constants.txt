@@ -42,6 +42,8 @@
 36: 5 @ 5 @ 5
 # POPULATION_FACTOR -> multiply this factor by MEN_AT_ARMS to get a houses total population
 79: 5 @ 4 @ 6
+# FOOD_CAPACITY -> how much food a single plains square generates at harvest (in the 3 x 3 grid that the city sits within)
+80: 1000 @ 500 @ 2000
 
 # History ---
 
@@ -207,4 +209,4 @@
 # REL_RUMOUR_TIME -> how many tunrs a relationship rumour exists for and the interval (time + 1) before initialising new ones.
 75: 20 @ 5 @ 30
 
-# Next valid number -> 80
+# Next valid number -> 81

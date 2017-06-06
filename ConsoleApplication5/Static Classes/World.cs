@@ -991,12 +991,12 @@ namespace Next_Game
                     switch (person.Status)
                     {
                         case ActorStatus.AtLocation:
-                            locString = string.Format("Located at {0} {1}, Lid {2}, Rid {3}", GetLocationName(locID), ShowLocationCoords(locID), locID, refID);
+                            locString = string.Format("Located at {0} {1}, Lid {2}, Rid {3}", GetLocationName(locID), GetLocationCoords(locID), locID, refID);
                             break;
                         case ActorStatus.Travelling:
                             Position pos = person.GetActorPosition();
                             locString = string.Format("Currently at {0}:{1}, {2} towards {3} {4}, Lid {5}, Rid {6}", pos.PosX, pos.PosY, person.Travel == TravelMode.Mounted ? "Riding" : "Walking",
-                                GetLocationName(locID), ShowLocationCoords(locID), locID, refID);
+                                GetLocationName(locID), GetLocationCoords(locID), locID, refID);
                             break;
                         case ActorStatus.AtSea:
                             if (person is Player)
@@ -1593,7 +1593,7 @@ namespace Next_Game
         /// </summary>
         /// <param name="locID"></param>
         /// <returns>returns '(loc 20:4)' format string</returns>
-        public string ShowLocationCoords(int locID)
+        public string GetLocationCoords(int locID)
         {
             string coords = "Unknown";
             Location loc = Game.network.GetLocation(locID);
@@ -1642,10 +1642,16 @@ namespace Next_Game
                                     loc.HouseID, loc.GetBranch()), color, RLColor.Black));
                                 locList.Add(new Snippet(string.Format("Motto \"{0}\"", house.Motto)));
                                 locList.Add(new Snippet(string.Format("Banner \"{0}\"", house.Banner)));
-                                locList.Add(new Snippet(string.Format("Seated at {0} {1}", house.LocName, ShowLocationCoords(locID))));
+                                locList.Add(new Snippet(string.Format("Seated at {0} {1}", house.LocName, GetLocationCoords(locID))));
                                 RLColor loyaltyColor = Color._goodTrait;
                                 if (house.Loyalty_Current == KingLoyalty.New_King) { loyaltyColor = Color._badTrait; }
                                 locList.Add(new Snippet(string.Format("Loyal to the {0}", house.Loyalty_Current), loyaltyColor, RLColor.Black));
+                                locList.Add(new Snippet($"Population {house.Population:N0}, Harvest {house.FoodCapacity:N0}, Granary {house.FoodStockpile:N0}"));
+                                if (house is MajorHouse)
+                                {
+                                    MajorHouse majorHouse = house as MajorHouse;
+                                    locList.Add(new Snippet($"House {majorHouse.Name} has {majorHouse.GetNumBannerLords()} BannerLords"));
+                                }
                                 if (house.SafeHouse > 0)
                                 {
                                     locList.Add(new Snippet($"Safe House available ", false));
@@ -1667,7 +1673,7 @@ namespace Next_Game
                                 locList.Add(new Snippet(string.Format("{0} Inn, LocID {1}, RefID {2}, Branch {3}", house.Name, loc.LocationID, loc.RefID, loc.GetBranch(), color, RLColor.Black)));
                                 locList.Add(new Snippet(string.Format("Motto \"{0}\"", house.Motto)));
                                 locList.Add(new Snippet(string.Format("Signage \"{0}\"", house.Banner)));
-                                locList.Add(new Snippet(string.Format("Found at {0}", ShowLocationCoords(locID))));
+                                locList.Add(new Snippet(string.Format("Found at {0}", GetLocationCoords(locID))));
                                 if (eventCount > 0)
                                 {
                                     locList.Add(new Snippet(string.Format("Archetype \"{0}\" with {1} events", Game.director.GetArchetypeName(house.ArcID), eventCount),
@@ -1699,6 +1705,7 @@ namespace Next_Game
                         locList.Add(new Snippet(string.Format("{0}", GetStars(capitalWalls)), RLColor.LightRed, RLColor.Black));
                         locList.Add(new Snippet(string.Format("House Resources ({0}) ", (ResourceLevel)capitalResources), false));
                         locList.Add(new Snippet(string.Format("{0}", GetStars((int)capitalResources)), RLColor.LightRed, RLColor.Black));
+                        locList.Add(new Snippet($"Population {house.Population}, Harvest {house.FoodCapacity}, Granary {house.FoodStockpile}"));
                     }
                     if (loc.Connector == true)
                     { locList.Add(new Snippet("CONNECTOR", RLColor.Red, RLColor.Black)); }
@@ -1821,7 +1828,7 @@ namespace Next_Game
                 houseList.Add(new Snippet(motto));
                 string banner = string.Format("Banner \"{0}\"", majorHouse.Banner);
                 houseList.Add(new Snippet(banner));
-                string seat = string.Format("Seated at {0} {1}", majorHouse.LocName, ShowLocationCoords(majorHouse.LocID));
+                string seat = string.Format("Seated at {0} {1}", majorHouse.LocName, GetLocationCoords(majorHouse.LocID));
                 houseList.Add(new Snippet(seat));
                 string loyalty = string.Format("Loyal to the {0} (originally: {1})", majorHouse.Loyalty_Current, majorHouse.Loyalty_AtStart);
                 houseList.Add(new Snippet(loyalty));
@@ -1836,6 +1843,7 @@ namespace Next_Game
                 houseList.Add(new Snippet(string.Format("House Resources ({0}) ", (ResourceLevel)majorHouse.Resources), false));
                 houseList.Add(new Snippet(string.Format("{0}", GetStars((int)majorHouse.Resources)), RLColor.LightRed, RLColor.Black));
                 //bannerlords
+                int food = majorHouse.FoodCapacity; int granary = majorHouse.FoodStockpile; int popTotal = majorHouse.Population;
                 if (listLordLocations.Count > 0)
                 {
                     houseList.Add(new Snippet("BannerLords", RLColor.Yellow, RLColor.Black));
@@ -1847,12 +1855,18 @@ namespace Next_Game
                         {
                             refID = Game.map.GetMapInfo(MapLayer.RefID, loc.GetPosX(), loc.GetPosY());
                             House house = GetHouse(refID);
-                            bannerLord = string.Format("House {0} at {1} {2}", house.Name, GetLocationName(locID), ShowLocationCoords(locID));
+                            bannerLord = string.Format("House {0} at {1} {2}", house.Name, GetLocationName(locID), GetLocationCoords(locID));
                             houseList.Add(new Snippet(bannerLord));
+                            food += house.FoodCapacity;
+                            granary += house.FoodStockpile;
+                            popTotal += house.Population;
                         }
                         else { Game.SetError(new Error(36, "Invalid Loc (null) BannerLord not added to list")); }
                     }
                 }
+                //Food and pop realm summary
+                houseList.Add(new Snippet("House Realm", RLColor.Yellow, RLColor.Black));
+                houseList.Add(new Snippet($"Realm Population {popTotal:N0}, Realm Harvest {food:N0}, Realm Granary {granary:N0}"));
                 //family - get list of all actorID's in family
                 houseList.Add(new Snippet("Family", RLColor.Brown, RLColor.Black));
                 List<int> listOfFamily = new List<int>();
@@ -1881,11 +1895,11 @@ namespace Next_Game
                         switch (person.Status)
                         {
                             case ActorStatus.AtLocation:
-                                locString = string.Format("at {0} {1}", GetLocationName(person.LocID), ShowLocationCoords(person.LocID));
+                                locString = string.Format("at {0} {1}", GetLocationName(person.LocID), GetLocationCoords(person.LocID));
                                 break;
                             case ActorStatus.Travelling:
                                 Position pos = person.GetActorPosition();
-                                locString = string.Format("travelling to {0} {1}", GetLocationName(person.LocID), ShowLocationCoords(person.LocID));
+                                locString = string.Format("travelling to {0} {1}", GetLocationName(person.LocID), GetLocationCoords(person.LocID));
                                 break;
                             case ActorStatus.Gone:
                                 locString = string.Format("Passed away ({0}) in {1}", person.ReasonGone, person.Gone);
@@ -1923,11 +1937,11 @@ namespace Next_Game
                         switch (person.Status)
                         {
                             case ActorStatus.AtLocation:
-                                locString = string.Format("at {0} {1}", GetLocationName(person.LocID), ShowLocationCoords(person.LocID));
+                                locString = string.Format("at {0} {1}", GetLocationName(person.LocID), GetLocationCoords(person.LocID));
                                 break;
                             case ActorStatus.Travelling:
                                 Position pos = person.GetActorPosition();
-                                locString = string.Format("travelling to {0} {1}", GetLocationName(person.LocID), ShowLocationCoords(person.LocID));
+                                locString = string.Format("travelling to {0} {1}", GetLocationName(person.LocID), GetLocationCoords(person.LocID));
                                 break;
                             case ActorStatus.Gone:
                                 locString = string.Format("passed away ({0}) in {1}", person.ReasonGone, person.Gone);
@@ -1982,7 +1996,7 @@ namespace Next_Game
             CapitalHouse capital = GetCapital();
             List<Snippet> capitalList = new List<Snippet>();
 
-            capitalList.Add(new Snippet(string.Format("Kingskeep, Kingdom Capital {0}", ShowLocationCoords(1)), RLColor.Yellow, RLColor.Black));
+            capitalList.Add(new Snippet(string.Format("Kingskeep, Kingdom Capital {0}", GetLocationCoords(1)), RLColor.Yellow, RLColor.Black));
             //int capitalWalls = Game.history.CapitalWalls;
             //int capitalResources = Game.history.CapitalTreasury;
             int capitalWalls = capital.CastleWalls;
@@ -2012,7 +2026,7 @@ namespace Next_Game
                 if (noble.Office > ActorOffice.None)
                 { actorOffice = Convert.ToString(noble.Office); }
                 else { actorOffice = Convert.ToString(noble.Type); }
-                capitalList.Add(new Snippet(string.Format("Aid {0} {1} {2}, age {3} at Kingskeep {4}", noble.ActID, actorOffice, noble.Name, noble.Age, ShowLocationCoords(1))));
+                capitalList.Add(new Snippet(string.Format("Aid {0} {1} {2}, age {3} at Kingskeep {4}", noble.ActID, actorOffice, noble.Name, noble.Age, GetLocationCoords(1))));
             }
             //ROYAL COURT
             capitalList.Add(new Snippet("Royal Court", RLColor.Brown, RLColor.Black));
@@ -2024,7 +2038,7 @@ namespace Next_Game
                     actorOffice = Convert.ToString(advisor.advisorRoyal);
                 }
                 else { actorOffice = Convert.ToString(kvp.Value.Office); }
-                capitalList.Add(new Snippet(string.Format("Aid {0} {1} {2}, age {3} at Kingskeep {4}", kvp.Value.ActID, actorOffice, kvp.Value.Name, kvp.Value.Age, ShowLocationCoords(1))));
+                capitalList.Add(new Snippet(string.Format("Aid {0} {1} {2}, age {3} at Kingskeep {4}", kvp.Value.ActID, actorOffice, kvp.Value.Name, kvp.Value.Age, GetLocationCoords(1))));
             }
             //OTHERS
             List<Actor> assortedActors = new List<Actor>();
@@ -2053,7 +2067,7 @@ namespace Next_Game
                         else
                         { textColor = Color._active; }
                     }
-                    capitalList.Add(new Snippet(string.Format("Aid {0} {1} {2}, age {3} at Kingskeep {4}", actor.ActID, actorOffice, actor.Name, actor.Age, ShowLocationCoords(1)),
+                    capitalList.Add(new Snippet(string.Format("Aid {0} {1} {2}, age {3} at Kingskeep {4}", actor.ActID, actorOffice, actor.Name, actor.Age, GetLocationCoords(1)),
                         textColor, RLColor.Black));
                 }
             }
@@ -2293,7 +2307,7 @@ namespace Next_Game
                 if (nameOnly == true)
                 { return actor.Name; }
                 else
-                { return string.Format("{0} {1}, ActID {2} at {3} {4}", actor.Title, actor.Name, actor.ActID, GetLocationName(actor.LocID), ShowLocationCoords(actor.LocID)); }
+                { return string.Format("{0} {1}, ActID {2} at {3} {4}", actor.Title, actor.Name, actor.ActID, GetLocationName(actor.LocID), GetLocationCoords(actor.LocID)); }
             }
             else { Game.SetError(new Error(172, string.Format("Actor not found in dictAllActors (ActID {0})", actID))); }
             return details;
@@ -3379,6 +3393,14 @@ namespace Next_Game
             listStats.Add(new Snippet(string.Format("{0} Secrets", numSecrets)));
             listStats.Add(new Snippet(string.Format("{0} Total Rumours  ({1} Normal, {2} Timed)", numRumours + numTimedRumours, numRumours, numTimedRumours)));
             if (numErrors > 0) { listStats.Add(new Snippet(string.Format("{0} Errors", numErrors), RLColor.LightRed, RLColor.Black)); }
+            //Total population and food capacity
+            int food = 0; int population = 0;
+            foreach(var house in dictAllHouses)
+            {
+                food += house.Value.FoodCapacity;
+                population += house.Value.Population;
+            }
+            listStats.Add(new Snippet($"Total Population {population:N0}, Total Food Capacity {food:N0} Surplus/Shortfall {food - population:N0}"));
             //list of all Greathouses by power
             listStats.Add(new Snippet("Great Houses", RLColor.Yellow, RLColor.Black));
             string housePower;
@@ -3386,7 +3408,7 @@ namespace Next_Game
             {
                 MajorHouse house = GetMajorHouse(kvp.Key);
                 housePower = string.Format("Hid {0} House {1} has {2} BannerLords  {3}, Loyal to the {4} (orig {5})", house.HouseID, house.Name, house.GetNumBannerLords(),
-                    ShowLocationCoords(house.LocID), house.Loyalty_Current, house.Loyalty_AtStart);
+                    GetLocationCoords(house.LocID), house.Loyalty_Current, house.Loyalty_AtStart);
                 //highlight great houses still loyal to the old king
                 if (house.Loyalty_Current == KingLoyalty.New_King) { houseColor = RLColor.White; }
                 else { houseColor = Color._goodTrait; }
@@ -5578,7 +5600,7 @@ namespace Next_Game
                             enemy.GoalTurns = 0;
                             //assign new goal
                             enemy.Goal = newGoal;
-                            Game.logTurn?.Write(string.Format(" [Goal -> New] {0}, ActID {1}, {2}, assigned new Goal -> {3}", enemy.Name, enemy.ActID, ShowLocationCoords(enemy.LocID),
+                            Game.logTurn?.Write(string.Format(" [Goal -> New] {0}, ActID {1}, {2}, assigned new Goal -> {3}", enemy.Name, enemy.ActID, GetLocationCoords(enemy.LocID),
                                 enemy.Goal));
                         }
                         //
@@ -6624,7 +6646,7 @@ namespace Next_Game
                 Passive passive = listPassiveActors[rndIndex];
                 passive.AddItem(item.PossID);
                 Game.logStart?.Write(string.Format("ItemID {0}, \"{1}\", given to {2} {3}, ActID {4}, at {5} {6}", item.ItemID, item.Description, passive.Title, passive.Name, passive.ActID,
-                    GetLocationName(passive.LocID), ShowLocationCoords(passive.LocID)));
+                    GetLocationName(passive.LocID), GetLocationCoords(passive.LocID)));
                 //item possession a secret? Not for a Lord (known)
                 if (proceedFlag == true)
                 {
@@ -7263,11 +7285,15 @@ namespace Next_Game
         /// </summary>
         private void InitialiseHouseData()
         {
+            Game.logStart?.Write("--- InitialiseHouseData (World.cs)");
             //Men at Arms drives all pop matters. Assumed to be 4 other people for every able bodied man
             int menAtArms = Game.constant.GetValue(Global.MEN_AT_ARMS);
             int popFactor = Game.constant.GetValue(Global.POPULATION_FACTOR);
+            int foodCapacity = Game.constant.GetValue(Global.FOOD_CAPACITY);
+            int food;
             foreach (var house in dictAllHouses)
             {
+                food = 0;
                 if (house.Value is MajorHouse)
                 {
                     house.Value.MenAtArms = menAtArms;
@@ -7283,9 +7309,18 @@ namespace Next_Game
                     house.Value.MenAtArms = menAtArms; //City Watch
                     house.Value.Population = house.Value.MenAtArms * popFactor * 3;
                 }
+                //food production capacity
+                Location loc = Game.network.GetLocation(house.Value.LocID);
+                if (loc != null)
+                {
+                    food = loc.NumPlain * foodCapacity;
+                    food += loc.NumSea * foodCapacity / 2;
+                    food += loc.NumForest * foodCapacity / 4;
+                    house.Value.FoodCapacity = food;
+                    Game.logStart?.Write($"House {house.Value.Name} at {house.Value.LocName} -> MenAtArms {house.Value.MenAtArms}, Population {house.Value.Population}, Food Capacity {house.Value.FoodCapacity}");
+                }
+                else { Game.SetError(new Error(303, $"Invalid loc (null) for house {house.Value.Name}")); }
             }
-
-            //Kingskeep
         }
 
         //new Methods above here

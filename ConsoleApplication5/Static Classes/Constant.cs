@@ -24,6 +24,7 @@ namespace Next_Game
         MEN_AT_ARMS,
         CASTLE_CAPITAL,
         POPULATION_FACTOR,
+        FOOD_CAPACITY,
         //History
         BATTLE_EVENTS,
         ADVISOR_REFUSAL,
@@ -195,6 +196,7 @@ namespace Next_Game
             arrayOfGlobals[77] = Global.AI_SEARCH_FOOT;
             arrayOfGlobals[78] = Global.HORSE_HEALTH;
             arrayOfGlobals[79] = Global.POPULATION_FACTOR;
+            arrayOfGlobals[80] = Global.FOOD_CAPACITY;
         }
 
         /// <summary>
