@@ -1,90 +1,17 @@
-//Exile Game File "LogTurn.txt" opened at: 06/06/2017 20:46:09
---- ProcessStartTurn (World.cs)
-Day 2, Turn 1, Harvest in 168 days, Winter in 183 days
-Usurper Will Florent, "The Forceful", AtLocation, Skyreach
---- UpdateRumours (World.cs)
-dictRumoursTimed (Start) -> 102 records
-102 rumours -> TimerExpire decremented
---- MoveActors -> 0 Records (World.cs)
---- UpdatePlayerStatus (World.cs)
---- UpdateWorldStatus (World.cs)
---- CheckFollowerActivity (World.cs)
---- GetRumour (Director.cs)
-arrayOfRumours [0] -> RumourID 87, Strength 1, Scope Global, Type Item, Global All
-arrayOfRumours [1] -> RumourID 426, Strength 2, Scope Global, Type HouseRel, Global North
-arrayOfRumours [5] -> RumourID 355, Strength 2, Scope Local, Type Relationship, Global All
-RumourID 87 selected from the Pool
-Rumour "It is known by all that the lusted after Elixir of Wellness (Passive Item) is to be found at Pyke" revealed to ActorID6 on turn 1 -> added to List
-RumourID 87 removed from listRumoursGlobal[4]
-Follower The Waif, ActID 6, added RumourID 87
---- GetRumour (Director.cs)
-arrayOfRumours [0] -> RumourID 452, Strength 3, Scope Global, Type Event, Global All
-arrayOfRumours [1] -> RumourID 245, Strength 2, Scope Global, Type Desire, Global North
-arrayOfRumours [5] -> RumourID 155, Strength 2, Scope Local, Type Skill, Global All
-RumourID 155 selected from the Pool
-Rumour "Septon Forley Althalos "The Deafening", ActID 69 at Highgarden, is suspected to have a Booming Voice" revealed to ActorID4 on turn 1 -> added to List
-RumourID 155 removed from listRumoursHouse[8]
-Follower The Viper, ActID 4, added RumourID 155
-Septon Forley Althalos, ActID 69, has their Leadership changed to True
---- GetRumour (Director.cs)
-arrayOfRumours [0] -> RumourID 149, Strength 4, Scope Global, Type Disguise, Global All
-arrayOfRumours [4] -> RumourID 165, Strength 2, Scope Global, Type Desire, Global West
-arrayOfRumours [5] -> RumourID 257, Strength 4, Scope Local, Type Skill, Global All
-RumourID 257 selected from the Pool
-Rumour "BannerLord Tion Mooton "The Confused", ActID 105 at Maidenpool, is rumoured to be Mean" revealed to ActorID2 on turn 1 -> added to List
-RumourID 257 removed from listRumoursHouse[1]
-Follower The Crone, ActID 2, added RumourID 257
-BannerLord Tion Mooton, ActID 105, has their Charm changed to True
---- GetMarketView (Director.cs)
-[GameVar] View_Index changed from 1 to 2
---- CheckStationaryActiveActors (World.cs)
- [Search -> Stationary] Usurper Will Florent, ActID 1 is AtLocation
---- CheckIfFoundActive (World.cs)
- [Search -> Debug] Enemy, Brother Astaroth, ID 132 at 11:17, Active Will Florent, ID 1, at 24:7
- [Search -> Debug] Enemy, Brother Mantus, ID 133 at 11:17, Active Will Florent, ID 1, at 24:7
- [Search -> Debug] Enemy, Brother Mastema, ID 134 at 11:17, Active Will Florent, ID 1, at 24:7
- [Search -> Debug] Enemy, Brother Shiva, ID 135 at 11:17, Active Will Florent, ID 1, at 24:7
- [Search -> Debug] Enemy, The Unrelenting, ID 136 at 11:17, Active Will Florent, ID 1, at 24:7
- [Search -> Stationary] Follower The Waif, ActID 6 is AtLocation
- [Search -> Stationary] Follower The Viper, ActID 4 is AtLocation
- [Search -> Stationary] Follower The Crone, ActID 2 is AtLocation
---- UpdateAIController (World.cs)
- [AI -> Player Unknown] Inquisitor Brother Astaroth, Act ID 132 Mode -> Normal
- [AI -> Player Unknown] Inquisitor Brother Mantus, Act ID 133 Mode -> Normal
- [AI -> Player Unknown] Inquisitor Brother Mastema, Act ID 134 Mode -> Normal
- [AI -> Player Unknown] Inquisitor Brother Shiva, Act ID 135 Mode -> Normal
- [AI -> Player Unknown] Nemesis The Unrelenting, Act ID 136 Mode -> Normal
---- SetEnemyActivity (World.cs)
- [Enemy -> Known] Brother Astaroth ActID 132 has become KNOWN
- [Enemy -> Goal] Brother Astaroth, ActID 132 retains Goal -> Wait
---- SetEnemyGoal (World.cs)
- [Goal -> Branch] Brother Mantus, ActID 133 Assigned Branch -> 0 Current Branch -> 0
- [Enemy -> Goal] Brother Mastema, ActID 134 retains Goal -> Wait
- [Enemy -> Goal] Brother Shiva, ActID 135 retains Goal -> Wait
- [Enemy -> Known] The Unrelenting ActID 136 has become KNOWN
---- SetEnemyGoal (World.cs)
- [Goal -> Branch] The Unrelenting, ActID 136 Assigned Branch -> 0 Current Branch -> 0
---- CheckPlayerEvents (Director.cs)
-Location event, Need 0, roll 60
-- CreateAutoLocEvent (Director.cs)
- [AutoEvent -> ActorList] "Jarvis Fowler", ID 92 added to list of Actors
- [AutoEvent -> LocalList] "Jarvis Fowler", ID 92 added to list of Locals
-[Notification] No entry found in dictOfIntroductions for RefID 99
- Chance of Player Location event 75 %
---- ResolvePlayerEvents (Director.cs)
- Trigger FAILED on "0" Equals 1
- Trigger: Player is wrong type of Known status -> Trigger failed
- Trigger FAILED on "0" Equals 1
- Trigger: Player is wrong type of Known status -> Trigger failed
- Event "What to do?" Timer Repeat now 999
- Event "What to do?" Cooldown Timer has been reset to 0
---- UpdateActiveActors (World.cs)
- Usurper Will Florent has had their TurnsUnknown Timer increased from 100 to 101
- Follower The Waif has had their TurnsUnknown Timer increased from 0 to 1
- Follower The Viper has had their TurnsUnknown Timer increased from 0 to 1
- Follower The Crone has had their TurnsUnknown Timer increased from 0 to 1
---- ResolveOutcome (Director.cs)
- Inactive (greyed out) Option chosen for "What to do?", option # 1
+//Exile Game file ops "LogTurn.txt" commenced at: 06/06/2017 21:22:06
+--- ProcessStartGame (World.cs)
+--- AgePassiveCharacters (History.cs)
+--- InitialiseGameVars (World.cs)
+[GameVar] View_Index changed from 0 to 1
+[AddVisitedLoc] LocID 17, "Hornwood", turn -3 -> record added to listLocsVisited
+[AddVisitedLoc] LocID 17, "Hornwood", turn -3 -> new record added to dictLocsVisited
+[AddVisitedLoc] LocID 20, "Greenstone", turn -2 -> record added to listLocsVisited
+[AddVisitedLoc] LocID 20, "Greenstone", turn -2 -> new record added to dictLocsVisited
+[AddVisitedLoc] LocID 35, "Dreadfort", turn -1 -> record added to listLocsVisited
+[AddVisitedLoc] LocID 35, "Dreadfort", turn -1 -> new record added to dictLocsVisited
+--- InitialiseFinalPlayer (World.cs)
+[AddVisitedLoc] LocID 9, "Uplands", turn 0 -> record added to listLocsVisited
+[AddVisitedLoc] LocID 9, "Uplands", turn 0 -> new record added to dictLocsVisited
 --- SetEndGame (Game.cs)
 [Alert] Player chose to exit (pressed 'X')
-//Exile Game file ops "LogTurn.txt" Completed at: 06/06/2017 20:48:59
+//Exile Game file ops "LogTurn.txt" Completed at: 06/06/2017 21:23:27

@@ -44,6 +44,12 @@
 79: 5 @ 4 @ 6
 # FOOD_CAPACITY -> how much food a single plains square generates at harvest (in the 3 x 3 grid that the city sits within)
 80: 1000 @ 500 @ 2000
+# GOODS_FACTOR -> if this number, or more, of a terrain type in 3 x 3 grid then chance of a resource present
+81: 3 @ 3 @ 6
+# GOODS_LOW -> % chance of a good being present for a low probability good
+82: 10 @ 5 @ 20
+# GOODS_MED -> % chance of a good being present for a medium probability good
+83: 30 @ 20 @ 40
 
 # History ---
 
@@ -209,4 +215,4 @@
 # REL_RUMOUR_TIME -> how many tunrs a relationship rumour exists for and the interval (time + 1) before initialising new ones.
 75: 20 @ 5 @ 30
 
-# Next valid number -> 81
+# Next valid number -> 84

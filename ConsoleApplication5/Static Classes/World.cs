@@ -7332,6 +7332,9 @@ namespace Next_Game
             int menAtArms = Game.constant.GetValue(Global.MEN_AT_ARMS);
             int popFactor = Game.constant.GetValue(Global.POPULATION_FACTOR);
             int foodCapacity = Game.constant.GetValue(Global.FOOD_CAPACITY);
+            int goodsMinTerrain = Game.constant.GetValue(Global.GOODS_FACTOR); //number of terrain squares in 3 x 3 grid needed to qualify for a particular good
+            int goodsLow = Game.constant.GetValue(Global.GOODS_LOW); //% chance of a low probability good being present
+            int goodsMed = Game.constant.GetValue(Global.GOODS_MED); //% chance of a medium probability good being present
             int food, balance;
             foreach (var house in dictAllHouses)
             {
@@ -7364,8 +7367,33 @@ namespace Next_Game
                     balance = house.Value.FoodCapacity - house.Value.Population;
                     if (Math.Abs(balance) > foodCapacity)
                     {
-                        if (balance > 0) { house.Value.AddExport(Goods.Food); }
-                        else { house.Value.AddImport(Goods.Food); }
+                        if (balance > 0) { house.Value.AddExport(Goods.Food); Game.logStart?.Write($"{house.Value.Name} Exports Food"); }
+                        else { house.Value.AddImport(Goods.Food); Game.logStart?.Write($"{house.Value.Name} Imports Food"); }
+                    }
+                    if (loc.NumMountain >= goodsMinTerrain)
+                    {
+                        //Iron -> Medium frequency
+                        if (rnd.Next(100) <= goodsMed) { house.Value.AddExport(Goods.Iron); Game.logStart?.Write($"House {house.Value.Name} Exports Iron"); }
+                        //Gold -> Low frequency
+                        if (rnd.Next(100) <= goodsLow) { house.Value.AddExport(Goods.Gold); Game.logStart?.Write($"House {house.Value.Name} Exports Gold"); }
+                    }
+                    if (loc.NumForest >= goodsMinTerrain)
+                    {
+                        //Timber -> Medium frequency
+                        if (rnd.Next(100) <= goodsMed) { house.Value.AddExport(Goods.Timber); Game.logStart?.Write($"House {house.Value.Name} Exports Timber"); }
+                        //Furs -> Low frequency
+                        if (rnd.Next(100) <= goodsLow) { house.Value.AddExport(Goods.Furs); Game.logStart?.Write($"House {house.Value.Name} Exports Furs"); }
+                    }
+                    //Oil -> Low frequency
+                    if (loc.NumSea >= goodsMinTerrain)
+                    { if (rnd.Next(100) <= goodsLow) { house.Value.AddExport(Goods.Oil); Game.logStart?.Write($"House {house.Value.Name} Exports Oil"); } }
+                    
+                    if (loc.NumPlain >= goodsMinTerrain)
+                    {
+                        //Wine -> Low frequency
+                        if (rnd.Next(100) <= goodsLow) { house.Value.AddExport(Goods.Wine); Game.logStart?.Write($"House {house.Value.Name} Exports Wine"); }
+                        //Wool -> Low frequency
+                        if (rnd.Next(100) <= goodsLow) { house.Value.AddExport(Goods.Wool); Game.logStart?.Write($"House {house.Value.Name} Exports Wool"); }
                     }
                 }
                 else { Game.SetError(new Error(303, $"Invalid loc (null) for house {house.Value.Name}")); }

@@ -24,6 +24,9 @@ namespace Next_Game
         MEN_AT_ARMS,
         CASTLE_CAPITAL,
         POPULATION_FACTOR,
+        GOODS_FACTOR,
+        GOODS_LOW,
+        GOODS_MED,
         FOOD_CAPACITY,
         //History
         BATTLE_EVENTS,
@@ -197,6 +200,9 @@ namespace Next_Game
             arrayOfGlobals[78] = Global.HORSE_HEALTH;
             arrayOfGlobals[79] = Global.POPULATION_FACTOR;
             arrayOfGlobals[80] = Global.FOOD_CAPACITY;
+            arrayOfGlobals[81] = Global.GOODS_FACTOR;
+            arrayOfGlobals[82] = Global.GOODS_LOW;
+            arrayOfGlobals[83] = Global.GOODS_MED;
         }
 
         /// <summary>
