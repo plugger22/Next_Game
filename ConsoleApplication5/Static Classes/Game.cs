@@ -644,6 +644,9 @@ namespace Next_Game
                                         infoChannel.SetInfoList(world.GetHistoricalRecordSet(keyPress), ConsoleDisplay.Multi);
                                         infoChannel.InsertHeader(new Snippet("--- all DEATHS", RLColor.Yellow, RLColor.Black), ConsoleDisplay.Multi);
                                         break;
+                                    case MenuMode.Balance:
+                                        infoChannel.SetInfoList(world.ShowFoodRL(FoodInfo.Branch), ConsoleDisplay.Multi);
+                                        break;
                                     case MenuMode.Debug:
                                         //show debug route
                                         List<Snippet> inputList = new List<Snippet>();

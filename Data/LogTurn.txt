@@ -1,92 +1,17 @@
-//Exile Game File "LogTurn.txt" opened at: 06/06/2017 14:38:12
---- ProcessStartTurn (World.cs)
-Day 2, Turn 1
-Usurper Guarnier Arryn, "The Devout", AtLocation, Evenfall
---- UpdateRumours (World.cs)
-dictRumoursTimed (Start) -> 89 records
-89 rumours -> TimerExpire decremented
---- MoveActors -> 0 Records (World.cs)
---- UpdatePlayerStatus (World.cs)
---- UpdateWorldStatus (World.cs)
---- CheckFollowerActivity (World.cs)
---- GetRumour (Director.cs)
-arrayOfRumours [0] -> RumourID 61, Strength 4, Scope Global, Type Disguise, Global All
-arrayOfRumours [1] -> RumourID 142, Strength 2, Scope Global, Type Desire, Global North
-arrayOfRumours [5] -> RumourID 345, Strength 4, Scope Local, Type Relationship, Global All
-RumourID 345 selected from the Pool
-Rumour "BannerLord Haimmon Flint "The Respectable", ActID 79 at Widow's Watch, is known by all to have a poor impression of the Usurper" revealed to ActorID4 on turn 1 -> added to List
-RumourID 345 removed from listRumoursHouse[2]
-Follower The Crone, ActID 4, added RumourID 345
-[Notification] BannerLord Haimmon Flint, ActID 79 -> RelKnown changed to True
-[Rumour -> Deleted] Timed RumourID 345 removed from dictRumoursTimed
---- GetRumour (Director.cs)
-arrayOfRumours [0] -> RumourID 61, Strength 4, Scope Global, Type Disguise, Global All
-arrayOfRumours [4] -> RumourID 236, Strength 2, Scope Global, Type Desire, Global West
-arrayOfRumours [5] -> RumourID 230, Strength 4, Scope Local, Type Skill, Global All
-RumourID 61 selected from the Pool
-Rumour "It is commonly known that Disguises can be had from Septon Lancel Roley, ActID 27 at Pyke" revealed to ActorID9 on turn 1 -> added to List
-RumourID 61 removed from listRumoursGlobal[3]
-Follower The Jester, ActID 9, added RumourID 61
---- GetRumour (Director.cs)
-arrayOfRumours [0] -> RumourID 420, Strength 3, Scope Global, Type Event, Global All
-arrayOfRumours [4] -> RumourID 118, Strength 2, Scope Global, Type Desire, Global West
-arrayOfRumours [5] -> RumourID 230, Strength 4, Scope Local, Type Skill, Global All
-RumourID 230 selected from the Pool
-Rumour "BannerLord Beuves Bolton "The Hisser", ActID 94 at Dreadfort, is commonly known to be a person who Lisps" revealed to ActorID8 on turn 1 -> added to List
-RumourID 230 removed from listRumoursHouse[0]
-Follower The Haggler, ActID 8, added RumourID 230
-BannerLord Beuves Bolton, ActID 94, has their Charm changed to True
---- GetMarketView (Director.cs)
-[GameVar] View_Index changed from 1 to 2
---- CheckStationaryActiveActors (World.cs)
- [Search -> Stationary] Usurper Guarnier Arryn, ActID 1 is AtLocation
---- CheckIfFoundActive (World.cs)
- [Search -> Debug] Enemy, Brother Beelzebub, ID 125 at 15:14, Active Guarnier Arryn, ID 1, at 23:9
- [Search -> Debug] Enemy, Brother Mastema, ID 126 at 15:14, Active Guarnier Arryn, ID 1, at 23:9
- [Search -> Debug] Enemy, Brother Mantus, ID 127 at 15:14, Active Guarnier Arryn, ID 1, at 23:9
- [Search -> Debug] Enemy, Brother Shiva, ID 128 at 15:14, Active Guarnier Arryn, ID 1, at 23:9
- [Search -> Debug] Enemy, The Unrelenting, ID 129 at 15:14, Active Guarnier Arryn, ID 1, at 23:9
- [Search -> Stationary] Follower The Crone, ActID 4 is AtLocation
- [Search -> Stationary] Follower The Jester, ActID 9 is AtLocation
- [Search -> Stationary] Follower The Haggler, ActID 8 is AtLocation
---- UpdateAIController (World.cs)
- [AI -> Player Unknown] Inquisitor Brother Beelzebub, Act ID 125 Mode -> Normal
- [AI -> Player Unknown] Inquisitor Brother Mastema, Act ID 126 Mode -> Normal
- [AI -> Player Unknown] Inquisitor Brother Mantus, Act ID 127 Mode -> Normal
- [AI -> Player Unknown] Inquisitor Brother Shiva, Act ID 128 Mode -> Normal
- [AI -> Player Unknown] Nemesis The Unrelenting, Act ID 129 Mode -> Normal
---- SetEnemyActivity (World.cs)
---- SetEnemyGoal (World.cs)
- [Goal -> Branch] Brother Beelzebub, ActID 125 Assigned Branch -> 0 Current Branch -> 0
---- SetEnemyGoal (World.cs)
- [Goal -> Branch] Brother Mastema, ActID 126 Assigned Branch -> 1 Current Branch -> 0
- [Enemy -> Known] Brother Mantus ActID 127 has become KNOWN
---- SetEnemyGoal (World.cs)
- [Goal -> Branch] Brother Mantus, ActID 127 Assigned Branch -> 3 Current Branch -> 0
- [Enemy -> Goal] Brother Shiva, ActID 128 retains Goal -> Wait
- [Enemy -> Known] The Unrelenting ActID 129 has become KNOWN
- [Enemy -> Goal] The Unrelenting, ActID 129 retains Goal -> Wait
---- CheckPlayerEvents (Director.cs)
-Location event, Need 0, roll 52
-- CreateAutoLocEvent (Director.cs)
- [AutoEvent -> ActorList] "Andry Tallhart", ID 110 added to list of Actors
- [AutoEvent -> LocalList] "Andry Tallhart", ID 110 added to list of Locals
-[Notification] No entry found in dictOfIntroductions for RefID 99
- Chance of Player Location event 75 %
---- ResolvePlayerEvents (Director.cs)
- Trigger FAILED on "0" Equals 1
- Trigger: Player is wrong type of Known status -> Trigger failed
- Trigger FAILED on "0" Equals 1
- Trigger: Player is wrong type of Known status -> Trigger failed
- Event "What to do?" Timer Repeat now 999
- Event "What to do?" Cooldown Timer has been reset to 0
---- UpdateActiveActors (World.cs)
- Usurper Guarnier Arryn has had their TurnsUnknown Timer increased from 100 to 101
- Follower The Crone has had their TurnsUnknown Timer increased from 0 to 1
- Follower The Jester has had their TurnsUnknown Timer increased from 0 to 1
- Follower The Haggler has had their TurnsUnknown Timer increased from 0 to 1
---- ResolveOutcome (Director.cs)
- Inactive (greyed out) Option chosen for "What to do?", option # 1
+//Exile Game file ops "LogTurn.txt" commenced at: 06/06/2017 15:17:21
+--- ProcessStartGame (World.cs)
+--- AgePassiveCharacters (History.cs)
+--- InitialiseGameVars (World.cs)
+[GameVar] View_Index changed from 0 to 1
+[AddVisitedLoc] LocID 17, "Blackwater", turn -3 -> record added to listLocsVisited
+[AddVisitedLoc] LocID 17, "Blackwater", turn -3 -> new record added to dictLocsVisited
+[AddVisitedLoc] LocID 24, "Last Hearth", turn -2 -> record added to listLocsVisited
+[AddVisitedLoc] LocID 24, "Last Hearth", turn -2 -> new record added to dictLocsVisited
+[AddVisitedLoc] LocID 14, "Clegane's Keep", turn -1 -> record added to listLocsVisited
+[AddVisitedLoc] LocID 14, "Clegane's Keep", turn -1 -> new record added to dictLocsVisited
+--- InitialiseFinalPlayer (World.cs)
+[AddVisitedLoc] LocID 28, "Nightsong", turn 0 -> record added to listLocsVisited
+[AddVisitedLoc] LocID 28, "Nightsong", turn 0 -> new record added to dictLocsVisited
 --- SetEndGame (Game.cs)
 [Alert] Player chose to exit (pressed 'X')
-//Exile Game file ops "LogTurn.txt" Completed at: 06/06/2017 14:38:40
+//Exile Game file ops "LogTurn.txt" Completed at: 06/06/2017 15:19:08

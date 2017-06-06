@@ -7344,6 +7344,7 @@ namespace Next_Game
 
         public List<String> GetFoodInfo(FoodInfo mode)
         {
+            int food, population, balance;
             List<string> tempList = new List<String>();
             switch (mode)
             {
@@ -7366,8 +7367,7 @@ namespace Next_Game
                     tempList = deficitHouses.ToList();
                     break;
                 case FoodInfo.House:
-                    int food, population, balance;
-                    Dictionary<int, int> tempHouseDict = new Dictionary<int, int>(); //key is houseId, value is surplus
+                    Dictionary<int, int> tempHouseDict = new Dictionary<int, int>(); //key is RefId, value is surplus
                     foreach(var house in dictMajorHouses)
                     {
                         food = house.Value.FoodCapacity;
@@ -7388,18 +7388,63 @@ namespace Next_Game
                         }
                         else { Game.SetError(new Error(304, "Invalid listBanners (null)")); }
                         balance = food - population;
-                        tempHouseDict.Add(house.Value.HouseID, balance);
+                        tempHouseDict.Add(house.Value.RefID, balance);
                     }
+                    //add capital
+                    CapitalHouse capital = GetCapital();
+                    if (capital != null)
+                    { tempHouseDict.Add(9999, capital.FoodCapacity - capital.Population); }
                     //sort dictionary by balance
                     var items = from foodBalance in tempHouseDict
                                 orderby foodBalance.Value descending
                                 select foodBalance;
                     //place into the list
                     foreach(var houseData in items)
-                    { tempList.Add($"House {GetMajorHouseName(houseData.Key)} has a food balance of {houseData.Value:N0}"); }
+                    { tempList.Add($"House {GetHouseName(houseData.Key)} has a food balance of {houseData.Value:N0}"); }
                     break;
                 case FoodInfo.Branch:
-
+                    Dictionary<int, int> tempBranchDict = new Dictionary<int, int>(); //key is BranchID, value is surplus
+                    int[,] branchArray = new int[5, 2]; //x -> 0 Capital, 1 north, 2 east, 3 south, 4 west [x ,0] Population [x ,1] Food
+                    foreach (var house in dictAllHouses)
+                    {
+                        switch(house.Value.Branch)
+                        {
+                            case 0:
+                                branchArray[0, 0] += house.Value.Population;
+                                branchArray[0, 1] += house.Value.FoodCapacity;
+                                break;
+                            case 1:
+                                branchArray[1, 0] += house.Value.Population;
+                                branchArray[1, 1] += house.Value.FoodCapacity;
+                                break;
+                            case 2:
+                                branchArray[2, 0] += house.Value.Population;
+                                branchArray[2, 1] += house.Value.FoodCapacity;
+                                break;
+                            case 3:
+                                branchArray[3, 0] += house.Value.Population;
+                                branchArray[3, 1] += house.Value.FoodCapacity;
+                                break;
+                            case 4:
+                                branchArray[4, 0] += house.Value.Population;
+                                branchArray[4, 1] += house.Value.FoodCapacity;
+                                break;
+                            default:
+                                Game.SetError(new Error(304, $"Invalid BranchID {house.Value.Branch}"));
+                                break;
+                        }
+                    }
+                    //place branch data in dictionary
+                    int upper = branchArray.GetUpperBound(0);
+                    for(int i = 0; i < upper; i++)
+                    { tempBranchDict.Add(i, branchArray[i, 1] - branchArray[i, 0]); }
+                    //sort dictionary
+                    var branches = from branchBalance in tempBranchDict
+                                orderby branchBalance.Value descending
+                                select branchBalance;
+                    //place into the list
+                    foreach (var houseData in branches)
+                    { tempList.Add($"Branch {houseData.Key} has a food balance of {houseData.Value:N0}"); }
                     break;
                 default:
                     Game.SetError(new Error(304, $"Invalid mode \"{mode}\""));

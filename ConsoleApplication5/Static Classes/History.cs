@@ -346,6 +346,7 @@ namespace Next_Game
             capital.CastleWalls = Game.constant.GetValue(Global.CASTLE_CAPITAL);
             capital.Resources = rnd.Next(2, 6);
             capital.LocName = "Kingskeep";
+            capital.Name = "Capital";
             if (loc != null)
             {
                 loc.RefID = 9999;
