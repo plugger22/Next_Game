@@ -30,6 +30,7 @@ namespace Next_Game
     public enum HorseStatus { None, Normal, Stabled, Lame, Exhausted, Gone}
     public enum HorseGone { None, Stolen, RunOff, Abandoned, Drowned, PutDown, Eaten, Murdered, Killed}
     public enum FoodInfo { None, Surplus, Deficit, House, Branch} //used to determine which food info is displayed / required
+    public enum Goods { None, Food, Ore, Timber} //goods that are imported / exported throughout world. Tracked by House.
 
 
     /// <summary>

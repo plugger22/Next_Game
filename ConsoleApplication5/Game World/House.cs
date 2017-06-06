@@ -41,6 +41,8 @@ namespace Next_Game
         private List<int> listOfSecrets;
         private List<int> listOfFollowerEvents;
         private List<int> listOfPlayerEvents;
+        private List<Goods> listOfImports;
+        private List<Goods> listOfExports;
         private List<int> listOfRumours;
         private List<Relation> listOfRelations; //relationships (records) with other houses (can have multiple relations with another house)
         private Dictionary<int, int> dictCurrentRelations; //current Relationship levels, key is RefID, value is current Rel lvl
@@ -53,6 +55,8 @@ namespace Next_Game
             listOfFirstNames = new List<int>();
             listOfSecrets = new List<int>();
             listOfRumours = new List<int>();
+            listOfImports = new List<Goods>();
+            listOfExports = new List<Goods>();
             listOfFollowerEvents = new List<int>();
             listOfPlayerEvents = new List<int>();
             listOfRelations = new List<Relation>();
@@ -141,6 +145,28 @@ namespace Next_Game
             FriendsAndEnemies = status;
             Game.logTurn?.Write($"[Notification] House {Name} FriendsAndEnemies status changed to \"{status}\"");
         }
+
+        /// <summary>
+        /// add an Import to the list Of Imports
+        /// </summary>
+        /// <param name="good"></param>
+        public void AddImport(Goods good)
+        { if (good > Goods.None) { listOfImports.Add(good); } }
+
+        public void AddExport(Goods good)
+        { if (good > Goods.None) { listOfExports.Add(good); } }
+
+        public List<Goods> GetImports()
+        { return listOfImports; }
+
+        public List<Goods> GetExports()
+        { return listOfExports; }
+
+        public int GetNumImports()
+        { return listOfImports.Count; }
+
+        public int GetNumExports()
+        { return listOfExports.Count; }
 
         /// <summary>
         /// import a list of Relations and add to House Relations List (auto  updates current Rel dict)

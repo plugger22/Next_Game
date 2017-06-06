@@ -1707,6 +1707,28 @@ namespace Next_Game
                         locList.Add(new Snippet(string.Format("{0}", GetStars((int)capitalResources)), RLColor.LightRed, RLColor.Black));
                         locList.Add(new Snippet($"Population: {house.Population} Harvest: {house.FoodCapacity} Food Balance: {house.FoodCapacity - house.Population:N0} Granary: {house.FoodStockpile}"));
                     }
+                    //imports & exports
+                    if (house.GetNumImports() > 0 || house.GetNumExports() > 0)
+                    {
+                        string tradeText = "";
+                        if (house.GetNumImports() > 0)
+                        {
+                            //imports
+                            List<Goods> tempImports = house.GetImports();
+                            for (int i = 0; i < tempImports.Count; i++)
+                            { tradeText = $"{tempImports[i]} "; }
+                            locList.Add(new Snippet($"Imports -> {tradeText}"));
+                        }
+                        if (house.GetNumExports() > 0)
+                        {
+                            //exports
+                            tradeText = "";
+                            List<Goods> tempExports = house.GetExports();
+                            for (int i = 0; i < tempExports.Count; i++)
+                            { tradeText = $"{tempExports[i]} "; }
+                            locList.Add(new Snippet($"Exports -> {tradeText}"));
+                        }
+                    }
                     if (loc.Connector == true)
                     { locList.Add(new Snippet("CONNECTOR", RLColor.Red, RLColor.Black)); }
                     if (loc.isPort == true)
@@ -7310,7 +7332,7 @@ namespace Next_Game
             int menAtArms = Game.constant.GetValue(Global.MEN_AT_ARMS);
             int popFactor = Game.constant.GetValue(Global.POPULATION_FACTOR);
             int foodCapacity = Game.constant.GetValue(Global.FOOD_CAPACITY);
-            int food;
+            int food, balance;
             foreach (var house in dictAllHouses)
             {
                 food = 0;
@@ -7338,6 +7360,13 @@ namespace Next_Game
                     food += loc.NumForest * foodCapacity / 4;
                     house.Value.FoodCapacity = food;
                     Game.logStart?.Write($"House {house.Value.Name} at {house.Value.LocName} -> MenAtArms {house.Value.MenAtArms}, Population {house.Value.Population}, Food Capacity {house.Value.FoodCapacity}");
+                    //Importer or Exporter of food if Abs(food balance) > foodCapacity
+                    balance = house.Value.FoodCapacity - house.Value.Population;
+                    if (Math.Abs(balance) > foodCapacity)
+                    {
+                        if (balance > 0) { house.Value.AddExport(Goods.Food); }
+                        else { house.Value.AddImport(Goods.Food); }
+                    }
                 }
                 else { Game.SetError(new Error(303, $"Invalid loc (null) for house {house.Value.Name}")); }
             }
