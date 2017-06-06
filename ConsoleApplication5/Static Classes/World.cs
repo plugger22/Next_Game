@@ -1646,7 +1646,7 @@ namespace Next_Game
                                 RLColor loyaltyColor = Color._goodTrait;
                                 if (house.Loyalty_Current == KingLoyalty.New_King) { loyaltyColor = Color._badTrait; }
                                 locList.Add(new Snippet(string.Format("Loyal to the {0}", house.Loyalty_Current), loyaltyColor, RLColor.Black));
-                                locList.Add(new Snippet($"Population {house.Population:N0}, Harvest {house.FoodCapacity:N0}, Granary {house.FoodStockpile:N0}"));
+                                locList.Add(new Snippet($"Population: {house.Population:N0} Harvest: {house.FoodCapacity:N0} Food Balance: {house.FoodCapacity - house.Population:N0} Granary: {house.FoodStockpile:N0}"));
                                 if (house is MajorHouse)
                                 {
                                     MajorHouse majorHouse = house as MajorHouse;
@@ -1705,7 +1705,7 @@ namespace Next_Game
                         locList.Add(new Snippet(string.Format("{0}", GetStars(capitalWalls)), RLColor.LightRed, RLColor.Black));
                         locList.Add(new Snippet(string.Format("House Resources ({0}) ", (ResourceLevel)capitalResources), false));
                         locList.Add(new Snippet(string.Format("{0}", GetStars((int)capitalResources)), RLColor.LightRed, RLColor.Black));
-                        locList.Add(new Snippet($"Population {house.Population}, Harvest {house.FoodCapacity}, Granary {house.FoodStockpile}"));
+                        locList.Add(new Snippet($"Population: {house.Population} Harvest: {house.FoodCapacity} Food Balance: {house.FoodCapacity - house.Population:N0} Granary: {house.FoodStockpile}"));
                     }
                     if (loc.Connector == true)
                     { locList.Add(new Snippet("CONNECTOR", RLColor.Red, RLColor.Black)); }
@@ -1866,7 +1866,7 @@ namespace Next_Game
                 }
                 //Food and pop realm summary
                 houseList.Add(new Snippet("House Realm", RLColor.Yellow, RLColor.Black));
-                houseList.Add(new Snippet($"Realm Population {popTotal:N0}, Realm Harvest {food:N0}, Realm Granary {granary:N0}"));
+                houseList.Add(new Snippet($"Realm Population: {popTotal:N0} Realm Harvest: {food:N0} Food Balance: {food - popTotal:N0} Realm Granary: {granary:N0}"));
                 //family - get list of all actorID's in family
                 houseList.Add(new Snippet("Family", RLColor.Brown, RLColor.Black));
                 List<int> listOfFamily = new List<int>();
@@ -2001,7 +2001,8 @@ namespace Next_Game
             //int capitalResources = Game.history.CapitalTreasury;
             int capitalWalls = capital.CastleWalls;
             int capitalResources = capital.Resources;
-            capitalList.Add(new Snippet(string.Format("Populatinn {0:N0} at {1}", capital.Population, capital.LocName)));
+            capitalList.Add(new Snippet(string.Format("Population: {0:N0} Harvest: {1:N0} Food Balance: {2:N0} Granary: {3:N0} ", capital.Population, capital.FoodCapacity, 
+                capital.FoodCapacity - capital.Population, capital.FoodStockpile )));
             capitalList.Add(new Snippet(string.Format("City Watch has {0:N0} Men At Arms", capital.MenAtArms)));
             capitalList.Add(new Snippet(string.Format("Strength of Castle Walls ({0}) ", (CastleDefences)capitalWalls), false));
             capitalList.Add(new Snippet(string.Format("{0}", GetStars(capitalWalls)), RLColor.LightRed, RLColor.Black));
@@ -7339,6 +7340,72 @@ namespace Next_Game
                 }
                 else { Game.SetError(new Error(303, $"Invalid loc (null) for house {house.Value.Name}")); }
             }
+        }
+
+        public List<String> GetFoodInfo(FoodInfo mode)
+        {
+            List<string> tempList = new List<String>();
+            switch (mode)
+            {
+                case FoodInfo.Surplus:
+                    IEnumerable<string> surplusHouses =
+                        from house in dictAllHouses
+                        let surplus = house.Value.FoodCapacity - house.Value.Population
+                        where surplus > 0
+                        orderby surplus descending
+                        select Convert.ToString($"House {house.Value.Name} at {house.Value.LocName}, {GetLocationCoords(house.Value.LocID)}, has a food Surplus of {surplus:N0}");
+                    tempList = surplusHouses.ToList();
+                    break;
+                case FoodInfo.Deficit:
+                    IEnumerable<string> deficitHouses =
+                        from house in dictAllHouses
+                        let deficit = house.Value.FoodCapacity - house.Value.Population
+                        where deficit < 0
+                        orderby deficit
+                        select Convert.ToString($"House {house.Value.Name} at {house.Value.LocName}, {GetLocationCoords(house.Value.LocID)}, has a food Deficit of {deficit:N0}");
+                    tempList = deficitHouses.ToList();
+                    break;
+                case FoodInfo.House:
+                    int food, population, balance;
+                    Dictionary<int, int> tempHouseDict = new Dictionary<int, int>(); //key is houseId, value is surplus
+                    foreach(var house in dictMajorHouses)
+                    {
+                        food = house.Value.FoodCapacity;
+                        population = house.Value.Population;
+                        List<int> listBanners = house.Value.GetBannerLords();
+                        if (listBanners != null)
+                        {
+                            for (int i = 0; i < listBanners.Count; i++)
+                            {
+                                House bannerHouse = GetHouse(listBanners[i]);
+                                if (bannerHouse != null)
+                                {
+                                    food += bannerHouse.FoodCapacity;
+                                    population += bannerHouse.Population;
+                                }
+                                else { Game.SetError(new Error(304, $"Invalid bannerHouse RefID {listBanners[i]}")); }
+                            }
+                        }
+                        else { Game.SetError(new Error(304, "Invalid listBanners (null)")); }
+                        balance = food - population;
+                        tempHouseDict.Add(house.Value.HouseID, balance);
+                    }
+                    //sort dictionary by balance
+                    var items = from foodBalance in tempHouseDict
+                                orderby foodBalance.Value descending
+                                select foodBalance;
+                    //place into the list
+                    foreach(var houseData in items)
+                    { tempList.Add($"House {GetMajorHouseName(houseData.Key)} has a food balance of {houseData.Value:N0}"); }
+                    break;
+                case FoodInfo.Branch:
+
+                    break;
+                default:
+                    Game.SetError(new Error(304, $"Invalid mode \"{mode}\""));
+                    break;
+            }
+            return tempList;
         }
 
         //new Methods above here

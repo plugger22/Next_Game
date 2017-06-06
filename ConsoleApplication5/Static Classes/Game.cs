@@ -577,6 +577,9 @@ namespace Next_Game
                                         infoChannel.SetInfoList(world.GetHistoricalRecordSet(keyPress), ConsoleDisplay.Multi);
                                         infoChannel.InsertHeader(new Snippet("--- ALL RECORDS", RLColor.Yellow, RLColor.Black), ConsoleDisplay.Multi);
                                         break;
+                                    case MenuMode.Balance:
+                                        infoChannel.SetInfoList(world.ShowFoodRL(FoodInfo.Surplus), ConsoleDisplay.Multi);
+                                        break;
                                     case MenuMode.Debug:
                                         //ShowGameVars
                                         infoChannel.SetInfoList(world.ShowGameVarsRL(), ConsoleDisplay.Multi);
@@ -589,6 +592,9 @@ namespace Next_Game
                                     case MenuMode.Main:
                                         //switch to Balance menu
                                         _menuMode = menu.SwitchMenuMode(MenuMode.Balance);
+                                        break;
+                                    case MenuMode.Balance:
+                                        infoChannel.SetInfoList(world.ShowFoodRL(FoodInfo.Deficit), ConsoleDisplay.Multi);
                                         break;
                                 }
                                 break;
@@ -614,6 +620,9 @@ namespace Next_Game
                                         //Custom report (debugging)
                                         infoChannel.SetInfoList(world.GetHistoricalRecordSet(keyPress), ConsoleDisplay.Multi);
                                         infoChannel.InsertHeader(new Snippet("--- CUSTOM", RLColor.Yellow, RLColor.Black), ConsoleDisplay.Multi);
+                                        break;
+                                    case MenuMode.Balance:
+                                        infoChannel.SetInfoList(world.ShowFoodRL(FoodInfo.House), ConsoleDisplay.Multi);
                                         break;
                                     case MenuMode.Debug:
                                         //ShowGameStats

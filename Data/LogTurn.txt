@@ -1,7 +1,7 @@
-//Exile Game File "LogTurn.txt" opened at: 06/06/2017 11:23:07
+//Exile Game File "LogTurn.txt" opened at: 06/06/2017 14:38:12
 --- ProcessStartTurn (World.cs)
 Day 2, Turn 1
-Usurper Joffery Targaryen, "The Lively", AtLocation, Widow's Watch
+Usurper Guarnier Arryn, "The Devout", AtLocation, Evenfall
 --- UpdateRumours (World.cs)
 dictRumoursTimed (Start) -> 89 records
 89 rumours -> TimerExpire decremented
@@ -10,66 +10,68 @@ dictRumoursTimed (Start) -> 89 records
 --- UpdateWorldStatus (World.cs)
 --- CheckFollowerActivity (World.cs)
 --- GetRumour (Director.cs)
-arrayOfRumours [0] -> RumourID 412, Strength 3, Scope Global, Type Event, Global All
-arrayOfRumours [1] -> RumourID 408, Strength 3, Scope Global, Type Friends, Global North
-arrayOfRumours [5] -> RumourID 298, Strength 1, Scope Local, Type Relationship, Global All
-RumourID 408 selected from the Pool
-Rumour "It is whispered that you have no Friends and many Enemies at Valyria (House Hightower)" revealed to ActorID9 on turn 1 -> added to List
-RumourID 408 removed from listRumoursNorth[12]
-Follower The Duchess, ActID 9, added RumourID 408
-[Notification] House Hightower FriendsAndEnemies status changed to "True"
+arrayOfRumours [0] -> RumourID 61, Strength 4, Scope Global, Type Disguise, Global All
+arrayOfRumours [1] -> RumourID 142, Strength 2, Scope Global, Type Desire, Global North
+arrayOfRumours [5] -> RumourID 345, Strength 4, Scope Local, Type Relationship, Global All
+RumourID 345 selected from the Pool
+Rumour "BannerLord Haimmon Flint "The Respectable", ActID 79 at Widow's Watch, is known by all to have a poor impression of the Usurper" revealed to ActorID4 on turn 1 -> added to List
+RumourID 345 removed from listRumoursHouse[2]
+Follower The Crone, ActID 4, added RumourID 345
+[Notification] BannerLord Haimmon Flint, ActID 79 -> RelKnown changed to True
+[Rumour -> Deleted] Timed RumourID 345 removed from dictRumoursTimed
 --- GetRumour (Director.cs)
-arrayOfRumours [0] -> RumourID 414, Strength 3, Scope Global, Type Event, Global All
-arrayOfRumours [2] -> RumourID 399, Strength 3, Scope Global, Type Friends, Global East
-arrayOfRumours [5] -> RumourID 211, Strength 4, Scope Local, Type Skill, Global All
-RumourID 211 selected from the Pool
-Rumour "BannerLord Charles Wull "The Inept", ActID 84 at Sodhall, is rumoured to be Clumsy" revealed to ActorID8 on turn 1 -> added to List
-RumourID 211 removed from listRumoursHouse[0]
-Follower The Beast, ActID 8, added RumourID 211
-BannerLord Charles Wull, ActID 84, has their Combat changed to True
+arrayOfRumours [0] -> RumourID 61, Strength 4, Scope Global, Type Disguise, Global All
+arrayOfRumours [4] -> RumourID 236, Strength 2, Scope Global, Type Desire, Global West
+arrayOfRumours [5] -> RumourID 230, Strength 4, Scope Local, Type Skill, Global All
+RumourID 61 selected from the Pool
+Rumour "It is commonly known that Disguises can be had from Septon Lancel Roley, ActID 27 at Pyke" revealed to ActorID9 on turn 1 -> added to List
+RumourID 61 removed from listRumoursGlobal[3]
+Follower The Jester, ActID 9, added RumourID 61
 --- GetRumour (Director.cs)
-arrayOfRumours [0] -> RumourID 27, Strength 1, Scope Global, Type Item, Global All
-arrayOfRumours [4] -> RumourID 395, Strength 3, Scope Global, Type Friends, Global West
-arrayOfRumours [5] -> RumourID 210, Strength 4, Scope Local, Type Skill, Global All
-RumourID 27 selected from the Pool
-Rumour "It is said that the lusted after Elixir of Wellness (Passive Item) is to be found at Casterly Rock" revealed to ActorID5 on turn 1 -> added to List
-RumourID 27 removed from listRumoursGlobal[4]
-Follower The Crone, ActID 5, added RumourID 27
+arrayOfRumours [0] -> RumourID 420, Strength 3, Scope Global, Type Event, Global All
+arrayOfRumours [4] -> RumourID 118, Strength 2, Scope Global, Type Desire, Global West
+arrayOfRumours [5] -> RumourID 230, Strength 4, Scope Local, Type Skill, Global All
+RumourID 230 selected from the Pool
+Rumour "BannerLord Beuves Bolton "The Hisser", ActID 94 at Dreadfort, is commonly known to be a person who Lisps" revealed to ActorID8 on turn 1 -> added to List
+RumourID 230 removed from listRumoursHouse[0]
+Follower The Haggler, ActID 8, added RumourID 230
+BannerLord Beuves Bolton, ActID 94, has their Charm changed to True
 --- GetMarketView (Director.cs)
 [GameVar] View_Index changed from 1 to 2
 --- CheckStationaryActiveActors (World.cs)
- [Search -> Stationary] Usurper Joffery Targaryen, ActID 1 is AtLocation
+ [Search -> Stationary] Usurper Guarnier Arryn, ActID 1 is AtLocation
 --- CheckIfFoundActive (World.cs)
- [Search -> Debug] Enemy, Brother Gorgo, ID 117 at 16:16, Active Joffery Targaryen, ID 1, at 4:2
- [Search -> Debug] Enemy, Brother Kali, ID 118 at 16:16, Active Joffery Targaryen, ID 1, at 4:2
- [Search -> Debug] Enemy, Brother Dagon, ID 119 at 16:16, Active Joffery Targaryen, ID 1, at 4:2
- [Search -> Debug] Enemy, Brother Amon, ID 120 at 16:16, Active Joffery Targaryen, ID 1, at 4:2
- [Search -> Debug] Enemy, The Unrelenting, ID 121 at 16:16, Active Joffery Targaryen, ID 1, at 4:2
- [Search -> Stationary] Follower The Duchess, ActID 9 is AtLocation
- [Search -> Stationary] Follower The Beast, ActID 8 is AtLocation
- [Search -> Stationary] Follower The Crone, ActID 5 is AtLocation
+ [Search -> Debug] Enemy, Brother Beelzebub, ID 125 at 15:14, Active Guarnier Arryn, ID 1, at 23:9
+ [Search -> Debug] Enemy, Brother Mastema, ID 126 at 15:14, Active Guarnier Arryn, ID 1, at 23:9
+ [Search -> Debug] Enemy, Brother Mantus, ID 127 at 15:14, Active Guarnier Arryn, ID 1, at 23:9
+ [Search -> Debug] Enemy, Brother Shiva, ID 128 at 15:14, Active Guarnier Arryn, ID 1, at 23:9
+ [Search -> Debug] Enemy, The Unrelenting, ID 129 at 15:14, Active Guarnier Arryn, ID 1, at 23:9
+ [Search -> Stationary] Follower The Crone, ActID 4 is AtLocation
+ [Search -> Stationary] Follower The Jester, ActID 9 is AtLocation
+ [Search -> Stationary] Follower The Haggler, ActID 8 is AtLocation
 --- UpdateAIController (World.cs)
- [AI -> Player Unknown] Inquisitor Brother Gorgo, Act ID 117 Mode -> Normal
- [AI -> Player Unknown] Inquisitor Brother Kali, Act ID 118 Mode -> Normal
- [AI -> Player Unknown] Inquisitor Brother Dagon, Act ID 119 Mode -> Normal
- [AI -> Player Unknown] Inquisitor Brother Amon, Act ID 120 Mode -> Normal
- [AI -> Player Unknown] Nemesis The Unrelenting, Act ID 121 Mode -> Normal
+ [AI -> Player Unknown] Inquisitor Brother Beelzebub, Act ID 125 Mode -> Normal
+ [AI -> Player Unknown] Inquisitor Brother Mastema, Act ID 126 Mode -> Normal
+ [AI -> Player Unknown] Inquisitor Brother Mantus, Act ID 127 Mode -> Normal
+ [AI -> Player Unknown] Inquisitor Brother Shiva, Act ID 128 Mode -> Normal
+ [AI -> Player Unknown] Nemesis The Unrelenting, Act ID 129 Mode -> Normal
 --- SetEnemyActivity (World.cs)
- [Enemy -> Known] Brother Gorgo ActID 117 has become KNOWN
- [Enemy -> Goal] Brother Gorgo, ActID 117 retains Goal -> Wait
 --- SetEnemyGoal (World.cs)
- [Goal -> Branch] Brother Kali, ActID 118 Assigned Branch -> 2 Current Branch -> 0
- [Enemy -> Goal] Brother Dagon, ActID 119 retains Goal -> Wait
- [Enemy -> Goal] Brother Amon, ActID 120 retains Goal -> Wait
+ [Goal -> Branch] Brother Beelzebub, ActID 125 Assigned Branch -> 0 Current Branch -> 0
 --- SetEnemyGoal (World.cs)
- [Goal -> Branch] The Unrelenting, ActID 121 Assigned Branch -> 0 Current Branch -> 0
- [Goal -> New] The Unrelenting, ActID 121, (loc 16:16), assigned new Goal -> Hide
+ [Goal -> Branch] Brother Mastema, ActID 126 Assigned Branch -> 1 Current Branch -> 0
+ [Enemy -> Known] Brother Mantus ActID 127 has become KNOWN
+--- SetEnemyGoal (World.cs)
+ [Goal -> Branch] Brother Mantus, ActID 127 Assigned Branch -> 3 Current Branch -> 0
+ [Enemy -> Goal] Brother Shiva, ActID 128 retains Goal -> Wait
+ [Enemy -> Known] The Unrelenting ActID 129 has become KNOWN
+ [Enemy -> Goal] The Unrelenting, ActID 129 retains Goal -> Wait
 --- CheckPlayerEvents (Director.cs)
-Location event, Need 0, roll 97
+Location event, Need 0, roll 52
 - CreateAutoLocEvent (Director.cs)
- [AutoEvent -> ActorList] "Areo Flint", ID 77 added to list of Actors
- [AutoEvent -> LocalList] "Areo Flint", ID 77 added to list of Locals
-[Notification] No entry found in dictOfIntroductions for RefID 4
+ [AutoEvent -> ActorList] "Andry Tallhart", ID 110 added to list of Actors
+ [AutoEvent -> LocalList] "Andry Tallhart", ID 110 added to list of Locals
+[Notification] No entry found in dictOfIntroductions for RefID 99
  Chance of Player Location event 75 %
 --- ResolvePlayerEvents (Director.cs)
  Trigger FAILED on "0" Equals 1
@@ -79,34 +81,12 @@ Location event, Need 0, roll 97
  Event "What to do?" Timer Repeat now 999
  Event "What to do?" Cooldown Timer has been reset to 0
 --- UpdateActiveActors (World.cs)
- Usurper Joffery Targaryen has had their TurnsUnknown Timer increased from 100 to 101
- Follower The Duchess has had their TurnsUnknown Timer increased from 0 to 1
- Follower The Beast has had their TurnsUnknown Timer increased from 0 to 1
+ Usurper Guarnier Arryn has had their TurnsUnknown Timer increased from 100 to 101
  Follower The Crone has had their TurnsUnknown Timer increased from 0 to 1
+ Follower The Jester has had their TurnsUnknown Timer increased from 0 to 1
+ Follower The Haggler has had their TurnsUnknown Timer increased from 0 to 1
 --- ResolveOutcome (Director.cs)
---- ChangePlayerRumourStatus (Director.cs)
---- GetRumour (Director.cs)
-arrayOfRumours [0] -> RumourID 416, Strength 3, Scope Global, Type Enemy, Global All
-arrayOfRumours [4] -> RumourID 68, Strength 2, Scope Global, Type Desire, Global West
-arrayOfRumours [5] -> RumourID 342, Strength 4, Scope Local, Type Relationship, Global All
-RumourID 68 selected from the Pool
-Rumour "It is whispered that Maester Sagard Maukolum, ActID 30 at Brightwater Keep, lusts after Gold" revealed to ActorID1 on turn 1 -> added to List
-RumourID 68 removed from listRumoursWest[2]
-Rumour "It is whispered that Maester Sagard Maukolum, ActID 30 at Brightwater Keep, lusts after Gold", rumourID 68, added to dictRumoursKnown
-[Notification] Maester Sagard Maukolum "The Direct" DesireKnown status changed to "True"
-It is whispered that Maester Sagard Maukolum, ActID 30 at Brightwater Keep, lusts after Gold
---- ChangePlayerRumourStatus (Director.cs)
---- GetRumour (Director.cs)
-arrayOfRumours [0] -> RumourID 415, Strength 3, Scope Global, Type Enemy, Global All
-arrayOfRumours [4] -> RumourID 186, Strength 2, Scope Global, Type Desire, Global West
-arrayOfRumours [5] -> RumourID 342, Strength 4, Scope Local, Type Relationship, Global All
-RumourID 186 selected from the Pool
-Rumour "It is known by all that BannerLord Houdouyn Crane, ActID 75 at Red Lake, hungers for the dreaded Chalice of Pain" revealed to ActorID1 on turn 1 -> added to List
-RumourID 186 removed from listRumoursWest[4]
-Rumour "It is known by all that BannerLord Houdouyn Crane, ActID 75 at Red Lake, hungers for the dreaded Chalice of Pain", rumourID 186, added to dictRumoursKnown
-[Notification] Lord Donnel Lannister "The Fixed" DesireKnown status changed to "True"
-It is known by all that BannerLord Houdouyn Crane, ActID 75 at Red Lake, hungers for the dreaded Chalice of Pain
---- ResolveFollowerEvents (Director.cs)
+ Inactive (greyed out) Option chosen for "What to do?", option # 1
 --- SetEndGame (Game.cs)
 [Alert] Player chose to exit (pressed 'X')
-//Exile Game file ops "LogTurn.txt" Completed at: 06/06/2017 11:23:47
+//Exile Game file ops "LogTurn.txt" Completed at: 06/06/2017 14:38:40
