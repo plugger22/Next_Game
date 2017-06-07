@@ -24,7 +24,6 @@ namespace Next_Game
         MEN_AT_ARMS,
         CASTLE_CAPITAL,
         POPULATION_FACTOR,
-        CAPITAL_FACTOR,
         GOODS_FACTOR,
         GOODS_LOW,
         GOODS_MED,
@@ -204,7 +203,6 @@ namespace Next_Game
             arrayOfGlobals[81] = Global.GOODS_FACTOR;
             arrayOfGlobals[82] = Global.GOODS_LOW;
             arrayOfGlobals[83] = Global.GOODS_MED;
-            arrayOfGlobals[84] = Global.CAPITAL_FACTOR;
         }
 
         /// <summary>

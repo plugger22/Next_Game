@@ -16,6 +16,7 @@ namespace Next_Game
         private List<ActorSpy> listTempEnemyActors; //bloodhound temp lists
         private List<HorseRecord> listHorses; //record of all Player's past horses
         private int[,] arrayAI; //'0' -> # enemies at capital, '1,2,3,4' -> # enemies patrolling each branch, [0,] -> actual, [1,] -> desired [2,] -> temp data
+        private int[] arrayTradeData; //0 -> Total Wealth, 1 # of Food, 2 # Iron, 3 # Timber, 4 # Gold, 5 # Wine, 6 # Oil, 7 # Wool, 8 # Furs
         private readonly Queue<Snippet> messageQueue; //short term queue to display recent messages
         private Dictionary<int, Active> dictActiveActors; //list of all Player controlled actors keyed off actorID (non-activated followers aren't in dictionary)
         private Dictionary<int, Passive> dictPassiveActors; //list of all NPC actors keyed of actorID
@@ -56,6 +57,7 @@ namespace Next_Game
             listTempEnemyActors = new List<ActorSpy>();
             listHorses = new List<HorseRecord>();
             arrayAI = new int[3, 5];
+            arrayTradeData = new int[9];
             messageQueue = new Queue<Snippet>();
             dictActiveActors = new Dictionary<int, Active>();
             dictPassiveActors = new Dictionary<int, Passive>();
@@ -3419,6 +3421,11 @@ namespace Next_Game
                 population += house.Value.Population;
             }
             listStats.Add(new Snippet($"Total Population {population:N0}, Total Food Capacity {food:N0} Surplus/Shortfall {food - population:N0}"));
+            string tradeText = string.Format("Total Net World Wealth {0}{1}", arrayTradeData[0] > 0 ? "+" : "", arrayTradeData[0]);
+            listStats.Add(new Snippet(tradeText));
+            string goodsText = string.Format("Goods: Iron x {0}, Timber x {1}, Gold x {2}, Wine x {3}, Oil x {4}, Wool x {5}, Furs x {6}", arrayTradeData[(int)Goods.Iron], arrayTradeData[(int)Goods.Timber], 
+                arrayTradeData[(int)Goods.Gold], arrayTradeData[(int)Goods.Wine], arrayTradeData[(int)Goods.Oil], arrayTradeData[(int)Goods.Wool], arrayTradeData[(int)Goods.Furs]);
+            listStats.Add(new Snippet(goodsText));
             //list of all Greathouses by power
             listStats.Add(new Snippet("Great Houses", RLColor.Yellow, RLColor.Black));
             string housePower;
@@ -7330,7 +7337,8 @@ namespace Next_Game
             int goodsMinTerrain = Game.constant.GetValue(Global.GOODS_FACTOR); //number of terrain squares in 3 x 3 grid needed to qualify for a particular good
             int goodsLow = Game.constant.GetValue(Global.GOODS_LOW); //% chance of a low probability good being present
             int goodsMed = Game.constant.GetValue(Global.GOODS_MED); //% chance of a medium probability good being present
-            int food, balance, absBalance, tally, resources;
+            int food, balance, absBalance, tally, resources, numLocs, modifier;
+            int overallTally = 0;
             foreach (var house in dictAllHouses)
             {
                 food = 0;
@@ -7403,14 +7411,14 @@ namespace Next_Game
                 absBalance = Math.Abs(balance);
                 if (absBalance > foodLimit )
                 {
-                    if (balance < 0) { tally -= 2; }
-                    else { tally += 2; }
+                    if (balance < 0) { tally -= 2; arrayTradeData[(int)Goods.Food] -= 1; }
+                    else { tally += 2; arrayTradeData[(int)Goods.Food] += 1; }
                 }
                 //must be more than a minimum and less than the limit
                 else if (absBalance <= foodLimit && absBalance > (foodCapacity/2))
                 {
-                    if (balance < 0) { tally -= 1; }
-                    else { tally += 1; }
+                    if (balance < 0) { tally -= 1; arrayTradeData[(int)Goods.Food] -= 1; }
+                    else { tally += 1; arrayTradeData[(int)Goods.Food] += 1; }
                 }
                 //goods -> exports as food is the only import and it's already been catered for
                 if (house.Value.GetNumExports() > 0)
@@ -7423,19 +7431,33 @@ namespace Next_Game
                         {
                             case Goods.Gold:
                                 tally += 3;
+                                arrayTradeData[(int)Goods.Gold] += 1;
                                 break;
                             case Goods.Wine:
                                 tally += 2;
+                                arrayTradeData[(int)Goods.Wine] += 1;
                                 break;
                             case Goods.Furs:
+                                tally += 1;
+                                arrayTradeData[(int)Goods.Furs] += 1;
+                                break;
                             case Goods.Oil:
+                                tally += 1;
+                                arrayTradeData[(int)Goods.Oil] += 1;
+                                break;
                             case Goods.Iron:
+                                tally += 1;
+                                arrayTradeData[(int)Goods.Iron] += 1;
+                                break;
                             case Goods.Timber:
                                 tally += 1;
+                                arrayTradeData[(int)Goods.Timber] += 1;
                                 break;
                         }
                     }
                 }
+                //keep tabs of overallTally
+                overallTally += tally;
                 //adjust house Resource level (allowable range of 1 to 5)
                 resources = house.Value.Resources;
                 resources += tally;
@@ -7443,20 +7465,51 @@ namespace Next_Game
                 resources = Math.Max(1, resources);
                 house.Value.Resources = resources;
                 Game.logStart?.Write($"House {house.Value.Name} has a Resource level of {resources}");
-
-                //allow for bigger picture
-                if (house.Value is MinorHouse)
-                {
-                    
-                }
-                else if (house.Value is CapitalHouse)
-                {
-                    
-                }
             }
             //end all houses loop
+            arrayTradeData[0] = overallTally;
+            //Capital Resources
+            CapitalHouse capital = GetCapital();
+            if (capital != null)
+            {
+                resources = capital.Resources;
+                numLocs = Game.network.GetNumLocations();
+                resources = overallTally / numLocs;
+                resources = Math.Min(5, resources);
+                resources = Math.Max(1, resources);
+                capital.Resources += resources;
+                Game.logStart?.Write($"Capital has resources level of {capital.Resources}, overallTally {overallTally}, Locs {numLocs}, Modifier {overallTally / numLocs}");
+            }
+            else { Game.SetError(new Error(303, "Invalid Capital (null) -> Resources not adjusted")); }
+            //Major House Resources -> adjusted for wealth of bannerLords -> + (total Bannerlord Resources - Num BannerLords) / 3
+            foreach(var major in dictMajorHouses)
+            {
+                modifier = 0;
+                if (major.Value.GetNumBannerLords() > 0)
+                {
+                    List<int> listBannerLords = major.Value.GetBannerLords();
+                    for (int i = 0; i < listBannerLords.Count; i++)
+                    {
+                        House bannerLord = GetHouse(listBannerLords[i]);
+                        modifier += bannerLord.Resources;
+                    }
+                }
+                if (modifier > 0)
+                {
+                    resources = major.Value.Resources;
+                    resources += (modifier - major.Value.GetNumBannerLords()) / 3;
+                    resources = Math.Min(5, resources);
+                    major.Value.Resources = resources;
+                    Game.logStart?.Write($"House {major.Value.Name}, Resources {resources}, Modifier {modifier}, Num BannerLords {major.Value.GetNumBannerLords()}");
+                }
+            }
         }
 
+        /// <summary>
+        /// Gets Info for ShowFoodRL
+        /// </summary>
+        /// <param name="mode"></param>
+        /// <returns></returns>
         public List<String> GetFoodInfo(FoodInfo mode)
         {
             int food, population, balance;
