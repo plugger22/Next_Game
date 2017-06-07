@@ -7407,7 +7407,7 @@ namespace Next_Game
             {
                 tally = 0;
                 //take care of individual house first -> food (+/- 1/2 depending on severity of balance)
-                balance = house.Value.FoodCapacity - house.Value.Population;
+                balance = house.Value.GetFoodBalance();
                 absBalance = Math.Abs(balance);
                 if (absBalance > foodLimit )
                 {
@@ -7519,7 +7519,7 @@ namespace Next_Game
                 case FoodInfo.Surplus:
                     IEnumerable<string> surplusHouses =
                         from house in dictAllHouses
-                        let surplus = house.Value.FoodCapacity - house.Value.Population
+                        let surplus = house.Value.GetFoodBalance()
                         where surplus > 0
                         orderby surplus descending
                         select Convert.ToString($"House {house.Value.Name} at {house.Value.LocName}, {GetLocationCoords(house.Value.LocID)}, has a food Surplus of {surplus:N0}");
@@ -7528,7 +7528,7 @@ namespace Next_Game
                 case FoodInfo.Deficit:
                     IEnumerable<string> deficitHouses =
                         from house in dictAllHouses
-                        let deficit = house.Value.FoodCapacity - house.Value.Population
+                        let deficit = house.Value.GetFoodBalance()
                         where deficit < 0
                         orderby deficit
                         select Convert.ToString($"House {house.Value.Name} at {house.Value.LocName}, {GetLocationCoords(house.Value.LocID)}, has a food Deficit of {deficit:N0}");

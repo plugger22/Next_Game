@@ -6031,24 +6031,33 @@ namespace Next_Game
                                 { innerArray = arrayOfViews[(int)ViewType.UnknownUned]; }
                             }
                             break;
+                        case 5:
+                            //food situation
+                            int refID = Game.world.ConvertLocToRef(player.LocID);
+                            House house = Game.world.GetHouse(refID);
+                            if (house != null)
+                            { randomText = GetStreetViewFood(house); }
+                            else { Game.SetError(new Error(282, $"Invalid house (null) for Player.LocID {player.LocID} -> Street view cancelled")); }
+                            break;
                         default:
                             Game.SetError(new Error(282, $"Invalid Street_View \"{viewIndex} -> Street View cancelled"));
                             break;
                     }
+                    //choose random text from array pool
                     if (innerArray != null)
                     {
                         if (innerArray.Length > 0)
                         { randomText = innerArray[rnd.Next(innerArray.Length)]; }
                         else { Game.logTurn?.Write($"[Alert] No data in innerArray for View group {group}, ViewIndex {viewIndex}, Educated {educated} -> Market View cancelled"); }
                     }
-                    else { Game.SetError(new Error(282, "Invalid innerArray (null) for View -> Market view cancelled")); }
+                    else if (randomText.Length == 0) { Game.SetError(new Error(282, "Invalid innerArray (null) for View -> Market view cancelled")); }
                     //increment index and roll over if need be
                     if (randomText.Length > 0)
                     {
-                        //deal with tags (only for game states as player choice views are tag checked at the time that they are created)
+                        //deal with tags (only for game states & Others above as player choice views are tag checked at the time that they are created)
                         view = Game.utility.CheckTagsView(randomText, player);
                         viewIndex++;
-                        if (viewIndex > 4) { viewIndex = 1; }
+                        if (viewIndex > 5) { viewIndex = 1; }
                         //update GameVar
                         Game.variable.SetValue(GameVar.View_Index, viewIndex);
                     }
@@ -6066,6 +6075,34 @@ namespace Next_Game
             }
             else { Game.SetError(new Error(282, "Invalid Player (null) -> Market view cancelled")); }
             return listToDisplay;
+        }
+
+        /// <summary>
+        /// subMethod to get a street view of a locations food situation
+        /// </summary>
+        /// <param name="house"></param>
+        /// <returns></returns>
+        private string GetStreetViewFood(House house)
+        {
+            string viewText = "";
+            int balance = house.GetFoodBalance();
+            int foodCapacity = Game.constant.GetValue(Global.FOOD_CAPACITY) / 2;
+            if (balance > foodCapacity)
+            {
+                //surplus
+                viewText = "There's always plenty of food here at <locName>. Nobody goes hungry.";
+            }
+            else if (balance < foodCapacity)
+            {
+                //deficit
+                viewText = "Why do I always feel hungry? That's what's wrong with <locName> - there's never enough food";
+            }
+            else
+            {
+                //Adequate, give or take
+                viewText = "The food situation here at <locName>? Is it a problem? I can't see anyone starving.";
+            }
+            return viewText;
         }
 
         /// <summary>

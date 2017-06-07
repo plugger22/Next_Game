@@ -169,6 +169,13 @@ namespace Next_Game
         { return listOfExports.Count; }
 
         /// <summary>
+        /// if neg then a food deficit, otherwise a surplus
+        /// </summary>
+        /// <returns></returns>
+        public int GetFoodBalance()
+        { return (FoodCapacity - Population); }
+
+        /// <summary>
         /// import a list of Relations and add to House Relations List (auto  updates current Rel dict)
         /// </summary>
         /// <param name="tempList"></param>

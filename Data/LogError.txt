@@ -1,2 +1,4 @@
-//Exile Game file ops "LogError.txt" commenced at: 07/06/2017 14:51:37
-//Exile Game file ops "LogError.txt" Completed at: 07/06/2017 14:56:27
+//Exile Game file ops "LogError.txt" commenced at: 07/06/2017 16:56:43
+ERROR_282 "Invalid innerArray (null) for View -> Market view cancelled"
+Method: GetMarketView,  Line: 6053,  Object: Director.cs,  Turn: 5,  Local Time: 16:57:16 UTC +10:00
+//Exile Game file ops "LogError.txt" Completed at: 07/06/2017 16:57:53
