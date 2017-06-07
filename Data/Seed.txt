@@ -104,3 +104,6 @@ Seed 53458 -> Tuesday, 6 June 2017 9:20 PM
 Seed 36921 -> Tuesday, 6 June 2017 9:20 PM
 Seed 44819 -> Tuesday, 6 June 2017 9:21 PM
 Seed 13109 -> Tuesday, 6 June 2017 9:22 PM
+Seed 49918 -> Wednesday, 7 June 2017 11:31 AM
+Seed 37998 -> Wednesday, 7 June 2017 11:32 AM
+Seed 60800 -> Wednesday, 7 June 2017 11:33 AM

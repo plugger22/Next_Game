@@ -7335,7 +7335,7 @@ namespace Next_Game
             int goodsMinTerrain = Game.constant.GetValue(Global.GOODS_FACTOR); //number of terrain squares in 3 x 3 grid needed to qualify for a particular good
             int goodsLow = Game.constant.GetValue(Global.GOODS_LOW); //% chance of a low probability good being present
             int goodsMed = Game.constant.GetValue(Global.GOODS_MED); //% chance of a medium probability good being present
-            int food, balance;
+            int food, balance, tally, resources;
             foreach (var house in dictAllHouses)
             {
                 food = 0;
@@ -7387,7 +7387,7 @@ namespace Next_Game
                     //Oil -> Low frequency
                     if (loc.NumSea >= goodsMinTerrain)
                     { if (rnd.Next(100) <= goodsLow) { house.Value.AddExport(Goods.Oil); Game.logStart?.Write($"House {house.Value.Name} Exports Oil"); } }
-                    
+
                     if (loc.NumPlain >= goodsMinTerrain)
                     {
                         //Wine -> Low frequency
@@ -7398,6 +7398,66 @@ namespace Next_Game
                 }
                 else { Game.SetError(new Error(303, $"Invalid loc (null) for house {house.Value.Name}")); }
             }
+            //Adjust resource levels to reflect trade goods situation (all start from a base level of 1)
+            int foodLimit = 2 * foodCapacity; //threshold for the effect of food surplus/deficit being small or large
+            foreach (var house in dictAllHouses)
+            {
+                tally = 0;
+                //take care of individual house first -> food (+/- 1/2 depending on severity of balance)
+                balance = house.Value.FoodCapacity - house.Value.Population;
+                if (Math.Abs(balance) > foodLimit )
+                {
+                    if (balance < 0) { tally -= 2; }
+                    else { tally += 2; }
+                }
+                else if (Math.Abs(balance) <= foodLimit)
+                {
+                    if (balance < 0) { tally -= 1; }
+                    else { tally += 1; }
+                }
+                //goods -> exports as food is the only import and it's already been catered for
+                if (house.Value.GetNumExports() > 0)
+                {
+                    List<Goods> tempGoods = house.Value.GetExports();
+                    foreach(Goods good in tempGoods)
+                    {
+                        //different goods have different effects
+                        switch (good)
+                        {
+                            case Goods.Gold:
+                                tally += 3;
+                                break;
+                            case Goods.Wine:
+                                tally += 2;
+                                break;
+                            case Goods.Furs:
+                            case Goods.Oil:
+                            case Goods.Iron:
+                            case Goods.Timber:
+                                tally += 1;
+                                break;
+                        }
+                    }
+                }
+                //adjust house Resource level (allowable range of 1 to 5)
+                resources = house.Value.Resources;
+                resources += tally;
+                resources = Math.Min(5, resources);
+                resources = Math.Max(1, resources);
+                house.Value.Resources = resources;
+                Game.logStart?.Write($"House {house.Value.Name} has a Resource level of {resources}");
+
+                //allow for bigger picture
+                if (house.Value is MinorHouse)
+                {
+                    
+                }
+                else if (house.Value is CapitalHouse)
+                {
+                    
+                }
+            }
+            //end all houses loop
         }
 
         public List<String> GetFoodInfo(FoodInfo mode)

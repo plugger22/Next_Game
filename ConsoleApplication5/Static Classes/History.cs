@@ -167,8 +167,8 @@ namespace Next_Game
                 house.LocName = listHousePool[i].Capital;
                 //house.MenAtArms = Game.constant.GetValue(Global.MEN_AT_ARMS);
                 house.CastleWalls = listHousePool[i].Castle;
-                //placeholder
-                house.Resources = rnd.Next(1, 5);
+                //base level before trade goods
+                house.Resources = 1;
                 //add house to listOfHouses
                 listOfMajorHouses.Add(house);
                 Game.logStart?.Write(string.Format("Major House {0} added at {1}, RefID {2}, ArcID {3}", house.Name, house.LocName, house.RefID, house.ArcID));
@@ -198,9 +198,8 @@ namespace Next_Game
             house.CastleWalls = listHousePool[index].Castle;
             house.LocID = locID;
             house.HouseID = houseID;
-            //house.MenAtArms = Game.constant.GetValue(Global.MEN_AT_ARMS) / 2;
-            //placeholder
-            house.Resources = rnd.Next(1, 3);
+            //base level before trade goods
+            house.Resources = 1;
             //add house to listOfHouses
             listOfMinorHouses.Add(house);
             //remove minorhouse from pool list to avoid being chosen again
@@ -344,7 +343,7 @@ namespace Next_Game
             capital.RefID = 9999;
             capital.LocID = 1;
             capital.CastleWalls = Game.constant.GetValue(Global.CASTLE_CAPITAL);
-            capital.Resources = rnd.Next(2, 6);
+            capital.Resources = 1; //base level
             capital.LocName = "Kingskeep";
             capital.Name = "Capital";
             if (loc != null)
