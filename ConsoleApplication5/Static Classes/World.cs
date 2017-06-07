@@ -95,20 +95,17 @@ namespace Next_Game
             timer_2.Start();
             InitialiseGeoClusters();
             Game.StopTimer(timer_2, "W: InitialiseGeoClusters");
-
             timer_2.Start();
             InitialiseHouses();
+            InitialiseHouseData();
             Game.StopTimer(timer_2, "W: InitialiseHouses");
-
             timer_2.Start();
             InitialiseItems();
             InitialiseActiveActors(Game.history.GetActiveActors());
             Game.StopTimer(timer_2, "W: InitiatePlayerActors");
-
             timer_2.Start();
             InitialiseTraits();
             Game.StopTimer(timer_2, "W: InitialiseTraits");
-
             timer_2.Start();
             //need to be here for sequencing issues
             Game.history.InitialiseOverthrow(dictPassiveActors);
@@ -123,10 +120,8 @@ namespace Next_Game
             InitialiseDesires();
             InitialiseSafeHouses();
             InitialiseDisguises();
-
             Game.StopTimer(timer_2, "W: InitialiseVarious");
             timer_2.Start();
-            InitialiseHouseData();
             InitialiseAI();
             InitialiseEnemyActors();
             InitialiseItemPlacement();
@@ -7335,7 +7330,7 @@ namespace Next_Game
             int goodsMinTerrain = Game.constant.GetValue(Global.GOODS_FACTOR); //number of terrain squares in 3 x 3 grid needed to qualify for a particular good
             int goodsLow = Game.constant.GetValue(Global.GOODS_LOW); //% chance of a low probability good being present
             int goodsMed = Game.constant.GetValue(Global.GOODS_MED); //% chance of a medium probability good being present
-            int food, balance, tally, resources;
+            int food, balance, absBalance, tally, resources;
             foreach (var house in dictAllHouses)
             {
                 food = 0;
@@ -7405,12 +7400,14 @@ namespace Next_Game
                 tally = 0;
                 //take care of individual house first -> food (+/- 1/2 depending on severity of balance)
                 balance = house.Value.FoodCapacity - house.Value.Population;
-                if (Math.Abs(balance) > foodLimit )
+                absBalance = Math.Abs(balance);
+                if (absBalance > foodLimit )
                 {
                     if (balance < 0) { tally -= 2; }
                     else { tally += 2; }
                 }
-                else if (Math.Abs(balance) <= foodLimit)
+                //must be more than a minimum and less than the limit
+                else if (absBalance <= foodLimit && absBalance > (foodCapacity/2))
                 {
                     if (balance < 0) { tally -= 1; }
                     else { tally += 1; }
