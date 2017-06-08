@@ -1616,7 +1616,10 @@ namespace Next_Game
             if (locID > 0)
             {
                 string description = "House";
-                RLColor color = RLColor.Cyan;
+                RLColor highlightColor = RLColor.Cyan;
+                RLColor unknownColor = RLColor.LightGray;
+                RLColor knownColor = RLColor.White;
+                RLColor displayColor;
                 bool houseCapital = false;
                 Location loc = Game.network.GetLocation(locID);
                 if (loc != null)
@@ -1636,38 +1639,50 @@ namespace Next_Game
                                 int resources = house.Resources;
                                 //normal houses - major / minor / capital 
                                 locList.Add(new Snippet(string.Format("House {0} of {1}, Lid {2}, Rid {3}, Hid {4}, Branch {5}", house.Name, loc.LocName, loc.LocationID, loc.RefID,
-                                    loc.HouseID, loc.GetBranch()), color, RLColor.Black));
+                                    loc.HouseID, loc.GetBranch()), highlightColor, RLColor.Black));
                                 locList.Add(new Snippet(string.Format("Motto \"{0}\"", house.Motto)));
                                 locList.Add(new Snippet(string.Format("Banner \"{0}\"", house.Banner)));
                                 locList.Add(new Snippet(string.Format("Seated at {0} {1}", house.LocName, GetLocationCoords(locID))));
                                 RLColor loyaltyColor = Color._goodTrait;
                                 if (house.Loyalty_Current == KingLoyalty.New_King) { loyaltyColor = Color._badTrait; }
                                 locList.Add(new Snippet(string.Format("Loyal to the {0}", house.Loyalty_Current), loyaltyColor, RLColor.Black));
-                                locList.Add(new Snippet($"Population: {house.Population:N0} Harvest: {house.FoodCapacity:N0} Food Balance: {house.FoodCapacity - house.Population:N0} Granary: {house.FoodStockpile:N0}"));
+                                
                                 if (house is MajorHouse)
                                 {
                                     MajorHouse majorHouse = house as MajorHouse;
                                     locList.Add(new Snippet($"House {majorHouse.Name} has {majorHouse.GetNumBannerLords()} BannerLords"));
                                 }
+                                //population and food inof
+                                string foodInfo = $"Population: {house.Population:N0} Harvest: {house.FoodCapacity:N0} Food Balance: {house.FoodCapacity - house.Population:N0} Granary: {house.FoodStockpile:N0}";
+                                displayColor = unknownColor; if (house.GetInfoStatus(HouseInfo.Food) == true) { displayColor = knownColor; }
+                                locList.Add(new Snippet(foodInfo, displayColor, RLColor.Black));
+                                //safehouse info
                                 if (house.SafeHouse > 0)
                                 {
-                                    locList.Add(new Snippet($"Safe House available ", false));
-                                    locList.Add(new Snippet(string.Format("{0}", GetStars(house.SafeHouse)), RLColor.LightRed, RLColor.Black));
+                                    displayColor = unknownColor;  if (house.GetInfoStatus(HouseInfo.SafeHouse) == true) { displayColor = knownColor; }
+                                    locList.Add(new Snippet($"Safe House available ", displayColor, RLColor.Black, false));
+                                    displayColor = unknownColor; if (house.GetInfoStatus(HouseInfo.SafeHouse) == true) { displayColor = RLColor.LightRed; }
+                                    locList.Add(new Snippet(string.Format("{0}", GetStars(house.SafeHouse)), displayColor, RLColor.Black));
                                 }
-                                locList.Add(new Snippet(string.Format("Strength of Castle Walls ({0}) ", (CastleDefences)house.CastleWalls), false));
-                                locList.Add(new Snippet(string.Format("{0}", GetStars((int)house.CastleWalls)), RLColor.LightRed, RLColor.Black));
-                                locList.Add(new Snippet(string.Format("House Resources ({0}) ", (ResourceLevel)resources), false));
-                                locList.Add(new Snippet(string.Format("{0}", GetStars((int)resources)), RLColor.LightRed, RLColor.Black));
+                                //castle wall info
+                                displayColor = unknownColor; if (house.GetInfoStatus(HouseInfo.CastleWalls) == true) { displayColor = knownColor; }
+                                locList.Add(new Snippet(string.Format("Strength of Castle Walls ({0}) ", (CastleDefences)house.CastleWalls), displayColor, RLColor.Black, false));
+                                displayColor = unknownColor; if (house.GetInfoStatus(HouseInfo.CastleWalls) == true) { displayColor = RLColor.LightRed; }
+                                locList.Add(new Snippet(string.Format("{0}", GetStars((int)house.CastleWalls)), displayColor, RLColor.Black));
+                                //resources info
+                                displayColor = unknownColor; if (house.GetInfoStatus(HouseInfo.Resources) == true) { displayColor = knownColor; }
+                                locList.Add(new Snippet(string.Format("House Resources ({0}) ", (ResourceLevel)resources), displayColor, RLColor.Black, false));
+                                displayColor = unknownColor; if (house.GetInfoStatus(HouseInfo.Resources) == true) { displayColor = RLColor.LightRed; }
+                                locList.Add(new Snippet(string.Format("{0}", GetStars((int)resources)), displayColor, RLColor.Black));
+                                //archetype info
                                 if (eventCount > 0)
-                                {
-                                    locList.Add(new Snippet(string.Format("Archetype \"{0}\" with {1} events", Game.director.GetArchetypeName(house.ArcID), eventCount),
-                                      RLColor.LightGray, RLColor.Black));
-                                }
+                                { locList.Add(new Snippet(string.Format("Archetype \"{0}\" with {1} events", Game.director.GetArchetypeName(house.ArcID), eventCount),
+                                      RLColor.LightGray, RLColor.Black)); }
                             }
                             else
                             {
                                 //special Inn
-                                locList.Add(new Snippet(string.Format("{0} Inn, LocID {1}, RefID {2}, Branch {3}", house.Name, loc.LocationID, loc.RefID, loc.GetBranch(), color, RLColor.Black)));
+                                locList.Add(new Snippet(string.Format("{0} Inn, LocID {1}, RefID {2}, Branch {3}", house.Name, loc.LocationID, loc.RefID, loc.GetBranch(), highlightColor, RLColor.Black)));
                                 locList.Add(new Snippet(string.Format("Motto \"{0}\"", house.Motto)));
                                 locList.Add(new Snippet(string.Format("Signage \"{0}\"", house.Banner)));
                                 locList.Add(new Snippet(string.Format("Found at {0}", GetLocationCoords(locID))));
@@ -1780,11 +1795,10 @@ namespace Next_Game
                         //display friends and enemies
                         if (numFriends > 0 || numEnemies > 0)
                         {
-                            RLColor foreColor = RLColor.White;
-                            if (house?.FriendsAndEnemies == false) { foreColor = RLColor.LightGray; }
+                            displayColor = unknownColor; if (house.GetInfoStatus(HouseInfo.FriendsEnemies) == true) { displayColor = knownColor; }
                             locList.Add(new Snippet(string.Format("Current Standing at {0}", loc.LocName), RLColor.Brown, RLColor.Black));
                             locList.Add(new Snippet(string.Format("You have {0} Friend{1} and {2} Enem{3} here", numFriends, numFriends != 1 ? "s" : "", numEnemies,
-                                numEnemies != 1 ? "ies" : "y"), foreColor, RLColor.Black));
+                                numEnemies != 1 ? "ies" : "y"), displayColor, RLColor.Black));
                         }
                     }
                 }

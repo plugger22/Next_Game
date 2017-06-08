@@ -9,6 +9,7 @@ namespace Next_Game
     public enum KingLoyalty { None, Old_King, New_King }
     public enum HouseSpecial { None, Inn }
     public enum CastleDefences { None, Minimal, Weak, Average, Strong, Formidable }
+    public enum HouseInfo { None, Resources, CastleWalls, FriendsEnemies, Food, SafeHouse, Count} //toggles information display on/off depending on known status
 
     //
     // Base class
@@ -32,12 +33,12 @@ namespace Next_Game
         public int SafeHouse { get; set; } //Safe House present if > 0. Number represents how many stars (max 5)
         public int FoodCapacity { get; set; } //the amount of food that the house can harvest from the surrounding terrain at the end of the growing season
         public int FoodStockpile { get; set; } //the amount of food that is stockpiled at the house loc for winter
-        public bool FriendsAndEnemies { get; private set; } //if true, then display number of friends and enemies at a house
         public bool ObserveFlag { get; set; } //True if the player has already used the "observe" action at this location
         public LocType Type { get; set; }
         public KingLoyalty Loyalty_AtStart { get; set; }
         public KingLoyalty Loyalty_Current { get; set; }
         public HouseSpecial Special { get; set; } //used for quick acess to special locations, eg. Inns
+        private int[,] arrayOfInfoVis; //toggles variousinformation elements (enum HouseInfo) display on/off -> [0,] (int)HouseInfo [1] Unknown '0', Known '1'
         private List<int> listOfFirstNames; //contains ID #'s (listOfMaleFirstNames index) of all first names used by males within the house (eg. 'Eddard Stark II')
         private List<int> listOfSecrets;
         private List<int> listOfFollowerEvents;
@@ -62,7 +63,7 @@ namespace Next_Game
             listOfPlayerEvents = new List<int>();
             listOfRelations = new List<Relation>();
             dictCurrentRelations = new Dictionary<int, int>();
-            FriendsAndEnemies = false;
+            arrayOfInfoVis = new int[(int)HouseInfo.Count, 2];
             ObserveFlag = false;
         }
 
@@ -79,6 +80,29 @@ namespace Next_Game
             listOfFirstNames.Add(nameID);
             numOfLikeNames = listOfFirstNames.Count(i => i.Equals(nameID));
             return numOfLikeNames;
+        }
+
+        /// <summary>
+        /// returns Known (true) or Unknown (false) status for HouseInfo
+        /// </summary>
+        /// <param name="info"></param>
+        /// <returns></returns>
+        public bool GetInfoStatus(HouseInfo info)
+        {
+            if (arrayOfInfoVis[(int)info, 1] > 0) { return true; }
+            else { return false; }
+        }
+
+        /// <summary>
+        /// toggles known/unknown status to on/off for HouseInfo
+        /// </summary>
+        /// <param name="info"></param>
+        /// <param name="isKnown"></param>
+        public void SetInfoStatus(HouseInfo info, bool isKnown = true)
+        {
+            if (isKnown == true)
+            { arrayOfInfoVis[(int)info, 1] = 1; }
+            else { arrayOfInfoVis[(int)info, 1] = 0; }
         }
 
         internal void SetFollowerEvents(List<int> listEvents)
@@ -137,16 +161,6 @@ namespace Next_Game
         /// <returns></returns>
         internal bool RemoveRumour(int rumourID)
         { return listOfRumours.Remove(rumourID); }
-
-        /// <summary>
-        /// Can be set directly but used to generate a msg
-        /// </summary>
-        /// <param name="status"></param>
-        public void SetFriendsAndEnemies(bool status)
-        {
-            FriendsAndEnemies = status;
-            Game.logTurn?.Write($"[Notification] House {Name} FriendsAndEnemies status changed to \"{status}\"");
-        }
 
         /// <summary>
         /// add an Import to the list Of Imports

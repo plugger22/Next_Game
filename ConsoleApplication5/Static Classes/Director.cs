@@ -1734,7 +1734,7 @@ namespace Next_Game
                                     option_1.SetGoodOutcome(outcome_1);
                                     eventObject.SetOption(option_1);
                                     person.SetAllSkillsKnownStatus(true);
-                                    house.SetFriendsAndEnemies(true);
+                                    house.SetInfoStatus(HouseInfo.FriendsEnemies);
                                     //blackmail
                                     OptionInteractive option_2 = new OptionInteractive("Blackmail") { ActorID = actorID };
                                     option_2.ReplyGood = string.Format("{0} frowns, their expression darkens", actorText);
@@ -1745,7 +1745,7 @@ namespace Next_Game
                                     option_2.SetGoodOutcome(outcome_2);
                                     eventObject.SetOption(option_2);
                                     person.SetAllSkillsKnownStatus(true);
-                                    house.SetFriendsAndEnemies(true);
+                                    house.SetInfoStatus(HouseInfo.FriendsEnemies);
                                     //seduce
                                     OptionInteractive option_3 = new OptionInteractive("Seduce") { ActorID = actorID };
                                     option_3.ReplyGood = string.Format("{0} flutters their eyelids at you", actorText);
@@ -1757,7 +1757,7 @@ namespace Next_Game
                                     option_3.SetGoodOutcome(outcome_3);
                                     eventObject.SetOption(option_3);
                                     person.SetAllSkillsKnownStatus(true);
-                                    house.SetFriendsAndEnemies(true);
+                                    house.SetInfoStatus(HouseInfo.FriendsEnemies);
                                     //You want Something from them
                                     OptionInteractive option_5 = new OptionInteractive("You want something") { ActorID = actorID };
                                     option_5.ReplyGood = $"{actorText} sits back and cautiously agrees to discuss your needs";
@@ -4512,7 +4512,7 @@ namespace Next_Game
                     {
                         House house = Game.world.GetHouse(rumour.RefID);
                         if (house != null)
-                        { house.SetFriendsAndEnemies(true); }
+                        { house.SetInfoStatus(HouseInfo.FriendsEnemies); }
                         else { Game.SetError(new Error(272, $"Invalid house (null) for rumour.RefID {rumour.RefID} -> FriendsAndEnemies not made Known")); }
                     }
                     else { Game.SetError(new Error(272, $"Rumour Type doesn't match Rumour class (Friends) -> FriendsAndEnemies not made Known, RumourID {rumour.RumourID}")); }
@@ -4799,8 +4799,11 @@ namespace Next_Game
                         resultText = builder.ToString();
                         //Set ObserveFlag to True
                         house.ObserveFlag = true;
+                        //Toggle houseInfo to Known
+                        house.SetInfoStatus(HouseInfo.CastleWalls);
+                        house.SetInfoStatus(HouseInfo.Resources);
+                        house.SetInfoStatus(HouseInfo.Food);
                     }
-                    
                 }
                 else { Game.SetError(new Error(305, $"Invalid House for RefID {refID}")); }
             }
