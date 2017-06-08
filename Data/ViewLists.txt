@@ -12,27 +12,38 @@
 # <ship> -> name of the ship that the player is on
 # <animalBig> -> random big animal
 # <curse> -> random curse
-# <foodEduc>, <foodUned> -> Check's loc terrain -> fish, grown crops, hunting -> gets random food from Assorted -> food type for 'Educ' or 'Uned'
+# <food> -> Check's loc terrain -> fish, grown crops, hunting -> gets random food from Assorted (varies if Educ / Uned)
 
 
 [FoodSurplusEduc]
-
+The food here at <locName> is a delight. Have you tasted the <food>?
+My table is never empty of food. There is an abundance. Especially of <food>.
 
 [FoodSurplusUned]
 There's always plenty of food here at <locName>. Nobody goes hungry.
+One good thing about <locName> is the amount of available food. Pity that it's mostly <food>.
+You probably haven't noticed but there are a lot of fat people around <locName>. It's because of the <food>.
+You could eat yourself silly here in <locName>. More <food> here than you can poke a stick at.
 
 [FoodDeficitEduc]
-What I miss most is the specialty of <locName>, the <foodEduc>. Why do I have to go without?
+What I miss most is the specialty of <locName>, the <food>. Why do I have to go without?
+It is a terrible impost to have to go without <food>. I admit to feeling hungry some days.
 
 [FoodDeficitUned]
 Why do I always feel hungry? That's what's wrong with <locName> - there's never enough food.
+Yes there is <food> to eat here at <locName>. But there's not enough of it. People are hungry.
+It's hard living in a place like <locName> where we don't have enough food. Tough on the children, it is.
+Who was the idiot who decided to build <locName> in a place without enough food? Is <food> all there is?
 
 [FoodNormalEduc]
 The food situation here at <locName>? Is it a problem? I can't see anyone starving.
-The <foodUned> here at <locName> is exquisite.
+The <food> here at <locName> is exquisite.
 
 [FoodNormalUned]
-I'm getting sick of eating <foodUned> every day. Isn't there something different?
+I'm getting sick of eating <food> every day. Isn't there something different?
+What's the point of dinner if all you get to eat is <food>?
+I love <food>. Just as well. I don't eat a lot else.
+If you had told me that I would grow to like <food> I wouldn't have believed you.
 
 [JusticeNeutralEduc]
 Does <player> have a right to be King? Hard to say.

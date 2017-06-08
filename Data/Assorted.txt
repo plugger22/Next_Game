@@ -79,35 +79,34 @@ Wolfhound
 Giant Boar
 
 
-# Food texts (views) Uned -> 'I'm getting sick of eating...<food>'
-# Food texts (views) Educ -> 'You can find expuisite ...<food>... here'
+# Food texts (views) Uned -> 'I'm getting sick of eating...<food>' -> No plurals
+# Food texts (views) Educ -> 'You can find expuisite ...<food>... here' -> No plurals
 
 [FoodCropEduc]
-Dates
-Figs
+Fig
 Raisins
 Cheese
 Pigeon
 Honeyed Chicken
-Blood Oranges
+Blood Orange
 Plums
-Pomegranates
-Strawberries
+Pomegranate
+choice fruit
 Stallion heart
 Suckling Pig
 Black Olive Bread
 
 [FoodCropUned]
-Potatoes
-Pumpkins
+Potato
+Pumpkin
 Oats
 Cabbage
 Pig
-Eggs
-Onions
+Egg
+Onion
 Mouldy bread
 Old Horse meat
-Turnips
+Turnip
 
 [FoodFishEduc]
 Squid
@@ -120,9 +119,9 @@ Lamprey
 
 [FoodFishUned]
 Whale Meat
-Spiny Sea Urchins
-Cockle Shells
-Mud Crabs
+Spiny Sea Urchin
+Cockle Shell
+Mud Crab
 Slimefish
 Whiskerfish
 Mudfish
@@ -140,4 +139,7 @@ Pig
 Wild Boar
 Wild Goat
 Rabbit
-Carpet Snake
+Bog Roddent
+Rat
+Dog
+Swamp Snake

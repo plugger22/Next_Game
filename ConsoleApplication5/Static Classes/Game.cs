@@ -132,7 +132,7 @@ namespace Next_Game
             constant = new Constant();
             variable = new Variable(seed);
             statistic = new Statistic();
-            utility = new Utility();
+            utility = new Utility(seed);
             logStart = new Logger("c:/Users/cameron/documents/visual studio 2015/Projects/Next_Game/Data/LogStart.txt", true);
             logError = new Logger("c:/Users/cameron/documents/visual studio 2015/Projects/Next_Game/Data/LogError.txt");
             try
@@ -516,23 +516,7 @@ namespace Next_Game
                                                 if (mouseLeft == true)
                                                 {
                                                     if ((_posSelect1 != null && _posSelect2 != null) && (_posSelect1.PosX != _posSelect2.PosX || _posSelect1.PosY != _posSelect2.PosY))
-                                                    {
-                                                        //int locID = map.GetMapInfo(MapLayer.LocID, _posSelect2.PosX, _posSelect2.PosY);
-                                                        //int refID = world.ConvertLocToRef(locID);
-                                                        //List<Position> pathToTravel = network.GetPathAnywhere(_posSelect1, _posSelect2);
-                                                        /*string infoText = */
-                                                        world.InitialiseMoveActor(_charIDSelected, _posSelect1, _posSelect2/*, pathToTravel*/);
-                                                        /*Message message = new Message(infoText, _charIDSelected, locID, MessageType.Move);
-                                                        world.SetMessage(message);
-                                                        if (_charIDSelected == 1)
-                                                        { Game.world.SetPlayerRecord(new Record(infoText, _charIDSelected, locID, refID, CurrentActorIncident.Travel)); }
-                                                        else if (_charIDSelected > 1)
-                                                        { Game.world.SetCurrentRecord(new Record(infoText, _charIDSelected, locID, refID, CurrentActorIncident.Travel)); }
-                                                        infoChannel.AppendInfoList(new Snippet(infoText), ConsoleDisplay.Input);*/
-                                                        /*//show route
-                                                        map.UpdateMap();
-                                                        map.DrawRoutePath(pathToTravel);*/
-                                                    }
+                                                    { world.InitialiseMoveActor(_charIDSelected, _posSelect1, _posSelect2);  }
                                                     else
                                                     { infoChannel.AppendInfoList(new Snippet("Destination the same as Origin. Journey Cancelled!", RLColor.Red, RLColor.Black), ConsoleDisplay.Input); }
                                                 }

@@ -11,6 +11,10 @@ namespace Next_Game
     /// </summary>
     public class Utility
     {
+        static Random rnd;
+
+        public Utility(int seed)
+        { rnd = new Random(seed); }
 
         /// <summary>
         /// utility function, returns a two line date format and harvest/winter countdown
@@ -18,6 +22,8 @@ namespace Next_Game
         /// <returns></returns>
         public List<Snippet> ShowDate()
         {
+            
+            
             List<Snippet> tempList = new List<Snippet>();
             string dateReturn = "Unknown";
             int moonDay = (Game.gameTurn % 30) + 1;
@@ -252,8 +258,9 @@ namespace Next_Game
         /// </summary>
         /// <param name="text"></param>
         /// <param name="player"></param>
+        /// <param name="educated">optional parameter where being educated/uneducated matters</param>
         /// <returns></returns>
-        public string CheckTagsView(string text, Player player)
+        public string CheckTagsView(string text, Player player, bool educated = true)
         {
             string checkedText = text;
             if (String.IsNullOrEmpty(text) == false)
@@ -375,40 +382,53 @@ namespace Next_Game
                             case "animalBig":
                                 replaceText = Game.director.GetAssortedRandom(Assorted.AnimalBig);
                                 break;
-                            case "foodEduc":
+                            case "food":
                                 //Food type for Educated People
                                 Location loc = Game.network.GetLocation(player.LocID);
                                 if (loc != null)
                                 {
                                     //figure out what's the dominant terrain type
-                                    int[] arrayTerrain = new int[3];
-                                    arrayTerrain[0] = loc.NumPlain;
-                                    arrayTerrain[1] = loc.NumForest;
-                                    arrayTerrain[2] = loc.NumSea;
                                     int index = 0;
-                                    int value = 0;
+                                    //int value = 0;
+                                    int range = 0;
+                                    int[] arrayTerrain = new int[3];
+                                    arrayTerrain[0] = loc.NumSea; range += loc.NumSea; //make sea the first to optimise odds of being chosen
+                                    arrayTerrain[1] = loc.NumPlain; range += loc.NumPlain;
+                                    arrayTerrain[2] = loc.NumForest; range += loc.NumForest;
+                                    //get a random terrain from the selection using a weighted average (eg. the more of a terrain, the greater the odds of being chosen)
+                                    int rndNum = rnd.Next(1, range);
                                     for(int i = 0; i < arrayTerrain.Length; i++)
-                                    { if (arrayTerrain[i] > value) { value = arrayTerrain[i]; index = i; } }
+                                    {
+                                        range -= arrayTerrain[i];
+                                        if (range <= 0) { index = i;  break; }
+                                    }
+
+                                    /*for(int i = 0; i < arrayTerrain.Length; i++)
+                                    { if (arrayTerrain[i] > value) { value = arrayTerrain[i]; index = i; } }*/
                                     //get an appropriate food
                                     switch (index)
                                     {
                                         case 0:
-                                            //Plains -> Crop food
-                                            replaceText = Game.director.GetAssortedRandom(Assorted.FoodCropEduc);
+                                            //Seas -> Fish food
+                                            if (educated == true) { replaceText = Game.director.GetAssortedRandom(Assorted.FoodFishEduc); }
+                                            else { replaceText = Game.director.GetAssortedRandom(Assorted.FoodFishUned); }
                                             break;
                                         case 1:
-                                            //Forest -> Hunting food
-                                            replaceText = Game.director.GetAssortedRandom(Assorted.FoodHuntEduc);
+                                            //Plains -> Crop food
+                                            if (educated == true) { replaceText = Game.director.GetAssortedRandom(Assorted.FoodCropEduc); }
+                                            else { replaceText = Game.director.GetAssortedRandom(Assorted.FoodCropUned); }
                                             break;
                                         case 2:
-                                            //Seas -> Fish food
-                                            replaceText = Game.director.GetAssortedRandom(Assorted.FoodFishEduc);
+                                            //Forest -> Hunting food
+                                            if (educated == true) { replaceText = Game.director.GetAssortedRandom(Assorted.FoodHuntEduc); }
+                                            else { replaceText = Game.director.GetAssortedRandom(Assorted.FoodHuntUned); }
                                             break;
+                                        
                                     }
                                 }
                                 else { Game.SetError(new Error(283, $"Invalid Loc (null) for player.LocID {player.LocID} for FoodEduc")); }
                                 break;
-                            case "foodUned":
+                            /*case "foodUned":
                                 //Food type for Uneducated people
                                 Location locUned = Game.network.GetLocation(player.LocID);
                                 if (locUned != null)
@@ -440,7 +460,7 @@ namespace Next_Game
                                     }
                                 }
                                 else { Game.SetError(new Error(283, $"Invalid Loc (null) for player.LocID {player.LocID} for FoodUned")); }
-                                break;
+                                break;*/
                             default:
                                 replaceText = "";
                                 Game.SetError(new Error(283, string.Format("Invalid tag (\"{0}\")", tag)));

@@ -5927,7 +5927,7 @@ namespace Next_Game
                     {
                         case 1:
                             //Justice of Cause
-                            data = CheckGameState(GameState.Justice) - 50;
+                            /*data = CheckGameState(GameState.Justice) - 50;
                             difference = Math.Abs(data);
                             if (difference <= 10)
                             {
@@ -5953,10 +5953,10 @@ namespace Next_Game
                                 else
                                 { innerArray = arrayOfViews[(int)ViewType.JusticeBadUned]; }
                             }
-                            break;
+                            break;*/
                         case 2:
                             //Relative Legend
-                            data = CheckGameState(GameState.Legend_Usurper) - CheckGameState(GameState.Legend_King);
+                            /*data = CheckGameState(GameState.Legend_Usurper) - CheckGameState(GameState.Legend_King);
                             difference = Math.Abs(data);
                             if (difference <= 10)
                             {
@@ -5982,10 +5982,10 @@ namespace Next_Game
                                 else
                                 { innerArray = arrayOfViews[(int)ViewType.LegendBadUned]; }
                             }
-                            break;
+                            break;*/
                         case 3:
                             //Relative Honour
-                            data = CheckGameState(GameState.Honour_Usurper) - CheckGameState(GameState.Honour_King);
+                            /*data = CheckGameState(GameState.Honour_Usurper) - CheckGameState(GameState.Honour_King);
                             difference = Math.Abs(data);
                             if (difference <= 10)
                             {
@@ -6011,11 +6011,10 @@ namespace Next_Game
                                 else
                                 { innerArray = arrayOfViews[(int)ViewType.HonourBadUned]; }
                             }
-
-                            break;
+                            break;*/
                         case 4:
                             //Known / Unknown
-                            if (player.Known == true)
+                            /*if (player.Known == true)
                             {
                                 //Player Known
                                 if (educated == true)
@@ -6031,7 +6030,7 @@ namespace Next_Game
                                 else
                                 { innerArray = arrayOfViews[(int)ViewType.UnknownUned]; }
                             }
-                            break;
+                            break;*/
                         case 5:
                             //food situation
                             int refID = Game.world.ConvertLocToRef(player.LocID);
@@ -6083,7 +6082,7 @@ namespace Next_Game
                     if (randomText.Length > 0)
                     {
                         //deal with tags (only for game states & Others above as player choice views are tag checked at the time that they are created)
-                        view = Game.utility.CheckTagsView(randomText, player);
+                        view = Game.utility.CheckTagsView(randomText, player, educated);
                         viewIndex++;
                         if (viewIndex > 5) { viewIndex = 1; }
                         //update GameVar
@@ -6118,16 +6117,19 @@ namespace Next_Game
             switch (type)
             {
                 case Assorted.HorseName:
-                    innerArray = arrayOfAssorted[(int)type];
-                    break;
                 case Assorted.HorseType:
-                    innerArray = arrayOfAssorted[(int)type];
-                    break;
                 case Assorted.Curse:
+                case Assorted.AnimalBig:
+                case Assorted.FoodCropEduc:
+                case Assorted.FoodCropUned:
+                case Assorted.FoodHuntEduc:
+                case Assorted.FoodHuntUned:
+                case Assorted.FoodFishEduc:
+                case Assorted.FoodFishUned:
                     innerArray = arrayOfAssorted[(int)type];
                     break;
-                case Assorted.AnimalBig:
-                    innerArray = arrayOfAssorted[(int)type];
+                default:
+                    Game.SetError(new Error(297, $"Invalid type \"{type}\""));
                     break;
             }
             //select a random string from the chosen list
