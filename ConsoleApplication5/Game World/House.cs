@@ -33,6 +33,7 @@ namespace Next_Game
         public int FoodCapacity { get; set; } //the amount of food that the house can harvest from the surrounding terrain at the end of the growing season
         public int FoodStockpile { get; set; } //the amount of food that is stockpiled at the house loc for winter
         public bool FriendsAndEnemies { get; private set; } //if true, then display number of friends and enemies at a house
+        public bool ObserveFlag { get; set; } //True if the player has already used the "observe" action at this location
         public LocType Type { get; set; }
         public KingLoyalty Loyalty_AtStart { get; set; }
         public KingLoyalty Loyalty_Current { get; set; }
@@ -62,6 +63,7 @@ namespace Next_Game
             listOfRelations = new List<Relation>();
             dictCurrentRelations = new Dictionary<int, int>();
             FriendsAndEnemies = false;
+            ObserveFlag = false;
         }
 
 

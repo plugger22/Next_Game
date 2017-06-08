@@ -1327,6 +1327,15 @@ namespace Next_Game
                                 option.SetGoodOutcome(outRumour);
                                 eventObject.SetOption(option);
                             }
+                            //option -> Observe (have a look around) 
+                            if (house.ObserveFlag == false)
+                            {
+                                OptionInteractive option = new OptionInteractive("Observe");
+                                option.ReplyGood = "You quietly walk around, taking note of everything";
+                                OutObserve outObserve = new OutObserve(eventObject.EventPID);
+                                option.SetGoodOutcome(outObserve);
+                                eventObject.SetOption(option);
+                            }
                             //option -> seek passage to another port (if applicable)
                             if (loc.isPort == true)
                             { 
@@ -2815,7 +2824,15 @@ namespace Next_Game
                                             if (String.IsNullOrEmpty(outcomeText) == false)
                                             { resultList.Add(new Snippet(outcomeText, foreColor, backColor)); resultList.Add(new Snippet("")); }
                                             //message
-                                            //tempText = string.Format("Event \"{0}\", Option \"{1}\", {2}", eventObject.Name, option.Text, outcomeText);
+                                            Game.world.SetMessage(new Message(outcomeText, 1, 0, MessageType.Event));
+                                            Game.world.SetPlayerRecord(new Record(outcomeText, player.ActID, player.LocID, CurrentActorIncident.Event));
+                                            break;
+                                        case OutcomeType.Observe:
+                                            //Player observes his location
+                                            outcomeText = GetObservation();
+                                            if (String.IsNullOrEmpty(outcomeText) == false)
+                                            { resultList.Add(new Snippet(outcomeText, foreColor, backColor)); resultList.Add(new Snippet("")); }
+                                            //message
                                             Game.world.SetMessage(new Message(outcomeText, 1, 0, MessageType.Event));
                                             Game.world.SetPlayerRecord(new Record(outcomeText, player.ActID, player.LocID, CurrentActorIncident.Event));
                                             break;
@@ -2825,7 +2842,6 @@ namespace Next_Game
                                             if (String.IsNullOrEmpty(outcomeText) == false)
                                             { resultList.Add(new Snippet(outcomeText, foreColor, backColor)); resultList.Add(new Snippet("")); }
                                             //message
-                                            //tempText = string.Format("Event \"{0}\", Option \"{1}\", {2}", eventObject.Name, option.Text, outcomeText);
                                             Game.world.SetMessage(new Message(outcomeText, 1, 0, MessageType.Event));
                                             Game.world.SetPlayerRecord(new Record(outcomeText, player.ActID, player.LocID, CurrentActorIncident.Event));
                                             break;
@@ -4722,6 +4738,27 @@ namespace Next_Game
             return resultText;
         }
 
+        /// <summary>
+        /// Player observes his current surroundings.
+        /// </summary>
+        /// <returns></returns>
+        private string GetObservation()
+        {
+            string resultText = "";
+            
+            Player player = Game.world.GetPlayer();
+            if (player != null)
+            {
+                //Get House
+                int refID = Game.world.ConvertLocToRef(player.LocID);
+                //check if capital
+                House house = Game.world.GetHouse(refID);
+                //Set ObserveFlag to True
+            }
+            else { Game.SetError(new Error(305, "Invalid Player (null) -> No observations")); }
+                
+                return resultText;
+        }
 
         /// <summary>
         /// implements actual changes

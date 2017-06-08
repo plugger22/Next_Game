@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 namespace Next_Game.Event_System
 {
     public enum OutcomeType { None, Delay, Conflict, GameState, GameVar, Known, EventTimer, EventStatus, EventChain, Resource, Condition, Freedom, Item, Passage, VoyageTime, Adrift, DeathTimer, Rescued,
-    Follower, Promise, RelPlyr, Favour, Introduction, SafeHouse, Disguise, Rumour, Travel, HorseHealth, HorseStatus};
+    Follower, Promise, RelPlyr, Favour, Introduction, SafeHouse, Disguise, Rumour, Travel, HorseHealth, HorseStatus, Observe};
 
     /// <summary>
     /// Option outcome, event system
@@ -197,12 +197,21 @@ namespace Next_Game.Event_System
     }
 
     /// <summary>
-    /// Player asks around for information at a location (CreateAutoLocEvent) and receives rumours
+    /// Player asks around for information at a location (CreateAutoLocEvent) and receives rumours -> Only used by CreateAutoLocEvent (fileimport.cs currently can't deal with it)
     /// </summary>
     class OutRumour : Outcome
     {
         public OutRumour(int eventID) : base(eventID)
         { Type = OutcomeType.Rumour; }
+    }
+
+    /// <summary>
+    /// Player Observes his current location and gains information on a number of things
+    /// </summary>
+    class OutObserve : Outcome
+    {
+        public OutObserve(int eventID) : base(eventID)
+        { Type = OutcomeType.Observe; }
     }
 
     /// <summary>
