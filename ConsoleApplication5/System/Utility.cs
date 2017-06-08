@@ -394,40 +394,44 @@ namespace Next_Game
                                     arrayTerrain[1] = loc.NumForest; range += loc.NumForest;
                                     arrayTerrain[2] = loc.NumSea; range += loc.NumSea;
                                     //get a random terrain from the selection using a weighted average (eg. the more of a terrain, the greater the odds of being chosen)
-                                    int rndNum = rnd.Next(1, range);
-                                    for(int i = 0; i < arrayTerrain.Length; i++)
+                                    if (range > 1)
                                     {
-                                        range -= arrayTerrain[i];
-                                        if (range <= 0) { index = i;  break; }
-                                    }
+                                        int rndNum = rnd.Next(1, range);
+                                        for (int i = 0; i < arrayTerrain.Length; i++)
+                                        {
+                                            range -= arrayTerrain[i];
+                                            if (range <= 0) { index = i; break; }
+                                        }
 
-                                    /*for(int i = 0; i < arrayTerrain.Length; i++)
-                                    { if (arrayTerrain[i] > value) { value = arrayTerrain[i]; index = i; } }*/
+                                        /*for(int i = 0; i < arrayTerrain.Length; i++)
+                                        { if (arrayTerrain[i] > value) { value = arrayTerrain[i]; index = i; } }*/
 
-                                    //get an appropriate food
-                                    switch (index)
-                                    {
-                                        case 0:
-                                            //Plains -> Crop food
-                                            if (educated == true) { replaceText = Game.director.GetAssortedRandom(Assorted.FoodCropEduc); }
-                                            else { replaceText = Game.director.GetAssortedRandom(Assorted.FoodCropUned); }
-                                            break;
-                                        case 1:
-                                            //Forest -> Hunting food
-                                            if (educated == true) { replaceText = Game.director.GetAssortedRandom(Assorted.FoodHuntEduc); }
-                                            else { replaceText = Game.director.GetAssortedRandom(Assorted.FoodHuntUned); }
-                                            break;
-                                        case 2:
-                                            //Seas -> Fish food
-                                            if (educated == true) { replaceText = Game.director.GetAssortedRandom(Assorted.FoodFishEduc); }
-                                            else { replaceText = Game.director.GetAssortedRandom(Assorted.FoodFishUned); }
-                                            break;
+                                        //get an appropriate food
+                                        switch (index)
+                                        {
+                                            case 0:
+                                                //Plains -> Crop food
+                                                if (educated == true) { replaceText = Game.director.GetAssortedRandom(Assorted.FoodCropEduc); }
+                                                else { replaceText = Game.director.GetAssortedRandom(Assorted.FoodCropUned); }
+                                                break;
+                                            case 1:
+                                                //Forest -> Hunting food
+                                                if (educated == true) { replaceText = Game.director.GetAssortedRandom(Assorted.FoodHuntEduc); }
+                                                else { replaceText = Game.director.GetAssortedRandom(Assorted.FoodHuntUned); }
+                                                break;
+                                            case 2:
+                                                //Seas -> Fish food
+                                                if (educated == true) { replaceText = Game.director.GetAssortedRandom(Assorted.FoodFishEduc); }
+                                                else { replaceText = Game.director.GetAssortedRandom(Assorted.FoodFishUned); }
+                                                break;
+                                        }
                                     }
+                                    else { Game.SetError(new Error(283, $"Invalid Range \"{range}\" (should be greater than 1)")); replaceText = "Ham"; }
                                 }
                                 else { Game.SetError(new Error(283, $"Invalid Loc (null) for player.LocID {player.LocID} for FoodEduc")); }
                                 break;
                             default:
-                                replaceText = "";
+                                replaceText = "Ham";
                                 Game.SetError(new Error(283, string.Format("Invalid tag (\"{0}\")", tag)));
                                 break;
                         }

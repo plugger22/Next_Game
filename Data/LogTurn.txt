@@ -1,138 +1,127 @@
-//Exile Game File "LogTurn.txt" opened at: 08/06/2017 17:41:35
+//Exile Game File "LogTurn.txt" opened at: 08/06/2017 19:51:07
 --- ProcessStartTurn (World.cs)
-Day 5, Turn 4, Harvest in 144 days, Winter in 159 days
-Usurper Jarvis Martell, "The Dutiful", AtLocation, Barrow Hill
+Day 9, Turn 8, Harvest in 140 days, Winter in 155 days
+Usurper Jarvis Martell, "The Dutiful", AtLocation, One Eyed Pete's
 --- UpdateRumours (World.cs)
-dictRumoursTimed (Start) -> 95 records
-[Rumour -> Removal] RID 452, "Inquisitor, Brother Amon, ActID 129 has been spotted wenching at Kingskeep (loc 17:13)" removed from Global All list
-94 rumours -> TimerExpire decremented
-1 records have expired and been removed
-dictRumoursTimed (End) -> 94 records
---- MoveActors -> 2 Records (World.cs)
- [Move -> MoveObject] Inquisitor Brother Amon, ActID 129 travelling to The Yellow Huntress (current Loc 17:11)
---- CheckIfFoundEnemy (World.cs)
- [Search -> Debug] Active Jarvis Martell, ID 1 at 2:22, Enemy at 17:11 (Brother Amon, ID 129
---- CheckIfFoundEnemy (World.cs)
- [Search -> Debug] Active Jarvis Martell, ID 1 at 2:22, Enemy at 17:10 (Brother Amon, ID 129
- [Move -> MoveObject] Inquisitor Brother Shiva, ActID 131 travelling to The Clumsy Hog (current Loc 17:15)
---- CheckIfFoundEnemy (World.cs)
- [Search -> Debug] Active Jarvis Martell, ID 1 at 2:22, Enemy at 17:15 (Brother Shiva, ID 131
---- CheckIfFoundEnemy (World.cs)
- [Search -> Debug] Active Jarvis Martell, ID 1 at 2:22, Enemy at 17:16 (Brother Shiva, ID 131
+dictRumoursTimed (Start) -> 94 records
+[Rumour -> Removal] RID 454, "Inquisitor, Brother Nergal, ActID 128 has been spotted drinking at Kingskeep (loc 17:13)" removed from Global All list
+[Rumour -> Removal] RID 457, "Nemesis, The Unrelenting, ActID 132 has been spotted hiding at Kingskeep (loc 17:13)" removed from Global All list
+[Rumour -> Removal] RID 455, "Inquisitor, Brother Damballa, ActID 130 has been seen on the road to One Eyed Pete's (loc 20:13)" removed from Global East list
+91 rumours -> TimerExpire decremented
+3 records have expired and been removed
+dictRumoursTimed (End) -> 91 records
+--- MoveActors -> 0 Records (World.cs)
 --- UpdatePlayerStatus (World.cs)
 --- UpdateWorldStatus (World.cs)
 --- CheckFollowerActivity (World.cs)
 --- GetRumour (Director.cs)
-arrayOfRumours [0] -> RumourID 83, Strength 4, Scope Global, Type Disguise, Global All
-arrayOfRumours [3] -> RumourID 426, Strength 2, Scope Global, Type HouseRel, Global South
+arrayOfRumours [0] -> RumourID 442, Strength 3, Scope Global, Type Event, Global All
+arrayOfRumours [3] -> RumourID 427, Strength 2, Scope Global, Type HouseRel, Global South
 arrayOfRumours [5] -> RumourID 211, Strength 2, Scope Local, Type Secret, Global All
-RumourID 83 selected from the Pool
-Rumour "It is whispered that Disguises can be had from Castellan Varys Josse, ActID 48 at Bloodkeep" revealed to ActorID3 on turn 4 -> added to List
-RumourID 83 removed from listRumoursGlobal[2]
-Follower The Leper, ActID 3, added RumourID 83
+RumourID 442 selected from the Pool
+Rumour "People talk about seeing an old woman on the roads, cursing all those she meets." revealed to ActorID3 on turn 8 -> added to List
+RumourID 442 removed from listRumoursGlobal[18]
+Follower The Leper, ActID 3, added RumourID 442
 --- GetRumour (Director.cs)
-arrayOfRumours [0] -> RumourID 174, Strength 1, Scope Global, Type Item, Global All
-arrayOfRumours [2] -> RumourID 419, Strength 3, Scope Global, Type Friends, Global East
-arrayOfRumours [5] -> RumourID 229, Strength 4, Scope Local, Type Skill, Global All
-RumourID 229 selected from the Pool
-Rumour "BannerLord Dickory Yronwood "The Stretchy", ActID 93 at Yronwood Castle, is said to be Impatient" revealed to ActorID2 on turn 4 -> added to List
-RumourID 229 removed from listRumoursHouse[1]
-Follower The Spider, ActID 2, added RumourID 229
-BannerLord Dickory Yronwood, ActID 93, has their Leadership changed to True
+arrayOfRumours [0] -> RumourID 153, Strength 4, Scope Global, Type Disguise, Global All
+arrayOfRumours [2] -> RumourID 247, Strength 2, Scope Global, Type Desire, Global East
+arrayOfRumours [5] -> RumourID 228, Strength 4, Scope Local, Type Skill, Global All
+RumourID 153 selected from the Pool
+Rumour "It is commonly known that Disguises can be had from Maester Luwin Ran, ActID 68 at Riverrun" revealed to ActorID2 on turn 8 -> added to List
+RumourID 153 removed from listRumoursGlobal[9]
+Follower The Spider, ActID 2, added RumourID 153
 --- GetRumour (Director.cs)
-arrayOfRumours [0] -> RumourID 19, Strength 1, Scope Global, Type Item, Global All
-arrayOfRumours [1] -> RumourID 436, Strength 2, Scope Global, Type HouseRel, Global North
-arrayOfRumours [5] -> RumourID 360, Strength 2, Scope Local, Type Relationship, Global All
-RumourID 360 selected from the Pool
-Rumour "Maester Quentyn Hue "The Many Tongued", ActID 75 at Valyria, is suspected to have a poor view of the Usurper" revealed to ActorID4 on turn 4 -> added to List
-RumourID 360 removed from listRumoursHouse[20]
-Follower The Waif, ActID 4, added RumourID 360
-[Notification] Maester Quentyn Hue, ActID 75 -> RelKnown changed to True
-[Rumour -> Deleted] Timed RumourID 360 removed from dictRumoursTimed
+arrayOfRumours [0] -> RumourID 145, Strength 1, Scope Global, Type Item, Global All
+arrayOfRumours [1] -> RumourID 438, Strength 2, Scope Global, Type HouseRel, Global North
+arrayOfRumours [5] -> RumourID 167, Strength 2, Scope Local, Type Skill, Global All
+RumourID 145 selected from the Pool
+Rumour "It is murmured among friends that the lusted after Elixir of Wellness (Passive Item) is to be found at Riverrun" revealed to ActorID4 on turn 8 -> added to List
+RumourID 145 removed from listRumoursGlobal[7]
+Follower The Waif, ActID 4, added RumourID 145
 --- GetMarketView (Director.cs)
-listPlayerChoices has 1 records, 10 % needed, rolled 40
-[Notification} listLocsVisited has no records  -> No valid random Loc returned
-[Alert -> Court] No viable House name returned from Director.GetRandomCourt -> default World.GetRandomMajorHouseName
-[GameVar] View_Index changed from 4 to 5
+listPlayerChoices has 2 records, 20 % needed, rolled 62
+[GameVar] View_Index changed from 3 to 4
 --- CheckStationaryActiveActors (World.cs)
  [Search -> Stationary] Usurper Jarvis Martell, ActID 1 is AtLocation
 --- CheckIfFoundActive (World.cs)
- [Search -> Debug] Enemy, Brother Nergal, ID 128 at 17:13, Active Jarvis Martell, ID 1, at 2:22
- [Search -> Debug] Enemy, Brother Amon, ID 129 at 17:9, Active Jarvis Martell, ID 1, at 2:22
- [Search -> Debug] Enemy, Brother Damballa, ID 130 at 17:13, Active Jarvis Martell, ID 1, at 2:22
- [Search -> Debug] Enemy, Brother Shiva, ID 131 at 17:17, Active Jarvis Martell, ID 1, at 2:22
- [Search -> Debug] Enemy, The Unrelenting, ID 132 at 17:13, Active Jarvis Martell, ID 1, at 2:22
+ [Search -> Debug] Enemy, Brother Nergal, ID 128 at 17:13, Active Jarvis Martell, ID 1, at 20:13
+ [Search -> Debug] Enemy, Brother Amon, ID 129 at 16:5, Active Jarvis Martell, ID 1, at 20:13
+ [Search -> Debug] Enemy, Brother Damballa, ID 130 at 20:13, Active Jarvis Martell, ID 1, at 20:13
+ [Search -> Alert] Inquisitor Brother Damballa, ActID 130, is in the same place as Active Jarvis Martell, ID 1, (loc 20:13)
+ [SEARCH -> Active] Random 46 < 50 (ai 20 + known 30 + foot 0) -> Success 
+ [Search -> ListSearched] Usurper Jarvis Martell, ActID 1 Searched -> Enemy ActID 130 added
+ [SEARCH -> Active] Usurper Jarvis Martell has been Spotted by Brother Damballa, ActID 130 at loc 20:13 -> Activated True
+ [Search -> ListEnemy] Usurper Jarvis Martell, ActID 1 as Spotted -> True and Enemy ActID 130 added
+ [Search -> Debug] Enemy, Brother Shiva, ID 131 at 15:19, Active Jarvis Martell, ID 1, at 20:13
+ [Search -> Debug] Enemy, The Unrelenting, ID 132 at 17:13, Active Jarvis Martell, ID 1, at 20:13
+ [Search -> Stationary] Follower The Leper, ActID 3 is AtLoca 1, at 20:13
  [Search -> Stationary] Follower The Leper, ActID 3 is AtLocation
  [Search -> Stationary] Follower The Spider, ActID 2 is AtLocation
  [Search -> Stationary] Follower The Waif, ActID 4 is AtLocation
 --- UpdateAIController (World.cs)
  [AI -> Player Unknown] Inquisitor Brother Nergal, Act ID 128 Mode -> Normal
+ [AI -> Player Unknown] Inquisitor Brother Amon, Act ID 129 Mode -> Normal
  [AI -> Player Unknown] Inquisitor Brother Damballa, Act ID 130 Mode -> Normal
+ [AI -> Player Unknown] Inquisitor Brother Shiva, Act ID 131 Mode -> Normal
  [AI -> Player Unknown] Nemesis The Unrelenting, Act ID 132 Mode -> Normal
 --- SetEnemyActivity (World.cs)
- [Enemy -> Unknown] Brother Nergal ActID 128 has reverted to Unknown status (timer elapsed)
---- SetEnemyGoal (World.cs)
- [Goal -> Branch] Brother Nergal, ActID 128 Assigned Branch -> 0 Current Branch -> 0
---- SetEnemyGoal (World.cs)
- [Goal -> Branch] Brother Damballa, ActID 130 Assigned Branch -> 2 Current Branch -> 0
- [Goal -> New] Brother Damballa, ActID 130, (loc 17:13), assigned new Goal -> Move
- [Goal -> Move] Brother Damballa, ActID 130 -> Capital to Correct Branch -> One Eyed Pete's, LocID 8
---- InitiateMoveActor (World.cs)
---- Move Actor (Director.cs)
- [Enemy -> Unknown] Brother Shiva ActID 131 has reverted to Unknown status (timer elapsed)
+ [Enemy -> Goal] Brother Nergal, ActID 128 retains Goal -> Wait
+ [Enemy -> Goal] Brother Amon, ActID 129 retains Goal -> Wait
+ [Enemy -> Goal] Brother Damballa, ActID 130 retains Goal -> Wait
+ [Enemy -> Goal] Brother Shiva, ActID 131 retains Goal -> Wait
  [Enemy -> Goal] The Unrelenting, ActID 132 retains Goal -> Hide
 --- CheckPlayerEvents (Director.cs)
-Location event, Need 37, roll 81
-- CreateAutoLocEvent (Director.cs)
- [AutoEvent -> ActorList] "Jiame Leygood", ID 83 added to list of Actors
- [AutoEvent -> LocalList] "Jiame Leygood", ID 83 added to list of Locals
-[Notification] No entry found in dictOfIntroductions for RefID 2
- Chance of Player Location event 75 %
---- ResolvePlayerEvents (Director.cs)
- Trigger FAILED on "0" Equals 1
- Trigger: Player is wrong type of Known status -> Trigger failed
- Trigger FAILED on "0" Equals 1
- Trigger: Player is wrong type of Known status -> Trigger failed
- Event "What to do?" Timer Repeat now 999
- Event "What to do?" Cooldown Timer has been reset to 0
+Location event, Need 75, roll 19
+--- GetValidPlayerEvents (Director.cs)
+--- GetValidPlayerEvents (Director.cs)
+--- GetValidPlayerEvents (Director.cs)
+[DeterminePlayerEvent] There are 0 events in the Pool
+ Chance of Player Location event 37 %
 --- UpdateActiveActors (World.cs)
- Usurper Jarvis Martell has had their TurnsUnknown Timer increased from 103 to 104
- Follower The Leper has had their TurnsUnknown Timer increased from 3 to 4
- Follower The Spider has had their TurnsUnknown Timer increased from 3 to 4
- Follower The Waif has had their TurnsUnknown Timer increased from 3 to 4
---- ResolveOutcome (Director.cs)
---- SetEndGame (Game.cs)
-[Alert] Player chose to exit (pressed 'X')
-//Exile Game file ops "LogTurn.txt" Completed at: 08/06/2017 17:42:05
-ndTurn (World.cs)
-Day 4, Turn 3
+ Usurper Jarvis Martell has had their Revert Timer reduced from 4 to 3
+ Follower The Leper has had their TurnsUnknown Timer increased from 6 to 7
+ Follower The Spider has had their TurnsUnknown Timer increased from 6 to 7
+ Follower The Waif has had their TurnsUnknown Timer increased from 6 to 7
+--- ProcessEndTurn (World.cs)
+Day 8, Turn 7
 --- CheckEventTimers (Director.cs)
- Event "Search and Detain" Dormant Timer decremented to 17
+ Event "Search and Detain" Dormant Timer decremented to 13
 --- InitialiseDynamicRumours (Director.cs)
-[Notification] Turn 3, generate new set of Relationship rumours on turn 21
+[Notification] Turn 7, generate new set of Relationship rumours on turn 21
 --- HouseKeepActors (World.cs)
-[GameStat] "Location_Days" -> increased from 3 to 4
+[GameStat] "Location_Days" -> increased from 7 to 8
+[GameStat] "Known_Days" -> increased from 0 to 1
 --- HousekeepRumours (World.cs)
-dictRumoursKnown has 9 records
+dictRumoursKnown has 21 records
 
-//Exile Game File "LogTurn.txt" Close completed at: 08/06/2017 17:41:35
-f has had their TurnsUnknown Timer increased from 1 to 2
+//Exile Game File "LogTurn.txt" Close completed at: 08/06/2017 19:51:07
+
+ Follower The Spider has had their TurnsUnknown Timer increased from 5 to 6
+ Follower The Waif has had their TurnsUnknown Timer increased from 5 to 6
 --- ResolveOutcome (Director.cs)
+ Inactive (greyed out) Option chosen for "What to do?", option # 1
 --- InitiateMoveActor (World.cs)
 --- Move Actor (Director.cs)
-[AddVisitedLoc] LocID 30, "Barrow Hill", turn 2 -> record added to listLocsVisited
-[AddVisitedLoc] LocID 30, "Barrow Hill", turn 2 -> new record added to dictLocsVisited
-[God Mode] Player teleports from Valyria to Barrow Hill
+[AddVisitedLoc] LocID 8, "One Eyed Pete's", turn 6 -> record added to listLocsVisited
+[AddVisitedLoc] LocID 8, "One Eyed Pete's", turn 6 -> new record added to dictLocsVisited
+[God Mode] Player teleports from Cerwyn to One Eyed Pete's
 --- ProcessEndTurn (World.cs)
-Day 3, Turn 2
+Day 7, Turn 6
 --- CheckEventTimers (Director.cs)
- Event "Search and Detain" Dormant Timer decremented to 18
+ Event "Search and Detain" Dormant Timer decremented to 14
 --- InitialiseDynamicRumours (Director.cs)
-[Notification] Turn 2, generate new set of Relationship rumours on turn 21
-[Rumour -> Added] RID 453, "Inquisitor, Brother Damballa, ActID 130 has been spotted hiding at Kingskeep (loc 17:13)" -> dict & List
+[Notification] Turn 6, generate new set of Relationship rumours on turn 21
 --- HouseKeepActors (World.cs)
-[GameStat] "Location_Days" -> increased from 2 to 3
+[GameStat] "Location_Days" -> increased from 6 to 7
 --- HousekeepRumours (World.cs)
-dictRumoursKnown has 6 records
+dictRumoursKnown has 18 records
 
-//Exile Game File "LogTurn.txt" Close completed at: 08/06/2017 17:41:30
+//Exile Game File "LogTurn.txt" Close completed at: 08/06/2017 19:51:02
+15:19)" -> dict & List
+[Rumour -> Added] RID 457, "Nemesis, The Unrelenting, ActID 132 has been spotted hiding at Kingskeep (loc 17:13)" -> dict & List
+--- HouseKeepActors (World.cs)
+[GameStat] "Location_Days" -> increased from 5 to 6
+--- HousekeepRumours (World.cs)
+dictRumoursKnown has 15 records
+
+//Exile Game File "LogTurn.txt" Close completed at: 08/06/2017 19:50:46

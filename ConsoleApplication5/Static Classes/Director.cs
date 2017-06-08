@@ -1332,7 +1332,7 @@ namespace Next_Game
                             if (house.ObserveFlag == false && house.Special == HouseSpecial.None)
                             {
                                 OptionInteractive option = new OptionInteractive("Observe");
-                                option.ReplyGood = "You quietly walk around, taking note of everything";
+                                option.ReplyGood = "You walk around, taking note of everything";
                                 OutObserve outObserve = new OutObserve(eventObject.EventPID);
                                 option.SetGoodOutcome(outObserve);
                                 eventObject.SetOption(option);

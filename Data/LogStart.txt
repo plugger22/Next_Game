@@ -1,4 +1,4 @@
-//Exile Game file ops "LogStart.txt" commenced at: 08/06/2017 17:40:09
+//Exile Game file ops "LogStart.txt" commenced at: 08/06/2017 19:50:12
 --- Initialise Constants (FileImport.cs)
 INHERIT_TRAIT -> 50 Min 0 Max 100
 CHILDBIRTH_DEATH -> 15 Min 0 Max 100
@@ -2148,5 +2148,5 @@ FoodCropEduc -> 14 records imported
 FoodCropUned -> 10 records imported
 FoodHuntEduc -> 6 records imported
 FoodHuntUned -> 10 records imported
-//Exile Game file ops "LogStart.txt" Completed at: 08/06/2017 17:40:10
-//Elapsed Time 955 ms
+//Exile Game file ops "LogStart.txt" Completed at: 08/06/2017 19:50:13
+//Elapsed Time 938 ms
