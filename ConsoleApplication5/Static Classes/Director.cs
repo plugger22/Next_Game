@@ -23,10 +23,11 @@ namespace Next_Game
     public enum ResourceLevel { None, Meagre, Moderate, Substantial, Wealthy, Excessive }
     public enum WorldGroup { None, Official, Church, Merchant, Craft, Peasant} //main population groupings within world
     public enum ViewType { JusticeNeutralEduc, JusticeNeutralUned, JusticeGoodEduc, JusticeGoodUned, JusticeBadEduc, JusticeBadUned, LegendNeutralEduc, LegendNeutralUned, LegendGoodEduc, LegendGoodUned,
-    LegendBadEduc, LegendBadUned, HonourNeutralEduc, HonourNeutralUned, HonourGoodEduc, HonourGoodUned, HonourBadEduc, HonourBadUned, KnownEduc, KnownUned, UnknownEduc, UnknownUned, Count} //Market View
+    LegendBadEduc, LegendBadUned, HonourNeutralEduc, HonourNeutralUned, HonourGoodEduc, HonourGoodUned, HonourBadEduc, HonourBadUned, KnownEduc, KnownUned, UnknownEduc, UnknownUned,
+    FoodSurplusEduc, FoodSurplusUned, FoodNormalEduc, FoodNormalUned, FoodDeficitEduc, FoodDeficitUned, Count} //Market View
     public enum Occupation { Offical, Church, Merchant, Craft, PeasantMale, PeasantFemale, Count}
     public enum TravelMode { None, Foot, Mounted} //default Mounted for all characters
-    public enum Assorted { HorseName, HorseType, Curse, AnimalBig, Count}
+    public enum Assorted { HorseName, HorseType, Curse, AnimalBig, FoodFishEduc, FoodFishUned, FoodCropEduc, FoodCropUned, FoodHuntEduc, FoodHuntUned, Count}
     public enum HorseStatus { None, Normal, Stabled, Lame, Exhausted, Gone}
     public enum HorseGone { None, Stolen, RunOff, Abandoned, Drowned, PutDown, Eaten, Murdered, Killed}
     public enum FoodInfo { None, Surplus, Deficit, House, Branch} //used to determine which food info is displayed / required
@@ -6036,7 +6037,34 @@ namespace Next_Game
                             int refID = Game.world.ConvertLocToRef(player.LocID);
                             House house = Game.world.GetHouse(refID);
                             if (house != null)
-                            { randomText = GetStreetViewFood(house); }
+                            {
+                                int balance = house.GetFoodBalance();
+                                int foodCapacity = Game.constant.GetValue(Global.FOOD_CAPACITY) / 2;
+                                if (balance > foodCapacity)
+                                {
+                                    //surplus
+                                    if (educated == true)
+                                    { innerArray = arrayOfViews[(int)ViewType.FoodSurplusEduc]; }
+                                    else
+                                    { innerArray = arrayOfViews[(int)ViewType.FoodSurplusUned]; }
+                                }
+                                else if (balance < foodCapacity)
+                                {
+                                    //deficit
+                                    if (educated == true)
+                                    { innerArray = arrayOfViews[(int)ViewType.FoodDeficitEduc]; }
+                                    else
+                                    { innerArray = arrayOfViews[(int)ViewType.FoodDeficitUned]; }
+                                }
+                                else
+                                {
+                                    //Adequate, give or take
+                                    if (educated == true)
+                                    { innerArray = arrayOfViews[(int)ViewType.FoodNormalEduc]; }
+                                    else
+                                    { innerArray = arrayOfViews[(int)ViewType.FoodNormalUned]; }
+                                }
+                            }
                             else { Game.SetError(new Error(282, $"Invalid house (null) for Player.LocID {player.LocID} -> Street view cancelled")); }
                             break;
                         default:
@@ -6075,34 +6103,6 @@ namespace Next_Game
             }
             else { Game.SetError(new Error(282, "Invalid Player (null) -> Market view cancelled")); }
             return listToDisplay;
-        }
-
-        /// <summary>
-        /// subMethod to get a street view of a locations food situation
-        /// </summary>
-        /// <param name="house"></param>
-        /// <returns></returns>
-        private string GetStreetViewFood(House house)
-        {
-            string viewText = "";
-            int balance = house.GetFoodBalance();
-            int foodCapacity = Game.constant.GetValue(Global.FOOD_CAPACITY) / 2;
-            if (balance > foodCapacity)
-            {
-                //surplus
-                viewText = "There's always plenty of food here at <locName>. Nobody goes hungry.";
-            }
-            else if (balance < foodCapacity)
-            {
-                //deficit
-                viewText = "Why do I always feel hungry? That's what's wrong with <locName> - there's never enough food";
-            }
-            else
-            {
-                //Adequate, give or take
-                viewText = "The food situation here at <locName>? Is it a problem? I can't see anyone starving.";
-            }
-            return viewText;
         }
 
         /// <summary>

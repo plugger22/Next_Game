@@ -375,6 +375,72 @@ namespace Next_Game
                             case "animalBig":
                                 replaceText = Game.director.GetAssortedRandom(Assorted.AnimalBig);
                                 break;
+                            case "foodEduc":
+                                //Food type for Educated People
+                                Location loc = Game.network.GetLocation(player.LocID);
+                                if (loc != null)
+                                {
+                                    //figure out what's the dominant terrain type
+                                    int[] arrayTerrain = new int[3];
+                                    arrayTerrain[0] = loc.NumPlain;
+                                    arrayTerrain[1] = loc.NumForest;
+                                    arrayTerrain[2] = loc.NumSea;
+                                    int index = 0;
+                                    int value = 0;
+                                    for(int i = 0; i < arrayTerrain.Length; i++)
+                                    { if (arrayTerrain[i] > value) { value = arrayTerrain[i]; index = i; } }
+                                    //get an appropriate food
+                                    switch (index)
+                                    {
+                                        case 0:
+                                            //Plains -> Crop food
+                                            replaceText = Game.director.GetAssortedRandom(Assorted.FoodCropEduc);
+                                            break;
+                                        case 1:
+                                            //Forest -> Hunting food
+                                            replaceText = Game.director.GetAssortedRandom(Assorted.FoodHuntEduc);
+                                            break;
+                                        case 2:
+                                            //Seas -> Fish food
+                                            replaceText = Game.director.GetAssortedRandom(Assorted.FoodFishEduc);
+                                            break;
+                                    }
+                                }
+                                else { Game.SetError(new Error(283, $"Invalid Loc (null) for player.LocID {player.LocID} for FoodEduc")); }
+                                break;
+                            case "foodUned":
+                                //Food type for Uneducated people
+                                Location locUned = Game.network.GetLocation(player.LocID);
+                                if (locUned != null)
+                                {
+                                    //figure out what's the dominant terrain type
+                                    int[] arrayTerrain = new int[3];
+                                    arrayTerrain[0] = locUned.NumPlain;
+                                    arrayTerrain[1] = locUned.NumForest;
+                                    arrayTerrain[2] = locUned.NumSea;
+                                    int index = 0;
+                                    int value = 0;
+                                    for (int i = 0; i < arrayTerrain.Length; i++)
+                                    { if (arrayTerrain[i] > value) { value = arrayTerrain[i]; index = i; } }
+                                    //get an appropriate food
+                                    switch (index)
+                                    {
+                                        case 0:
+                                            //Plains -> Crop food
+                                            replaceText = Game.director.GetAssortedRandom(Assorted.FoodCropUned);
+                                            break;
+                                        case 1:
+                                            //Forest -> Hunting food
+                                            replaceText = Game.director.GetAssortedRandom(Assorted.FoodHuntUned);
+                                            break;
+                                        case 2:
+                                            //Seas -> Fish food
+                                            replaceText = Game.director.GetAssortedRandom(Assorted.FoodFishUned);
+                                            break;
+                                    }
+                                }
+                                else { Game.SetError(new Error(283, $"Invalid Loc (null) for player.LocID {player.LocID} for FoodUned")); }
+                                break;
                             default:
                                 replaceText = "";
                                 Game.SetError(new Error(283, string.Format("Invalid tag (\"{0}\")", tag)));

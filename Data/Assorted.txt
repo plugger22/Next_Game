@@ -77,3 +77,67 @@ Black Bear
 Elkhound
 Wolfhound
 Giant Boar
+
+
+# Food texts (views) Uned -> 'I'm getting sick of eating...<food>'
+# Food texts (views) Educ -> 'You can find expuisite ...<food>... here'
+
+[FoodCropEduc]
+Dates
+Figs
+Raisins
+Cheese
+Pigeon
+Honeyed Chicken
+Blood Oranges
+Plums
+Pomegranates
+Strawberries
+Stallion heart
+Suckling Pig
+Black Olive Bread
+
+[FoodCropUned]
+Potatoes
+Pumpkins
+Oats
+Cabbage
+Pig
+Eggs
+Onions
+Mouldy bread
+Old Horse meat
+Turnips
+
+[FoodFishEduc]
+Squid
+Octopus
+Lobster
+Seal
+Porpoise
+Eel
+Lamprey
+
+[FoodFishUned]
+Whale Meat
+Spiny Sea Urchins
+Cockle Shells
+Mud Crabs
+Slimefish
+Whiskerfish
+Mudfish
+
+[FoodHuntEduc]
+Swan
+Deer
+Pheasant
+Peacock
+Salmon
+Pickled Weasel
+
+[FoodHuntUned]
+Pig
+Wild Boar
+Wild Goat
+Rabbit
+Carpet Snake

@@ -3886,11 +3886,16 @@ namespace Next_Game
             List<string> listKnownUned = new List<string>();
             List<string> listUnknownEduc = new List<string>();
             List<string> listUnknownUned = new List<string>();
+            List<string> listFoodSurplusEduc = new List<string>();
+            List<string> listFoodSurplusUned = new List<string>();
+            List<string> listFoodNormalEduc = new List<string>();
+            List<string> listFoodNormalUned = new List<string>();
+            List<string> listFoodDeficitEduc = new List<string>();
+            List<string> listFoodDeficitUned = new List<string>();
             //import data from file
             string[] arrayOfViewTexts = ImportDataFile(fileName);
             if (arrayOfViewTexts != null)
             {
-
                 //read location names from array into list
                 string nameType = null;
                 char[] charsToTrim = { '[', ']' };
@@ -3975,6 +3980,24 @@ namespace Next_Game
                                 case "UnknownUned":
                                     listUnknownUned.Add(tempString);
                                     break;
+                                case "FoodSurplusEduc":
+                                    listFoodSurplusEduc.Add(tempString);
+                                    break;
+                                case "FoodSurplusUned":
+                                    listFoodSurplusUned.Add(tempString);
+                                    break;
+                                case "FoodNormalEduc":
+                                    listFoodNormalEduc.Add(tempString);
+                                    break;
+                                case "FoodNormalUned":
+                                    listFoodNormalUned.Add(tempString);
+                                    break;
+                                case "FoodDeficitEduc":
+                                    listFoodDeficitEduc.Add(tempString);
+                                    break;
+                                case "FoodDeficitUned":
+                                    listFoodDeficitUned.Add(tempString);
+                                    break;
                                 default:
                                     Game.SetError(new Error(287, string.Format("Invalid ViewType {0}, record {1}", nameType, i)));
                                     break;
@@ -4005,6 +4028,12 @@ namespace Next_Game
                 arrayOfViews[(int)ViewType.KnownUned] = new string[listKnownUned.Count];
                 arrayOfViews[(int)ViewType.UnknownEduc] = new string[listUnknownEduc.Count];
                 arrayOfViews[(int)ViewType.UnknownUned] = new string[listUnknownUned.Count];
+                arrayOfViews[(int)ViewType.FoodSurplusEduc] = new string[listFoodSurplusEduc.Count];
+                arrayOfViews[(int)ViewType.FoodSurplusUned] = new string[listFoodSurplusUned.Count];
+                arrayOfViews[(int)ViewType.FoodNormalEduc] = new string[listFoodNormalEduc.Count];
+                arrayOfViews[(int)ViewType.FoodNormalUned] = new string[listFoodNormalUned.Count];
+                arrayOfViews[(int)ViewType.FoodDeficitEduc] = new string[listFoodDeficitEduc.Count];
+                arrayOfViews[(int)ViewType.FoodDeficitUned] = new string[listFoodDeficitUned.Count];
                 //populate from lists
                 arrayOfViews[(int)ViewType.JusticeNeutralEduc] = listJusticeNeutralEduc.ToArray();
                 arrayOfViews[(int)ViewType.JusticeNeutralUned] = listJusticeNeutralUned.ToArray();
@@ -4028,6 +4057,12 @@ namespace Next_Game
                 arrayOfViews[(int)ViewType.KnownUned] = listKnownUned.ToArray();
                 arrayOfViews[(int)ViewType.UnknownEduc] = listUnknownEduc.ToArray();
                 arrayOfViews[(int)ViewType.UnknownUned] = listUnknownUned.ToArray();
+                arrayOfViews[(int)ViewType.FoodSurplusEduc] = listFoodSurplusEduc.ToArray();
+                arrayOfViews[(int)ViewType.FoodSurplusUned] = listFoodSurplusUned.ToArray();
+                arrayOfViews[(int)ViewType.FoodNormalEduc] = listFoodNormalEduc.ToArray();
+                arrayOfViews[(int)ViewType.FoodNormalUned] = listFoodNormalUned.ToArray();
+                arrayOfViews[(int)ViewType.FoodDeficitEduc] = listFoodDeficitEduc.ToArray();
+                arrayOfViews[(int)ViewType.FoodDeficitUned] = listFoodDeficitUned.ToArray();
                 //output stat data
                 for (int i = 0; i < arrayOfViews.Length; i++)
                 { Game.logStart?.Write($"{(ViewType)i} -> {arrayOfViews[i].Length} records imported"); }
@@ -4140,6 +4175,12 @@ namespace Next_Game
             List<string> listHorseType = new List<string>();
             List<string> listCurses = new List<string>();
             List<string> listAnimalBig = new List<string>();
+            List<string> listFoodFishEduc = new List<string>();
+            List<string> listFoodFishUned = new List<string>();
+            List<string> listFoodCropEduc = new List<string>();
+            List<string> listFoodCropUned = new List<string>();
+            List<string> listFoodHuntEduc = new List<string>();
+            List<string> listFoodHuntUned = new List<string>();
             //import data from file
             string[] arrayOfAssortedTexts = ImportDataFile(fileName);
             if (arrayOfAssortedTexts != null)
@@ -4174,6 +4215,24 @@ namespace Next_Game
                                 case "AnimalBig":
                                     listAnimalBig.Add(tempString);
                                     break;
+                                case "FoodFishEduc":
+                                    listFoodFishEduc.Add(tempString);
+                                    break;
+                                case "FoodFishUned":
+                                    listFoodFishUned.Add(tempString);
+                                    break;
+                                case "FoodCropEduc":
+                                    listFoodCropEduc.Add(tempString);
+                                    break;
+                                case "FoodCropUned":
+                                    listFoodCropUned.Add(tempString);
+                                    break;
+                                case "FoodHuntEduc":
+                                    listFoodHuntEduc.Add(tempString);
+                                    break;
+                                case "FoodHuntUned":
+                                    listFoodHuntUned.Add(tempString);
+                                    break;
                                 default:
                                     Game.SetError(new Error(296, string.Format("Invalid Assorted Category {0}, record {1}", assortedType, i)));
                                     break;
@@ -4186,11 +4245,23 @@ namespace Next_Game
                 arrayOfAssorted[(int)Assorted.HorseType] = new string[listHorseType.Count];
                 arrayOfAssorted[(int)Assorted.Curse] = new string[listCurses.Count];
                 arrayOfAssorted[(int)Assorted.AnimalBig] = new string[listAnimalBig.Count];
+                arrayOfAssorted[(int)Assorted.FoodFishEduc] = new string[listFoodFishEduc.Count];
+                arrayOfAssorted[(int)Assorted.FoodFishUned] = new string[listFoodFishUned.Count];
+                arrayOfAssorted[(int)Assorted.FoodCropEduc] = new string[listFoodCropEduc.Count];
+                arrayOfAssorted[(int)Assorted.FoodCropUned] = new string[listFoodCropUned.Count];
+                arrayOfAssorted[(int)Assorted.FoodHuntEduc] = new string[listFoodHuntEduc.Count];
+                arrayOfAssorted[(int)Assorted.FoodHuntUned] = new string[listFoodHuntUned.Count];
                 //populate from lists
                 arrayOfAssorted[(int)Assorted.HorseName] = listHorseName.ToArray();
                 arrayOfAssorted[(int)Assorted.HorseType] = listHorseType.ToArray();
                 arrayOfAssorted[(int)Assorted.Curse] = listCurses.ToArray();
                 arrayOfAssorted[(int)Assorted.AnimalBig] = listAnimalBig.ToArray();
+                arrayOfAssorted[(int)Assorted.FoodFishEduc] = listFoodFishEduc.ToArray();
+                arrayOfAssorted[(int)Assorted.FoodFishUned] = listFoodFishUned.ToArray();
+                arrayOfAssorted[(int)Assorted.FoodCropEduc] = listFoodCropEduc.ToArray();
+                arrayOfAssorted[(int)Assorted.FoodCropUned] = listFoodCropUned.ToArray();
+                arrayOfAssorted[(int)Assorted.FoodHuntEduc] = listFoodHuntEduc.ToArray();
+                arrayOfAssorted[(int)Assorted.FoodHuntUned] = listFoodHuntUned.ToArray();
                 //output stat data
                 for (int i = 0; i < arrayOfAssorted.Length; i++)
                 { Game.logStart?.Write($"{(Assorted)i} -> {arrayOfAssorted[i].Length} records imported"); }

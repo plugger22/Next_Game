@@ -12,6 +12,27 @@
 # <ship> -> name of the ship that the player is on
 # <animalBig> -> random big animal
 # <curse> -> random curse
+# <foodEduc>, <foodUned> -> Check's loc terrain -> fish, grown crops, hunting -> gets random food from Assorted -> food type for 'Educ' or 'Uned'
+
+
+[FoodSurplusEduc]
+
+
+[FoodSurplusUned]
+There's always plenty of food here at <locName>. Nobody goes hungry.
+
+[FoodDeficitEduc]
+What I miss most is the specialty of <locName>, the <foodEduc>. Why do I have to go without?
+
+[FoodDeficitUned]
+Why do I always feel hungry? That's what's wrong with <locName> - there's never enough food.
+
+[FoodNormalEduc]
+The food situation here at <locName>? Is it a problem? I can't see anyone starving.
+The <foodUned> here at <locName> is exquisite.
+
+[FoodNormalUned]
+I'm getting sick of eating <foodUned> every day. Isn't there something different?
 
 [JusticeNeutralEduc]
 Does <player> have a right to be King? Hard to say.
