@@ -95,6 +95,8 @@ choice fruit
 Stallion heart
 Suckling Pig
 Black Olive Bread
+Beef
+Lamb
 
 [FoodCropUned]
 Potato
@@ -128,7 +130,7 @@ Mudfish
 
 [FoodHuntEduc]
 Swan
-Deer
+Venison
 Pheasant
 Peacock
 Salmon
@@ -139,7 +141,9 @@ Pig
 Wild Boar
 Wild Goat
 Rabbit
+Chicken
+Toad meat
 Bog Roddent
-Rat
-Dog
+River Rat
+Dog meat
 Swamp Snake

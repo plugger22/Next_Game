@@ -5927,7 +5927,7 @@ namespace Next_Game
                     {
                         case 1:
                             //Justice of Cause
-                            /*data = CheckGameState(GameState.Justice) - 50;
+                            data = CheckGameState(GameState.Justice) - 50;
                             difference = Math.Abs(data);
                             if (difference <= 10)
                             {
@@ -5953,10 +5953,10 @@ namespace Next_Game
                                 else
                                 { innerArray = arrayOfViews[(int)ViewType.JusticeBadUned]; }
                             }
-                            break;*/
+                            break;
                         case 2:
                             //Relative Legend
-                            /*data = CheckGameState(GameState.Legend_Usurper) - CheckGameState(GameState.Legend_King);
+                            data = CheckGameState(GameState.Legend_Usurper) - CheckGameState(GameState.Legend_King);
                             difference = Math.Abs(data);
                             if (difference <= 10)
                             {
@@ -5982,10 +5982,10 @@ namespace Next_Game
                                 else
                                 { innerArray = arrayOfViews[(int)ViewType.LegendBadUned]; }
                             }
-                            break;*/
+                            break;
                         case 3:
                             //Relative Honour
-                            /*data = CheckGameState(GameState.Honour_Usurper) - CheckGameState(GameState.Honour_King);
+                            data = CheckGameState(GameState.Honour_Usurper) - CheckGameState(GameState.Honour_King);
                             difference = Math.Abs(data);
                             if (difference <= 10)
                             {
@@ -6011,10 +6011,10 @@ namespace Next_Game
                                 else
                                 { innerArray = arrayOfViews[(int)ViewType.HonourBadUned]; }
                             }
-                            break;*/
+                            break;
                         case 4:
                             //Known / Unknown
-                            /*if (player.Known == true)
+                            if (player.Known == true)
                             {
                                 //Player Known
                                 if (educated == true)
@@ -6030,7 +6030,7 @@ namespace Next_Game
                                 else
                                 { innerArray = arrayOfViews[(int)ViewType.UnknownUned]; }
                             }
-                            break;*/
+                            break;
                         case 5:
                             //food situation
                             int refID = Game.world.ConvertLocToRef(player.LocID);

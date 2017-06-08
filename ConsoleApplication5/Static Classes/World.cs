@@ -4997,7 +4997,7 @@ namespace Next_Game
                             switch (player.horseStatus)
                             {
                                 case HorseStatus.Normal:
-                                    //handles god mode moving from one to another
+                                    //handles God mode moving from one to another
                                     player.horseStatus = HorseStatus.Stabled;
                                     break;
                                 case HorseStatus.Lame:

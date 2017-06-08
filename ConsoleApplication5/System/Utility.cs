@@ -392,9 +392,9 @@ namespace Next_Game
                                     //int value = 0;
                                     int range = 0;
                                     int[] arrayTerrain = new int[3];
-                                    arrayTerrain[0] = loc.NumSea; range += loc.NumSea; //make sea the first to optimise odds of being chosen
-                                    arrayTerrain[1] = loc.NumPlain; range += loc.NumPlain;
-                                    arrayTerrain[2] = loc.NumForest; range += loc.NumForest;
+                                    arrayTerrain[0] = loc.NumPlain; range += loc.NumPlain;
+                                    arrayTerrain[1] = loc.NumForest; range += loc.NumForest;
+                                    arrayTerrain[2] = loc.NumSea; range += loc.NumSea;
                                     //get a random terrain from the selection using a weighted average (eg. the more of a terrain, the greater the odds of being chosen)
                                     int rndNum = rnd.Next(1, range);
                                     for(int i = 0; i < arrayTerrain.Length; i++)
@@ -405,62 +405,29 @@ namespace Next_Game
 
                                     /*for(int i = 0; i < arrayTerrain.Length; i++)
                                     { if (arrayTerrain[i] > value) { value = arrayTerrain[i]; index = i; } }*/
+
                                     //get an appropriate food
                                     switch (index)
                                     {
                                         case 0:
-                                            //Seas -> Fish food
-                                            if (educated == true) { replaceText = Game.director.GetAssortedRandom(Assorted.FoodFishEduc); }
-                                            else { replaceText = Game.director.GetAssortedRandom(Assorted.FoodFishUned); }
-                                            break;
-                                        case 1:
                                             //Plains -> Crop food
                                             if (educated == true) { replaceText = Game.director.GetAssortedRandom(Assorted.FoodCropEduc); }
                                             else { replaceText = Game.director.GetAssortedRandom(Assorted.FoodCropUned); }
                                             break;
-                                        case 2:
+                                        case 1:
                                             //Forest -> Hunting food
                                             if (educated == true) { replaceText = Game.director.GetAssortedRandom(Assorted.FoodHuntEduc); }
                                             else { replaceText = Game.director.GetAssortedRandom(Assorted.FoodHuntUned); }
                                             break;
-                                        
+                                        case 2:
+                                            //Seas -> Fish food
+                                            if (educated == true) { replaceText = Game.director.GetAssortedRandom(Assorted.FoodFishEduc); }
+                                            else { replaceText = Game.director.GetAssortedRandom(Assorted.FoodFishUned); }
+                                            break;
                                     }
                                 }
                                 else { Game.SetError(new Error(283, $"Invalid Loc (null) for player.LocID {player.LocID} for FoodEduc")); }
                                 break;
-                            /*case "foodUned":
-                                //Food type for Uneducated people
-                                Location locUned = Game.network.GetLocation(player.LocID);
-                                if (locUned != null)
-                                {
-                                    //figure out what's the dominant terrain type
-                                    int[] arrayTerrain = new int[3];
-                                    arrayTerrain[0] = locUned.NumPlain;
-                                    arrayTerrain[1] = locUned.NumForest;
-                                    arrayTerrain[2] = locUned.NumSea;
-                                    int index = 0;
-                                    int value = 0;
-                                    for (int i = 0; i < arrayTerrain.Length; i++)
-                                    { if (arrayTerrain[i] > value) { value = arrayTerrain[i]; index = i; } }
-                                    //get an appropriate food
-                                    switch (index)
-                                    {
-                                        case 0:
-                                            //Plains -> Crop food
-                                            replaceText = Game.director.GetAssortedRandom(Assorted.FoodCropUned);
-                                            break;
-                                        case 1:
-                                            //Forest -> Hunting food
-                                            replaceText = Game.director.GetAssortedRandom(Assorted.FoodHuntUned);
-                                            break;
-                                        case 2:
-                                            //Seas -> Fish food
-                                            replaceText = Game.director.GetAssortedRandom(Assorted.FoodFishUned);
-                                            break;
-                                    }
-                                }
-                                else { Game.SetError(new Error(283, $"Invalid Loc (null) for player.LocID {player.LocID} for FoodUned")); }
-                                break;*/
                             default:
                                 replaceText = "";
                                 Game.SetError(new Error(283, string.Format("Invalid tag (\"{0}\")", tag)));
