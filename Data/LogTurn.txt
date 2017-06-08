@@ -1,85 +1,92 @@
-//Exile Game File "LogTurn.txt" opened at: 08/06/2017 15:29:04
+//Exile Game File "LogTurn.txt" opened at: 08/06/2017 17:41:35
 --- ProcessStartTurn (World.cs)
-Day 8, Turn 7, Harvest in 164 days, Winter in 179 days
-Usurper Bertelot Tully, "The Large", AtLocation, Cerwyn
+Day 5, Turn 4, Harvest in 144 days, Winter in 159 days
+Usurper Jarvis Martell, "The Dutiful", AtLocation, Barrow Hill
 --- UpdateRumours (World.cs)
-dictRumoursTimed (Start) -> 63 records
-[Rumour -> Removal] RID 296, "Inquisitor, Brother Behemoth, ActID 92 has been seen on the road to Kingskeep (loc 17:15)" removed from Global All list
-62 rumours -> TimerExpire decremented
+dictRumoursTimed (Start) -> 95 records
+[Rumour -> Removal] RID 452, "Inquisitor, Brother Amon, ActID 129 has been spotted wenching at Kingskeep (loc 17:13)" removed from Global All list
+94 rumours -> TimerExpire decremented
 1 records have expired and been removed
-dictRumoursTimed (End) -> 62 records
+dictRumoursTimed (End) -> 94 records
 --- MoveActors -> 2 Records (World.cs)
- [Move -> MoveObject] Inquisitor Brother Behemoth, ActID 92 travelling to Kingskeep (current Loc 16:15)
+ [Move -> MoveObject] Inquisitor Brother Amon, ActID 129 travelling to The Yellow Huntress (current Loc 17:11)
 --- CheckIfFoundEnemy (World.cs)
- [Search -> Debug] Active Bertelot Tully, ID 1 at 21:29, Enemy at 16:15 (Brother Behemoth, ID 92
+ [Search -> Debug] Active Jarvis Martell, ID 1 at 2:22, Enemy at 17:11 (Brother Amon, ID 129
 --- CheckIfFoundEnemy (World.cs)
- [Search -> Debug] Active Bertelot Tully, ID 1 at 21:29, Enemy at 17:15 (Brother Behemoth, ID 92
- [Goal -> Arrival] Inquisitor Brother Behemoth, ActID 92, currently at Kingskeep, new Goal -> Wait
- [Move -> MoveObject] Inquisitor Brother Gorgo, ActID 89 travelling to The Raucous Rat (current Loc 18:14)
+ [Search -> Debug] Active Jarvis Martell, ID 1 at 2:22, Enemy at 17:10 (Brother Amon, ID 129
+ [Move -> MoveObject] Inquisitor Brother Shiva, ActID 131 travelling to The Clumsy Hog (current Loc 17:15)
 --- CheckIfFoundEnemy (World.cs)
- [Search -> Debug] Active Bertelot Tully, ID 1 at 21:29, Enemy at 18:14 (Brother Gorgo, ID 89
+ [Search -> Debug] Active Jarvis Martell, ID 1 at 2:22, Enemy at 17:15 (Brother Shiva, ID 131
 --- CheckIfFoundEnemy (World.cs)
- [Search -> Debug] Active Bertelot Tully, ID 1 at 21:29, Enemy at 19:14 (Brother Gorgo, ID 89
+ [Search -> Debug] Active Jarvis Martell, ID 1 at 2:22, Enemy at 17:16 (Brother Shiva, ID 131
 --- UpdatePlayerStatus (World.cs)
 --- UpdateWorldStatus (World.cs)
 --- CheckFollowerActivity (World.cs)
 --- GetRumour (Director.cs)
-arrayOfRumours [0] -> RumourID 156, Strength 1, Scope Global, Type Item, Global All
-arrayOfRumours [4] -> RumourID 262, Strength 2, Scope Global, Type HouseRel, Global West
-arrayOfRumours [5] -> RumourID 11, Strength 2, Scope Local, Type Secret, Global All
-RumourID 11 selected from the Pool
-Rumour "It is said that Knight Ser Dickon Rouland "The Whisperer", ActID 12 at Casterly Rock, knows something important" revealed to ActorID3 on turn 7 -> added to List
-RumourID 11 removed from listRumoursHouse[3]
-Follower The Duchess, ActID 3, added RumourID 11
+arrayOfRumours [0] -> RumourID 83, Strength 4, Scope Global, Type Disguise, Global All
+arrayOfRumours [3] -> RumourID 426, Strength 2, Scope Global, Type HouseRel, Global South
+arrayOfRumours [5] -> RumourID 211, Strength 2, Scope Local, Type Secret, Global All
+RumourID 83 selected from the Pool
+Rumour "It is whispered that Disguises can be had from Castellan Varys Josse, ActID 48 at Bloodkeep" revealed to ActorID3 on turn 4 -> added to List
+RumourID 83 removed from listRumoursGlobal[2]
+Follower The Leper, ActID 3, added RumourID 83
 --- GetRumour (Director.cs)
-arrayOfRumours [0] -> RumourID 192, Strength 1, Scope Global, Type Item, Global All
-arrayOfRumours [3] -> RumourID 128, Strength 2, Scope Global, Type Desire, Global South
-arrayOfRumours [5] -> RumourID 168, Strength 1, Scope Local, Type Skill, Global All
-RumourID 168 selected from the Pool
-Rumour "lady Shireen Flint "The Unrealistic", ActID 81 at Riverrun, is rumoured to be a Crazy Quilter" revealed to ActorID8 on turn 7 -> added to List
-RumourID 168 removed from listRumoursHouse[22]
-Follower The Viper, ActID 8, added RumourID 168
-lady Shireen Flint, ActID 81, has their Combat changed to True
+arrayOfRumours [0] -> RumourID 174, Strength 1, Scope Global, Type Item, Global All
+arrayOfRumours [2] -> RumourID 419, Strength 3, Scope Global, Type Friends, Global East
+arrayOfRumours [5] -> RumourID 229, Strength 4, Scope Local, Type Skill, Global All
+RumourID 229 selected from the Pool
+Rumour "BannerLord Dickory Yronwood "The Stretchy", ActID 93 at Yronwood Castle, is said to be Impatient" revealed to ActorID2 on turn 4 -> added to List
+RumourID 229 removed from listRumoursHouse[1]
+Follower The Spider, ActID 2, added RumourID 229
+BannerLord Dickory Yronwood, ActID 93, has their Leadership changed to True
 --- GetRumour (Director.cs)
-arrayOfRumours [0] -> RumourID 156, Strength 1, Scope Global, Type Item, Global All
-arrayOfRumours [4] -> RumourID 266, Strength 2, Scope Global, Type HouseRel, Global West
-arrayOfRumours [5] -> RumourID 142, Strength 4, Scope Local, Type Skill, Global All
-RumourID 266 selected from the Pool
-Rumour "House Lannister has had poor past relations with their BannerLord at House Slynt due to their contemptuous behaviour" revealed to ActorID2 on turn 7 -> added to List
-RumourID 266 removed from listRumoursWest[7]
-Follower The Waif, ActID 2, added RumourID 266
-[Notification -> HouseRel] "Have been openly contemptuous of our House in the past" -> Known is True
+arrayOfRumours [0] -> RumourID 19, Strength 1, Scope Global, Type Item, Global All
+arrayOfRumours [1] -> RumourID 436, Strength 2, Scope Global, Type HouseRel, Global North
+arrayOfRumours [5] -> RumourID 360, Strength 2, Scope Local, Type Relationship, Global All
+RumourID 360 selected from the Pool
+Rumour "Maester Quentyn Hue "The Many Tongued", ActID 75 at Valyria, is suspected to have a poor view of the Usurper" revealed to ActorID4 on turn 4 -> added to List
+RumourID 360 removed from listRumoursHouse[20]
+Follower The Waif, ActID 4, added RumourID 360
+[Notification] Maester Quentyn Hue, ActID 75 -> RelKnown changed to True
+[Rumour -> Deleted] Timed RumourID 360 removed from dictRumoursTimed
 --- GetMarketView (Director.cs)
-listPlayerChoices has 2 records, 20 % needed, rolled 28
-[GameVar] View_Index changed from 5 to 1
+listPlayerChoices has 1 records, 10 % needed, rolled 40
+[Notification} listLocsVisited has no records  -> No valid random Loc returned
+[Alert -> Court] No viable House name returned from Director.GetRandomCourt -> default World.GetRandomMajorHouseName
+[GameVar] View_Index changed from 4 to 5
 --- CheckStationaryActiveActors (World.cs)
- [Search -> Stationary] Usurper Bertelot Tully, ActID 1 is AtLocation
+ [Search -> Stationary] Usurper Jarvis Martell, ActID 1 is AtLocation
 --- CheckIfFoundActive (World.cs)
- [Search -> Debug] Enemy, Brother Gorgo, ID 89 at 20:14, Active Bertelot Tully, ID 1, at 21:29
- [Search -> Debug] Enemy, Brother Beelzebub, ID 90 at 20:18, Active Bertelot Tully, ID 1, at 21:29
- [Search -> Debug] Enemy, Brother Set, ID 91 at 17:15, Active Bertelot Tully, ID 1, at 21:29
- [Search -> Debug] Enemy, Brother Behemoth, ID 92 at 17:15, Active Bertelot Tully, ID 1, at 21:29
- [Search -> Debug] Enemy, The Unrelenting, ID 93 at 17:15, Active Bertelot Tully, ID 1, at 21:29
- [Search -> Stationary] Follower The Duchess, ActID 3 is AtLocation
- [Search -> Stationary] Follower The Viper, ActID 8 is AtLocation
- [Search -> Stationary] Follower The Waif, ActID 2 is AtLocation
+ [Search -> Debug] Enemy, Brother Nergal, ID 128 at 17:13, Active Jarvis Martell, ID 1, at 2:22
+ [Search -> Debug] Enemy, Brother Amon, ID 129 at 17:9, Active Jarvis Martell, ID 1, at 2:22
+ [Search -> Debug] Enemy, Brother Damballa, ID 130 at 17:13, Active Jarvis Martell, ID 1, at 2:22
+ [Search -> Debug] Enemy, Brother Shiva, ID 131 at 17:17, Active Jarvis Martell, ID 1, at 2:22
+ [Search -> Debug] Enemy, The Unrelenting, ID 132 at 17:13, Active Jarvis Martell, ID 1, at 2:22
+ [Search -> Stationary] Follower The Leper, ActID 3 is AtLocation
+ [Search -> Stationary] Follower The Spider, ActID 2 is AtLocation
+ [Search -> Stationary] Follower The Waif, ActID 4 is AtLocation
 --- UpdateAIController (World.cs)
- [AI -> Player Unknown] Inquisitor Brother Beelzebub, Act ID 90 Mode -> Normal
- [AI -> Player Unknown] Inquisitor Brother Set, Act ID 91 Mode -> Normal
- [AI -> Player Unknown] Inquisitor Brother Behemoth, Act ID 92 Mode -> Normal
- [AI -> Player Unknown] Nemesis The Unrelenting, Act ID 93 Mode -> Normal
+ [AI -> Player Unknown] Inquisitor Brother Nergal, Act ID 128 Mode -> Normal
+ [AI -> Player Unknown] Inquisitor Brother Damballa, Act ID 130 Mode -> Normal
+ [AI -> Player Unknown] Nemesis The Unrelenting, Act ID 132 Mode -> Normal
 --- SetEnemyActivity (World.cs)
- [Enemy -> Known] Brother Beelzebub ActID 90 has become KNOWN
- [Enemy -> Goal] Brother Beelzebub, ActID 90 retains Goal -> Wait
- [Enemy -> Goal] Brother Set, ActID 91 retains Goal -> Wait
- [Enemy -> Goal] Brother Behemoth, ActID 92 retains Goal -> Wait
- [Enemy -> Goal] The Unrelenting, ActID 93 retains Goal -> Wait
+ [Enemy -> Unknown] Brother Nergal ActID 128 has reverted to Unknown status (timer elapsed)
+--- SetEnemyGoal (World.cs)
+ [Goal -> Branch] Brother Nergal, ActID 128 Assigned Branch -> 0 Current Branch -> 0
+--- SetEnemyGoal (World.cs)
+ [Goal -> Branch] Brother Damballa, ActID 130 Assigned Branch -> 2 Current Branch -> 0
+ [Goal -> New] Brother Damballa, ActID 130, (loc 17:13), assigned new Goal -> Move
+ [Goal -> Move] Brother Damballa, ActID 130 -> Capital to Correct Branch -> One Eyed Pete's, LocID 8
+--- InitiateMoveActor (World.cs)
+--- Move Actor (Director.cs)
+ [Enemy -> Unknown] Brother Shiva ActID 131 has reverted to Unknown status (timer elapsed)
+ [Enemy -> Goal] The Unrelenting, ActID 132 retains Goal -> Hide
 --- CheckPlayerEvents (Director.cs)
-Location event, Need 18, roll 76
+Location event, Need 37, roll 81
 - CreateAutoLocEvent (Director.cs)
- [AutoEvent -> ActorList] "Tyrek Cerwyn", ID 59 added to list of Actors
- [AutoEvent -> LocalList] "Tyrek Cerwyn", ID 59 added to list of Locals
-[Notification] No entry found in dictOfIntroductions for RefID 99
+ [AutoEvent -> ActorList] "Jiame Leygood", ID 83 added to list of Actors
+ [AutoEvent -> LocalList] "Jiame Leygood", ID 83 added to list of Locals
+[Notification] No entry found in dictOfIntroductions for RefID 2
  Chance of Player Location event 75 %
 --- ResolvePlayerEvents (Director.cs)
  Trigger FAILED on "0" Equals 1
@@ -89,44 +96,43 @@ Location event, Need 18, roll 76
  Event "What to do?" Timer Repeat now 999
  Event "What to do?" Cooldown Timer has been reset to 0
 --- UpdateActiveActors (World.cs)
- Usurper Bertelot Tully has had their TurnsUnknown Timer increased from 106 to 107
- Follower The Duchess has had their TurnsUnknown Timer increased from 6 to 7
- Follower The Viper has had their TurnsUnknown Timer increased from 6 to 7
- Follower The Waif has had their TurnsUnknown Timer increased from 6 to 7
+ Usurper Jarvis Martell has had their TurnsUnknown Timer increased from 103 to 104
+ Follower The Leper has had their TurnsUnknown Timer increased from 3 to 4
+ Follower The Spider has had their TurnsUnknown Timer increased from 3 to 4
+ Follower The Waif has had their TurnsUnknown Timer increased from 3 to 4
 --- ResolveOutcome (Director.cs)
- Inactive (greyed out) Option chosen for "What to do?", option # 1
 --- SetEndGame (Game.cs)
 [Alert] Player chose to exit (pressed 'X')
-//Exile Game file ops "LogTurn.txt" Completed at: 08/06/2017 15:30:14
-anOrEqual 3
- Event "Mysterious Stranger" Timer Repeat now 6
- Event "Mysterious Stranger" Cooldown Timer has been reset to 0
---- UpdateActiveActors (World.cs)
- Usurper Bertelot Tully has had their TurnsUnknown Timer increased from 105 to 106
- Follower The Duchess has had their TurnsUnknown Timer increased from 5 to 6
- Follower The Viper has had their TurnsUnknown Timer increased from 5 to 6
- Follower The Waif has had their TurnsUnknown Timer increased from 5 to 6
---- ResolveOutcome (Director.cs)
-[Player Choice View -> Added] "Remember that stranger? The scary one? Says he bumped into Bertelot Tully at Cerwyn recently."
-[Notification] listPlayerChoices now has 2 records
---- ProcessEndTurn (World.cs)
-Day 7, Turn 6
+//Exile Game file ops "LogTurn.txt" Completed at: 08/06/2017 17:42:05
+ndTurn (World.cs)
+Day 4, Turn 3
 --- CheckEventTimers (Director.cs)
- Event "Search and Detain" Dormant Timer decremented to 14
+ Event "Search and Detain" Dormant Timer decremented to 17
 --- InitialiseDynamicRumours (Director.cs)
-[Notification] Turn 6, generate new set of Relationship rumours on turn 21
-[Rumour -> Added] RID 300, "Inquisitor, Brother Gorgo, ActID 89 has been seen on the road to The Raucous Rat (loc 24:14)" -> dict & List
+[Notification] Turn 3, generate new set of Relationship rumours on turn 21
 --- HouseKeepActors (World.cs)
-[GameStat] "Location_Days" -> increased from 6 to 7
+[GameStat] "Location_Days" -> increased from 3 to 4
 --- HousekeepRumours (World.cs)
-dictRumoursKnown has 20 records
+dictRumoursKnown has 9 records
 
-//Exile Game File "LogTurn.txt" Close completed at: 08/06/2017 15:29:04
-ther Set, ActID 91 has been spotted wenching at Kingskeep (loc 17:15)" -> dict & List
-[Rumour -> Added] RID 292, "Nemesis, The Unrelenting, ActID 93 has been spotted flagelatting themself at Kingskeep (loc 17:15)" -> dict & List
+//Exile Game File "LogTurn.txt" Close completed at: 08/06/2017 17:41:35
+f has had their TurnsUnknown Timer increased from 1 to 2
+--- ResolveOutcome (Director.cs)
+--- InitiateMoveActor (World.cs)
+--- Move Actor (Director.cs)
+[AddVisitedLoc] LocID 30, "Barrow Hill", turn 2 -> record added to listLocsVisited
+[AddVisitedLoc] LocID 30, "Barrow Hill", turn 2 -> new record added to dictLocsVisited
+[God Mode] Player teleports from Valyria to Barrow Hill
+--- ProcessEndTurn (World.cs)
+Day 3, Turn 2
+--- CheckEventTimers (Director.cs)
+ Event "Search and Detain" Dormant Timer decremented to 18
+--- InitialiseDynamicRumours (Director.cs)
+[Notification] Turn 2, generate new set of Relationship rumours on turn 21
+[Rumour -> Added] RID 453, "Inquisitor, Brother Damballa, ActID 130 has been spotted hiding at Kingskeep (loc 17:13)" -> dict & List
 --- HouseKeepActors (World.cs)
-[GameStat] "Location_Days" -> increased from 1 to 2
+[GameStat] "Location_Days" -> increased from 2 to 3
 --- HousekeepRumours (World.cs)
-dictRumoursKnown has 5 records
+dictRumoursKnown has 6 records
 
-//Exile Game File "LogTurn.txt" Close completed at: 08/06/2017 15:26:56
+//Exile Game File "LogTurn.txt" Close completed at: 08/06/2017 17:41:30

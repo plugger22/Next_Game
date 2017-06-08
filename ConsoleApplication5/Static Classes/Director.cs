@@ -20,7 +20,8 @@ namespace Next_Game
     public enum ConflictSpecial { None, Fortified_Position, Mountain_Battle, Forest_Battle, Mountain_Beast, Forest_Beast, Castle_Walls } //special situations
     public enum ConflictResult { None, MinorWin, Win, MajorWin, MinorLoss, Loss, MajorLoss, Count } //result of challenge
     public enum ConflictState { None, Relative_Army_Size, Relative_Fame, Relative_Honour, Relative_Justice, Known_Status } //game specific states that are used for situations
-    public enum ResourceLevel { None, Meagre, Moderate, Substantial, Wealthy, Excessive }
+    public enum ResourceLevel { None, Meagre, Moderate, Subtantial, Prosperous, Wealthy }
+    
     public enum WorldGroup { None, Official, Church, Merchant, Craft, Peasant} //main population groupings within world
     public enum ViewType { JusticeNeutralEduc, JusticeNeutralUned, JusticeGoodEduc, JusticeGoodUned, JusticeBadEduc, JusticeBadUned, LegendNeutralEduc, LegendNeutralUned, LegendGoodEduc, LegendGoodUned,
     LegendBadEduc, LegendBadUned, HonourNeutralEduc, HonourNeutralUned, HonourGoodEduc, HonourGoodUned, HonourBadEduc, HonourBadUned, KnownEduc, KnownUned, UnknownEduc, UnknownUned,
@@ -1327,8 +1328,8 @@ namespace Next_Game
                                 option.SetGoodOutcome(outRumour);
                                 eventObject.SetOption(option);
                             }
-                            //option -> Observe (have a look around) 
-                            if (house.ObserveFlag == false)
+                            //option -> Observe (have a look around) -> Can't do so at Inns (nothing to see)
+                            if (house.ObserveFlag == false && house.Special == HouseSpecial.None)
                             {
                                 OptionInteractive option = new OptionInteractive("Observe");
                                 option.ReplyGood = "You quietly walk around, taking note of everything";
@@ -2831,10 +2832,13 @@ namespace Next_Game
                                             //Player observes his location
                                             outcomeText = GetObservation();
                                             if (String.IsNullOrEmpty(outcomeText) == false)
-                                            { resultList.Add(new Snippet(outcomeText, foreColor, backColor)); resultList.Add(new Snippet("")); }
-                                            //message
-                                            Game.world.SetMessage(new Message(outcomeText, 1, 0, MessageType.Event));
-                                            Game.world.SetPlayerRecord(new Record(outcomeText, player.ActID, player.LocID, CurrentActorIncident.Event));
+                                            {
+                                                resultList.Add(new Snippet(outcomeText, foreColor, backColor)); resultList.Add(new Snippet(""));
+                                                outcomeText = $"{player.Name} spends the day observing {Game.world.GetLocationName(player.LocID)}";
+                                                //message
+                                                Game.world.SetMessage(new Message(outcomeText, 1, 0, MessageType.Event));
+                                                Game.world.SetPlayerRecord(new Record(outcomeText, player.ActID, player.LocID, CurrentActorIncident.Event));
+                                            }
                                             break;
                                         case OutcomeType.SafeHouse:
                                             //change Player's SafeHouse status
@@ -4739,7 +4743,7 @@ namespace Next_Game
         }
 
         /// <summary>
-        /// Player observes his current surroundings.
+        /// Player observes his current surroundings. Returns MT string if nothing seen
         /// </summary>
         /// <returns></returns>
         private string GetObservation()
@@ -4750,10 +4754,55 @@ namespace Next_Game
             if (player != null)
             {
                 //Get House
+                int foodCapacity = Game.constant.GetValue(Global.FOOD_CAPACITY);
                 int refID = Game.world.ConvertLocToRef(player.LocID);
+                House house = null;
                 //check if capital
-                House house = Game.world.GetHouse(refID);
-                //Set ObserveFlag to True
+                if (refID == 9999) { house = Game.world.GetCapital(); }
+                else { house = Game.world.GetHouse(refID); }
+                if (house != null)
+                {
+                    StringBuilder builder = new StringBuilder();
+                    //castle walls
+                    string[] arrayOfWallTexts = new string[] { "None", "to be in disrepair", "barely adequate", "sturdy", "solidly constructed", "formidable" };
+                    //resources
+                    string[] arrayOfAirTexts = new string[] { "None", "neglect", "modesty", "consequence", "prosperity", "opulence" };
+                    //food
+                    string foodText = "to be healthy enough";
+                    int balance = house.GetFoodBalance();
+                    if (balance >= foodCapacity) { foodText = "plump and well fed"; }
+                    else if (balance < 0 && Math.Abs(balance) >= foodCapacity) { foodText = "thin and underfed"; }
+                    //goods
+                    string goodsText = "no evidence of any meaningful trade";
+                    if (house.GetNumExports() > 0)
+                    {
+                        goodsText = "signs of trade in ";
+                        List<Goods> listGoods = house.GetExports();
+                        for(int i = 0; i < listGoods.Count; i++)
+                        {
+                            goodsText += $"{listGoods[i]}";
+                            if (listGoods.Count > 1)
+                            {
+                                if (i < (listGoods.Count - 2))
+                                { goodsText += ", "; }
+                                else if (i == (listGoods.Count - 2)) { goodsText += " and "; }
+                            }
+                        }
+                    }
+                    //Get Information
+                    if (house.Special == HouseSpecial.None)
+                    {
+                        builder.Append($"The Castle walls appear {arrayOfWallTexts[(int)house.CastleWalls]} ");
+                        builder.Append($"while the buildings have an air of {arrayOfAirTexts[(int)house.Resources]} about them. ");
+                        builder.Append($"The inhabitants look to be {foodText} ");
+                        builder.Append($"while the market shows {goodsText}.");
+                        resultText = builder.ToString();
+                        //Set ObserveFlag to True
+                        house.ObserveFlag = true;
+                    }
+                    
+                }
+                else { Game.SetError(new Error(305, $"Invalid House for RefID {refID}")); }
             }
             else { Game.SetError(new Error(305, "Invalid Player (null) -> No observations")); }
                 

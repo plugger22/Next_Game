@@ -22,8 +22,6 @@ namespace Next_Game
         /// <returns></returns>
         public List<Snippet> ShowDate()
         {
-            
-            
             List<Snippet> tempList = new List<Snippet>();
             string dateReturn = "Unknown";
             int moonDay = (Game.gameTurn % 30) + 1;

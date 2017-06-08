@@ -1713,7 +1713,7 @@ namespace Next_Game
                             //imports
                             List<Goods> tempImports = house.GetImports();
                             for (int i = 0; i < tempImports.Count; i++)
-                            { tradeText = $"{tempImports[i]} "; }
+                            { tradeText += $"{tempImports[i]} "; }
                             locList.Add(new Snippet($"Imports -> {tradeText}"));
                         }
                         if (house.GetNumExports() > 0)
@@ -1722,7 +1722,7 @@ namespace Next_Game
                             tradeText = "";
                             List<Goods> tempExports = house.GetExports();
                             for (int i = 0; i < tempExports.Count; i++)
-                            { tradeText = $"{tempExports[i]} "; }
+                            { tradeText += $"{tempExports[i]} "; }
                             locList.Add(new Snippet($"Exports -> {tradeText}"));
                         }
                     }

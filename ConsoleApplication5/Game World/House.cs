@@ -37,7 +37,7 @@ namespace Next_Game
         public LocType Type { get; set; }
         public KingLoyalty Loyalty_AtStart { get; set; }
         public KingLoyalty Loyalty_Current { get; set; }
-        public HouseSpecial Special { get; set; }
+        public HouseSpecial Special { get; set; } //used for quick acess to special locations, eg. Inns
         private List<int> listOfFirstNames; //contains ID #'s (listOfMaleFirstNames index) of all first names used by males within the house (eg. 'Eddard Stark II')
         private List<int> listOfSecrets;
         private List<int> listOfFollowerEvents;
