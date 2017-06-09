@@ -39,6 +39,7 @@ namespace Next_Game
         public KingLoyalty Loyalty_Current { get; set; }
         public HouseSpecial Special { get; set; } //used for quick acess to special locations, eg. Inns
         private int[,] arrayOfInfoVis; //toggles variousinformation elements (enum HouseInfo) display on/off -> [0,] (int)HouseInfo [1] Unknown '0', Known '1'
+        private int[,] arrayOfExports; //toggles visibility of export goods (enum Goods) and tracks #'s -> [0] # of each good, [1] Unknown '0', Known '1'
         private List<int> listOfFirstNames; //contains ID #'s (listOfMaleFirstNames index) of all first names used by males within the house (eg. 'Eddard Stark II')
         private List<int> listOfSecrets;
         private List<int> listOfFollowerEvents;
@@ -64,6 +65,7 @@ namespace Next_Game
             listOfRelations = new List<Relation>();
             dictCurrentRelations = new Dictionary<int, int>();
             arrayOfInfoVis = new int[(int)HouseInfo.Count, 2];
+            arrayOfExports = new int[(int)Goods.Count, 2];
             ObserveFlag = false;
         }
 
@@ -91,6 +93,37 @@ namespace Next_Game
         {
             if (arrayOfInfoVis[(int)info, 1] > 0) { return true; }
             else { return false; }
+        }
+
+        /// <summary>
+        /// toggles known/unknown status to on/off for Export Goods
+        /// </summary>
+        /// <param name="good"></param>
+        /// <param name="isKnown"></param>
+        public void SetExportStatus(Goods good, bool isKnown = true)
+        {
+            if (isKnown == true)
+            { arrayOfInfoVis[(int)good, 1] = 1; }
+            else { arrayOfExports[(int)good, 1] = 0; }
+        }
+
+        /// <summary>
+        /// returns Known (true) or Unknown (false) status for Export Goods
+        /// </summary>
+        /// <param name="good"></param>
+        /// <returns></returns>
+        public bool GetExportStatus(Goods good)
+        {
+            if (arrayOfExports[(int)good, 1] > 0) { return true; }
+            else { return false; }
+        }
+        
+        public int GetNumExports()
+        {
+            int sumOfExports = 0;
+            for (int i = 0; i <= arrayOfExports.GetUpperBound(0); i++)
+            { sumOfExports += arrayOfExports[0, i]; }
+            return sumOfExports;
         }
 
         /// <summary>
@@ -169,7 +202,7 @@ namespace Next_Game
         public void AddImport(Goods good)
         { if (good > Goods.None) { listOfImports.Add(good); } }
 
-        public void AddExport(Goods good)
+        /*public void AddExport(Goods good)
         { if (good > Goods.None) { listOfExports.Add(good); } }
 
         public List<Goods> GetImports()
@@ -182,7 +215,7 @@ namespace Next_Game
         { return listOfImports.Count; }
 
         public int GetNumExports()
-        { return listOfExports.Count; }
+        { return listOfExports.Count; }*/
 
         /// <summary>
         /// if neg then a food deficit, otherwise a surplus

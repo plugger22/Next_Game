@@ -27,6 +27,7 @@ Beadle
 Almoner 
 Friar 
 Monk
+Druid
 
 [Merchant]
 Innkeeper 
@@ -57,6 +58,8 @@ Innkeeper
  Waterseller 
  Woodmonger 
  Wool Stapler
+ Tailor
+
  
  [Craft]
  Armourer 
@@ -97,6 +100,16 @@ Innkeeper
  Glover 
  Butcher 
  Scabbard Maker
+ Leatherworker
+ Scabbard Maker
+ Buckle Maker
+ Purse Maker
+ Woodcarver
+ Rope Maker
+ Wheelwright
+ Mason
+ Bonesetter
+ 
  
  [PeasantMale]
  Farmer 
@@ -121,7 +134,7 @@ Innkeeper
  Palmer 
  Tenter
  Ferryman 
- Sheperd 
+ Shepherd 
  Hawker 
  Hunter 
  Goatherder 
@@ -131,12 +144,31 @@ Innkeeper
  Reaper 
  Trapper 
  Molecatcher
+ Farmhand
+ Plowman
+ Swineherd
+ Sheep Shearer
+ Tillerman
+ Cowherder
+ Ditcher
+ Labourer
+ Road worker
+ Street Sweeper
+ Dung Carter
+ Dung Sweeper
+ Vagabond
+ Pimp
+ Gypsy
+ Rogue
+ Rogue
  
  [PeasantFemale]
  Farmer's Wife 
  Farmer's Wife 
  Servant 
  Servant 
+ Server
+ Server
  Cook 
  Cook
  Cleaner
@@ -152,6 +184,7 @@ Innkeeper
  Prostitute 
  Washerwoman 
  Silk Snatcher 
+ Herbalist
  Beggar 
  Beggar 
  Beggar 
@@ -159,3 +192,5 @@ Innkeeper
  Hawker 
  Molecatcher
  Trollop
+ Scullion
+ Midwife

@@ -7643,7 +7643,7 @@ namespace Next_Game
                     }
                     //place branch data in dictionary
                     int upper = branchArray.GetUpperBound(0);
-                    for(int i = 0; i < upper; i++)
+                    for(int i = 0; i <= upper; i++)
                     { tempBranchDict.Add(i, branchArray[i, 1] - branchArray[i, 0]); }
                     //sort dictionary
                     var branches = from branchBalance in tempBranchDict
