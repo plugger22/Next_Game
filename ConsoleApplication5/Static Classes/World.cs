@@ -3571,6 +3571,9 @@ namespace Next_Game
         internal Dictionary<int, MajorHouse> GetAllMajorHouses()
         { return dictMajorHouses; }
 
+        internal Dictionary<int, House> GetAllHouses()
+        { return dictAllHouses; }
+
         internal Dictionary<int, Passive> GetRoyalCourt()
         { return dictRoyalCourt; }
 
@@ -7010,13 +7013,14 @@ namespace Next_Game
         {
             Game.logStart?.Write("--- InitialiseSafeHouse (World.cs)");
             int oldKingRefID = Game.lore.RoyalRefIDOld;
+            int chanceSafeHouse = Game.constant.GetValue(Global.SAFE_HOUSE);
             //Major Houses
             for (int i = 0; i < dictAllHouses.Count; i++)
             {
                 House house = dictAllHouses.ElementAt(i).Value;
                 if (house != null)
                 {
-                    //supports old King & not the deceased Old King (player's) hose?
+                    //supports old King -> automatically have a safe house and auto known
                     if (house.Loyalty_Current == KingLoyalty.Old_King && house.RefID != oldKingRefID )
                     {
                         if (house is MajorHouse)
@@ -7024,12 +7028,30 @@ namespace Next_Game
                             //randomly allocate a safe house rating of between 3 and 5
                             house.SafeHouse = rnd.Next(3, 6);
                             Game.logStart?.Write($"House {house.Name} at \"{house.LocName}\" has a SafeHouse rating of {house.SafeHouse} stars");
+                            house.SetInfoStatus(HouseInfo.SafeHouse);
                         }
                         else if (house is MinorHouse)
                         {
                             //randomly allocate a safe house rating of between 1 and 2
                             house.SafeHouse = rnd.Next(1, 3);
                             Game.logStart?.Write($"BannerLord House {house.Name} at \"{house.LocName}\" has a SafeHouse rating of {house.SafeHouse} stars");
+                            house.SetInfoStatus(HouseInfo.SafeHouse);
+                        }
+                    }
+                    //random chance of a safe house elsewhere (supporters of New King) -> Safe Houses not known about at game start (rumours)
+                    else if (rnd.Next(100) <= chanceSafeHouse)
+                    {
+                        if (house is MajorHouse)
+                        {
+                            //randomly allocate a safe house rating of between 3 and 5
+                            house.SafeHouse = rnd.Next(3, 6);
+                            Game.logStart?.Write($"[Supports New King] House {house.Name} at \"{house.LocName}\" has a SafeHouse rating of {house.SafeHouse} stars -> Rumour created");
+                        }
+                        else if (house is MinorHouse)
+                        {
+                            //randomly allocate a safe house rating of between 1 and 2
+                            house.SafeHouse = rnd.Next(1, 3);
+                            Game.logStart?.Write($"[Supports New King] BannerLord House {house.Name} at \"{house.LocName}\" has a SafeHouse rating of {house.SafeHouse} stars -> Rumour created");
                         }
                     }
                 }

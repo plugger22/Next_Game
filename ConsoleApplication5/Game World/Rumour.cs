@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 namespace Next_Game
 {
     public enum RumourScope { None, Local, Global }
-    public enum RumourType { None, Terrain, Road, Skill, Secret, Item, Disguise, HouseRel, Friends, Desire, Enemy, Relationship, Event } //Corresponds to Rumour subclasses, set in subclass
+    public enum RumourType { None, Terrain, Road, Skill, Secret, Item, Disguise, HouseRel, Friends, Desire, Enemy, Relationship, Event, SafeHouse } //Corresponds to Rumour subclasses, set in subclass
     public enum RumourGlobal { All, North, East, South, West }
     public enum RumourStatus { Normal, Timed, Inactive} //Normal -> dictRumoursNormal, Timed (TimerExpire > 0) -> dictRumoursTimed, Inactive (TimerStart > 0) -> dictRumoursInactive
     public enum RumourDisplay { All, Enemies} //used by Game.ShowRumoursRL to filter the required rumour set
@@ -158,6 +158,18 @@ namespace Next_Game
         public RumourDisguise(string text, int strength, RumourScope scope, int turnCreated = 0, RumourGlobal global = RumourGlobal.All, bool isActive = true) : base(text, strength, scope, turnCreated, global, isActive)
         {
             Type = RumourType.Disguise;
+        }
+    }
+
+    /// <summary>
+    /// Rumour about a Safe House being present in a location that supports the New King (those of the old King are assumed known at game start)
+    /// </summary>
+    class RumourSafeHouse : Rumour
+    {
+
+        public RumourSafeHouse(string text, int strength, RumourScope scope, int turnCreated = 0, RumourGlobal global = RumourGlobal.All, bool isActive = true) : base(text, strength, scope, turnCreated, global, isActive)
+        {
+            Type = RumourType.SafeHouse;
         }
     }
 

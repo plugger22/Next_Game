@@ -28,6 +28,7 @@ namespace Next_Game
         GOODS_LOW,
         GOODS_MED,
         FOOD_CAPACITY,
+        SAFE_HOUSE,
         //History
         BATTLE_EVENTS,
         ADVISOR_REFUSAL,
@@ -203,6 +204,7 @@ namespace Next_Game
             arrayOfGlobals[81] = Global.GOODS_FACTOR;
             arrayOfGlobals[82] = Global.GOODS_LOW;
             arrayOfGlobals[83] = Global.GOODS_MED;
+            arrayOfGlobals[84] = Global.SAFE_HOUSE;
         }
 
         /// <summary>

@@ -1113,16 +1113,6 @@ namespace Next_Game
                         Game.SetError(new Error(118, $"Invalid loc.Type \"{loc.Type}\""));
                         break;
                 }
-                /*if (locID == 1) { locType = 1; } //capital
-                else if (refID > 0 && refID < 100) { locType = 2; } //major houses
-                else if (refID >= 100 && refID < 1000) { locType = 3; } //minor houses
-                else if (refID >= 1000 && houseID == 99) //inns
-                {
-                    locType = 4;
-                    //can't be locals present at an Inn, only Visitors and Followers
-                    if (filter == EventAutoFilter.Court) { filter = EventAutoFilter.Visitors; Game.SetError(new Error(118, "Invalid filter (Locals when at an Inn)")); }
-                }
-                else { Game.SetError(new Error(118, "Invalid locType (doesn't fit any criteria)")); }*/
                 //Get actors present at location
                 List<int> actorIDList = loc.GetActorList();
                 if (actorIDList.Count > 0)
@@ -1292,12 +1282,12 @@ namespace Next_Game
                                         if (rnd.Next(100) <= Game.constant.GetValue(Global.RECRUIT_FOLLOWERS))
                                         {
                                             //are there any followers available to recruit in the inn?
-                                            House tempHouse = Game.world.GetHouse(refID);
-                                            if (tempHouse != null)
+                                            //House tempHouse = Game.world.GetHouse(refID);
+                                            if (house != null)
                                             {
-                                                if (tempHouse is InnHouse)
+                                                if (house is InnHouse)
                                                 {
-                                                    InnHouse inn = tempHouse as InnHouse;
+                                                    InnHouse inn = house as InnHouse;
                                                     int numAvailable = inn.GetNumFollowers();
                                                     if (numAvailable > 0)
                                                     {
@@ -1329,14 +1319,18 @@ namespace Next_Game
                                 eventObject.SetOption(option);
                             }
                             //option -> Observe (have a look around) -> Can't do so at Inns (nothing to see)
-                            if (house.ObserveFlag == false && house.Special == HouseSpecial.None)
+                            if (house != null)
                             {
-                                OptionInteractive option = new OptionInteractive("Observe");
-                                option.ReplyGood = "You walk around, taking note of everything";
-                                OutObserve outObserve = new OutObserve(eventObject.EventPID);
-                                option.SetGoodOutcome(outObserve);
-                                eventObject.SetOption(option);
+                                if (house.ObserveFlag == false && house.Special == HouseSpecial.None)
+                                {
+                                    OptionInteractive option = new OptionInteractive("Observe");
+                                    option.ReplyGood = "You walk around, taking note of everything";
+                                    OutObserve outObserve = new OutObserve(eventObject.EventPID);
+                                    option.SetGoodOutcome(outObserve);
+                                    eventObject.SetOption(option);
+                                }
                             }
+                            else { Game.SetError(new Error(118, "Invalid house (null) for Observe option")); }
                             //option -> seek passage to another port (if applicable)
                             if (loc.isPort == true)
                             { 
@@ -1348,16 +1342,20 @@ namespace Next_Game
                                 eventObject.SetOption(option);
                             }
                             //option -> Lay low (only if not known)
-                            if (player.Known == true && house?.SafeHouse > 0 && player.Conceal != ActorConceal.SafeHouse)
+                            if (house != null)
                             {
-                                OptionInteractive option = new OptionInteractive($"Lay Low ({house.SafeHouse} stars)");
-                                option.ReplyGood = $"You seek refuge at a Safe House ({house.SafeHouse} stars). You are immune from discovery while ever the place of refuge retains at least one star";
-                                OutKnown outKnown = new OutKnown(eventObject.EventPID, 1);
-                                OutSafeHouse outSafe = new OutSafeHouse(eventObject.EventPID, 1);
-                                option.SetGoodOutcome(outKnown);
-                                option.SetGoodOutcome(outSafe);
-                                eventObject.SetOption(option);
+                                if (player.Known == true && house.SafeHouse > 0 && player.Conceal != ActorConceal.SafeHouse && (house?.GetInfoStatus(HouseInfo.SafeHouse) == true))
+                                {
+                                    OptionInteractive option = new OptionInteractive($"Lay Low ({house.SafeHouse} stars)");
+                                    option.ReplyGood = $"You seek refuge at a Safe House ({house.SafeHouse} stars). You are immune from discovery while ever the place of refuge retains at least one star";
+                                    OutKnown outKnown = new OutKnown(eventObject.EventPID, 1);
+                                    OutSafeHouse outSafe = new OutSafeHouse(eventObject.EventPID, 1);
+                                    option.SetGoodOutcome(outKnown);
+                                    option.SetGoodOutcome(outSafe);
+                                    eventObject.SetOption(option);
+                                }
                             }
+                            else { Game.SetError(new Error(118, "Invalid house (null) for Lay low option")); }
                             //option -> Leave
                             OptionInteractive option_L = new OptionInteractive("Leave");
                             if (player.Known == true) { option_L.ReplyGood = "You depart, head held high, shoulders back, meeting the eye of everyone you pass"; }
@@ -4999,7 +4997,7 @@ namespace Next_Game
         private void InitialiseStartRumours()
         {
             Dictionary<int, Passive> dictPassiveActors = Game.world.GetAllPassiveActors();
-            Dictionary<int, MajorHouse> dictMajorHouses = Game.world.GetMajorHouses();
+            Dictionary<int, House> dictAllHouses = Game.world.GetAllHouses();
 
             if (dictPassiveActors != null)
             {
@@ -5032,7 +5030,7 @@ namespace Next_Game
                                     case ActorStatus.AtLocation:
                                         locName = Game.world.GetLocationName(actor.LocID);
                                         //
-                                        //rumour -> Skills (all skills except touched)
+                                        //Skills -> (all skills except touched)
                                         //
                                         for (int skillIndex = 1; skillIndex < (int)SkillType.Count; skillIndex++)
                                         {
@@ -5074,7 +5072,7 @@ namespace Next_Game
                                             }
                                         }
                                         //
-                                        //Rumour -> Secrets (one rumour per character, regardless of how many secrets a character has)
+                                        //Secrets -> (one rumour per character, regardless of how many secrets a character has)
                                         //
                                         if (actor.CheckSecrets() == true)
                                         {
@@ -5087,7 +5085,7 @@ namespace Next_Game
                                             AddRumour(rumour, house);
                                         }
                                         //
-                                        //Items (one rumour per item possessed, global All)
+                                        //Items -> (one rumour per item possessed, global All)
                                         //
                                         if (actor.CheckItems() == true)
                                         {
@@ -5124,7 +5122,7 @@ namespace Next_Game
                                             else { Game.SetError(new Error(268, "Invalid listOfItems (null)")); }
                                         }
                                         //
-                                        //Disguises (one rumour regardless of # of disguises, global All)
+                                        //Disguises  -> one rumour regardless of # of disguises, global All
                                         //
                                         if(actor is Advisor)
                                         {
@@ -5141,7 +5139,7 @@ namespace Next_Game
                                             }
                                         }
                                         //
-                                        //Desires (one rumour per desire -> global.Branch)
+                                        // Desires -> one rumour per desire -> global.Branch
                                         //
                                         if (actor.Desire > PossPromiseType.None)
                                         {
@@ -5255,7 +5253,7 @@ namespace Next_Game
                     }
                     else { Game.SetError(new Error(268, "Invalid Passive actor (null)")); }
                 }
-                //Relationships (timed rumours)
+                //Relationships  -> (timed rumours)
                 InitialiseRelationshipRumours();
                 //set turn number to generate the next set of relationship rumours (turn after the first set has expired)
                 int newValue = Game.constant.GetValue(Global.REL_RUMOUR_TIME);
@@ -5270,124 +5268,153 @@ namespace Next_Game
                 string friendPrefix, enemyPrefix;
                 string[] arrayOfDescriptors = new string[] { "no", "an", "a few", "a handful of", "many" }; //used for Friends and enemies, index corresponds to #'s, eg. index 0 -> 'no' friends, 4+ -> 'many'
                 //Major Houses
-                foreach (var house in dictMajorHouses)
+                foreach (var house in dictAllHouses)
                 {
-                    //
-                    //Friends and Enemies (one per Major House if any exist, Capital excluded as auto known -> Global.Branches)
-                    //
-                    Location loc = Game.network.GetLocation(house.Value.LocID);
-                    if (loc != null)
+                    if (house.Value is MajorHouse)
                     {
-                        numFriends = 0; numEnemies = 0; relPlyr = 0;
-                        //characters at location
-                        List<int> charList = loc.GetActorList();
-                        charList.Sort();
-                        if (charList.Count > 0)
+                        //
+                        //Friends and Enemies -> (one per Major House if any exist, Capital excluded as auto known -> Global.Branches)
+                        //
+                        Location loc = Game.network.GetLocation(house.Value.LocID);
+                        if (loc != null)
                         {
-                            foreach (int charID in charList)
+                            numFriends = 0; numEnemies = 0; relPlyr = 0;
+                            //characters at location
+                            List<int> charList = loc.GetActorList();
+                            charList.Sort();
+                            if (charList.Count > 0)
                             {
-                                Actor actor = Game.world.GetAnyActor(charID);
-                                if (actor != null)
+                                foreach (int charID in charList)
                                 {
-                                    //tally friends and enemies
-                                    if (actor.ActID > 1)
+                                    Actor actor = Game.world.GetAnyActor(charID);
+                                    if (actor != null)
                                     {
-                                        relPlyr = actor.GetRelPlyr();
-                                        if (relPlyr >= relFriends) { numFriends++; }
-                                        else if (relPlyr <= relEnemies) { numEnemies++; }
+                                        //tally friends and enemies
+                                        if (actor.ActID > 1)
+                                        {
+                                            relPlyr = actor.GetRelPlyr();
+                                            if (relPlyr >= relFriends) { numFriends++; }
+                                            else if (relPlyr <= relEnemies) { numEnemies++; }
+                                        }
                                     }
                                 }
                             }
-                        }
-                        else { Game.logStart?.Write( $"[Notification] There are no characters at {loc.LocName}, LocID {loc.LocationID}"); }
-                        //any friends or enemies?
-                        friendPrefix = ""; enemyPrefix = "";
-                        if (numFriends > 0 || numEnemies > 0)
-                        {
-                            branch = house.Value.Branch;
-                            if (branch >= 0 && branch < 5)
+                            else { Game.logStart?.Write($"[Notification] There are no characters at {loc.LocName}, LocID {loc.LocationID}"); }
+                            //any friends or enemies?
+                            friendPrefix = ""; enemyPrefix = "";
+                            if (numFriends > 0 || numEnemies > 0)
                             {
-                                strength = 3;
-                                index = numFriends;
-                                index = Math.Min(4, numFriends); //cap to size of arrayOfDescriptors
-                                friendPrefix = arrayOfDescriptors[index];
-                                index = numEnemies;
-                                index = Math.Min(4, numEnemies); //cap to size of arrayOfDescriptors
-                                enemyPrefix = arrayOfDescriptors[index];
-                                startText = $"It is {arrayOfRumourTexts[rnd.Next(arrayOfRumourTexts.Length)]}";
-                                rumourText = string.Format("{0} that you have {1} Friend{2} and {3} Enem{4} at {5} (House {6})", startText, friendPrefix, numFriends != 1 ? "s" : "",
-                                    enemyPrefix, numEnemies != 1 ? "ies" : "y", loc.LocName, house.Value.Name);
-                                RumourFriends rumour = new RumourFriends(rumourText, strength, RumourScope.Global, rnd.Next(100) * -1, (RumourGlobal)branch) { RefID = loc.RefID };
-                                //add to dictionary and global list
-                                if (AddRumour(rumour) == false)
-                                { Game.SetError(new Error(268, $"{rumour.Text}, RumourID {rumour.RumourID}, failed to load (Friends and Enemies) -> Rumour Cancelled")); }
-                            }
-                            else { Game.SetError(new Error(268, $"Invalid House Branch \"{branch}\" -> Rumour Friends not created")); }
-                        }
-                    }
-                    else { Game.SetError(new Error(268, $"Invalid Location (null) from LocID {house.Value.LocID}")); }
-                    //
-                    //Past History between Major Houses, other Major Houses and their Minor Houses (one entry per relationship, global.Branch)
-                    //
-                    List<Relation> listOfHouseRelationships = house.Value.GetRelations();
-                    if (listOfHouseRelationships != null)
-                    {
-                        if (listOfHouseRelationships.Count > 0)
-                        {
-                            //House who the relationship is From
-                            House houseFrom = Game.world.GetHouse(house.Value.RefID);
-                            if (houseFrom != null)
-                            {
-                                foreach (var relationship in listOfHouseRelationships)
+                                branch = house.Value.Branch;
+                                if (branch >= 0 && branch < 5)
                                 {
-                                    //get house who the relationship is with (relationship To..)
-                                    House houseTo = Game.world.GetHouse(relationship.RefID);
-                                    if (houseTo != null)
+                                    strength = 3;
+                                    index = numFriends;
+                                    index = Math.Min(4, numFriends); //cap to size of arrayOfDescriptors
+                                    friendPrefix = arrayOfDescriptors[index];
+                                    index = numEnemies;
+                                    index = Math.Min(4, numEnemies); //cap to size of arrayOfDescriptors
+                                    enemyPrefix = arrayOfDescriptors[index];
+                                    startText = $"It is {arrayOfRumourTexts[rnd.Next(arrayOfRumourTexts.Length)]}";
+                                    rumourText = string.Format("{0} that you have {1} Friend{2} and {3} Enem{4} at {5} (House {6})", startText, friendPrefix, numFriends != 1 ? "s" : "",
+                                        enemyPrefix, numEnemies != 1 ? "ies" : "y", loc.LocName, house.Value.Name);
+                                    RumourFriends rumour = new RumourFriends(rumourText, strength, RumourScope.Global, rnd.Next(100) * -1, (RumourGlobal)branch) { RefID = loc.RefID };
+                                    //add to dictionary and global list
+                                    if (AddRumour(rumour) == false)
+                                    { Game.SetError(new Error(268, $"{rumour.Text}, RumourID {rumour.RumourID}, failed to load (Friends and Enemies) -> Rumour Cancelled")); }
+                                }
+                                else { Game.SetError(new Error(268, $"Invalid House Branch \"{branch}\" -> Rumour Friends not created")); }
+                            }
+                        }
+                        else { Game.SetError(new Error(268, $"Invalid Location (null) from LocID {house.Value.LocID}")); }
+                        //
+                        //Past History between Major Houses -> other Major Houses and their Minor Houses (one entry per relationship, global.Branch)
+                        //
+                        List<Relation> listOfHouseRelationships = house.Value.GetRelations();
+                        if (listOfHouseRelationships != null)
+                        {
+                            if (listOfHouseRelationships.Count > 0)
+                            {
+                                //House who the relationship is From
+                                House houseFrom = Game.world.GetHouse(house.Value.RefID);
+                                if (houseFrom != null)
+                                {
+                                    foreach (var relationship in listOfHouseRelationships)
                                     {
-                                        rumourText = "";
-                                        //generate rumour text
-                                        switch(relationship.Type)
+                                        //get house who the relationship is with (relationship To..)
+                                        House houseTo = Game.world.GetHouse(relationship.RefID);
+                                        if (houseTo != null)
                                         {
-                                            case RelListType.HousePastGood:
-                                                rumourText = $"House {houseFrom.Name} has had good past relations with House {houseTo.Name} due to {relationship.Rumour}";
-                                                break;
-                                            case RelListType.HousePastBad:
-                                                rumourText = $"House {houseFrom.Name} has had poor past relations with House {houseTo.Name} due to {relationship.Rumour}";
-                                                break;
-                                            case RelListType.BannerPastGood:
-                                                rumourText = $"House {houseFrom.Name} has had good past relations with their BannerLord at House {houseTo.Name} due to {relationship.Rumour}";
-                                                break;
-                                            case RelListType.BannerPastBad:
-                                                rumourText = $"House {houseFrom.Name} has had poor past relations with their BannerLord at House {houseTo.Name} due to {relationship.Rumour}";
-                                                break;
-                                            default:
-                                                Game.SetError(new Error(268, $"Invalid relationship.Type \"{relationship.Type}\""));
-                                                break;
-                                        }
-                                        //is there a rumour to create?
-                                        if (rumourText.Length > 0)
-                                        {
-                                            branch = houseFrom.Branch;
-                                            if (branch >= 0 && branch < 5)
+                                            rumourText = "";
+                                            //generate rumour text
+                                            switch (relationship.Type)
                                             {
-                                                strength = 2;
-                                                RumourHouseRel rumour = new RumourHouseRel(rumourText, strength, RumourScope.Global, rnd.Next(100) * -1, (RumourGlobal)branch)
-                                                { RefID = houseFrom.RefID, HouseToRefID = houseTo.RefID, TrackerID = relationship.TrackerID };
-                                                //add to dictionary and global list
-                                                if (AddRumour(rumour) == false)
-                                                { Game.SetError(new Error(268, $"{rumour.Text}, RumourID {rumour.RumourID}, failed to load (HouseRel) -> Rumour Cancelled")); }
+                                                case RelListType.HousePastGood:
+                                                    rumourText = $"House {houseFrom.Name} has had good past relations with House {houseTo.Name} due to {relationship.Rumour}";
+                                                    break;
+                                                case RelListType.HousePastBad:
+                                                    rumourText = $"House {houseFrom.Name} has had poor past relations with House {houseTo.Name} due to {relationship.Rumour}";
+                                                    break;
+                                                case RelListType.BannerPastGood:
+                                                    rumourText = $"House {houseFrom.Name} has had good past relations with their BannerLord at House {houseTo.Name} due to {relationship.Rumour}";
+                                                    break;
+                                                case RelListType.BannerPastBad:
+                                                    rumourText = $"House {houseFrom.Name} has had poor past relations with their BannerLord at House {houseTo.Name} due to {relationship.Rumour}";
+                                                    break;
+                                                default:
+                                                    Game.SetError(new Error(268, $"Invalid relationship.Type \"{relationship.Type}\""));
+                                                    break;
                                             }
-                                            else { Game.SetError(new Error(268, $"Invalid houseFrom.Branch \"{branch}\" -> rumour cancelled")); }
+                                            //is there a rumour to create?
+                                            if (rumourText.Length > 0)
+                                            {
+                                                branch = houseFrom.Branch;
+                                                if (branch >= 0 && branch < 5)
+                                                {
+                                                    strength = 2;
+                                                    RumourHouseRel rumour = new RumourHouseRel(rumourText, strength, RumourScope.Global, rnd.Next(100) * -1, (RumourGlobal)branch)
+                                                    { RefID = houseFrom.RefID, HouseToRefID = houseTo.RefID, TrackerID = relationship.TrackerID };
+                                                    //add to dictionary and global list
+                                                    if (AddRumour(rumour) == false)
+                                                    { Game.SetError(new Error(268, $"{rumour.Text}, RumourID {rumour.RumourID}, failed to load (HouseRel) -> Rumour Cancelled")); }
+                                                }
+                                                else { Game.SetError(new Error(268, $"Invalid houseFrom.Branch \"{branch}\" -> rumour cancelled")); }
+                                            }
                                         }
+                                        else { Game.SetError(new Error(268, $"Invalid houseTo (null), RefID {relationship.RefID} -> Rumour not created")); }
                                     }
-                                    else { Game.SetError(new Error(268, $"Invalid houseTo (null), RefID {relationship.RefID} -> Rumour not created")); }
                                 }
+                                else { Game.SetError(new Error(268, $"Invalid houseFrom (null), RefID {house.Value.RefID} -> No rumours created ")); }
                             }
-                            else { Game.SetError(new Error(268, $"Invalid houseFrom (null), RefID {house.Value.RefID} -> No rumours created ")); }
+                        }
+                        else { Game.SetError(new Error(268, "Invalid listOfHouseRelationships (null)")); }
+                        //
+                        //Safe House (the unknown ones -> supporters of New King)
+                        //
+                        if (house.Value.SafeHouse > 0 && house.Value.GetInfoStatus(HouseInfo.SafeHouse) == false)
+                        {
+                            strength = 1; //keep well hidden
+                            rumourText = $"Underground supporters of Old King {Game.lore.OldKing.Name}, \"{Game.lore.OldKing.Handle}\", will offer Safe Refuge at {house.Value.LocName}, {Game.world.GetLocationCoords(house.Value.LocID)} HouseID {house.Value.HouseID} RefID {house.Value.RefID}";
+                            RumourSafeHouse rumour = new RumourSafeHouse(rumourText, strength, RumourScope.Global, rnd.Next(100) * -1, (RumourGlobal)house.Value.Branch);
+                            //add to dictionary and global list
+                            if (AddRumour(rumour) == false)
+                            { Game.SetError(new Error(268, $"{rumour.Text}, RumourID {rumour.RumourID}, failed to load (MajorHouse SafeHouse) -> Rumour Cancelled")); }
                         }
                     }
-                    else { Game.SetError(new Error(268, "Invalid listOfHouseRelationships (null)")); }
+                    else if (house.Value is MinorHouse)
+                    {
+                        //Safe House (the unknown ones -> supporters of New King)
+                        if (house.Value.SafeHouse > 0 && house.Value.GetInfoStatus(HouseInfo.SafeHouse) == false)
+                        {
+                            strength = 1; //keep well hidden
+                            rumourText = $"Underground supporters of Old King {Game.lore.OldKing.Name}, \"{Game.lore.OldKing.Handle}\", will offer Safe Refuge at {house.Value.LocName}, {Game.world.GetLocationCoords(house.Value.LocID)} HouseID {house.Value.HouseID} RefID {house.Value.RefID}";
+                            RumourSafeHouse rumour = new RumourSafeHouse(rumourText, strength, RumourScope.Global, rnd.Next(100) * -1, (RumourGlobal)house.Value.Branch);
+                            //add to dictionary and global list
+                            if (AddRumour(rumour) == false)
+                            { Game.SetError(new Error(268, $"{rumour.Text}, RumourID {rumour.RumourID}, failed to load (MinorHouse SafeHouse) -> Rumour Cancelled")); }
+                        }
+                    }
                 }
+                //end house loop
             }
             else { Game.SetError(new Error(268, "Invalid dictOfPassiveActors (null)")); }
         }

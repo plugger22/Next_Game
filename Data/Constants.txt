@@ -50,6 +50,8 @@
 82: 10 @ 5 @ 20
 # GOODS_MED -> % chance of a good being present for a medium probability good
 83: 30 @ 20 @ 40
+# SAFE_HOUSE -> % chance of a house that supports New king having a safe house available
+84: 20 @ 5 @ 30 
 
 # History ---
 
@@ -215,4 +217,4 @@
 # REL_RUMOUR_TIME -> how many tunrs a relationship rumour exists for and the interval (time + 1) before initialising new ones.
 75: 20 @ 5 @ 30
 
-# Next valid number -> 84
+# Next valid number -> 85
