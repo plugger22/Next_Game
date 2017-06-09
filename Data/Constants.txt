@@ -51,7 +51,7 @@
 # GOODS_MED -> % chance of a good being present for a medium probability good
 83: 30 @ 20 @ 40
 # SAFE_HOUSE -> % chance of a house that supports New king having a safe house available
-84: 20 @ 5 @ 30 
+84: 10 @ 5 @ 30 
 
 # History ---
 

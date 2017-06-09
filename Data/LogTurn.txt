@@ -1,17 +1,150 @@
-//Exile Game file ops "LogTurn.txt" commenced at: 09/06/2017 15:30:12
---- ProcessStartGame (World.cs)
---- AgePassiveCharacters (History.cs)
---- InitialiseGameVars (World.cs)
-[GameVar] View_Index changed from 0 to 1
-[AddVisitedLoc] LocID 27, "Eyrie", turn -3 -> record added to listLocsVisited
-[AddVisitedLoc] LocID 27, "Eyrie", turn -3 -> new record added to dictLocsVisited
-[AddVisitedLoc] LocID 22, "Torrhen's Square", turn -2 -> record added to listLocsVisited
-[AddVisitedLoc] LocID 22, "Torrhen's Square", turn -2 -> new record added to dictLocsVisited
-[AddVisitedLoc] LocID 31, "Longbow Hall", turn -1 -> record added to listLocsVisited
-[AddVisitedLoc] LocID 31, "Longbow Hall", turn -1 -> new record added to dictLocsVisited
---- InitialiseFinalPlayer (World.cs)
-[AddVisitedLoc] LocID 13, "Hornwood", turn 0 -> record added to listLocsVisited
-[AddVisitedLoc] LocID 13, "Hornwood", turn 0 -> new record added to dictLocsVisited
+//Exile Game File "LogTurn.txt" opened at: 09/06/2017 16:33:28
+--- ProcessStartTurn (World.cs)
+Day 7, Turn 6, Harvest in 184 days, Winter in 199 days
+Usurper Aeron Stark, "The Ready", AtLocation, Dorne
+--- UpdateRumours (World.cs)
+dictRumoursTimed (Start) -> 88 records
+[Rumour -> Removal] RID 421, "Inquisitor, Brother Damballa, ActID 119 has been spotted wenching at Kingskeep (loc 18:16)" removed from Global All list
+87 rumours -> TimerExpire decremented
+1 records have expired and been removed
+dictRumoursTimed (End) -> 87 records
+--- MoveActors -> 0 Records (World.cs)
+--- UpdatePlayerStatus (World.cs)
+--- UpdateWorldStatus (World.cs)
+--- CheckFollowerActivity (World.cs)
+--- GetRumour (Director.cs)
+[Notification] No house rumours available -> none added to pool
+arrayOfRumours [0] -> RumourID 409, Strength 3, Scope Global, Type Event, Global All
+arrayOfRumours [2] -> RumourID 400, Strength 2, Scope Global, Type HouseRel, Global East
+RumourID 409 selected from the Pool
+Rumour "Guards are actively targeting strangers in the larger towns." revealed to ActorID9 on turn 6 -> added to List
+RumourID 409 removed from listRumoursGlobal[13]
+Follower The Crone, ActID 9, added RumourID 409
+--- GetRumour (Director.cs)
+[Notification] No house rumours available -> none added to pool
+arrayOfRumours [0] -> RumourID 168, Strength 1, Scope Global, Type Item, Global All
+arrayOfRumours [2] -> RumourID 401, Strength 5, Scope Global, Type SafeHouse, Global East
+RumourID 401 selected from the Pool
+Rumour "Underground supporters of Old King Hodgkin Stark, "The Steadfast", will offer Safe Refuge at Riverrun, (loc 21:24) HouseID 4 RefID 9" revealed to ActorID2 on turn 6 -> added to List
+RumourID 401 removed from listRumoursEast[7]
+Follower The Beast, ActID 2, added RumourID 401
+--- GetRumour (Director.cs)
+[Notification] No house rumours available -> none added to pool
+arrayOfRumours [0] -> RumourID 82, Strength 4, Scope Global, Type Disguise, Global All
+arrayOfRumours [2] -> RumourID 406, Strength 5, Scope Global, Type SafeHouse, Global East
+RumourID 406 selected from the Pool
+Rumour "Underground supporters of Old King Hodgkin Stark, "The Steadfast", will offer Safe Refuge at Stone Hedge, (loc 24:27) HouseID 4 RefID 103" revealed to ActorID8 on turn 6 -> added to List
+RumourID 406 removed from listRumoursEast[7]
+Follower The Viper, ActID 8, added RumourID 406
+--- GetMarketView (Director.cs)
+listPlayerChoices has 1 records, 10 % needed, rolled 33
+[GameVar] View_Index changed from 1 to 2
+--- CheckStationaryActiveActors (World.cs)
+ [Search -> Stationary] Usurper Aeron Stark, ActID 1 is AtLocation
+--- CheckIfFoundActive (World.cs)
+ [Search -> Debug] Enemy, Brother Damballa, ID 119 at 18:16, Active Aeron Stark, ID 1, at 5:28
+ [Search -> Debug] Enemy, Brother Azazel, ID 120 at 18:16, Active Aeron Stark, ID 1, at 5:28
+ [Search -> Debug] Enemy, Brother Gorgo, ID 121 at 18:12, Active Aeron Stark, ID 1, at 5:28
+ [Search -> Debug] Enemy, Brother Shiva, ID 122 at 18:16, Active Aeron Stark, ID 1, at 5:28
+ [Search -> Debug] Enemy, The Unrelenting, ID 123 at 18:16, Active Aeron Stark, ID 1, at 5:28
+ [Search -> Stationary] Follower The Crone, ActID 9 is AtLocation
+ [Search -> Stationary] Follower The Beast, ActID 2 is AtLocation
+ [Search -> Stationary] Follower The Viper, ActID 8 is AtLocation
+--- UpdateAIController (World.cs)
+ [AI -> Mode] enemyID 119,  distance -> 25  Threshold (turns) -> 4  Mode -> Normal
+ [AI -> Mode] enemyID 120,  distance -> 25  Threshold (turns) -> 4  Mode -> Normal
+ [AI -> Mode] enemyID 122,  distance -> 25  Threshold (turns) -> 4  Mode -> Normal
+ [AI -> Mode] enemyID 123,  distance -> 25  Threshold (turns) -> 8  Mode -> Normal
+ [AI -> Mode] enemyID 121,  distance -> 29  Threshold (turns) -> 4  Mode -> Normal
+--- SetEnemyActivity (World.cs)
+--- SetEnemyGoal (World.cs)
+ [Goal -> Branch] Brother Damballa, ActID 119 Assigned Branch -> 0 Current Branch -> 0
+ [Enemy -> Goal] Brother Azazel, ActID 120 retains Goal -> Wait
+--- SetEnemyGoal (World.cs)
+ [Goal -> Branch] Brother Gorgo, ActID 121 Assigned Branch -> 1 Current Branch -> 1
+ [Enemy -> Known] Brother Shiva ActID 122 has become KNOWN
+ [Enemy -> Goal] Brother Shiva, ActID 122 retains Goal -> Wait
+ [Enemy -> Goal] The Unrelenting, ActID 123 retains Goal -> Wait
+--- CheckPlayerEvents (Director.cs)
+Location event, Need 75, roll 5
+--- GetValidPlayerEvents (Director.cs)
+[Event -> Added] "You there, Halt! A group of red coated guards move purposely towards you." -> 3 records added to pool
+--- GetValidPlayerEvents (Director.cs)
+--- GetValidPlayerEvents (Director.cs)
+[DeterminePlayerEvent] There are 3 events in the Pool
+ Chance of Player Location event 37 %
+--- ResolvePlayerEvents (Director.cs)
+ "Stay Calm" Trait Trigger, if type 3 is GreaterThanOrEqual to 3
+ Trigger passed on "4" GreaterThanOrEqual 3
+ "Run straight at them" Trait Trigger, if type 1 is GreaterThanOrEqual to 3
+ Trigger passed on "4" GreaterThanOrEqual 3
+ Event "Search and Detain" Timer Repeat now 998
+ Event "Search and Detain" Cooldown Timer has been reset to 4
+--- UpdateActiveActors (World.cs)
+ Usurper Aeron Stark has had their Revert Timer reduced from 1 to 0
+Usurper Aeron Stark is no longer "Known" as sufficient time has passed
+ Follower The Crone has had their TurnsUnknown Timer increased from 5 to 6
+ Follower The Beast has had their TurnsUnknown Timer increased from 5 to 6
+ Follower The Viper has had their TurnsUnknown Timer increased from 5 to 6
+--- ResolveOutcome (Director.cs)
+ [Variable Option] "Leg it!" Failed test (60 % needed, rolled 64)  Roll 74 + DMskill -10 + DMtouched 0 -> modifiedRoll 64
+[Player Choice View -> Added] "He ran! That Aeron Stark Usurper person, at Dorne. Viserys swears he saw it happen."
+[Notification] listPlayerChoices now has 2 records
+--- ResolveFollowerEvents (Director.cs)
 --- SetEndGame (Game.cs)
 [Alert] Player chose to exit (pressed 'X')
-//Exile Game file ops "LogTurn.txt" Completed at: 09/06/2017 15:31:01
+//Exile Game file ops "LogTurn.txt" Completed at: 09/06/2017 16:35:44
+ Player is wrong type of Known status -> Trigger failed
+ Event "What to do?" Timer Repeat now 999
+ Event "What to do?" Cooldown Timer has been reset to 0
+--- UpdateActiveActors (World.cs)
+ Usurper Aeron Stark has had their Revert Timer reduced from 2 to 1
+ Follower The Crone has had their TurnsUnknown Timer increased from 4 to 5
+ Follower The Beast has had their TurnsUnknown Timer increased from 4 to 5
+ Follower The Viper has had their TurnsUnknown Timer increased from 4 to 5
+--- ResolveOutcome (Director.cs)
+--- ResolveFollowerEvents (Director.cs)
+--- ProcessEndTurn (World.cs)
+Day 6, Turn 5
+--- CheckEventTimers (Director.cs)
+ Event "Search and Detain" Dormant Timer decremented to 15
+ "Search and Detain" event, Cooldown Timer decremented from 1 to 0
+--- InitialiseDynamicRumours (Director.cs)
+[Notification] Turn 5, generate new set of Relationship rumours on turn 21
+[Rumour -> Added] RID 425, "Inquisitor, Brother Shiva, ActID 122 has been spotted relaxing at Kingskeep (loc 18:16)" -> dict & List
+--- HouseKeepActors (World.cs)
+[GameStat] "Location_Days" -> increased from 5 to 6
+[GameStat] "Known_Days" -> increased from 3 to 4
+--- HousekeepRumours (World.cs)
+dictRumoursKnown has 17 records
+
+//Exile Game File "LogTurn.txt" Close completed at: 09/06/2017 16:33:28
+tor, Brother Damballa, ActID 119 has been spotted wenching at Kingskeep (loc 18:16)" -> dict & List
+--- HouseKeepActors (World.cs)
+[GameStat] "Location_Days" -> increased from 3 to 4
+[GameStat] "Known_Days" -> increased from 1 to 2
+--- HousekeepRumours (World.cs)
+dictRumoursKnown has 11 records
+
+//Exile Game File "LogTurn.txt" Close completed at: 09/06/2017 16:32:48
+trength 2, Scope Global, Type HouseRel, Global South
+arrayOfRumours [5] -> RumourID 283, Strength 2, Scope Local, Type Relationship, Global All
+RumourID 416 selected from the Pool
+Rumour "Sailors mutter into the their ales about the mythical Kraken that supposedly are to be found in the depths of The Jade Abyss." revealed to ActorID1 on turn 1 -> added to List
+RumourID 416 removed from listRumoursGlobal[21]
+Rumour "Sailors mutter into the their ales about the mythical Kraken that supposedly are to be found in the depths of The Jade Abyss.", rumourID 416, added to dictRumoursKnown
+Sailors mutter into the their ales about the mythical Kraken that supposedly are to be found in the depths of The Jade Abyss.
+--- ProcessEndTurn (World.cs)
+Day 2, Turn 1
+--- CheckEventTimers (Director.cs)
+ Event "Search and Detain" Dormant Timer decremented to 19
+--- InitialiseDynamicRumours (Director.cs)
+[Notification] Turn 1, generate new set of Relationship rumours on turn 21
+[Rumour -> Added] RID 419, "Inquisitor, Brother Gorgo, ActID 121 has been spotted doing sword drills at Kingskeep (loc 18:16)" -> dict & List
+[Rumour -> Added] RID 420, "Nemesis, The Unrelenting, ActID 123 has been spotted meditating at Kingskeep (loc 18:16)" -> dict & List
+--- HouseKeepActors (World.cs)
+[GameStat] "Location_Days" -> increased from 1 to 2
+--- HousekeepRumours (World.cs)
+dictRumoursKnown has 5 records
+
+//Exile Game File "LogTurn.txt" Close completed at: 09/06/2017 16:32:00

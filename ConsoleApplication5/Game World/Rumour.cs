@@ -166,6 +166,7 @@ namespace Next_Game
     /// </summary>
     class RumourSafeHouse : Rumour
     {
+        //RefID holds house RefID so that ResolveRumour can set SafeHouse to known for that house
 
         public RumourSafeHouse(string text, int strength, RumourScope scope, int turnCreated = 0, RumourGlobal global = RumourGlobal.All, bool isActive = true) : base(text, strength, scope, turnCreated, global, isActive)
         {

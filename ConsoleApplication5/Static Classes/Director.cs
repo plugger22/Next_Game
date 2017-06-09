@@ -4526,6 +4526,15 @@ namespace Next_Game
                     }
                     else { Game.SetError(new Error(272, $"Rumour Type doesn't match Rumour class (Desire) -> Desire not made Known, RumourID {rumour.RumourID}")); }
                     break;
+                case RumourType.SafeHouse:
+                    if (rumour is RumourSafeHouse)
+                    {
+                        House house = Game.world.GetHouse(rumour.RefID);
+                        if (house != null)
+                        { house.SetInfoStatus(HouseInfo.SafeHouse); }
+                        else { Game.SetError(new Error(272, $"Invalid house (null) for rumour.RefID {rumour.RefID} -> SafeHouse not made Known")); }
+                    }
+                    break;
                 case RumourType.Relationship:
                     if (rumour is RumourRelationship)
                     {
@@ -5392,12 +5401,16 @@ namespace Next_Game
                         //
                         if (house.Value.SafeHouse > 0 && house.Value.GetInfoStatus(HouseInfo.SafeHouse) == false)
                         {
-                            strength = 1; //keep well hidden
-                            rumourText = $"Underground supporters of Old King {Game.lore.OldKing.Name}, \"{Game.lore.OldKing.Handle}\", will offer Safe Refuge at {house.Value.LocName}, {Game.world.GetLocationCoords(house.Value.LocID)} HouseID {house.Value.HouseID} RefID {house.Value.RefID}";
-                            RumourSafeHouse rumour = new RumourSafeHouse(rumourText, strength, RumourScope.Global, rnd.Next(100) * -1, (RumourGlobal)house.Value.Branch);
-                            //add to dictionary and global list
-                            if (AddRumour(rumour) == false)
-                            { Game.SetError(new Error(268, $"{rumour.Text}, RumourID {rumour.RumourID}, failed to load (MajorHouse SafeHouse) -> Rumour Cancelled")); }
+                            //ignore deceased old King's house as it's no longer relevant (not yet removed from dictionaries)
+                            if (house.Value.RefID != Game.lore.RoyalRefIDOld)
+                            {
+                                strength = 2;
+                                rumourText = $"Underground supporters of Old King {Game.lore.OldKing.Name}, \"{Game.lore.OldKing.Handle}\", will offer Safe Refuge at {house.Value.LocName}, {Game.world.GetLocationCoords(house.Value.LocID)}";
+                                RumourSafeHouse rumour = new RumourSafeHouse(rumourText, strength, RumourScope.Global, rnd.Next(100) * -1, (RumourGlobal)house.Value.Branch) { RefID = house.Value.RefID };
+                                //add to dictionary and global list
+                                if (AddRumour(rumour) == false)
+                                { Game.SetError(new Error(268, $"{rumour.Text}, RumourID {rumour.RumourID}, failed to load (MajorHouse SafeHouse) -> Rumour Cancelled")); }
+                            }
                         }
                     }
                     else if (house.Value is MinorHouse)
@@ -5405,9 +5418,9 @@ namespace Next_Game
                         //Safe House (the unknown ones -> supporters of New King)
                         if (house.Value.SafeHouse > 0 && house.Value.GetInfoStatus(HouseInfo.SafeHouse) == false)
                         {
-                            strength = 1; //keep well hidden
-                            rumourText = $"Underground supporters of Old King {Game.lore.OldKing.Name}, \"{Game.lore.OldKing.Handle}\", will offer Safe Refuge at {house.Value.LocName}, {Game.world.GetLocationCoords(house.Value.LocID)} HouseID {house.Value.HouseID} RefID {house.Value.RefID}";
-                            RumourSafeHouse rumour = new RumourSafeHouse(rumourText, strength, RumourScope.Global, rnd.Next(100) * -1, (RumourGlobal)house.Value.Branch);
+                            strength = 2;
+                            rumourText = $"Underground supporters of Old King {Game.lore.OldKing.Name}, \"{Game.lore.OldKing.Handle}\", will offer Safe Refuge at {house.Value.LocName}, {Game.world.GetLocationCoords(house.Value.LocID)}";
+                            RumourSafeHouse rumour = new RumourSafeHouse(rumourText, strength, RumourScope.Global, rnd.Next(100) * -1, (RumourGlobal)house.Value.Branch) { RefID = house.Value.RefID };
                             //add to dictionary and global list
                             if (AddRumour(rumour) == false)
                             { Game.SetError(new Error(268, $"{rumour.Text}, RumourID {rumour.RumourID}, failed to load (MinorHouse SafeHouse) -> Rumour Cancelled")); }
