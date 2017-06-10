@@ -7515,6 +7515,8 @@ namespace Next_Game
         private void InitialiseHouseData()
         {
             Game.logStart?.Write("--- InitialiseHouseData (World.cs)");
+            int timeSpan = Game.constant.GetValue(Global.GAME_REVOLT) - Game.constant.GetValue(Global.GAME_PAST);
+            int timeBase = Game.constant.GetValue(Global.GAME_PAST);
             //Men at Arms drives all pop matters. Assumed to be 4 other people for every able bodied man
             int menAtArms = Game.constant.GetValue(Global.MEN_AT_ARMS);
             int popFactor = Game.constant.GetValue(Global.POPULATION_FACTOR);
@@ -7524,6 +7526,7 @@ namespace Next_Game
             int goodsMed = Game.constant.GetValue(Global.GOODS_MED); //% chance of a medium probability good being present
             int food, balance, absBalance, tally, resources, numLocs, modifier;
             int overallTally = 0;
+            string descriptor;
             //
             // Men At Arms and Population
             //
@@ -7558,10 +7561,24 @@ namespace Next_Game
                     Game.logStart?.Write($"House {house.Value.Name} at {house.Value.LocName} -> MenAtArms {house.Value.MenAtArms}, Population {house.Value.Population}, Food Capacity {house.Value.FoodCapacity}");
                     //Importer or Exporter of food if Abs(food balance) > foodCapacity
                     balance = house.Value.FoodCapacity - house.Value.Population;
+                    descriptor = "";
                     if (Math.Abs(balance) > foodCapacity)
                     {
-                        if (balance > 0) { house.Value.AddExport(Goods.Food); Game.logStart?.Write($"{house.Value.Name} Exports Food"); }
-                        else { house.Value.AddImport(Goods.Food); Game.logStart?.Write($"{house.Value.Name} Imports Food"); }
+                        if (balance > 0)
+                        {
+                            house.Value.AddExport(Goods.Food); Game.logStart?.Write($"{house.Value.Name} Exports Food");
+                            descriptor = "Fertile fields provide a surplus of food which is exported for a profit";
+                        }
+                        else {
+                            house.Value.AddImport(Goods.Food); Game.logStart?.Write($"{house.Value.Name} Imports Food");
+                            descriptor = "A shortage of arable land creates a food shortfall which is made up by imports from elsewhere at a cost to the economy";
+                        }
+                        if (descriptor.Length > 0)
+                        {
+                            //add record to house
+                            Record record = new Record(descriptor, house.Value.LocID, house.Value.RefID, timeBase + rnd.Next(timeSpan), HistHouseEvent.Food);
+                            SetHistoricalRecord(record);
+                        }
                     }
                     if (loc.NumMountain >= goodsMinTerrain)
                     {
@@ -7614,9 +7631,8 @@ namespace Next_Game
                 }
                 //goods -> exports as food is the only import and it's already been catered for
                 Goods good = Goods.None;
-                string descriptor;
-                int timeSpan = Game.constant.GetValue(Global.GAME_REVOLT) - Game.constant.GetValue(Global.GAME_PAST);
-                int timeBase = Game.constant.GetValue(Global.GAME_PAST);
+                
+                
                 if (house.Value.GetNumExports() > 0)
                 {
                     int[,] tempGoods = house.Value.GetExports();
@@ -7632,32 +7648,32 @@ namespace Next_Game
                                 case Goods.Gold:
                                     tally += 3;
                                     arrayTradeData[(int)Goods.Gold] += 1;
-                                    descriptor = $"Rich Veins of Gold mined from within the nearby mountains provide a significant boost to the economy";
+                                    descriptor = "Rich Veins of Gold mined from within the nearby mountains provide a significant boost to the economy";
                                     break;
                                 case Goods.Wine:
                                     tally += 2;
                                     arrayTradeData[(int)Goods.Wine] += 1;
-                                    descriptor = $"Fine Wines made from high yielding Grapes provide a sizeable boost to the economy";
+                                    descriptor = "Fine Wines made from high yielding Grapes provide a sizeable boost to the economy";
                                     break;
                                 case Goods.Furs:
                                     tally += 1;
                                     arrayTradeData[(int)Goods.Furs] += 1;
-                                    descriptor = $"Thick Furs from the hunting and trapping of animals in the nearby forests provide a boost to the economy";
+                                    descriptor = "Thick Furs from the hunting and trapping of animals in the nearby forests provide a boost to the economy";
                                     break;
                                 case Goods.Oil:
                                     tally += 1;
                                     arrayTradeData[(int)Goods.Oil] += 1;
-                                    descriptor = $"Oil distilled from the hunting of Whales provide a boost to the economy";
+                                    descriptor = "Oil distilled from the hunting of Whales provide a boost to the economy";
                                     break;
                                 case Goods.Iron:
                                     tally += 1;
                                     arrayTradeData[(int)Goods.Iron] += 1;
-                                    descriptor = $"Deposits of Iron located in the nearby mountains provide a boost to the economy";
+                                    descriptor = "Deposits of Iron located in the nearby mountains provide a boost to the economy";
                                     break;
                                 case Goods.Timber:
                                     tally += 1;
                                     arrayTradeData[(int)Goods.Timber] += 1;
-                                    descriptor = $"An abundance of Timer in the nearby Forests provide a boost to the economy";
+                                    descriptor = "An abundance of Timer in the nearby Forests provide a boost to the economy";
                                     break;
                             }
                             if (descriptor.Length > 0)
@@ -7681,23 +7697,34 @@ namespace Next_Game
                 //
                 //adjust Castle walls to reflect resource level (properous houses are more likely to have stronger castles) -> Base value from Major/Minorhouse.txt's
                 //
-                int origValue = house.Value.CastleWalls;
-                switch(resources)
+                if (house.Value.Special == HouseSpecial.None)
                 {
-                    case 4:
-                        //DM +1
-                        house.Value.CastleWalls += 1;
-                        break;
-                    case 5:
-                        //DM +2
-                        house.Value.CastleWalls += 2;
-                        break;
+                    int origValue = house.Value.CastleWalls;
+                    descriptor = "";
+                    switch (resources)
+                    {
+                        case 4:
+                            //DM +1
+                            house.Value.CastleWalls += 1;
+
+                            break;
+                        case 5:
+                            //DM +2
+                            house.Value.CastleWalls += 2;
+                            break;
+                    }
+                    //limit check
+                    house.Value.CastleWalls = Math.Min(5, house.Value.CastleWalls);
+                    house.Value.CastleWalls = Math.Max(1, house.Value.CastleWalls);
+                    if (origValue != house.Value.CastleWalls)
+                    {
+                        Game.logStart?.Write($"House {house.Value.Name} -> CastleWalls Now {house.Value.CastleWalls}, Before {origValue}, Resources {house.Value.Resources} ");
+                        //add record to house
+                        descriptor = "A strong economy has allowed the castle walls to be upgraded";
+                        Record record = new Record(descriptor, house.Value.LocID, house.Value.RefID, timeBase + rnd.Next(timeSpan / 2, timeSpan), HistHouseEvent.Goods);
+                        SetHistoricalRecord(record);
+                    }
                 }
-                //limit check
-                house.Value.CastleWalls = Math.Min(5, house.Value.CastleWalls);
-                house.Value.CastleWalls = Math.Max(1, house.Value.CastleWalls);
-                if (origValue != house.Value.CastleWalls)
-                { Game.logStart?.Write($"House {house.Value.Name} -> CastleWalls Now {house.Value.CastleWalls}, Before {origValue}, Resources {house.Value.Resources} "); }
             }
             //end all houses loop
             arrayTradeData[0] = overallTally;
@@ -7736,6 +7763,10 @@ namespace Next_Game
                     resources = Math.Min(5, resources);
                     major.Value.Resources = resources;
                     Game.logStart?.Write($"House {major.Value.Name}, Resources {resources}, Modifier {modifier}, Num BannerLords {major.Value.GetNumBannerLords()}");
+                    //add record to house
+                    descriptor = $"Bannerlords with valuable exports have provided a boost to the House {major.Value.Name} economy";
+                    Record record = new Record(descriptor, major.Value.LocID, major.Value.RefID, timeBase + rnd.Next(timeSpan/2, timeSpan), HistHouseEvent.Goods);
+                    SetHistoricalRecord(record);
                 }
             }
         }

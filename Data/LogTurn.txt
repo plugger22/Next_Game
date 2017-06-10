@@ -1,4 +1,4 @@
-//Exile Game file ops "LogTurn.txt" commenced at: 10/06/2017 17:25:44
+//Exile Game file ops "LogTurn.txt" commenced at: 10/06/2017 17:41:17
 --- ProcessStartGame (World.cs)
 --- AgePassiveCharacters (History.cs)
 --- InitialiseGameVars (World.cs)
@@ -14,4 +14,4 @@
 [AddVisitedLoc] LocID 7, "Yronwood Castle", turn 0 -> new record added to dictLocsVisited
 --- SetEndGame (Game.cs)
 [Alert] Player chose to exit (pressed 'X')
-//Exile Game file ops "LogTurn.txt" Completed at: 10/06/2017 17:26:38
+//Exile Game file ops "LogTurn.txt" Completed at: 10/06/2017 17:44:08
