@@ -1631,7 +1631,7 @@ namespace Next_Game
                         if (house != null)
                         {
                             int eventCount = house.GetNumFollowerEvents();
-                            if (loc.HouseID != 99)
+                            if (house.Special == HouseSpecial.None && loc.HouseID != 99)
                             {
                                 int resources = house.Resources;
                                 //normal houses - major / minor / capital 
@@ -1678,10 +1678,10 @@ namespace Next_Game
                                         RLColor.LightGray, RLColor.Black));
                                 }
                             }
-                            else
+                            else if (house.Special == HouseSpecial.Inn)
                             {
                                 //special Inn
-                                locList.Add(new Snippet(string.Format("{0} Inn, LocID {1}, RefID {2}, Branch {3}", house.Name, loc.LocationID, loc.RefID, loc.GetBranch(), highlightColor, RLColor.Black)));
+                                locList.Add(new Snippet(string.Format("{0} Inn, LocID {1}, RefID {2}, Branch {3}", house.Name, loc.LocationID, loc.RefID, loc.GetBranch()), highlightColor, RLColor.Black));
                                 locList.Add(new Snippet(string.Format("Motto \"{0}\"", house.Motto)));
                                 locList.Add(new Snippet(string.Format("Signage \"{0}\"", house.Banner)));
                                 locList.Add(new Snippet(string.Format("Found at {0}", GetLocationCoords(locID))));
@@ -1738,7 +1738,7 @@ namespace Next_Game
                                     displayColor = unknownColor;
                                     if (tempImports[i, 1] > 0) { displayColor = knownColor; }
                                     newLine = true;
-                                    if (i + 1 < numGoods) { newLine = false; }
+                                    if (i < numGoods) { newLine = false; }
                                     locList.Add(new Snippet($"{(Goods)i} ", displayColor, RLColor.Black, newLine));
                                 }
                             }
@@ -1758,21 +1758,10 @@ namespace Next_Game
                                     displayColor = unknownColor;
                                     if (tempExports[i, 1] > 0) { displayColor = knownColor; }
                                     newLine = true;
-                                    if (i + 1 < numGoods) { newLine = false; }
+                                    if (i < numGoods) { newLine = false; }
                                     locList.Add(new Snippet($"{(Goods)i} ", displayColor, RLColor.Black, newLine));
                                 }
                             }
-
-                            /*//exports
-                            tradeText = "";
-                            int[,] tempExports = house.GetExports();
-                            for (int i = 0; i <= tempExports.GetUpperBound(0); i++)
-                            {
-                                //at least one present and is known
-                                if (tempExports[i, 0] > 0 && tempExports[i, 1] > 0)
-                                { tradeText += $"{(Goods)i} "; }
-                            }
-                            locList.Add(new Snippet($"Exports -> {tradeText}"));*/
                         }
                     }
                     if (loc.Connector == true)
@@ -4356,6 +4345,7 @@ namespace Next_Game
                     case RumourType.Enemy:
                     case RumourType.Relationship:
                     case RumourType.Event:
+                    case RumourType.Goods:
                         break;
                     default:
                         Game.SetError(new Error(275, $"Invalid Rumour.Type \"{rumour.Type}\""));

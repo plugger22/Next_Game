@@ -4535,6 +4535,17 @@ namespace Next_Game
                         else { Game.SetError(new Error(272, $"Invalid house (null) for rumour.RefID {rumour.RefID} -> SafeHouse not made Known")); }
                     }
                     break;
+                case RumourType.Goods:
+                    if (rumour is RumourGoods)
+                    {
+                        //Sets good to known
+                        RumourGoods rumourGoods = rumour as RumourGoods;
+                        House house = Game.world.GetHouse(rumour.RefID);
+                        if (house != null)
+                        { house.SetExportStatus(rumourGoods.Good); }
+                        else { Game.SetError(new Error(272, $"Invalid house (null) for rumour.RefID {rumour.RefID} -> Good \"{rumourGoods.Good}\" not made Known")); }
+                    }
+                    break;
                 case RumourType.Relationship:
                     if (rumour is RumourRelationship)
                     {
@@ -5263,7 +5274,7 @@ namespace Next_Game
                                         break;
                                     case ActorStatus.Gone:
                                         //
-                                        //rumour of past character
+                                        //rumour of past (dead)  character
                                         //
                                         break;
                                 }
@@ -5290,6 +5301,49 @@ namespace Next_Game
                 //Major Houses
                 foreach (var house in dictAllHouses)
                 {
+                    //
+                    //Goods -> Import / Export, one rumour per good
+                    //
+                    if (house.Value.GetNumImports() > 0)
+                    {
+                        int[,] arrayOfImports = house.Value.GetImports();
+                        if (arrayOfImports != null)
+                        {
+                            for (int i = 0; i <= arrayOfImports.GetUpperBound(0); i++)
+                            {
+                                if (arrayOfImports[i, 0] > 0 && arrayOfImports[i, 1] == 0)
+                                {
+                                    strength = 3;
+                                    startText = $"It is well known among Traders";
+                                    rumourText = $"{startText} that House {house.Value.Name}, at {house.Value.LocName}, regularly needs to Import {(Goods)i} to meet demand";
+                                    RumourGoods rumour = new RumourGoods(rumourText, strength, (Goods)i, RumourScope.Local, rnd.Next(100) * -1) { RefID = house.Value.RefID };
+                                    //add to dictionary and global list
+                                    if (AddRumour(rumour, house.Value) == false)
+                                    { Game.SetError(new Error(268, $"{rumour.Text}, RumourID {rumour.RumourID}, failed to load (Goods) -> Rumour Cancelled")); }
+                                }
+                            }
+                        }
+                    }
+                    if (house.Value.GetNumExports() > 0)
+                    {
+                        int[,] arrayOfExports = house.Value.GetExports();
+                        if (arrayOfExports != null)
+                        {
+                            for (int i = 0; i <= arrayOfExports.GetUpperBound(0); i++)
+                            {
+                                if (arrayOfExports[i, 0] > 0 && arrayOfExports[i, 1] == 0)
+                                {
+                                    strength = 3;
+                                    startText = $"It is well known among Traders";
+                                    rumourText = $"{startText} that House {house.Value.Name}, at {house.Value.LocName}, conducts a brisk Export trade in {(Goods)i}";
+                                    RumourGoods rumour = new RumourGoods(rumourText, strength, (Goods)i, RumourScope.Local, rnd.Next(100) * -1) { RefID = house.Value.RefID };
+                                    //add to dictionary and global list
+                                    if (AddRumour(rumour, house.Value) == false)
+                                    { Game.SetError(new Error(268, $"{rumour.Text}, RumourID {rumour.RumourID}, failed to load (Goods) -> Rumour Cancelled")); }
+                                }
+                            }
+                        }
+                    }
                     if (house.Value is MajorHouse)
                     {
                         //
