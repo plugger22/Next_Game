@@ -241,7 +241,7 @@ namespace Next_Game
             Game.logStart?.Write("--- Battles -> CreateOldKingBackStory (Lore.cs)");
             //fixed # of battles -> first, last and one inbetween
             int numBattles = 3;
-            HistKingdomIncident kingdomEvent;
+            HistKingdomEvent kingdomEvent;
             string descriptor = null;
             int index;
             int year = Game.gameRevolt - 1; //all conflict assumed to be one year prior to start of the new King's rule
@@ -325,9 +325,9 @@ namespace Next_Game
                 { Game.SetError(new Error(32, "Invalid index for orderedLocs.RemoveAt, location not removed")); }
                 //40% chance of a siege, otherwise a battle
                 if (rnd.Next(100) < 40)
-                { kingdomEvent = HistKingdomIncident.Siege; descriptor = string.Format("The Siege of {0}", loc.LocName); }
+                { kingdomEvent = HistKingdomEvent.Siege; descriptor = string.Format("The Siege of {0}", loc.LocName); }
                 else
-                { kingdomEvent = HistKingdomIncident.Battle; descriptor = string.Format("The Battle of {0}", loc.LocName); }
+                { kingdomEvent = HistKingdomEvent.Battle; descriptor = string.Format("The Battle of {0}", loc.LocName); }
                 //create record
                 string details = string.Format("{0} {1}", descriptor, Game.world.GetLocationCoords(loc.LocationID));
                 Record record = new Record(details, loc.LocationID, loc.RefID, year, kingdomEvent);
@@ -346,12 +346,12 @@ namespace Next_Game
                     int royalForces = royalArmy / rnd.Next(3, 5);
                     text_1 = string.Format("Under the {0} leadership of the Rebel {1} {2} his {3:N0} men at arms", array_LeadershipNew[newKing_Leadership], NewKing.Type, NewKing.Name, rebelForces);
                     //first
-                    if (kingdomEvent == HistKingdomIncident.Battle)
+                    if (kingdomEvent == HistKingdomEvent.Battle)
                     { text_1 += string.Format(" {0} a Royalist force of {1:N0} at {2}. ", array_Battle[rnd.Next(0, array_Battle.Length)], royalForces, descriptor); }
                     else
                     { text_1 += string.Format(" {0} a Royalist stronghold at {1}. ", array_Siege[rnd.Next(0, array_Siege.Length)], descriptor); }
                     //outcome text
-                    if (kingdomEvent == HistKingdomIncident.Battle)
+                    if (kingdomEvent == HistKingdomEvent.Battle)
                     {
                         //battle
                         if (oldKing_Leadership > 3)
@@ -431,7 +431,7 @@ namespace Next_Game
                                 listOfTempKnights.RemoveAt(listIndex);
                                 eventText = string.Format("{0}, Aid {1}, was captured by the {2} during {3}", knight.Name, knight.ActID, Enemies, descriptor);
                                 Game.logStart?.Write(string.Format("Knight {0}, Aid {1}, was captured by the {2} during {3}", knight.Name, knight.ActID, Enemies, descriptor));
-                                record_knight = new Record(eventText, knight.ActID, loc.LocationID, knight.RefID, year, HistActorIncident.Captured);
+                                record_knight = new Record(eventText, knight.ActID, loc.LocationID, knight.RefID, year, HistActorEvent.Captured);
                                 break;
                             case 3:
                             case 4:
@@ -439,7 +439,7 @@ namespace Next_Game
                                 listOfTempKnights.RemoveAt(listIndex);
                                 eventText = string.Format("{0}, Aid {1}, was killed during {2} while fighting for the {3}, age {4}", knight.Name, knight.ActID, descriptor, Friends, knight.Age);
                                 Game.logStart?.Write(string.Format("Knight {0}, Aid {1}, was killed by the {2} during {3}", knight.Name, knight.ActID, Enemies, descriptor));
-                                record_knight = new Record(eventText, knight.ActID, loc.LocationID, knight.RefID, year, HistActorIncident.Died);
+                                record_knight = new Record(eventText, knight.ActID, loc.LocationID, knight.RefID, year, HistActorEvent.Died);
                                 Game.history.RemoveActor(knight, year, ActorGone.Battle);
                                 break;
                             case 5:
@@ -448,7 +448,7 @@ namespace Next_Game
                                 //knight wounded
                                 eventText = string.Format("{0}, Aid {1}, was wounded during {2} while fighting for the {3}", knight.Name, knight.ActID, descriptor, Friends);
                                 Game.logStart?.Write(string.Format("Knight {0}, Aid {1}, was wounded by the {2} during {3}", knight.Name, knight.ActID, Enemies, descriptor));
-                                record_knight = new Record(eventText, knight.ActID, loc.LocationID, knight.RefID, year, HistActorIncident.Wounded);
+                                record_knight = new Record(eventText, knight.ActID, loc.LocationID, knight.RefID, year, HistActorEvent.Wounded);
                                 //60% chance of wound causing an ongoing issue -> Secret (random strength 1 to 4)
                                 if (rnd.Next(100) < 60)
                                 {
@@ -497,13 +497,13 @@ namespace Next_Game
                                         trueEvent = false;
                                     }
                                 }
-                                record_knight = new Record(eventText, knight.ActID, loc.LocationID, knight.RefID, year, HistActorIncident.Heroic_Deed, trueEvent);
+                                record_knight = new Record(eventText, knight.ActID, loc.LocationID, knight.RefID, year, HistActorEvent.Heroic_Deed, trueEvent);
                                 break;
                             default:
                                 Game.SetError(new Error(31, "Invalid case"));
                                 break;
                         }
-                        if (record_knight != null) { record_knight.AddActorIncident(HistActorIncident.Conflict); Game.world.SetHistoricalRecord(record_knight); }
+                        if (record_knight != null) { record_knight.AddActorIncident(HistActorEvent.Conflict); Game.world.SetHistoricalRecord(record_knight); }
                     }
 
                     //Royalist Lords
@@ -529,14 +529,14 @@ namespace Next_Game
                                 listOfTempRoyals.RemoveAt(listIndex);
                                 eventText = string.Format("{0}, Aid {1}, was captured by the {2} during {3}", royal.Name, royal.ActID, Enemies, descriptor);
                                 Game.logStart?.Write(string.Format("{0} {1}, Aid {2}, was captured by the {3} during {4}", royal.Type, royal.Name, royal.ActID, Enemies, descriptor));
-                                record_royal = new Record(eventText, royal.ActID, loc.LocationID, royal.RefID, year, HistActorIncident.Captured);
+                                record_royal = new Record(eventText, royal.ActID, loc.LocationID, royal.RefID, year, HistActorEvent.Captured);
                                 break;
                             case 2:
                                 //killed
                                 listOfTempRoyals.RemoveAt(listIndex);
                                 eventText = string.Format("{0}, Aid {1}, was killed during {2} while fighting for the {3}, age {4}", royal.Name, royal.ActID, descriptor, Friends, royal.Age);
                                 Game.logStart?.Write(string.Format("{0} {1}, Aid {2}, was killed by the {3} during {4}", royal.Type, royal.Name, royal.ActID, Enemies, descriptor));
-                                record_royal = new Record(eventText, royal.ActID, loc.LocationID, royal.RefID, year, HistActorIncident.Died);
+                                record_royal = new Record(eventText, royal.ActID, loc.LocationID, royal.RefID, year, HistActorEvent.Died);
                                 //replace Bannerlord
                                 if (royal is BannerLord) { ReplaceBannerLord((BannerLord)royal); }
                                 else if (royal is Noble) { ReplaceNobleLord((Noble)royal); }
@@ -548,7 +548,7 @@ namespace Next_Game
                                 //wounded
                                 eventText = string.Format("{0}, Aid {1}, was wounded during {2} while fighting for the {3}", royal.Name, royal.ActID, descriptor, Friends);
                                 Game.logStart?.Write(string.Format("{0} {1}, Aid {2}, was wounded by the {3} during {4}", royal.Type, royal.Name, royal.ActID, Enemies, descriptor));
-                                record_royal = new Record(eventText, royal.ActID, loc.LocationID, royal.RefID, year, HistActorIncident.Wounded);
+                                record_royal = new Record(eventText, royal.ActID, loc.LocationID, royal.RefID, year, HistActorEvent.Wounded);
                                 //60% chance of wound causing an ongoing issue -> Secret (random strength 1 to 4)
                                 if (rnd.Next(100) < 60)
                                 {
@@ -600,7 +600,7 @@ namespace Next_Game
                                         Game.logStart?.Write("Moved to Rebel List");
                                     }
                                 }
-                                record_royal = new Record(eventText, royal.ActID, loc.LocationID, royal.RefID, year, HistActorIncident.Leadership, truth);
+                                record_royal = new Record(eventText, royal.ActID, loc.LocationID, royal.RefID, year, HistActorEvent.Leadership, truth);
                                 break;
                             case 8:
                             case 9:
@@ -619,13 +619,13 @@ namespace Next_Game
                                     royal.AddSecret(secret.PossID);
                                     truth = false;
                                 }
-                                record_royal = new Record(eventText, royal.ActID, loc.LocationID, royal.RefID, year, HistActorIncident.Leadership);
+                                record_royal = new Record(eventText, royal.ActID, loc.LocationID, royal.RefID, year, HistActorEvent.Leadership);
                                 break;
                             default:
                                 Game.SetError(new Error(31, "Invalid case"));
                                 break;
                         }
-                        if (record_royal != null) { record_royal.AddActorIncident(HistActorIncident.Conflict); Game.world.SetHistoricalRecord(record_royal); }
+                        if (record_royal != null) { record_royal.AddActorIncident(HistActorEvent.Conflict); Game.world.SetHistoricalRecord(record_royal); }
                     }
 
                     //Rebel Lords
@@ -651,14 +651,14 @@ namespace Next_Game
                                 listOfTempRebels.RemoveAt(listIndex);
                                 eventText = string.Format("{0}, Aid {1}, was captured by the {2} during {3}", rebel.Name, rebel.ActID, Enemies, descriptor);
                                 Game.logStart?.Write(string.Format("{0} {1}, Aid {2}, was captured by the {3} during {4}", rebel.Type, rebel.Name, rebel.ActID, Enemies, descriptor));
-                                record_rebel = new Record(eventText, rebel.ActID, loc.LocationID, rebel.RefID, year, HistActorIncident.Captured);
+                                record_rebel = new Record(eventText, rebel.ActID, loc.LocationID, rebel.RefID, year, HistActorEvent.Captured);
                                 break;
                             case 2:
                                 //killed
                                 listOfTempRebels.RemoveAt(listIndex);
                                 eventText = string.Format("{0}, Aid {1}, was killed during {2} while fighting for the {3}, age {4}", rebel.Name, rebel.ActID, descriptor, Friends, rebel.Age);
                                 Game.logStart?.Write(string.Format("{0} {1}, Aid {2}, was killed by the {3} during {4}", rebel.Type, rebel.Name, rebel.ActID, Enemies, descriptor));
-                                record_rebel = new Record(eventText, rebel.ActID, loc.LocationID, rebel.RefID, year, HistActorIncident.Died);
+                                record_rebel = new Record(eventText, rebel.ActID, loc.LocationID, rebel.RefID, year, HistActorEvent.Died);
                                 //replace Bannerlord
                                 if (rebel is BannerLord ) { ReplaceBannerLord((BannerLord)rebel); }
                                 else if (rebel is Noble) { ReplaceNobleLord((Noble)rebel); }
@@ -670,7 +670,7 @@ namespace Next_Game
                                 //wounded
                                 eventText = string.Format("{0}, Aid {1}, was wounded during {2} while fighting for the {3}", rebel.Name, rebel.ActID, descriptor, Friends);
                                 Game.logStart?.Write(string.Format("{0} {1}, Aid {2}, was wounded by the {3} during {4}", rebel.Type, rebel.Name, rebel.ActID, Enemies, descriptor));
-                                record_rebel = new Record(eventText, rebel.ActID, loc.LocationID, rebel.RefID, year, HistActorIncident.Wounded);
+                                record_rebel = new Record(eventText, rebel.ActID, loc.LocationID, rebel.RefID, year, HistActorEvent.Wounded);
                                 //60% chance of wound causing an ongoing issue -> Secret (random strength 1 to 4)
                                 if (rnd.Next(100) < 60)
                                 {
@@ -722,7 +722,7 @@ namespace Next_Game
                                         Game.logStart?.Write("Moved to Rebel List");
                                     }
                                 }
-                                record_rebel = new Record(eventText, rebel.ActID, loc.LocationID, rebel.RefID, year, HistActorIncident.Leadership, truth);
+                                record_rebel = new Record(eventText, rebel.ActID, loc.LocationID, rebel.RefID, year, HistActorEvent.Leadership, truth);
                                 break;
                             case 7:
                             case 8:
@@ -742,13 +742,13 @@ namespace Next_Game
                                     rebel.AddSecret(secret.PossID);
                                     truth = false;
                                 }
-                                record_rebel = new Record(eventText, rebel.ActID, loc.LocationID, rebel.RefID, year, HistActorIncident.Leadership, truth);
+                                record_rebel = new Record(eventText, rebel.ActID, loc.LocationID, rebel.RefID, year, HistActorEvent.Leadership, truth);
                                 break;
                             default:
                                 Game.SetError(new Error(31, "Invalid case"));
                                 break;
                         }
-                        if (record_rebel != null) { record_rebel.AddActorIncident(HistActorIncident.Conflict); Game.world.SetHistoricalRecord(record_rebel); }
+                        if (record_rebel != null) { record_rebel.AddActorIncident(HistActorEvent.Conflict); Game.world.SetHistoricalRecord(record_rebel); }
                     }
                 }
             }
@@ -759,7 +759,7 @@ namespace Next_Game
                 int rndNum = rnd.Next(10);
                 Passive actor = Game.world.GetPassiveActor(actorID);
                 eventText = string.Format("{0}, Aid {1}, ", actor.Name, actor.ActID);
-                HistActorIncident actorEvent = HistActorIncident.None;
+                HistActorEvent actorEvent = HistActorEvent.None;
                 Friends = "Royalist";
                 Enemies = "Rebel";
                 bool truth = true;
@@ -788,7 +788,7 @@ namespace Next_Game
                     case 7:
                         //eventText += string.Format("allowed to slowly rot to his death in the {0} dungeons", Enemies);
                         eventText += string.Format("died of his wounds while held in the {0} dungeons", Enemies);
-                        actorEvent = HistActorIncident.Died;
+                        actorEvent = HistActorEvent.Died;
                         //replace Bannerlord
                         if (actor is BannerLord) { ReplaceBannerLord((BannerLord)actor); }
                         else if (actor is Noble) { ReplaceNobleLord((Noble)actor); }
@@ -807,7 +807,7 @@ namespace Next_Game
                     case 9:
                         //executed
                         eventText += string.Format("was summarily executed by the {0}s after a period of captivity", Enemies);
-                        actorEvent = HistActorIncident.Died;
+                        actorEvent = HistActorEvent.Died;
                         //replace Bannerlord
                         if (actor is BannerLord) { ReplaceBannerLord((BannerLord)actor); }
                         else if (actor is Noble) { ReplaceNobleLord((Noble)actor); }
@@ -818,9 +818,9 @@ namespace Next_Game
                         break;
                 }
                 //store record
-                Record record_actor = new Record(eventText, actor.ActID, 0, actor.RefID, Game.gameRevolt, HistActorIncident.Captured, truth);
-                if (actorEvent == HistActorIncident.Died)
-                { record_actor.AddActorIncident(HistActorIncident.Died); }
+                Record record_actor = new Record(eventText, actor.ActID, 0, actor.RefID, Game.gameRevolt, HistActorEvent.Captured, truth);
+                if (actorEvent == HistActorEvent.Died)
+                { record_actor.AddActorIncident(HistActorEvent.Died); }
                 Game.world.SetHistoricalRecord(record_actor);
             }
         }
@@ -885,7 +885,7 @@ namespace Next_Game
                     advisorDied = true;
                     advisor.Loyalty_Current = KingLoyalty.Old_King;
                     eventText = string.Format("{0} {1}, Aid {2}, refused to swear allegiance to King {3} and was dismissed", advisor.advisorRoyal, advisor.Name, advisor.ActID, liege.Name);
-                    record = new Record(eventText, advisor.ActID, 1, 9999, Game.gameRevolt, HistActorIncident.Service);
+                    record = new Record(eventText, advisor.ActID, 1, 9999, Game.gameRevolt, HistActorEvent.Service);
                     Game.history.RemoveActor(advisor, Game.gameRevolt, ActorGone.Missing);
                     //chance of advisor being killed as a result -> secret (depends on New Kings treachery)
                     int liegeTreachery = liege.GetSkill(SkillType.Treachery);
@@ -902,7 +902,7 @@ namespace Next_Game
                     //advisor retained
                     advisor.Loyalty_Current = KingLoyalty.New_King;
                     eventText = string.Format("{0} {1}, Aid {2}, swears allegiance to King {3}", advisor.advisorRoyal, advisor.Name, advisor.ActID, liege.Name);
-                    record = new Record(eventText, advisor.ActID, 1, 9999, Game.gameRevolt, HistActorIncident.Service);
+                    record = new Record(eventText, advisor.ActID, 1, 9999, Game.gameRevolt, HistActorEvent.Service);
                     //chance of advisor being a secret sympathiser to the Old King, a fifth Column -> secret (depends on Advisors treachery)
                     int advisorTreachery = liege.GetSkill(SkillType.Treachery);
                     string fate = evilFate[rnd.Next(0, evilFate.Length)];
@@ -1146,8 +1146,8 @@ namespace Next_Game
                         Game.history.RemoveActor(advisor, Game.gameRevolt, ActorGone.Executed);
                         //record - fate of old king advisor
                         descriptor = string.Format("{0} {1}, Aid {2} was {3} on orders of the new Lord {4}", advisor.advisorNoble, advisor.Name, advisor.ActID, fate, newLord.Name);
-                        Record record_6 = new Record(descriptor, advisor.ActID, advisor.LocID, advisor.RefID, Game.gameRevolt, HistActorIncident.Service);
-                        record_6.AddActorIncident(HistActorIncident.Died);
+                        Record record_6 = new Record(descriptor, advisor.ActID, advisor.LocID, advisor.RefID, Game.gameRevolt, HistActorEvent.Service);
+                        record_6.AddActorIncident(HistActorEvent.Died);
                         Game.world.SetHistoricalRecord(record_6);
                     }
                     else
@@ -1155,7 +1155,7 @@ namespace Next_Game
                         Game.history.RemoveActor(advisor, Game.gameRevolt, ActorGone.Missing);
                         //record - fate of old king advisor
                         descriptor = string.Format("{0} {1}, Aid {2} was {3} on orders of the new Lord {4}", advisor.advisorNoble, advisor.Name, advisor.ActID, fate, newLord.Name);
-                        Record record_6 = new Record(descriptor, advisor.ActID, advisor.LocID, advisor.RefID, Game.gameRevolt, HistActorIncident.Service);
+                        Record record_6 = new Record(descriptor, advisor.ActID, advisor.LocID, advisor.RefID, Game.gameRevolt, HistActorEvent.Service);
                         Game.world.SetHistoricalRecord(record_6);
                     }
                 }
@@ -1198,27 +1198,27 @@ namespace Next_Game
 
                 //record - new bannerlord
                 descriptor = string.Format("{0}, Aid {1}, assumes Lordship, BannerLord of House {2}, age {3}", newBannerLord.Name, newBannerLord.ActID, newMinorHouse.Name, newBannerLord.Age);
-                Record record_0 = new Record(descriptor, newBannerLord.ActID, newBannerLord.LocID, newBannerLord.RefID, newBannerLord.Lordship, HistActorIncident.Lordship);
+                Record record_0 = new Record(descriptor, newBannerLord.ActID, newBannerLord.LocID, newBannerLord.RefID, newBannerLord.Lordship, HistActorEvent.Lordship);
                 Game.world.SetHistoricalRecord(record_0);
                 //record - old bannerlord does the dirty (public knowledge, hence no secret)
                 descriptor = string.Format("{0}, Aid {1}, dramatically changed sides during {2} and captured Old King {3} ", oldBannerLord.Name, oldBannerLord.ActID, listOfUprisingBattles[listOfUprisingBattles.Count - 1], OldKing.Name);
-                Record record_5 = new Record(descriptor, oldBannerLord.ActID, oldBannerLord.LocID, oldBannerLord.RefID, Game.gameRevolt, HistActorIncident.Lordship);
+                Record record_5 = new Record(descriptor, oldBannerLord.ActID, oldBannerLord.LocID, oldBannerLord.RefID, Game.gameRevolt, HistActorEvent.Lordship);
                 Game.world.SetHistoricalRecord(record_5);
                 //record - old bannerlord promoted
                 descriptor = string.Format("{0}, Aid {1}, has been elevated to a Noble Lord by decree of King {2}", oldBannerLord.Name, oldBannerLord.ActID, NewKing.Name);
-                Record record_1 = new Record(descriptor, oldBannerLord.ActID, oldBannerLord.LocID, oldBannerLord.RefID, Game.gameRevolt, HistActorIncident.Lordship);
+                Record record_1 = new Record(descriptor, oldBannerLord.ActID, oldBannerLord.LocID, oldBannerLord.RefID, Game.gameRevolt, HistActorEvent.Lordship);
                 Game.world.SetHistoricalRecord(record_1);
                 //House record - new House created
                 descriptor = string.Format("King {0} has gifted all property and lands belonging to House {1} to House {2}", NewKing.Name, oldkingHouse.Name, newMajorhouse.Name);
-                Record record_4 = new Record(descriptor, newMajorhouse.LocID, newMajorhouse.RefID, Game.gameRevolt, HistHouseIncident.Ownership);
+                Record record_4 = new Record(descriptor, newMajorhouse.LocID, newMajorhouse.RefID, Game.gameRevolt, HistHouseEvent.Ownership);
                 Game.world.SetHistoricalRecord(record_4);
                 //record - new GreatLord
                 descriptor = string.Format("{0}, Aid {1}, assumes Lordship of House {2}, age {3}", oldBannerLord.Name, oldBannerLord.ActID, newMajorhouse.Name, oldBannerLord.Age);
-                Record record_2 = new Record(descriptor, oldBannerLord.ActID, oldBannerLord.LocID, oldBannerLord.RefID, Game.gameRevolt, HistActorIncident.Lordship);
+                Record record_2 = new Record(descriptor, oldBannerLord.ActID, oldBannerLord.LocID, oldBannerLord.RefID, Game.gameRevolt, HistActorEvent.Lordship);
                 Game.world.SetHistoricalRecord(record_2);
                 //House record - old King's house stolen
                 descriptor = string.Format("The false King {0} has stolen all property and lands belonging to House {1}", NewKing.Name, oldkingHouse.Name);
-                Record record_3 = new Record(descriptor, OldKing.LocID, OldKing.RefID, Game.gameRevolt, HistHouseIncident.Ownership);
+                Record record_3 = new Record(descriptor, OldKing.LocID, OldKing.RefID, Game.gameRevolt, HistHouseEvent.Ownership);
                 Game.world.SetHistoricalRecord(record_3);
 
                 //resentment of other new king loyal noble lords at promotion of bannerlord
@@ -1254,7 +1254,7 @@ namespace Next_Game
 
                 //record of lordship & taking over
                 string descriptor = string.Format("{0}, Aid {1}, brother of {2}, assumes Lordship of House {3}, age {4}", newLord.Name, newLord.ActID, deadLord.Name, house.Name, newLord.Age);
-                Record record_0 = new Record(descriptor, newLord.ActID, newLord.LocID, newLord.RefID, newLord.Lordship, HistActorIncident.Lordship);
+                Record record_0 = new Record(descriptor, newLord.ActID, newLord.LocID, newLord.RefID, newLord.Lordship, HistActorEvent.Lordship);
                 Game.world.SetHistoricalRecord(record_0);
                 Game.logStart?.Write(string.Format("New Bannerlord for House {0} -> {1}, Aid {2}", house.Name, newLord.Name, newLord.ActID));
             }
@@ -1310,7 +1310,7 @@ namespace Next_Game
                     {
                         //record
                         descriptor = string.Format("{0}, Aid {1}, son of {2}, assumes Lordship of House {3}, age {4}", heir.Name, heir.ActID, deadLord.Name, house.Name, heir.Age);
-                        Record record_0 = new Record(descriptor, heir.ActID, heir.LocID, heir.RefID, heir.Lordship, HistActorIncident.Lordship);
+                        Record record_0 = new Record(descriptor, heir.ActID, heir.LocID, heir.RefID, heir.Lordship, HistActorEvent.Lordship);
                         Game.world.SetHistoricalRecord(record_0);
                     }
                     //underage heir, his mother (Lord's wife) becomes Regent, if of age and if alive and kicking
@@ -1318,14 +1318,14 @@ namespace Next_Game
                     {
                         //record
                         descriptor = string.Format("{0}, Aid {1}, assumes Lordship (with a Regent) of House {2}, age {3}", heir.Name, heir.ActID, house.Name, heir.Age);
-                        Record record_1 = new Record(descriptor, heir.ActID, heir.LocID, heir.RefID, heir.Lordship, HistActorIncident.Lordship);
+                        Record record_1 = new Record(descriptor, heir.ActID, heir.LocID, heir.RefID, heir.Lordship, HistActorEvent.Lordship);
                         Game.world.SetHistoricalRecord(record_1);
                         //wife as regent
                         wife.Realm = ActorRealm.Regent;
                         wife.RegencyPeriod = 15 - heir.Age;
                         //record
                         descriptor = string.Format("{0}, Aid {1}, wife of {2}, assumes Regency of House {3}, age {4}", wife.Name, wife.ActID, deadLord.Name, house.Name, wife.Age);
-                        Record record_2 = new Record(descriptor, heir.ActID, heir.LocID, heir.RefID, heir.Lordship, HistActorIncident.Lordship);
+                        Record record_2 = new Record(descriptor, heir.ActID, heir.LocID, heir.RefID, heir.Lordship, HistActorEvent.Lordship);
                         record_2.AddActor(wife.ActID);
                         Game.world.SetHistoricalRecord(record_2);
                     }
@@ -1353,7 +1353,7 @@ namespace Next_Game
                             //record
                             descriptor = string.Format("{0}, Aid {1}, brother of {2} {3}, assumes Regency of House {4}, age {5}", brother.Name, brother.ActID, 
                                 deadLord.Title, deadLord.Name, house.Name, brother.Age);
-                            Record record_3 = new Record(descriptor, heir.ActID, heir.LocID, heir.RefID, heir.Lordship, HistActorIncident.Lordship);
+                            Record record_3 = new Record(descriptor, heir.ActID, heir.LocID, heir.RefID, heir.Lordship, HistActorEvent.Lordship);
                             record_3.AddActor(brother.ActID);
                             Game.world.SetHistoricalRecord(record_3);
                         }

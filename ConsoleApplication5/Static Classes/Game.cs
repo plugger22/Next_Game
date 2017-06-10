@@ -23,9 +23,9 @@ namespace Next_Game
     {
         // The screen height and width are in number of tiles
 
-        private static int seed = (int)DateTime.Now.Ticks & 0x0000FFFF;
+        //private static int seed = (int)DateTime.Now.Ticks & 0x0000FFFF;
         //DEBUG: insert seed here to test a particular map
-        //private static int seed = 50807;
+        private static int seed = 2520;
 
         static Random rnd;
         
@@ -467,12 +467,12 @@ namespace Next_Game
                                             if (_inputState == 1)
                                             {
                                                 //valid location?
-                                                int houseID = map.GetMapInfo(MapLayer.HouseID, mouse.X, mouse.Y, true);
-                                                int locID = map.GetMapInfo(MapLayer.LocID, mouse.X, mouse.Y, true);
-                                                if (houseID > 0)
-                                                { infoChannel.SetInfoList(world.ShowHouseRL(houseID), ConsoleDisplay.Multi); }
-                                                else if (locID == 1)
-                                                { infoChannel.SetInfoList(world.ShowCapitalRL(), ConsoleDisplay.Multi); }
+                                                //int houseID = map.GetMapInfo(MapLayer.HouseID, mouse.X, mouse.Y, true);
+                                                int refID = map.GetMapInfo(MapLayer.RefID, mouse.X, mouse.Y, true);
+                                                //int locID = map.GetMapInfo(MapLayer.LocID, mouse.X, mouse.Y, true);
+                                                if (refID == 9999 { infoChannel.SetInfoList(world.ShowCapitalRL(), ConsoleDisplay.Multi); }
+                                                else if (refID < 100) { infoChannel.SetInfoList(world.ShowMajorHouseRL(refID), ConsoleDisplay.Multi); }
+                                                else if (refID > 100 && refID < 1000) { infoChannel.SetInfoList(world.ShowMinorHouseRL(refID), ConsoleDisplay.Multi); }
                                             }
                                             _mouseOn = false;
                                             break;
@@ -754,7 +754,7 @@ namespace Next_Game
                                         infoChannel.InsertHeader(new Snippet("--- all KINGDOM EVENTS", RLColor.Yellow, RLColor.Black), ConsoleDisplay.Multi);
                                         break;
                                     case MenuMode.Debug:
-                                        infoChannel.SetInfoList(world.ShowHouseRL(0, lore.OldKing.RefID), ConsoleDisplay.Multi);
+                                        infoChannel.SetInfoList(world.ShowMajorHouseRL(0, lore.OldKing.RefID), ConsoleDisplay.Multi);
                                         break;
                                     case MenuMode.God:
                                         infoChannel.SetInfoList(world.GodChangeKnownStatus(), ConsoleDisplay.Input);

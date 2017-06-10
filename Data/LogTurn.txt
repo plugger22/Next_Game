@@ -1,112 +1,17 @@
-//Exile Game File "LogTurn.txt" opened at: 10/06/2017 12:17:55
---- ProcessStartTurn (World.cs)
-Day 4, Turn 3, Harvest in 175 days, Winter in 190 days
-Usurper Rickard Florent, "The Respectable", Travelling, Lordsport
---- UpdateRumours (World.cs)
-dictRumoursTimed (Start) -> 101 records
-[Rumour -> Removal] RID 440, "Inquisitor, Brother Shiva, ActID 132 has been spotted gambling at Kingskeep (loc 18:15)" removed from Global All list
-[Rumour -> Removal] RID 441, "Inquisitor, Brother Set, ActID 133 has been spotted doing sword drills at Kingskeep (loc 18:15)" removed from Global All list
-[Rumour -> Removal] RID 442, "Nemesis, The Unrelenting, ActID 136 has been spotted meditating at Kingskeep (loc 18:15)" removed from Global All list
-98 rumours -> TimerExpire decremented
-3 records have expired and been removed
-dictRumoursTimed (End) -> 98 records
---- MoveActors -> 2 Records (World.cs)
- [Move -> MoveObject] Inquisitor Brother Behemoth, ActID 134 travelling to The Raucous Rat (current Loc 18:17)
---- CheckIfFoundEnemy (World.cs)
- [Search -> Debug] Active Rickard Florent, ID 1 at 3:14, Enemy at 18:17 (Brother Behemoth, ID 134
---- CheckIfFoundEnemy (World.cs)
- [Search -> Debug] Active Rickard Florent, ID 1 at 3:14, Enemy at 18:18 (Brother Behemoth, ID 134
- [Move -> MoveObject] Usurper Rickard Florent, ActID 1 travelling to Lordsport (current Loc 3:14)
---- CheckIfFoundActive (World.cs)
- [Search -> Debug] Enemy, Brother Shiva, ID 132 at 18:15, Active Rickard Florent, ID 1, at 3:14
- [Search -> Debug] Enemy, Brother Set, ID 133 at 18:15, Active Rickard Florent, ID 1, at 3:14
- [Search -> Debug] Enemy, Brother Behemoth, ID 134 at 18:19, Active Rickard Florent, ID 1, at 3:14
- [Search -> Debug] Enemy, Brother Damballa, ID 135 at 18:15, Active Rickard Florent, ID 1, at 3:14
- [Search -> Debug] Enemy, The Unrelenting, ID 136 at 18:15, Active Rickard Florent, ID 1, at 3:14
---- CheckIfFoundActive (World.cs)
- [Search -> Debug] Enemy, Brother Shiva, ID 132 at 18:15, Active Rickard Florent, ID 1, at 3:15
- [Search -> Debug] Enemy, Brother Set, ID 133 at 18:15, Active Rickard Florent, ID 1, at 3:15
- [Search -> Debug] Enemy, Brother Behemoth, ID 134 at 18:19, Active Rickard Florent, ID 1, at 3:15
- [Search -> Debug] Enemy, Brother Damballa, ID 135 at 18:15, Active Rickard Florent, ID 1, at 3:15
- [Search -> Debug] Enemy, The Unrelenting, ID 136 at 18:15, Active Rickard Florent, ID 1, at 3:15
-[AddVisitedLoc] LocID 35, "Lordsport", turn 3 -> record added to listLocsVisited
-[AddVisitedLoc] LocID 35, "Lordsport", turn 3 -> record updated in dictLocsVisited
---- UpdatePlayerStatus (World.cs)
---- UpdateWorldStatus (World.cs)
---- CheckFollowerActivity (World.cs)
---- GetRumour (Director.cs)
-arrayOfRumours [0] -> RumourID 28, Strength 4, Scope Global, Type Disguise, Global All
-arrayOfRumours [4] -> RumourID 401, Strength 2, Scope Global, Type HouseRel, Global West
-arrayOfRumours [5] -> RumourID 361, Strength 4, Scope Local, Type Relationship, Global All
-RumourID 361 selected from the Pool
-Rumour "BannerLord Cleos Umber "The Regal", ActID 114 at Last Hearth, is known by all to have a poor impression of the Usurper" revealed to ActorID6 on turn 3 -> added to List
-RumourID 361 removed from listRumoursHouse[2]
-Follower The Waif, ActID 6, added RumourID 361
-[Notification] BannerLord Cleos Umber, ActID 114 -> RelKnown changed to True
-[Rumour -> Deleted] Timed RumourID 361 removed from dictRumoursTimed
---- GetRumour (Director.cs)
-arrayOfRumours [0] -> RumourID 433, Strength 3, Scope Global, Type Event, Global All
-arrayOfRumours [4] -> RumourID 401, Strength 2, Scope Global, Type HouseRel, Global West
-arrayOfRumours [5] -> RumourID 177, Strength 4, Scope Local, Type Skill, Global All
-RumourID 177 selected from the Pool
-Rumour "BannerLord Elyes Cerwyn "The Spitter", ActID 86 at Cerwyn, is rumoured to be a Compulsive Liar" revealed to ActorID5 on turn 3 -> added to List
-RumourID 177 removed from listRumoursHouse[2]
-Follower The Viper, ActID 5, added RumourID 177
-BannerLord Elyes Cerwyn, ActID 86, has their Treachery changed to True
---- GetRumour (Director.cs)
-arrayOfRumours [0] -> RumourID 94, Strength 1, Scope Global, Type Item, Global All
-arrayOfRumours [2] -> RumourID 412, Strength 2, Scope Global, Type HouseRel, Global East
-arrayOfRumours [5] -> RumourID 356, Strength 4, Scope Local, Type Relationship, Global All
-RumourID 356 selected from the Pool
-Rumour "BannerLord Merrett Yronwood "The Steady", ActID 98 at Yronwood Castle, is well known to have a good view of the Usurper" revealed to ActorID2 on turn 3 -> added to List
-RumourID 356 removed from listRumoursHouse[2]
-Follower The Leper, ActID 2, added RumourID 356
-[Notification] BannerLord Merrett Yronwood, ActID 98 -> RelKnown changed to True
-[Rumour -> Deleted] Timed RumourID 356 removed from dictRumoursTimed
---- GetMarketView (Director.cs)
-[GameVar] View_Index changed from 2 to 3
---- CheckStationaryActiveActors (World.cs)
- [Search -> Stationary] Usurper Rickard Florent, ActID 1 is AtLocation
---- CheckIfFoundActive (World.cs)
- [Search -> Debug] Enemy, Brother Shiva, ID 132 at 18:15, Active Rickard Florent, ID 1, at 3:15
- [Search -> Debug] Enemy, Brother Set, ID 133 at 18:15, Active Rickard Florent, ID 1, at 3:15
- [Search -> Debug] Enemy, Brother Behemoth, ID 134 at 18:19, Active Rickard Florent, ID 1, at 3:15
- [Search -> Debug] Enemy, Brother Damballa, ID 135 at 18:15, Active Rickard Florent, ID 1, at 3:15
- [Search -> Debug] Enemy, The Unrelenting, ID 136 at 18:15, Active Rickard Florent, ID 1, at 3:15
- [Search -> Stationary] Follower The Waif, ActID 6 is AtLocation
- [Search -> Stationary] Follower The Viper, ActID 5 is AtLocation
- [Search -> Stationary] Follower The Leper, ActID 2 is AtLocation
---- UpdateAIController (World.cs)
- [AI -> Player Unknown] Inquisitor Brother Shiva, Act ID 132 Mode -> Normal
- [AI -> Player Unknown] Inquisitor Brother Set, Act ID 133 Mode -> Normal
- [AI -> Player Unknown] Inquisitor Brother Damballa, Act ID 135 Mode -> Normal
- [AI -> Player Unknown] Nemesis The Unrelenting, Act ID 136 Mode -> Normal
---- SetEnemyActivity (World.cs)
- [Enemy -> Goal] Brother Shiva, ActID 132 retains Goal -> Wait
---- SetEnemyGoal (World.cs)
- [Goal -> Branch] Brother Set, ActID 133 Assigned Branch -> 1 Current Branch -> 0
- [Enemy -> Goal] Brother Damballa, ActID 135 retains Goal -> Wait
- [Enemy -> Goal] The Unrelenting, ActID 136 retains Goal -> Wait
---- CheckPlayerEvents (Director.cs)
-Location event, Need 75, roll 78
-- CreateAutoLocEvent (Director.cs)
- [AutoEvent -> ActorList] "Patrek Botley", ID 91 added to list of Actors
- [AutoEvent -> LocalList] "Patrek Botley", ID 91 added to list of Locals
-[Notification] No entry found in dictOfIntroductions for RefID 6
- Chance of Player Location event 75 %
---- ResolvePlayerEvents (Director.cs)
- Trigger FAILED on "0" Equals 1
- Trigger: Player is wrong type of Known status -> Trigger failed
- Trigger FAILED on "0" Equals 1
- Trigger: Player is wrong type of Known status -> Trigger failed
- Event "What to do?" Timer Repeat now 999
- Event "What to do?" Cooldown Timer has been reset to 0
---- UpdateActiveActors (World.cs)
- Usurper Rickard Florent has had their TurnsUnknown Timer increased from 102 to 103
- Follower The Waif has had their TurnsUnknown Timer increased from 2 to 3
- Follower The Viper has had their TurnsUnknown Timer increased from 2 to 3
- Follower The Leper has had their TurnsUnknown Timer increased from 2 to 3
---- ResolveOutcome (Director.cs)
+//Exile Game file ops "LogTurn.txt" commenced at: 10/06/2017 14:54:22
+--- ProcessStartGame (World.cs)
+--- AgePassiveCharacters (History.cs)
+--- InitialiseGameVars (World.cs)
+[GameVar] View_Index changed from 0 to 1
+[AddVisitedLoc] LocID 23, "Longbow Hall", turn -3 -> record added to listLocsVisited
+[AddVisitedLoc] LocID 23, "Longbow Hall", turn -3 -> new record added to dictLocsVisited
+[AddVisitedLoc] LocID 2, "The Clumsy Hog", turn -2 -> record added to listLocsVisited
+[AddVisitedLoc] LocID 2, "The Clumsy Hog", turn -2 -> new record added to dictLocsVisited
+[AddVisitedLoc] LocID 14, "Hornwood", turn -1 -> record added to listLocsVisited
+[AddVisitedLoc] LocID 14, "Hornwood", turn -1 -> new record added to dictLocsVisited
+--- InitialiseFinalPlayer (World.cs)
+[AddVisitedLoc] LocID 7, "Yronwood Castle", turn 0 -> record added to listLocsVisited
+[AddVisitedLoc] LocID 7, "Yronwood Castle", turn 0 -> new record added to dictLocsVisited
 --- SetEndGame (Game.cs)
 [Alert] Player chose to exit (pressed 'X')
-//Exile Game file ops "LogTurn.txt" Completed at: 10/06/2017 12:18:11
+//Exile Game file ops "LogTurn.txt" Completed at: 10/06/2017 14:56:04

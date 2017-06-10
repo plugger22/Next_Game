@@ -374,9 +374,9 @@ namespace Next_Game
                                     SetMessage(new Message(returnText, person.ActID, locID_Destination, MessageType.Move));
                                     int refID = ConvertLocToRef(locID_Destination);
                                     if (charID == 1)
-                                    { Game.world.SetPlayerRecord(new Record(returnText, charID, locID_Destination, CurrentActorIncident.Travel)); }
+                                    { Game.world.SetPlayerRecord(new Record(returnText, charID, locID_Destination, CurrentActorEvent.Travel)); }
                                     else if (charID > 1)
-                                    { Game.world.SetCurrentRecord(new Record(returnText, charID, locID_Destination, CurrentActorIncident.Travel)); }
+                                    { Game.world.SetCurrentRecord(new Record(returnText, charID, locID_Destination, CurrentActorEvent.Travel)); }
                                 }
                                 //God Mode Teleport Travel
                                 else
@@ -562,7 +562,7 @@ namespace Next_Game
                             // Player
                             if (person.ActID == 1)
                             {
-                                SetPlayerRecord(new Record(tempText, person.ActID, person.LocID, CurrentActorIncident.Travel));
+                                SetPlayerRecord(new Record(tempText, person.ActID, person.LocID, CurrentActorEvent.Travel));
                                 Game.director.AddVisitedLoc(locID, Game.gameTurn);
                                 Player player = person as Player;
                                 switch (player.horseStatus)
@@ -579,7 +579,7 @@ namespace Next_Game
                                 }
                             }
                             else if (person.ActID > 1)
-                            { SetCurrentRecord(new Record(tempText, person.ActID, person.LocID, CurrentActorIncident.Travel)); }
+                            { SetCurrentRecord(new Record(tempText, person.ActID, person.LocID, CurrentActorEvent.Travel)); }
                             //enemy -> arrives at destination, assign goal
                             if (person is Enemy)
                             {
@@ -1724,11 +1724,11 @@ namespace Next_Game
                         string tradeText = "";
                         int upper;
                         bool newLine;
+                        //Imports
                         int numGoods = house.GetNumImports();
                         if (numGoods > 0)
                         {
                             locList.Add(new Snippet("Imports -> ", false));
-                            //imports
                             int[,] tempImports = house.GetImports();
                             upper = tempImports.GetUpperBound(0);
                             for (int i = 0; i <= upper ; i++)
@@ -1744,9 +1744,27 @@ namespace Next_Game
                                 }
                             }
                         }
-                        if (house.GetNumExports() > 0)
+                        //Exports
+                        numGoods = house.GetNumExports();
+                        if (numGoods > 0)
                         {
-                            //exports
+                            locList.Add(new Snippet("Exports -> ", false));
+                            int[,] tempExports = house.GetExports();
+                            upper = tempExports.GetUpperBound(0);
+                            for (int i = 0; i <= upper; i++)
+                            {
+                                //at least one present and is known
+                                if (tempExports[i, 0] > 0)
+                                {
+                                    displayColor = unknownColor;
+                                    if (tempExports[i, 1] > 0) { displayColor = knownColor; }
+                                    newLine = true;
+                                    if (i + 1 < numGoods) { newLine = false; }
+                                    locList.Add(new Snippet($"{(Goods)i} ", displayColor, RLColor.Black, newLine));
+                                }
+                            }
+
+                            /*//exports
                             tradeText = "";
                             int[,] tempExports = house.GetExports();
                             for (int i = 0; i <= tempExports.GetUpperBound(0); i++)
@@ -1755,7 +1773,7 @@ namespace Next_Game
                                 if (tempExports[i, 0] > 0 && tempExports[i, 1] > 0)
                                 { tradeText += $"{(Goods)i} "; }
                             }
-                            locList.Add(new Snippet($"Exports -> {tradeText}"));
+                            locList.Add(new Snippet($"Exports -> {tradeText}"));*/
                         }
                     }
                     if (loc.Connector == true)
@@ -1858,13 +1876,10 @@ namespace Next_Game
         /// <param name="houseID"></param>
         /// <param name="refID"></param>
         /// <returns></returns>
-        internal List<Snippet> ShowHouseRL(int houseID, int refID = 0)
+        internal List<Snippet> ShowMajorHouseRL(int refID)
         {
             MajorHouse majorHouse = null;
-            //check input type
-            if (houseID > 0)
-            { majorHouse = GetMajorHouse(houseID); }
-            else if (refID > 0)
+            if (refID > 0)
             { House house = GetHouse(refID); majorHouse = house as MajorHouse; }
             else
             { Game.SetError(new Error(36, "Invalid input data (houseID and refID are both Zero, or less)")); return null; }
@@ -2033,6 +2048,32 @@ namespace Next_Game
                     { houseList.Add(new Snippet(text)); }
                 }
             }
+            return houseList;
+        }
+
+        /// <summary>
+        /// Display Minor House data to main infoConsole (input either houseID or refID, will check houseID first)
+        /// </summary>
+        /// <param name="houseID"></param>
+        /// <param name="refID"></param>
+        /// <returns></returns>
+        internal List<Snippet> ShowMinorHouseRL(int refID)
+        {
+            MajorHouse majorHouse = null;
+            //check input type
+            if (houseID > 0)
+            {
+                majorHouse = GetMajorHouse(houseID);
+            }
+            else if (refID > 0)
+            {
+                House house = GetHouse(refID); majorHouse = house as MajorHouse;
+            }
+            else
+            {
+                Game.SetError(new Error(36, "Invalid input data (houseID and refID are both Zero, or less)")); return null;
+            }
+            List<Snippet> houseList = new List<Snippet>();
             return houseList;
         }
 
@@ -4049,7 +4090,7 @@ namespace Next_Game
                     recordList =
                         from record in dictHistoricalRecords
                         from eventType in record.Value.listOfHistoricalActorIncidents
-                        where eventType == HistActorIncident.Lordship
+                        where eventType == HistActorEvent.Lordship
                         //where record.Value.Actual == false
                         orderby record.Value.Year
                         select Convert.ToString(record.Value.Year + " " + record.Value.Text);
@@ -4060,7 +4101,7 @@ namespace Next_Game
                     recordList =
                         from record in dictHistoricalRecords
                         from eventType in record.Value.listOfHistoricalActorIncidents
-                        where eventType == HistActorIncident.Died
+                        where eventType == HistActorEvent.Died
                         orderby record.Value.Year
                         select Convert.ToString(record.Value.Year + " " + record.Value.Text);
                     tempList = recordList.ToList();
@@ -4070,7 +4111,7 @@ namespace Next_Game
                     recordList =
                         from record in dictHistoricalRecords
                         from eventType in record.Value.listOfHistoricalActorIncidents
-                        where eventType == HistActorIncident.Married
+                        where eventType == HistActorEvent.Married
                         orderby record.Value.Year
                         select Convert.ToString(record.Value.Year + " " + record.Value.Text);
                     tempList = recordList.ToList();
@@ -4080,7 +4121,7 @@ namespace Next_Game
                     recordList =
                         from record in dictHistoricalRecords
                         from eventType in record.Value.listOfKingdomIncidents
-                        where eventType == HistKingdomIncident.Battle || eventType == HistKingdomIncident.Siege
+                        where eventType == HistKingdomEvent.Battle || eventType == HistKingdomEvent.Siege
                         orderby record.Value.Year
                         select Convert.ToString(record.Value.Year + " " + record.Value.Text);
                     tempList = recordList.ToList();
@@ -4627,7 +4668,7 @@ namespace Next_Game
                         //arrived at Location
                         string locName = GetLocationName(player.LocID);
                         description = string.Format("{0} {1} has arrived at {2} onboard the S.S \"{3}\"", player.Title, player.Name, locName, player.ShipName);
-                        SetPlayerRecord(new Record(description, 1, player.LocID, CurrentActorIncident.Travel));
+                        SetPlayerRecord(new Record(description, 1, player.LocID, CurrentActorEvent.Travel));
                         SetMessage(new Message(description, MessageType.Move));
                         //notification message
                         List<Snippet> msgList = new List<Snippet>();
@@ -5218,9 +5259,9 @@ namespace Next_Game
                         SetMessage(message);
                         int refID = ConvertLocToRef(actor.Value.LocID);
                         if (actor.Value.ActID == 1)
-                        { SetPlayerRecord(new Record(eventText, actor.Value.ActID, actor.Value.LocID, CurrentActorIncident.Known)); }
+                        { SetPlayerRecord(new Record(eventText, actor.Value.ActID, actor.Value.LocID, CurrentActorEvent.Known)); }
                         else if (actor.Value.ActID > 1)
-                        { SetCurrentRecord(new Record(eventText, actor.Value.ActID, actor.Value.LocID, CurrentActorIncident.Known)); }
+                        { SetCurrentRecord(new Record(eventText, actor.Value.ActID, actor.Value.LocID, CurrentActorEvent.Known)); }
                         Game.logTurn?.Write(eventText);
                     }
                 }
@@ -5991,7 +6032,7 @@ namespace Next_Game
                                                             active.Known = true; active.Revert = known_revert;
                                                             description = string.Format("{0} {1}, ActID {2}, has been Spotted by {3} {4}, ActID {5} at {6}", active.Title, active.Name, active.ActID,
                                                                 enemy.Value.Title, enemy.Value.Name, enemy.Value.ActID, locName);
-                                                            Record record = new Record(description, active.ActID, locID, CurrentActorIncident.Known);
+                                                            Record record = new Record(description, active.ActID, locID, CurrentActorEvent.Known);
                                                             SetPlayerRecord(record);
                                                             SetMessage(new Message(description, MessageType.Search));
                                                         }
@@ -6011,7 +6052,7 @@ namespace Next_Game
                                                                     //only activated enemies can capture (Inquisitors ae always activated, Nemesis only if the gods are angry)
                                                                     active.Capture = true;
                                                                 }
-                                                                Record record = new Record(description, active.ActID, locID, CurrentActorIncident.Search);
+                                                                Record record = new Record(description, active.ActID, locID, CurrentActorEvent.Search);
                                                                 SetPlayerRecord(record);
                                                                 SetMessage(new Message(description, MessageType.Search));
                                                             }
@@ -6036,7 +6077,7 @@ namespace Next_Game
                                                         active.Known = true; active.Revert = known_revert;
                                                         description = string.Format("{0} {1}, ActID {2}, has been Spotted by {3} {4}, ActID {5} at {6}", active.Title, active.Name, active.ActID,
                                                             enemy.Value.Title, enemy.Value.Name, enemy.Value.ActID, locName);
-                                                        Record record = new Record(description, active.ActID, locID, CurrentActorIncident.Search);
+                                                        Record record = new Record(description, active.ActID, locID, CurrentActorEvent.Search);
                                                         SetCurrentRecord(record);
                                                         SetMessage(new Message(description, MessageType.Search));
                                                     }
@@ -6164,7 +6205,7 @@ namespace Next_Game
                                                             active.Value.Known = true; active.Value.Revert = known_revert;
                                                             description = string.Format("{0} {1}, ActID {2}, has been Spotted by {3} {4}, ActID {5} at {6}", active.Value.Title, active.Value.Name,
                                                                 active.Value.ActID, enemy.Title, enemy.Name, enemy.ActID, locName);
-                                                            Record record = new Record(description, active.Value.ActID, locID, CurrentActorIncident.Known);
+                                                            Record record = new Record(description, active.Value.ActID, locID, CurrentActorEvent.Known);
                                                             SetPlayerRecord(record);
                                                             SetMessage(new Message(description, MessageType.Search));
                                                         }
@@ -6184,7 +6225,7 @@ namespace Next_Game
                                                                     //only activated enemies can capture (Inquisitors are always activated, Nemesis only when gods are angry)
                                                                     active.Value.Capture = true;
                                                                 }
-                                                                Record record = new Record(description, active.Value.ActID, locID, CurrentActorIncident.Search);
+                                                                Record record = new Record(description, active.Value.ActID, locID, CurrentActorEvent.Search);
                                                                 SetPlayerRecord(record);
                                                                 SetMessage(new Message(description, MessageType.Search));
                                                             }
@@ -6208,7 +6249,7 @@ namespace Next_Game
                                                         active.Value.Known = true; active.Value.Revert = known_revert; active.Value.Capture = true;
                                                         description = string.Format("{0} {1}, ActID {2}, has been Spotted by {3} {4}, ActID {5} at {6}", active.Value.Title, active.Value.Name, active.Value.ActID,
                                                             enemy.Title, enemy.Name, enemy.ActID, locName);
-                                                        Record record = new Record(description, active.Value.ActID, locID, CurrentActorIncident.Search);
+                                                        Record record = new Record(description, active.Value.ActID, locID, CurrentActorEvent.Search);
                                                         SetCurrentRecord(record);
                                                         SetMessage(new Message(description, MessageType.Search));
                                                     }
@@ -6647,7 +6688,7 @@ namespace Next_Game
                                     //admin
                                     description = string.Format("ItemID {0}, {1}, has been confiscated by the {2} Dungeon Master", item.ItemID, item.Description, dungeonLoc);
                                     SetMessage(new Message(description, MessageType.Incarceration));
-                                    SetPlayerRecord(new Record(description, player.ActID, player.LocID, CurrentActorIncident.Challenge));
+                                    SetPlayerRecord(new Record(description, player.ActID, player.LocID, CurrentActorEvent.Challenge));
                                 }
                             }
                         }
@@ -6656,7 +6697,7 @@ namespace Next_Game
                         {
                             description = $"The disguise, {player.ConcealText}, has been confiscated by the {dungeonLoc} Dungeon Master";
                             SetMessage(new Message(description, MessageType.Incarceration));
-                            SetPlayerRecord(new Record(description, player.ActID, player.LocID, CurrentActorIncident.Challenge));
+                            SetPlayerRecord(new Record(description, player.ActID, player.LocID, CurrentActorEvent.Challenge));
                             player.ConcealDisguise = 0;
                             player.Conceal = ActorConceal.None;
                             player.ConcealLevel = 0;
@@ -6668,13 +6709,13 @@ namespace Next_Game
                             player.Resources = 1;
                             description = $"{player.Name} \"{player.Handle}\", has had most of their gold confiscated by the {dungeonLoc} Dungeon Master";
                             SetMessage(new Message(description, MessageType.Incarceration));
-                            SetPlayerRecord(new Record(description, player.ActID, player.LocID, CurrentActorIncident.Challenge));
+                            SetPlayerRecord(new Record(description, player.ActID, player.LocID, CurrentActorEvent.Challenge));
                         }
                         //administration
                         description = string.Format("{0} has been Captured by {1} {2}, ActID {3} and is to be held at {4}", player.Name, enemy.Title, enemy.Name, enemy.ActID, dungeonLoc);
                         SetMessage(new Message(description, MessageType.Search));
-                        SetPlayerRecord(new Record(description, player.ActID, player.LocID, CurrentActorIncident.Search));
-                        SetCurrentRecord(new Record(description, enemy.ActID, player.LocID, CurrentActorIncident.Search));
+                        SetPlayerRecord(new Record(description, player.ActID, player.LocID, CurrentActorEvent.Search));
+                        SetCurrentRecord(new Record(description, enemy.ActID, player.LocID, CurrentActorEvent.Search));
                     }
                     else if (enemy is Nemesis)
                     {
@@ -7203,7 +7244,7 @@ namespace Next_Game
                                 //remove disguise
                                 description = $"{player.Name} \"{player.Handle}\" has removed their disguise of {disguise.Description}";
                                 SetMessage(new Message(description, MessageType.Search));
-                                SetPlayerRecord(new Record(description, 1, player.LocID, CurrentActorIncident.Search));
+                                SetPlayerRecord(new Record(description, 1, player.LocID, CurrentActorEvent.Search));
                                 Game.logTurn?.Write(description);
                                 player.Conceal = ActorConceal.None;
                                 player.ConcealLevel = 0;
@@ -7221,7 +7262,7 @@ namespace Next_Game
                                 player.ConcealText = disguise.Description;
                                 description = $"{player.Name} \"{player.Handle}\" has assumed the disguise of {disguise.Description}";
                                 SetMessage(new Message(description, MessageType.Search));
-                                SetPlayerRecord(new Record(description, 1, player.LocID, CurrentActorIncident.Search));
+                                SetPlayerRecord(new Record(description, 1, player.LocID, CurrentActorEvent.Search));
                                 //player becomes UNKNOWN, if already Known
                                 if (player.Known == true)
                                 {
@@ -7343,7 +7384,7 @@ namespace Next_Game
                 //admin
                 string text = $"{player.Name} has acquired a new horse, a {player.HorseType} named \"{player.HorseName}\" (stamina {player.HorseHealth})";
                 SetMessage(new Message(text, 1, player.LocID, MessageType.Horse));
-                SetPlayerRecord(new Record(text, 1, player.LocID, CurrentActorIncident.Horse));
+                SetPlayerRecord(new Record(text, 1, player.LocID, CurrentActorEvent.Horse));
             }
         }
 
@@ -7381,7 +7422,7 @@ namespace Next_Game
         }
 
         /// <summary>
-        /// gives houses population, Men At Arms and food data
+        /// gives houses population, Men At Arms, food data, resources and castle walls
         /// </summary>
         private void InitialiseHouseData()
         {
@@ -7395,6 +7436,9 @@ namespace Next_Game
             int goodsMed = Game.constant.GetValue(Global.GOODS_MED); //% chance of a medium probability good being present
             int food, balance, absBalance, tally, resources, numLocs, modifier;
             int overallTally = 0;
+            //
+            // Men At Arms and Population
+            //
             foreach (var house in dictAllHouses)
             {
                 food = 0;
@@ -7413,7 +7457,9 @@ namespace Next_Game
                     house.Value.MenAtArms = menAtArms; //City Watch
                     house.Value.Population = house.Value.MenAtArms * popFactor * 3;
                 }
+                //
                 //food production capacity
+                //
                 Location loc = Game.network.GetLocation(house.Value.LocID);
                 if (loc != null)
                 {
@@ -7457,7 +7503,9 @@ namespace Next_Game
                 }
                 else { Game.SetError(new Error(303, $"Invalid loc (null) for house {house.Value.Name}")); }
             }
+            //
             //Adjust resource levels to reflect trade goods situation (all start from a base level of 1)
+            //
             int foodLimit = 2 * foodCapacity; //threshold for the effect of food surplus/deficit being small or large
             foreach (var house in dictAllHouses)
             {
@@ -7478,6 +7526,9 @@ namespace Next_Game
                 }
                 //goods -> exports as food is the only import and it's already been catered for
                 Goods good = Goods.None;
+                string descriptor;
+                int timeSpan = Game.constant.GetValue(Global.GAME_REVOLT) - Game.constant.GetValue(Global.GAME_PAST);
+                int timeBase = Game.constant.GetValue(Global.GAME_PAST);
                 if (house.Value.GetNumExports() > 0)
                 {
                     int[,] tempGoods = house.Value.GetExports();
@@ -7485,6 +7536,7 @@ namespace Next_Game
                     {
                         if (tempGoods[i, 0] > 0)
                         {
+                            descriptor = "";
                             good = (Goods)i;
                             //different goods have different effects
                             switch (good)
@@ -7492,27 +7544,39 @@ namespace Next_Game
                                 case Goods.Gold:
                                     tally += 3;
                                     arrayTradeData[(int)Goods.Gold] += 1;
+                                    descriptor = $"Rich Veins of Gold mined from withinthe nearby mountains provide a significant boost to the economy";
                                     break;
                                 case Goods.Wine:
                                     tally += 2;
                                     arrayTradeData[(int)Goods.Wine] += 1;
+                                    descriptor = $"Fine Wines made from high yielding Grapes provide a sizeable boost to the economy";
                                     break;
                                 case Goods.Furs:
                                     tally += 1;
                                     arrayTradeData[(int)Goods.Furs] += 1;
+                                    descriptor = $"Thick Furs from the hunting and trapping of animals in the nearby forests provide a boost to the economy";
                                     break;
                                 case Goods.Oil:
                                     tally += 1;
                                     arrayTradeData[(int)Goods.Oil] += 1;
+                                    descriptor = $"Oil distilled from the hunting of Whales provide a boost to the economy";
                                     break;
                                 case Goods.Iron:
                                     tally += 1;
                                     arrayTradeData[(int)Goods.Iron] += 1;
+                                    descriptor = $"Deposits of Iron located in the nearby mountains provide a boost to the economy";
                                     break;
                                 case Goods.Timber:
                                     tally += 1;
                                     arrayTradeData[(int)Goods.Timber] += 1;
+                                    descriptor = $"An abundance of Timer in the nearby Forests provide a boost to the economy";
                                     break;
+                            }
+                            if (descriptor.Length > 0)
+                            {
+                                //add record to house
+                                Record record = new Record(descriptor, house.Value.LocID, house.Value.RefID, timeBase + rnd.Next(timeSpan), HistHouseEvent.Goods);
+                                SetHistoricalRecord(record);
                             }
                         }
                     }
@@ -7526,6 +7590,26 @@ namespace Next_Game
                 resources = Math.Max(1, resources);
                 house.Value.Resources = resources;
                 Game.logStart?.Write($"House {house.Value.Name} has a Resource level of {resources}");
+                //
+                //adjust Castle walls to reflect resource level (properous houses are more likely to have stronger castles) -> Base value from Major/Minorhouse.txt's
+                //
+                int origValue = house.Value.CastleWalls;
+                switch(resources)
+                {
+                    case 4:
+                        //DM +1
+                        house.Value.CastleWalls += 1;
+                        break;
+                    case 5:
+                        //DM +2
+                        house.Value.CastleWalls += 2;
+                        break;
+                }
+                //limit check
+                house.Value.CastleWalls = Math.Min(5, house.Value.CastleWalls);
+                house.Value.CastleWalls = Math.Max(1, house.Value.CastleWalls);
+                if (origValue != house.Value.CastleWalls)
+                { Game.logStart?.Write($"House {house.Value.Name} -> CastleWalls Now {house.Value.CastleWalls}, Before {origValue}, Resources {house.Value.Resources} "); }
             }
             //end all houses loop
             arrayTradeData[0] = overallTally;
@@ -7542,7 +7626,9 @@ namespace Next_Game
                 Game.logStart?.Write($"Capital has resources level of {capital.Resources}, overallTally {overallTally}, Locs {numLocs}, Modifier {overallTally / numLocs}");
             }
             else { Game.SetError(new Error(303, "Invalid Capital (null) -> Resources not adjusted")); }
+            //
             //Major House Resources -> adjusted for wealth of bannerLords -> + (total Bannerlord Resources - Num BannerLords) / 3
+            //
             foreach(var major in dictMajorHouses)
             {
                 modifier = 0;

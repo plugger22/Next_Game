@@ -12,3 +12,10 @@ Seed 58203 -> Saturday, 10 June 2017 12:12 PM
 Seed 42401 -> Saturday, 10 June 2017 12:13 PM
 Seed 32883 -> Saturday, 10 June 2017 12:16 PM
 Seed 60958 -> Saturday, 10 June 2017 12:17 PM
+Seed 334 -> Saturday, 10 June 2017 1:51 PM
+Seed 61055 -> Saturday, 10 June 2017 1:59 PM
+Seed 21160 -> Saturday, 10 June 2017 2:09 PM
+Seed 44355 -> Saturday, 10 June 2017 2:13 PM
+Seed 51150 -> Saturday, 10 June 2017 2:32 PM
+Seed 2520 -> Saturday, 10 June 2017 2:40 PM
+Seed 2520 -> Saturday, 10 June 2017 2:50 PM
