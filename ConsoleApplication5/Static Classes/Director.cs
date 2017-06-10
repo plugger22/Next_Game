@@ -4756,7 +4756,7 @@ namespace Next_Game
         private string GetObservation()
         {
             string resultText = "";
-            
+            int numGoods;
             Player player = Game.world.GetPlayer();
             if (player != null)
             {
@@ -4781,19 +4781,23 @@ namespace Next_Game
                     else if (balance < 0 && Math.Abs(balance) >= foodCapacity) { foodText = "thin and underfed"; }
                     //goods
                     string goodsText = "no evidence of any meaningful trade";
-                    if (house.GetNumExports() > 0)
+                    numGoods = house.GetNumExports();
+                    if ( numGoods > 0)
                     {
                         goodsText = "signs of trade in ";
                         int[,] arrayOfExports = house.GetExports();
                         int upper = arrayOfExports.GetUpperBound(0);
                         for(int i = 0; i <= upper; i++)
                         {
-                            if (arrayOfExports[i, 0] > 0) { goodsText += $"{(Goods)i}"; }
-                            if (upper > 1)
+                            if (arrayOfExports[i, 0] > 0)
                             {
-                                if (i < (upper - 2))
-                                { goodsText += ", "; }
-                                else if (i == (upper - 2)) { goodsText += " and "; }
+                                goodsText += $"{(Goods)i}"; 
+                                if (numGoods > 1)
+                                {
+                                    if (i < (numGoods - 1))
+                                    { goodsText += ", "; }
+                                    else if (i == (numGoods - 1)) { goodsText += " and "; }
+                                }
                             }
                         }
                     }
@@ -4811,6 +4815,12 @@ namespace Next_Game
                         house.SetInfoStatus(HouseInfo.CastleWalls);
                         house.SetInfoStatus(HouseInfo.Resources);
                         house.SetInfoStatus(HouseInfo.Food);
+                        //Toogle All Import/Export Goods to Known
+                        for (int i = 0; i < (int)Goods.Count; i++)
+                        {
+                            house.SetImportStatus((Goods)i);
+                            house.SetExportStatus((Goods)i);
+                        }
                     }
                 }
                 else { Game.SetError(new Error(305, $"Invalid House for RefID {refID}")); }

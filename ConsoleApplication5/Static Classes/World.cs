@@ -1722,17 +1722,27 @@ namespace Next_Game
                     if (house.GetNumImports() > 0 || house.GetNumExports() > 0)
                     {
                         string tradeText = "";
-                        if (house.GetNumImports() > 0)
+                        int upper;
+                        bool newLine;
+                        int numGoods = house.GetNumImports();
+                        if (numGoods > 0)
                         {
+                            locList.Add(new Snippet("Imports -> ", false));
                             //imports
                             int[,] tempImports = house.GetImports();
-                            for (int i = 0; i <= tempImports.GetUpperBound(0); i++)
+                            upper = tempImports.GetUpperBound(0);
+                            for (int i = 0; i <= upper ; i++)
                             {
                                 //at least one present and is known
-                                if (tempImports[i, 0] > 0 && tempImports[i, 1] > 0)
-                                { tradeText += $"{(Goods)i} "; }
+                                if (tempImports[i, 0] > 0)
+                                {
+                                    displayColor = unknownColor;
+                                    if (tempImports[i, 1] > 0) { displayColor = knownColor; }
+                                    newLine = true;
+                                    if (i + 1 < numGoods) { newLine = false; }
+                                    locList.Add(new Snippet($"{(Goods)i} ", displayColor, RLColor.Black, newLine));
+                                }
                             }
-                            locList.Add(new Snippet($"Imports -> {tradeText}"));
                         }
                         if (house.GetNumExports() > 0)
                         {
