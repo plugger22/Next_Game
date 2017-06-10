@@ -1,17 +1,147 @@
-//Exile Game file ops "LogTurn.txt" commenced at: 10/06/2017 20:45:45
---- ProcessStartGame (World.cs)
---- AgePassiveCharacters (History.cs)
---- InitialiseGameVars (World.cs)
-[GameVar] View_Index changed from 0 to 1
-[AddVisitedLoc] LocID 23, "Longbow Hall", turn -3 -> record added to listLocsVisited
-[AddVisitedLoc] LocID 23, "Longbow Hall", turn -3 -> new record added to dictLocsVisited
-[AddVisitedLoc] LocID 2, "The Clumsy Hog", turn -2 -> record added to listLocsVisited
-[AddVisitedLoc] LocID 2, "The Clumsy Hog", turn -2 -> new record added to dictLocsVisited
-[AddVisitedLoc] LocID 14, "Hornwood", turn -1 -> record added to listLocsVisited
-[AddVisitedLoc] LocID 14, "Hornwood", turn -1 -> new record added to dictLocsVisited
---- InitialiseFinalPlayer (World.cs)
-[AddVisitedLoc] LocID 7, "Yronwood Castle", turn 0 -> record added to listLocsVisited
-[AddVisitedLoc] LocID 7, "Yronwood Castle", turn 0 -> new record added to dictLocsVisited
---- SetEndGame (Game.cs)
-[Alert] Player chose to exit (pressed 'X')
-//Exile Game file ops "LogTurn.txt" Completed at: 10/06/2017 20:46:25
+//Exile Game File "LogTurn.txt" opened at: 10/06/2017 21:09:50
+--- ProcessStartTurn (World.cs)
+Day 5, Turn 4, Harvest in 164 days, Winter in 179 days
+Usurper Tyrion Stark, "The Adjustable", AtLocation, Valyria
+--- UpdateRumours (World.cs)
+dictRumoursTimed (Start) -> 76 records
+[Rumour -> Removal] RID 441, "Inquisitor, Brother Damballa, ActID 118 has been spotted relaxing at Kingskeep (loc 17:15)" removed from Global All list
+75 rumours -> TimerExpire decremented
+1 records have expired and been removed
+dictRumoursTimed (End) -> 75 records
+--- MoveActors -> 0 Records (World.cs)
+--- UpdatePlayerStatus (World.cs)
+--- UpdateWorldStatus (World.cs)
+--- CheckFollowerActivity (World.cs)
+--- GetRumour (Director.cs)
+arrayOfRumours [0] -> RumourID 115, Strength 4, Scope Global, Type Disguise, Global All
+arrayOfRumours [1] -> RumourID 17, Strength 2, Scope Global, Type Desire, Global North
+arrayOfRumours [5] -> RumourID 82, Strength 2, Scope Local, Type Skill, Global All
+RumourID 17 selected from the Pool
+Rumour "It is rumoured that Lord Preston Lannister, ActID 17 at Casterly Rock, desires the neighbouring lands belonging to the Bannerlord at Mooton" revealed to ActorID7 on turn 4 -> added to List
+RumourID 17 removed from listRumoursNorth[0]
+Follower The Waif, ActID 7, added RumourID 17
+[Notification] None  "" DesireKnown status changed to "True"
+--- GetRumour (Director.cs)
+arrayOfRumours [0] -> RumourID 64, Strength 1, Scope Global, Type Item, Global All
+arrayOfRumours [1] -> RumourID 350, Strength 2, Scope Global, Type HouseRel, Global North
+arrayOfRumours [5] -> RumourID 387, Strength 5, Scope Local, Type HouseHistory, Global All
+RumourID 387 selected from the Pool
+Rumour "There is a scribe who can recall the history of House Tallhart, at Torrhen's Square" revealed to ActorID2 on turn 4 -> added to List
+RumourID 387 removed from listRumoursHouse[2]
+Follower The Spider, ActID 2, added RumourID 387
+--- GetRumour (Director.cs)
+arrayOfRumours [0] -> RumourID 239, Strength 2, Scope Global, Type Desire, Global All
+arrayOfRumours [3] -> RumourID 359, Strength 2, Scope Global, Type HouseRel, Global South
+arrayOfRumours [5] -> RumourID 170, Strength 2, Scope Local, Type Secret, Global All
+RumourID 359 selected from the Pool
+Rumour "House Stark has had poor past relations with House Lannister due to a skirmish" revealed to ActorID6 on turn 4 -> added to List
+RumourID 359 removed from listRumoursSouth[7]
+Follower The Dark Eminence, ActID 6, added RumourID 359
+[Notification -> HouseRel] "Fought a small skirmish with us over disputed land" -> Known is True
+--- GetMarketView (Director.cs)
+listPlayerChoices has 1 records, 10 % needed, rolled 76
+[GameVar] View_Index changed from 4 to 5
+--- CheckStationaryActiveActors (World.cs)
+ [Search -> Stationary] Usurper Tyrion Stark, ActID 1 is AtLocation
+--- CheckIfFoundActive (World.cs)
+ [Search -> Debug] Enemy, Brother Mantus, ID 116 at 17:15, Active Tyrion Stark, ID 1, at 20:22
+ [Search -> Debug] Enemy, Brother Set, ID 117 at 17:15, Active Tyrion Stark, ID 1, at 20:22
+ [Search -> Debug] Enemy, Brother Damballa, ID 118 at 17:15, Active Tyrion Stark, ID 1, at 20:22
+ [Search -> Debug] Enemy, Brother Demogorgon, ID 119 at 17:15, Active Tyrion Stark, ID 1, at 20:22
+ [Search -> Debug] Enemy, The Unrelenting, ID 120 at 17:15, Active Tyrion Stark, ID 1, at 20:22
+ [Search -> Stationary] Follower The Waif, ActID 7 is AtLocation
+ [Search -> Stationary] Follower The Spider, ActID 2 is AtLocation
+ [Search -> Stationary] Follower The Dark Eminence, ActID 6 is AtLocation
+--- UpdateAIController (World.cs)
+ [AI -> Player Unknown] Inquisitor Brother Mantus, Act ID 116 Mode -> Normal
+ [AI -> Player Unknown] Inquisitor Brother Set, Act ID 117 Mode -> Normal
+ [AI -> Player Unknown] Inquisitor Brother Damballa, Act ID 118 Mode -> Normal
+ [AI -> Player Unknown] Inquisitor Brother Demogorgon, Act ID 119 Mode -> Normal
+ [AI -> Player Unknown] Nemesis The Unrelenting, Act ID 120 Mode -> Normal
+--- SetEnemyActivity (World.cs)
+ [Enemy -> Goal] Brother Mantus, ActID 116 retains Goal -> Hide
+--- SetEnemyGoal (World.cs)
+ [Goal -> Branch] Brother Set, ActID 117 Assigned Branch -> 1 Current Branch -> 0
+ [Enemy -> Goal] Brother Damballa, ActID 118 retains Goal -> Wait
+ [Enemy -> Goal] Brother Demogorgon, ActID 119 retains Goal -> Wait
+ [Enemy -> Unknown] The Unrelenting ActID 120 has reverted to Unknown status (timer elapsed)
+--- SetEnemyGoal (World.cs)
+ [Goal -> Branch] The Unrelenting, ActID 120 Assigned Branch -> 0 Current Branch -> 0
+ [Goal -> New] The Unrelenting, ActID 120, (loc 17:15), assigned new Goal -> Hide
+--- CheckPlayerEvents (Director.cs)
+Location event, Need 75, roll 32
+--- GetValidPlayerEvents (Director.cs)
+--- GetValidPlayerEvents (Director.cs)
+--- GetValidPlayerEvents (Director.cs)
+[DeterminePlayerEvent] There are 0 events in the Pool
+ Chance of Player Location event 37 %
+--- UpdateActiveActors (World.cs)
+ Usurper Tyrion Stark has had their TurnsUnknown Timer increased from 103 to 104
+ Follower The Waif has had their TurnsUnknown Timer increased from 3 to 4
+ Follower The Spider has had their TurnsUnknown Timer increased from 3 to 4
+ Follower The Dark Eminence has had their TurnsUnknown Timer increased from 3 to 4
+ERROR_36 "Invalid input RefID (zero, or less)"
+Method: ShowMajorHouseRL,  Line: 1873,  Object: World.cs,  Turn: 4,  Local Time: 21:10:16 UTC +10:00
+ERROR_00   (Main Game Loop)
+--- Error Message
+Value cannot be null.
+Parameter name: collection
+--- Source
+mscorlib
+--- Stack Trace
+   at System.Collections.Generic.List`1.InsertRange(Int32 index, IEnumerable`1 collection)
+   at System.Collections.Generic.List`1.AddRange(IEnumerable`1 collection)
+   at Next_Game.InfoChannel.SetInfoList(List`1 listToDisplay, ConsoleDisplay consoleDisplay) in C:\Users\cameron\Documents\Visual Studio 2015\Projects\Next_Game\ConsoleApplication5\Static Classes\InfoChannel.cs:line 63
+   at Next_Game.Game.OnRootConsoleUpdate(Object sender, UpdateEventArgs e) in C:\Users\cameron\Documents\Visual Studio 2015\Projects\Next_Game\ConsoleApplication5\Static Classes\Game.cs:line 474
+--- TargetSite
+Void InsertRange(Int32, System.Collections.Generic.IEnumerable`1[T])
+//Exile Game file ops "LogTurn.txt" Completed at: 10/06/2017 21:10:16
+us -> Trigger failed
+ Trigger FAILED on "0" Equals 1
+ Trigger: Player is wrong type of Known status -> Trigger failed
+ Trigger FAILED on "0" Equals 1
+ Trigger: Player is wrong type of Known status -> Trigger failed
+ Event "What to do?" Timer Repeat now 999
+ Event "What to do?" Cooldown Timer has been reset to 0
+--- UpdateActiveActors (World.cs)
+ Usurper Tyrion Stark has had their TurnsUnknown Timer increased from 102 to 103
+ Follower The Waif has had their TurnsUnknown Timer increased from 2 to 3
+ Follower The Spider has had their TurnsUnknown Timer increased from 2 to 3
+ Follower The Dark Eminence has had their TurnsUnknown Timer increased from 2 to 3
+--- ResolveOutcome (Director.cs)
+--- ChangePlayerRumourStatus (Director.cs)
+--- GetRumour (Director.cs)
+arrayOfRumours [0] -> RumourID 35, Strength 1, Scope Global, Type Item, Global All
+arrayOfRumours [2] -> RumourID 113, Strength 2, Scope Global, Type Desire, Global East
+arrayOfRumours [5] -> RumourID 283, Strength 5, Scope Local, Type Relationship, Global All
+RumourID 113 selected from the Pool
+Rumour "It is known by all that Lord Guarnier Targaryen, ActID 59 at Valyria, desires that his Son, Heir Forley Targaryen "The Careless", ActID 65, attains a position in the Royal Court" revealed to ActorID1 on turn 3 -> added to List
+RumourID 113 removed from listRumoursEast[0]
+Rumour "It is known by all that Lord Guarnier Targaryen, ActID 59 at Valyria, desires that his Son, Heir Forley Targaryen "The Careless", ActID 65, attains a position in the Royal Court", rumourID 113, added to dictRumoursKnown
+[Notification] Heir Forley Targaryen "The Careless" DesireKnown status changed to "True"
+It is known by all that Lord Guarnier Targaryen, ActID 59 at Valyria, desires that his Son, Heir Forley Targaryen "The Careless", ActID 65, attains a position in the Royal Court
+--- ChangePlayerRumourStatus (Director.cs)
+--- GetRumour (Director.cs)
+arrayOfRumours [0] -> RumourID 430, Strength 3, Scope Global, Type Event, Global All
+arrayOfRumours [2] -> RumourID 413, Strength 2, Scope Global, Type SafeHouse, Global East
+arrayOfRumours [5] -> RumourID 119, Strength 2, Scope Local, Type Skill, Global All
+RumourID 119 selected from the Pool
+Rumour "Maester Christy Rab "The Adjustable", ActID 63 at Valyria, is murmured among friends to be Truthful" revealed to ActorID1 on turn 3 -> added to List
+RumourID 119 removed from listRumoursHouse[6]
+Rumour "Maester Christy Rab "The Adjustable", ActID 63 at Valyria, is murmured among friends to be Truthful", rumourID 119, added to dictRumoursKnown
+Maester Christy Rab, ActID 63, has their Treachery changed to True
+Maester Christy Rab "The Adjustable", ActID 63 at Valyria, is murmured among friends to be Truthful
+--- ResolveFollowerEvents (Director.cs)
+--- ProcessEndTurn (World.cs)
+Day 4, Turn 3
+--- CheckEventTimers (Director.cs)
+ Event "Search and Detain" Dormant Timer decremented to 17
+ "Search and Detain" event, Cooldown Timer decremented from 3 to 2
+--- InitialiseDynamicRumours (Director.cs)
+[Notification] Turn 3, generate new set of Relationship rumours on turn 21
+--- HouseKeepActors (World.cs)
+[GameStat] "Location_Days" -> increased from 3 to 4
+--- HousekeepRumours (World.cs)
+dictRumoursKnown has 13 records
+
+//Exile Game File "LogTurn.txt" Close completed at: 10/06/2017 21:09:50

@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 namespace Next_Game
 {
     public enum RumourScope { None, Local, Global }
-    public enum RumourType { None, Terrain, Road, Skill, Secret, Item, Disguise, HouseRel, Friends, Desire, Enemy, Relationship, Event, SafeHouse, Goods } //Corresponds to Rumour subclasses, set in subclass
+    public enum RumourType { None, Terrain, Road, Skill, Secret, Item, Disguise, HouseRel, Friends, Desire, Enemy, Relationship, Event, SafeHouse, Goods, HouseHistory } //Corresponds to Rumour subclasses, set in subclass
     public enum RumourGlobal { All, North, East, South, West }
     public enum RumourStatus { Normal, Timed, Inactive} //Normal -> dictRumoursNormal, Timed (TimerExpire > 0) -> dictRumoursTimed, Inactive (TimerStart > 0) -> dictRumoursInactive
     public enum RumourDisplay { All, Enemies} //used by Game.ShowRumoursRL to filter the required rumour set
@@ -222,7 +222,30 @@ namespace Next_Game
     }
 
     /// <summary>
-    /// Rumour about a House's import/export goods (one rumour for each different good that the house deals in)
+    /// Rumour about a House's History -> Local)
+    /// </summary>
+    class RumourHouseHistory : Rumour
+    {
+
+        /// <summary>
+        /// Rumour HouseHistory constructor
+        /// </summary>
+        /// <param name="text"></param>
+        /// <param name="strength"></param>
+        /// <param name="skill"></param>
+        /// <param name="scope"></param>
+        /// <param name="turnCreated">If '0' then defaults to current game turn</param>
+        /// <param name="global"></param>
+        /// <param name="isActive"></param>
+        public RumourHouseHistory(string text, int strength, RumourScope scope, int turnCreated = 0, RumourGlobal global = RumourGlobal.All, bool isActive = true) : base(text, strength, scope, turnCreated, global, isActive)
+        {
+            Type = RumourType.HouseHistory;
+        }
+    }
+
+
+    /// <summary>
+    /// Rumour about a House's import/export goods (one rumour for each different good that the house deals in) -> Local
     /// </summary>
     class RumourGoods : Rumour
     {

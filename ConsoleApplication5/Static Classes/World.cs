@@ -1872,6 +1872,9 @@ namespace Next_Game
             else
             { Game.SetError(new Error(36, "Invalid input RefID (zero, or less)")); return null; }
             List<Snippet> houseList = new List<Snippet>();
+            RLColor unknownColor = RLColor.LightGray;
+            RLColor knownColor = RLColor.White;
+            RLColor displayColor;
             if (majorHouse != null)
             {
                 List<int> listLordLocations = majorHouse.GetBannerLordLocations();
@@ -2028,12 +2031,13 @@ namespace Next_Game
                     }
                 }
                 //house history
+                if (majorHouse.GetInfoStatus(HouseInfo.History) == true) { displayColor = knownColor; } else { displayColor = unknownColor; }
                 List<string> houseHistory = GetHistoricalHouseRecords(majorHouse.RefID);
                 if (houseHistory.Count > 0)
                 {
                     houseList.Add(new Snippet("House History", RLColor.Brown, RLColor.Black));
                     foreach (string text in houseHistory)
-                    { houseList.Add(new Snippet(text)); }
+                    { houseList.Add(new Snippet(text, displayColor, RLColor.Black)); }
                 }
             }
             return houseList;
@@ -2053,6 +2057,9 @@ namespace Next_Game
             else
             { Game.SetError(new Error(306, "Invalid input RefID (Zero, or less)")); return null; }
             List<Snippet> houseList = new List<Snippet>();
+            RLColor unknownColor = RLColor.LightGray;
+            RLColor knownColor = RLColor.White;
+            RLColor displayColor;
             if (minorHouse != null)
             {
                 //details
@@ -2143,12 +2150,13 @@ namespace Next_Game
                     }
                 }*/
                 //house history
+                if (minorHouse.GetInfoStatus(HouseInfo.History) == true) { displayColor = knownColor; } else { displayColor = unknownColor; }
                 List<string> houseHistory = GetHistoricalHouseRecords(minorHouse.RefID);
                 if (houseHistory.Count > 0)
                 {
                     houseList.Add(new Snippet("House History", RLColor.Brown, RLColor.Black));
                     foreach (string text in houseHistory)
-                    { houseList.Add(new Snippet(text)); }
+                    { houseList.Add(new Snippet(text, displayColor, RLColor.Black)); }
                 }
             }
             return houseList;
@@ -4346,6 +4354,7 @@ namespace Next_Game
                     case RumourType.Relationship:
                     case RumourType.Event:
                     case RumourType.Goods:
+                    case RumourType.HouseHistory:
                         break;
                     default:
                         Game.SetError(new Error(275, $"Invalid Rumour.Type \"{rumour.Type}\""));

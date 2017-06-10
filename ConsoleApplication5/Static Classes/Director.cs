@@ -4515,6 +4515,16 @@ namespace Next_Game
                     }
                     else { Game.SetError(new Error(272, $"Rumour Type doesn't match Rumour class (Friends) -> FriendsAndEnemies not made Known, RumourID {rumour.RumourID}")); }
                     break;
+                case RumourType.HouseHistory:
+                    if (rumour is RumourHouseHistory)
+                    {
+                        House house = Game.world.GetHouse(rumour.RefID);
+                        if (house != null)
+                        { house.SetInfoStatus(HouseInfo.History); }
+                        else { Game.SetError(new Error(272, $"Invalid house (null) for rumour.RefID {rumour.RefID} -> HouseHistory not made Known")); }
+                    }
+                    else { Game.SetError(new Error(272, $"Rumour Type doesn't match Rumour class (HouseHistory) -> House History not made Known, RumourID {rumour.RumourID}")); }
+                    break;
                 case RumourType.Desire:
                     if (rumour is RumourDesire)
                     {
@@ -5298,7 +5308,6 @@ namespace Next_Game
                 int numFriends, numEnemies, relPlyr;
                 string friendPrefix, enemyPrefix;
                 string[] arrayOfDescriptors = new string[] { "no", "an", "a few", "a handful of", "many" }; //used for Friends and enemies, index corresponds to #'s, eg. index 0 -> 'no' friends, 4+ -> 'many'
-                //Major Houses
                 foreach (var house in dictAllHouses)
                 {
                     //
@@ -5344,6 +5353,20 @@ namespace Next_Game
                             }
                         }
                     }
+                    //
+                    //House History -> one rumour unlocks all (not for Inns)
+                    //
+                    if (house.Value.Special == HouseSpecial.None)
+                    {
+                        strength = 3;
+                        rumourText = $"There is a scribe who can recall the history of House {house.Value.Name}, at {house.Value.LocName}";
+                        RumourHouseHistory rumour = new RumourHouseHistory(rumourText, strength, RumourScope.Local, rnd.Next(100) * -1) { RefID = house.Value.RefID };
+                        //add to dictionary and global list
+                        if (AddRumour(rumour, house.Value) == false)
+                        { Game.SetError(new Error(268, $"{rumour.Text}, RumourID {rumour.RumourID}, failed to load (House History) -> Rumour Cancelled")); }
+                    }
+
+                    //Major Houses
                     if (house.Value is MajorHouse)
                     {
                         //
