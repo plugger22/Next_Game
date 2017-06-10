@@ -4784,15 +4784,16 @@ namespace Next_Game
                     if (house.GetNumExports() > 0)
                     {
                         goodsText = "signs of trade in ";
-                        List<Goods> listGoods = house.GetExports();
-                        for(int i = 0; i < listGoods.Count; i++)
+                        int[,] arrayOfExports = house.GetExports();
+                        int upper = arrayOfExports.GetUpperBound(0);
+                        for(int i = 0; i <= upper; i++)
                         {
-                            goodsText += $"{listGoods[i]}";
-                            if (listGoods.Count > 1)
+                            if (arrayOfExports[i, 0] > 0) { goodsText += $"{(Goods)i}"; }
+                            if (upper > 1)
                             {
-                                if (i < (listGoods.Count - 2))
+                                if (i < (upper - 2))
                                 { goodsText += ", "; }
-                                else if (i == (listGoods.Count - 2)) { goodsText += " and "; }
+                                else if (i == (upper - 2)) { goodsText += " and "; }
                             }
                         }
                     }

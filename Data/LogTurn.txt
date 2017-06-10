@@ -1,151 +1,17 @@
-//Exile Game File "LogTurn.txt" opened at: 09/06/2017 17:15:23
---- ProcessStartTurn (World.cs)
-Day 3, Turn 2, Harvest in 147 days, Winter in 162 days
-Usurper Hunfridus Martell, "The Stargazer", AtLocation, Eyrie
---- UpdateRumours (World.cs)
-dictRumoursTimed (Start) -> 90 records
-90 rumours -> TimerExpire decremented
---- MoveActors -> 1 Records (World.cs)
- [Move -> MoveObject] Inquisitor Brother Behemoth, ActID 125 travelling to The Shaggy Parrot (current Loc 17:14)
---- CheckIfFoundEnemy (World.cs)
- [Search -> Debug] Active Hunfridus Martell, ID 1 at 18:24, Enemy at 17:14 (Brother Behemoth, ID 125
---- UpdatePlayerStatus (World.cs)
-Usurper Hunfridus Martell is laying low at a safe house at Eyrie (3 stars)
---- UpdateWorldStatus (World.cs)
---- CheckFollowerActivity (World.cs)
-Follower The Crone, ActID 2, has no contact with the Player -> No rumours
-Follower The Beast, ActID 4, has no contact with the Player -> No rumours
-Follower The Spider, ActID 5, has no contact with the Player -> No rumours
-[Notification] Player in SafeHouse -> World events cancelled
---- CheckStationaryActiveActors (World.cs)
- [Search -> Stationary] Usurper Hunfridus Martell, ActID 1 is AtLocation
---- CheckIfFoundActive (World.cs)
- [Search -> Debug] Enemy, Brother Mantus, ID 123 at 17:13, Active Hunfridus Martell, ID 1, at 18:24
- [Search -> Debug] Enemy, Brother Adramalech, ID 124 at 17:13, Active Hunfridus Martell, ID 1, at 18:24
- [Search -> Debug] Enemy, Brother Behemoth, ID 125 at 17:15, Active Hunfridus Martell, ID 1, at 18:24
- [Search -> Debug] Enemy, Brother Gorgo, ID 126 at 17:13, Active Hunfridus Martell, ID 1, at 18:24
- [Search -> Debug] Enemy, The Unrelenting, ID 127 at 17:13, Active Hunfridus Martell, ID 1, at 18:24
- [Search -> Stationary] Follower The Crone, ActID 2 is AtLocation
- [Search -> Stationary] Follower The Beast, ActID 4 is AtLocation
- [Search -> Stationary] Follower The Spider, ActID 5 is AtLocation
---- UpdateAIController (World.cs)
- [AI -> Notification] Inquisitor Brother Behemoth, ActID 125 is Travelling to The Shaggy Parrot
- [AI -> Mode] enemyID 123,  distance -> 38  Threshold (turns) -> 4  Mode -> Normal
- [AI -> Mode] enemyID 124,  distance -> 38  Threshold (turns) -> 4  Mode -> Normal
- [AI -> Mode] enemyID 126,  distance -> 38  Threshold (turns) -> 4  Mode -> Normal
- [AI -> Mode] enemyID 127,  distance -> 38  Threshold (turns) -> 8  Mode -> Normal
---- SetEnemyActivity (World.cs)
- [Enemy -> Goal] Brother Mantus, ActID 123 retains Goal -> Wait
- [Enemy -> Goal] Brother Adramalech, ActID 124 retains Goal -> Wait
---- SetEnemyGoal (World.cs)
- [Goal -> Branch] Brother Gorgo, ActID 126 Assigned Branch -> 4 Current Branch -> 0
- [Enemy -> Goal] The Unrelenting, ActID 127 retains Goal -> Wait
---- CheckPlayerEvents (Director.cs)
-- CreateAutoLocEvent (Director.cs)
- [AutoEvent -> ActorList] "Raff Arryn", ID 37 added to list of Actors
- [AutoEvent -> ActorList] "Ser Farlen Reynoldus", ID 39 added to list of Actors
- [AutoEvent -> ActorList] "Christy Hodgkin", ID 40 added to list of Actors
- [AutoEvent -> ActorList] "Merrett Roley", ID 41 added to list of Actors
- [AutoEvent -> ActorList] "Jacquelin Hodgkin", ID 42 added to list of Actors
- [AutoEvent -> ActorList] "Beleite Arryn", ID 43 added to list of Actors
- [AutoEvent -> ActorList] "Varly Arryn", ID 44 added to list of Actors
- [AutoEvent -> LocalList] "Raff Arryn", ID 37 added to list of Locals
- [AutoEvent -> LocalList] "Ser Farlen Reynoldus", ID 39 added to list of Locals
- [AutoEvent -> AdvisorList] "Christy Hodgkin", ID 40 added to list of Advisors
- [AutoEvent -> AdvisorList] "Merrett Roley", ID 41 added to list of Advisors
- [AutoEvent -> AdvisorList] "Jacquelin Hodgkin", ID 42 added to list of Advisors
- [AutoEvent -> LocalList] "Beleite Arryn", ID 43 added to list of Locals
- [AutoEvent -> LocalList] "Varly Arryn", ID 44 added to list of Locals
---- ResolvePlayerEvents (Director.cs)
- Event "Safe House at Eyrie (3 stars)" Timer Repeat now 999
- Event "Safe House at Eyrie (3 stars)" Cooldown Timer has been reset to 0
---- UpdateActiveActors (World.cs)
- Usurper Hunfridus Martell has had their TurnsUnknown Timer increased from 0 to 1
- Follower The Crone has had their TurnsUnknown Timer increased from 1 to 2
- Follower The Beast has had their TurnsUnknown Timer increased from 1 to 2
- Follower The Spider has had their TurnsUnknown Timer increased from 1 to 2
---- ResolveOutcome (Director.cs)
---- ResolveFollowerEvents (Director.cs)
+//Exile Game file ops "LogTurn.txt" commenced at: 10/06/2017 11:47:02
+--- ProcessStartGame (World.cs)
+--- AgePassiveCharacters (History.cs)
+--- InitialiseGameVars (World.cs)
+[GameVar] View_Index changed from 0 to 1
+[AddVisitedLoc] LocID 32, "Last Hearth", turn -3 -> record added to listLocsVisited
+[AddVisitedLoc] LocID 32, "Last Hearth", turn -3 -> new record added to dictLocsVisited
+[AddVisitedLoc] LocID 4, "Stone Hedge", turn -2 -> record added to listLocsVisited
+[AddVisitedLoc] LocID 4, "Stone Hedge", turn -2 -> new record added to dictLocsVisited
+[AddVisitedLoc] LocID 16, "Widow's Watch", turn -1 -> record added to listLocsVisited
+[AddVisitedLoc] LocID 16, "Widow's Watch", turn -1 -> new record added to dictLocsVisited
+--- InitialiseFinalPlayer (World.cs)
+[AddVisitedLoc] LocID 20, "Hornvale", turn 0 -> record added to listLocsVisited
+[AddVisitedLoc] LocID 20, "Hornvale", turn 0 -> new record added to dictLocsVisited
 --- SetEndGame (Game.cs)
 [Alert] Player chose to exit (pressed 'X')
---- SetEndGame (Game.cs)
-[Alert] Player chose to exit (pressed 'X')
-//Exile Game file ops "LogTurn.txt" Completed at: 09/06/2017 17:19:01
- 0
---- CheckPlayerEvents (Director.cs)
-Location event, Need 0, roll 65
-- CreateAutoLocEvent (Director.cs)
- [AutoEvent -> ActorList] "Raff Arryn", ID 37 added to list of Actors
- [AutoEvent -> ActorList] "Ser Farlen Reynoldus", ID 39 added to list of Actors
- [AutoEvent -> ActorList] "Christy Hodgkin", ID 40 added to list of Actors
- [AutoEvent -> ActorList] "Merrett Roley", ID 41 added to list of Actors
- [AutoEvent -> ActorList] "Jacquelin Hodgkin", ID 42 added to list of Actors
- [AutoEvent -> ActorList] "Beleite Arryn", ID 43 added to list of Actors
- [AutoEvent -> ActorList] "Varly Arryn", ID 44 added to list of Actors
- [AutoEvent -> LocalList] "Raff Arryn", ID 37 added to list of Locals
- [AutoEvent -> LocalList] "Ser Farlen Reynoldus", ID 39 added to list of Locals
- [AutoEvent -> AdvisorList] "Christy Hodgkin", ID 40 added to list of Advisors
- [AutoEvent -> AdvisorList] "Merrett Roley", ID 41 added to list of Advisors
- [AutoEvent -> AdvisorList] "Jacquelin Hodgkin", ID 42 added to list of Advisors
- [AutoEvent -> LocalList] "Beleite Arryn", ID 43 added to list of Locals
- [AutoEvent -> LocalList] "Varly Arryn", ID 44 added to list of Locals
-[Notification] No entry found in dictOfIntroductions for RefID 6
- Chance of Player Location event 75 %
---- ResolvePlayerEvents (Director.cs)
- Trigger FAILED on "0" Equals 1
- Trigger: Player is wrong type of Known status -> Trigger failed
- Trigger FAILED on "0" Equals 1
- Trigger: Player is wrong type of Known status -> Trigger failed
- Trigger FAILED on "0" Equals 1
- Trigger: Player is wrong type of Known status -> Trigger failed
- Trigger FAILED on "0" Equals 1
- Trigger: Player is wrong type of Known status -> Trigger failed
- Event "What to do?" Timer Repeat now 999
- Event "What to do?" Cooldown Timer has been reset to 0
---- UpdateActiveActors (World.cs)
- Usurper Hunfridus Martell has had their TurnsUnknown Timer increased from 100 to 101
- Follower The Crone has had their TurnsUnknown Timer increased from 0 to 1
- Follower The Beast has had their TurnsUnknown Timer increased from 0 to 1
- Follower The Spider has had their TurnsUnknown Timer increased from 0 to 1
---- ResolveOutcome (Director.cs)
-- CreateAutoLocEvent (Director.cs)
- [AutoEvent -> ActorList] "Raff Arryn", ID 37 added to list of Actors
- [AutoEvent -> ActorList] "Ser Farlen Reynoldus", ID 39 added to list of Actors
- [AutoEvent -> ActorList] "Christy Hodgkin", ID 40 added to list of Actors
- [AutoEvent -> ActorList] "Merrett Roley", ID 41 added to list of Actors
- [AutoEvent -> ActorList] "Jacquelin Hodgkin", ID 42 added to list of Actors
- [AutoEvent -> ActorList] "Beleite Arryn", ID 43 added to list of Actors
- [AutoEvent -> ActorList] "Varly Arryn", ID 44 added to list of Actors
- [AutoEvent -> LocalList] "Raff Arryn", ID 37 added to list of Locals
- [AutoEvent -> LocalList] "Ser Farlen Reynoldus", ID 39 added to list of Locals
- [AutoEvent -> AdvisorList] "Christy Hodgkin", ID 40 added to list of Advisors
- [AutoEvent -> AdvisorList] "Merrett Roley", ID 41 added to list of Advisors
- [AutoEvent -> AdvisorList] "Jacquelin Hodgkin", ID 42 added to list of Advisors
- [AutoEvent -> LocalList] "Beleite Arryn", ID 43 added to list of Locals
- [AutoEvent -> LocalList] "Varly Arryn", ID 44 added to list of Locals
---- ResolvePlayerEvents (Director.cs)
- Trigger passed on "1" Equals 1
- Trigger FAILED on "0" Equals 1
- Trigger: Player is wrong type of Known status -> Trigger failed
- Trigger passed on "1" Equals 1
- Trigger FAILED on "0" Equals 1
- Trigger: Player is wrong type of Known status -> Trigger failed
- Event "What to do?" Timer Repeat now 999
- Event "What to do?" Cooldown Timer has been reset to 0
---- ResolveOutcome (Director.cs)
-Usurper Hunfridus Martell has found refuge in the safe house at Eyrie (3 stars)
---- MultiKeyInput (Game.cs)
-1 input
---- ProcessEndTurn (World.cs)
-Day 2, Turn 1
---- CheckEventTimers (Director.cs)
- Event "Search and Detain" Dormant Timer decremented to 19
---- InitialiseDynamicRumours (Director.cs)
-[Notification] Turn 1, generate new set of Relationship rumours on turn 21
---- HouseKeepActors (World.cs)
-[GameStat] "Location_Days" -> increased from 1 to 2
-[GameStat] "SafeHouse_Days" -> increased from 0 to 1
---- HousekeepRumours (World.cs)
-dictRumoursKnown has 3 records
-
-//Exile Game File "LogTurn.txt" Close completed at: 09/06/2017 17:15:23
+//Exile Game file ops "LogTurn.txt" Completed at: 10/06/2017 11:47:32

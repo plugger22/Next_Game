@@ -99,7 +99,6 @@ namespace Next_Game
             Game.StopTimer(timer_2, "W: InitialiseGeoClusters");
             timer_2.Start();
             InitialiseHouses();
-            InitialiseHouseData();
             Game.StopTimer(timer_2, "W: InitialiseHouses");
             timer_2.Start();
             InitialiseItems();
@@ -117,6 +116,7 @@ namespace Next_Game
             Game.history.InitialiseBeasts(Game.file.GetFollowers("Beasts.txt"));
             Game.StopTimer(timer_2, "W: InitialiseHistory");
             timer_2.Start();
+            InitialiseHouseData(); //needs to be before InitialiseDesires but after InitialiseOverthrow
             InitialiseConversionDicts(); //needs to be after history methods (above) & before InitialiseEnemyActors (below)
             InitialiseSecrets();
             InitialiseDesires();
@@ -1627,9 +1627,6 @@ namespace Next_Game
                     House house = GetHouse(loc.RefID);
                     if (!(house is CapitalHouse))
                     {
-                        //if a House Capital show in Yellow
-                        //if (Game.map.GetMapInfo(MapLayer.Capitals, loc.GetPosX(), loc.GetPosY()) > 0)
-
                         //ignore the capital and special locations for the moment until they are included in dictAllHouses
                         if (house != null)
                         {
@@ -1646,7 +1643,7 @@ namespace Next_Game
                                 RLColor loyaltyColor = Color._goodTrait;
                                 if (house.Loyalty_Current == KingLoyalty.New_King) { loyaltyColor = Color._badTrait; }
                                 locList.Add(new Snippet(string.Format("Loyal to the {0}", house.Loyalty_Current), loyaltyColor, RLColor.Black));
-                                
+
                                 if (house is MajorHouse)
                                 {
                                     MajorHouse majorHouse = house as MajorHouse;
@@ -1659,7 +1656,7 @@ namespace Next_Game
                                 //safehouse info
                                 if (house.SafeHouse > 0)
                                 {
-                                    displayColor = unknownColor;  if (house.GetInfoStatus(HouseInfo.SafeHouse) == true) { displayColor = knownColor; }
+                                    displayColor = unknownColor; if (house.GetInfoStatus(HouseInfo.SafeHouse) == true) { displayColor = knownColor; }
                                     locList.Add(new Snippet($"Safe House available ", displayColor, RLColor.Black, false));
                                     displayColor = unknownColor; if (house.GetInfoStatus(HouseInfo.SafeHouse) == true) { displayColor = RLColor.LightRed; }
                                     locList.Add(new Snippet(string.Format("{0}", GetStars(house.SafeHouse)), displayColor, RLColor.Black));
@@ -1676,8 +1673,10 @@ namespace Next_Game
                                 locList.Add(new Snippet(string.Format("{0}", GetStars((int)resources)), displayColor, RLColor.Black));
                                 //archetype info
                                 if (eventCount > 0)
-                                { locList.Add(new Snippet(string.Format("Archetype \"{0}\" with {1} events", Game.director.GetArchetypeName(house.ArcID), eventCount),
-                                      RLColor.LightGray, RLColor.Black)); }
+                                {
+                                    locList.Add(new Snippet(string.Format("Archetype \"{0}\" with {1} events", Game.director.GetArchetypeName(house.ArcID), eventCount),
+                                        RLColor.LightGray, RLColor.Black));
+                                }
                             }
                             else
                             {
@@ -1717,7 +1716,7 @@ namespace Next_Game
                         locList.Add(new Snippet(string.Format("{0}", GetStars(capitalWalls)), RLColor.LightRed, RLColor.Black));
                         locList.Add(new Snippet(string.Format("House Resources ({0}) ", (ResourceLevel)capitalResources), false));
                         locList.Add(new Snippet(string.Format("{0}", GetStars((int)capitalResources)), RLColor.LightRed, RLColor.Black));
-                        locList.Add(new Snippet($"Population: {house.Population} Harvest: {house.FoodCapacity} Food Balance: {house.FoodCapacity - house.Population:N0} Granary: {house.FoodStockpile}"));
+                        locList.Add(new Snippet($"Population: {house.Population:N0} Harvest: {house.FoodCapacity:N0} Food Balance: {house.FoodCapacity - house.Population:N0} Granary: {house.FoodStockpile:N0}"));
                     }
                     //imports & exports
                     if (house.GetNumImports() > 0 || house.GetNumExports() > 0)
@@ -1726,18 +1725,26 @@ namespace Next_Game
                         if (house.GetNumImports() > 0)
                         {
                             //imports
-                            List<Goods> tempImports = house.GetImports();
-                            for (int i = 0; i < tempImports.Count; i++)
-                            { tradeText += $"{tempImports[i]} "; }
+                            int[,] tempImports = house.GetImports();
+                            for (int i = 0; i <= tempImports.GetUpperBound(0); i++)
+                            {
+                                //at least one present and is known
+                                if (tempImports[i, 0] > 0 && tempImports[i, 1] > 0)
+                                { tradeText += $"{(Goods)i} "; }
+                            }
                             locList.Add(new Snippet($"Imports -> {tradeText}"));
                         }
                         if (house.GetNumExports() > 0)
                         {
                             //exports
                             tradeText = "";
-                            List<Goods> tempExports = house.GetExports();
-                            for (int i = 0; i < tempExports.Count; i++)
-                            { tradeText += $"{tempExports[i]} "; }
+                            int[,] tempExports = house.GetExports();
+                            for (int i = 0; i <= tempExports.GetUpperBound(0); i++)
+                            {
+                                //at least one present and is known
+                                if (tempExports[i, 0] > 0 && tempExports[i, 1] > 0)
+                                { tradeText += $"{(Goods)i} "; }
+                            }
                             locList.Add(new Snippet($"Exports -> {tradeText}"));
                         }
                     }
@@ -7460,38 +7467,43 @@ namespace Next_Game
                     else { tally += 1; arrayTradeData[(int)Goods.Food] += 1; }
                 }
                 //goods -> exports as food is the only import and it's already been catered for
+                Goods good = Goods.None;
                 if (house.Value.GetNumExports() > 0)
                 {
-                    List<Goods> tempGoods = house.Value.GetExports();
-                    foreach(Goods good in tempGoods)
+                    int[,] tempGoods = house.Value.GetExports();
+                    for(int i = 0; i < tempGoods.GetUpperBound(0); i++)
                     {
-                        //different goods have different effects
-                        switch (good)
+                        if (tempGoods[i, 0] > 0)
                         {
-                            case Goods.Gold:
-                                tally += 3;
-                                arrayTradeData[(int)Goods.Gold] += 1;
-                                break;
-                            case Goods.Wine:
-                                tally += 2;
-                                arrayTradeData[(int)Goods.Wine] += 1;
-                                break;
-                            case Goods.Furs:
-                                tally += 1;
-                                arrayTradeData[(int)Goods.Furs] += 1;
-                                break;
-                            case Goods.Oil:
-                                tally += 1;
-                                arrayTradeData[(int)Goods.Oil] += 1;
-                                break;
-                            case Goods.Iron:
-                                tally += 1;
-                                arrayTradeData[(int)Goods.Iron] += 1;
-                                break;
-                            case Goods.Timber:
-                                tally += 1;
-                                arrayTradeData[(int)Goods.Timber] += 1;
-                                break;
+                            good = (Goods)i;
+                            //different goods have different effects
+                            switch (good)
+                            {
+                                case Goods.Gold:
+                                    tally += 3;
+                                    arrayTradeData[(int)Goods.Gold] += 1;
+                                    break;
+                                case Goods.Wine:
+                                    tally += 2;
+                                    arrayTradeData[(int)Goods.Wine] += 1;
+                                    break;
+                                case Goods.Furs:
+                                    tally += 1;
+                                    arrayTradeData[(int)Goods.Furs] += 1;
+                                    break;
+                                case Goods.Oil:
+                                    tally += 1;
+                                    arrayTradeData[(int)Goods.Oil] += 1;
+                                    break;
+                                case Goods.Iron:
+                                    tally += 1;
+                                    arrayTradeData[(int)Goods.Iron] += 1;
+                                    break;
+                                case Goods.Timber:
+                                    tally += 1;
+                                    arrayTradeData[(int)Goods.Timber] += 1;
+                                    break;
+                            }
                         }
                     }
                 }
