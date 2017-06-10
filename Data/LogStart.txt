@@ -1,4 +1,4 @@
-//Exile Game file ops "LogStart.txt" commenced at: 10/06/2017 14:50:42
+//Exile Game file ops "LogStart.txt" commenced at: 10/06/2017 17:25:43
 --- Initialise Constants (FileImport.cs)
 INHERIT_TRAIT -> 50 Min 0 Max 100
 CHILDBIRTH_DEATH -> 15 Min 0 Max 100
@@ -85,17 +85,17 @@ ENEMY_RUMOURS -> 50 Min 10 Max 90
 ENEMY_RUMOUR_TIME -> 3 Min 2 Max 6
 REL_RUMOUR_TIME -> 20 Min 5 Max 30
 ERROR_29 "Location Deleted 22:18"
-Method: LocationSweeper,  Line: 1675,  Object: Map.cs,  Turn: 0,  Local Time: 14:50:42 UTC +10:00
+Method: LocationSweeper,  Line: 1675,  Object: Map.cs,  Turn: 0,  Local Time: 17:25:43 UTC +10:00
 ERROR_29 "Location Deleted 24:21"
-Method: LocationSweeper,  Line: 1675,  Object: Map.cs,  Turn: 0,  Local Time: 14:50:42 UTC +10:00
+Method: LocationSweeper,  Line: 1675,  Object: Map.cs,  Turn: 0,  Local Time: 17:25:43 UTC +10:00
 ERROR_29 "Location Deleted 29:22"
-Method: LocationSweeper,  Line: 1675,  Object: Map.cs,  Turn: 0,  Local Time: 14:50:42 UTC +10:00
+Method: LocationSweeper,  Line: 1675,  Object: Map.cs,  Turn: 0,  Local Time: 17:25:43 UTC +10:00
 ERROR_29 "Location Deleted 27:23"
-Method: LocationSweeper,  Line: 1675,  Object: Map.cs,  Turn: 0,  Local Time: 14:50:42 UTC +10:00
+Method: LocationSweeper,  Line: 1675,  Object: Map.cs,  Turn: 0,  Local Time: 17:25:43 UTC +10:00
 ERROR_29 "Location Deleted 19:24"
-Method: LocationSweeper,  Line: 1675,  Object: Map.cs,  Turn: 0,  Local Time: 14:50:42 UTC +10:00
+Method: LocationSweeper,  Line: 1675,  Object: Map.cs,  Turn: 0,  Local Time: 17:25:43 UTC +10:00
 ERROR_29 "Location Deleted 21:29"
-Method: LocationSweeper,  Line: 1675,  Object: Map.cs,  Turn: 0,  Local Time: 14:50:42 UTC +10:00
+Method: LocationSweeper,  Line: 1675,  Object: Map.cs,  Turn: 0,  Local Time: 17:25:43 UTC +10:00
 --- InitialiseHouseLocations (Network.cs)
 Total Locations (excluding Capital) 25
 Number of Houses 8, Max Cap on House Numbers 8
@@ -1948,5 +1948,5 @@ FoodCropEduc -> 14 records imported
 FoodCropUned -> 10 records imported
 FoodHuntEduc -> 6 records imported
 FoodHuntUned -> 10 records imported
-//Exile Game file ops "LogStart.txt" Completed at: 10/06/2017 14:54:22
-//Elapsed Time 977 ms
+//Exile Game file ops "LogStart.txt" Completed at: 10/06/2017 17:25:44
+//Elapsed Time 33 ms

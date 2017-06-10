@@ -1721,7 +1721,6 @@ namespace Next_Game
                     //imports & exports
                     if (house.GetNumImports() > 0 || house.GetNumExports() > 0)
                     {
-                        string tradeText = "";
                         int upper;
                         bool newLine;
                         //Imports
@@ -1882,7 +1881,7 @@ namespace Next_Game
             if (refID > 0)
             { House house = GetHouse(refID); majorHouse = house as MajorHouse; }
             else
-            { Game.SetError(new Error(36, "Invalid input data (houseID and refID are both Zero, or less)")); return null; }
+            { Game.SetError(new Error(36, "Invalid input RefID (zero, or less)")); return null; }
             List<Snippet> houseList = new List<Snippet>();
             if (majorHouse != null)
             {
@@ -2059,21 +2058,110 @@ namespace Next_Game
         /// <returns></returns>
         internal List<Snippet> ShowMinorHouseRL(int refID)
         {
-            MajorHouse majorHouse = null;
-            //check input type
-            if (houseID > 0)
-            {
-                majorHouse = GetMajorHouse(houseID);
-            }
-            else if (refID > 0)
-            {
-                House house = GetHouse(refID); majorHouse = house as MajorHouse;
-            }
+            MinorHouse minorHouse = null;
+            if (refID > 0)
+            { House house = GetHouse(refID); minorHouse = house as MinorHouse; }
             else
-            {
-                Game.SetError(new Error(36, "Invalid input data (houseID and refID are both Zero, or less)")); return null;
-            }
+            { Game.SetError(new Error(306, "Invalid input RefID (Zero, or less)")); return null; }
             List<Snippet> houseList = new List<Snippet>();
+            if (minorHouse != null)
+            {
+                //details
+                houseList.Add(new Snippet("House " + minorHouse.Name, RLColor.Yellow, RLColor.Black));
+                string motto = string.Format("Motto \"{0}\"", minorHouse.Motto);
+                houseList.Add(new Snippet(motto));
+                string banner = string.Format("Banner \"{0}\"", minorHouse.Banner);
+                houseList.Add(new Snippet(banner));
+                string seat = string.Format("Seated at {0} {1}", minorHouse.LocName, GetLocationCoords(minorHouse.LocID));
+                houseList.Add(new Snippet(seat));
+                string loyalty = string.Format("Loyal to the {0} (originally: {1})", minorHouse.Loyalty_Current, minorHouse.Loyalty_AtStart);
+                houseList.Add(new Snippet(loyalty));
+                string population = string.Format("Populatinn {0:N0} at {1}", minorHouse.Population, minorHouse.LocName);
+                houseList.Add(new Snippet(population));
+                houseList.Add(new Snippet($"Can call upon {minorHouse.MenAtArms:N0} Men At Arms"));
+                houseList.Add(new Snippet(string.Format("Strength of Castle Walls ({0}) ", (CastleDefences)minorHouse.CastleWalls), false));
+                houseList.Add(new Snippet(string.Format("{0}", GetStars(minorHouse.CastleWalls)), RLColor.LightRed, RLColor.Black));
+                houseList.Add(new Snippet(string.Format("House Resources ({0}) ", (ResourceLevel)minorHouse.Resources), false));
+                houseList.Add(new Snippet(string.Format("{0}", GetStars((int)minorHouse.Resources)), RLColor.LightRed, RLColor.Black));
+                //bannerlords
+                int food = minorHouse.FoodCapacity; int granary = minorHouse.FoodStockpile; int popTotal = minorHouse.Population;
+                //Food and pop realm summary
+                food = minorHouse.FoodCapacity; popTotal = minorHouse.Population; granary = minorHouse.FoodStockpile;
+                houseList.Add(new Snippet($"Population: {popTotal:N0} Harvest: {food:N0} Food Balance: {food - popTotal:N0} Realm Granary: {granary:N0}"));
+                //family - get list of all actorID's in family
+                houseList.Add(new Snippet("Family", RLColor.Brown, RLColor.Black));
+                List<int> listOfFamily = new List<int>();
+                refID = minorHouse.RefID;
+                IEnumerable<int> familyMembers =
+                    from person in dictPassiveActors
+                    where person.Value.RefID == refID && person.Value is BannerLord
+                    orderby person.Value.ActID
+                    select person.Value.ActID;
+                listOfFamily = familyMembers.ToList();
+                //loop list and display each actor appropriately (dead, or missing, in Lt.Gray)
+                string personText;
+                string actorType;
+                foreach (int actorID in listOfFamily)
+                {
+                    Passive person = GetPassiveActor(actorID);
+                    if ((int)person.Office > 0) { actorType = Convert.ToString(person.Office); }
+                    else { actorType = Convert.ToString(person.Type); }
+                    personText = string.Format("Aid {0} {1} {2}, age {3}, ", person.ActID, actorType, person.Name, person.Age);
+                    //valid actor?
+                    if (person.Name != null)
+                    {
+                        RLColor locColor = RLColor.White;
+                        string locString = "?";
+                        //location descriptor
+                        switch (person.Status)
+                        {
+                            case ActorStatus.AtLocation:
+                                locString = string.Format("at {0} {1}", GetLocationName(person.LocID), GetLocationCoords(person.LocID));
+                                break;
+                            case ActorStatus.Travelling:
+                                Position pos = person.GetActorPosition();
+                                locString = string.Format("travelling to {0} {1}", GetLocationName(person.LocID), GetLocationCoords(person.LocID));
+                                break;
+                            case ActorStatus.Gone:
+                                locString = string.Format("Passed away ({0}) in {1}", person.ReasonGone, person.Gone);
+                                locColor = RLColor.LightGray;
+                                break;
+                        }
+                        houseList.Add(new Snippet(personText + locString, locColor, RLColor.Black));
+                    }
+                }
+                //Relationships
+                /*List<Relation> tempListRelations = minorHouse.GetRelations();
+                if (tempListRelations != null && tempListRelations.Count > 0)
+                {
+                    houseList.Add(new Snippet("Relations with Other Houses", RLColor.Brown, RLColor.Black));
+                    //display relations in chronological order
+                    IEnumerable<Relation> relOrdered =
+                        from relation in tempListRelations
+                        orderby relation.Year
+                        select relation;
+                    List<Relation> tempRelRecords = relOrdered.ToList();
+                    //add snippets
+                    RLColor foreColor;
+                    string relText;
+                    foreach (var relation in tempRelRecords)
+                    {
+                        if (relation.Known == true) { foreColor = RLColor.White; }
+                        else { foreColor = RLColor.LightGray; }
+                        relText = string.Format("{0}  {1} {2}, \"{3}\", Rel {4}{5}", relation.Year, relation.RefID >= 100 ? "(Minor)" : "(Major)",
+                        GetHouseName(relation.RefID), relation.Text, relation.Change > 0 ? "+" : "", relation.Change);
+                        houseList.Add(new Snippet(relText, foreColor, RLColor.Black));
+                    }
+                }*/
+                //house history
+                List<string> houseHistory = GetHistoricalHouseRecords(minorHouse.RefID);
+                if (houseHistory.Count > 0)
+                {
+                    houseList.Add(new Snippet("House History", RLColor.Brown, RLColor.Black));
+                    foreach (string text in houseHistory)
+                    { houseList.Add(new Snippet(text)); }
+                }
+            }
             return houseList;
         }
 
@@ -7544,7 +7632,7 @@ namespace Next_Game
                                 case Goods.Gold:
                                     tally += 3;
                                     arrayTradeData[(int)Goods.Gold] += 1;
-                                    descriptor = $"Rich Veins of Gold mined from withinthe nearby mountains provide a significant boost to the economy";
+                                    descriptor = $"Rich Veins of Gold mined from within the nearby mountains provide a significant boost to the economy";
                                     break;
                                 case Goods.Wine:
                                     tally += 2;

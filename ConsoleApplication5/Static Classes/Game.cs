@@ -470,7 +470,7 @@ namespace Next_Game
                                                 //int houseID = map.GetMapInfo(MapLayer.HouseID, mouse.X, mouse.Y, true);
                                                 int refID = map.GetMapInfo(MapLayer.RefID, mouse.X, mouse.Y, true);
                                                 //int locID = map.GetMapInfo(MapLayer.LocID, mouse.X, mouse.Y, true);
-                                                if (refID == 9999 { infoChannel.SetInfoList(world.ShowCapitalRL(), ConsoleDisplay.Multi); }
+                                                if (refID == 9999) { infoChannel.SetInfoList(world.ShowCapitalRL(), ConsoleDisplay.Multi); }
                                                 else if (refID < 100) { infoChannel.SetInfoList(world.ShowMajorHouseRL(refID), ConsoleDisplay.Multi); }
                                                 else if (refID > 100 && refID < 1000) { infoChannel.SetInfoList(world.ShowMinorHouseRL(refID), ConsoleDisplay.Multi); }
                                             }
@@ -754,7 +754,7 @@ namespace Next_Game
                                         infoChannel.InsertHeader(new Snippet("--- all KINGDOM EVENTS", RLColor.Yellow, RLColor.Black), ConsoleDisplay.Multi);
                                         break;
                                     case MenuMode.Debug:
-                                        infoChannel.SetInfoList(world.ShowMajorHouseRL(0, lore.OldKing.RefID), ConsoleDisplay.Multi);
+                                        infoChannel.SetInfoList(world.ShowMajorHouseRL(lore.OldKing.RefID), ConsoleDisplay.Multi);
                                         break;
                                     case MenuMode.God:
                                         infoChannel.SetInfoList(world.GodChangeKnownStatus(), ConsoleDisplay.Input);
