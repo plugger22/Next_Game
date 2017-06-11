@@ -57,7 +57,7 @@ namespace Next_Game
             listTempEnemyActors = new List<ActorSpy>();
             listHorses = new List<HorseRecord>();
             arrayAI = new int[3, 5];
-            arrayTradeData = new int[9];
+            arrayTradeData = new int[(int)Goods.Count];
             messageQueue = new Queue<Snippet>();
             dictActiveActors = new Dictionary<int, Active>();
             dictPassiveActors = new Dictionary<int, Passive>();
@@ -1607,7 +1607,6 @@ namespace Next_Game
         /// <param name="pos"></param>
         internal List<Snippet> ShowLocationRL(int locID, int mouseX, int mouseY)
         {
-
             int relFriends = Game.constant.GetValue(Global.FRIEND_THRESHOLD);
             int relEnemies = Game.constant.GetValue(Global.ENEMY_THRESHOLD);
             int numFriends = 0; int numEnemies = 0; int relPlyr = 0;
@@ -1721,12 +1720,13 @@ namespace Next_Game
                     //imports & exports
                     if (house.GetNumImports() > 0 || house.GetNumExports() > 0)
                     {
-                        int upper;
+                        int upper, sumGoods;
                         bool newLine;
                         //Imports
                         int numGoods = house.GetNumImports();
                         if (numGoods > 0)
                         {
+                            sumGoods = 0;
                             locList.Add(new Snippet("Imports -> ", false));
                             int[,] tempImports = house.GetImports();
                             upper = tempImports.GetUpperBound(0);
@@ -1735,11 +1735,12 @@ namespace Next_Game
                                 //at least one present and is known
                                 if (tempImports[i, 0] > 0)
                                 {
+                                    sumGoods++;
                                     displayColor = unknownColor;
                                     if (tempImports[i, 1] > 0) { displayColor = knownColor; }
                                     newLine = true;
-                                    if (i < numGoods) { newLine = false; }
-                                    locList.Add(new Snippet($"{(Goods)i} ", displayColor, RLColor.Black, newLine));
+                                    if (sumGoods < numGoods) { newLine = false; }
+                                    locList.Add(new Snippet($"{(Goods)i} x {tempImports[i, 0]} ", displayColor, RLColor.Black, newLine));
                                 }
                             }
                         }
@@ -1747,6 +1748,7 @@ namespace Next_Game
                         numGoods = house.GetNumExports();
                         if (numGoods > 0)
                         {
+                            sumGoods = 0;
                             locList.Add(new Snippet("Exports -> ", false));
                             int[,] tempExports = house.GetExports();
                             upper = tempExports.GetUpperBound(0);
@@ -1755,11 +1757,12 @@ namespace Next_Game
                                 //at least one present and is known
                                 if (tempExports[i, 0] > 0)
                                 {
+                                    sumGoods++;
                                     displayColor = unknownColor;
                                     if (tempExports[i, 1] > 0) { displayColor = knownColor; }
                                     newLine = true;
-                                    if (i < numGoods) { newLine = false; }
-                                    locList.Add(new Snippet($"{(Goods)i} ", displayColor, RLColor.Black, newLine));
+                                    if (sumGoods < numGoods) { newLine = false; }
+                                    locList.Add(new Snippet($"{(Goods)i} x {tempExports[i, 0]} ", displayColor, RLColor.Black, newLine));
                                 }
                             }
                         }
@@ -7548,7 +7551,7 @@ namespace Next_Game
                     house.Value.Population = house.Value.MenAtArms * popFactor * 3;
                 }
                 //
-                //food production capacity
+                //Goods & food production capacity
                 //
                 Location loc = Game.network.GetLocation(house.Value.LocID);
                 if (loc != null)
@@ -7768,6 +7771,32 @@ namespace Next_Game
                     SetHistoricalRecord(record);
                 }
             }
+            //
+            // Capital Imports (all exports other than Capitals)
+            //
+            CapitalHouse capitalHouse = GetCapital();
+            int existing;
+            if (capitalHouse != null)
+            {
+                int[,] arrayCapitalImports = capitalHouse.GetImports();
+                int[,] arrayCapitalExports = capitalHouse.GetExports();
+                //should be of identical lengths (use GetUpperBound for both as apples for apples)
+                if (arrayCapitalExports.GetUpperBound(0) == arrayTradeData.GetUpperBound(0))
+                {
+                    Game.logStart?.Write($"- Capital Imports");
+                    for (int i = 1; i < arrayTradeData.Length; i++)
+                    {
+                        //all other house exports become capital imports
+                        existing = arrayCapitalExports[i, 0];
+                        arrayCapitalImports[i, 0] += arrayTradeData[i] - arrayCapitalExports[i, 0];
+                        arrayCapitalImports[i, 0] = Math.Max(0, arrayCapitalImports[i, 0]);
+                        Game.logStart?.Write($"{(Goods)i} x {arrayCapitalImports[i, 0]}");
+                    }
+                }
+                else { Game.SetError(new Error(303, "Array lengths don't match, ArrayCapitalImports & arrayTradeData -> Capital Imports not calculated")); }
+            }
+            else { Game.SetError(new Error(303, "Invalid capitalHouse (null)")); }
+
         }
 
         /// <summary>

@@ -122,12 +122,16 @@ namespace Next_Game
             if (arrayOfExports[(int)good, 1] > 0) { return true; }
             else { return false; }
         }
-        
+
+        /// <summary>
+        /// returns number of unique Exports (ignores 3 of one type -> treats as one)
+        /// </summary>
+        /// <returns></returns>
         public int GetNumExports()
         {
             int sumOfExports = 0;
-            for (int i = 0; i <= arrayOfExports.GetUpperBound(0); i++)
-            { sumOfExports += arrayOfExports[i, 0]; }
+            for (int i = 1; i <= arrayOfExports.GetUpperBound(0); i++)
+            { if (arrayOfExports[i, 0] > 0) { sumOfExports++; } }
             return sumOfExports;
         }
 
@@ -164,11 +168,15 @@ namespace Next_Game
             else { return false; }
         }
 
+        /// <summary>
+        /// returns number of unique Imports (ignores 3 of one type -> treats as one)
+        /// </summary>
+        /// <returns></returns>
         public int GetNumImports()
         {
             int sumOfImports = 0;
-            for (int i = 0; i <= arrayOfImports.GetUpperBound(0); i++)
-            { sumOfImports += arrayOfImports[i, 0]; }
+            for (int i = 1; i <= arrayOfImports.GetUpperBound(0); i++)
+            { if (arrayOfImports[i, 0] > 0) { sumOfImports++; } }
             return sumOfImports;
         }
 
