@@ -1,4 +1,4 @@
-//Exile Game file ops "LogStart.txt" commenced at: 11/06/2017 17:21:29
+//Exile Game file ops "LogStart.txt" commenced at: 11/06/2017 18:54:18
 --- Initialise Constants (FileImport.cs)
 INHERIT_TRAIT -> 50 Min 0 Max 100
 CHILDBIRTH_DEATH -> 15 Min 0 Max 100
@@ -85,7 +85,7 @@ ENEMY_RUMOURS -> 50 Min 10 Max 90
 ENEMY_RUMOUR_TIME -> 3 Min 2 Max 6
 REL_RUMOUR_TIME -> 20 Min 5 Max 30
 ERROR_29 "Location Deleted 5:27"
-Method: LocationSweeper,  Line: 1675,  Object: Map.cs,  Turn: 0,  Local Time: 17:21:29 UTC +10:00
+Method: LocationSweeper,  Line: 1675,  Object: Map.cs,  Turn: 0,  Local Time: 18:54:18 UTC +10:00
 --- InitialiseHouseLocations (Network.cs)
 Total Locations (excluding Capital) 25
 Number of Houses 8, Max Cap on House Numbers 8
@@ -1703,15 +1703,16 @@ Escape Challenge (Stealth)
 [Rumour -> Added] RID 307, "It is well known among Traders that House Capital, at Kingskeep, regularly needs to Import Wine to meet demand" -> dict & List
 [Rumour -> Added] RID 308, "It is well known among Traders that House Capital, at Kingskeep, conducts a brisk Export trade in Timber" -> dict & List
 [Rumour -> Added] RID 309, "There is a scribe who can recall the history of House Capital, at Kingskeep" -> dict & List
-[Rumour -> Added] RID 310, "It is well known among Traders that House The Clumsy Hog, at The Clumsy Hog, conducts a brisk Export trade in Food" -> dict & List
-[Rumour -> Added] RID 311, "It is well known among Traders that House The Shaggy Parrot, at The Shaggy Parrot, conducts a brisk Export trade in Food" -> dict & List
-[Rumour -> Added] RID 312, "It is well known among Traders that House The Raucous Rat, at The Raucous Rat, conducts a brisk Export trade in Food" -> dict & List
-[Rumour -> Added] RID 313, "It is well known among Traders that House The Pickled Prune, at The Pickled Prune, conducts a brisk Export trade in Food" -> dict & List
-[Rumour -> Added] RID 314, "It is well known among Traders that House The Pickled Prune, at The Pickled Prune, conducts a brisk Export trade in Wool" -> dict & List
-[Rumour -> Added] RID 315, "It is well known among Traders that House Caron, at Eyrie, regularly needs to Import Food to meet demand" -> dict & List
-[Rumour -> Added] RID 316, "It is well known among Traders that House Caron, at Eyrie, conducts a brisk Export trade in Furs" -> dict & List
-[Rumour -> Added] RID 317, "There is a scribe who can recall the history of House Caron, at Eyrie" -> dict & List
-[Rumour -> Added] RID 318, "It is rumoured that you have no Friends and many Enemies at Eyrie (House Caron)" -> dict & List
+[Rumour -> Added] RID 310, "It is said that you have no Friends and many Enemies at Kingskeep (House Capital)" -> dict & List
+[Rumour -> Added] RID 311, "It is well known among Traders that House The Clumsy Hog, at The Clumsy Hog, conducts a brisk Export trade in Food" -> dict & List
+[Rumour -> Added] RID 312, "It is well known among Traders that House The Shaggy Parrot, at The Shaggy Parrot, conducts a brisk Export trade in Food" -> dict & List
+[Rumour -> Added] RID 313, "It is well known among Traders that House The Raucous Rat, at The Raucous Rat, conducts a brisk Export trade in Food" -> dict & List
+[Rumour -> Added] RID 314, "It is well known among Traders that House The Pickled Prune, at The Pickled Prune, conducts a brisk Export trade in Food" -> dict & List
+[Rumour -> Added] RID 315, "It is well known among Traders that House The Pickled Prune, at The Pickled Prune, conducts a brisk Export trade in Wool" -> dict & List
+[Rumour -> Added] RID 316, "It is well known among Traders that House Caron, at Eyrie, regularly needs to Import Food to meet demand" -> dict & List
+[Rumour -> Added] RID 317, "It is well known among Traders that House Caron, at Eyrie, conducts a brisk Export trade in Furs" -> dict & List
+[Rumour -> Added] RID 318, "There is a scribe who can recall the history of House Caron, at Eyrie" -> dict & List
+[Rumour -> Added] RID 319, "It is known that you have no Friends and many Enemies at Eyrie (House Caron)" -> dict & List
 --- InitialiseViewTexts (Director.cs)
 JusticeNeutralEduc -> 2 records imported
 JusticeNeutralUned -> 4 records imported
@@ -1759,5 +1760,5 @@ FoodCropEduc -> 14 records imported
 FoodCropUned -> 10 records imported
 FoodHuntEduc -> 6 records imported
 FoodHuntUned -> 10 records imported
-//Exile Game file ops "LogStart.txt" Completed at: 11/06/2017 17:21:30
-//Elapsed Time 826 ms
+//Exile Game file ops "LogStart.txt" Completed at: 11/06/2017 18:54:19
+//Elapsed Time 965 ms

@@ -4525,6 +4525,16 @@ namespace Next_Game
                     }
                     else { Game.SetError(new Error(272, $"Rumour Type doesn't match Rumour class (HouseHistory) -> House History not made Known, RumourID {rumour.RumourID}")); }
                     break;
+                case RumourType.Military:
+                    if (rumour is RumourMilitary)
+                    {
+                        House house = Game.world.GetHouse(rumour.RefID);
+                        if (house != null)
+                        { house.SetInfoStatus(HouseInfo.Military); }
+                        else { Game.SetError(new Error(272, $"Invalid house (null) for rumour.RefID {rumour.RefID} -> HouseMilitary not made Known")); }
+                    }
+                    else { Game.SetError(new Error(272, $"Rumour Type doesn't match Rumour class (Military) -> Men At Arms not made Known, RumourID {rumour.RumourID}")); }
+                    break;
                 case RumourType.Desire:
                     if (rumour is RumourDesire)
                     {
@@ -5354,7 +5364,7 @@ namespace Next_Game
                         }
                     }
                     //
-                    //House History -> one rumour unlocks all (not for Inns)
+                    //House History -> one rumour unlocks all (not for Inns) -> Local
                     //
                     if (house.Value.Special == HouseSpecial.None)
                     {
@@ -5365,12 +5375,23 @@ namespace Next_Game
                         if (AddRumour(rumour, house.Value) == false)
                         { Game.SetError(new Error(268, $"{rumour.Text}, RumourID {rumour.RumourID}, failed to load (House History) -> Rumour Cancelled")); }
                     }
-
-                    //Major Houses
-                    if (house.Value is MajorHouse)
+                    //
+                    //Men At Arms -> Local
+                    //
+                    if (house.Value.Special == HouseSpecial.None)
+                    {
+                        strength = 5;
+                        rumourText = $"A levy solider of House {house.Value.Name}, at {house.Value.LocName} provides a good estimate of the available Men At Arms";
+                        RumourMilitary rumour = new RumourMilitary(rumourText, strength, RumourScope.Local, rnd.Next(20) * -1) { RefID = house.Value.RefID };
+                        //add to dictionary and global list
+                        if (AddRumour(rumour, house.Value) == false)
+                        { Game.SetError(new Error(268, $"{rumour.Text}, RumourID {rumour.RumourID}, failed to load (House History) -> Rumour Cancelled")); }
+                    }
+                    //Major Houses & Capital
+                    if (house.Value is MajorHouse || house.Value is CapitalHouse)
                     {
                         //
-                        //Friends and Enemies -> (one per Major House if any exist, Capital excluded as auto known -> Global.Branches)
+                        //Friends and Enemies -> (one per Major House if any exist -> Global.Branches)
                         //
                         Location loc = Game.network.GetLocation(house.Value.LocID);
                         if (loc != null)
@@ -5423,67 +5444,71 @@ namespace Next_Game
                             }
                         }
                         else { Game.SetError(new Error(268, $"Invalid Location (null) from LocID {house.Value.LocID}")); }
-                        //
-                        //Past History between Major Houses -> other Major Houses and their Minor Houses (one entry per relationship, global.Branch)
-                        //
-                        List<Relation> listOfHouseRelationships = house.Value.GetRelations();
-                        if (listOfHouseRelationships != null)
+                        //Major Houses only
+                        if (house.Value is MajorHouse)
                         {
-                            if (listOfHouseRelationships.Count > 0)
+                            //
+                            //Past History between Major Houses -> other Major Houses and their Minor Houses (one entry per relationship, global.Branch)
+                            //
+                            List<Relation> listOfHouseRelationships = house.Value.GetRelations();
+                            if (listOfHouseRelationships != null)
                             {
-                                //House who the relationship is From
-                                House houseFrom = Game.world.GetHouse(house.Value.RefID);
-                                if (houseFrom != null)
+                                if (listOfHouseRelationships.Count > 0)
                                 {
-                                    foreach (var relationship in listOfHouseRelationships)
+                                    //House who the relationship is From
+                                    House houseFrom = Game.world.GetHouse(house.Value.RefID);
+                                    if (houseFrom != null)
                                     {
-                                        //get house who the relationship is with (relationship To..)
-                                        House houseTo = Game.world.GetHouse(relationship.RefID);
-                                        if (houseTo != null)
+                                        foreach (var relationship in listOfHouseRelationships)
                                         {
-                                            rumourText = "";
-                                            //generate rumour text
-                                            switch (relationship.Type)
+                                            //get house who the relationship is with (relationship To..)
+                                            House houseTo = Game.world.GetHouse(relationship.RefID);
+                                            if (houseTo != null)
                                             {
-                                                case RelListType.HousePastGood:
-                                                    rumourText = $"House {houseFrom.Name} has had good past relations with House {houseTo.Name} due to {relationship.Rumour}";
-                                                    break;
-                                                case RelListType.HousePastBad:
-                                                    rumourText = $"House {houseFrom.Name} has had poor past relations with House {houseTo.Name} due to {relationship.Rumour}";
-                                                    break;
-                                                case RelListType.BannerPastGood:
-                                                    rumourText = $"House {houseFrom.Name} has had good past relations with their BannerLord at House {houseTo.Name} due to {relationship.Rumour}";
-                                                    break;
-                                                case RelListType.BannerPastBad:
-                                                    rumourText = $"House {houseFrom.Name} has had poor past relations with their BannerLord at House {houseTo.Name} due to {relationship.Rumour}";
-                                                    break;
-                                                default:
-                                                    Game.SetError(new Error(268, $"Invalid relationship.Type \"{relationship.Type}\""));
-                                                    break;
-                                            }
-                                            //is there a rumour to create?
-                                            if (rumourText.Length > 0)
-                                            {
-                                                branch = houseFrom.Branch;
-                                                if (branch >= 0 && branch < 5)
+                                                rumourText = "";
+                                                //generate rumour text
+                                                switch (relationship.Type)
                                                 {
-                                                    strength = 2;
-                                                    RumourHouseRel rumour = new RumourHouseRel(rumourText, strength, RumourScope.Global, rnd.Next(100) * -1, (RumourGlobal)branch)
-                                                    { RefID = houseFrom.RefID, HouseToRefID = houseTo.RefID, TrackerID = relationship.TrackerID };
-                                                    //add to dictionary and global list
-                                                    if (AddRumour(rumour) == false)
-                                                    { Game.SetError(new Error(268, $"{rumour.Text}, RumourID {rumour.RumourID}, failed to load (HouseRel) -> Rumour Cancelled")); }
+                                                    case RelListType.HousePastGood:
+                                                        rumourText = $"House {houseFrom.Name} has had good past relations with House {houseTo.Name} due to {relationship.Rumour}";
+                                                        break;
+                                                    case RelListType.HousePastBad:
+                                                        rumourText = $"House {houseFrom.Name} has had poor past relations with House {houseTo.Name} due to {relationship.Rumour}";
+                                                        break;
+                                                    case RelListType.BannerPastGood:
+                                                        rumourText = $"House {houseFrom.Name} has had good past relations with their BannerLord at House {houseTo.Name} due to {relationship.Rumour}";
+                                                        break;
+                                                    case RelListType.BannerPastBad:
+                                                        rumourText = $"House {houseFrom.Name} has had poor past relations with their BannerLord at House {houseTo.Name} due to {relationship.Rumour}";
+                                                        break;
+                                                    default:
+                                                        Game.SetError(new Error(268, $"Invalid relationship.Type \"{relationship.Type}\""));
+                                                        break;
                                                 }
-                                                else { Game.SetError(new Error(268, $"Invalid houseFrom.Branch \"{branch}\" -> rumour cancelled")); }
+                                                //is there a rumour to create?
+                                                if (rumourText.Length > 0)
+                                                {
+                                                    branch = houseFrom.Branch;
+                                                    if (branch >= 0 && branch < 5)
+                                                    {
+                                                        strength = 2;
+                                                        RumourHouseRel rumour = new RumourHouseRel(rumourText, strength, RumourScope.Global, rnd.Next(100) * -1, (RumourGlobal)branch)
+                                                        { RefID = houseFrom.RefID, HouseToRefID = houseTo.RefID, TrackerID = relationship.TrackerID };
+                                                        //add to dictionary and global list
+                                                        if (AddRumour(rumour) == false)
+                                                        { Game.SetError(new Error(268, $"{rumour.Text}, RumourID {rumour.RumourID}, failed to load (HouseRel) -> Rumour Cancelled")); }
+                                                    }
+                                                    else { Game.SetError(new Error(268, $"Invalid houseFrom.Branch \"{branch}\" -> rumour cancelled")); }
+                                                }
                                             }
+                                            else { Game.SetError(new Error(268, $"Invalid houseTo (null), RefID {relationship.RefID} -> Rumour not created")); }
                                         }
-                                        else { Game.SetError(new Error(268, $"Invalid houseTo (null), RefID {relationship.RefID} -> Rumour not created")); }
                                     }
+                                    else { Game.SetError(new Error(268, $"Invalid houseFrom (null), RefID {house.Value.RefID} -> No rumours created ")); }
                                 }
-                                else { Game.SetError(new Error(268, $"Invalid houseFrom (null), RefID {house.Value.RefID} -> No rumours created ")); }
                             }
+                            else { Game.SetError(new Error(268, "Invalid listOfHouseRelationships (null)")); }
                         }
-                        else { Game.SetError(new Error(268, "Invalid listOfHouseRelationships (null)")); }
                         //
                         //Safe House (the unknown ones -> supporters of New King)
                         //

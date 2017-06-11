@@ -1670,6 +1670,9 @@ namespace Next_Game
                                 locList.Add(new Snippet(string.Format("House Resources ({0}) ", (ResourceLevel)resources), displayColor, RLColor.Black, false));
                                 displayColor = unknownColor; if (house.GetInfoStatus(HouseInfo.Resources) == true) { displayColor = RLColor.LightRed; }
                                 locList.Add(new Snippet(string.Format("{0}", GetStars((int)resources)), displayColor, RLColor.Black));
+                                //Men At Arms info
+                                displayColor = unknownColor; if (house.GetInfoStatus(HouseInfo.Military) == true) { displayColor = knownColor; }
+                                locList.Add(new Snippet($"Men At Arms {house.MenAtArms:N0}", displayColor, RLColor.Black));
                                 //archetype info
                                 if (eventCount > 0)
                                 {
@@ -1709,13 +1712,19 @@ namespace Next_Game
                     {
                         CapitalHouse capital = house as CapitalHouse;
                         locList.Add(new Snippet("KINGDOM CAPITAL", RLColor.Yellow, RLColor.Black));
-                        int capitalWalls = capital.CastleWalls;
-                        int capitalResources = capital.Resources;
-                        locList.Add(new Snippet(string.Format("Strength of Castle Walls ({0}) ", (CastleDefences)capitalWalls), false));
-                        locList.Add(new Snippet(string.Format("{0}", GetStars(capitalWalls)), RLColor.LightRed, RLColor.Black));
-                        locList.Add(new Snippet(string.Format("House Resources ({0}) ", (ResourceLevel)capitalResources), false));
-                        locList.Add(new Snippet(string.Format("{0}", GetStars((int)capitalResources)), RLColor.LightRed, RLColor.Black));
-                        locList.Add(new Snippet($"Population: {house.Population:N0} Harvest: {house.FoodCapacity:N0} Food Balance: {house.FoodCapacity - house.Population:N0} Granary: {house.FoodStockpile:N0}"));
+                        displayColor = unknownColor; if (capital.GetInfoStatus(HouseInfo.CastleWalls) == true) { displayColor = knownColor; }
+                        locList.Add(new Snippet($"Strength of Castle Walls {(CastleDefences)capital.CastleWalls} ", displayColor, RLColor.Black, false));
+                        displayColor = unknownColor; if (capital.GetInfoStatus(HouseInfo.CastleWalls) == true) { displayColor = RLColor.LightRed; }
+                        locList.Add(new Snippet($"{GetStars(capital.CastleWalls)}",displayColor, RLColor.Black));
+                        displayColor = unknownColor; if (capital.GetInfoStatus(HouseInfo.Resources) == true) { displayColor = knownColor; }
+                        locList.Add(new Snippet($"House Resources {(ResourceLevel)capital.Resources} ", displayColor, RLColor.Black, false));
+                        displayColor = unknownColor; if (capital.GetInfoStatus(HouseInfo.Resources) == true) { displayColor = RLColor.LightRed; }
+                        locList.Add(new Snippet($"{GetStars(capital.Resources)}", displayColor, RLColor.Black));
+                        displayColor = unknownColor; if (capital.GetInfoStatus(HouseInfo.Military) == true) { displayColor = knownColor; }
+                        locList.Add(new Snippet($"Men At Arms {capital.MenAtArms:N0}", displayColor, RLColor.Black));
+                        displayColor = unknownColor; if (capital.GetInfoStatus(HouseInfo.Food) == true) { displayColor = knownColor; }
+                        description = $"Population: {house.Population:N0} Harvest: {house.FoodCapacity:N0} Food Balance: {house.FoodCapacity - house.Population:N0} Granary: {house.FoodStockpile:N0}";
+                        locList.Add(new Snippet(description, displayColor, RLColor.Black));
                     }
                     //imports & exports
                     if (house.GetNumImports() > 0 || house.GetNumExports() > 0)
@@ -1895,8 +1904,9 @@ namespace Next_Game
                 houseList.Add(new Snippet(population));
                 int bannerTotal = listLordLocations.Count * Game.constant.GetValue(Global.MEN_AT_ARMS) / 2;
                 int armyTotal = bannerTotal + majorHouse.MenAtArms;
+                displayColor = unknownColor; if (majorHouse.GetInfoStatus(HouseInfo.Military) == true) { displayColor = knownColor; }
                 string army = string.Format("Can call upon {0:N0} Men At Arms in Total ({1:N0} from Lord, {2:N0} from Bannerlords)", armyTotal, majorHouse.MenAtArms, bannerTotal);
-                houseList.Add(new Snippet(army));
+                houseList.Add(new Snippet(army, displayColor, RLColor.Black));
                 displayColor = unknownColor; if (majorHouse.GetInfoStatus(HouseInfo.CastleWalls) == true) { displayColor = knownColor; }
                 houseList.Add(new Snippet(string.Format("Strength of Castle Walls ({0}) ", (CastleDefences)majorHouse.CastleWalls), displayColor, RLColor.Black, false));
                 displayColor = unknownColor; if (majorHouse.GetInfoStatus(HouseInfo.CastleWalls) == true) { displayColor = RLColor.LightRed; }
@@ -2130,7 +2140,8 @@ namespace Next_Game
                 houseList.Add(new Snippet(loyalty));
                 string population = string.Format("Populatinn {0:N0} at {1}", minorHouse.Population, minorHouse.LocName);
                 houseList.Add(new Snippet(population));
-                houseList.Add(new Snippet($"Can call upon {minorHouse.MenAtArms:N0} Men At Arms"));
+                displayColor = unknownColor; if (minorHouse.GetInfoStatus(HouseInfo.Military) == true) { displayColor = knownColor; }
+                houseList.Add(new Snippet($"Can call upon {minorHouse.MenAtArms:N0} Men At Arms", displayColor, RLColor.Black));
                 displayColor = unknownColor; if (minorHouse.GetInfoStatus(HouseInfo.CastleWalls) == true) { displayColor = knownColor; }
                 houseList.Add(new Snippet(string.Format("Strength of Castle Walls ({0}) ", (CastleDefences)minorHouse.CastleWalls), displayColor, RLColor.Black, false));
                 displayColor = unknownColor; if (minorHouse.GetInfoStatus(HouseInfo.CastleWalls) == true) { displayColor = RLColor.LightRed; }
@@ -2267,7 +2278,8 @@ namespace Next_Game
             capitalList.Add(new Snippet(string.Format("Kingskeep, Kingdom Capital {0}", GetLocationCoords(1)), RLColor.Yellow, RLColor.Black));
             int capitalWalls = capital.CastleWalls;
             int capitalResources = capital.Resources;
-            capitalList.Add(new Snippet(string.Format("City Watch has {0:N0} Men At Arms", capital.MenAtArms)));
+            displayColor = unknownColor; if (capital.GetInfoStatus(HouseInfo.Military) == true) { displayColor = knownColor; }
+            capitalList.Add(new Snippet(string.Format("City Watch has {0:N0} Men At Arms", capital.MenAtArms), displayColor, RLColor.Black));
             displayColor = unknownColor; if (capital.GetInfoStatus(HouseInfo.CastleWalls) == true) { displayColor = knownColor; }
             capitalList.Add(new Snippet(string.Format("Strength of Castle Walls ({0}) ", (CastleDefences)capitalWalls), displayColor, RLColor.Black, false));
             displayColor = unknownColor; if (capital.GetInfoStatus(HouseInfo.CastleWalls) == true) { displayColor = RLColor.LightRed; }
@@ -4518,6 +4530,7 @@ namespace Next_Game
                     case RumourType.Event:
                     case RumourType.Goods:
                     case RumourType.HouseHistory:
+                    case RumourType.Military:
                         break;
                     default:
                         Game.SetError(new Error(275, $"Invalid Rumour.Type \"{rumour.Type}\""));

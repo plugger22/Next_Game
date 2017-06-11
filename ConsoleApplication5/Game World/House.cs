@@ -9,7 +9,7 @@ namespace Next_Game
     public enum KingLoyalty { None, Old_King, New_King }
     public enum HouseSpecial { None, Inn }
     public enum CastleDefences { None, Minimal, Weak, Average, Strong, Formidable }
-    public enum HouseInfo { None, Resources, CastleWalls, FriendsEnemies, Food, SafeHouse, History, Count} //toggles information display on/off depending on known status
+    public enum HouseInfo { None, Resources, CastleWalls, FriendsEnemies, Food, SafeHouse, History, Military, Count} //toggles information display on/off depending on known status
 
     //
     // Base class
