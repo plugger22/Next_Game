@@ -2077,15 +2077,13 @@ namespace Next_Game
                         select relation;
                     List<Relation> tempRelRecords = relOrdered.ToList();
                     //add snippets
-                    RLColor foreColor;
                     string relText;
                     foreach (var relation in tempRelRecords)
                     {
-                        if (relation.Known == true) { foreColor = RLColor.White; }
-                        else { foreColor = RLColor.LightGray; }
+                        if (relation.Known == true) { displayColor = knownColor; } else { displayColor = unknownColor; }
                         relText = string.Format("{0}  {1} {2}, \"{3}\", Rel {4}{5}", relation.Year, relation.RefID >= 100 ? "(Minor)" : "(Major)",
                         GetHouseName(relation.RefID), relation.Text, relation.Change > 0 ? "+" : "", relation.Change);
-                        houseList.Add(new Snippet(relText, foreColor, RLColor.Black));
+                        houseList.Add(new Snippet(relText, displayColor, RLColor.Black));
                     }
                 }
                 //house history
@@ -2133,10 +2131,14 @@ namespace Next_Game
                 string population = string.Format("Populatinn {0:N0} at {1}", minorHouse.Population, minorHouse.LocName);
                 houseList.Add(new Snippet(population));
                 houseList.Add(new Snippet($"Can call upon {minorHouse.MenAtArms:N0} Men At Arms"));
-                houseList.Add(new Snippet(string.Format("Strength of Castle Walls ({0}) ", (CastleDefences)minorHouse.CastleWalls), false));
-                houseList.Add(new Snippet(string.Format("{0}", GetStars(minorHouse.CastleWalls)), RLColor.LightRed, RLColor.Black));
-                houseList.Add(new Snippet(string.Format("House Resources ({0}) ", (ResourceLevel)minorHouse.Resources), false));
-                houseList.Add(new Snippet(string.Format("{0}", GetStars((int)minorHouse.Resources)), RLColor.LightRed, RLColor.Black));
+                displayColor = unknownColor; if (minorHouse.GetInfoStatus(HouseInfo.CastleWalls) == true) { displayColor = knownColor; }
+                houseList.Add(new Snippet(string.Format("Strength of Castle Walls ({0}) ", (CastleDefences)minorHouse.CastleWalls), displayColor, RLColor.Black, false));
+                displayColor = unknownColor; if (minorHouse.GetInfoStatus(HouseInfo.CastleWalls) == true) { displayColor = RLColor.LightRed; }
+                houseList.Add(new Snippet(string.Format("{0}", GetStars(minorHouse.CastleWalls)), displayColor, RLColor.Black));
+                displayColor = unknownColor; if (minorHouse.GetInfoStatus(HouseInfo.Resources) == true) { displayColor = knownColor; }
+                houseList.Add(new Snippet(string.Format("House Resources ({0}) ", (ResourceLevel)minorHouse.Resources), displayColor, RLColor.Black, false));
+                displayColor = unknownColor; if (minorHouse.GetInfoStatus(HouseInfo.Resources) == true) { displayColor = RLColor.LightRed; }
+                houseList.Add(new Snippet(string.Format("{0}", GetStars((int)minorHouse.Resources)), displayColor, RLColor.Black));
                 //bannerlords
                 int food = minorHouse.FoodCapacity; int granary = minorHouse.FoodStockpile; int popTotal = minorHouse.Population;
                 //Food and pop realm summary
@@ -2237,29 +2239,6 @@ namespace Next_Game
                         houseList.Add(new Snippet(personText + locString, locColor, RLColor.Black));
                     }
                 }
-                //Relationships
-                /*List<Relation> tempListRelations = minorHouse.GetRelations();
-                if (tempListRelations != null && tempListRelations.Count > 0)
-                {
-                    houseList.Add(new Snippet("Relations with Other Houses", RLColor.Brown, RLColor.Black));
-                    //display relations in chronological order
-                    IEnumerable<Relation> relOrdered =
-                        from relation in tempListRelations
-                        orderby relation.Year
-                        select relation;
-                    List<Relation> tempRelRecords = relOrdered.ToList();
-                    //add snippets
-                    RLColor foreColor;
-                    string relText;
-                    foreach (var relation in tempRelRecords)
-                    {
-                        if (relation.Known == true) { foreColor = RLColor.White; }
-                        else { foreColor = RLColor.LightGray; }
-                        relText = string.Format("{0}  {1} {2}, \"{3}\", Rel {4}{5}", relation.Year, relation.RefID >= 100 ? "(Minor)" : "(Major)",
-                        GetHouseName(relation.RefID), relation.Text, relation.Change > 0 ? "+" : "", relation.Change);
-                        houseList.Add(new Snippet(relText, foreColor, RLColor.Black));
-                    }
-                }*/
                 //house history
                 if (minorHouse.GetInfoStatus(HouseInfo.History) == true) { displayColor = knownColor; } else { displayColor = unknownColor; }
                 List<string> houseHistory = GetHistoricalHouseRecords(minorHouse.RefID);
@@ -2289,10 +2268,14 @@ namespace Next_Game
             int capitalWalls = capital.CastleWalls;
             int capitalResources = capital.Resources;
             capitalList.Add(new Snippet(string.Format("City Watch has {0:N0} Men At Arms", capital.MenAtArms)));
-            capitalList.Add(new Snippet(string.Format("Strength of Castle Walls ({0}) ", (CastleDefences)capitalWalls), false));
-            capitalList.Add(new Snippet(string.Format("{0}", GetStars(capitalWalls)), RLColor.LightRed, RLColor.Black));
-            capitalList.Add(new Snippet(string.Format("Kingdom Treasury Resources ({0}) ", (ResourceLevel)capitalResources), false));
-            capitalList.Add(new Snippet(string.Format("{0}", GetStars(capitalResources)), RLColor.LightRed, RLColor.Black));
+            displayColor = unknownColor; if (capital.GetInfoStatus(HouseInfo.CastleWalls) == true) { displayColor = knownColor; }
+            capitalList.Add(new Snippet(string.Format("Strength of Castle Walls ({0}) ", (CastleDefences)capitalWalls), displayColor, RLColor.Black, false));
+            displayColor = unknownColor; if (capital.GetInfoStatus(HouseInfo.CastleWalls) == true) { displayColor = RLColor.LightRed; }
+            capitalList.Add(new Snippet(string.Format("{0}", GetStars(capitalWalls)), displayColor, RLColor.Black));
+            displayColor = unknownColor; if (capital.GetInfoStatus(HouseInfo.Resources) == true) { displayColor = knownColor; }
+            capitalList.Add(new Snippet(string.Format("Kingdom Treasury Resources ({0}) ", (ResourceLevel)capitalResources), displayColor, RLColor.Black, false));
+            displayColor = unknownColor; if (capital.GetInfoStatus(HouseInfo.Resources) == true) { displayColor = RLColor.LightRed; }
+            capitalList.Add(new Snippet(string.Format("{0}", GetStars(capitalResources)), displayColor, RLColor.Black));
             capitalList.Add(new Snippet("Kingdom Realm", RLColor.Yellow, RLColor.Black));
             displayColor = unknownColor; if (capital.GetInfoStatus(HouseInfo.Food) == true) { displayColor = knownColor; }
             capitalList.Add(new Snippet(string.Format("Population: {0:N0} Harvest: {1:N0} Food Balance: {2:N0} Granary: {3:N0} ", capital.Population, capital.FoodCapacity, 
@@ -2417,9 +2400,10 @@ namespace Next_Game
                 List<Relation> tempListRelations = majorHouse.GetRelations();
                 if (tempListRelations != null && tempListRelations.Count > 0)
                 {
+                    string relText;
                     capitalList.Add(new Snippet("Relations with Other Houses", RLColor.Brown, RLColor.Black));
                     //display relations in chronological order
-                    IEnumerable<string> relRecords =
+                    /*IEnumerable<string> relRecords =
                         from relation in tempListRelations
                         orderby relation.Year
                         select string.Format("{0}  {1} {2}, \"{3}\", Rel {4}{5}", relation.Year, relation.RefID >= 100 ? "(Minor)" : "(Major)",
@@ -2427,7 +2411,24 @@ namespace Next_Game
                     List<string> tempRelRecords = relRecords.ToList();
                     //add snippets
                     foreach (string relText in tempRelRecords)
-                    { capitalList.Add(new Snippet(relText)); }
+                    {
+                        
+                        capitalList.Add(new Snippet(relText));
+                    }*/
+
+                    IEnumerable<Relation> relOrdered =
+                        from relation in tempListRelations
+                        orderby relation.Year
+                        select relation;
+                    List<Relation> tempRelRecords = relOrdered.ToList();
+                    //add snippets
+                    foreach (var relation in tempRelRecords)
+                    {
+                        if (relation.Known == true) { displayColor = knownColor; } else { displayColor = unknownColor; }
+                        relText = string.Format("{0}  {1} {2}, \"{3}\", Rel {4}{5}", relation.Year, relation.RefID >= 100 ? "(Minor)" : "(Major)",
+                        GetHouseName(relation.RefID), relation.Text, relation.Change > 0 ? "+" : "", relation.Change);
+                        capitalList.Add(new Snippet(relText, displayColor, RLColor.Black));
+                    }
                 }
             }
             else { Game.SetError(new Error(136, "New King's House not found (null)")); }
