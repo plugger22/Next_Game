@@ -1,4 +1,4 @@
-//Exile Game file ops "LogStart.txt" commenced at: 11/06/2017 18:54:18
+//Exile Game file ops "LogStart.txt" commenced at: 11/06/2017 19:38:39
 --- Initialise Constants (FileImport.cs)
 INHERIT_TRAIT -> 50 Min 0 Max 100
 CHILDBIRTH_DEATH -> 15 Min 0 Max 100
@@ -85,7 +85,7 @@ ENEMY_RUMOURS -> 50 Min 10 Max 90
 ENEMY_RUMOUR_TIME -> 3 Min 2 Max 6
 REL_RUMOUR_TIME -> 20 Min 5 Max 30
 ERROR_29 "Location Deleted 5:27"
-Method: LocationSweeper,  Line: 1675,  Object: Map.cs,  Turn: 0,  Local Time: 18:54:18 UTC +10:00
+Method: LocationSweeper,  Line: 1675,  Object: Map.cs,  Turn: 0,  Local Time: 19:38:39 UTC +10:00
 --- InitialiseHouseLocations (Network.cs)
 Total Locations (excluding Capital) 25
 Number of Houses 8, Max Cap on House Numbers 8
@@ -1625,94 +1625,117 @@ Escape Challenge (Stealth)
 [Rumour -> Added] RID 229, "It is well known among Traders that House Martell, at Dorne, regularly needs to Import Food to meet demand" -> dict & List
 [Rumour -> Added] RID 230, "It is well known among Traders that House Martell, at Dorne, conducts a brisk Export trade in Timber" -> dict & List
 [Rumour -> Added] RID 231, "There is a scribe who can recall the history of House Martell, at Dorne" -> dict & List
-[Rumour -> Added] RID 232, "It is murmured among friends that you have no Friends and a few Enemies at Dorne (House Martell)" -> dict & List
-[Rumour -> Added] RID 233, "House Martell has had poor past relations with House Stark due to a claim of contested lands" -> dict & List
-[Rumour -> Added] RID 234, "House Martell has had good past relations with their BannerLord at House Frey due to them rescuing a Lord" -> dict & List
-[Rumour -> Added] RID 235, "House Martell has had good past relations with their BannerLord at House Tallhart due to their valuable advice" -> dict & List
-[Rumour -> Added] RID 236, "House Martell has had good past relations with House Caron due to their loyalty to the New King" -> dict & List
-[Rumour -> Added] RID 237, "It is well known among Traders that House Greyjoy, at Pyke, regularly needs to Import Food to meet demand" -> dict & List
-[Rumour -> Added] RID 238, "There is a scribe who can recall the history of House Greyjoy, at Pyke" -> dict & List
-[Rumour -> Added] RID 239, "It is whispered that you have a handful of Friends and no Enemies at Pyke (House Greyjoy)" -> dict & List
-[Rumour -> Added] RID 240, "House Greyjoy has had good past relations with House Arryn due to their gift of land" -> dict & List
-[Rumour -> Added] RID 241, "House Greyjoy has had poor past relations with their BannerLord at House Tarly due to their incestuous interbreeding" -> dict & List
-[Rumour -> Added] RID 242, "House Greyjoy has had poor past relations with House Caron due to them betraying the Old King" -> dict & List
-[Rumour -> Added] RID 243, "It is well known among Traders that House Arryn, at Eyrie, regularly needs to Import Food to meet demand" -> dict & List
-[Rumour -> Added] RID 244, "There is a scribe who can recall the history of House Arryn, at Eyrie" -> dict & List
-[Rumour -> Added] RID 245, "It is whispered that you have no Friends and many Enemies at Eyrie (House Arryn)" -> dict & List
-[Rumour -> Added] RID 246, "House Arryn has had poor past relations with House Baratheon due to their cowardice in battle" -> dict & List
-[Rumour -> Added] RID 247, "House Arryn has had good past relations with House Stark due to their saving a Lord" -> dict & List
-[Rumour -> Added] RID 248, "House Arryn has had poor past relations with House Caron due to them betraying the Old King" -> dict & List
-[Rumour -> Added] RID 249, "It is well known among Traders that House Baratheon, at Bloodkeep, conducts a brisk Export trade in Timber" -> dict & List
-[Rumour -> Added] RID 250, "There is a scribe who can recall the history of House Baratheon, at Bloodkeep" -> dict & List
-[Rumour -> Added] RID 251, "It is well known that you have no Friends and a handful of Enemies at Bloodkeep (House Baratheon)" -> dict & List
-[Rumour -> Added] RID 252, "House Baratheon has had good past relations with House Arryn due to mutual blood bonds" -> dict & List
-[Rumour -> Added] RID 253, "House Baratheon has had poor past relations with House Greyjoy due to their claim on a title" -> dict & List
-[Rumour -> Added] RID 254, "House Baratheon has had poor past relations with their BannerLord at House Codd due to their contemptuous behaviour" -> dict & List
-[Rumour -> Added] RID 255, "House Baratheon has had good past relations with their BannerLord at House Umber due to their exceptional loyalty" -> dict & List
-[Rumour -> Added] RID 256, "House Baratheon has had poor past relations with House Caron due to their traitorous actions" -> dict & List
-[Rumour -> Added] RID 257, "It is well known among Traders that House Stark, at Winterfell, conducts a brisk Export trade in Food" -> dict & List
-[Rumour -> Added] RID 258, "It is well known among Traders that House Stark, at Winterfell, conducts a brisk Export trade in Wine" -> dict & List
-[Rumour -> Added] RID 259, "There is a scribe who can recall the history of House Stark, at Winterfell" -> dict & List
-[Rumour -> Added] RID 260, "It is said that you have no Friends and many Enemies at Winterfell (House Stark)" -> dict & List
-[Rumour -> Added] RID 261, "House Stark has had good past relations with House Baratheon due to them taking and educating family wards" -> dict & List
-[Rumour -> Added] RID 262, "House Stark has had good past relations with House Martell due to them saving the day in a battle" -> dict & List
-[Rumour -> Added] RID 263, "House Stark has had good past relations with their BannerLord at House Peake due to their reliability in repaying loans" -> dict & List
-[Rumour -> Added] RID 264, "House Stark has had poor past relations with their BannerLord at House Karstark due to them breeding Dire Wolves" -> dict & List
-[Rumour -> Added] RID 265, "House Stark has had good past relations with their BannerLord at House Bolton due to them being likeminded, sensible, managers" -> dict & List
-[Rumour -> Added] RID 266, "House Stark has had poor past relations with House Caron due to their traitorous actions" -> dict & List
-[Rumour -> Added] RID 267, "It is well known among Traders that House Ambrose, at Blackwater, conducts a brisk Export trade in Food" -> dict & List
-[Rumour -> Added] RID 268, "There is a scribe who can recall the history of House Ambrose, at Blackwater" -> dict & List
-[Rumour -> Added] RID 269, "There is a scribe who can recall the history of House Frey, at The Twins" -> dict & List
-[Rumour -> Added] RID 270, "It is well known among Traders that House Bracken, at Stone Hedge, conducts a brisk Export trade in Food" -> dict & List
-[Rumour -> Added] RID 271, "It is well known among Traders that House Bracken, at Stone Hedge, conducts a brisk Export trade in Wine" -> dict & List
-[Rumour -> Added] RID 272, "There is a scribe who can recall the history of House Bracken, at Stone Hedge" -> dict & List
-[Rumour -> Added] RID 273, "Underground supporters of Old King Elyes Arryn, "The UnRead", will offer Safe Refuge at Stone Hedge, (loc 20:24)" -> dict & List
-[Rumour -> Added] RID 274, "It is well known among Traders that House Tallhart, at Torrhen's Square, conducts a brisk Export trade in Food" -> dict & List
-[Rumour -> Added] RID 275, "It is well known among Traders that House Tallhart, at Torrhen's Square, conducts a brisk Export trade in Wool" -> dict & List
-[Rumour -> Added] RID 276, "There is a scribe who can recall the history of House Tallhart, at Torrhen's Square" -> dict & List
-[Rumour -> Added] RID 277, "It is well known among Traders that House Tarly, at Horn Hill, conducts a brisk Export trade in Gold" -> dict & List
-[Rumour -> Added] RID 278, "There is a scribe who can recall the history of House Tarly, at Horn Hill" -> dict & List
-[Rumour -> Added] RID 279, "It is well known among Traders that House Dondarrion, at Blackhaven, conducts a brisk Export trade in Timber" -> dict & List
-[Rumour -> Added] RID 280, "There is a scribe who can recall the history of House Dondarrion, at Blackhaven" -> dict & List
-[Rumour -> Added] RID 281, "It is well known among Traders that House Botley, at Lordsport, conducts a brisk Export trade in Food" -> dict & List
-[Rumour -> Added] RID 282, "There is a scribe who can recall the history of House Botley, at Lordsport" -> dict & List
-[Rumour -> Added] RID 283, "It is well known among Traders that House Mullendore, at Uplands, conducts a brisk Export trade in Food" -> dict & List
-[Rumour -> Added] RID 284, "There is a scribe who can recall the history of House Mullendore, at Uplands" -> dict & List
-[Rumour -> Added] RID 285, "There is a scribe who can recall the history of House Tarth, at Evenfall" -> dict & List
-[Rumour -> Added] RID 286, "It is well known among Traders that House Hunt, at Longbow Hall, conducts a brisk Export trade in Timber" -> dict & List
-[Rumour -> Added] RID 287, "It is well known among Traders that House Hunt, at Longbow Hall, conducts a brisk Export trade in Furs" -> dict & List
-[Rumour -> Added] RID 288, "There is a scribe who can recall the history of House Hunt, at Longbow Hall" -> dict & List
-[Rumour -> Added] RID 289, "There is a scribe who can recall the history of House Codd, at Fishfork" -> dict & List
-[Rumour -> Added] RID 290, "Underground supporters of Old King Elyes Arryn, "The UnRead", will offer Safe Refuge at Fishfork, (loc 13:21)" -> dict & List
-[Rumour -> Added] RID 291, "It is well known among Traders that House Umber, at Last Hearth, conducts a brisk Export trade in Food" -> dict & List
-[Rumour -> Added] RID 292, "There is a scribe who can recall the history of House Umber, at Last Hearth" -> dict & List
-[Rumour -> Added] RID 293, "It is well known among Traders that House Peake, at Starpike, conducts a brisk Export trade in Food" -> dict & List
-[Rumour -> Added] RID 294, "It is well known among Traders that House Peake, at Starpike, conducts a brisk Export trade in Iron" -> dict & List
-[Rumour -> Added] RID 295, "There is a scribe who can recall the history of House Peake, at Starpike" -> dict & List
-[Rumour -> Added] RID 296, "It is well known among Traders that House Hightower, at Oldtown, conducts a brisk Export trade in Food" -> dict & List
-[Rumour -> Added] RID 297, "There is a scribe who can recall the history of House Hightower, at Oldtown" -> dict & List
-[Rumour -> Added] RID 298, "It is well known among Traders that House Karstark, at Karhold, conducts a brisk Export trade in Food" -> dict & List
-[Rumour -> Added] RID 299, "There is a scribe who can recall the history of House Karstark, at Karhold" -> dict & List
-[Rumour -> Added] RID 300, "It is well known among Traders that House Bolton, at Dreadfort, conducts a brisk Export trade in Food" -> dict & List
-[Rumour -> Added] RID 301, "It is well known among Traders that House Bolton, at Dreadfort, conducts a brisk Export trade in Timber" -> dict & List
-[Rumour -> Added] RID 302, "There is a scribe who can recall the history of House Bolton, at Dreadfort" -> dict & List
-[Rumour -> Added] RID 303, "It is well known among Traders that House Capital, at Kingskeep, regularly needs to Import Food to meet demand" -> dict & List
-[Rumour -> Added] RID 304, "It is well known among Traders that House Capital, at Kingskeep, regularly needs to Import Iron to meet demand" -> dict & List
-[Rumour -> Added] RID 305, "It is well known among Traders that House Capital, at Kingskeep, regularly needs to Import Timber to meet demand" -> dict & List
-[Rumour -> Added] RID 306, "It is well known among Traders that House Capital, at Kingskeep, regularly needs to Import Gold to meet demand" -> dict & List
-[Rumour -> Added] RID 307, "It is well known among Traders that House Capital, at Kingskeep, regularly needs to Import Wine to meet demand" -> dict & List
-[Rumour -> Added] RID 308, "It is well known among Traders that House Capital, at Kingskeep, conducts a brisk Export trade in Timber" -> dict & List
-[Rumour -> Added] RID 309, "There is a scribe who can recall the history of House Capital, at Kingskeep" -> dict & List
-[Rumour -> Added] RID 310, "It is said that you have no Friends and many Enemies at Kingskeep (House Capital)" -> dict & List
-[Rumour -> Added] RID 311, "It is well known among Traders that House The Clumsy Hog, at The Clumsy Hog, conducts a brisk Export trade in Food" -> dict & List
-[Rumour -> Added] RID 312, "It is well known among Traders that House The Shaggy Parrot, at The Shaggy Parrot, conducts a brisk Export trade in Food" -> dict & List
-[Rumour -> Added] RID 313, "It is well known among Traders that House The Raucous Rat, at The Raucous Rat, conducts a brisk Export trade in Food" -> dict & List
-[Rumour -> Added] RID 314, "It is well known among Traders that House The Pickled Prune, at The Pickled Prune, conducts a brisk Export trade in Food" -> dict & List
-[Rumour -> Added] RID 315, "It is well known among Traders that House The Pickled Prune, at The Pickled Prune, conducts a brisk Export trade in Wool" -> dict & List
-[Rumour -> Added] RID 316, "It is well known among Traders that House Caron, at Eyrie, regularly needs to Import Food to meet demand" -> dict & List
-[Rumour -> Added] RID 317, "It is well known among Traders that House Caron, at Eyrie, conducts a brisk Export trade in Furs" -> dict & List
-[Rumour -> Added] RID 318, "There is a scribe who can recall the history of House Caron, at Eyrie" -> dict & List
-[Rumour -> Added] RID 319, "It is known that you have no Friends and many Enemies at Eyrie (House Caron)" -> dict & List
+[Rumour -> Added] RID 232, "A levy solider of House Martell, at Dorne provides a good estimate of the available Men At Arms" -> dict & List
+[Rumour -> Added] RID 233, "It is rumoured that you have no Friends and a few Enemies at Dorne (House Martell)" -> dict & List
+[Rumour -> Added] RID 234, "House Martell has had poor past relations with House Stark due to a claim of contested lands" -> dict & List
+[Rumour -> Added] RID 235, "House Martell has had good past relations with their BannerLord at House Frey due to them rescuing a Lord" -> dict & List
+[Rumour -> Added] RID 236, "House Martell has had good past relations with their BannerLord at House Tallhart due to their valuable advice" -> dict & List
+[Rumour -> Added] RID 237, "House Martell has had good past relations with House Caron due to their loyalty to the New King" -> dict & List
+[Rumour -> Added] RID 238, "It is well known among Traders that House Greyjoy, at Pyke, regularly needs to Import Food to meet demand" -> dict & List
+[Rumour -> Added] RID 239, "There is a scribe who can recall the history of House Greyjoy, at Pyke" -> dict & List
+[Rumour -> Added] RID 240, "A levy solider of House Greyjoy, at Pyke provides a good estimate of the available Men At Arms" -> dict & List
+[Rumour -> Added] RID 241, "It is commonly known that you have a handful of Friends and no Enemies at Pyke (House Greyjoy)" -> dict & List
+[Rumour -> Added] RID 242, "House Greyjoy has had good past relations with House Arryn due to their gift of land" -> dict & List
+[Rumour -> Added] RID 243, "House Greyjoy has had poor past relations with their BannerLord at House Tarly due to their incestuous interbreeding" -> dict & List
+[Rumour -> Added] RID 244, "House Greyjoy has had poor past relations with House Caron due to them betraying the Old King" -> dict & List
+[Rumour -> Added] RID 245, "It is well known among Traders that House Arryn, at Eyrie, regularly needs to Import Food to meet demand" -> dict & List
+[Rumour -> Added] RID 246, "There is a scribe who can recall the history of House Arryn, at Eyrie" -> dict & List
+[Rumour -> Added] RID 247, "A levy solider of House Arryn, at Eyrie provides a good estimate of the available Men At Arms" -> dict & List
+[Rumour -> Added] RID 248, "It is said that you have no Friends and many Enemies at Eyrie (House Arryn)" -> dict & List
+[Rumour -> Added] RID 249, "House Arryn has had poor past relations with House Baratheon due to their cowardice in battle" -> dict & List
+[Rumour -> Added] RID 250, "House Arryn has had good past relations with House Stark due to their saving a Lord" -> dict & List
+[Rumour -> Added] RID 251, "House Arryn has had poor past relations with House Caron due to them betraying the Old King" -> dict & List
+[Rumour -> Added] RID 252, "It is well known among Traders that House Baratheon, at Bloodkeep, conducts a brisk Export trade in Timber" -> dict & List
+[Rumour -> Added] RID 253, "There is a scribe who can recall the history of House Baratheon, at Bloodkeep" -> dict & List
+[Rumour -> Added] RID 254, "A levy solider of House Baratheon, at Bloodkeep provides a good estimate of the available Men At Arms" -> dict & List
+[Rumour -> Added] RID 255, "It is said that you have no Friends and a handful of Enemies at Bloodkeep (House Baratheon)" -> dict & List
+[Rumour -> Added] RID 256, "House Baratheon has had good past relations with House Arryn due to mutual blood bonds" -> dict & List
+[Rumour -> Added] RID 257, "House Baratheon has had poor past relations with House Greyjoy due to their claim on a title" -> dict & List
+[Rumour -> Added] RID 258, "House Baratheon has had poor past relations with their BannerLord at House Codd due to their contemptuous behaviour" -> dict & List
+[Rumour -> Added] RID 259, "House Baratheon has had good past relations with their BannerLord at House Umber due to their exceptional loyalty" -> dict & List
+[Rumour -> Added] RID 260, "House Baratheon has had poor past relations with House Caron due to their traitorous actions" -> dict & List
+[Rumour -> Added] RID 261, "It is well known among Traders that House Stark, at Winterfell, conducts a brisk Export trade in Food" -> dict & List
+[Rumour -> Added] RID 262, "It is well known among Traders that House Stark, at Winterfell, conducts a brisk Export trade in Wine" -> dict & List
+[Rumour -> Added] RID 263, "There is a scribe who can recall the history of House Stark, at Winterfell" -> dict & List
+[Rumour -> Added] RID 264, "A levy solider of House Stark, at Winterfell provides a good estimate of the available Men At Arms" -> dict & List
+[Rumour -> Added] RID 265, "It is whispered that you have no Friends and many Enemies at Winterfell (House Stark)" -> dict & List
+[Rumour -> Added] RID 266, "House Stark has had good past relations with House Baratheon due to them taking and educating family wards" -> dict & List
+[Rumour -> Added] RID 267, "House Stark has had good past relations with House Martell due to them saving the day in a battle" -> dict & List
+[Rumour -> Added] RID 268, "House Stark has had good past relations with their BannerLord at House Peake due to their reliability in repaying loans" -> dict & List
+[Rumour -> Added] RID 269, "House Stark has had poor past relations with their BannerLord at House Karstark due to them breeding Dire Wolves" -> dict & List
+[Rumour -> Added] RID 270, "House Stark has had good past relations with their BannerLord at House Bolton due to them being likeminded, sensible, managers" -> dict & List
+[Rumour -> Added] RID 271, "House Stark has had poor past relations with House Caron due to their traitorous actions" -> dict & List
+[Rumour -> Added] RID 272, "It is well known among Traders that House Ambrose, at Blackwater, conducts a brisk Export trade in Food" -> dict & List
+[Rumour -> Added] RID 273, "There is a scribe who can recall the history of House Ambrose, at Blackwater" -> dict & List
+[Rumour -> Added] RID 274, "A levy solider of House Ambrose, at Blackwater provides a good estimate of the available Men At Arms" -> dict & List
+[Rumour -> Added] RID 275, "There is a scribe who can recall the history of House Frey, at The Twins" -> dict & List
+[Rumour -> Added] RID 276, "A levy solider of House Frey, at The Twins provides a good estimate of the available Men At Arms" -> dict & List
+[Rumour -> Added] RID 277, "It is well known among Traders that House Bracken, at Stone Hedge, conducts a brisk Export trade in Food" -> dict & List
+[Rumour -> Added] RID 278, "It is well known among Traders that House Bracken, at Stone Hedge, conducts a brisk Export trade in Wine" -> dict & List
+[Rumour -> Added] RID 279, "There is a scribe who can recall the history of House Bracken, at Stone Hedge" -> dict & List
+[Rumour -> Added] RID 280, "A levy solider of House Bracken, at Stone Hedge provides a good estimate of the available Men At Arms" -> dict & List
+[Rumour -> Added] RID 281, "Underground supporters of Old King Elyes Arryn, "The UnRead", will offer Safe Refuge at Stone Hedge, (loc 20:24)" -> dict & List
+[Rumour -> Added] RID 282, "It is well known among Traders that House Tallhart, at Torrhen's Square, conducts a brisk Export trade in Food" -> dict & List
+[Rumour -> Added] RID 283, "It is well known among Traders that House Tallhart, at Torrhen's Square, conducts a brisk Export trade in Wool" -> dict & List
+[Rumour -> Added] RID 284, "There is a scribe who can recall the history of House Tallhart, at Torrhen's Square" -> dict & List
+[Rumour -> Added] RID 285, "A levy solider of House Tallhart, at Torrhen's Square provides a good estimate of the available Men At Arms" -> dict & List
+[Rumour -> Added] RID 286, "It is well known among Traders that House Tarly, at Horn Hill, conducts a brisk Export trade in Gold" -> dict & List
+[Rumour -> Added] RID 287, "There is a scribe who can recall the history of House Tarly, at Horn Hill" -> dict & List
+[Rumour -> Added] RID 288, "A levy solider of House Tarly, at Horn Hill provides a good estimate of the available Men At Arms" -> dict & List
+[Rumour -> Added] RID 289, "It is well known among Traders that House Dondarrion, at Blackhaven, conducts a brisk Export trade in Timber" -> dict & List
+[Rumour -> Added] RID 290, "There is a scribe who can recall the history of House Dondarrion, at Blackhaven" -> dict & List
+[Rumour -> Added] RID 291, "A levy solider of House Dondarrion, at Blackhaven provides a good estimate of the available Men At Arms" -> dict & List
+[Rumour -> Added] RID 292, "It is well known among Traders that House Botley, at Lordsport, conducts a brisk Export trade in Food" -> dict & List
+[Rumour -> Added] RID 293, "There is a scribe who can recall the history of House Botley, at Lordsport" -> dict & List
+[Rumour -> Added] RID 294, "A levy solider of House Botley, at Lordsport provides a good estimate of the available Men At Arms" -> dict & List
+[Rumour -> Added] RID 295, "It is well known among Traders that House Mullendore, at Uplands, conducts a brisk Export trade in Food" -> dict & List
+[Rumour -> Added] RID 296, "There is a scribe who can recall the history of House Mullendore, at Uplands" -> dict & List
+[Rumour -> Added] RID 297, "A levy solider of House Mullendore, at Uplands provides a good estimate of the available Men At Arms" -> dict & List
+[Rumour -> Added] RID 298, "There is a scribe who can recall the history of House Tarth, at Evenfall" -> dict & List
+[Rumour -> Added] RID 299, "A levy solider of House Tarth, at Evenfall provides a good estimate of the available Men At Arms" -> dict & List
+[Rumour -> Added] RID 300, "It is well known among Traders that House Hunt, at Longbow Hall, conducts a brisk Export trade in Timber" -> dict & List
+[Rumour -> Added] RID 301, "It is well known among Traders that House Hunt, at Longbow Hall, conducts a brisk Export trade in Furs" -> dict & List
+[Rumour -> Added] RID 302, "There is a scribe who can recall the history of House Hunt, at Longbow Hall" -> dict & List
+[Rumour -> Added] RID 303, "A levy solider of House Hunt, at Longbow Hall provides a good estimate of the available Men At Arms" -> dict & List
+[Rumour -> Added] RID 304, "There is a scribe who can recall the history of House Codd, at Fishfork" -> dict & List
+[Rumour -> Added] RID 305, "A levy solider of House Codd, at Fishfork provides a good estimate of the available Men At Arms" -> dict & List
+[Rumour -> Added] RID 306, "Underground supporters of Old King Elyes Arryn, "The UnRead", will offer Safe Refuge at Fishfork, (loc 13:21)" -> dict & List
+[Rumour -> Added] RID 307, "It is well known among Traders that House Umber, at Last Hearth, conducts a brisk Export trade in Food" -> dict & List
+[Rumour -> Added] RID 308, "There is a scribe who can recall the history of House Umber, at Last Hearth" -> dict & List
+[Rumour -> Added] RID 309, "A levy solider of House Umber, at Last Hearth provides a good estimate of the available Men At Arms" -> dict & List
+[Rumour -> Added] RID 310, "It is well known among Traders that House Peake, at Starpike, conducts a brisk Export trade in Food" -> dict & List
+[Rumour -> Added] RID 311, "It is well known among Traders that House Peake, at Starpike, conducts a brisk Export trade in Iron" -> dict & List
+[Rumour -> Added] RID 312, "There is a scribe who can recall the history of House Peake, at Starpike" -> dict & List
+[Rumour -> Added] RID 313, "A levy solider of House Peake, at Starpike provides a good estimate of the available Men At Arms" -> dict & List
+[Rumour -> Added] RID 314, "It is well known among Traders that House Hightower, at Oldtown, conducts a brisk Export trade in Food" -> dict & List
+[Rumour -> Added] RID 315, "There is a scribe who can recall the history of House Hightower, at Oldtown" -> dict & List
+[Rumour -> Added] RID 316, "A levy solider of House Hightower, at Oldtown provides a good estimate of the available Men At Arms" -> dict & List
+[Rumour -> Added] RID 317, "It is well known among Traders that House Karstark, at Karhold, conducts a brisk Export trade in Food" -> dict & List
+[Rumour -> Added] RID 318, "There is a scribe who can recall the history of House Karstark, at Karhold" -> dict & List
+[Rumour -> Added] RID 319, "A levy solider of House Karstark, at Karhold provides a good estimate of the available Men At Arms" -> dict & List
+[Rumour -> Added] RID 320, "It is well known among Traders that House Bolton, at Dreadfort, conducts a brisk Export trade in Food" -> dict & List
+[Rumour -> Added] RID 321, "It is well known among Traders that House Bolton, at Dreadfort, conducts a brisk Export trade in Timber" -> dict & List
+[Rumour -> Added] RID 322, "There is a scribe who can recall the history of House Bolton, at Dreadfort" -> dict & List
+[Rumour -> Added] RID 323, "A levy solider of House Bolton, at Dreadfort provides a good estimate of the available Men At Arms" -> dict & List
+[Rumour -> Added] RID 324, "It is well known among Traders that House Capital, at Kingskeep, regularly needs to Import Food to meet demand" -> dict & List
+[Rumour -> Added] RID 325, "It is well known among Traders that House Capital, at Kingskeep, regularly needs to Import Iron to meet demand" -> dict & List
+[Rumour -> Added] RID 326, "It is well known among Traders that House Capital, at Kingskeep, regularly needs to Import Timber to meet demand" -> dict & List
+[Rumour -> Added] RID 327, "It is well known among Traders that House Capital, at Kingskeep, regularly needs to Import Gold to meet demand" -> dict & List
+[Rumour -> Added] RID 328, "It is well known among Traders that House Capital, at Kingskeep, regularly needs to Import Wine to meet demand" -> dict & List
+[Rumour -> Added] RID 329, "It is well known among Traders that House Capital, at Kingskeep, conducts a brisk Export trade in Timber" -> dict & List
+[Rumour -> Added] RID 330, "There is a scribe who can recall the history of House Capital, at Kingskeep" -> dict & List
+[Rumour -> Added] RID 331, "A levy solider of House Capital, at Kingskeep provides a good estimate of the available Men At Arms" -> dict & List
+[Rumour -> Added] RID 332, "It is whispered that you have no Friends and many Enemies at Kingskeep (House Capital)" -> dict & List
+[Rumour -> Added] RID 333, "It is well known among Traders that House The Clumsy Hog, at The Clumsy Hog, conducts a brisk Export trade in Food" -> dict & List
+[Rumour -> Added] RID 334, "It is well known among Traders that House The Shaggy Parrot, at The Shaggy Parrot, conducts a brisk Export trade in Food" -> dict & List
+[Rumour -> Added] RID 335, "It is well known among Traders that House The Raucous Rat, at The Raucous Rat, conducts a brisk Export trade in Food" -> dict & List
+[Rumour -> Added] RID 336, "It is well known among Traders that House The Pickled Prune, at The Pickled Prune, conducts a brisk Export trade in Food" -> dict & List
+[Rumour -> Added] RID 337, "It is well known among Traders that House The Pickled Prune, at The Pickled Prune, conducts a brisk Export trade in Wool" -> dict & List
+[Rumour -> Added] RID 338, "It is well known among Traders that House Caron, at Eyrie, regularly needs to Import Food to meet demand" -> dict & List
+[Rumour -> Added] RID 339, "It is well known among Traders that House Caron, at Eyrie, conducts a brisk Export trade in Furs" -> dict & List
+[Rumour -> Added] RID 340, "There is a scribe who can recall the history of House Caron, at Eyrie" -> dict & List
+[Rumour -> Added] RID 341, "A levy solider of House Caron, at Eyrie provides a good estimate of the available Men At Arms" -> dict & List
+[Rumour -> Added] RID 342, "It is said that you have no Friends and many Enemies at Eyrie (House Caron)" -> dict & List
 --- InitialiseViewTexts (Director.cs)
 JusticeNeutralEduc -> 2 records imported
 JusticeNeutralUned -> 4 records imported
@@ -1760,5 +1783,5 @@ FoodCropEduc -> 14 records imported
 FoodCropUned -> 10 records imported
 FoodHuntEduc -> 6 records imported
 FoodHuntUned -> 10 records imported
-//Exile Game file ops "LogStart.txt" Completed at: 11/06/2017 18:54:19
-//Elapsed Time 965 ms
+//Exile Game file ops "LogStart.txt" Completed at: 11/06/2017 19:38:40
+//Elapsed Time 913 ms

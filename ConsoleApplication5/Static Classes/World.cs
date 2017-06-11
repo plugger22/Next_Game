@@ -2828,11 +2828,11 @@ namespace Next_Game
         internal void InitialiseHouses()
         {
 
-            Game.network.UpdateHouses(Game.history.GetGreatHouses());
+            Game.network.UpdateHouses(Game.history.GetMajorHouses());
             Game.logStart?.Write("---  InitialiseHouses (World.cs) ---");
             //great houses
-            List<MajorHouse> listOfGreatHouses = Game.history.GetGreatHouses();
-            foreach (MajorHouse house in listOfGreatHouses)
+            List<MajorHouse> listOfMajorHouses = Game.history.GetMajorHouses();
+            foreach (MajorHouse house in listOfMajorHouses)
             { AddMajorHouse(house); }
             //populate sorted dictionary (descending) of house ID's by Power (# of BannerLords)
             SortMajorHouses();
@@ -2857,8 +2857,8 @@ namespace Next_Game
                 if (loc != null) { Game.map.SetMapInfo(MapLayer.RefID, loc.GetPosX(), loc.GetPosY(), refID); }
                 else { Game.SetError(new Error(188, "Invalid Loc (null) Map Layer not updated")); }
             }
-            //populate list of Bannerlord RefID's in Great Houses
-            foreach (MajorHouse house in listOfGreatHouses)
+            //populate list of Bannerlord RefID's in Major Houses
+            foreach (MajorHouse house in listOfMajorHouses)
             {
                 List<int> bannerLords = house.GetBannerLordLocations();
                 int minorRefID;

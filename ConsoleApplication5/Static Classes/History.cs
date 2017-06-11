@@ -2048,7 +2048,7 @@ namespace Next_Game
         ///return list of Great Houses (one house for each houseID)
         /// </summary>
         /// <returns></returns>
-        internal List<MajorHouse> GetGreatHouses()
+        internal List<MajorHouse> GetMajorHouses()
         { return listOfMajorHouses; }
 
         /// <summary>

@@ -5380,7 +5380,7 @@ namespace Next_Game
                     //
                     if (house.Value.Special == HouseSpecial.None)
                     {
-                        strength = 5;
+                        strength = 3;
                         rumourText = $"A levy solider of House {house.Value.Name}, at {house.Value.LocName} provides a good estimate of the available Men At Arms";
                         RumourMilitary rumour = new RumourMilitary(rumourText, strength, RumourScope.Local, rnd.Next(20) * -1) { RefID = house.Value.RefID };
                         //add to dictionary and global list
