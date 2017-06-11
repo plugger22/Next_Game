@@ -2827,7 +2827,7 @@ namespace Next_Game
         /// <param name="listOfHouses"></param>
         internal void InitialiseHouses()
         {
-
+            int menAtArms = Game.constant.GetValue(Global.MEN_AT_ARMS);
             Game.network.UpdateHouses(Game.history.GetMajorHouses());
             Game.logStart?.Write("---  InitialiseHouses (World.cs) ---");
             //great houses
@@ -2843,7 +2843,7 @@ namespace Next_Game
             //capital
             List<CapitalHouse> listOfCapitalHouses = Game.history.GetCapitalHouses();
             foreach (House house in listOfCapitalHouses)
-            { dictAllHouses.Add(house.RefID, house); }
+            { dictAllHouses.Add(house.RefID, house); house.MenAtArms = menAtArms; }
             //initialise Special Locations
             Game.history.InitialiseSpecialHouses();
             //update Map layer for RefID
@@ -2904,6 +2904,9 @@ namespace Next_Game
                     SetPassiveActor(actorSepton);
                     //create family
                     Game.history.CreateFamily(actorLord, actorLady);
+                    //add MenAtArms (needed to be done here -> sequence issues with history. InitialisePastHistory)
+                    kvp.Value.MenAtArms = menAtArms;
+
                 }
                 else { Game.SetError(new Error(188, "Invalid Loc (null) Lord and Lady not created")); }
                 //check if lady died in childbirth
@@ -2952,6 +2955,8 @@ namespace Next_Game
                         dictAllActors.Add(bannerLord.ActID, bannerLord);
                         //add Lord to house
                         kvp.Value.LordID = bannerLord.ActID;
+                        //add MenAtArms (needed to be done here -> sequence issues with history. InitialisePastHistory)
+                        kvp.Value.MenAtArms = menAtArms / 2;
                     }
                     else { Game.SetError(new Error(188, "Invalid Loc (null) Bannerlord not created")); }
                 }
@@ -7703,7 +7708,7 @@ namespace Next_Game
             int overallTally = 0;
             string descriptor;
             //
-            // Men At Arms and Population
+            // Men At Arms and Population (MenAtArms done earlier in InitialiseHouses due to need for data then but redo here with different stats if need be)
             //
             foreach (var house in dictAllHouses)
             {

@@ -1,4 +1,4 @@
-//Exile Game file ops "LogStart.txt" commenced at: 11/06/2017 19:38:39
+//Exile Game file ops "LogStart.txt" commenced at: 11/06/2017 20:12:42
 --- Initialise Constants (FileImport.cs)
 INHERIT_TRAIT -> 50 Min 0 Max 100
 CHILDBIRTH_DEATH -> 15 Min 0 Max 100
@@ -85,7 +85,7 @@ ENEMY_RUMOURS -> 50 Min 10 Max 90
 ENEMY_RUMOUR_TIME -> 3 Min 2 Max 6
 REL_RUMOUR_TIME -> 20 Min 5 Max 30
 ERROR_29 "Location Deleted 5:27"
-Method: LocationSweeper,  Line: 1675,  Object: Map.cs,  Turn: 0,  Local Time: 19:38:39 UTC +10:00
+Method: LocationSweeper,  Line: 1675,  Object: Map.cs,  Turn: 0,  Local Time: 20:12:42 UTC +10:00
 --- InitialiseHouseLocations (Network.cs)
 Total Locations (excluding Capital) 25
 Number of Houses 8, Max Cap on House Numbers 8
@@ -317,30 +317,30 @@ King Elyes Arryn was tolerated by his people
 His Queen, Myrielle Arryn, was liked by the common folk
 In 1200 there was a great Revolt
 --- Royalist Army -> CreateOldKingBackStory (Lore.cs)
-Aid 26, Elyes Arryn has provided 0 men
-Aid 54, Hallis Botley has provided 0 men
-Aid 55, Gualtier Mullendore has provided 0 men
-Aid 56, Ingrannus Tarth has provided 0 men
-Aid 57, Vargo Hunt has provided 0 men
-Aid 18, Luwin Greyjoy has provided 0 men
-Aid 52, Segarus Caron has provided 0 men
-Aid 53, Addam Dondarrion has provided 0 men
-The Royalists fielded 0 Men At Arms
+Aid 26, Elyes Arryn has provided 720 men
+Aid 54, Hallis Botley has provided 240 men
+Aid 55, Gualtier Mullendore has provided 240 men
+Aid 56, Ingrannus Tarth has provided 360 men
+Aid 57, Vargo Hunt has provided 360 men
+Aid 18, Luwin Greyjoy has provided 720 men
+Aid 52, Segarus Caron has provided 240 men
+Aid 53, Addam Dondarrion has provided 360 men
+The Royalists fielded 3,240 Men At Arms
 --- Rebel Army -> CreateOldKingBackStory (Lore.cs)
-Aid 10, Jonos Martell has provided 0 men
-Aid 48, Houdouyn Ambrose has provided 0 men
-Aid 49, Willem Frey has provided 0 men
-Aid 50, Mord Bracken has provided 0 men
-Aid 51, Gilibertus Tallhart has provided 0 men
-Aid 41, Azer Stark has provided 0 men
-Aid 60, Willas Peake has provided 0 men
-Aid 61, Renoldus Hightower has provided 0 men
-Aid 62, Rainald Karstark has provided 0 men
-Aid 63, Dreu Bolton has provided 0 men
-Aid 34, Chett Baratheon has provided 0 men
-Aid 58, Ivo Codd has provided 0 men
-Aid 59, Vargo Umber has provided 0 men
-The Rebels fielded 0 Men At Arms
+Aid 10, Jonos Martell has provided 720 men
+Aid 48, Houdouyn Ambrose has provided 360 men
+Aid 49, Willem Frey has provided 240 men
+Aid 50, Mord Bracken has provided 600 men
+Aid 51, Gilibertus Tallhart has provided 240 men
+Aid 41, Azer Stark has provided 720 men
+Aid 60, Willas Peake has provided 240 men
+Aid 61, Renoldus Hightower has provided 240 men
+Aid 62, Rainald Karstark has provided 240 men
+Aid 63, Dreu Bolton has provided 240 men
+Aid 34, Chett Baratheon has provided 720 men
+Aid 58, Ivo Codd has provided 360 men
+Aid 59, Vargo Umber has provided 360 men
+The Rebels fielded 5,280 Men At Arms
 King Jonos Martell was tolerated by his people
 His Queen, Sully Martell, was tolerated by the common folk
 --- Royalist Locations -> CreateOldKingBackStory (Lore.cs)
@@ -355,7 +355,7 @@ Greyjoy -> Blackhaven, distance 31
 Arryn -> Longbow Hall, distance 34
 --- Battles -> CreateOldKingBackStory (Lore.cs)
 1199 The Siege of Eyrie (loc 16:3)
-Under the strong leadership of the Rebel Lord Jonos Martell his 0 men at arms invested a Royalist stronghold at The Siege of Eyrie. 
+Under the strong leadership of the Rebel Lord Jonos Martell his 2,640 men at arms invested a Royalist stronghold at The Siege of Eyrie. 
 King Elyes Arryn's unremarkable direction resulted in the destruction of the stronghold although the King and his guard managed to flee.
 --- Events -> CreateOldKingBackStory (Lore.cs)
 Knight Ser Aunger Warnerus, Aid 12, was wounded by the Royalists during The Siege of Eyrie
@@ -391,7 +391,7 @@ BannerLord Addam Dondarrion, Aid 53, was wounded by the Rebels during The Battle
 Vargo Hunt, Aid 57, led his men with valour and distinction during The Battle of Uplands
 Vargo Hunt, Aid 57, cowardly stole somebody else's glory during The Battle of Uplands
 1199 The Battle of Kingskeep (loc 14:17)
-King Elyes Arryn, with an air of desperation, made a last stand with his remaining 0 loyal men at arms at The Battle of Kingskeep. Like the hell raised Son of Satan, Lord Jonos Martell thrust a Royalist force 0 strong straight at them. 
+King Elyes Arryn, with an air of desperation, made a last stand with his remaining 1,620 loyal men at arms at The Battle of Kingskeep. Like the hell raised Son of Satan, Lord Jonos Martell thrust a Royalist force 5,280 strong straight at them. 
 The King fought ferociously but it was a lost cause. The rebel Lord Jonos Martell entered Kingskeep, slaughtering all those he deemed unworthy, before proclaiming himself King of the Iron Throne and ruler of the Seven Kingdoms. Long live the King!
 --- Events -> CreateOldKingBackStory (Lore.cs)
 Knight Ser Fraunk Rouland, Aid 43, was killed by the Royalists during The Battle of Kingskeep
@@ -1783,5 +1783,5 @@ FoodCropEduc -> 14 records imported
 FoodCropUned -> 10 records imported
 FoodHuntEduc -> 6 records imported
 FoodHuntUned -> 10 records imported
-//Exile Game file ops "LogStart.txt" Completed at: 11/06/2017 19:38:40
-//Elapsed Time 913 ms
+//Exile Game file ops "LogStart.txt" Completed at: 11/06/2017 20:12:43
+//Elapsed Time 888 ms
