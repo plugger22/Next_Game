@@ -1,4 +1,4 @@
-//Exile Game file ops "LogStart.txt" commenced at: 11/06/2017 16:23:28
+//Exile Game file ops "LogStart.txt" commenced at: 11/06/2017 16:40:26
 --- Initialise Constants (FileImport.cs)
 INHERIT_TRAIT -> 50 Min 0 Max 100
 CHILDBIRTH_DEATH -> 15 Min 0 Max 100
@@ -85,7 +85,7 @@ ENEMY_RUMOURS -> 50 Min 10 Max 90
 ENEMY_RUMOUR_TIME -> 3 Min 2 Max 6
 REL_RUMOUR_TIME -> 20 Min 5 Max 30
 ERROR_29 "Location Deleted 5:27"
-Method: LocationSweeper,  Line: 1675,  Object: Map.cs,  Turn: 0,  Local Time: 16:23:28 UTC +10:00
+Method: LocationSweeper,  Line: 1675,  Object: Map.cs,  Turn: 0,  Local Time: 16:40:26 UTC +10:00
 --- InitialiseHouseLocations (Network.cs)
 Total Locations (excluding Capital) 25
 Number of Houses 8, Max Cap on House Numbers 8
@@ -1759,5 +1759,5 @@ FoodCropEduc -> 14 records imported
 FoodCropUned -> 10 records imported
 FoodHuntEduc -> 6 records imported
 FoodHuntUned -> 10 records imported
-//Exile Game file ops "LogStart.txt" Completed at: 11/06/2017 16:23:29
-//Elapsed Time 23 ms
+//Exile Game file ops "LogStart.txt" Completed at: 11/06/2017 16:40:27
+//Elapsed Time 962 ms

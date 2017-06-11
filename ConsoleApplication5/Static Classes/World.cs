@@ -1897,10 +1897,14 @@ namespace Next_Game
                 int armyTotal = bannerTotal + majorHouse.MenAtArms;
                 string army = string.Format("Can call upon {0:N0} Men At Arms in Total ({1:N0} from Lord, {2:N0} from Bannerlords)", armyTotal, majorHouse.MenAtArms, bannerTotal);
                 houseList.Add(new Snippet(army));
-                houseList.Add(new Snippet(string.Format("Strength of Castle Walls ({0}) ", (CastleDefences)majorHouse.CastleWalls), false));
-                houseList.Add(new Snippet(string.Format("{0}", GetStars(majorHouse.CastleWalls)), RLColor.LightRed, RLColor.Black));
-                houseList.Add(new Snippet(string.Format("House Resources ({0}) ", (ResourceLevel)majorHouse.Resources), false));
-                houseList.Add(new Snippet(string.Format("{0}", GetStars((int)majorHouse.Resources)), RLColor.LightRed, RLColor.Black));
+                displayColor = unknownColor; if (majorHouse.GetInfoStatus(HouseInfo.CastleWalls) == true) { displayColor = knownColor; }
+                houseList.Add(new Snippet(string.Format("Strength of Castle Walls ({0}) ", (CastleDefences)majorHouse.CastleWalls), displayColor, RLColor.Black, false));
+                displayColor = unknownColor; if (majorHouse.GetInfoStatus(HouseInfo.CastleWalls) == true) { displayColor = RLColor.LightRed; }
+                houseList.Add(new Snippet(string.Format("{0}", GetStars(majorHouse.CastleWalls)), displayColor, RLColor.Black));
+                displayColor = unknownColor; if (majorHouse.GetInfoStatus(HouseInfo.Resources) == true) { displayColor = knownColor; }
+                houseList.Add(new Snippet(string.Format("House Resources ({0}) ", (ResourceLevel)majorHouse.Resources), displayColor, RLColor.Black, false));
+                displayColor = unknownColor; if (majorHouse.GetInfoStatus(HouseInfo.Resources) == true) { displayColor = RLColor.LightRed; }
+                houseList.Add(new Snippet(string.Format("{0}", GetStars((int)majorHouse.Resources)), displayColor, RLColor.Black));
                 //bannerlords
                 int food = majorHouse.FoodCapacity; int granary = majorHouse.FoodStockpile; int popTotal = majorHouse.Population;
                 if (listLordLocations.Count > 0)
@@ -1925,7 +1929,58 @@ namespace Next_Game
                 }
                 //Food and pop realm summary
                 houseList.Add(new Snippet("House Realm", RLColor.Yellow, RLColor.Black));
-                houseList.Add(new Snippet($"Realm Population: {popTotal:N0} Realm Harvest: {food:N0} Food Balance: {food - popTotal:N0} Realm Granary: {granary:N0}"));
+                displayColor = unknownColor; if (majorHouse.GetInfoStatus(HouseInfo.Food) == true) { displayColor = knownColor; }
+                houseList.Add(new Snippet($"Realm Population: {popTotal:N0} Realm Harvest: {food:N0} Food Balance: {food - popTotal:N0} Realm Granary: {granary:N0}", displayColor, RLColor.Black));
+                //imports & exports
+                if (majorHouse.GetNumImports() > 0 || majorHouse.GetNumExports() > 0)
+                {
+                    int upper, sumGoods;
+                    bool newLine;
+                    //Imports
+                    int numGoods = majorHouse.GetNumImports();
+                    if (numGoods > 0)
+                    {
+                        sumGoods = 0;
+                        houseList.Add(new Snippet("Imports -> ", false));
+                        int[,] tempImports = majorHouse.GetImports();
+                        upper = tempImports.GetUpperBound(0);
+                        for (int i = 0; i <= upper; i++)
+                        {
+                            //at least one present and is known
+                            if (tempImports[i, 0] > 0)
+                            {
+                                sumGoods++;
+                                displayColor = unknownColor;
+                                if (tempImports[i, 1] > 0) { displayColor = knownColor; }
+                                newLine = true;
+                                if (sumGoods < numGoods) { newLine = false; }
+                                houseList.Add(new Snippet($"{(Goods)i} x {tempImports[i, 0]} ", displayColor, RLColor.Black, newLine));
+                            }
+                        }
+                    }
+                    //Exports
+                    numGoods = majorHouse.GetNumExports();
+                    if (numGoods > 0)
+                    {
+                        sumGoods = 0;
+                        houseList.Add(new Snippet("Exports -> ", false));
+                        int[,] tempExports = majorHouse.GetExports();
+                        upper = tempExports.GetUpperBound(0);
+                        for (int i = 0; i <= upper; i++)
+                        {
+                            //at least one present and is known
+                            if (tempExports[i, 0] > 0)
+                            {
+                                sumGoods++;
+                                displayColor = unknownColor;
+                                if (tempExports[i, 1] > 0) { displayColor = knownColor; }
+                                newLine = true;
+                                if (sumGoods < numGoods) { newLine = false; }
+                                houseList.Add(new Snippet($"{(Goods)i} x {tempExports[i, 0]} ", displayColor, RLColor.Black, newLine));
+                            }
+                        }
+                    }
+                }
                 //family - get list of all actorID's in family
                 houseList.Add(new Snippet("Family", RLColor.Brown, RLColor.Black));
                 List<int> listOfFamily = new List<int>();
@@ -2085,8 +2140,61 @@ namespace Next_Game
                 //bannerlords
                 int food = minorHouse.FoodCapacity; int granary = minorHouse.FoodStockpile; int popTotal = minorHouse.Population;
                 //Food and pop realm summary
+                houseList.Add(new Snippet("House Realm", RLColor.Yellow, RLColor.Black));
                 food = minorHouse.FoodCapacity; popTotal = minorHouse.Population; granary = minorHouse.FoodStockpile;
-                houseList.Add(new Snippet($"Population: {popTotal:N0} Harvest: {food:N0} Food Balance: {food - popTotal:N0} Realm Granary: {granary:N0}"));
+                displayColor = unknownColor; if (minorHouse.GetInfoStatus(HouseInfo.Food) == true) { displayColor = knownColor; }
+                houseList.Add(new Snippet($"Population: {popTotal:N0} Harvest: {food:N0} Food Balance: {food - popTotal:N0} Realm Granary: {granary:N0}", displayColor, RLColor.Black));
+                //imports & exports
+                if (minorHouse.GetNumImports() > 0 || minorHouse.GetNumExports() > 0)
+                {
+                    int upper, sumGoods;
+                    bool newLine;
+                    //Imports
+                    int numGoods = minorHouse.GetNumImports();
+                    if (numGoods > 0)
+                    {
+                        sumGoods = 0;
+                        houseList.Add(new Snippet("Imports -> ", false));
+                        int[,] tempImports = minorHouse.GetImports();
+                        upper = tempImports.GetUpperBound(0);
+                        for (int i = 0; i <= upper; i++)
+                        {
+                            //at least one present and is known
+                            if (tempImports[i, 0] > 0)
+                            {
+                                sumGoods++;
+                                displayColor = unknownColor;
+                                if (tempImports[i, 1] > 0) { displayColor = knownColor; }
+                                newLine = true;
+                                if (sumGoods < numGoods) { newLine = false; }
+                                houseList.Add(new Snippet($"{(Goods)i} x {tempImports[i, 0]} ", displayColor, RLColor.Black, newLine));
+                            }
+                        }
+                    }
+                    //Exports
+                    numGoods = minorHouse.GetNumExports();
+                    if (numGoods > 0)
+                    {
+                        sumGoods = 0;
+                        houseList.Add(new Snippet("Exports -> ", false));
+                        int[,] tempExports = minorHouse.GetExports();
+                        upper = tempExports.GetUpperBound(0);
+                        for (int i = 0; i <= upper; i++)
+                        {
+                            //at least one present and is known
+                            if (tempExports[i, 0] > 0)
+                            {
+                                sumGoods++;
+                                displayColor = unknownColor;
+                                if (tempExports[i, 1] > 0) { displayColor = knownColor; }
+                                newLine = true;
+                                if (sumGoods < numGoods) { newLine = false; }
+                                houseList.Add(new Snippet($"{(Goods)i} x {tempExports[i, 0]} ", displayColor, RLColor.Black, newLine));
+                            }
+                        }
+                    }
+                }
+
                 //family - get list of all actorID's in family
                 houseList.Add(new Snippet("Family", RLColor.Brown, RLColor.Black));
                 List<int> listOfFamily = new List<int>();
@@ -2174,20 +2282,71 @@ namespace Next_Game
         {
             CapitalHouse capital = GetCapital();
             List<Snippet> capitalList = new List<Snippet>();
-
+            RLColor unknownColor = RLColor.LightGray;
+            RLColor knownColor = RLColor.White;
+            RLColor displayColor;
             capitalList.Add(new Snippet(string.Format("Kingskeep, Kingdom Capital {0}", GetLocationCoords(1)), RLColor.Yellow, RLColor.Black));
-            //int capitalWalls = Game.history.CapitalWalls;
-            //int capitalResources = Game.history.CapitalTreasury;
             int capitalWalls = capital.CastleWalls;
             int capitalResources = capital.Resources;
-            capitalList.Add(new Snippet(string.Format("Population: {0:N0} Harvest: {1:N0} Food Balance: {2:N0} Granary: {3:N0} ", capital.Population, capital.FoodCapacity, 
-                capital.FoodCapacity - capital.Population, capital.FoodStockpile )));
             capitalList.Add(new Snippet(string.Format("City Watch has {0:N0} Men At Arms", capital.MenAtArms)));
             capitalList.Add(new Snippet(string.Format("Strength of Castle Walls ({0}) ", (CastleDefences)capitalWalls), false));
             capitalList.Add(new Snippet(string.Format("{0}", GetStars(capitalWalls)), RLColor.LightRed, RLColor.Black));
-            //placeholder
             capitalList.Add(new Snippet(string.Format("Kingdom Treasury Resources ({0}) ", (ResourceLevel)capitalResources), false));
             capitalList.Add(new Snippet(string.Format("{0}", GetStars(capitalResources)), RLColor.LightRed, RLColor.Black));
+            capitalList.Add(new Snippet("Kingdom Realm", RLColor.Yellow, RLColor.Black));
+            displayColor = unknownColor; if (capital.GetInfoStatus(HouseInfo.Food) == true) { displayColor = knownColor; }
+            capitalList.Add(new Snippet(string.Format("Population: {0:N0} Harvest: {1:N0} Food Balance: {2:N0} Granary: {3:N0} ", capital.Population, capital.FoodCapacity, 
+                capital.FoodCapacity - capital.Population, capital.FoodStockpile ), displayColor, RLColor.Black));
+            //imports & exports
+            if (capital.GetNumImports() > 0 || capital.GetNumExports() > 0)
+            {
+                int upper, sumGoods;
+                bool newLine;
+                //Imports
+                int numGoods = capital.GetNumImports();
+                if (numGoods > 0)
+                {
+                    sumGoods = 0;
+                    capitalList.Add(new Snippet("Imports -> ", false));
+                    int[,] tempImports = capital.GetImports();
+                    upper = tempImports.GetUpperBound(0);
+                    for (int i = 0; i <= upper; i++)
+                    {
+                        //at least one present and is known
+                        if (tempImports[i, 0] > 0)
+                        {
+                            sumGoods++;
+                            displayColor = unknownColor;
+                            if (tempImports[i, 1] > 0) { displayColor = knownColor; }
+                            newLine = true;
+                            if (sumGoods < numGoods) { newLine = false; }
+                            capitalList.Add(new Snippet($"{(Goods)i} x {tempImports[i, 0]} ", displayColor, RLColor.Black, newLine));
+                        }
+                    }
+                }
+                //Exports
+                numGoods = capital.GetNumExports();
+                if (numGoods > 0)
+                {
+                    sumGoods = 0;
+                    capitalList.Add(new Snippet("Exports -> ", false));
+                    int[,] tempExports = capital.GetExports();
+                    upper = tempExports.GetUpperBound(0);
+                    for (int i = 0; i <= upper; i++)
+                    {
+                        //at least one present and is known
+                        if (tempExports[i, 0] > 0)
+                        {
+                            sumGoods++;
+                            displayColor = unknownColor;
+                            if (tempExports[i, 1] > 0) { displayColor = knownColor; }
+                            newLine = true;
+                            if (sumGoods < numGoods) { newLine = false; }
+                            capitalList.Add(new Snippet($"{(Goods)i} x {tempExports[i, 0]} ", displayColor, RLColor.Black, newLine));
+                        }
+                    }
+                }
+            }
             //ROYAL FAMILY
             capitalList.Add(new Snippet("Royal Family", RLColor.Brown, RLColor.Black));
             //query royal family members at capital
