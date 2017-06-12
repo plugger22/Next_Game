@@ -14,6 +14,7 @@ namespace Next_Game
         Promises_Num,
         View_Index,
         New_RelRumours,
+        View_Rollover,
         //keep as last, DO NOT change order of GameVars
         Count
     }
@@ -36,6 +37,7 @@ namespace Next_Game
             arrayOfGameVars[1] = GameVar.Promises_Num;
             arrayOfGameVars[2] = GameVar.View_Index;
             arrayOfGameVars[3] = GameVar.New_RelRumours;
+            arrayOfGameVars[4] = GameVar.View_Rollover;
         }
 
         public GameVar[] GetArrayOfGameVars()

@@ -7568,7 +7568,9 @@ namespace Next_Game
         private void InitialiseGameVars()
         {
             Game.logTurn?.Write("--- InitialiseGameVars (World.cs)");
-            Game.variable.SetValue(GameVar.View_Index, 1);
+            int numOfMarketViews = 6;
+            Game.variable.SetValue(GameVar.View_Index, rnd.Next(1, numOfMarketViews));
+            Game.variable.SetValue(GameVar.View_Rollover, numOfMarketViews);
         }
 
         /// <summary>

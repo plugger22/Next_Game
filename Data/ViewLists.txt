@@ -1,4 +1,5 @@
 # ViewLists.txt -> various lists of text used for generating the View from the Market
+# need two sets for each item, one for Educated persons and one for Uneducated, eg. '...Educ' & '...Uned'
 
 # Format -> Single lines of text with embedded tags
 # <player> <newKing> <oldKing> -> Names
@@ -13,6 +14,29 @@
 # <animalBig> -> random big animal
 # <curse> -> random curse
 # <food> -> Check's loc terrain -> fish, grown crops, hunting -> gets random food from Assorted (varies if Educ / Uned)
+
+[SummerEduc]
+
+
+[SummerUned]
+
+
+[AutumnEduc]
+
+
+[AutumnUned]
+
+
+[WinterEduc]
+
+
+[WinterUned]
+
+
+[SpringEduc]
+
+
+[SpringUned]
 
 
 [FoodSurplusEduc]

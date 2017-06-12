@@ -1,17 +1,112 @@
-//Exile Game file ops "LogTurn.txt" commenced at: 12/06/2017 15:28:23
---- ProcessStartGame (World.cs)
---- AgePassiveCharacters (History.cs)
---- InitialiseGameVars (World.cs)
-[GameVar] View_Index changed from 0 to 1
-[AddVisitedLoc] LocID 5, "Ten Towers", turn -3 -> record added to listLocsVisited
-[AddVisitedLoc] LocID 5, "Ten Towers", turn -3 -> new record added to dictLocsVisited
-[AddVisitedLoc] LocID 25, "Dreadfort", turn -2 -> record added to listLocsVisited
-[AddVisitedLoc] LocID 25, "Dreadfort", turn -2 -> new record added to dictLocsVisited
-[AddVisitedLoc] LocID 27, "Winterfell", turn -1 -> record added to listLocsVisited
-[AddVisitedLoc] LocID 27, "Winterfell", turn -1 -> new record added to dictLocsVisited
---- InitialiseFinalPlayer (World.cs)
-[AddVisitedLoc] LocID 25, "Dreadfort", turn 0 -> record added to listLocsVisited
-[AddVisitedLoc] LocID 25, "Dreadfort", turn 0 -> record updated in dictLocsVisited
+//Exile Game File "LogTurn.txt" opened at: 12/06/2017 15:53:24
+--- ProcessStartTurn (World.cs)
+Day 5, Turn 4, Harvest in 162 days, Winter in 177 days
+Usurper Rhaegar Tyrell, "The Decent", AtLocation, The Raucous Rat
+--- UpdateRumours (World.cs)
+dictRumoursTimed (Start) -> 94 records
+[Rumour -> Removal] RID 556, "Inquisitor, Brother Azazel, ActID 131 has been spotted drinking at Kingskeep (loc 17:12)" removed from Global All list
+[Rumour -> Removal] RID 557, "Inquisitor, Brother Behemoth, ActID 132 has been spotted wenching at Kingskeep (loc 17:12)" removed from Global All list
+92 rumours -> TimerExpire decremented
+2 records have expired and been removed
+dictRumoursTimed (End) -> 92 records
+--- MoveActors -> 1 Records (World.cs)
+ [Move -> MoveObject] Inquisitor Brother Mormo, ActID 130 travelling to The Pickled Prune (current Loc 17:11)
+--- CheckIfFoundEnemy (World.cs)
+ [Search -> Debug] Active Rhaegar Tyrell, ID 1 at 11:14, Enemy at 17:11 (Brother Mormo, ID 130
+--- UpdatePlayerStatus (World.cs)
+--- UpdateWorldStatus (World.cs)
+--- CheckFollowerActivity (World.cs)
+--- GetRumour (Director.cs)
+arrayOfRumours [0] -> RumourID 559, Strength 3, Scope Global, Type Enemy, Global All
+arrayOfRumours [3] -> RumourID 424, Strength 2, Scope Global, Type HouseRel, Global South
+arrayOfRumours [5] -> RumourID 538, Strength 3, Scope Local, Type Goods, Global All
+RumourID 424 selected from the Pool
+Rumour "House Stark has had poor past relations with House Cerwyn due to them betraying the Old King" revealed to ActorID2 on turn 4 -> added to List
+RumourID 424 removed from listRumoursSouth[20]
+Follower The Waif, ActID 2, added RumourID 424
+[Notification -> HouseRel] "The Turncoat Traitor and his House should burn in Hell" -> Known is True
+--- GetRumour (Director.cs)
+arrayOfRumours [0] -> RumourID 53, Strength 4, Scope Global, Type Disguise, Global All
+arrayOfRumours [4] -> RumourID 435, Strength 2, Scope Global, Type HouseRel, Global West
+arrayOfRumours [5] -> RumourID 504, Strength 3, Scope Local, Type Goods, Global All
+RumourID 53 selected from the Pool
+Rumour "It is suspected that Disguises can be had from Septon Charles Terryn, ActID 33 at Pyke" revealed to ActorID9 on turn 4 -> added to List
+RumourID 53 removed from listRumoursGlobal[4]
+Follower The Leper, ActID 9, added RumourID 53
+--- GetRumour (Director.cs)
+[Notification] No house rumours available -> none added to pool
+arrayOfRumours [0] -> RumourID 94, Strength 4, Scope Global, Type Disguise, Global All
+arrayOfRumours [4] -> RumourID 435, Strength 2, Scope Global, Type HouseRel, Global West
+RumourID 94 selected from the Pool
+Rumour "It is whispered that Disguises can be had from Maester Merrett Conan, ActID 48 at Winterfell" revealed to ActorID4 on turn 4 -> added to List
+RumourID 94 removed from listRumoursGlobal[5]
+Follower The Beast, ActID 4, added RumourID 94
+--- GetMarketView (Director.cs)
+ERROR_282 "Invalid innerArray (null) for View -> Market view cancelled"
+Method: GetMarketView,  Line: 6326,  Object: Director.cs,  Turn: 4,  Local Time: 15:53:24 UTC +10:00
+--- CheckStationaryActiveActors (World.cs)
+ [Search -> Stationary] Usurper Rhaegar Tyrell, ActID 1 is AtLocation
+--- CheckIfFoundActive (World.cs)
+ [Search -> Debug] Enemy, Brother Set, ID 129 at 17:12, Active Rhaegar Tyrell, ID 1, at 11:14
+ [Search -> Debug] Enemy, Brother Mormo, ID 130 at 17:10, Active Rhaegar Tyrell, ID 1, at 11:14
+ [Search -> Debug] Enemy, Brother Azazel, ID 131 at 17:12, Active Rhaegar Tyrell, ID 1, at 11:14
+ [Search -> Debug] Enemy, Brother Behemoth, ID 132 at 17:12, Active Rhaegar Tyrell, ID 1, at 11:14
+ [Search -> Debug] Enemy, The Unrelenting, ID 133 at 17:12, Active Rhaegar Tyrell, ID 1, at 11:14
+ [Search -> Stationary] Follower The Waif, ActID 2 is AtLocation
+ [Search -> Stationary] Follower The Leper, ActID 9 is AtLocation
+ [Search -> Stationary] Follower The Beast, ActID 4 is AtLocation
+--- UpdateAIController (World.cs)
+ [AI -> Player Unknown] Inquisitor Brother Set, Act ID 129 Mode -> Normal
+ [AI -> Player Unknown] Inquisitor Brother Azazel, Act ID 131 Mode -> Normal
+ [AI -> Player Unknown] Inquisitor Brother Behemoth, Act ID 132 Mode -> Normal
+ [AI -> Player Unknown] Nemesis The Unrelenting, Act ID 133 Mode -> Normal
+--- SetEnemyActivity (World.cs)
+ [Enemy -> Unknown] Brother Set ActID 129 has reverted to Unknown status (timer elapsed)
+ [Enemy -> Goal] Brother Set, ActID 129 retains Goal -> Wait
+ [Enemy -> Unknown] Brother Mormo ActID 130 has reverted to Unknown status (timer elapsed)
+ [Enemy -> Goal] Brother Azazel, ActID 131 retains Goal -> Wait
+ [Enemy -> Goal] Brother Behemoth, ActID 132 retains Goal -> Wait
+ [Enemy -> Unknown] The Unrelenting ActID 133 has reverted to Unknown status (timer elapsed)
+--- SetEnemyGoal (World.cs)
+ [Goal -> Branch] The Unrelenting, ActID 133 Assigned Branch -> 0 Current Branch -> 0
+ [Goal -> New] The Unrelenting, ActID 133, (loc 17:12), assigned new Goal -> Wait
+--- CheckPlayerEvents (Director.cs)
+Location event, Need 18, roll 65
+- CreateAutoLocEvent (Director.cs)
+ [AutoEvent -> ActorList] "The Beast", ID 4 added to list of Actors
+ [AutoEvent -> FollowerList] "The Beast", ID 4 added to list of Followers
+[Notification] No entry found in dictOfIntroductions for RefID 1001
+ Chance of Player Location event 75 %
+--- ResolvePlayerEvents (Director.cs)
+ Event "What to do?" Timer Repeat now 999
+ Event "What to do?" Cooldown Timer has been reset to 0
+--- UpdateActiveActors (World.cs)
+ Usurper Rhaegar Tyrell has had their TurnsUnknown Timer increased from 103 to 104
+ Follower The Waif has had their TurnsUnknown Timer increased from 3 to 4
+ Follower The Leper has had their TurnsUnknown Timer increased from 3 to 4
+ Follower The Beast has had their TurnsUnknown Timer increased from 3 to 4
+--- ResolveOutcome (Director.cs)
+--- ChangePlayerRumourStatus (Director.cs)
+--- GetRumour (Director.cs)
+[Notification] No house rumours available -> none added to pool
+arrayOfRumours [0] -> RumourID 280, Strength 1, Scope Global, Type Item, Global All
+arrayOfRumours [4] -> RumourID 392, Strength 2, Scope Global, Type HouseRel, Global West
+RumourID 392 selected from the Pool
+Rumour "House Florent has had poor past relations with House Martell due to their cowardice in battle" revealed to ActorID1 on turn 4 -> added to List
+RumourID 392 removed from listRumoursWest[10]
+Rumour "House Florent has had poor past relations with House Martell due to their cowardice in battle", rumourID 392, added to dictRumoursKnown
+[Notification -> HouseRel] "Abandoned a past Lord, in his time of need, on the field of Battle" -> Known is True
+House Florent has had poor past relations with House Martell due to their cowardice in battle
+--- ChangePlayerRumourStatus (Director.cs)
+--- GetRumour (Director.cs)
+[Notification] No house rumours available -> none added to pool
+arrayOfRumours [0] -> RumourID 558, Strength 3, Scope Global, Type Enemy, Global All
+arrayOfRumours [4] -> RumourID 23, Strength 2, Scope Global, Type Desire, Global West
+RumourID 558 selected from the Pool
+Rumour "Inquisitor, Brother Azazel, ActID 131 has been spotted doing sword drills at Kingskeep (loc 17:12)" revealed to ActorID1 on turn 4 -> added to List
+RumourID 558 removed from listRumoursGlobal[20]
+Rumour "Inquisitor, Brother Azazel, ActID 131 has been spotted doing sword drills at Kingskeep (loc 17:12)", rumourID 558, added to dictRumoursKnown
+Inquisitor, Brother Azazel, ActID 131 has been spotted doing sword drills at Kingskeep (loc 17:12)
 --- SetEndGame (Game.cs)
 [Alert] Player chose to exit (pressed 'X')
-//Exile Game file ops "LogTurn.txt" Completed at: 12/06/2017 15:28:50
+//Exile Game file ops "LogTurn.txt" Completed at: 12/06/2017 15:53:56

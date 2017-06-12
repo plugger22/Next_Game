@@ -4,4 +4,5 @@
 
 1: Promises_Num     # Number of Promises made
 2: View_Index		# used to rotate GetMarketView through Gamestates (Justice/Legend/Honour/Known) on a regular basis
+4: View_Rollover	# View_Index rollsover to 1 when it reaches this 
 3: New_RelRumours	# turn number for creating the next set of relationship rumours

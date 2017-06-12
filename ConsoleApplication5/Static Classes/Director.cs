@@ -6308,6 +6308,10 @@ namespace Next_Game
                             }
                             else { Game.SetError(new Error(282, $"Invalid house (null) for Player.LocID {player.LocID} -> Street view cancelled")); }
                             break;
+                        case 6:
+                            //weather
+
+                            break;
                         default:
                             Game.SetError(new Error(282, $"Invalid Street_View \"{viewIndex} -> Street View cancelled"));
                             break;
@@ -6326,7 +6330,8 @@ namespace Next_Game
                         //deal with tags (only for game states & Others above as player choice views are tag checked at the time that they are created)
                         view = Game.utility.CheckTagsView(randomText, player, educated);
                         viewIndex++;
-                        if (viewIndex > 5) { viewIndex = 1; }
+                        //NOTE: don't forget to update numOfMarketViews in world.cs InitialseGameVars
+                        if (viewIndex > Game.variable.GetValue(GameVar.View_Rollover)) { viewIndex = 1; }
                         //update GameVar
                         Game.variable.SetValue(GameVar.View_Index, viewIndex);
                     }
