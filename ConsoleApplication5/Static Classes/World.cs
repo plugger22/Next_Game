@@ -4856,7 +4856,7 @@ namespace Next_Game
             bool notificationStatus = false; //is a notification msg needed?
             Game.infoChannel.ClearConsole(ConsoleDisplay.Event);
             Game.logTurn?.Write("--- ProcessStartTurn (World.cs)");
-            Game.logTurn?.Write($"Day {Game.gameTurn + 1}, Turn {Game.gameTurn}, Harvest in {Game.HarvestTimer} days, Winter in {Game.WinterTimer} days");
+            Game.logTurn?.Write($"Day {Game.gameTurn}, Turn {Game.gameTurn}, Harvest in {Game.HarvestTimer} days, Winter in {Game.WinterTimer} days, SeasonTimer {Game.SeasonTimer}");
             Game.logTurn?.Write($"{GetPlayerStatusReport()}");
             UpdateRumours();
             UpdateActorMoveStatus(MoveActors());
@@ -8115,6 +8115,7 @@ namespace Next_Game
             Game.gameTurn++;
             Game.HarvestTimer--;
             Game.WinterTimer--;
+            Game.SeasonTimer--;
         }
 
         //new Methods above here

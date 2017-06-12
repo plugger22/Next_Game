@@ -6310,7 +6310,7 @@ namespace Next_Game
                             break;
                         case 6:
                             //weather
-
+                            
                             break;
                         default:
                             Game.SetError(new Error(282, $"Invalid Street_View \"{viewIndex} -> Street View cancelled"));
