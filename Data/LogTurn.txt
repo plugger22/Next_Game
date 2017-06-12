@@ -1,123 +1,17 @@
-//Exile Game File "LogTurn.txt" opened at: 12/06/2017 12:37:27
---- ProcessStartTurn (World.cs)
-Day 9, Turn 8, Harvest in 180 days, Winter in 195 days
-Usurper Tion Arryn, "The Fixed", AtLocation, The Raucous Rat
---- UpdateRumours (World.cs)
-dictRumoursTimed (Start) -> 57 records
-[Notification -> North] RID 356, "Inquisitor, Brother Demogorgon, ActID 92 has been seen on the road to The Clumsy Hog (loc 12:9)" removed from Global North list
-56 rumours -> TimerExpire decremented
-1 records have expired and been removed
-dictRumoursTimed (End) -> 56 records
---- MoveActors -> 1 Records (World.cs)
- [Move -> MoveObject] Inquisitor Brother Demogorgon, ActID 92 travelling to The Clumsy Hog (current Loc 14:9)
---- CheckIfFoundEnemy (World.cs)
- [Search -> Debug] Active Tion Arryn, ID 1 at 10:22, Enemy at 14:9 (Brother Demogorgon, ID 92
---- CheckIfFoundEnemy (World.cs)
- [Search -> Debug] Active Tion Arryn, ID 1 at 10:22, Enemy at 13:9 (Brother Demogorgon, ID 92
- [Goal -> Arrival] Inquisitor Brother Demogorgon, ActID 92, currently at The Clumsy Hog, new Goal -> Wait
---- UpdatePlayerStatus (World.cs)
---- UpdateWorldStatus (World.cs)
---- CheckFollowerActivity (World.cs)
---- GetRumour (Director.cs)
-arrayOfRumours [0] -> RumourID 9, Strength 1, Scope Global, Type Item, Global All
-arrayOfRumours [3] -> RumourID 256, Strength 2, Scope Global, Type HouseRel, Global South
-arrayOfRumours [5] -> RumourID 48, Strength 2, Scope Local, Type Skill, Global All
-RumourID 256 selected from the Pool
-Rumour "House Baratheon has had good past relations with House Arryn due to mutual blood bonds" revealed to ActorID8 on turn 8 -> added to List
-RumourID 256 removed from listRumoursSouth[12]
-Follower The Leper, ActID 8, added RumourID 256
-[Notification -> HouseRel] "Blood bonds forged between past Lords" -> Known is True
---- GetRumour (Director.cs)
-arrayOfRumours [0] -> RumourID 139, Strength 1, Scope Global, Type Item, Global All
-arrayOfRumours [3] -> RumourID 56, Strength 2, Scope Global, Type Desire, Global South
-arrayOfRumours [5] -> RumourID 279, Strength 3, Scope Local, Type HouseHistory, Global All
-RumourID 279 selected from the Pool
-Rumour "There is a scribe who can recall the history of House Bracken, at Stone Hedge" revealed to ActorID3 on turn 8 -> added to List
-RumourID 279 removed from listRumoursHouse[5]
-Follower The Spider, ActID 3, added RumourID 279
---- GetRumour (Director.cs)
-arrayOfRumours [0] -> RumourID 332, Strength 3, Scope Global, Type Friends, Global All
-arrayOfRumours [1] -> RumourID 357, Strength 3, Scope Global, Type Enemy, Global North
-arrayOfRumours [5] -> RumourID 121, Strength 4, Scope Local, Type Skill, Global All
-RumourID 121 selected from the Pool
-Rumour "BannerLord Renly Mullendore "The Raging", ActID 72 at Uplands, is said to be Impulsive" revealed to ActorID2 on turn 8 -> added to List
-RumourID 121 removed from listRumoursHouse[1]
-Follower The Viper, ActID 2, added RumourID 121
-BannerLord Renly Mullendore, ActID 72, has their Leadership changed to True
---- GetMarketView (Director.cs)
-[GameVar] View_Index changed from 5 to 1
---- CheckStationaryActiveActors (World.cs)
- [Search -> Stationary] Usurper Tion Arryn, ActID 1 is AtLocation
---- CheckIfFoundActive (World.cs)
- [Search -> Debug] Enemy, Brother Dagon, ID 91 at 14:17, Active Tion Arryn, ID 1, at 10:22
- [Search -> Debug] Enemy, Brother Demogorgon, ID 92 at 12:9, Active Tion Arryn, ID 1, at 10:22
- [Search -> Debug] Enemy, Brother Gorgo, ID 93 at 15:11, Active Tion Arryn, ID 1, at 10:22
- [Search -> Debug] Enemy, Brother Behemoth, ID 94 at 14:17, Active Tion Arryn, ID 1, at 10:22
- [Search -> Debug] Enemy, The Unrelenting, ID 95 at 14:17, Active Tion Arryn, ID 1, at 10:22
- [Search -> Stationary] Follower The Leper, ActID 8 is AtLocation
- [Search -> Stationary] Follower The Spider, ActID 3 is AtLocation
- [Search -> Stationary] Follower The Viper, ActID 2 is AtLocation
---- UpdateAIController (World.cs)
- [AI -> Player Unknown] Inquisitor Brother Dagon, Act ID 91 Mode -> Normal
- [AI -> Player Unknown] Inquisitor Brother Demogorgon, Act ID 92 Mode -> Normal
- [AI -> Player Unknown] Inquisitor Brother Gorgo, Act ID 93 Mode -> Normal
- [AI -> Player Unknown] Inquisitor Brother Behemoth, Act ID 94 Mode -> Normal
- [AI -> Player Unknown] Nemesis The Unrelenting, Act ID 95 Mode -> Normal
---- SetEnemyActivity (World.cs)
- [Enemy -> Unknown] Brother Dagon ActID 91 has reverted to Unknown status (timer elapsed)
- [Enemy -> Goal] Brother Dagon, ActID 91 retains Goal -> Wait
---- SetEnemyGoal (World.cs)
- [Goal -> Branch] Brother Demogorgon, ActID 92 Assigned Branch -> 1 Current Branch -> 1
- [Goal -> New] Brother Demogorgon, ActID 92, (loc 12:9), assigned new Goal -> Move
- [Goal -> Move] Brother Demogorgon, ActID 92 -> Move Outwards -> Eyrie, LocID 3
---- InitiateMoveActor (World.cs)
---- Move Actor (Director.cs)
- [Enemy -> Goal] Brother Gorgo, ActID 93 retains Goal -> Wait
---- SetEnemyGoal (World.cs)
- [Goal -> Branch] Brother Behemoth, ActID 94 Assigned Branch -> 3 Current Branch -> 0
- [Goal -> New] Brother Behemoth, ActID 94, (loc 14:17), assigned new Goal -> Move
- [Goal -> Move] Brother Behemoth, ActID 94 -> Capital to Correct Branch -> The Raucous Rat, LocID 17
---- InitiateMoveActor (World.cs)
---- Move Actor (Director.cs)
- [Enemy -> Goal] The Unrelenting, ActID 95 retains Goal -> Wait
---- CheckPlayerEvents (Director.cs)
-Location event, Need 37, roll 41
-- CreateAutoLocEvent (Director.cs)
-[Notification] No entry found in dictOfIntroductions for RefID 1001
- Chance of Player Location event 75 %
---- ResolvePlayerEvents (Director.cs)
- Event "What to do?" Timer Repeat now 999
- Event "What to do?" Cooldown Timer has been reset to 0
---- UpdateActiveActors (World.cs)
- Usurper Tion Arryn has had their TurnsUnknown Timer increased from 107 to 108
- Follower The Leper has had their TurnsUnknown Timer increased from 7 to 8
- Follower The Spider has had their TurnsUnknown Timer increased from 7 to 8
- Follower The Viper has had their TurnsUnknown Timer increased from 7 to 8
---- ResolveOutcome (Director.cs)
-ERROR_73 "No valid option present for "What to do?", option # 5"
-Method: ResolveOptionOutcome,  Line: 3270,  Object: Director.cs,  Turn: 8,  Local Time: 12:37:40 UTC +10:00
---- ResolveOutcome (Director.cs)
+//Exile Game file ops "LogTurn.txt" commenced at: 12/06/2017 15:28:23
+--- ProcessStartGame (World.cs)
+--- AgePassiveCharacters (History.cs)
+--- InitialiseGameVars (World.cs)
+[GameVar] View_Index changed from 0 to 1
+[AddVisitedLoc] LocID 5, "Ten Towers", turn -3 -> record added to listLocsVisited
+[AddVisitedLoc] LocID 5, "Ten Towers", turn -3 -> new record added to dictLocsVisited
+[AddVisitedLoc] LocID 25, "Dreadfort", turn -2 -> record added to listLocsVisited
+[AddVisitedLoc] LocID 25, "Dreadfort", turn -2 -> new record added to dictLocsVisited
+[AddVisitedLoc] LocID 27, "Winterfell", turn -1 -> record added to listLocsVisited
+[AddVisitedLoc] LocID 27, "Winterfell", turn -1 -> new record added to dictLocsVisited
+--- InitialiseFinalPlayer (World.cs)
+[AddVisitedLoc] LocID 25, "Dreadfort", turn 0 -> record added to listLocsVisited
+[AddVisitedLoc] LocID 25, "Dreadfort", turn 0 -> record updated in dictLocsVisited
 --- SetEndGame (Game.cs)
 [Alert] Player chose to exit (pressed 'X')
-//Exile Game file ops "LogTurn.txt" Completed at: 12/06/2017 12:37:47
-ursKnown has 9 records
-
-//Exile Game File "LogTurn.txt" Close completed at: 12/06/2017 12:37:21
---- ResolveOutcome (Director.cs)
-ERROR_73 "No valid option present for "What to do?", option # 5"
-Method: ResolveOptionOutcome,  Line: 3270,  Object: Director.cs,  Turn: 5,  Local Time: 12:37:09 UTC +10:00
---- ResolveOutcome (Director.cs)
---- ProcessEndTurn (World.cs)
-Day 6, Turn 5
---- CheckEventTimers (Director.cs)
- Event "Search and Detain" Dormant Timer decremented to 15
- "Crazy Old Woman" event, Cooldown Timer decremented from 5 to 4
---- InitialiseDynamicRumours (Director.cs)
-[Notification] Turn 5, generate new set of Relationship rumours on turn 21
-[Rumour -> Added] RID 356, "Inquisitor, Brother Demogorgon, ActID 92 has been seen on the road to The Clumsy Hog (loc 12:9)" -> dict & List
---- HouseKeepActors (World.cs)
-[GameStat] "Location_Days" -> increased from 1 to 2
---- HousekeepRumours (World.cs)
-dictRumoursKnown has 6 records
-
-//Exile Game File "LogTurn.txt" Close completed at: 12/06/2017 12:37:11
+//Exile Game file ops "LogTurn.txt" Completed at: 12/06/2017 15:28:50

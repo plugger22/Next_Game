@@ -7704,7 +7704,7 @@ namespace Next_Game
             int goodsMinTerrain = Game.constant.GetValue(Global.GOODS_FACTOR); //number of terrain squares in 3 x 3 grid needed to qualify for a particular good
             int goodsLow = Game.constant.GetValue(Global.GOODS_LOW); //% chance of a low probability good being present
             int goodsMed = Game.constant.GetValue(Global.GOODS_MED); //% chance of a medium probability good being present
-            int food, balance, absBalance, tally, resources, numLocs, modifier;
+            int food, balance, absBalance, tally, resources, numLocs, modifier, granary, stockFactor;
             int overallTally = 0;
             string descriptor;
             //
@@ -7741,6 +7741,18 @@ namespace Next_Game
                     Game.logStart?.Write($"House {house.Value.Name} at {house.Value.LocName} -> MenAtArms {house.Value.MenAtArms}, Population {house.Value.Population}, Food Capacity {house.Value.FoodCapacity}");
                     //Importer or Exporter of food if Abs(food balance) > foodCapacity
                     balance = house.Value.FoodCapacity - house.Value.Population;
+                    //Food stockpile in granary? (higher chance if an ongoing food surplus)
+                    if (balance > 0) { stockFactor = foodCapacity; } else { stockFactor = foodCapacity * 3; }
+                    granary = (stockFactor - rnd.Next(0, foodCapacity / 1000 * 4) * 1000);
+                    if (granary > 0)
+                    {
+                        house.Value.FoodStockpile = granary;
+                        Game.logStart?.Write($"House {house.Value.Name} at {house.Value.LocName} has a food surplus (granary) of {granary}");
+                        descriptor = $"There is food in the granary as a result of astute management and a productive previous season";
+                        Record record = new Record(descriptor, house.Value.LocID, house.Value.RefID, Game.gameYear, HistHouseEvent.Food);
+                        SetHistoricalRecord(record);
+                    }
+                    
                     descriptor = "";
                     if (Math.Abs(balance) > foodCapacity)
                     {
@@ -7749,7 +7761,8 @@ namespace Next_Game
                             house.Value.AddExport(Goods.Food); Game.logStart?.Write($"{house.Value.Name} Exports Food");
                             descriptor = "Fertile fields provide a surplus of food which is exported for a profit";
                         }
-                        else {
+                        else
+                        {
                             house.Value.AddImport(Goods.Food); Game.logStart?.Write($"{house.Value.Name} Imports Food");
                             descriptor = "A shortage of arable land creates a food shortfall which is made up by imports from elsewhere at a cost to the economy";
                         }
