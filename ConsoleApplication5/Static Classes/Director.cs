@@ -6310,7 +6310,23 @@ namespace Next_Game
                             break;
                         case 6:
                             //weather
-                            
+                            if (Game.SeasonTimer <= 90)
+                            {
+                                //winter
+                            }
+                            else if (Game.SeasonTimer <= 180 && Game.SeasonTimer > 90)
+                            {
+                                //Autumn
+                            }
+                            else if (Game.SeasonTimer <= 270  && Game.SeasonTimer > 180 )
+                            {
+                                //Summer
+                            }
+                            else if (Game.SeasonTimer <= 360 && Game.SeasonTimer > 270)
+                            {
+                                //Spring
+                            }
+                            else { Game.SetError(new Error(282, $"Invalid SeasonTimer Value \"{Game.SeasonTimer}\"")); }
                             break;
                         default:
                             Game.SetError(new Error(282, $"Invalid Street_View \"{viewIndex} -> Street View cancelled"));
