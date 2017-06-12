@@ -6569,7 +6569,7 @@ namespace Next_Game
         }
 
         /// <summary>
-        /// handles all specific follower actions, returns a list of Snippets to World.UpdateWorldActivity (combined to generate notification message)
+        /// handles all specific follower actions, returns a list of Snippets to World.UpdateWorldActivity (combined to generate notification message). Returns rumours only if Player at location.
         /// </summary>
         private List<Snippet> CheckFollowerActivity()
         {
@@ -7149,7 +7149,7 @@ namespace Next_Game
                             eventList.Add(new Snippet(""));
                             break;
                         case ActorStatus.Travelling:
-                            if (rnd.Next(100) < 20)
+                            /*if (rnd.Next(100) < 20)
                             {
                                 eventList.Add(new Snippet("The Word on the Road", RLColor.Red, backColor));
                                 eventList.Add(new Snippet(""));
@@ -7158,9 +7158,9 @@ namespace Next_Game
                                 eventList.Add(new Snippet("- 0 -", RLColor.Gray, backColor));
                                 eventList.Add(new Snippet(""));
                             }
-                            break;
+                            break;*/
                         case ActorStatus.AtSea:
-                            if (rnd.Next(100) < 20)
+                            /*if (rnd.Next(100) < 20)
                             {
                                 eventList.Add(new Snippet("The Word at Sea", RLColor.Red, backColor));
                                 eventList.Add(new Snippet(""));
@@ -7169,9 +7169,9 @@ namespace Next_Game
                                 eventList.Add(new Snippet("- 0 -", RLColor.Gray, backColor));
                                 eventList.Add(new Snippet(""));
                             }
-                            break;
+                            break;*/
                         case ActorStatus.Captured:
-                            if (rnd.Next(100) < 20)
+                            /*if (rnd.Next(100) < 20)
                             {
                                 eventList.Add(new Snippet(""));
                                 eventList.Add(new Snippet("The Word in the Dungeon", RLColor.Red, backColor));
@@ -7180,7 +7180,7 @@ namespace Next_Game
                                 eventList.Add(new Snippet(""));
                                 eventList.Add(new Snippet("- 0 -", RLColor.Gray, backColor));
                                 eventList.Add(new Snippet(""));
-                            }
+                            }*/
                             break;
                     }
                     //any world message to display?
@@ -7811,8 +7811,6 @@ namespace Next_Game
                 }
                 //goods -> exports as food is the only import and it's already been catered for
                 Goods good = Goods.None;
-                
-                
                 if (house.Value.GetNumExports() > 0)
                 {
                     int[,] tempGoods = house.Value.GetExports();
