@@ -12,29 +12,42 @@
 # <randomMale> <randomFemale> -> random first names
 # <ship> -> name of the ship that the player is on
 # <animalBig> -> random big animal
-# <curse> -> random curse
+# <curse> -> random curse, What in ...<curse>... is that
 # <food> -> Check's loc terrain -> fish, grown crops, hunting -> gets random food from Assorted (varies if Educ / Uned)
 
 [SummerEduc]
-
+The gentle caress of a Summer breeze here in <locName> is one of life's greatest joys.
+Summer is my favourite time here in <locName>.
 
 [SummerUned]
-
+It's hot, sweaty work for the likes of us in Summer. Who needs it?
+Summer? Phhht! Work, work, work. Give me winter everytime.
+There's nothin good about no Summer here in <locName>. A <man> could sweat to death on a hot day.
+Summer in <locName> means the sickness. Just yesterday I saw <randomFemale> spewing her guts out on the street.
 
 [AutumnEduc]
-
+It's the squirrels frantically gathering their nuts that give me the most enjoyment during a <locName> Autumn.
+The Ides of Autumn are upon us. Can you feel the heaviness in the air?
 
 [AutumnUned]
-
+Hard work for us in Autumn. Harvest time. Back breaking. Everybody has to help.
+Autumn rains don't stop the harvest. Nothing does. Can't wait for winter.
+Autumn is the worst time of the year. Harvest time. Work till you drop.
+I'm thinking of leaving <locName>. Autumn chills and Autumn rains aren't good for my bones.
 
 [WinterEduc]
-
+The crisp, virgin white, snow is something to behold here in <locName>.
+Winter has a sense of cleansing about it. <locName> looks cleaner covered in snow.
 
 [WinterUned]
-
+The Winter snow covers up the sh*t on the streets, have to give it that. <locName> looks better.
+Trod in a pile of horse sh*t yesterday. Winter snow tricked me. Just my luck.
+It's damn cold here in <locName>. Every Winter seems to be worse than the one before. 
+If I could I've leave <locName> during Winter. To cold. To quiet. To much snow.
 
 [SpringEduc]
-
+The trees that cluster in pockets throughout <locName> are of many colors. Isn't Spring wonderful?
+It is as if <locName> has been born anew. Spring and fertility are as one in my mind.
 
 [SpringUned]
 

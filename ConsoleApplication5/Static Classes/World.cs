@@ -8113,9 +8113,10 @@ namespace Next_Game
         {
             //update Game timers
             Game.gameTurn++;
-            Game.HarvestTimer--;
-            Game.WinterTimer--;
+            if (Game.HarvestTimer > 1) { Game.HarvestTimer--; }
+            if (Game.WinterTimer > 1) { Game.WinterTimer--; }
             Game.SeasonTimer--;
+            if (Game.SeasonTimer <= 0) { Game.SeasonTimer = 360; }
         }
 
         //new Methods above here

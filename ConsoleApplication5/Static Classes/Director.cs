@@ -25,7 +25,7 @@ namespace Next_Game
     public enum WorldGroup { None, Official, Church, Merchant, Craft, Peasant} //main population groupings within world
     public enum ViewType { JusticeNeutralEduc, JusticeNeutralUned, JusticeGoodEduc, JusticeGoodUned, JusticeBadEduc, JusticeBadUned, LegendNeutralEduc, LegendNeutralUned, LegendGoodEduc, LegendGoodUned,
     LegendBadEduc, LegendBadUned, HonourNeutralEduc, HonourNeutralUned, HonourGoodEduc, HonourGoodUned, HonourBadEduc, HonourBadUned, KnownEduc, KnownUned, UnknownEduc, UnknownUned,
-    FoodSurplusEduc, FoodSurplusUned, FoodNormalEduc, FoodNormalUned, FoodDeficitEduc, FoodDeficitUned, Count} //Market View
+    FoodSurplusEduc, FoodSurplusUned, FoodNormalEduc, FoodNormalUned, FoodDeficitEduc, FoodDeficitUned, SummerEduc, SummerUned, AutumnEduc, AutumnUned, WinterEduc, WinterUned, SpringEduc, SpringUned, Count} //Market View
     public enum Occupation { Offical, Church, Merchant, Craft, PeasantMale, PeasantFemale, Count}
     public enum TravelMode { None, Foot, Mounted} //default Mounted for all characters
     public enum Assorted { HorseName, HorseType, Curse, AnimalBig, FoodFishEduc, FoodFishUned, FoodCropEduc, FoodCropUned, FoodHuntEduc, FoodHuntUned, Count}

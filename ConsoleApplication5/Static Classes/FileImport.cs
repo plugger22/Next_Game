@@ -3892,6 +3892,14 @@ namespace Next_Game
             List<string> listFoodNormalUned = new List<string>();
             List<string> listFoodDeficitEduc = new List<string>();
             List<string> listFoodDeficitUned = new List<string>();
+            List<string> listSummerEduc = new List<string>();
+            List<string> listSummerUned = new List<string>();
+            List<string> listSpringEduc = new List<string>();
+            List<string> listSpringUned = new List<string>();
+            List<string> listAutumnEduc = new List<string>();
+            List<string> listAutumnUned = new List<string>();
+            List<string> listWinterEduc = new List<string>();
+            List<string> listWinterUned = new List<string>();
             //import data from file
             string[] arrayOfViewTexts = ImportDataFile(fileName);
             if (arrayOfViewTexts != null)
@@ -3998,6 +4006,30 @@ namespace Next_Game
                                 case "FoodDeficitUned":
                                     listFoodDeficitUned.Add(tempString);
                                     break;
+                                case "SummerEduc":
+                                    listSummerEduc.Add(tempString);
+                                    break;
+                                case "SummerUned":
+                                    listSummerUned.Add(tempString);
+                                    break;
+                                case "AutumnEduc":
+                                    listAutumnEduc.Add(tempString);
+                                    break;
+                                case "AutumnUned":
+                                    listAutumnUned.Add(tempString);
+                                    break;
+                                case "WinterEduc":
+                                    listWinterEduc.Add(tempString);
+                                    break;
+                                case "WinterUned":
+                                    listWinterUned.Add(tempString);
+                                    break;
+                                case "SpringEduc":
+                                    listSpringEduc.Add(tempString);
+                                    break;
+                                case "SpringUned":
+                                    listSpringUned.Add(tempString);
+                                    break;
                                 default:
                                     Game.SetError(new Error(287, string.Format("Invalid ViewType {0}, record {1}", nameType, i)));
                                     break;
@@ -4034,6 +4066,14 @@ namespace Next_Game
                 arrayOfViews[(int)ViewType.FoodNormalUned] = new string[listFoodNormalUned.Count];
                 arrayOfViews[(int)ViewType.FoodDeficitEduc] = new string[listFoodDeficitEduc.Count];
                 arrayOfViews[(int)ViewType.FoodDeficitUned] = new string[listFoodDeficitUned.Count];
+                arrayOfViews[(int)ViewType.SummerEduc] = new string[listSummerEduc.Count];
+                arrayOfViews[(int)ViewType.SummerUned] = new string[listSummerUned.Count];
+                arrayOfViews[(int)ViewType.AutumnEduc] = new string[listAutumnEduc.Count];
+                arrayOfViews[(int)ViewType.AutumnUned] = new string[listAutumnUned.Count];
+                arrayOfViews[(int)ViewType.WinterEduc] = new string[listWinterEduc.Count];
+                arrayOfViews[(int)ViewType.WinterUned] = new string[listWinterUned.Count];
+                arrayOfViews[(int)ViewType.SpringEduc] = new string[listSpringEduc.Count];
+                arrayOfViews[(int)ViewType.SpringUned] = new string[listSpringUned.Count];
                 //populate from lists
                 arrayOfViews[(int)ViewType.JusticeNeutralEduc] = listJusticeNeutralEduc.ToArray();
                 arrayOfViews[(int)ViewType.JusticeNeutralUned] = listJusticeNeutralUned.ToArray();
@@ -4063,6 +4103,14 @@ namespace Next_Game
                 arrayOfViews[(int)ViewType.FoodNormalUned] = listFoodNormalUned.ToArray();
                 arrayOfViews[(int)ViewType.FoodDeficitEduc] = listFoodDeficitEduc.ToArray();
                 arrayOfViews[(int)ViewType.FoodDeficitUned] = listFoodDeficitUned.ToArray();
+                arrayOfViews[(int)ViewType.SummerEduc] = listSummerEduc.ToArray();
+                arrayOfViews[(int)ViewType.SummerUned] = listSummerUned.ToArray();
+                arrayOfViews[(int)ViewType.AutumnEduc] = listAutumnEduc.ToArray();
+                arrayOfViews[(int)ViewType.AutumnUned] = listAutumnUned.ToArray();
+                arrayOfViews[(int)ViewType.WinterEduc] = listWinterEduc.ToArray();
+                arrayOfViews[(int)ViewType.WinterUned] = listWinterUned.ToArray();
+                arrayOfViews[(int)ViewType.SpringEduc] = listSpringEduc.ToArray();
+                arrayOfViews[(int)ViewType.SpringUned] = listSpringUned.ToArray();
                 //output stat data
                 for (int i = 0; i < arrayOfViews.Length; i++)
                 { Game.logStart?.Write($"{(ViewType)i} -> {arrayOfViews[i].Length} records imported"); }
