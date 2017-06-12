@@ -33,12 +33,14 @@ namespace Next_Game
             { moonSuffix = "nd"; }
             else if (moonCycle == 3)
             { moonSuffix = "rd"; }
+            string plantText = string.Format("Planting in {0} day{1}", Game.PlantTimer, Game.PlantTimer != 1 ? "s" : "");
             string harvestText = string.Format("Harvest in {0} day{1}", Game.HarvestTimer, Game.HarvestTimer != 1 ? "s" : "");
             string winterText = string.Format("Winter in {0} day{1}", Game.WinterTimer, Game.WinterTimer != 1 ? "s" : "");
             string seasonText = $"(SeasonTimer {Game.SeasonTimer})";
             dateReturn = string.Format("Day {0} of the {1}{2} Moon in the Year of our Gods {3}  (Turn {4}) ", moonDay, moonCycle, moonSuffix, 
                 Game.gameYear, Game.gameTurn + 1);
-            string timerText = string.Format("{0}{1} {2} {3}", Game.HarvestTimer > 0 ? harvestText : "", Game.WinterTimer > 0 ? "," : "", Game.WinterTimer > 0 ? winterText : "", seasonText);
+            string timerText = string.Format("{0}{1}{2} {3} ", Game.PlantTimer > 0 ? plantText : "", Game.HarvestTimer > 0 ? harvestText : "", Game.WinterTimer > 0 ? "," : "", 
+                Game.WinterTimer > 0 ? winterText : "" );
             tempList.Add(new Snippet(dateReturn, RLColor.Yellow, RLColor.Gray));
             tempList.Add(new Snippet(timerText, RLColor.Yellow, RLColor.Gray));
             return tempList;

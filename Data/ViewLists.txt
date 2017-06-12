@@ -50,7 +50,10 @@ The trees that cluster in pockets throughout <locName> are of many colors. Isn't
 It is as if <locName> has been born anew. Spring and fertility are as one in my mind.
 
 [SpringUned]
-
+Spring. Planting season. My aching back. At least I'm not wading knee deep through dirty snow.
+It'd be nice if somebody gave me some new clothes for Spring. The ones I have stink.
+The best part about Spring is that you can go to the toilet anywhere, not just in the hole in the corner.
+Some people like Spring. I'm not one of them. It's all the same when you are dirt poor and shoeless.
 
 [FoodSurplusEduc]
 The food here at <locName> is a delight. Have you tasted the <food>?

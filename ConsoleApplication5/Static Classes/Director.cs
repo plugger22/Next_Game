@@ -6313,18 +6313,34 @@ namespace Next_Game
                             if (Game.SeasonTimer <= 90)
                             {
                                 //winter
+                                if (educated == true)
+                                { innerArray = arrayOfViews[(int)ViewType.WinterEduc]; }
+                                else
+                                { innerArray = arrayOfViews[(int)ViewType.WinterUned]; }
                             }
                             else if (Game.SeasonTimer <= 180 && Game.SeasonTimer > 90)
                             {
                                 //Autumn
+                                if (educated == true)
+                                { innerArray = arrayOfViews[(int)ViewType.AutumnEduc]; }
+                                else
+                                { innerArray = arrayOfViews[(int)ViewType.AutumnUned]; }
                             }
                             else if (Game.SeasonTimer <= 270  && Game.SeasonTimer > 180 )
                             {
                                 //Summer
+                                if (educated == true)
+                                { innerArray = arrayOfViews[(int)ViewType.SummerEduc]; }
+                                else
+                                { innerArray = arrayOfViews[(int)ViewType.SummerUned]; }
                             }
                             else if (Game.SeasonTimer <= 360 && Game.SeasonTimer > 270)
                             {
                                 //Spring
+                                if (educated == true)
+                                { innerArray = arrayOfViews[(int)ViewType.SpringEduc]; }
+                                else
+                                { innerArray = arrayOfViews[(int)ViewType.SpringUned]; }
                             }
                             else { Game.SetError(new Error(282, $"Invalid SeasonTimer Value \"{Game.SeasonTimer}\"")); }
                             break;
