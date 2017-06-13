@@ -1,18 +1,18 @@
-//Exile Game file ops "LogTurn.txt" commenced at: 13/06/2017 15:14:01
+//Exile Game file ops "LogTurn.txt" commenced at: 13/06/2017 15:30:41
 --- ProcessStartGame (World.cs)
 --- AgePassiveCharacters (History.cs)
 --- InitialiseGameVars (World.cs)
-[GameVar] View_Index changed from 0 to 2
+[GameVar] View_Index changed from 0 to 3
 [GameVar] View_Rollover changed from 0 to 6
-[AddVisitedLoc] LocID 13, "Winterfell", turn -3 -> record added to listLocsVisited
-[AddVisitedLoc] LocID 13, "Winterfell", turn -3 -> new record added to dictLocsVisited
-[AddVisitedLoc] LocID 10, "Red Lake", turn -2 -> record added to listLocsVisited
-[AddVisitedLoc] LocID 10, "Red Lake", turn -2 -> new record added to dictLocsVisited
-[AddVisitedLoc] LocID 31, "Harrenhal", turn -1 -> record added to listLocsVisited
-[AddVisitedLoc] LocID 31, "Harrenhal", turn -1 -> new record added to dictLocsVisited
+[AddVisitedLoc] LocID 18, "Harrenhal", turn -3 -> record added to listLocsVisited
+[AddVisitedLoc] LocID 18, "Harrenhal", turn -3 -> new record added to dictLocsVisited
+[AddVisitedLoc] LocID 24, "Pyke", turn -2 -> record added to listLocsVisited
+[AddVisitedLoc] LocID 24, "Pyke", turn -2 -> new record added to dictLocsVisited
+[AddVisitedLoc] LocID 29, "Blackwater", turn -1 -> record added to listLocsVisited
+[AddVisitedLoc] LocID 29, "Blackwater", turn -1 -> new record added to dictLocsVisited
 --- InitialiseFinalPlayer (World.cs)
-[AddVisitedLoc] LocID 23, "Casterly Rock", turn 0 -> record added to listLocsVisited
-[AddVisitedLoc] LocID 23, "Casterly Rock", turn 0 -> new record added to dictLocsVisited
+[AddVisitedLoc] LocID 2, "The Singing Ghost", turn 0 -> record added to listLocsVisited
+[AddVisitedLoc] LocID 2, "The Singing Ghost", turn 0 -> new record added to dictLocsVisited
 --- SetEndGame (Game.cs)
 [Alert] Player chose to exit (pressed 'X')
-//Exile Game file ops "LogTurn.txt" Completed at: 13/06/2017 15:14:49
+//Exile Game file ops "LogTurn.txt" Completed at: 13/06/2017 15:31:47

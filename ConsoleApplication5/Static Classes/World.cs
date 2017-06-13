@@ -7711,6 +7711,7 @@ namespace Next_Game
             int goodsMinTerrain = Game.constant.GetValue(Global.GOODS_FACTOR); //number of terrain squares in 3 x 3 grid needed to qualify for a particular good
             int goodsLow = Game.constant.GetValue(Global.GOODS_LOW); //% chance of a low probability good being present
             int goodsMed = Game.constant.GetValue(Global.GOODS_MED); //% chance of a medium probability good being present
+            int loanChance = Game.constant.GetValue(Global.LOAN_CHANCE); //% chance of new king taking on loans to make up a resource shortfall
             int food, balance, absBalance, tally, resources, numLocs, modifier, granary, stockFactor;
             int overallTally = 0;
             string descriptor;
@@ -7943,7 +7944,7 @@ namespace Next_Game
                 {
                     for (int i = 0; i < deficit; i++)
                     {
-                        if (rnd.Next(100) < 30)
+                        if (rnd.Next(100) < loanChance)
                         {
                             //king takes on a loan
                             capital.Resources++;
