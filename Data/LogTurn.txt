@@ -1,59 +1,98 @@
-//Exile Game File "LogTurn.txt" opened at: 13/06/2017 09:45:21
+//Exile Game File "LogTurn.txt" opened at: 13/06/2017 14:29:51
 --- ProcessStartTurn (World.cs)
-Day 2, Turn 2, Harvest in 155 days, Winter in 170 days, SeasonTimer 260
-Usurper Cleos Greyjoy, "The Fortuitous", Travelling, Parchments
+Day 3, Turn 3, Harvest in 198 days, Winter in 213 days, SeasonTimer 303
+Usurper Galbart Stark, "The Stylish", AtLocation, Blackhaven
 --- UpdateRumours (World.cs)
 dictRumoursTimed (Start) -> 88 records
-88 rumours -> TimerExpire decremented
---- MoveActors -> 1 Records (World.cs)
- [Move -> MoveObject] Usurper Cleos Greyjoy, ActID 1 travelling to Parchments (current Loc 19:28)
---- CheckIfFoundActive (World.cs)
- [Search -> Debug] Enemy, Brother Behemoth, ID 123 at 18:16, Active Cleos Greyjoy, ID 1, at 19:28
- [Search -> Debug] Enemy, Brother Haborym, ID 124 at 18:16, Active Cleos Greyjoy, ID 1, at 19:28
- [Search -> Debug] Enemy, Brother Gorgo, ID 125 at 18:16, Active Cleos Greyjoy, ID 1, at 19:28
- [Search -> Debug] Enemy, Brother Amon, ID 126 at 18:16, Active Cleos Greyjoy, ID 1, at 19:28
- [Search -> Debug] Enemy, The Unrelenting, ID 127 at 18:16, Active Cleos Greyjoy, ID 1, at 19:28
---- CheckIfFoundActive (World.cs)
- [Search -> Debug] Enemy, Brother Behemoth, ID 123 at 18:16, Active Cleos Greyjoy, ID 1, at 19:27
- [Search -> Debug] Enemy, Brother Haborym, ID 124 at 18:16, Active Cleos Greyjoy, ID 1, at 19:27
- [Search -> Debug] Enemy, Brother Gorgo, ID 125 at 18:16, Active Cleos Greyjoy, ID 1, at 19:27
- [Search -> Debug] Enemy, Brother Amon, ID 126 at 18:16, Active Cleos Greyjoy, ID 1, at 19:27
- [Search -> Debug] Enemy, The Unrelenting, ID 127 at 18:16, Active Cleos Greyjoy, ID 1, at 19:27
-[AddVisitedLoc] LocID 19, "Parchments", turn 2 -> record added to listLocsVisited
-[AddVisitedLoc] LocID 19, "Parchments", turn 2 -> new record added to dictLocsVisited
+[Rumour -> Removal] RID 489, "Inquisitor, Brother Mastema, ActID 116 has been spotted relaxing at Kingskeep (loc 16:16)" removed from Global All list
+[Rumour -> Removal] RID 490, "Inquisitor, Brother Adramalech, ActID 117 has been spotted relaxing at Kingskeep (loc 16:16)" removed from Global All list
+[Rumour -> Removal] RID 491, "Inquisitor, Brother Azazel, ActID 119 has been spotted gambling at Kingskeep (loc 16:16)" removed from Global All list
+[Rumour -> Removal] RID 492, "Nemesis, The Unrelenting, ActID 120 has been spotted meditating at Kingskeep (loc 16:16)" removed from Global All list
+84 rumours -> TimerExpire decremented
+4 records have expired and been removed
+dictRumoursTimed (End) -> 84 records
+--- MoveActors -> 0 Records (World.cs)
 --- UpdatePlayerStatus (World.cs)
 --- UpdateWorldStatus (World.cs)
 --- CheckFollowerActivity (World.cs)
 --- GetRumour (Director.cs)
-arrayOfRumours [0] -> RumourID 504, Strength 3, Scope Global, Type Enemy, Global All
-arrayOfRumours [4] -> RumourID 368, Strength 2, Scope Global, Type HouseRel, Global West
-arrayOfRumours [5] -> RumourID 187, Strength 2, Scope Local, Type Secret, Global All
-RumourID 368 selected from the Pool
-Rumour "House Florent has had poor past relations with House Baratheon due to a longstanding blood feud" revealed to ActorID4 on turn 2 -> added to List
-RumourID 368 removed from listRumoursWest[13]
-Follower The Waif, ActID 4, added RumourID 368
-[Notification -> HouseRel] "Engaged in a long standing blood feud" -> Known is True
+arrayOfRumours [0] -> RumourID 484, Strength 3, Scope Global, Type Event, Global All
+arrayOfRumours [1] -> RumourID 373, Strength 2, Scope Global, Type HouseRel, Global North
+arrayOfRumours [5] -> RumourID 88, Strength 2, Scope Local, Type Skill, Global All
+RumourID 373 selected from the Pool
+Rumour "House Arryn has had good past relations with their BannerLord at House Tallhart due to their ongoing bandit eradication" revealed to ActorID5 on turn 3 -> added to List
+RumourID 373 removed from listRumoursNorth[26]
+Follower The Haggler, ActID 5, added RumourID 373
+[Notification -> HouseRel] "Have tried to rid their lands of Bandits over the years" -> Known is True
 --- GetRumour (Director.cs)
-arrayOfRumours [0] -> RumourID 505, Strength 3, Scope Global, Type Enemy, Global All
-arrayOfRumours [1] -> RumourID 359, Strength 2, Scope Global, Type HouseRel, Global North
-arrayOfRumours [5] -> RumourID 482, Strength 3, Scope Local, Type Goods, Global All
-RumourID 482 selected from the Pool
-Rumour "It is well known among Traders that House The Singing Ghost, at The Singing Ghost, conducts a brisk Export trade in Food" revealed to ActorID9 on turn 2 -> added to List
-RumourID 482 removed from listRumoursHouse[0]
-Follower The Crone, ActID 9, added RumourID 482
+arrayOfRumours [0] -> RumourID 55, Strength 4, Scope Global, Type Disguise, Global All
+arrayOfRumours [1] -> RumourID 209, Strength 2, Scope Global, Type Desire, Global North
+arrayOfRumours [5] -> RumourID 421, Strength 3, Scope Local, Type Military, Global All
+RumourID 55 selected from the Pool
+Rumour "It is rumoured that Disguises can be had from Castellan Tytos Foucaud, ActID 30 at Brightwater Keep" revealed to ActorID8 on turn 3 -> added to List
+RumourID 55 removed from listRumoursGlobal[2]
+Follower The Leper, ActID 8, added RumourID 55
 --- GetRumour (Director.cs)
-arrayOfRumours [0] -> RumourID 481, Strength 3, Scope Global, Type Friends, Global All
-arrayOfRumours [1] -> RumourID 15, Strength 2, Scope Global, Type Desire, Global North
-arrayOfRumours [5] -> RumourID 192, Strength 4, Scope Local, Type Skill, Global All
-RumourID 192 selected from the Pool
-Rumour "BannerLord Paxter Peake "The Knowing", ActID 89 at Starpike, is suspected to be Multilingual" revealed to ActorID6 on turn 2 -> added to List
-RumourID 192 removed from listRumoursHouse[0]
-Follower The Viper, ActID 6, added RumourID 192
-BannerLord Paxter Peake, ActID 89, has their Wits changed to True
+arrayOfRumours [0] -> RumourID 205, Strength 1, Scope Global, Type Item, Global All
+arrayOfRumours [3] -> RumourID 381, Strength 2, Scope Global, Type HouseRel, Global South
+arrayOfRumours [5] -> RumourID 444, Strength 3, Scope Local, Type Military, Global All
+RumourID 205 selected from the Pool
+Rumour "It is rumoured that the dreaded Chalice of Pain (Passive Item) is to be found at Blackhaven" revealed to ActorID9 on turn 3 -> added to List
+RumourID 205 removed from listRumoursGlobal[8]
+Follower The Beast, ActID 9, added RumourID 205
 --- GetMarketView (Director.cs)
-[GameVar] View_Index changed from 3 to 4
+[GameVar] View_Index changed from 4 to 5
 --- CheckStationaryActiveActors (World.cs)
- [Search -> Stationary] Usurper Cleos Greyjoy, ActID 1 is AtLocation
+ [Search -> Stationary] Usurper Galbart Stark, ActID 1 is AtLocation
 --- CheckIfFoundActive (World.cs)
- [Search -> Debug] Enemy, Brother Behemoth, ID 123 at 18:16, Active Cleos Greyjoy, ID 1, at 19:26
- [Search -> Debug] Enemy, Brother Haborym, ID 124 at 18:16, Activ
+ [Search -> Debug] Enemy, Brother Mastema, ID 116 at 16:16, Active Galbart Stark, ID 1, at 1:13
+ [Search -> Debug] Enemy, Brother Adramalech, ID 117 at 16:16, Active Galbart Stark, ID 1, at 1:13
+ [Search -> Debug] Enemy, Brother Set, ID 118 at 16:16, Active Galbart Stark, ID 1, at 1:13
+ [Search -> Debug] Enemy, Brother Azazel, ID 119 at 16:16, Active Galbart Stark, ID 1, at 1:13
+ [Search -> Debug] Enemy, The Unrelenting, ID 120 at 16:16, Active Galbart Stark, ID 1, at 1:13
+ [Search -> Stationary] Follower The Haggler, ActID 5 is AtLocation
+ [Search -> Stationary] Follower The Leper, ActID 8 is AtLocation
+ [Search -> Stationary] Follower The Beast, ActID 9 is AtLocation
+--- UpdateAIController (World.cs)
+ [AI -> Player Unknown] Inquisitor Brother Mastema, Act ID 116 Mode -> Normal
+ [AI -> Player Unknown] Inquisitor Brother Adramalech, Act ID 117 Mode -> Normal
+ [AI -> Player Unknown] Inquisitor Brother Set, Act ID 118 Mode -> Normal
+ [AI -> Player Unknown] Inquisitor Brother Azazel, Act ID 119 Mode -> Normal
+ [AI -> Player Unknown] Nemesis The Unrelenting, Act ID 120 Mode -> Normal
+--- SetEnemyActivity (World.cs)
+--- SetEnemyGoal (World.cs)
+ [Goal -> Branch] Brother Mastema, ActID 116 Assigned Branch -> 0 Current Branch -> 0
+ [Goal -> New] Brother Mastema, ActID 116, (loc 16:16), assigned new Goal -> Hide
+ [Enemy -> Goal] Brother Adramalech, ActID 117 retains Goal -> Wait
+ [Enemy -> Goal] Brother Set, ActID 118 retains Goal -> Wait
+ [Enemy -> Goal] Brother Azazel, ActID 119 retains Goal -> Wait
+--- SetEnemyGoal (World.cs)
+ [Goal -> Branch] The Unrelenting, ActID 120 Assigned Branch -> 0 Current Branch -> 0
+--- CheckPlayerEvents (Director.cs)
+Location event, Need 75, roll 28
+--- GetValidPlayerEvents (Director.cs)
+ Trigger passed on "1" NotEqual 4
+[Event -> Added] "A hooded figure crosses your path, piercing eyes glancing in your direction." -> 3 records added to pool
+--- GetValidPlayerEvents (Director.cs)
+--- GetValidPlayerEvents (Director.cs)
+[DeterminePlayerEvent] There are 3 events in the Pool
+ Chance of Player Location event 37 %
+--- ResolvePlayerEvents (Director.cs)
+ "Talk to them" Trait Trigger, if type 3 is GreaterThanOrEqual to 3
+ Trigger passed on "4" GreaterThanOrEqual 3
+ "Curse all strangers" Trait Trigger, if type 4 is GreaterThanOrEqual to 3
+ Trigger passed on "3" GreaterThanOrEqual 3
+ Event "Mysterious Stranger" Timer Repeat now 9
+ Event "Mysterious Stranger" Cooldown Timer has been reset to 0
+--- UpdateActiveActors (World.cs)
+ Usurper Galbart Stark has had their TurnsUnknown Timer increased from 102 to 103
+ Follower The Haggler has had their TurnsUnknown Timer increased from 2 to 3
+ Follower The Leper has had their TurnsUnknown Timer increased from 2 to 3
+ Follower The Beast has had their TurnsUnknown Timer increased from 2 to 3
+--- ResolveOutcome (Director.cs)
+ [Variable Option] "Curse all strangers" Failed test (50 % needed, rolled 97)  Roll 97 + DMskill 0 + DMtouched 0 -> modifiedRoll 97
+[Player Choice View -> Added] "Hunfridus, the scary one, met Galbart Stark at Blackhaven recently, who was acting all high and mighty. Spread the word, he says."
+[Notification] listPlayerChoices now has 1 records
+--- SetEndGame (Game.cs)
+[Alert] Player chose to exit (pressed 'X')
+//Exile Game file ops "LogTurn.txt" Completed at: 13/06/2017 14:30:43

@@ -2563,6 +2563,15 @@ namespace Next_Game
                                 if (trigger.Compulsory == true) { Game.logTurn?.Write("[Notification] Sex trigger Compulsory fail check"); return false; }
                             }
                             break;
+                        case TriggerCheck.Season:
+                            //Threshold = (int)Season -> Spring 1, Summer 2, Autumn 3, Winter 4
+                            if (CheckTrigger((int)Game.gameSeason, trigger.Calc, trigger.Threshold) == true) { validCheck = true; }
+                            else
+                            {
+                                Game.logTurn?.Write(" Trigger: Incorrect Season -> Trigger failed");
+                                if (trigger.Compulsory == true) { Game.logTurn?.Write("[Notification] Season trigger Compulsory fail check"); return false; }
+                            }
+                            break;
                         case TriggerCheck.TravelMode:
                             //Threshold = (int)TravelMode -> None 0, Foot 1, Mounted 2
                             if (CheckTrigger((int)player.Travel, EventCalc.Equals, trigger.Threshold) == true) { validCheck = true; }

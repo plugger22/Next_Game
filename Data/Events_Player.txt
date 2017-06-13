@@ -19,10 +19,10 @@
 # Cool: (Timer) Number > 0 -> Optional tag (if not shown then default 0) -> number of turns of cool down before it can fire again
 
 # [eventTrigger]: Optional block (one block that covers the whole event)
-# eventCheck: Trigger Check ( None, Trait, GameVar, ActorType, Sex, ResourcePlyr, Known, Follower, Travel)
+# eventCheck: Trigger Check ( None, Trait, GameVar, ActorType, Sex, ResourcePlyr, Known, Follower, Travel, Season)
 # eventItem: OPTIONAL multi purpose number depending on Trigger Check type, default '0' 
 # eventThresh: Trigger threshold amount to be tested against, eg. < 3
-# eventCalc: Type of comparison for testing trigger (>=, <=, =)
+# eventCalc: Type of comparison for testing trigger (>=, <=, =, !=)
 
 # [option]: Option Block (one block for each option, only use enough blocks for your need. Max 4 option blocks. Place block header at top
 # text: option text. Keep it short and clear.
@@ -39,7 +39,7 @@
 # there is NO need to put 'bad: No' for the good outcome
 
 # [trigger]: Trigger block (optional, can have multiple triggers for each option or event). There must be at least one option with no triggers.
-# check: Trigger Check ( None, Trait, GameVar, ActorType, Sex, ResourcePlyr, Known, Follower, Travel, Horse)
+# check: Trigger Check ( None, Trait, GameVar, ActorType, Sex, ResourcePlyr, Known, Follower, Travel, Horse, Season)
 # item: OPTIONAL multi purpose number depending on Trigger Check type, default '0' 
 # thresh: Trigger threshold amount to be tested against, eg. < 3
 # calc: Type of comparison for testing trigger (>=, <=, =)
@@ -51,6 +51,10 @@
 # [trigger] check -> Travel
 # thresh: -> (TravelMode) 0 None, 1 Foot, 2 Mounted
 # calc: =
+
+# [trigger] check -> Season
+# thresh: -> (Season) 0 None, 1 Spring, 2 Summer, 3 Autumn, 4 Winter
+# calc: =, !=
 
 # [trigger] check -> Horse 
 # thresh: -> (HorseStatus) 0 None, 1 Normal, 2 Stabled, 3 Lame, 4 Exhausted
@@ -299,6 +303,10 @@ Freq: Low
 Repeat: 10
 Event: A hooded figure crosses your path, piercing eyes glancing in your direction.
 Rumour: A mysterious stranger has been sighted in the smaller towns. Nobody knows who they are or what they want.
+[eventTrigger]
+eventCheck: Season
+eventThresh: 4
+eventCalc: !=
 [option]
 text: Ignore them
 reply: Why risk getting involved with an unknown stranger?

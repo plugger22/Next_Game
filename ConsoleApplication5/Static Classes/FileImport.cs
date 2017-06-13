@@ -1794,6 +1794,10 @@ namespace Next_Game
                                         case "Horse":
                                             structTrigger.Check = TriggerCheck.HorseStatus;
                                             break;
+                                        case "season":
+                                        case "Season":
+                                            structTrigger.Check = TriggerCheck.Season;
+                                            break;
                                         default:
                                             Game.SetError(new Error(49, string.Format("Invalid Input, Option Trigger Check, (\"{0}\")", arrayOfEvents[i])));
                                             validData = false;
@@ -1834,6 +1838,14 @@ namespace Next_Game
                                         case "travel":
                                         case "Travel":
                                             structEventTrigger.Check = TriggerCheck.TravelMode;
+                                            break;
+                                        case "horse":
+                                        case "Horse":
+                                            structEventTrigger.Check = TriggerCheck.HorseStatus;
+                                            break;
+                                        case "season":
+                                        case "Season":
+                                            structEventTrigger.Check = TriggerCheck.Season;
                                             break;
                                         default:
                                             Game.SetError(new Error(49, string.Format("Invalid Input, Event Trigger Check, (\"{0}\")", arrayOfEvents[i])));
@@ -1986,6 +1998,9 @@ namespace Next_Game
                                         case "=":
                                             structTrigger.Calc = EventCalc.Equals;
                                             break;
+                                        case "!=":
+                                            structTrigger.Calc = EventCalc.NotEqual;
+                                            break;
                                         default:
                                             Game.SetError(new Error(49, string.Format("Invalid Input, Option Trigger Calc, (\"{0}\")", arrayOfEvents[i])));
                                             validData = false;
@@ -2005,6 +2020,9 @@ namespace Next_Game
                                             break;
                                         case "=":
                                             structEventTrigger.Calc = EventCalc.Equals;
+                                            break;
+                                        case "!=":
+                                            structEventTrigger.Calc = EventCalc.NotEqual;
                                             break;
                                         default:
                                             Game.SetError(new Error(49, string.Format("Invalid Input, Event Trigger Calc, (\"{0}\")", arrayOfEvents[i])));
@@ -2799,6 +2817,10 @@ namespace Next_Game
                         eventObject.Value.TimerRepeat, eventObject.Value.TimerDormant, eventObject.Value.TimerLive, eventObject.Value.Status));
                     if (String.IsNullOrEmpty(eventObject.Value.Rumour) == false)
                     { Game.logStart?.Write($"    Rumour -> \"{eventObject.Value.Rumour}\", TimerExpire {eventObject.Value.TimerExpire}"); }
+                    //event triggers
+                    List<Trigger> listTempEventTriggers = eventObject.Value.GetTriggers();
+                    foreach (Trigger triggerObject in listTempEventTriggers)
+                    { Game.logStart?.Write(string.Format("   Event {0} -> if {1}, Data {2}, is Calc \"{3}\" to Threshold {4}", "Trigger", triggerObject.Check, triggerObject.Data, triggerObject.Calc, triggerObject.Threshold)); }
                     List<OptionInteractive> listTempOptions = eventObject.Value.GetOptions();
                     //options
                     foreach (OptionInteractive optionObject in listTempOptions)
@@ -2811,8 +2833,8 @@ namespace Next_Game
                         List<Outcome> listTempOutcomes = new List<Outcome>(); //need to create a new list otherwise copying by reference and affects records in dictOfPlayerEvents
                         listTempOutcomes.AddRange(optionObject.GetGoodOutcomes());
                         listTempOutcomes.AddRange(optionObject.GetBadOutcomes());
+                        //option triggers
                         List<Trigger> listTempTriggers = optionObject.GetTriggers();
-                        //triggers
                         foreach (Trigger triggerObject in listTempTriggers)
                         { Game.logStart?.Write(string.Format("   {0} -> if {1}, Data {2}, is Calc \"{3}\" to Threshold {4}", "Trigger", triggerObject.Check, triggerObject.Data, triggerObject.Calc, triggerObject.Threshold)); }
                         //outcomes
