@@ -5455,6 +5455,32 @@ namespace Next_Game
                             }
                         }
                         else { Game.SetError(new Error(268, $"Invalid Location (null) from LocID {house.Value.LocID}")); }
+                        //Capital
+                        if (house.Value is CapitalHouse)
+                        {
+                            //
+                            // Loans
+                            //
+                            CapitalHouse capital = house.Value as CapitalHouse;
+                            if (capital.GetNumOfLoans() > 0)
+                            {
+                                List<Finance> listOfLoans = capital.GetLoans();
+                                if (listOfLoans != null)
+                                {
+                                    for(int i = 0; i < listOfLoans.Count; i++)
+                                    {
+                                        strength = 5;
+                                        startText = $"It is {arrayOfRumourTexts[rnd.Next(arrayOfRumourTexts.Length)]}";
+                                        rumourText = string.Format("{0} that King {1} {2} has taken out a loan from the {3}", startText, Game.lore.NewKing.Name, Game.lore.NewKing.Handle, listOfLoans[i]);
+                                        RumourLoan rumour = new RumourLoan(rumourText, strength, RumourScope.Local, rnd.Next(20) * -1);
+                                        //add to dictionary and global list
+                                        if (AddRumour(rumour, house.Value) == false)
+                                        { Game.SetError(new Error(268, $"{rumour.Text}, RumourID {rumour.RumourID}, failed to load (Loan) -> Rumour Cancelled")); }
+                                    }
+                                }
+                                else { Game.SetError(new Error(268, "Invalid listOfLoans (null) -> Loan rumour not created")); }
+                            }
+                        }
                         //Major Houses only
                         if (house.Value is MajorHouse)
                         {

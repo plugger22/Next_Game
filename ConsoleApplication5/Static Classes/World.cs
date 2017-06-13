@@ -4541,6 +4541,7 @@ namespace Next_Game
                     case RumourType.Goods:
                     case RumourType.HouseHistory:
                     case RumourType.Military:
+                    case RumourType.Loan:
                         break;
                     default:
                         Game.SetError(new Error(275, $"Invalid Rumour.Type \"{rumour.Type}\""));
