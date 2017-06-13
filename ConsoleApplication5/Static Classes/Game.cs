@@ -60,6 +60,7 @@ namespace Next_Game
         private static int _updateTimer = 0; //controls redraws
 
         public static int gameTurn, gameGeneration, gameStart, gameRevolt, gameExile, gameYear, mapSize, HarvestTimer, PlantTimer, WinterTimer, SeasonTimer;
+        public static Season gameSeason;
 
         //core objects
         public static Menu menu;

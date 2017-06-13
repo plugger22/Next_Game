@@ -1,95 +1,59 @@
-//Exile Game File "LogTurn.txt" opened at: 12/06/2017 19:53:44
+//Exile Game File "LogTurn.txt" opened at: 13/06/2017 09:45:21
 --- ProcessStartTurn (World.cs)
-Day 2, Turn 2, Harvest in 180 days, Winter in 195 days, SeasonTimer 285
-Usurper Davos Greyjoy, "The Spotted", AtLocation, One Eyed Pete's
+Day 2, Turn 2, Harvest in 155 days, Winter in 170 days, SeasonTimer 260
+Usurper Cleos Greyjoy, "The Fortuitous", Travelling, Parchments
 --- UpdateRumours (World.cs)
-dictRumoursTimed (Start) -> 90 records
-90 rumours -> TimerExpire decremented
---- MoveActors -> 0 Records (World.cs)
+dictRumoursTimed (Start) -> 88 records
+88 rumours -> TimerExpire decremented
+--- MoveActors -> 1 Records (World.cs)
+ [Move -> MoveObject] Usurper Cleos Greyjoy, ActID 1 travelling to Parchments (current Loc 19:28)
+--- CheckIfFoundActive (World.cs)
+ [Search -> Debug] Enemy, Brother Behemoth, ID 123 at 18:16, Active Cleos Greyjoy, ID 1, at 19:28
+ [Search -> Debug] Enemy, Brother Haborym, ID 124 at 18:16, Active Cleos Greyjoy, ID 1, at 19:28
+ [Search -> Debug] Enemy, Brother Gorgo, ID 125 at 18:16, Active Cleos Greyjoy, ID 1, at 19:28
+ [Search -> Debug] Enemy, Brother Amon, ID 126 at 18:16, Active Cleos Greyjoy, ID 1, at 19:28
+ [Search -> Debug] Enemy, The Unrelenting, ID 127 at 18:16, Active Cleos Greyjoy, ID 1, at 19:28
+--- CheckIfFoundActive (World.cs)
+ [Search -> Debug] Enemy, Brother Behemoth, ID 123 at 18:16, Active Cleos Greyjoy, ID 1, at 19:27
+ [Search -> Debug] Enemy, Brother Haborym, ID 124 at 18:16, Active Cleos Greyjoy, ID 1, at 19:27
+ [Search -> Debug] Enemy, Brother Gorgo, ID 125 at 18:16, Active Cleos Greyjoy, ID 1, at 19:27
+ [Search -> Debug] Enemy, Brother Amon, ID 126 at 18:16, Active Cleos Greyjoy, ID 1, at 19:27
+ [Search -> Debug] Enemy, The Unrelenting, ID 127 at 18:16, Active Cleos Greyjoy, ID 1, at 19:27
+[AddVisitedLoc] LocID 19, "Parchments", turn 2 -> record added to listLocsVisited
+[AddVisitedLoc] LocID 19, "Parchments", turn 2 -> new record added to dictLocsVisited
 --- UpdatePlayerStatus (World.cs)
 --- UpdateWorldStatus (World.cs)
 --- CheckFollowerActivity (World.cs)
 --- GetRumour (Director.cs)
-arrayOfRumours [0] -> RumourID 495, Strength 3, Scope Global, Type Friends, Global All
-arrayOfRumours [1] -> RumourID 77, Strength 2, Scope Global, Type Desire, Global North
-arrayOfRumours [5] -> RumourID 329, Strength 4, Scope Local, Type Relationship, Global All
-RumourID 329 selected from the Pool
-Rumour "BannerLord Gylbard Ambrose "The Mediocre", ActID 83 at Blackwater, is said to have a very poor impression of the Usurper" revealed to ActorID4 on turn 2 -> added to List
-RumourID 329 removed from listRumoursHouse[1]
-Follower The Haggler, ActID 4, added RumourID 329
-[Notification] BannerLord Gylbard Ambrose, ActID 83 -> RelKnown changed to True
-[Rumour -> Deleted] Timed RumourID 329 removed from dictRumoursTimed
+arrayOfRumours [0] -> RumourID 504, Strength 3, Scope Global, Type Enemy, Global All
+arrayOfRumours [4] -> RumourID 368, Strength 2, Scope Global, Type HouseRel, Global West
+arrayOfRumours [5] -> RumourID 187, Strength 2, Scope Local, Type Secret, Global All
+RumourID 368 selected from the Pool
+Rumour "House Florent has had poor past relations with House Baratheon due to a longstanding blood feud" revealed to ActorID4 on turn 2 -> added to List
+RumourID 368 removed from listRumoursWest[13]
+Follower The Waif, ActID 4, added RumourID 368
+[Notification -> HouseRel] "Engaged in a long standing blood feud" -> Known is True
 --- GetRumour (Director.cs)
-arrayOfRumours [0] -> RumourID 114, Strength 1, Scope Global, Type Item, Global All
-arrayOfRumours [1] -> RumourID 103, Strength 2, Scope Global, Type Desire, Global North
-arrayOfRumours [5] -> RumourID 86, Strength 1, Scope Local, Type Skill, Global All
-RumourID 103 selected from the Pool
-Rumour "It is known that Lord Wilmot Tyrell, ActID 55 at Highgarden, desires the neighbouring lands belonging to the Bannerlord at Estermont" revealed to ActorID3 on turn 2 -> added to List
-RumourID 103 removed from listRumoursNorth[1]
-Follower The Viper, ActID 3, added RumourID 103
-[Notification] Castellan Humfredus Jeacock "The Middling" DesireKnown status changed to "True"
+arrayOfRumours [0] -> RumourID 505, Strength 3, Scope Global, Type Enemy, Global All
+arrayOfRumours [1] -> RumourID 359, Strength 2, Scope Global, Type HouseRel, Global North
+arrayOfRumours [5] -> RumourID 482, Strength 3, Scope Local, Type Goods, Global All
+RumourID 482 selected from the Pool
+Rumour "It is well known among Traders that House The Singing Ghost, at The Singing Ghost, conducts a brisk Export trade in Food" revealed to ActorID9 on turn 2 -> added to List
+RumourID 482 removed from listRumoursHouse[0]
+Follower The Crone, ActID 9, added RumourID 482
 --- GetRumour (Director.cs)
-arrayOfRumours [0] -> RumourID 517, Strength 3, Scope Global, Type Enemy, Global All
-arrayOfRumours [1] -> RumourID 420, Strength 3, Scope Global, Type Friends, Global North
-arrayOfRumours [5] -> RumourID 214, Strength 2, Scope Local, Type Secret, Global All
-RumourID 517 selected from the Pool
-Rumour "Inquisitor, Brother Diabolous, ActID 129 has been spotted gambling at Kingskeep (loc 15:10)" revealed to ActorID5 on turn 2 -> added to List
-RumourID 517 removed from listRumoursGlobal[27]
-Follower The Jester, ActID 5, added RumourID 517
-[Rumour -> Deleted] Timed RumourID 517 removed from dictRumoursTimed
+arrayOfRumours [0] -> RumourID 481, Strength 3, Scope Global, Type Friends, Global All
+arrayOfRumours [1] -> RumourID 15, Strength 2, Scope Global, Type Desire, Global North
+arrayOfRumours [5] -> RumourID 192, Strength 4, Scope Local, Type Skill, Global All
+RumourID 192 selected from the Pool
+Rumour "BannerLord Paxter Peake "The Knowing", ActID 89 at Starpike, is suspected to be Multilingual" revealed to ActorID6 on turn 2 -> added to List
+RumourID 192 removed from listRumoursHouse[0]
+Follower The Viper, ActID 6, added RumourID 192
+BannerLord Paxter Peake, ActID 89, has their Wits changed to True
 --- GetMarketView (Director.cs)
-[GameVar] View_Index changed from 6 to 1
+[GameVar] View_Index changed from 3 to 4
 --- CheckStationaryActiveActors (World.cs)
- [Search -> Stationary] Usurper Davos Greyjoy, ActID 1 is AtLocation
+ [Search -> Stationary] Usurper Cleos Greyjoy, ActID 1 is AtLocation
 --- CheckIfFoundActive (World.cs)
- [Search -> Debug] Enemy, Brother Shaitan, ID 127 at 15:10, Active Davos Greyjoy, ID 1, at 18:19
- [Search -> Debug] Enemy, Brother Azazel, ID 128 at 15:10, Active Davos Greyjoy, ID 1, at 18:19
- [Search -> Debug] Enemy, Brother Diabolous, ID 129 at 15:10, Active Davos Greyjoy, ID 1, at 18:19
- [Search -> Debug] Enemy, Brother Dagon, ID 130 at 15:10, Active Davos Greyjoy, ID 1, at 18:19
- [Search -> Debug] Enemy, The Unrelenting, ID 131 at 15:10, Active Davos Greyjoy, ID 1, at 18:19
- [Search -> Stationary] Follower The Haggler, ActID 4 is AtLocation
- [Search -> Stationary] Follower The Viper, ActID 3 is AtLocation
- [Search -> Stationary] Follower The Jester, ActID 5 is AtLocation
---- UpdateAIController (World.cs)
- [AI -> Mode] enemyID 127,  distance -> 12  Threshold (turns) -> 4  Mode -> Normal
- [AI -> Mode] enemyID 128,  distance -> 12  Threshold (turns) -> 4  Mode -> Normal
- [AI -> Mode] enemyID 129,  distance -> 12  Threshold (turns) -> 4  Mode -> Normal
- [AI -> Mode] enemyID 130,  distance -> 12  Threshold (turns) -> 4  Mode -> Normal
- [AI -> Mode] enemyID 131,  distance -> 12  Threshold (turns) -> 8  Mode -> Hunt
---- SetEnemyActivity (World.cs)
- [Enemy -> Goal] Brother Shaitan, ActID 127 retains Goal -> Wait
- [Enemy -> Goal] Brother Azazel, ActID 128 retains Goal -> Hide
---- SetEnemyGoal (World.cs)
- [Goal -> Branch] Brother Diabolous, ActID 129 Assigned Branch -> 2 Current Branch -> 0
- [Goal -> New] Brother Diabolous, ActID 129, (loc 15:10), assigned new Goal -> Hide
- [Enemy -> Goal] Brother Dagon, ActID 130 retains Goal -> Wait
---- SetEnemyGoal (World.cs)
- [Goal -> Branch] The Unrelenting, ActID 131 Assigned Branch -> 0 Current Branch -> 0
- [Goal -> New] The Unrelenting, ActID 131, (loc 15:10), assigned new Goal -> Move
- [Goal -> Move] The Unrelenting, ActID 131 -> Player's last known location -> One Eyed Pete's, LocID 23
---- InitiateMoveActor (World.cs)
---- Move Actor (Director.cs)
---- CheckPlayerEvents (Director.cs)
-Location event, Need 75, roll 63
---- GetValidPlayerEvents (Director.cs)
---- GetValidPlayerEvents (Director.cs)
---- GetValidPlayerEvents (Director.cs)
-[DeterminePlayerEvent] There are 0 events in the Pool
- Chance of Player Location event 37 %
---- UpdateActiveActors (World.cs)
- Usurper Davos Greyjoy has had their Revert Timer reduced from 4 to 3
- Follower The Haggler has had their TurnsUnknown Timer increased from 1 to 2
- Follower The Viper has had their TurnsUnknown Timer increased from 1 to 2
- Follower The Jester has had their TurnsUnknown Timer increased from 1 to 2
---- SetEndGame (Game.cs)
-[Alert] Player chose to exit (pressed 'X')
-//Exile Game file ops "LogTurn.txt" Completed at: 12/06/2017 19:54:05
- Relationship rumours on turn 21
-[Rumour -> Added] RID 517, "Inquisitor, Brother Diabolous, ActID 129 has been spotted gambling at Kingskeep (loc 15:10)" -> dict & List
---- HouseKeepActors (World.cs)
-[GameStat] "Location_Days" -> increased from 1 to 2
-[GameStat] "Known_Days" -> increased from 0 to 1
---- HousekeepRumours (World.cs)
-dictRumoursKnown has 3 records
-
-//Exile Game File "LogTurn.txt" Close completed at: 12/06/2017 19:53:44
+ [Search -> Debug] Enemy, Brother Behemoth, ID 123 at 18:16, Active Cleos Greyjoy, ID 1, at 19:26
+ [Search -> Debug] Enemy, Brother Haborym, ID 124 at 18:16, Activ

@@ -34,6 +34,7 @@ Hard work for us in Autumn. Harvest time. Back breaking. Everybody has to help.
 Autumn rains don't stop the harvest. Nothing does. Can't wait for winter.
 Autumn is the worst time of the year. Harvest time. Work till you drop.
 I'm thinking of leaving <locName>. Autumn chills and Autumn rains aren't good for my bones.
+Lots of squirrels around here at <locName> 'cause it's Autumn. Squirrels taste nice. Roasted is best.
 
 [WinterEduc]
 The crisp, virgin white, snow is something to behold here in <locName>.
@@ -52,8 +53,8 @@ It is as if <locName> has been born anew. Spring and fertility are as one in my 
 [SpringUned]
 Spring. Planting season. My aching back. At least I'm not wading knee deep through dirty snow.
 It'd be nice if somebody gave me some new clothes for Spring. The ones I have stink.
-The best part about Spring is that you can go to the toilet anywhere, not just in the hole in the corner.
-Some people like Spring. I'm not one of them. It's all the same when you are dirt poor and shoeless.
+The best part about Spring is that you can go to the toilet anywhere, not just in that smelly hole in the corner.
+Some people like Spring. I'm not one of them. If I had a pair of shoes I might feel better about it.
 
 [FoodSurplusEduc]
 The food here at <locName> is a delight. Have you tasted the <food>?

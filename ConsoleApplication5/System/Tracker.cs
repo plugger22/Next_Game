@@ -8,11 +8,12 @@ namespace Next_Game
 {
     //categories (can choose multiple) -> Used for Historical Records
     public enum HistActorEvent { None, Born, Died, Married, Conflict, Lordship, Birthing, Knighthood, Coronation, Captured, Wounded, Leadership, Heroic_Deed, Service} 
-    public enum HistHouseEvent { None, Allegiance, Ownership, Food, Goods, Economy, Population }
+    public enum HistHouseEvent { None, Allegiance, Ownership, Food, Goods, Population }
     public enum HistKingdomEvent { None, Battle, Siege }
     //categorires -> Used for Messages & current Records
     public enum MessageType { None, System, God, Error, Move, Crow, Activation, Event, Conflict, Known, Search, Incarceration, Horse }
     public enum CurrentActorEvent { None, Condition, Event, Challenge, Travel, Resource, Known, Search, Horse }
+    public enum CurrentHouseEvent { None }
     //Relationship List Categories
     public enum RelListType { HousePastGood, HousePastBad, BannerPastGood, BannerPastBad, Lord_1, Lord_2, Lord_3, Lord_4, Lord_5, Count }
 

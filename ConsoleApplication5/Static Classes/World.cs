@@ -2004,35 +2004,40 @@ namespace Next_Game
                 //loop list and display each actor appropriately (dead, or missing, in Lt.Gray)
                 string personText;
                 string actorType;
-                foreach (int actorID in listOfFamily)
+                if (listOfFamily.Count > 0)
                 {
-                    Passive person = GetPassiveActor(actorID);
-                    if ((int)person.Office > 0) { actorType = Convert.ToString(person.Office); }
-                    else { actorType = Convert.ToString(person.Type); }
-                    personText = string.Format("Aid {0} {1} {2}, age {3}, ", person.ActID, actorType, person.Name, person.Age);
-                    //valid actor?
-                    if (person.Name != null)
+                    foreach (int actorID in listOfFamily)
                     {
-                        RLColor locColor = RLColor.White;
-                        string locString = "?";
-                        //location descriptor
-                        switch (person.Status)
+                        Passive person = GetPassiveActor(actorID);
+                        if ((int)person.Office > 0) { actorType = Convert.ToString(person.Office); }
+                        else { actorType = Convert.ToString(person.Type); }
+                        personText = string.Format("Aid {0} {1} {2}, age {3}, ", person.ActID, actorType, person.Name, person.Age);
+                        //valid actor?
+                        if (person.Name != null)
                         {
-                            case ActorStatus.AtLocation:
-                                locString = string.Format("at {0} {1}", GetLocationName(person.LocID), GetLocationCoords(person.LocID));
-                                break;
-                            case ActorStatus.Travelling:
-                                Position pos = person.GetActorPosition();
-                                locString = string.Format("travelling to {0} {1}", GetLocationName(person.LocID), GetLocationCoords(person.LocID));
-                                break;
-                            case ActorStatus.Gone:
-                                locString = string.Format("Passed away ({0}) in {1}", person.ReasonGone, person.Gone);
-                                locColor = RLColor.LightGray;
-                                break;
+                            RLColor locColor = RLColor.White;
+                            string locString = "?";
+                            //location descriptor
+                            switch (person.Status)
+                            {
+                                case ActorStatus.AtLocation:
+                                    locString = string.Format("at {0} {1}", GetLocationName(person.LocID), GetLocationCoords(person.LocID));
+                                    break;
+                                case ActorStatus.Travelling:
+                                    Position pos = person.GetActorPosition();
+                                    locString = string.Format("travelling to {0} {1}", GetLocationName(person.LocID), GetLocationCoords(person.LocID));
+                                    break;
+                                case ActorStatus.Gone:
+                                    locString = string.Format("Passed away ({0}) in {1}", person.ReasonGone, person.Gone);
+                                    locColor = RLColor.LightGray;
+                                    break;
+                            }
+                            houseList.Add(new Snippet(personText + locString, locColor, RLColor.Black));
                         }
-                        houseList.Add(new Snippet(personText + locString, locColor, RLColor.Black));
                     }
                 }
+                else if (majorHouse.RefID == Game.lore.RoyalRefIDCurrent)
+                { houseList.Add(new Snippet("Family members are in residence at KingsKeep (Capital)")); }
                 //House Retainers - get list of all actorID's
                 houseList.Add(new Snippet("Retainers", RLColor.Brown, RLColor.Black));
                 List<int> listOfRetainers = new List<int>();
@@ -8120,6 +8125,12 @@ namespace Next_Game
             //rollover timers
             if (Game.SeasonTimer <= 0) { Game.SeasonTimer = 360; Game.WinterTimer = 270; }
             if (Game.HarvestTimer == 0) { Game.HarvestTimer = 360; Game.PlantTimer = 35; }
+            //determine season
+            if (Game.SeasonTimer <= 90) { Game.gameSeason = Season.Winter; }
+            else if (Game.SeasonTimer <= 180 && Game.SeasonTimer > 90) { Game.gameSeason = Season.Autumn; }
+            else if (Game.SeasonTimer <= 270 && Game.SeasonTimer > 180) { Game.gameSeason = Season.Summer; }
+            else if (Game.SeasonTimer <= 360 && Game.SeasonTimer > 270) { Game.gameSeason = Season.Spring; }
+            else { Game.SetError(new Error(307, $"Invalid Game.SeasonTimer value \"{Game.SeasonTimer}\" -> Game.gameSeason not set")); }
         }
 
         //new Methods above here
