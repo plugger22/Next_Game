@@ -358,8 +358,27 @@ namespace Next_Game
     /// 
     class CapitalHouse : House
     {
+        private List<Finance> listOfLoans; //who has lent money to the King
+
+        /// <summary>
+        /// default constructor
+        /// </summary>
         public CapitalHouse()
-        { }
+        {
+            listOfLoans = new List<Finance>();
+        }
+
+        public void AddLoan(Finance loan)
+        {
+            if (loan != Finance.None)
+            { listOfLoans.Add(loan); }
+        }
+
+        public int GetNumOfLoans()
+        { return listOfLoans.Count; }
+
+        public List<Finance> GetLoans()
+        { return listOfLoans; }
     }
 
     //

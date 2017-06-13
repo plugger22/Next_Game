@@ -7937,6 +7937,22 @@ namespace Next_Game
                 resources = Math.Max(1, resources);
                 capital.Resources += resources;
                 Game.logStart?.Write($"Capital has resources level of {capital.Resources}, overallTally {overallTally}, Locs {numLocs}, Modifier {overallTally / numLocs}");
+                //Any loans taken out by new King?
+                int deficit = 5 - capital.Resources;
+                if (deficit > 0)
+                {
+                    for (int i = 0; i < deficit; i++)
+                    {
+                        if (rnd.Next(100) < 30)
+                        {
+                            //king takes on a loan
+                            capital.Resources++;
+                            Finance loan = (Finance)rnd.Next(1, (int)Finance.Count);
+                            capital.AddLoan(loan);
+                            Game.logStart?.Write($"The New King has taken on a Loan with the {loan}, Capital resources now {capital.Resources}");
+                        }
+                    }
+                }
             }
             else { Game.SetError(new Error(303, "Invalid Capital (null) -> Resources not adjusted")); }
             //
