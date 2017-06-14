@@ -360,7 +360,8 @@ namespace Next_Game
     {
         private List<Finance> listOfLoans; //who has lent money to the King
         //collections
-        int[] arrayOfGroups;
+        int[] arrayOfGroups; //relationship levels (0 - 100)  with the different WorldGroups (enum) within the Capital, Kingskeep
+        int[] arrayOfLenders; //relationship levels (0 - 100) with the different Lenders who you've obtained a loan from
 
         /// <summary>
         /// default constructor
@@ -369,6 +370,7 @@ namespace Next_Game
         {
             listOfLoans = new List<Finance>();
             arrayOfGroups = new int[(int)WorldGroup.Count];
+            arrayOfLenders = new int[(int)Finance.Count];
         }
 
         public void AddLoan(Finance loan)
@@ -401,6 +403,25 @@ namespace Next_Game
         /// <returns></returns>
         public int GetGroupRelations(WorldGroup group)
         { return arrayOfGroups[(int)group]; }
+
+        public void SetLenderRelations(Finance lender, int newRelLvl)
+        { arrayOfLenders[(int)lender] = newRelLvl; }
+
+        /// <summary>
+        /// Change by adding an amount to a lender relationship
+        /// </summary>
+        /// <param name="lender"></param>
+        /// <param name="changeAmt">Adds this amount to existing lender relationship level</param>
+        public void ChangeLenderRelations(Finance lender, int changeAmt)
+        { arrayOfLenders[(int)lender] += changeAmt; }
+
+        /// <summary>
+        /// returns relationship level of a particular lender
+        /// </summary>
+        /// <param name="lender"></param>
+        /// <returns></returns>
+        public int GetLenderRelations(Finance lender)
+        { return arrayOfLenders[(int)lender]; }
     }
 
     //

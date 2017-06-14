@@ -104,23 +104,66 @@ namespace Next_Game
             CapitalHouse capital = Game.world.GetCapital();
             RLColor starColor;
             int relLvl, stars;
+            int spacer = 2; //number of blank lines between data groups
             if (capital != null)
             {
+                //World Groups
                 listDisplay.Add(new Snippet("--- KingsKeep Groups", RLColor.Yellow, RLColor.Black));
-                for(int i = 1; i < (int)WorldGroup.Count; i++)
+                for (int i = 1; i < (int)WorldGroup.Count; i++)
                 {
                     relLvl = capital.GetGroupRelations((WorldGroup)i);
-                    stars = relLvl/20 + 1;
+                    stars = relLvl / 20 + 1;
                     stars = Math.Min(5, stars);
                     if (stars <= 2) { starColor = RLColor.LightRed; } else { starColor = RLColor.Yellow; }
-                    listDisplay.Add(new Snippet($"{(WorldGroup)i, -20}", false));
-                    listDisplay.Add(new Snippet($"{GetStars(stars), -15}", starColor, RLColor.Black, false));
+                    listDisplay.Add(new Snippet($"{(WorldGroup)i,-25}", false));
+                    listDisplay.Add(new Snippet($"{GetStars(stars),-15}", starColor, RLColor.Black, false));
                     listDisplay.Add(new Snippet($"Rel Lvl {relLvl}%", RLColor.LightGray, RLColor.Black));
                 }
+                //spacer
+                for (int i = 0; i < spacer; i++)
+                { listDisplay.Add(new Snippet("")); }
+                //Lords
+                Dictionary<int, MajorHouse> dictMajorHouses = Game.world.GetMajorHouses();
+                if (dictMajorHouses != null)
+                {
+                    listDisplay.Add(new Snippet("--- Major Houses", RLColor.Yellow, RLColor.Black));
+                    foreach (var house in dictMajorHouses)
+                    {
+                        Passive lord = Game.world.GetPassiveActor(house.Value.LordID);
+                        if (lord != null)
+                        {
+                            relLvl = 100 - lord.GetRelPlyr();
+                            stars = relLvl / 20 + 1;
+                            stars = Math.Min(5, stars);
+                            if (stars <= 2) { starColor = RLColor.LightRed; } else { starColor = RLColor.Yellow; }
+                            listDisplay.Add(new Snippet($"{"House " + house.Value.Name,-25}", false));
+                            listDisplay.Add(new Snippet($"{GetStars(stars),-15}", starColor, RLColor.Black, false));
+                            listDisplay.Add(new Snippet($"Lord {lord.Name}, \"{ lord.Handle }\""));
+                        }
+                        else { Game.SetError(new Error(308, $"Invalid Lord (null) from house.Value.LordID {house.Value.LordID}")); }
+                    }
+                }
+                else { Game.SetError(new Error(308, "Invalid dictMajorHouses (null) -> Lord rel's not shown")); }
+                //spacer
+                for (int i = 0; i < spacer; i++)
+                { listDisplay.Add(new Snippet("")); }
+                //Lenders
+                listDisplay.Add(new Snippet("--- Lenders", RLColor.Yellow, RLColor.Black));
+                for (int i = 1; i < (int)Finance.Count; i++)
+                {
+                    relLvl = capital.GetLenderRelations((Finance)i);
+                    stars = relLvl / 20 + 1;
+                    stars = Math.Min(5, stars);
+                    if (stars <= 2) { starColor = RLColor.LightRed; } else { starColor = RLColor.Yellow; }
+                    listDisplay.Add(new Snippet($"{(Finance)i,-25}", false));
+                    listDisplay.Add(new Snippet($"{GetStars(stars),-15}", starColor, RLColor.Black, false));
+                    listDisplay.Add(new Snippet($"Rel Lvl {relLvl}%", RLColor.LightGray, RLColor.Black));
+                }
+
                 //display data
                 Game.infoChannel.SetInfoList(listDisplay, ConsoleDisplay.Multi);
             }
-            else { Game.SetError(new Error(308, "Invalid Capital (null)")); }
+            else { Game.SetError(new Error(308, "Invalid Capital (null) -> no rel's shown")); }
         }
 
 

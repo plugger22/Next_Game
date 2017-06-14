@@ -257,15 +257,21 @@ namespace Next_Game
                         break;
                 }
                 //max number of lines
+                int actualLines = 0;
+                //take into account multiple snippets making up a single line
+                for (int i = 0; i < displayList.Count; i++)
+                { if (displayList[i].GetNewLine() == true) { actualLines++; } }
+                /*Game.logTurn?.Write("--- DrawInfoConsole (InfoChannel.cs)");
+                Game.logTurn?.Write($"Console {consoleDisplay} -> DisplayList.Count {displayList.Count}, actualLines {actualLines}");*/
                 int maxLength = Math.Min(dataLength, displayList.Count);
                 if (clearDisplay)
                 { infoConsole.Clear(); }
                 int lineCounter = 0;
-                int listLength = displayList.Count;
+                //int listLength = actualLines/*displayList.Count*/;
                 //keep _scrollIndex (set in Game.ScrollingKeyInput) within bounds
                 if (consoleDisplay == ConsoleDisplay.Multi && Game._scrollIndex > 0)
                 {
-                    startIndex = Math.Min(Game._scrollIndex, displayList.Count - Game._multiConsoleLength / 2);
+                    startIndex = Math.Min(Game._scrollIndex, /*displayList.Count*/actualLines - Game._multiConsoleLength / 2);
                     startIndex = Math.Max(startIndex, 0);
                     maxLength = Math.Min(dataLength + Game._scrollIndex, displayList.Count);
                     //prevent _scrollIndex from escalating

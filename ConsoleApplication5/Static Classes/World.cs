@@ -24,8 +24,8 @@ namespace Next_Game
         private Dictionary<int, Enemy> dictEnemyActors; //list of all Enemy actors keyed of actorID
         private Dictionary<int, Special> dictSpecialActors; //list of all Special NPC actors -> key is SpecialID
         private Dictionary<int, Actor> dictAllActors; //list of all Actors keyed of actorID
-        private Dictionary<int, MajorHouse> dictMajorHouses; //list of all Greathouses keyed off houseID
-        private Dictionary<int, House> dictAllHouses; //list of all houses & special locations keyed off RefID
+        private Dictionary<int, MajorHouse> dictMajorHouses; //list of all Greathouses keyed off houseID (Does NOT contain CapitalHouse)
+        private Dictionary<int, House> dictAllHouses; //list of all houses & special locations keyed off RefID (Does contain CapitalHouse)
         private Dictionary<int, int> dictMajorHouseID; //list of Great Houses, unsorted (Key is House ID, value is # of bannerlords)
         private Dictionary<int, int> dictHousePower; // list of Great Houses, Sorted (key is House ID, value is # of bannerlords (power))
         private Dictionary<int, Record> dictHistoricalRecords; //all historical records (including Players) in a central collection (key is trackerID)
@@ -7879,6 +7879,9 @@ namespace Next_Game
                         }
                     }
                 }
+                //relationships with Lender (actual if loans and possible future lenders)
+                for(int i = 1; i < (int)Finance.Count; i++)
+                { capital.SetLenderRelations((Finance)i, rnd.Next(100)); }
             }
             else { Game.SetError(new Error(303, "Invalid Capital (null) -> Resources not adjusted")); }
             //

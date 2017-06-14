@@ -36,7 +36,7 @@ namespace Next_Game
         public string Description { get; set; }
         public int Delay { get; set; } = 0; // if > 0 then character delayed for some reason and unavailable
         public int Resources { get; set; } //abstracted money, equipment and influence
-        private int relPlyr; //relationship with Player (0 to 100), higher the better
+        private int relPlyr; //relationship with Player (0 to 100), higher the better -> NOTE: relationship with New King is (100 - relPlyr), diammetrically opposite
         private int relLord; //relationship with their Lord (0 to 100), higher the better (ignore if a Lord)
         public bool RelKnown { get; private set; } //if true relationship (Plyr & Lord) are Known
         public string DelayReason { get; set; }

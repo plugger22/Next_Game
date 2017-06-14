@@ -53,6 +53,10 @@ namespace Next_Game
         public RLColor GetBackColor()
         { return backColor; }
 
+        /// <summary>
+        /// returns true if a new line is inserted immediately after this one, false otherwise
+        /// </summary>
+        /// <returns></returns>
         public bool GetNewLine()
         { return newLine; }
 
