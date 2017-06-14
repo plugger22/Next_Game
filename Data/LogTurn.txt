@@ -1,119 +1,18 @@
-//Exile Game File "LogTurn.txt" opened at: 14/06/2017 12:14:21
---- ProcessStartTurn (World.cs)
-Day 1, Turn 1, Harvest in 157 days, Winter in 172 days, SeasonTimer 262
-Usurper Humfredus Greyjoy, "The Whimsical", AtLocation, Pyke
---- UpdateRumours (World.cs)
-dictRumoursTimed (Start) -> 87 records
-87 rumours -> TimerExpire decremented
---- MoveActors -> 0 Records (World.cs)
---- UpdatePlayerStatus (World.cs)
---- UpdateWorldStatus (World.cs)
---- CheckFollowerActivity (World.cs)
---- GetRumour (Director.cs)
-arrayOfRumours [0] -> RumourID 135, Strength 1, Scope Global, Type Item, Global All
-arrayOfRumours [2] -> RumourID 48, Strength 2, Scope Global, Type Desire, Global East
-arrayOfRumours [5] -> RumourID 330, Strength 4, Scope Local, Type Relationship, Global All
-RumourID 330 selected from the Pool
-Rumour "BannerLord Patrek Harlaw "The Tentative", ActID 89 at Ten Towers, is murmured among friends to have a poor view of the Usurper" revealed to ActorID9 on turn 1 -> added to List
-RumourID 330 removed from listRumoursHouse[2]
-Follower The Beast, ActID 9, added RumourID 330
-[Notification] BannerLord Patrek Harlaw, ActID 89 -> RelKnown changed to True
-[Rumour -> Deleted] Timed RumourID 330 removed from dictRumoursTimed
---- GetRumour (Director.cs)
-arrayOfRumours [0] -> RumourID 495, Strength 3, Scope Global, Type Enemy, Global All
-arrayOfRumours [2] -> RumourID 168, Strength 2, Scope Global, Type Desire, Global East
-arrayOfRumours [5] -> RumourID 221, Strength 2, Scope Local, Type Skill, Global All
-RumourID 495 selected from the Pool
-Rumour "Inquisitor, Brother Demogorgon, ActID 127 has been spotted relaxing at Kingskeep (loc 16:15)" revealed to ActorID5 on turn 1 -> added to List
-RumourID 495 removed from listRumoursGlobal[21]
-Follower The Duchess, ActID 5, added RumourID 495
-[Rumour -> Deleted] Timed RumourID 495 removed from dictRumoursTimed
---- GetRumour (Director.cs)
-arrayOfRumours [0] -> RumourID 258, Strength 1, Scope Global, Type Item, Global All
-arrayOfRumours [4] -> RumourID 70, Strength 2, Scope Global, Type Desire, Global West
-arrayOfRumours [5] -> RumourID 187, Strength 4, Scope Local, Type Skill, Global All
-RumourID 258 selected from the Pool
-Rumour "It is murmured among friends that the infamous Goblin Mug (Passive Item) is to be found at Kingskeep" revealed to ActorID4 on turn 1 -> added to List
-RumourID 258 removed from listRumoursGlobal[12]
-Follower The Crone, ActID 4, added RumourID 258
---- GetMarketView (Director.cs)
-[GameVar] View_Index changed from 4 to 5
---- CheckStationaryActiveActors (World.cs)
- [Search -> Stationary] Usurper Humfredus Greyjoy, ActID 1 is AtLocation
---- CheckIfFoundActive (World.cs)
- [Search -> Debug] Enemy, Brother Azazel, ID 124 at 16:15, Active Humfredus Greyjoy, ID 1, at 23:7
- [Search -> Debug] Enemy, Brother Set, ID 125 at 16:15, Active Humfredus Greyjoy, ID 1, at 23:7
- [Search -> Debug] Enemy, Brother Shaitan, ID 126 at 16:15, Active Humfredus Greyjoy, ID 1, at 23:7
- [Search -> Debug] Enemy, Brother Demogorgon, ID 127 at 16:15, Active Humfredus Greyjoy, ID 1, at 23:7
- [Search -> Debug] Enemy, The Unrelenting, ID 128 at 16:15, Active Humfredus Greyjoy, ID 1, at 23:7
- [Search -> Stationary] Follower The Beast, ActID 9 is AtLocation
- [Search -> Stationary] Follower The Duchess, ActID 5 is AtLocation
- [Search -> Stationary] Follower The Crone, ActID 4 is AtLocation
---- UpdateAIController (World.cs)
- [AI -> Player Unknown] Inquisitor Brother Azazel, Act ID 124 Mode -> Normal
- [AI -> Player Unknown] Inquisitor Brother Set, Act ID 125 Mode -> Normal
- [AI -> Player Unknown] Inquisitor Brother Shaitan, Act ID 126 Mode -> Normal
- [AI -> Player Unknown] Inquisitor Brother Demogorgon, Act ID 127 Mode -> Normal
- [AI -> Player Unknown] Nemesis The Unrelenting, Act ID 128 Mode -> Normal
---- SetEnemyActivity (World.cs)
---- SetEnemyGoal (World.cs)
- [Goal -> Branch] Brother Azazel, ActID 124 Assigned Branch -> 0 Current Branch -> 0
---- SetEnemyGoal (World.cs)
- [Goal -> Branch] Brother Set, ActID 125 Assigned Branch -> 0 Current Branch -> 0
- [Enemy -> Goal] Brother Shaitan, ActID 126 retains Goal -> Wait
- [Enemy -> Goal] Brother Demogorgon, ActID 127 retains Goal -> Wait
- [Enemy -> Known] The Unrelenting ActID 128 has become KNOWN
---- SetEnemyGoal (World.cs)
- [Goal -> Branch] The Unrelenting, ActID 128 Assigned Branch -> 0 Current Branch -> 0
---- CheckPlayerEvents (Director.cs)
-Location event, Need 0, roll 98
-- CreateAutoLocEvent (Director.cs)
- [AutoEvent -> ActorList] "The Duchess", ID 5 added to list of Actors
- [AutoEvent -> ActorList] "Giradin Tarth", ID 82 added to list of Actors
- [AutoEvent -> ActorList] "Luwin Heylot", ID 106 added to list of Actors
- [AutoEvent -> ActorList] "Ywain Alainon", ID 107 added to list of Actors
- [AutoEvent -> ActorList] "Areo Fulchard", ID 108 added to list of Actors
- [AutoEvent -> ActorList] "Ser Aerys Gerrart", ID 109 added to list of Actors
- [AutoEvent -> ActorList] "Elia Tarth", ID 110 added to list of Actors
- [AutoEvent -> ActorList] "Sagard Tarth", ID 111 added to list of Actors
- [AutoEvent -> ActorList] "Willis Tarth", ID 112 added to list of Actors
- [AutoEvent -> ActorList] "Gilibertus Tarth", ID 113 added to list of Actors
- [AutoEvent -> ActorList] "Gerion Tarth", ID 114 added to list of Actors
- [AutoEvent -> ActorList] "Vortimer Tarth", ID 115 added to list of Actors
- [AutoEvent -> ActorList] "Essylt Tarth", ID 116 added to list of Actors
- [AutoEvent -> FollowerList] "The Duchess", ID 5 added to list of Followers
- [AutoEvent -> LocalList] "Giradin Tarth", ID 82 added to list of Locals
- [AutoEvent -> AdvisorList] "Luwin Heylot", ID 106 added to list of Advisors
- [AutoEvent -> AdvisorList] "Ywain Alainon", ID 107 added to list of Advisors
- [AutoEvent -> AdvisorList] "Areo Fulchard", ID 108 added to list of Advisors
- [AutoEvent -> LocalList] "Ser Aerys Gerrart", ID 109 added to list of Locals
- [AutoEvent -> LocalList] "Elia Tarth", ID 110 added to list of Locals
- [AutoEvent -> LocalList] "Sagard Tarth", ID 111 added to list of Locals
- [AutoEvent -> LocalList] "Willis Tarth", ID 112 added to list of Locals
- [AutoEvent -> LocalList] "Gilibertus Tarth", ID 113 added to list of Locals
- [AutoEvent -> LocalList] "Gerion Tarth", ID 114 added to list of Locals
- [AutoEvent -> LocalList] "Vortimer Tarth", ID 115 added to list of Locals
- [AutoEvent -> LocalList] "Essylt Tarth", ID 116 added to list of Locals
-[Notification] No entry found in dictOfIntroductions for RefID 99
- Chance of Player Location event 75 %
---- ResolvePlayerEvents (Director.cs)
- Trigger FAILED on "0" Equals 1
- Trigger: Player is wrong type of Known status -> Trigger failed
- Trigger FAILED on "0" Equals 1
- Trigger: Player is wrong type of Known status -> Trigger failed
- Trigger FAILED on "0" Equals 1
- Trigger: Player is wrong type of Known status -> Trigger failed
- Trigger FAILED on "0" Equals 1
- Trigger: Player is wrong type of Known status -> Trigger failed
- Event "What to do?" Timer Repeat now 999
- Event "What to do?" Cooldown Timer has been reset to 0
---- UpdateActiveActors (World.cs)
- Usurper Humfredus Greyjoy has had their TurnsUnknown Timer increased from 100 to 101
- Follower The Beast has had their TurnsUnknown Timer increased from 0 to 1
- Follower The Duchess has had their TurnsUnknown Timer increased from 0 to 1
- Follower The Crone has had their TurnsUnknown Timer increased from 0 to 1
---- ResolveOutcome (Director.cs)
- Inactive (greyed out) Option chosen for "What to do?", option # 1
+//Exile Game file ops "LogTurn.txt" commenced at: 14/06/2017 14:29:16
+--- ProcessStartGame (World.cs)
+--- AgePassiveCharacters (History.cs)
+--- InitialiseGameVars (World.cs)
+[GameVar] View_Index changed from 0 to 1
+[GameVar] View_Rollover changed from 0 to 6
+[AddVisitedLoc] LocID 3, "Winterfell", turn -3 -> record added to listLocsVisited
+[AddVisitedLoc] LocID 3, "Winterfell", turn -3 -> new record added to dictLocsVisited
+[AddVisitedLoc] LocID 24, "Hornvale", turn -2 -> record added to listLocsVisited
+[AddVisitedLoc] LocID 24, "Hornvale", turn -2 -> new record added to dictLocsVisited
+[AddVisitedLoc] LocID 21, "Brightwater Keep", turn -1 -> record added to listLocsVisited
+[AddVisitedLoc] LocID 21, "Brightwater Keep", turn -1 -> new record added to dictLocsVisited
+--- InitialiseFinalPlayer (World.cs)
+[AddVisitedLoc] LocID 18, "The Crag", turn 0 -> record added to listLocsVisited
+[AddVisitedLoc] LocID 18, "The Crag", turn 0 -> new record added to dictLocsVisited
 --- SetEndGame (Game.cs)
 [Alert] Player chose to exit (pressed 'X')
-//Exile Game file ops "LogTurn.txt" Completed at: 14/06/2017 12:14:25
+//Exile Game file ops "LogTurn.txt" Completed at: 14/06/2017 14:29:42

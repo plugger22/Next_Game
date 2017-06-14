@@ -353,12 +353,14 @@ namespace Next_Game
     }
     
     /// <summary>
-    /// Capital House (Kingskeep)
+    /// Capital House (Kingskeep) -> holds all info for King related matters
     /// </summary>
     /// 
     class CapitalHouse : House
     {
         private List<Finance> listOfLoans; //who has lent money to the King
+        //collections
+        int[] arrayOfGroups;
 
         /// <summary>
         /// default constructor
@@ -366,6 +368,7 @@ namespace Next_Game
         public CapitalHouse()
         {
             listOfLoans = new List<Finance>();
+            arrayOfGroups = new int[(int)WorldGroup.Count];
         }
 
         public void AddLoan(Finance loan)
@@ -379,6 +382,25 @@ namespace Next_Game
 
         public List<Finance> GetLoans()
         { return listOfLoans; }
+
+        public void SetGroupRelations(WorldGroup group, int newRelLvl)
+        { arrayOfGroups[(int)group] = newRelLvl; }
+
+        /// <summary>
+        /// Change by adding an amount to a group relationship
+        /// </summary>
+        /// <param name="group"></param>
+        /// <param name="changeAmt">Adds this amount to existing group relationship level</param>
+        public void ChangeGroupRelations(WorldGroup group, int changeAmt)
+        { arrayOfGroups[(int)group] += changeAmt; }
+
+        /// <summary>
+        /// returns relationship level of a particular group
+        /// </summary>
+        /// <param name="group"></param>
+        /// <returns></returns>
+        public int GetGroupRelations(WorldGroup group)
+        { return arrayOfGroups[(int)group]; }
     }
 
     //

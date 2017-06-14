@@ -876,6 +876,9 @@ namespace Next_Game
                                         infoChannel.SetInfoList(world.ShowRumoursRL(RumourDisplay.All), ConsoleDisplay.Multi);
                                         infoChannel.InsertHeader(new Snippet("--- Rumours ALL", RLColor.Yellow, RLColor.Black), ConsoleDisplay.Multi);
                                         break;
+                                    case MenuMode.King:
+                                        display.ShowKingGroupsRL();
+                                        break;
                                     case MenuMode.Debug:
                                         //show debug route
                                         map.UpdateMap(true, false);

@@ -22,7 +22,7 @@ namespace Next_Game
     public enum ConflictState { None, Relative_Army_Size, Relative_Fame, Relative_Honour, Relative_Justice, Known_Status } //game specific states that are used for situations
     public enum ResourceLevel { None, Meagre, Moderate, Subtantial, Prosperous, Wealthy }
     
-    public enum WorldGroup { None, Official, Church, Merchant, Craft, Peasant} //main population groupings within world
+    public enum WorldGroup { None, Officials, Church, Merchants, Craft, Peasants, Count} //main population groupings within world
     public enum ViewType { JusticeNeutralEduc, JusticeNeutralUned, JusticeGoodEduc, JusticeGoodUned, JusticeBadEduc, JusticeBadUned, LegendNeutralEduc, LegendNeutralUned, LegendGoodEduc, LegendGoodUned,
     LegendBadEduc, LegendBadUned, HonourNeutralEduc, HonourNeutralUned, HonourGoodEduc, HonourGoodUned, HonourBadEduc, HonourBadUned, KnownEduc, KnownUned, UnknownEduc, UnknownUned,
     FoodSurplusEduc, FoodSurplusUned, FoodNormalEduc, FoodNormalUned, FoodDeficitEduc, FoodDeficitUned, SummerEduc, SummerUned, AutumnEduc, AutumnUned, WinterEduc, WinterUned, SpringEduc, SpringUned, Count} //Market View
@@ -2224,11 +2224,11 @@ namespace Next_Game
                     if (ability != 3)
                     {
                         eventList.Add(new Snippet(string.Format("({0} {1})  {2} {3} {4}", ability, ability == 1 ? "Star" : "Stars",
-                          Game.world.GetStars(ability), actor.arrayOfTraitNames[(int)option.Trait],
+                          Game.display.GetStars(ability), actor.arrayOfTraitNames[(int)option.Trait],
                           effectText), traitColor, backColor));
                     }
                     else
-                    { eventList.Add(new Snippet(string.Format("({0} {1})  {2}", ability, ability == 1 ? "Star" : "Stars", Game.world.GetStars(ability)), traitColor, backColor)); }
+                    { eventList.Add(new Snippet(string.Format("({0} {1})  {2}", ability, ability == 1 ? "Star" : "Stars", Game.display.GetStars(ability)), traitColor, backColor)); }
                     eventList.Add(new Snippet(""));
                     eventList.Add(new Snippet(string.Format("Success on {0}% or less", success), RLColor.Brown, backColor));
                     eventList.Add(new Snippet(""));
@@ -6070,8 +6070,8 @@ namespace Next_Game
             RLColor backColor = Color._background1;
             string streetView = "";
             int viewIndex = Game.variable.GetValue(GameVar.View_Index);
-            WorldGroup[] arrayOfGroupsMale = new WorldGroup[] { WorldGroup.Official, WorldGroup.Merchant, WorldGroup.Church, WorldGroup.Craft, WorldGroup.Craft,
-                WorldGroup.Peasant, WorldGroup.Peasant };
+            WorldGroup[] arrayOfGroupsMale = new WorldGroup[] { WorldGroup.Officials, WorldGroup.Merchants, WorldGroup.Church, WorldGroup.Craft, WorldGroup.Craft,
+                WorldGroup.Peasants, WorldGroup.Peasants };
             WorldGroup group = WorldGroup.None;
             bool proceedFlag = true;
             string name, place;
@@ -6103,13 +6103,13 @@ namespace Next_Game
                 else
                 {
                     //female
-                    group = WorldGroup.Peasant;
+                    group = WorldGroup.Peasants;
                     name = Game.history.GetFirstName(ActorSex.Female);
                     sex = ActorSex.Female;
                 }
                 switch (group)
                 {
-                    case WorldGroup.Official:
+                    case WorldGroup.Officials:
                         innerArray = arrayOfOccupations[(int)Occupation.Offical];
                         educated = true;
                         break;
@@ -6117,7 +6117,7 @@ namespace Next_Game
                         innerArray = arrayOfOccupations[(int)Occupation.Church];
                         educated = true;
                         break;
-                    case WorldGroup.Merchant:
+                    case WorldGroup.Merchants:
                         innerArray = arrayOfOccupations[(int)Occupation.Merchant];
                         educated = true;
                         break;
@@ -6125,7 +6125,7 @@ namespace Next_Game
                         innerArray = arrayOfOccupations[(int)Occupation.Merchant];
                         educated = false;
                         break;
-                    case WorldGroup.Peasant:
+                    case WorldGroup.Peasants:
                         if (sex == ActorSex.Male)
                         { innerArray = arrayOfOccupations[(int)Occupation.PeasantMale]; }
                         else

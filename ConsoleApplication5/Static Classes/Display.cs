@@ -97,6 +97,48 @@ namespace Next_Game
             Game.infoChannel.SetInfoList(listStats, ConsoleDisplay.Multi);
         }
 
+
+        public void ShowKingGroupsRL()
+        {
+            List<Snippet> listDisplay = new List<Snippet>();
+            CapitalHouse capital = Game.world.GetCapital();
+            RLColor starColor;
+            int relLvl, stars;
+            if (capital != null)
+            {
+                listDisplay.Add(new Snippet("--- KingsKeep Groups", RLColor.Yellow, RLColor.Black));
+                for(int i = 1; i < (int)WorldGroup.Count; i++)
+                {
+                    relLvl = capital.GetGroupRelations((WorldGroup)i);
+                    stars = relLvl/20 + 1;
+                    stars = Math.Min(5, stars);
+                    if (stars <= 2) { starColor = RLColor.LightRed; } else { starColor = RLColor.Yellow; }
+                    listDisplay.Add(new Snippet($"{(WorldGroup)i, -20}", false));
+                    listDisplay.Add(new Snippet($"{GetStars(stars), -15}", starColor, RLColor.Black, false));
+                    listDisplay.Add(new Snippet($"Rel Lvl {relLvl}%", RLColor.LightGray, RLColor.Black));
+                }
+                //display data
+                Game.infoChannel.SetInfoList(listDisplay, ConsoleDisplay.Multi);
+            }
+            else { Game.SetError(new Error(308, "Invalid Capital (null)")); }
+        }
+
+
+
+        /// <summary>
+        /// creates a string showing the number of stars for traits, secrets, etc. (1 to 5 stars)
+        /// </summary>
+        /// <param name="num">number of stars</param>
+        /// <returns></returns>
+        internal string GetStars(int num)
+        {
+            string stars = null;
+            num = Math.Min(5, num);
+            num = Math.Max(1, num);
+            for (int i = 0; i < num; i++)
+            { stars += "o "; }
+            return stars;
+        }
         //methods above here
     }
 }

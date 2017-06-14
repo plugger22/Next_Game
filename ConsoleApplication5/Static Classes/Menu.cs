@@ -160,9 +160,9 @@ namespace Next_Game
                     //menuArrayCategories[1] = "Player Menu ---";
                     menuArrayCategories[3] = "Switch ---";
                     //Main King Menu
-                    menuArrayText[0, 0] = "[C] Capital";
+                    menuArrayText[0, 0] = "[R] Relationships";
                     menuArrayText[0, 1] = "[F] Finances";
-                    menuArrayText[0, 2] = "[O} Council";
+                    menuArrayText[0, 2] = "[C} Council";
                     menuArrayText[0, 3] = "[P] Policies";
                     //Switch commands
                     menuArrayText[3, 0] = "[ESC] Main Menu";
