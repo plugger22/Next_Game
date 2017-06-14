@@ -236,7 +236,7 @@ namespace Next_Game
                         //default game state display if nothing present
                         if (inputList.Count == 0)
                         {
-                            Game.world.ShowGameStateRL();
+                            Game.display.ShowGameStateRL();
                             //inputList.Add(new Snippet(Game.utility.ShowDate(), RLColor.Yellow, RLColor.Black)); 
                         }
                         displayList = inputList;

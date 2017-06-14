@@ -1,18 +1,22 @@
-//Exile Game file ops "LogTurn.txt" commenced at: 14/06/2017 21:12:38
+//Exile Game file ops "LogTurn.txt" commenced at: 15/06/2017 09:36:08
 --- ProcessStartGame (World.cs)
 --- AgePassiveCharacters (History.cs)
 --- InitialiseGameVars (World.cs)
-[GameVar] View_Index changed from 0 to 3
+[GameVar] View_Index changed from 0 to 5
 [GameVar] View_Rollover changed from 0 to 6
-[AddVisitedLoc] LocID 16, "Torrhen's Square", turn -3 -> record added to listLocsVisited
-[AddVisitedLoc] LocID 16, "Torrhen's Square", turn -3 -> new record added to dictLocsVisited
-[AddVisitedLoc] LocID 27, "Bloodkeep", turn -2 -> record added to listLocsVisited
-[AddVisitedLoc] LocID 27, "Bloodkeep", turn -2 -> new record added to dictLocsVisited
-[AddVisitedLoc] LocID 34, "Parchments", turn -1 -> record added to listLocsVisited
-[AddVisitedLoc] LocID 34, "Parchments", turn -1 -> new record added to dictLocsVisited
+[AddVisitedLoc] LocID 17, "Eyrie", turn -3 -> record added to listLocsVisited
+[AddVisitedLoc] LocID 17, "Eyrie", turn -3 -> new record added to dictLocsVisited
+[AddVisitedLoc] LocID 17, "Eyrie", turn -2 -> record added to listLocsVisited
+[AddVisitedLoc] LocID 17, "Eyrie", turn -2 -> record updated in dictLocsVisited
+[AddVisitedLoc] LocID 24, "Yronwood Castle", turn -1 -> record added to listLocsVisited
+[AddVisitedLoc] LocID 24, "Yronwood Castle", turn -1 -> new record added to dictLocsVisited
 --- InitialiseFinalPlayer (World.cs)
-[AddVisitedLoc] LocID 37, "Widow's Watch", turn 0 -> record added to listLocsVisited
-[AddVisitedLoc] LocID 37, "Widow's Watch", turn 0 -> new record added to dictLocsVisited
+[AddVisitedLoc] LocID 24, "Yronwood Castle", turn 0 -> record added to listLocsVisited
+[AddVisitedLoc] LocID 24, "Yronwood Castle", turn 0 -> record updated in dictLocsVisited
+--- MultiKeyInput (Game.cs)
+1 input
+--- MultiKeyInput (Game.cs)
+23 input
 --- SetEndGame (Game.cs)
 [Alert] Player chose to exit (pressed 'X')
-//Exile Game file ops "LogTurn.txt" Completed at: 14/06/2017 21:13:30
+//Exile Game file ops "LogTurn.txt" Completed at: 15/06/2017 09:36:49

@@ -302,7 +302,7 @@ namespace Next_Game
                             case 1:
                                 //Show Actor (input actorID)
                                 _actorID = Convert.ToInt32(_multiData);
-                                infoChannel.SetInfoList(world.ShowActorRL(_actorID), ConsoleDisplay.Multi);
+                                infoChannel.SetInfoList(display.ShowActorRL(_actorID), ConsoleDisplay.Multi);
                                 infoChannel.ClearConsole(ConsoleDisplay.Input);
                                 infoChannel.AppendInfoList(new Snippet("Press LEFT or RIGHT ARROWS to change Actors, ENTER or ESC to exit", RLColor.Magenta, RLColor.Black), ConsoleDisplay.Input);
                                 _menuMode = MenuMode.Actor_Passive;
@@ -323,7 +323,7 @@ namespace Next_Game
                             case 4:
                                 //Rumour -> Show specific Rumour
                                 int rumourID = Convert.ToInt32(_multiData);
-                                infoChannel.SetInfoList(world.ShowRumourRL(rumourID), ConsoleDisplay.Multi);
+                                infoChannel.SetInfoList(display.ShowRumourRL(rumourID), ConsoleDisplay.Multi);
                                 infoChannel.ClearConsole(ConsoleDisplay.Input);
                                 break;
                         }
@@ -567,7 +567,7 @@ namespace Next_Game
                                         break;
                                     case MenuMode.Debug:
                                         //ShowGameVars
-                                        infoChannel.SetInfoList(world.ShowGameVarsRL(), ConsoleDisplay.Multi);
+                                        infoChannel.SetInfoList(display.ShowGameVarsRL(), ConsoleDisplay.Multi);
                                         break;
                                 }
                                 break;
@@ -611,7 +611,7 @@ namespace Next_Game
                                         break;
                                     case MenuMode.Debug:
                                         //ShowGameStats
-                                        infoChannel.SetInfoList(world.ShowGameStatsRL(), ConsoleDisplay.Multi);
+                                        infoChannel.SetInfoList(display.ShowGameStatsRL(), ConsoleDisplay.Multi);
                                         break;
                                 }
                                 break;
@@ -652,7 +652,7 @@ namespace Next_Game
                                         break;
                                     case MenuMode.Reference:
                                         //Show Enemy Rumours
-                                        infoChannel.SetInfoList(world.ShowRumoursRL(RumourDisplay.Enemies), ConsoleDisplay.Multi);
+                                        infoChannel.SetInfoList(display.ShowRumoursRL(RumourDisplay.Enemies), ConsoleDisplay.Multi);
                                         infoChannel.InsertHeader(new Snippet("--- Rumours Enemies", RLColor.Yellow, RLColor.Black), ConsoleDisplay.Multi);
                                         break;
                                     case MenuMode.Debug:
@@ -707,7 +707,7 @@ namespace Next_Game
                                         break;
                                     case MenuMode.Reference:
                                         //Show Horse list
-                                        infoChannel.SetInfoList(world.ShowHorsesRL(), ConsoleDisplay.Multi);
+                                        infoChannel.SetInfoList(display.ShowHorsesRL(), ConsoleDisplay.Multi);
                                         infoChannel.InsertHeader(new Snippet("--- Horse ALL", RLColor.Yellow, RLColor.Black), ConsoleDisplay.Multi);
                                         break;
                                     case MenuMode.Debug:
@@ -873,11 +873,11 @@ namespace Next_Game
                                         break;
                                     case MenuMode.Reference:
                                         //Show All Rumours
-                                        infoChannel.SetInfoList(world.ShowRumoursRL(RumourDisplay.All), ConsoleDisplay.Multi);
+                                        infoChannel.SetInfoList(display.ShowRumoursRL(RumourDisplay.All), ConsoleDisplay.Multi);
                                         infoChannel.InsertHeader(new Snippet("--- Rumours ALL", RLColor.Yellow, RLColor.Black), ConsoleDisplay.Multi);
                                         break;
                                     case MenuMode.King:
-                                        display.ShowKingGroupsRL();
+                                        display.ShowKingRelationsRL();
                                         break;
                                     case MenuMode.Debug:
                                         //show debug route
@@ -1010,7 +1010,7 @@ namespace Next_Game
                                         //Left Arrow -> show Actor with ID--
                                         _actorID--;
                                         _actorID = Math.Max(_actorID, 1);
-                                        infoChannel.SetInfoList(world.ShowActorRL(_actorID), ConsoleDisplay.Multi);
+                                        infoChannel.SetInfoList(display.ShowActorRL(_actorID), ConsoleDisplay.Multi);
                                         break;
                                 }
                                 break;
@@ -1020,7 +1020,7 @@ namespace Next_Game
                                     case MenuMode.Actor_Passive:
                                         //Right Arrow -> show Actor with ID--
                                         _actorID++;
-                                        infoChannel.SetInfoList(world.ShowActorRL(_actorID), ConsoleDisplay.Multi);
+                                        infoChannel.SetInfoList(display.ShowActorRL(_actorID), ConsoleDisplay.Multi);
                                         break;
                                 }
                                 break;
@@ -1032,7 +1032,7 @@ namespace Next_Game
                                 infoChannel.ClearConsole(ConsoleDisplay.Input);
                                 infoChannel.ClearConsole(ConsoleDisplay.Multi);
                                 //infoChannel.AppendInfoList(new Snippet(Game.utility.ShowDate(), RLColor.Yellow, RLColor.Black), ConsoleDisplay.Input);
-                                world.ShowGameStateRL();
+                                display.ShowGameStateRL();
                                 if (_menuMode == MenuMode.Actor_Passive)
                                 { _menuMode = MenuMode.Main; }
                                 break;
