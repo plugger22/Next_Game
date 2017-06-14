@@ -5468,7 +5468,7 @@ namespace Next_Game
                                 {
                                     for(int i = 0; i < listOfLoans.Count; i++)
                                     {
-                                        strength = 5;
+                                        strength = 3;
                                         startText = $"It is {arrayOfRumourTexts[rnd.Next(arrayOfRumourTexts.Length)]}";
                                         rumourText = string.Format("{0} that King {1}, \"{2}\", has taken out a loan from the {3}", startText, Game.lore.NewKing.Name, Game.lore.NewKing.Handle, listOfLoans[i]);
                                         RumourLoan rumour = new RumourLoan(rumourText, strength, RumourScope.Local, rnd.Next(20) * -1);

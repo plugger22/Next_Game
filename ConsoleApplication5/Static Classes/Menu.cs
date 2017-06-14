@@ -71,8 +71,8 @@ namespace Next_Game
             switch (menuMode)
             {
                 case MenuMode.Main:
-                    menuColorFore = RLColor.Black;
-                    menuColorBack = RLColor.LightGray;
+                    menuColorFore = RLColor.White;
+                    menuColorBack = RLColor.Gray;
                     //input categories
                     menuArrayCategories[0] = "Main MENU ---";
                     menuArrayCategories[1] = "Info ---";
@@ -89,14 +89,15 @@ namespace Next_Game
                     menuArrayText[1, 3] = "[G] Show Generator Stats";
                     menuArrayText[1, 4] = "[A] Show Actor";
                     menuArrayText[1, 5] = "[E] Show Enemies";
-                    //sub Menu commands
+                    //Switch Menu commands
                     menuArrayText[3, 0] = "[1..9] Character MENU";
                     menuArrayText[3, 1] = "[D] Debug MENU";
                     menuArrayText[3, 2] = "[O] God MENU";
                     menuArrayText[3, 3] = "[R] Reference MENU";
                     menuArrayText[3, 4] = "[B] Balance MENU";
+                    menuArrayText[3, 5] = "[K] King MENU";
                     //menuArrayText[3, 4] = "[L] Lore MENU";
-                    menuArrayText[3, 5] = "[X] Quit";
+                    menuArrayText[3, 6] = "[X] Quit";
                     break;
                 case MenuMode.Actor_Active:
                     menuColorFore = RLColor.Blue;
@@ -112,8 +113,8 @@ namespace Next_Game
                     menuArrayText[3, 1] = "[ENTER] End Turn";
                     break;
                 case MenuMode.Reference:
-                    menuColorFore = RLColor.Red;
-                    menuColorBack = RLColor.LightGray;
+                    menuColorFore = RLColor.LightMagenta;
+                    menuColorBack = RLColor.Gray;
                     //input categories
                     menuArrayCategories[0] = "Records MENU ---";
                     menuArrayCategories[1] = "Rumours MENU ---";
@@ -147,6 +148,22 @@ namespace Next_Game
                     //Main God Menu
                     menuArrayText[1, 0] = "[P] Move Player";
                     menuArrayText[1, 1] = "[K] Known Status";
+                    //Switch commands
+                    menuArrayText[3, 0] = "[ESC] Main Menu";
+                    menuArrayText[3, 1] = "[ENTER] End Turn";
+                    break;
+                case MenuMode.King:
+                    menuColorFore = RLColor.LightCyan;
+                    menuColorBack = RLColor.Gray;
+                    //input categories
+                    menuArrayCategories[0] = "King MENU ---";
+                    //menuArrayCategories[1] = "Player Menu ---";
+                    menuArrayCategories[3] = "Switch ---";
+                    //Main King Menu
+                    menuArrayText[0, 0] = "[C] Capital";
+                    menuArrayText[0, 1] = "[F] Finances";
+                    menuArrayText[0, 2] = "[O} Council";
+                    menuArrayText[0, 3] = "[P] Policies";
                     //Switch commands
                     menuArrayText[3, 0] = "[ESC] Main Menu";
                     menuArrayText[3, 1] = "[ENTER] End Turn";

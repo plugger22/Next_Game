@@ -39,12 +39,15 @@ namespace Next_Game
             string seasonText = $"(SeasonTimer {Game.SeasonTimer})";
             dateReturn = string.Format("Day {0} of the {1}{2} Moon in the Year of our Gods {3}  (Turn {4}) ", moonDay, moonCycle, moonSuffix, 
                 Game.gameYear, Game.gameTurn + 1);
-            string timerText = string.Format("{0}{1}{2} {3} ", Game.PlantTimer > 0 ? plantText : "", Game.HarvestTimer > 0 ? harvestText : "", Game.WinterTimer > 0 ? "," : "", 
+            string timerText = string.Format("{0}, {1}{2}{3} {4} ", Game.gameSeason, Game.PlantTimer > 0 ? plantText : "", Game.HarvestTimer > 0 ? harvestText : "", Game.WinterTimer > 0 ? "," : "", 
                 Game.WinterTimer > 0 ? winterText : "" );
             tempList.Add(new Snippet(dateReturn, RLColor.Yellow, RLColor.Gray));
             tempList.Add(new Snippet(timerText, RLColor.Yellow, RLColor.Gray));
             return tempList;
         }
+
+
+
 
         /// <summary>
         /// word wrap a long sentence

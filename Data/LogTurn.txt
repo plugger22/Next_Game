@@ -1,84 +1,100 @@
-//Exile Game File "LogTurn.txt" opened at: 14/06/2017 10:57:43
+//Exile Game File "LogTurn.txt" opened at: 14/06/2017 12:14:21
 --- ProcessStartTurn (World.cs)
-Day 6, Turn 6, Harvest in 135 days, Winter in 150 days, SeasonTimer 240
-Usurper Aegon Stark, "The Reluctant", AtLocation, Pyke
+Day 1, Turn 1, Harvest in 157 days, Winter in 172 days, SeasonTimer 262
+Usurper Humfredus Greyjoy, "The Whimsical", AtLocation, Pyke
 --- UpdateRumours (World.cs)
-dictRumoursTimed (Start) -> 93 records
-[Rumour -> Removal] RID 592, "Inquisitor, Brother Shaitan, ActID 129 has been seen on the road to The Raucous Rat (loc 19:12)" removed from Global East list
-92 rumours -> TimerExpire decremented
-1 records have expired and been removed
-dictRumoursTimed (End) -> 92 records
+dictRumoursTimed (Start) -> 87 records
+87 rumours -> TimerExpire decremented
 --- MoveActors -> 0 Records (World.cs)
 --- UpdatePlayerStatus (World.cs)
 --- UpdateWorldStatus (World.cs)
 --- CheckFollowerActivity (World.cs)
 --- GetRumour (Director.cs)
-arrayOfRumours [0] -> RumourID 76, Strength 1, Scope Global, Type Item, Global All
-arrayOfRumours [1] -> RumourID 199, Strength 2, Scope Global, Type Desire, Global North
-arrayOfRumours [5] -> RumourID 518, Strength 3, Scope Local, Type HouseHistory, Global All
-RumourID 518 selected from the Pool
-Rumour "There is a scribe who can recall the history of House Penrose, at Parchments" revealed to ActorID2 on turn 6 -> added to List
-RumourID 518 removed from listRumoursHouse[0]
-Follower The Duchess, ActID 2, added RumourID 518
+arrayOfRumours [0] -> RumourID 135, Strength 1, Scope Global, Type Item, Global All
+arrayOfRumours [2] -> RumourID 48, Strength 2, Scope Global, Type Desire, Global East
+arrayOfRumours [5] -> RumourID 330, Strength 4, Scope Local, Type Relationship, Global All
+RumourID 330 selected from the Pool
+Rumour "BannerLord Patrek Harlaw "The Tentative", ActID 89 at Ten Towers, is murmured among friends to have a poor view of the Usurper" revealed to ActorID9 on turn 1 -> added to List
+RumourID 330 removed from listRumoursHouse[2]
+Follower The Beast, ActID 9, added RumourID 330
+[Notification] BannerLord Patrek Harlaw, ActID 89 -> RelKnown changed to True
+[Rumour -> Deleted] Timed RumourID 330 removed from dictRumoursTimed
 --- GetRumour (Director.cs)
-arrayOfRumours [0] -> RumourID 576, Strength 3, Scope Global, Type Event, Global All
-arrayOfRumours [1] -> RumourID 41, Strength 2, Scope Global, Type Desire, Global North
-arrayOfRumours [5] -> RumourID 215, Strength 4, Scope Local, Type Skill, Global All
-RumourID 576 selected from the Pool
-Rumour "There are Direwolves roaming the shadows of Bladdernut Forest." revealed to ActorID8 on turn 6 -> added to List
-RumourID 576 removed from listRumoursGlobal[21]
-Follower The Spider, ActID 8, added RumourID 576
+arrayOfRumours [0] -> RumourID 495, Strength 3, Scope Global, Type Enemy, Global All
+arrayOfRumours [2] -> RumourID 168, Strength 2, Scope Global, Type Desire, Global East
+arrayOfRumours [5] -> RumourID 221, Strength 2, Scope Local, Type Skill, Global All
+RumourID 495 selected from the Pool
+Rumour "Inquisitor, Brother Demogorgon, ActID 127 has been spotted relaxing at Kingskeep (loc 16:15)" revealed to ActorID5 on turn 1 -> added to List
+RumourID 495 removed from listRumoursGlobal[21]
+Follower The Duchess, ActID 5, added RumourID 495
+[Rumour -> Deleted] Timed RumourID 495 removed from dictRumoursTimed
 --- GetRumour (Director.cs)
-arrayOfRumours [0] -> RumourID 574, Strength 3, Scope Global, Type Event, Global All
-arrayOfRumours [2] -> RumourID 404, Strength 2, Scope Global, Type HouseRel, Global East
-arrayOfRumours [5] -> RumourID 178, Strength 4, Scope Local, Type Skill, Global All
-RumourID 178 selected from the Pool
-Rumour "BannerLord Aunger Brax "The Mingy", ActID 80 at Hornvale, is well known to be Mean" revealed to ActorID6 on turn 6 -> added to List
-RumourID 178 removed from listRumoursHouse[0]
-Follower The Beast, ActID 6, added RumourID 178
-BannerLord Aunger Brax, ActID 80, has their Charm changed to True
+arrayOfRumours [0] -> RumourID 258, Strength 1, Scope Global, Type Item, Global All
+arrayOfRumours [4] -> RumourID 70, Strength 2, Scope Global, Type Desire, Global West
+arrayOfRumours [5] -> RumourID 187, Strength 4, Scope Local, Type Skill, Global All
+RumourID 258 selected from the Pool
+Rumour "It is murmured among friends that the infamous Goblin Mug (Passive Item) is to be found at Kingskeep" revealed to ActorID4 on turn 1 -> added to List
+RumourID 258 removed from listRumoursGlobal[12]
+Follower The Crone, ActID 4, added RumourID 258
 --- GetMarketView (Director.cs)
-listPlayerChoices has 1 records, 10 % needed, rolled 51
-[GameVar] View_Index changed from 2 to 3
+[GameVar] View_Index changed from 4 to 5
 --- CheckStationaryActiveActors (World.cs)
- [Search -> Stationary] Usurper Aegon Stark, ActID 1 is AtLocation
+ [Search -> Stationary] Usurper Humfredus Greyjoy, ActID 1 is AtLocation
 --- CheckIfFoundActive (World.cs)
- [Search -> Debug] Enemy, Brother Kali, ID 127 at 15:14, Active Aegon Stark, ID 1, at 10:12
- [Search -> Debug] Enemy, Brother Diabolous, ID 128 at 12:11, Active Aegon Stark, ID 1, at 10:12
- [Search -> Debug] Enemy, Brother Shaitan, ID 129 at 19:12, Active Aegon Stark, ID 1, at 10:12
- [Search -> Debug] Enemy, Brother Haborym, ID 130 at 12:15, Active Aegon Stark, ID 1, at 10:12
- [Search -> Debug] Enemy, The Unrelenting, ID 131 at 15:14, Active Aegon Stark, ID 1, at 10:12
- [Search -> Stationary] Follower The Duchess, ActID 2 is AtLocation
- [Search -> Stationary] Follower The Spider, ActID 8 is AtLocation
- [Search -> Stationary] Follower The Beast, ActID 6 is AtLocation
+ [Search -> Debug] Enemy, Brother Azazel, ID 124 at 16:15, Active Humfredus Greyjoy, ID 1, at 23:7
+ [Search -> Debug] Enemy, Brother Set, ID 125 at 16:15, Active Humfredus Greyjoy, ID 1, at 23:7
+ [Search -> Debug] Enemy, Brother Shaitan, ID 126 at 16:15, Active Humfredus Greyjoy, ID 1, at 23:7
+ [Search -> Debug] Enemy, Brother Demogorgon, ID 127 at 16:15, Active Humfredus Greyjoy, ID 1, at 23:7
+ [Search -> Debug] Enemy, The Unrelenting, ID 128 at 16:15, Active Humfredus Greyjoy, ID 1, at 23:7
+ [Search -> Stationary] Follower The Beast, ActID 9 is AtLocation
+ [Search -> Stationary] Follower The Duchess, ActID 5 is AtLocation
+ [Search -> Stationary] Follower The Crone, ActID 4 is AtLocation
 --- UpdateAIController (World.cs)
- [AI -> Player Unknown] Inquisitor Brother Kali, Act ID 127 Mode -> Normal
- [AI -> Player Unknown] Inquisitor Brother Diabolous, Act ID 128 Mode -> Normal
- [AI -> Player Unknown] Inquisitor Brother Shaitan, Act ID 129 Mode -> Normal
- [AI -> Player Unknown] Inquisitor Brother Haborym, Act ID 130 Mode -> Normal
- [AI -> Player Unknown] Nemesis The Unrelenting, Act ID 131 Mode -> Normal
+ [AI -> Player Unknown] Inquisitor Brother Azazel, Act ID 124 Mode -> Normal
+ [AI -> Player Unknown] Inquisitor Brother Set, Act ID 125 Mode -> Normal
+ [AI -> Player Unknown] Inquisitor Brother Shaitan, Act ID 126 Mode -> Normal
+ [AI -> Player Unknown] Inquisitor Brother Demogorgon, Act ID 127 Mode -> Normal
+ [AI -> Player Unknown] Nemesis The Unrelenting, Act ID 128 Mode -> Normal
 --- SetEnemyActivity (World.cs)
 --- SetEnemyGoal (World.cs)
- [Goal -> Branch] Brother Kali, ActID 127 Assigned Branch -> 0 Current Branch -> 0
- [Enemy -> Known] Brother Diabolous ActID 128 has become KNOWN
- [Enemy -> Goal] Brother Diabolous, ActID 128 retains Goal -> Hide
- [Enemy -> Goal] Brother Shaitan, ActID 129 retains Goal -> Wait
- [Enemy -> Goal] Brother Haborym, ActID 130 retains Goal -> Hide
- [Enemy -> Goal] The Unrelenting, ActID 131 retains Goal -> Wait
+ [Goal -> Branch] Brother Azazel, ActID 124 Assigned Branch -> 0 Current Branch -> 0
+--- SetEnemyGoal (World.cs)
+ [Goal -> Branch] Brother Set, ActID 125 Assigned Branch -> 0 Current Branch -> 0
+ [Enemy -> Goal] Brother Shaitan, ActID 126 retains Goal -> Wait
+ [Enemy -> Goal] Brother Demogorgon, ActID 127 retains Goal -> Wait
+ [Enemy -> Known] The Unrelenting ActID 128 has become KNOWN
+--- SetEnemyGoal (World.cs)
+ [Goal -> Branch] The Unrelenting, ActID 128 Assigned Branch -> 0 Current Branch -> 0
 --- CheckPlayerEvents (Director.cs)
-Location event, Need 18, roll 70
+Location event, Need 0, roll 98
 - CreateAutoLocEvent (Director.cs)
- [AutoEvent -> ActorList] "Dick Greyjoy", ID 26 added to list of Actors
- [AutoEvent -> ActorList] "Guarnier Guy", ID 29 added to list of Actors
- [AutoEvent -> ActorList] "Pate Reynoldus", ID 30 added to list of Actors
- [AutoEvent -> ActorList] "Mord Christian", ID 31 added to list of Actors
- [AutoEvent -> ActorList] "Rodrik Greyjoy", ID 32 added to list of Actors
- [AutoEvent -> LocalList] "Dick Greyjoy", ID 26 added to list of Locals
- [AutoEvent -> AdvisorList] "Guarnier Guy", ID 29 added to list of Advisors
- [AutoEvent -> AdvisorList] "Pate Reynoldus", ID 30 added to list of Advisors
- [AutoEvent -> AdvisorList] "Mord Christian", ID 31 added to list of Advisors
- [AutoEvent -> LocalList] "Rodrik Greyjoy", ID 32 added to list of Locals
-[Notification] No entry found in dictOfIntroductions for RefID 5
+ [AutoEvent -> ActorList] "The Duchess", ID 5 added to list of Actors
+ [AutoEvent -> ActorList] "Giradin Tarth", ID 82 added to list of Actors
+ [AutoEvent -> ActorList] "Luwin Heylot", ID 106 added to list of Actors
+ [AutoEvent -> ActorList] "Ywain Alainon", ID 107 added to list of Actors
+ [AutoEvent -> ActorList] "Areo Fulchard", ID 108 added to list of Actors
+ [AutoEvent -> ActorList] "Ser Aerys Gerrart", ID 109 added to list of Actors
+ [AutoEvent -> ActorList] "Elia Tarth", ID 110 added to list of Actors
+ [AutoEvent -> ActorList] "Sagard Tarth", ID 111 added to list of Actors
+ [AutoEvent -> ActorList] "Willis Tarth", ID 112 added to list of Actors
+ [AutoEvent -> ActorList] "Gilibertus Tarth", ID 113 added to list of Actors
+ [AutoEvent -> ActorList] "Gerion Tarth", ID 114 added to list of Actors
+ [AutoEvent -> ActorList] "Vortimer Tarth", ID 115 added to list of Actors
+ [AutoEvent -> ActorList] "Essylt Tarth", ID 116 added to list of Actors
+ [AutoEvent -> FollowerList] "The Duchess", ID 5 added to list of Followers
+ [AutoEvent -> LocalList] "Giradin Tarth", ID 82 added to list of Locals
+ [AutoEvent -> AdvisorList] "Luwin Heylot", ID 106 added to list of Advisors
+ [AutoEvent -> AdvisorList] "Ywain Alainon", ID 107 added to list of Advisors
+ [AutoEvent -> AdvisorList] "Areo Fulchard", ID 108 added to list of Advisors
+ [AutoEvent -> LocalList] "Ser Aerys Gerrart", ID 109 added to list of Locals
+ [AutoEvent -> LocalList] "Elia Tarth", ID 110 added to list of Locals
+ [AutoEvent -> LocalList] "Sagard Tarth", ID 111 added to list of Locals
+ [AutoEvent -> LocalList] "Willis Tarth", ID 112 added to list of Locals
+ [AutoEvent -> LocalList] "Gilibertus Tarth", ID 113 added to list of Locals
+ [AutoEvent -> LocalList] "Gerion Tarth", ID 114 added to list of Locals
+ [AutoEvent -> LocalList] "Vortimer Tarth", ID 115 added to list of Locals
+ [AutoEvent -> LocalList] "Essylt Tarth", ID 116 added to list of Locals
+[Notification] No entry found in dictOfIntroductions for RefID 99
  Chance of Player Location event 75 %
 --- ResolvePlayerEvents (Director.cs)
  Trigger FAILED on "0" Equals 1
@@ -92,44 +108,12 @@ Location event, Need 18, roll 70
  Event "What to do?" Timer Repeat now 999
  Event "What to do?" Cooldown Timer has been reset to 0
 --- UpdateActiveActors (World.cs)
- Usurper Aegon Stark has had their TurnsUnknown Timer increased from 105 to 106
- Follower The Duchess has had their TurnsUnknown Timer increased from 5 to 6
- Follower The Spider has had their TurnsUnknown Timer increased from 5 to 6
- Follower The Beast has had their TurnsUnknown Timer increased from 5 to 6
+ Usurper Humfredus Greyjoy has had their TurnsUnknown Timer increased from 100 to 101
+ Follower The Beast has had their TurnsUnknown Timer increased from 0 to 1
+ Follower The Duchess has had their TurnsUnknown Timer increased from 0 to 1
+ Follower The Crone has had their TurnsUnknown Timer increased from 0 to 1
 --- ResolveOutcome (Director.cs)
  Inactive (greyed out) Option chosen for "What to do?", option # 1
 --- SetEndGame (Game.cs)
 [Alert] Player chose to exit (pressed 'X')
-//Exile Game file ops "LogTurn.txt" Completed at: 14/06/2017 10:57:48
-Unknown Timer increased from 4 to 5
- Follower The Beast has had their TurnsUnknown Timer increased from 4 to 5
---- ResolveFollowerEvents (Director.cs)
---- ProcessEndTurn (World.cs)
-Day 6, Turn 5
---- CheckEventTimers (Director.cs)
- Event "Search and Detain" Dormant Timer decremented to 15
- "Search and Detain" event, Cooldown Timer decremented from 1 to 0
---- InitialiseDynamicRumours (Director.cs)
-[Notification] Turn 5, generate new set of Relationship rumours on turn 21
-[Rumour -> Added] RID 593, "Nemesis, The Unrelenting, ActID 131 has been spotted absolving themself at Kingskeep (loc 15:14)" -> dict & List
---- HouseKeepActors (World.cs)
-[GameStat] "Location_Days" -> increased from 5 to 6
---- HousekeepRumours (World.cs)
-dictRumoursKnown has 15 records
-
-//Exile Game File "LogTurn.txt" Close completed at: 14/06/2017 10:57:43
-ive (greyed out) Option chosen for "What to do?", option # 1
---- ProcessEndTurn (World.cs)
-Day 4, Turn 3
---- CheckEventTimers (Director.cs)
- Event "Search and Detain" Dormant Timer decremented to 17
- "Search and Detain" event, Cooldown Timer decremented from 3 to 2
---- InitialiseDynamicRumours (Director.cs)
-[Notification] Turn 3, generate new set of Relationship rumours on turn 21
-[Rumour -> Added] RID 592, "Inquisitor, Brother Shaitan, ActID 129 has been seen on the road to The Raucous Rat (loc 19:12)" -> dict & List
---- HouseKeepActors (World.cs)
-[GameStat] "Location_Days" -> increased from 3 to 4
---- HousekeepRumours (World.cs)
-dictRumoursKnown has 9 records
-
-//Exile Game File "LogTurn.txt" Close completed at: 14/06/2017 10:57:38
+//Exile Game file ops "LogTurn.txt" Completed at: 14/06/2017 12:14:25

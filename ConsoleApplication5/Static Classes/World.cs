@@ -11,6 +11,7 @@ namespace Next_Game
     public class World
     {
         static Random rnd;
+        int seed;
         private List<Move> listMoveObjects; //actors moving through the world
         private List<ActorSpy> listTempActiveActors; //bloodhound temp lists
         private List<ActorSpy> listTempEnemyActors; //bloodhound temp lists
@@ -51,6 +52,7 @@ namespace Next_Game
         /// <param name="seed"></param>
         public World(int seed)
         {
+            this.seed = seed;
             rnd = new Random(seed);
             listMoveObjects = new List<Move>();
             listTempActiveActors = new List<ActorSpy>();
@@ -2559,6 +2561,9 @@ namespace Next_Game
             return person;
         }
 
+        internal Dictionary<int, Actor> GetAllActors()
+        { return dictAllActors; }
+
         /// <summary>
         /// returns dictionary of Active Actors
         /// </summary>
@@ -2982,6 +2987,7 @@ namespace Next_Game
             foreach (KeyValuePair<int, int> kvp in dictMajorHouseID.OrderByDescending(key => key.Value))
             { dictHousePower.Add(kvp.Key, kvp.Value); }
         }
+
 
         /// <summary>
         /// adds a Major House to all relevant dictionaries
@@ -3723,7 +3729,7 @@ namespace Next_Game
             else { Game.SetError(new Error(199, "Invalid dictionary input -> history.GetSecrets (null)")); }
         }
 
-        /// <summary>
+        /*/// <summary>
         /// places a message in info panel detailing all relevant data for a single generation
         /// </summary>
         public void ShowGeneratorStatsRL()
@@ -3797,7 +3803,7 @@ namespace Next_Game
             }
             //display data
             Game.infoChannel.SetInfoList(listStats, ConsoleDisplay.Multi);
-        }
+        }*/
 
         /// <summary>
         /// Show game state as well as the date as the default input display (green if Good has increased, red if Bad)
@@ -4843,6 +4849,8 @@ namespace Next_Game
         public void ProcessStartGame()
         {
             Game.logTurn?.Write("--- ProcessStartGame (World.cs)");
+            Message message = new Message($"Game world created with seed {seed}", MessageType.System);
+            SetMessage(message);
             Game.history.AgePassiveCharacters(dictPassiveActors);
             InitialiseGameVars();
             CalculateCrows();
@@ -4852,6 +4860,7 @@ namespace Next_Game
             { Game.director.AddVisitedLoc(Game.network.GetRandomLocation(), i * -1); }
 
             InitialiseFinalPlayer();
+            Game.display.ShowGeneratorStatsRL();
         }
 
         /// <summary>
@@ -5416,6 +5425,12 @@ namespace Next_Game
             }
             return num;
         }
+
+        internal int GetRumoursNormalCount()
+        { return dictRumoursNormal.Count; }
+
+        internal int GetRumoursTimedCount()
+        { return dictRumoursTimed.Count; }
 
         /// <summary>
         /// returns a list of year + description of the specific object type in dictionary
@@ -8144,13 +8159,16 @@ namespace Next_Game
             if (Game.SeasonTimer <= 0) { Game.SeasonTimer = 360; Game.WinterTimer = 270; }
             if (Game.HarvestTimer == 0) { Game.HarvestTimer = 360; Game.PlantTimer = 35; }
             //determine season
-            if (Game.SeasonTimer <= 90) { Game.gameSeason = Season.Winter; }
-            else if (Game.SeasonTimer <= 180 && Game.SeasonTimer > 90) { Game.gameSeason = Season.Autumn; }
-            else if (Game.SeasonTimer <= 270 && Game.SeasonTimer > 180) { Game.gameSeason = Season.Summer; }
-            else if (Game.SeasonTimer <= 360 && Game.SeasonTimer > 270) { Game.gameSeason = Season.Spring; }
-            else { Game.SetError(new Error(307, $"Invalid Game.SeasonTimer value \"{Game.SeasonTimer}\" -> Game.gameSeason not set")); }
+            Game.UpdateSeason();
         }
 
+
+        internal int[] GetTradeData()
+        { return arrayTradeData; }
+
+
+        internal Dictionary<int, int> GetHousePower()
+        { return dictHousePower; }
         //new Methods above here
     }
 }

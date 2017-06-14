@@ -12,7 +12,7 @@ using System.IO;
 
 namespace Next_Game
 {
-    public enum MenuMode {Main, Actor_Active, Actor_Passive, Debug, Reference, Special, God, Balance} //distinct menu sets (Menu.cs)
+    public enum MenuMode {Main, Actor_Active, Actor_Passive, Debug, Reference, Special, God, Balance, King} //distinct menu sets (Menu.cs)
     public enum ConsoleDisplay {Status, Input, Multi, Message, Event, Conflict} //different console windows (Menu window handled independently by Menu.cs) -> Event & Conflict are within Multi
     public enum InputMode {Normal, MultiKey, Scrolling} //special input modes
     public enum SpecialMode {None, FollowerEvent, PlayerEvent, Conflict, Outcome, Notification, Confirm} //if MenuMode.Special then -> type of special (Notification -> msg, Confirm -> Y/N)
@@ -67,6 +67,7 @@ namespace Next_Game
         //public static MessageLog messageLog;
         public static Map map;
         public static Network network;
+        public static Display display;
         public static History history;
         public static World world;
         public static Lore lore;
@@ -163,9 +164,8 @@ namespace Next_Game
                 director = new Director(seed);
                 director.InitialiseDirector();
                 StopTimer(timer_1, "Director Initialisation");
-                world.ShowGeneratorStatsRL();
-                Message message = new Message($"Game world created with seed {seed}", MessageType.System);
-                world.SetMessage(message);
+                display = new Display();
+                
             }
             catch(Exception e)
             {
@@ -676,7 +676,7 @@ namespace Next_Game
                                 switch (_menuMode)
                                 {
                                     case MenuMode.Main:
-                                        world.ShowGeneratorStatsRL();
+                                        display.ShowGeneratorStatsRL();
                                         break;
                                     case MenuMode.Reference:
                                         //Marriages
@@ -749,6 +749,10 @@ namespace Next_Game
                             case RLKey.K:
                                 switch (_menuMode)
                                 {
+                                    case MenuMode.Main:
+                                        //switch to King Menu
+                                        _menuMode = menu.SwitchMenuMode(MenuMode.King);
+                                        break;
                                     case MenuMode.Reference:
                                         //Kingdom Events
                                         infoChannel.SetInfoList(world.GetHistoricalRecordSet(keyPress), ConsoleDisplay.Multi);
@@ -1810,6 +1814,7 @@ namespace Next_Game
             WinterTimer = HarvestTimer + 15;
             SeasonTimer = 105 + HarvestTimer;
             PlantTimer = 0;
+            UpdateSeason();
         }
 
         /// <summary>
@@ -1834,7 +1839,14 @@ namespace Next_Game
             //_endFlag = true; //preliminary end game, set to true (_endGame = true) once confirmed.
         }
 
-
+        public static void UpdateSeason()
+        {
+            if (Game.SeasonTimer <= 90) { Game.gameSeason = Season.Winter; }
+            else if (Game.SeasonTimer <= 180 && Game.SeasonTimer > 90) { Game.gameSeason = Season.Autumn; }
+            else if (Game.SeasonTimer <= 270 && Game.SeasonTimer > 180) { Game.gameSeason = Season.Summer; }
+            else if (Game.SeasonTimer <= 360 && Game.SeasonTimer > 270) { Game.gameSeason = Season.Spring; }
+            else { Game.SetError(new Error(307, $"Invalid Game.SeasonTimer value \"{Game.SeasonTimer}\" -> Game.gameSeason not set")); }
+        }
 
     }
 }
