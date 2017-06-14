@@ -7,7 +7,8 @@ using System.Threading.Tasks;
 namespace Next_Game
 {
     public enum RumourScope { None, Local, Global }
-    public enum RumourType { None, Terrain, Road, Skill, Secret, Item, Disguise, HouseRel, Friends, Desire, Enemy, Relationship, Event, SafeHouse, Goods, HouseHistory, Military, Loan } //Corresponds to Rumour subclasses, set in subclass
+    public enum RumourType { None, Terrain, Road, Skill, Secret, Item, Disguise, HouseRel, Friends, Desire, Enemy, Relationship, Event, SafeHouse, Goods, HouseHistory, Military, Loan, Lender, 
+    Group} //Corresponds to Rumour subclasses, set in subclass
     public enum RumourGlobal { All, North, East, South, West }
     public enum RumourStatus { Normal, Timed, Inactive} //Normal -> dictRumoursNormal, Timed (TimerExpire > 0) -> dictRumoursTimed, Inactive (TimerStart > 0) -> dictRumoursInactive
     public enum RumourDisplay { All, Enemies} //used by Game.ShowRumoursRL to filter the required rumour set
@@ -241,6 +242,50 @@ namespace Next_Game
         public RumourLoan(string text, int strength, RumourScope scope, int turnCreated = 0, RumourGlobal global = RumourGlobal.All, bool isActive = true) : base(text, strength, scope, turnCreated, global, isActive)
         {
             Type = RumourType.Loan;
+        }
+    }
+
+    /// <summary>
+    /// Rumour about the New King and a Lender relationship -> Local @ Kingskeep
+    /// </summary>
+    class RumourLender : Rumour
+    {
+
+        /// <summary>
+        /// Rumour Lender constructor
+        /// </summary>
+        /// <param name="text"></param>
+        /// <param name="strength"></param>
+        /// <param name="skill"></param>
+        /// <param name="scope"></param>
+        /// <param name="turnCreated">If '0' then defaults to current game turn</param>
+        /// <param name="global"></param>
+        /// <param name="isActive"></param>
+        public RumourLender(string text, int strength, RumourScope scope, int turnCreated = 0, RumourGlobal global = RumourGlobal.All, bool isActive = true) : base(text, strength, scope, turnCreated, global, isActive)
+        {
+            Type = RumourType.Lender;
+        }
+    }
+
+    /// <summary>
+    /// Rumour about the New King and his relationship with a WorldGroup at the Capital -> Local @ Kingskeep
+    /// </summary>
+    class RumourGroup : Rumour
+    {
+
+        /// <summary>
+        /// Rumour Lender constructor
+        /// </summary>
+        /// <param name="text"></param>
+        /// <param name="strength"></param>
+        /// <param name="skill"></param>
+        /// <param name="scope"></param>
+        /// <param name="turnCreated">If '0' then defaults to current game turn</param>
+        /// <param name="global"></param>
+        /// <param name="isActive"></param>
+        public RumourGroup(string text, int strength, RumourScope scope, int turnCreated = 0, RumourGlobal global = RumourGlobal.All, bool isActive = true) : base(text, strength, scope, turnCreated, global, isActive)
+        {
+            Type = RumourType.Group;
         }
     }
 

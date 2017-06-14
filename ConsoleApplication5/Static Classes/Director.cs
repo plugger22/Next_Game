@@ -5071,6 +5071,7 @@ namespace Next_Game
                     "has hidden secrets carefully kept from view", "jealously guards a secret", "knows something important", "conceals a dark truth" };
                 string[] arrayOfPrefixTexts = new string[] { "has an unquenched hunger for", "thirsts for", "hungers for", "lusts after", "thinks only of", "is in thrall to", "is fixated upon" };
                 string[] arrayOfTitleTexts = new string[] { "is impatient for a Title", "desires a Title", "has their eyes set on a Title", "is determined to gain a Title", "would do anything for a Title" };
+                string[] arrayOfOpinions = new string[] { "impression", "opinion", "view" };
                 //
                 // Characters ---
                 //
@@ -5454,11 +5455,13 @@ namespace Next_Game
                             }
                         }
                         else { Game.SetError(new Error(268, $"Invalid Location (null) from LocID {house.Value.LocID}")); }
+                        //
                         //Capital
+                        //
                         if (house.Value is CapitalHouse)
                         {
                             //
-                            // Loans
+                            // Loans -> Capital
                             //
                             CapitalHouse capital = house.Value as CapitalHouse;
                             if (capital.GetNumOfLoans() > 0)
@@ -5478,6 +5481,24 @@ namespace Next_Game
                                     }
                                 }
                                 else { Game.SetError(new Error(268, "Invalid listOfLoans (null) -> Loan rumour not created")); }
+                            }
+                            //
+                            // Lender Relationships -> Capital
+                            //
+                            string view, opinionText;
+                            for(int i = 1; i < (int)Finance.Count; i++)
+                            {
+
+                                strength = 5;
+                                view = GetRelationshipPrefix(capital.GetLenderRelations((Finance)i));
+                                //immersionText = $"{arrayOfRumourTexts[rnd.Next(arrayOfRumourTexts.Length)]}";
+                                startText = $"It is {arrayOfRumourTexts[rnd.Next(arrayOfRumourTexts.Length)]}";
+                                opinionText = $"{arrayOfOpinions[rnd.Next(arrayOfOpinions.Length)]}";
+                                rumourText = $"{startText} that the {(Finance)i} has {view} {opinionText} of King {Game.lore.NewKing.Name}, \"{Game.lore.NewKing.Handle}\"";
+                                RumourLender rumour = new RumourLender(rumourText, strength, RumourScope.Local);
+                                //add to dictionary and global list
+                                if (AddRumour(rumour, house.Value) == false)
+                                { Game.SetError(new Error(268, $"{rumour.Text}, RumourID {rumour.RumourID}, failed to load (Lender) -> Rumour Cancelled")); }
                             }
                         }
                         //Major Houses only
@@ -6592,33 +6613,7 @@ namespace Next_Game
                                                 strength = 2; 
                                                 break;
                                         }
-                                        //get view
-                                        relPlyr = actor.GetRelPlyr();
-                                        band = relPlyr / 20;
-                                        view = "Unknown";
-                                        switch (band)
-                                        {
-                                            case 5:
-                                            case 4:
-                                                view = "a very good";
-                                                break;
-                                            case 3:
-                                                view = "a good";
-                                                break;
-                                            case 2:
-                                                view = "an average";
-                                                break;
-                                            case 1:
-                                                view = "a poor";
-                                                break;
-                                            case 0:
-                                                view = "a very poor";
-                                                break;
-                                            default:
-                                                Game.SetError(new Error(286, $"Invalid band \"{band}\" -> given default value 'average"));
-                                                view = "an average";
-                                                break;
-                                        }
+                                        view = GetRelationshipPrefix(actor.GetRelPlyr());
                                         immersionText = $"{arrayOfRumourTexts[rnd.Next(arrayOfRumourTexts.Length)]}";
                                         opinionText = $"{arrayOfOpinions[rnd.Next(arrayOfOpinions.Length)]}";
                                         rumourText = $"{actor.Title} {actor.Name} \"{actor.Handle}\", ActID {actor.ActID} at {locName}, is {immersionText} to have {view} {opinionText} of the Usurper";
@@ -6639,6 +6634,44 @@ namespace Next_Game
             Game.logTurn?.Write($"[Notification] {counter} Relationship Rumours have been added to the dictRumoursTimed");
         }
 
+        /// <summary>
+        /// subMethod to input a relLevel (0 - 100) and output a prefix for a relationship text
+        /// </summary>
+        /// <param name="relLevel">0 to 100 range</param>
+        /// <returns></returns>
+        private string GetRelationshipPrefix(int relLevel)
+        {
+            //check input is within 0 to 100 range
+            relLevel = Math.Min(100, relLevel);
+            relLevel = Math.Max(0, relLevel);
+            //get prefix based on bands of 20
+            int band = relLevel / 20;
+            string prefix = "Unknown";
+            switch (band)
+            {
+                case 5:
+                case 4:
+                    prefix = "a very good";
+                    break;
+                case 3:
+                    prefix = "a good";
+                    break;
+                case 2:
+                    prefix = "an average";
+                    break;
+                case 1:
+                    prefix = "a poor";
+                    break;
+                case 0:
+                    prefix = "a very poor";
+                    break;
+                default:
+                    Game.SetError(new Error(286, $"Invalid band \"{band}\" -> given default value 'average"));
+                    prefix = "an average";
+                    break;
+            }
+            return prefix;
+        }
 
         /// <summary>
         /// Creates a Event Rumour
