@@ -392,7 +392,7 @@ namespace Next_Game
                                     int index = 0;
                                     //int value = 0;
                                     int range = 0;
-                                    int[] arrayTerrain = new int[3];
+                                    int[] arrayTerrain = new int[4];
                                     arrayTerrain[0] = loc.NumPlain; range += loc.NumPlain;
                                     arrayTerrain[1] = loc.NumForest; range += loc.NumForest;
                                     arrayTerrain[2] = loc.NumSea; range += loc.NumSea;
@@ -429,7 +429,13 @@ namespace Next_Game
                                                 break;
                                         }
                                     }
-                                    else { Game.SetError(new Error(283, $"Invalid Range \"{range}\" (should be greater than 1)")); replaceText = "Ham"; }
+                                    else
+                                    {
+                                        //edge case of a 9 square cell Mountain location. Return a fixed text that overides the inputted on.
+                                        if (loc.NumMountain == 9)
+                                        { return "All the food comes from somewhere else. You can't grow anything in the mountains"; }
+                                        else { Game.SetError(new Error(283, $"Invalid Range \"{range}\" (should be greater than 1)")); replaceText = "Ham"; }
+                                    }
                                 }
                                 else { Game.SetError(new Error(283, $"Invalid Loc (null) for player.LocID {player.LocID} for FoodEduc")); }
                                 break;
