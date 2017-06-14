@@ -99,7 +99,6 @@ namespace Next_Game
         List<int> listArcPlyrRoadEventsConnector;
         List<int> listArcPlyrCapitalEvents;
         //Rumours
-        List<int> listRumoursCapital; //specific to capital
         List<int> listRumoursGlobal; //world wide
         List<int> listRumoursNorth; //north branch
         List<int> listRumoursEast;
@@ -176,7 +175,6 @@ namespace Next_Game
             listArcPlyrRoadEventsConnector = new List<int>();
             listArcPlyrCapitalEvents = new List<int>();
             //Rumours
-            listRumoursCapital = new List<int>();
             listRumoursGlobal = new List<int>();
             listRumoursNorth = new List<int>();
             listRumoursEast = new List<int>();
@@ -658,17 +656,18 @@ namespace Next_Game
                 geoID = Game.map.GetMapInfo(Cartographic.MapLayer.GeoID, pos.PosX, pos.PosY);
                 terrain = Game.map.GetMapInfo(Cartographic.MapLayer.Terrain, pos.PosX, pos.PosY);
                 road = Game.map.GetMapInfo(Cartographic.MapLayer.Road, pos.PosX, pos.PosY);
-                GeoCluster cluster = Game.world.GetGeoCluster(geoID);
                 //get terrain & road events
                 if (locID == 0 && terrain == 1)
                 {
                     //mountains
+                    GeoCluster cluster = Game.world.GetGeoCluster(geoID);
                     listEventPool.AddRange(GetValidFollowerEvents(listGenFollEventsMountain));
                     listEventPool.AddRange(GetValidFollowerEvents(cluster.GetFollowerEvents()));
                 }
                 else if (locID == 0 && terrain == 2)
                 {
                     //forests
+                    GeoCluster cluster = Game.world.GetGeoCluster(geoID);
                     listEventPool.AddRange(GetValidFollowerEvents(listGenFollEventsForest));
                     listEventPool.AddRange(GetValidFollowerEvents(cluster.GetFollowerEvents()));
                 }
@@ -5471,7 +5470,7 @@ namespace Next_Game
                                     {
                                         strength = 5;
                                         startText = $"It is {arrayOfRumourTexts[rnd.Next(arrayOfRumourTexts.Length)]}";
-                                        rumourText = string.Format("{0} that King {1} {2} has taken out a loan from the {3}", startText, Game.lore.NewKing.Name, Game.lore.NewKing.Handle, listOfLoans[i]);
+                                        rumourText = string.Format("{0} that King {1}, \"{2}\", has taken out a loan from the {3}", startText, Game.lore.NewKing.Name, Game.lore.NewKing.Handle, listOfLoans[i]);
                                         RumourLoan rumour = new RumourLoan(rumourText, strength, RumourScope.Local, rnd.Next(20) * -1);
                                         //add to dictionary and global list
                                         if (AddRumour(rumour, house.Value) == false)
@@ -5710,46 +5709,32 @@ namespace Next_Game
             int rumourID = 0;
             int tempRumourID, index;
             int branch = 0;
-            int[] arrayOfRumours = new int[7];  //selected rumourID's -> [0] global All [1 to 4] branch N/E/S/W [5] house [6] Capital
+            int[] arrayOfRumours = new int[6];  //selected rumourID's -> [0] global All [1 to 4] branch N/E/S/W [5] house
             List<int> listRumoursReturn = new List<int>();
             List<int> listRumoursPool = new List<int>();
             List<int> listRumoursHouse = new List<int>();
             //get local rumours
-            if (refID != 9999)
-            {
                 House house = Game.world.GetHouse(refID);
-                if (house != null)
-                {
-                    //get branch rumour
-                    branch = house.Branch;
-                    //get local rumours
-                    listRumoursHouse = house.GetRumours();
-                    if (listRumoursHouse != null)
-                    {
-                        if (listRumoursHouse.Count > 0)
-                        {
-                            index = rnd.Next(listRumoursHouse.Count);
-                            tempRumourID = listRumoursHouse[index];
-                            //keep track of which rumour was selected (might have to delete it)
-                            arrayOfRumours[5] = tempRumourID;
-                        }
-                        else { Game.logTurn?.Write("[Notification] No house rumours available -> none added to pool"); }
-                    }
-                    else { Game.SetError(new Error(271, "Invalid listTempRumours (null)")); }
-                }
-                else { Game.SetError(new Error(271, $"Invalid house (null) for refID {refID}")); }
-            }
-            else
+            if (house != null)
             {
-                //Capital
-                if (listRumoursCapital.Count > 0)
+                //get branch rumour
+                branch = house.Branch;
+                //get local rumours
+                listRumoursHouse = house.GetRumours();
+                if (listRumoursHouse != null)
                 {
-                    index = rnd.Next(listRumoursCapital.Count);
-                    tempRumourID = listRumoursCapital[index];
-                    arrayOfRumours[6] = tempRumourID;
+                    if (listRumoursHouse.Count > 0)
+                    {
+                        index = rnd.Next(listRumoursHouse.Count);
+                        tempRumourID = listRumoursHouse[index];
+                        //keep track of which rumour was selected (might have to delete it)
+                        arrayOfRumours[5] = tempRumourID;
+                    }
+                    else { Game.logTurn?.Write("[Notification] No house rumours available -> none added to pool"); }
                 }
-                else { Game.logTurn?.Write("[Notification] No Capital rumours available -> none added to pool"); }
+                else { Game.SetError(new Error(271, "Invalid listTempRumours (null)")); }
             }
+            else { Game.SetError(new Error(271, $"Invalid house (null) for refID {refID}")); }
             //get global All rumour
             if (listRumoursGlobal.Count > 0)
             {
@@ -5888,12 +5873,6 @@ namespace Next_Game
                             listRumoursHouse.RemoveAt(index);
                             Game.logTurn?.Write($"RumourID {rumourID} removed from listRumoursHouse[{index}]");
                             break;
-                        case 6:
-                            //Capital
-                            index = listRumoursCapital.FindIndex(id => id == rumourID);
-                            listRumoursCapital.RemoveAt(index);
-                            Game.logTurn?.Write($"RumourID {rumourID} removed from listRumoursCapital[{index}]");
-                            break;
                     }
                     
                 }
@@ -5916,24 +5895,15 @@ namespace Next_Game
                 {
                     case RumourScope.Local:
                         //remove from a house list
-                        if (rumour.RefID != 9999)
+                        House house = Game.world.GetHouse(rumour.RefID);
+                        if (house != null)
                         {
-                            House house = Game.world.GetHouse(rumour.RefID);
-                            if (house != null)
-                            {
-                                if (house.RemoveRumour(rumour.RumourID) == true)
-                                { Game.logTurn?.Write($"[Rumour -> Removal] RID {rumour.RumourID}, \"{rumour.Text}\" removed from House list"); return true; }
-                                else { Game.SetError(new Error(279, $"RID {rumour.RumourID}, \"{rumour.Text}\" FAILED removed from House list")); }
-                            }
-                            else { Game.SetError(new Error(279, $"Invalid house (null) for rumourID {rumour.RumourID}, refID {rumour.RefID} -> list removal cancelled")); }
+                            if (house.RemoveRumour(rumour.RumourID) == true)
+                            { Game.logTurn?.Write($"[Rumour -> Removal] RID {rumour.RumourID}, \"{rumour.Text}\" removed from House list"); return true; }
+                            else { Game.SetError(new Error(279, $"RID {rumour.RumourID}, \"{rumour.Text}\" FAILED removed from House list")); }
                         }
-                        else
-                        {
-                            //remove from capital list
-                            if (listRumoursCapital.Remove(rumour.RumourID) == true)
-                            { Game.logTurn?.Write($"[Rumour -> Removal] RID {rumour.RumourID}, \"{rumour.Text}\" removed from Capital list"); return true; }
-                            else { Game.SetError(new Error(279, $"RID {rumour.RumourID}, \"{rumour.Text}\" FAILED removed from Capital list")); }
-                        }
+                        else { Game.SetError(new Error(279, $"Invalid house (null) for rumourID {rumour.RumourID}, refID {rumour.RefID} -> list removal cancelled")); }
+
                         break;
                     case RumourScope.Global:
                         switch (rumour.Global)
@@ -6066,12 +6036,8 @@ namespace Next_Game
                             break;
                         case RumourScope.Local:
                             //add to house list
-                            if (house != null || rumour.RefID == 9999)
-                            {
-                                //royal family or royal advisors go to the Capital list, all others to their house list
-                                if (rumour.RefID == 9999) { listRumoursCapital.Add(rumour.RumourID);}
-                                else { house.AddRumour(rumour.RumourID); }
-                            }
+                            if (house != null)
+                            { house.AddRumour(rumour.RumourID); }
                             else { Game.SetError(new Error(270, $"Invalid house (null) -> rumourID {rumour.RumourID} not added to List")); }
                             break;
                         default:

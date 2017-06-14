@@ -1,250 +1,135 @@
-//Exile Game File "LogTurn.txt" opened at: 13/06/2017 21:18:54
+//Exile Game File "LogTurn.txt" opened at: 14/06/2017 10:41:08
 --- ProcessStartTurn (World.cs)
-Day 55, Turn 55, Harvest in 107 days, Winter in 122 days, SeasonTimer 212
-Usurper Hervey Florent, "The Polite", AtLocation, Dreadfort
+Day 5, Turn 5, Harvest in 136 days, Winter in 151 days, SeasonTimer 241
+Usurper Aegon Stark, "The Reluctant", AtLocation, Pyke
 --- UpdateRumours (World.cs)
-dictRumoursTimed (Start) -> 83 records
-[Rumour -> Removal] RID 815, "Inquisitor, Brother Azazel, ActID 131 has been spotted drinking at Bearpit (loc 24:17)" removed from Global South list
-82 rumours -> TimerExpire decremented
-1 records have expired and been removed
-dictRumoursTimed (End) -> 82 records
---- MoveActors -> 1 Records (World.cs)
- [Move -> MoveObject] Inquisitor Brother Azazel, ActID 131 travelling to The Twins (current Loc 24:19)
+dictRumoursTimed (Start) -> 94 records
+[Rumour -> Removal] RID 590, "Inquisitor, Brother Kali, ActID 127 has been spotted relaxing at Kingskeep (loc 15:14)" removed from Global All list
+[Rumour -> Removal] RID 591, "Inquisitor, Brother Shaitan, ActID 129 has been seen on the road to The Raucous Rat (loc 19:12)" removed from Global East list
+92 rumours -> TimerExpire decremented
+2 records have expired and been removed
+dictRumoursTimed (End) -> 92 records
+--- MoveActors -> 2 Records (World.cs)
+ [Move -> MoveObject] Inquisitor Brother Diabolous, ActID 128 travelling to One Eyed Pete's (current Loc 14:11)
 --- CheckIfFoundEnemy (World.cs)
- [Search -> Debug] Active Hervey Florent, ID 1 at 27:19, Enemy at 24:19 (Brother Azazel, ID 131
+ [Search -> Debug] Active Aegon Stark, ID 1 at 10:12, Enemy at 14:11 (Brother Diabolous, ID 128
 --- CheckIfFoundEnemy (World.cs)
- [Search -> Debug] Active Hervey Florent, ID 1 at 27:19, Enemy at 24:19 (Brother Azazel, ID 131
- [Goal -> Arrival] Inquisitor Brother Azazel, ActID 131, currently at The Twins, new Goal -> Wait
+ [Search -> Debug] Active Aegon Stark, ID 1 at 10:12, Enemy at 13:11 (Brother Diabolous, ID 128
+ [Goal -> Arrival] Inquisitor Brother Diabolous, ActID 128, currently at One Eyed Pete's, new Goal -> Wait
+ [Move -> MoveObject] Inquisitor Brother Haborym, ActID 130 travelling to The Clumsy Hog (current Loc 13:14)
+--- CheckIfFoundEnemy (World.cs)
+ [Search -> Debug] Active Aegon Stark, ID 1 at 10:12, Enemy at 13:14 (Brother Haborym, ID 130
+--- CheckIfFoundEnemy (World.cs)
+ [Search -> Debug] Active Aegon Stark, ID 1 at 10:12, Enemy at 12:14 (Brother Haborym, ID 130
+ [Goal -> Arrival] Inquisitor Brother Haborym, ActID 130, currently at The Clumsy Hog, new Goal -> Wait
 --- UpdatePlayerStatus (World.cs)
 --- UpdateWorldStatus (World.cs)
 --- CheckFollowerActivity (World.cs)
 --- GetRumour (Director.cs)
-[Notification] No Capital rumours available -> none added to pool
-[Notification] No Global rumours available -> none added to pool
-[Notification] No Branch (overall) rumours available  -> none added to pool
-[Notification] No rumours available (listRumourPool empty)  -> none selected
-[Notification] No rumour returned for The Duchess at Kingskeep
+arrayOfRumours [0] -> RumourID 574, Strength 3, Scope Global, Type Event, Global All
+arrayOfRumours [1] -> RumourID 127, Strength 2, Scope Global, Type Desire, Global North
+arrayOfRumours [5] -> RumourID 208, Strength 4, Scope Local, Type Skill, Global All
+RumourID 208 selected from the Pool
+Rumour "BannerLord Mikken Penrose "The Accomplished", ActID 89 at Parchments, is known by all to be Talented" revealed to ActorID2 on turn 5 -> added to List
+RumourID 208 removed from listRumoursHouse[0]
+Follower The Duchess, ActID 2, added RumourID 208
+BannerLord Mikken Penrose, ActID 89, has their Wits changed to True
 --- GetRumour (Director.cs)
-[Notification] No house rumours available -> none added to pool
-[Notification] No Global rumours available -> none added to pool
-[Notification] No Branch North rumours available  -> none added to pool
-[Notification] No rumours available (listRumourPool empty)  -> none selected
-[Notification] No rumour returned for The Dark Eminence at Red Lake
+arrayOfRumours [0] -> RumourID 54, Strength 4, Scope Global, Type Disguise, Global All
+arrayOfRumours [1] -> RumourID 86, Strength 2, Scope Global, Type Desire, Global North
+arrayOfRumours [5] -> RumourID 523, Strength 3, Scope Local, Type HouseHistory, Global All
+RumourID 54 selected from the Pool
+Rumour "It is whispered that Disguises can be had from Septon Mord Christian, ActID 31 at Pyke" revealed to ActorID8 on turn 5 -> added to List
+RumourID 54 removed from listRumoursGlobal[3]
+Follower The Spider, ActID 8, added RumourID 54
 --- GetRumour (Director.cs)
-[Notification] No Capital rumours available -> none added to pool
-[Notification] No Global rumours available -> none added to pool
-[Notification] No Branch (overall) rumours available  -> none added to pool
-[Notification] No rumours available (listRumourPool empty)  -> none selected
-[Notification] No rumour returned for The Crone at Kingskeep
+arrayOfRumours [0] -> RumourID 578, Strength 3, Scope Global, Type Event, Global All
+arrayOfRumours [2] -> RumourID 234, Strength 2, Scope Global, Type Desire, Global East
+arrayOfRumours [5] -> RumourID 487, Strength 3, Scope Local, Type HouseHistory, Global All
+RumourID 487 selected from the Pool
+Rumour "There is a scribe who can recall the history of House Brax, at Hornvale" revealed to ActorID6 on turn 5 -> added to List
+RumourID 487 removed from listRumoursHouse[2]
+Follower The Beast, ActID 6, added RumourID 487
 --- GetMarketView (Director.cs)
+listPlayerChoices has 1 records, 10 % needed, rolled 32
 [GameVar] View_Index changed from 1 to 2
 --- CheckStationaryActiveActors (World.cs)
- [Search -> Stationary] Usurper Hervey Florent, ActID 1 is AtLocation
+ [Search -> Stationary] Usurper Aegon Stark, ActID 1 is AtLocation
 --- CheckIfFoundActive (World.cs)
- [Search -> Debug] Enemy, Brother Amon, ID 128 at 17:15, Active Hervey Florent, ID 1, at 27:19
- [Search -> Debug] Enemy, Brother Damballa, ID 129 at 17:15, Active Hervey Florent, ID 1, at 27:19
- [Search -> Debug] Enemy, Brother Shiva, ID 130 at 19:13, Active Hervey Florent, ID 1, at 27:19
- [Search -> Debug] Enemy, Brother Azazel, ID 131 at 24:19, Active Hervey Florent, ID 1, at 27:19
- [Search -> Debug] Enemy, The Unrelenting, ID 132 at 17:15, Active Hervey Florent, ID 1, at 27:19
+ [Search -> Debug] Enemy, Brother Kali, ID 127 at 15:14, Active Aegon Stark, ID 1, at 10:12
+ [Search -> Debug] Enemy, Brother Diabolous, ID 128 at 12:11, Active Aegon Stark, ID 1, at 10:12
+ [Search -> Debug] ed, rolled 96
+[GameVar] View_Index changed from 6 to 1
+--- CheckStationaryActiveActors (World.cs)
+ [Search -> Stationary] Usurper Aegon Stark, ActID 1 is AtLocation
+--- CheckIfFoundActive (World.cs)
+ [Search -> Debug] Enemy, Brother Kali, ID 127 at 15:14, Active Aegon Stark, ID 1, at 10:12
+ [Search -> Debug] Enemy, Brother Diabolous, ID 128 at 14:11, Active Aegon Stark, ID 1, at 10:12
+ [Search -> Debug] Enemy, Brother Shaitan, ID 129 at 19:12, Active Aegon Stark, ID 1, at 10:12
+ [Search -> Debug] Enemy, Brother Haborym, ID 130 at 13:14, Active Aegon Stark, ID 1, at 10:12
+ [Search -> Debug] Enemy, The Unrelenting, ID 131 at 15:14, Active Aegon Stark, ID 1, at 10:12
  [Search -> Stationary] Follower The Duchess, ActID 2 is AtLocation
- [Search -> Stationary] Follower The Dark Eminence, ActID 5 is AtLocation
- [Search -> Stationary] Follower The Crone, ActID 8 is AtLocation
+ [Search -> Stationary] Follower The Spider, ActID 8 is AtLocation
+ [Search -> Stationary] Follower The Beast, ActID 6 is AtLocation
 --- UpdateAIController (World.cs)
- [AI -> Player Unknown] Inquisitor Brother Amon, Act ID 128 Mode -> Normal
- [AI -> Player Unknown] Inquisitor Brother Damballa, Act ID 129 Mode -> Normal
- [AI -> Player Unknown] Inquisitor Brother Shiva, Act ID 130 Mode -> Normal
- [AI -> Player Unknown] Inquisitor Brother Azazel, Act ID 131 Mode -> Normal
- [AI -> Player Unknown] Nemesis The Unrelenting, Act ID 132 Mode -> Normal
+ [AI -> Player Unknown] Inquisitor Brother Kali, Act ID 127 Mode -> Normal
+ [AI -> Player Unknown] Inquisitor Brother Shaitan, Act ID 129 Mode -> Normal
+ [AI -> Player Unknown] Nemesis The Unrelenting, Act ID 131 Mode -> Normal
 --- SetEnemyActivity (World.cs)
- [Enemy -> Goal] Brother Amon, ActID 128 retains Goal -> Wait
- [Enemy -> Goal] Brother Damballa, ActID 129 retains Goal -> Hide
---- SetEnemyGoal (World.cs)
- [Goal -> Branch] Brother Shiva, ActID 130 Assigned Branch -> 2 Current Branch -> 2
- [Goal -> New] Brother Shiva, ActID 130, (loc 19:13), assigned new Goal -> Move
- [Goal -> Move] Brother Shiva, ActID 130 -> Move Inwards -> Kingskeep, LocID 1
---- InitiateMoveActor (World.cs)
---- Move Actor (Director.cs)
---- SetEnemyGoal (World.cs)
- [Goal -> Branch] Brother Azazel, ActID 131 Assigned Branch -> 3 Current Branch -> 3
- [Goal -> New] Brother Azazel, ActID 131, (loc 24:19), assigned new Goal -> Move
- [Goal -> Move] Brother Azazel, ActID 131 -> Move Inwards -> Brightwater Keep, LocID 22
---- InitiateMoveActor (World.cs)
---- Move Actor (Director.cs)
- [Enemy -> Goal] The Unrelenting, ActID 132 retains Goal -> Wait
+ [Enemy -> Goal] Brother Kali, ActID 127 retains Goal -> Wait
+ [Enemy -> Known] Brother Shaitan ActID 129 has become KNOWN
+ [Enemy -> Goal] Brother Shaitan, ActID 129 retains Goal -> Wait
+ [Enemy -> Goal] The Unrelenting, ActID 131 retains Goal -> Hide
 --- CheckPlayerEvents (Director.cs)
-Location event, Need 18, roll 54
-- CreateAutoLocEvent (Director.cs)
- [AutoEvent -> ActorList] "Davos Bolton", ID 100 added to list of Actors
- [AutoEvent -> LocalList] "Davos Bolton", ID 100 added to list of Locals
-[Notification] No entry found in dictOfIntroductions for RefID 11
- Chance of Player Location event 75 %
---- ResolvePlayerEvents (Director.cs)
- Trigger FAILED on "0" Equals 1
+Location event, Need 75, roll 65
+--- GetValidPlayerEvents (Director.cs)
+--- GetValidPlayerEvents (Director.cs)
+--- GetValidPlayerEvents (Director.cs)
+[DeterminePlayerEvent] There are 0 events in the Pool
+ Chance of Player Location event 37 %
+--- ResolveFollowerEvents (Director.cs)
+--- UpdateActiveActors (World.cs)
+ Usurper Aegon Stark has had their TurnsUnknown Timer increased from 103 to 104
+ Follower The Duchess has had their TurnsUnknown Timer increased from 3 to 4
+ Follower The Spider has had their TurnsUnknown Timer increased from 3 to 4
+ Follower The Beast has had their TurnsUnknown Timer increased from 3 to 4
+--- ProcessEndTurn (World.cs)
+Day 5, Turn 4
+--- CheckEventTimers (Director.cs)
+ Event "Search and Detain" Dormant Timer decremented to 16
+ "Search and Detain" event, Cooldown Timer decremented from 2 to 1
+--- InitialiseDynamicRumours (Director.cs)
+[Notification] Turn 4, generate new set of Relationship rumours on turn 21
+--- HouseKeepActors (World.cs)
+[GameStat] "Location_Days" -> increased from 4 to 5
+--- HousekeepRumours (World.cs)
+dictRumoursKnown has 12 records
+
+//Exile Game File "LogTurn.txt" Close completed at: 14/06/2017 10:41:08
+ 1
  Trigger: Player is wrong type of Known status -> Trigger failed
  Trigger FAILED on "0" Equals 1
  Trigger: Player is wrong type of Known status -> Trigger failed
  Event "What to do?" Timer Repeat now 999
  Event "What to do?" Cooldown Timer has been reset to 0
 --- UpdateActiveActors (World.cs)
- Usurper Hervey Florent has had their TurnsUnknown Timer increased from 154 to 155
- Follower The Duchess has had their TurnsUnknown Timer increased from 54 to 55
- Follower The Dark Eminence has had their TurnsUnknown Timer increased from 54 to 55
- Follower The Crone has had their TurnsUnknown Timer increased from 54 to 55
---- ResolveOutcome (Director.cs)
- Inactive (greyed out) Option chosen for "What to do?", option # 1
---- MultiKeyInput (Game.cs)
-544 input
---- SetEndGame (Game.cs)
-[Alert] Player chose to exit (pressed 'X')
-//Exile Game file ops "LogTurn.txt" Completed at: 13/06/2017 21:19:51
-r.cs)
---- InitialiseDynamicRumours (Director.cs)
-[Notification] Turn 52, generate new set of Relationship rumours on turn 87
-[Rumour -> Added] RID 814, "Inquisitor, Brother Amon, ActID 128 has been spotted drinking at Kingskeep (loc 17:15)" -> dict & List
-[Rumour -> Added] RID 815, "Inquisitor, Brother Azazel, ActID 131 has been spotted drinking at Bearpit (loc 24:17)" -> dict & List
-[Rumour -> Added] RID 816, "Nemesis, The Unrelenting, ActID 132 has been spotted worshipping at Kingskeep (loc 17:15)" -> dict & List
---- HouseKeepActors (World.cs)
-[GameStat] "Location_Days" -> increased from 52 to 53
---- HousekeepRumours (World.cs)
-dictRumoursKnown has 139 records
-
-//Exile Game File "LogTurn.txt" Close completed at: 13/06/2017 21:18:51
-leted at: 13/06/2017 21:18:22
-mong friends to have a good opinion of the Usurper" -> dict & List
-[Rumour -> Added] RID 729, "Heir Druet Martell "The Tumultuous", ActID 16 at Dorne, is rumoured to have a good view of the Usurper" -> dict & List
-[Rumour -> Added] RID 730, "lady Ysmeina Martell "The Reverent", ActID 17 at Dorne, is known to have a very good view of the Usurper" -> dict & List
-[Rumour -> Added] RID 731, "Lord Brynden Martell "The Flustered", ActID 18 at Dorne, is widely known to have an average view of the Usurper" -> dict & List
-[Rumour -> Added] RID 732, "Lord Haimmon Greyjoy "The Adroit", ActID 26 at Pyke, is commonly known to have a poor view of the Usurper" -> dict & List
-[Rumour -> Added] RID 733, "Lady Sapphire Greyjoy "The Benevolent", ActID 27 at Pyke, is said to have a poor opinion of the Usurper" -> dict & List
-[Rumour -> Added] RID 734, "Castellan Doran Warnerus "The Absent", ActID 29 at Pyke, is commonly known to have a very poor view of the Usurper" -> dict & List
-[Rumour -> Added] RID 735, "Maester Salemon Hue "The Wild", ActID 30 at Pyke, is well known to have a very poor view of the Usurper" -> dict & List
-[Rumour -> Added] RID 736, "Septon Roose Bardolf "The Devoted", ActID 31 at Pyke, is said to have a poor impression of the Usurper" -> dict & List
-[Rumour -> Added] RID 737, "lady Cleremunda Greyjoy "The Anarchic", ActID 32 at Pyke, is widely known to have an average opinion of the Usurper" -> dict & List
-[Rumour -> Added] RID 738, "Heir Vortimer Greyjoy "The Dove", ActID 33 at Pyke, is well known to have an average opinion of the Usurper" -> dict & List
-[Rumour -> Added] RID 739, "Lord Mace Baratheon "The Restless", ActID 34 at Bloodkeep, is suspected to have a very poor impression of the Usurper" -> dict & List
-[Rumour -> Added] RID 740, "Lady Genna Baratheon "The Uncompromising", ActID 35 at Bloodkeep, is suspected to have a poor impression of the Usurper" -> dict & List
-[Rumour -> Added] RID 741, "Knight Ser Chett Gilebin "The Disgusting", ActID 36 at Bloodkeep, is known to have a poor impression of the Usurper" -> dict & List
-[Rumour -> Added] RID 742, "Castellan Rodrik Engerran "The Weighty", ActID 37 at Bloodkeep, is known by all to have a very poor opinion of the Usurper" -> dict & List
-[Rumour -> Added] RID 743, "Maester Mikken Gervasius "The Testy", ActID 38 at Bloodkeep, is commonly known to have a very poor opinion of the Usurper" -> dict & List
-[Rumour -> Added] RID 744, "Septon Fraunk Wymon "The Trusting", ActID 39 at Bloodkeep, is rumoured to have a poor opinion of the Usurper" -> dict & List
-[Rumour -> Added] RID 745, "lady Desmera Baratheon "The Troubadour", ActID 40 at Bloodkeep, is said to have a poor impression of the Usurper" -> dict & List
-[Rumour -> Added] RID 746, "Heir Robert Baratheon "The Colorless", ActID 41 at Bloodkeep, is rumoured to have a poor view of the Usurper" -> dict & List
-[Rumour -> Added] RID 747, "lady Essylt Baratheon "The Stitcher", ActID 42 at Bloodkeep, is rumoured to have a very poor opinion of the Usurper" -> dict & List
-[Rumour -> Added] RID 748, "lady Lysa Baratheon "The Trustworthy", ActID 43 at Bloodkeep, is murmured among friends to have a very poor opinion of the Usurper" -> dict & List
-[Rumour -> Added] RID 749, "lord Benjen Baratheon "The Graceless", ActID 44 at Bloodkeep, is whispered to have a very poor view of the Usurper" -> dict & List
-[Rumour -> Added] RID 750, "lady Polly Baratheon "The Sensational", ActID 45 at Bloodkeep, is said to have an average impression of the Usurper" -> dict & List
-[Rumour -> Added] RID 751, "Castellan Rodrik Roley "The Bothered", ActID 49 at Winterfell, is known by all to have a very poor view of the Usurper" -> dict & List
-[Rumour -> Added] RID 752, "Maester Walcher Noy "The Aloof", ActID 50 at Winterfell, is known to have an average impression of the Usurper" -> dict & List
-[Rumour -> Added] RID 753, "Septon Hervey Maukolum "The Harmless", ActID 51 at Winterfell, is well known to have a very poor opinion of the Usurper" -> dict & List
-[Rumour -> Added] RID 754, "Lord Hallis Tully "The Intelligent", ActID 55 at Riverrun, is whispered to have a very good opinion of the Usurper" -> dict & List
-[Rumour -> Added] RID 755, "Lady Sari Tully "The Startling", ActID 56 at Riverrun, is commonly known to have an average opinion of the Usurper" -> dict & List
-[Rumour -> Added] RID 756, "Knight Ser Cristal Oudin "The Restless", ActID 57 at Riverrun, is murmured among friends to have a very good view of the Usurper" -> dict & List
-[Rumour -> Added] RID 757, "Castellan Gerbertus Teodric "The Rancid", ActID 58 at Riverrun, is said to have a good view of the Usurper" -> dict & List
-[Rumour -> Added] RID 758, "Maester Gerbod Charles "The Stringent", ActID 59 at Riverrun, is known by all to have a very good impression of the Usurper" -> dict & List
-[Rumour -> Added] RID 759, "Septon Harys Aymeri "The Even Tempered", ActID 60 at Riverrun, is known to have a good impression of the Usurper" -> dict & List
-[Rumour -> Added] RID 760, "Heir Luwin Tully "The Gallant", ActID 61 at Riverrun, is rumoured to have a good view of the Usurper" -> dict & List
-[Rumour -> Added] RID 761, "Lady Jacquelyn Tyrell "The Breathtaking", ActID 63 at Highgarden, is well known to have a very good impression of the Usurper" -> dict & List
-[Rumour -> Added] RID 762, "Knight Ser Nestor Reignolde "The Crazy", ActID 64 at Highgarden, is suspected to have a good opinion of the Usurper" -> dict & List
-[Rumour -> Added] RID 763, "Castellan Bran Houdoin "The Unmovable", ActID 65 at Highgarden, is commonly known to have a good impression of the Usurper" -> dict & List
-[Rumour -> Added] RID 764, "Maester Garth Guy "The Scholar", ActID 66 at Highgarden, is rumoured to have a good view of the Usurper" -> dict & List
-[Rumour -> Added] RID 765, "Septon Areo Mikael "The Gracious", ActID 67 at Highgarden, is known by all to have a very good impression of the Usurper" -> dict & List
-[Rumour -> Added] RID 766, "lady Isabell Tyrell "The Soft Hearted", ActID 68 at Highgarden, is known by all to have a good opinion of the Usurper" -> dict & List
-[Rumour -> Added] RID 767, "Lord Tytos Targaryen "The Inflated", ActID 69 at Valyria, is rumoured to have a very poor impression of the Usurper" -> dict & List
-[Rumour -> Added] RID 768, "Lady Moll Targaryen "The Iron Willed", ActID 70 at Valyria, is commonly known to have an average opinion of the Usurper" -> dict & List
-[Rumour -> Added] RID 769, "Knight Ser Stafford Giff "The Ready", ActID 71 at Valyria, is whispered to have a poor opinion of the Usurper" -> dict & List
-[Rumour -> Added] RID 770, "Castellan Druettus Artus "Lofty", ActID 72 at Valyria, is rumoured to have a poor impression of the Usurper" -> dict & List
-[Rumour -> Added] RID 771, "Maester Pate Gilebin "The Insipid Rodent", ActID 73 at Valyria, is known by all to have an average opinion of the Usurper" -> dict & List
-[Rumour -> Added] RID 772, "Septon Segarus Giff "The Stunted", ActID 74 at Valyria, is whispered to have an average view of the Usurper" -> dict & List
-[Rumour -> Added] RID 773, "Heir Joffery Targaryen "The Quick Witted", ActID 75 at Valyria, is rumoured to have a very poor impression of the Usurper" -> dict & List
-[Rumour -> Added] RID 774, "lord Marq Targaryen "The Ambitious", ActID 76 at Valyria, is commonly known to have a very poor impression of the Usurper" -> dict & List
-[Rumour -> Added] RID 775, "Lord Hallis Tyrell "The Assured", ActID 78 at Highgarden, is whispered to have a good view of the Usurper" -> dict & List
-[Rumour -> Added] RID 776, "BannerLord Gylbard Harlaw "The Heavy", ActID 79 at Ten Towers, is rumoured to have a very good view of the Usurper" -> dict & List
-[Rumour -> Added] RID 777, "BannerLord Vayon Clegane "The Watchful", ActID 81 at Clegane's Keep, is murmured among friends to have a very good opinion of the Usurper" -> dict & List
-[Rumour -> Added] RID 778, "Lord Gerbertus Bracken "The Smart", ActID 82 at Brightwater Keep, is well known to have a very poor opinion of the Usurper" -> dict & List
-[Rumour -> Added] RID 779, "BannerLord Farlen Tallhart "The Ear Piercing", ActID 83 at Torrhen's Square, is widely known to have a good view of the Usurper" -> dict & List
-[Rumour -> Added] RID 780, "BannerLord Dickory Mormont "The Agile", ActID 85 at Bearpit, is widely known to have a very good impression of the Usurper" -> dict & List
-[Rumour -> Added] RID 781, "BannerLord Jiame Hornwood "The Trustworthy", ActID 86 at Hornwood, is suspected to have a poor view of the Usurper" -> dict & List
-[Rumour -> Added] RID 782, "BannerLord Leyton Penrose "The Tolerable", ActID 87 at Parchments, is whispered to have a very poor opinion of the Usurper" -> dict & List
-[Rumour -> Added] RID 783, "BannerLord Guarnier Cerwyn "The Holy Terror", ActID 88 at Cerwyn, is whispered to have a very poor opinion of the Usurper" -> dict & List
-[Rumour -> Added] RID 784, "BannerLord Huchon Glover "The Decent", ActID 89 at Deepwood Motte, is whispered to have an average view of the Usurper" -> dict & List
-[Rumour -> Added] RID 785, "BannerLord Ingrannus Codd "The Smart", ActID 90 at Fishfork, is known to have a poor impression of the Usurper" -> dict & List
-[Rumour -> Added] RID 786, "BannerLord Preston Slynt "The Carnal", ActID 91 at Harrenhal, is widely known to have an average view of the Usurper" -> dict & List
-[Rumour -> Added] RID 787, "BannerLord Tybaut Hightower "The Wise", ActID 92 at Oldtown, is whispered to have a poor view of the Usurper" -> dict & List
-[Rumour -> Added] RID 788, "BannerLord Ingrannus Mullendore "The Unmerciful", ActID 93 at Uplands, is rumoured to have an average view of the Usurper" -> dict & List
-[Rumour -> Added] RID 789, "BannerLord Kevan Ambrose "The Pirate", ActID 95 at Blackwater, is known to have an average view of the Usurper" -> dict & List
-[Rumour -> Added] RID 790, "BannerLord Morton Flint "The Persistent", ActID 97 at Widow's Watch, is known to have a very good opinion of the Usurper" -> dict & List
-[Rumour -> Added] RID 791, "BannerLord Vardis Peake "The Vexed", ActID 98 at Starpike, is known by all to have a very poor view of the Usurper" -> dict & List
-[Rumour -> Added] RID 792, "BannerLord Hamlin Westerling "The Talented", ActID 99 at The Crag, is rumoured to have a poor view of the Usurper" -> dict & List
-[Rumour -> Added] RID 793, "BannerLord Davos Bolton "The Tentative", ActID 100 at Dreadfort, is rumoured to have a poor view of the Usurper" -> dict & List
-[Rumour -> Added] RID 794, "BannerLord Gualtier Botley "The Sheep Humper", ActID 109 at Lordsport, is well known to have a poor opinion of the Usurper" -> dict & List
-[Rumour -> Added] RID 795, "BannerLord Humfredus Frey "The Righteous", ActID 110 at The Twins, is commonly known to have a poor impression of the Usurper" -> dict & List
-[Rumour -> Added] RID 796, "BannerLord Wyman Karstark "The Dependable", ActID 111 at Karhold, is rumoured to have a poor view of the Usurper" -> dict & List
-[Rumour -> Added] RID 797, "BannerLord Cristal Leygood "The Righteous", ActID 112 at Stone Hedge, is said to have a very poor view of the Usurper" -> dict & List
-[Rumour -> Added] RID 798, "Castellan Mord Anselet "The Middling", ActID 113 at Brightwater Keep, is known by all to have a poor view of the Usurper" -> dict & List
-[Rumour -> Added] RID 799, "Maester Eon Noy "The Inquiring", ActID 114 at Brightwater Keep, is whispered to have a very poor opinion of the Usurper" -> dict & List
-[Rumour -> Added] RID 800, "Septon Roose Hugelin "The Insipid Rodent", ActID 115 at Brightwater Keep, is murmured among friends to have an average view of the Usurper" -> dict & List
-[Rumour -> Added] RID 801, "Knight Ser Segarus Saunsum "The Lightning Flash", ActID 116 at Brightwater Keep, is known to have a poor view of the Usurper" -> dict & List
-[Rumour -> Added] RID 802, "Heir Bernier Bracken "The Charmed", ActID 118 at Brightwater Keep, is whispered to have a poor view of the Usurper" -> dict & List
-[Rumour -> Added] RID 803, "lord Hamlin Bracken "The Conspirator", ActID 119 at Brightwater Keep, is widely known to have a very poor opinion of the Usurper" -> dict & List
-[Rumour -> Added] RID 804, "lady Genna Bracken "The Tender", ActID 120 at Brightwater Keep, is rumoured to have a very poor impression of the Usurper" -> dict & List
-[Rumour -> Added] RID 805, "Master_of_Laws Forley Colley "The Middling", ActID 103 at Kingskeep, is known to have a poor opinion of the Usurper" -> dict & List
-[Notification] 81 Relationship Rumours have been added to the dictRumoursTimed
-[GameVar] New_RelRumours changed from 43 to 87
-[Notification] A new set of Relationship Rumours is set to be generated on turn 87
-[Rumour -> Added] RID 806, "Inquisitor, Brother Amon, ActID 128 has been spotted hiding at Kingskeep (loc 17:15)" -> dict & List
---- HouseKeepActors (World.cs)
-[GameStat] "Location_Days" -> increased from 43 to 44
---- HousekeepRumours (World.cs)
-dictRumoursKnown has 122 records
-
-//Exile Game File "LogTurn.txt" Close completed at: 13/06/2017 21:18:14
-ad their TurnsUnknown Timer increased from 140 to 141
- Follower The Duchess has had their TurnsUnknown Timer increased from 40 to 41
- Follower The Dark Eminence has had their TurnsUnknown Timer increased from 40 to 41
- Follower The Crone has had their TurnsUnknown Timer increased from 40 to 41
+ Usurper Aegon Stark has had their TurnsUnknown Timer increased from 102 to 103
+ Follower The Duchess has had their TurnsUnknown Timer increased from 2 to 3
+ Follower The Spider has had their TurnsUnknown Timer increased from 2 to 3
+ Follower The Beast has had their TurnsUnknown Timer increased from 2 to 3
 --- ResolveOutcome (Director.cs)
  Inactive (greyed out) Option chosen for "What to do?", option # 1
 --- ProcessEndTurn (World.cs)
-Day 42, Turn 41
+Day 4, Turn 3
 --- CheckEventTimers (Director.cs)
+ Event "Search and Detain" Dormant Timer decremented to 17
+ "Search and Detain" event, Cooldown Timer decremented from 3 to 2
 --- InitialiseDynamicRumours (Director.cs)
-[Notification] Turn 41, generate new set of Relationship rumours on turn 43
-[Rumour -> Added] RID 720, "Inquisitor, Brother Damballa, ActID 129 has been spotted relaxing at The Yellow Huntress (loc 18:9)" -> dict & List
-[Rumour -> Added] RID 721, "Inquisitor, Brother Azazel, ActID 131 has been seen on the road to Brightwater Keep (loc 21:24)" -> dict & List
+[Notification] Turn 3, generate new set of Relationship rumours on turn 21
+[Rumour -> Added] RID 592, "Inquisitor, Brother Shaitan, ActID 129 has been seen on the road to The Raucous Rat (loc 19:12)" -> dict & List
 --- HouseKeepActors (World.cs)
-[GameStat] "Location_Days" -> increased from 41 to 42
+[GameStat] "Location_Days" -> increased from 3 to 4
 --- HousekeepRumours (World.cs)
-dictRumoursKnown has 116 records
+dictRumoursKnown has 9 records
 
-//Exile Game File "LogTurn.txt" Close completed at: 13/06/2017 21:18:04
-rs
- [AutoEvent -> LocalList] "Davos Bolton", ID 100 added to list of Locals
-[Notification] No entry found in dictOfIntroductions for RefID 11
- Chance of Player Location event 75 %
---- ResolvePlayerEvents (Director.cs)
- Trigger FAILED on "0" Equals 1
- Trigger: Player is wrong type of Known status -> Trigger failed
- Trigger FAILED on "0" Equals 1
- Trigger: Player is wrong type of Known status -> Trigger failed
- Event "What to do?" Timer Repeat now 999
- Event "What to do?" Cooldown Timer has been reset to 0
---- UpdateActiveActors (World.cs)
- Usurper Hervey Florent has had their TurnsUnknown Timer increased from 119 to 120
- Follower The Duchess has had their TurnsUnknown Timer increased from 19 to 20
- Follower The Dark Eminence has had their TurnsUnknown Timer increased from 19 to 20
- Follower The Crone has had their TurnsUnknown Timer increased from 19 to 20
---- ResolveOutcome (Director.cs)
- Inactive (greyed out) Option chosen for "What to do?", option # 1
---- ProcessEndTurn (World.cs)
-Day 21, Turn 20
---- CheckEventTimers (Director.cs)
- Event "Search and Detain" Dormant Timer decremented to 0
- Event "Search and Detain" Dormant Timer has run down to Zero. Event is now Dormant
---- InitialiseDynamicRumours (Director.cs)
-[Notification] Turn 20, generate new set of Relationship rumours on turn 21
---- HouseKeepActors (World.cs)
-[GameStat] "Location_Days" -> increased from 20 to 21
---- HousekeepRumours (World.cs)
-dictRumoursKnown has 53 records
-
-//Exile Game File "LogTurn.txt" Close completed at: 13/06/2017 21:16:10
+//Exile Game File "LogTurn.txt" Close completed at: 14/06/2017 10:41:06
