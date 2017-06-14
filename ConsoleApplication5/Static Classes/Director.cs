@@ -22,7 +22,7 @@ namespace Next_Game
     public enum ConflictState { None, Relative_Army_Size, Relative_Fame, Relative_Honour, Relative_Justice, Known_Status } //game specific states that are used for situations
     public enum ResourceLevel { None, Meagre, Moderate, Subtantial, Prosperous, Wealthy }
     
-    public enum WorldGroup { None, Officials, Church, Merchants, Craft, Peasants, Count} //main population groupings within world
+    public enum WorldGroup { None, Officials, Churches, Merchants, Crafters, Peasants, Count} //main population groupings within world
     public enum ViewType { JusticeNeutralEduc, JusticeNeutralUned, JusticeGoodEduc, JusticeGoodUned, JusticeBadEduc, JusticeBadUned, LegendNeutralEduc, LegendNeutralUned, LegendGoodEduc, LegendGoodUned,
     LegendBadEduc, LegendBadUned, HonourNeutralEduc, HonourNeutralUned, HonourGoodEduc, HonourGoodUned, HonourBadEduc, HonourBadUned, KnownEduc, KnownUned, UnknownEduc, UnknownUned,
     FoodSurplusEduc, FoodSurplusUned, FoodNormalEduc, FoodNormalUned, FoodDeficitEduc, FoodDeficitUned, SummerEduc, SummerUned, AutumnEduc, AutumnUned, WinterEduc, WinterUned, SpringEduc, SpringUned, Count} //Market View
@@ -5491,7 +5491,6 @@ namespace Next_Game
 
                                 strength = 5;
                                 view = GetRelationshipPrefix(capital.GetLenderRelations((Finance)i));
-                                //immersionText = $"{arrayOfRumourTexts[rnd.Next(arrayOfRumourTexts.Length)]}";
                                 startText = $"It is {arrayOfRumourTexts[rnd.Next(arrayOfRumourTexts.Length)]}";
                                 opinionText = $"{arrayOfOpinions[rnd.Next(arrayOfOpinions.Length)]}";
                                 rumourText = $"{startText} that the {(Finance)i} has {view} {opinionText} of King {Game.lore.NewKing.Name}, \"{Game.lore.NewKing.Handle}\"";
@@ -5499,6 +5498,21 @@ namespace Next_Game
                                 //add to dictionary and global list
                                 if (AddRumour(rumour, house.Value) == false)
                                 { Game.SetError(new Error(268, $"{rumour.Text}, RumourID {rumour.RumourID}, failed to load (Lender) -> Rumour Cancelled")); }
+                            }
+                            //
+                            // Group Relationships -> Capital
+                            //
+                            for (int i = 1; i < (int)WorldGroup.Count; i++)
+                            {
+                                strength = 5;
+                                view = GetRelationshipPrefix(capital.GetGroupRelations((WorldGroup)i));
+                                startText = $"It is {arrayOfRumourTexts[rnd.Next(arrayOfRumourTexts.Length)]}";
+                                opinionText = $"{arrayOfOpinions[rnd.Next(arrayOfOpinions.Length)]}";
+                                rumourText = $"{startText} that the KingsKeep {(WorldGroup)i} have {view} {opinionText} of King {Game.lore.NewKing.Name}, \"{Game.lore.NewKing.Handle}\"";
+                                RumourGroup rumour = new RumourGroup(rumourText, strength, RumourScope.Local);
+                                //add to dictionary and global list
+                                if (AddRumour(rumour, house.Value) == false)
+                                { Game.SetError(new Error(268, $"{rumour.Text}, RumourID {rumour.RumourID}, failed to load (Group) -> Rumour Cancelled")); }
                             }
                         }
                         //Major Houses only
@@ -6091,7 +6105,7 @@ namespace Next_Game
             RLColor backColor = Color._background1;
             string streetView = "";
             int viewIndex = Game.variable.GetValue(GameVar.View_Index);
-            WorldGroup[] arrayOfGroupsMale = new WorldGroup[] { WorldGroup.Officials, WorldGroup.Merchants, WorldGroup.Church, WorldGroup.Craft, WorldGroup.Craft,
+            WorldGroup[] arrayOfGroupsMale = new WorldGroup[] { WorldGroup.Officials, WorldGroup.Merchants, WorldGroup.Churches, WorldGroup.Crafters, WorldGroup.Crafters,
                 WorldGroup.Peasants, WorldGroup.Peasants };
             WorldGroup group = WorldGroup.None;
             bool proceedFlag = true;
@@ -6134,7 +6148,7 @@ namespace Next_Game
                         innerArray = arrayOfOccupations[(int)Occupation.Offical];
                         educated = true;
                         break;
-                    case WorldGroup.Church:
+                    case WorldGroup.Churches:
                         innerArray = arrayOfOccupations[(int)Occupation.Church];
                         educated = true;
                         break;
@@ -6142,7 +6156,7 @@ namespace Next_Game
                         innerArray = arrayOfOccupations[(int)Occupation.Merchant];
                         educated = true;
                         break;
-                    case WorldGroup.Craft:
+                    case WorldGroup.Crafters:
                         innerArray = arrayOfOccupations[(int)Occupation.Merchant];
                         educated = false;
                         break;
@@ -6560,7 +6574,7 @@ namespace Next_Game
             //loop NPC's
             if (dictPassiveActors != null)
             {
-                int strength, relPlyr, band;
+                int strength;
                 int royalRefID = Game.lore.RoyalRefIDNew;
                 int timerExpire = Game.constant.GetValue(Global.REL_RUMOUR_TIME);
                 string view, rumourText, immersionText, opinionText, locName;

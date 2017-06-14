@@ -116,7 +116,7 @@
 # HORSE_HEALTH -> max cap for horsehealth random roll -> health = rnd.Next(1, HORSE_HEALTH) & health = Math.Min(5, health)
 78: 10 @ 3 @ 12
 # LOAN_CHANCE -> % chance of new King taking out a loan for every capital.Resourse level below max.
-85: 50 @ 10 @ 80
+85: 40 @ 10 @ 80
 
 # Events ---
 
