@@ -261,17 +261,14 @@ namespace Next_Game
                 //take into account multiple snippets making up a single line
                 for (int i = 0; i < displayList.Count; i++)
                 { if (displayList[i].GetNewLine() == true) { actualLines++; } }
-                /*Game.logTurn?.Write("--- DrawInfoConsole (InfoChannel.cs)");
-                Game.logTurn?.Write($"Console {consoleDisplay} -> DisplayList.Count {displayList.Count}, actualLines {actualLines}");*/
                 int maxLength = Math.Min(dataLength, displayList.Count);
                 if (clearDisplay)
                 { infoConsole.Clear(); }
                 int lineCounter = 0;
-                //int listLength = actualLines/*displayList.Count*/;
                 //keep _scrollIndex (set in Game.ScrollingKeyInput) within bounds
                 if (consoleDisplay == ConsoleDisplay.Multi && Game._scrollIndex > 0)
                 {
-                    startIndex = Math.Min(Game._scrollIndex, /*displayList.Count*/actualLines - Game._multiConsoleLength / 2);
+                    startIndex = Math.Min(Game._scrollIndex, displayList.Count - Game._multiConsoleLength / 2);
                     startIndex = Math.Max(startIndex, 0);
                     maxLength = Math.Min(dataLength + Game._scrollIndex, displayList.Count);
                     //prevent _scrollIndex from escalating
@@ -282,7 +279,7 @@ namespace Next_Game
                     }
                 }
                 //Display data
-                int length = 0; //allows for sequential snippets on the same line
+                /*int length = 0; //allows for sequential snippets on the same line
                 for (int i = startIndex; i < maxLength; i++)
                 {
                     Snippet snippet = displayList[i];
@@ -292,7 +289,23 @@ namespace Next_Game
                     { lineCounter++; length = 0; }
                     else
                     { length += snippet.GetText().Length; }
+                }*/
+
+                int length = 0; //allows for sequential snippets on the same line
+                int index = startIndex;
+                while(index < displayList.Count && lineCounter < dataLength)
+                {
+                    
+                    Snippet snippet = displayList[index];
+                    infoConsole.Print(margin + length, lineCounter * 2 + margin, snippet.GetText(), snippet.GetForeColor(), snippet.GetBackColor());
+                    //new line
+                    if (snippet.GetNewLine() == true)
+                    { lineCounter++; length = 0; }
+                    else
+                    { length += snippet.GetText().Length; }
+                    index++;
                 }
+
                 //multi console interface texts at bottom
                 if (consoleDisplay == ConsoleDisplay.Multi && lineCounter >= (dataLength - 2))
                 {
