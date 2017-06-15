@@ -10,7 +10,7 @@ namespace Next_Game
     public enum HouseSpecial { None, Inn }
     public enum CastleDefences { None, Minimal, Weak, Average, Strong, Formidable }
     public enum HouseInfo { None, Resources, CastleWalls, FriendsEnemies, Food, SafeHouse, History, Military, Count} //toggles information display on/off depending on known status
-    public enum CapArray { Data, Status, TaxRate, Reference, Constant, Count } //second index for capital finance arrays
+    public enum CapArray { Data, Status, Rate, Reference, Constant, Count } //second index for capital finance arrays
 
     //
     // Base class
@@ -381,8 +381,8 @@ namespace Next_Game
             arrayOfGroups = new int[(int)WorldGroup.Count];
             arrayOfLenders = new int[(int)Finance.Count];
             arrayOfIncome = new int[(int)Income.Count, (int)CapArray.Count];
-            arrayOfExpenses = new int[(int)Expense.Count, 2];
-            arrayOfLumpSums = new int[(int)LumpSum.Count, 2];
+            arrayOfExpenses = new int[(int)Expense.Count, (int)CapArray.Count];
+            arrayOfLumpSums = new int[(int)LumpSum.Count, (int)CapArray.Count];
         }
 
         public void AddLoan(Finance loan)
@@ -470,7 +470,7 @@ namespace Next_Game
         }
 
         public void SetIncomeTax(Income income, TaxRate tax)
-        { arrayOfIncome[(int)income, (int)CapArray.TaxRate] = (int)tax; }
+        { arrayOfIncome[(int)income, (int)CapArray.Rate] = (int)tax; }
 
         /// <summary>
         /// returns TaxRate for income item
@@ -478,7 +478,7 @@ namespace Next_Game
         /// <param name="income"></param>
         /// <returns></returns>
         public TaxRate GetIncomeTax(Income income)
-        { return (TaxRate)arrayOfIncome[(int)income, (int)CapArray.TaxRate]; }
+        { return (TaxRate)arrayOfIncome[(int)income, (int)CapArray.Rate]; }
 
         public void SetIncomeReference(Income income, int refData)
         { arrayOfIncome[(int)income, (int)CapArray.Reference] = refData; }

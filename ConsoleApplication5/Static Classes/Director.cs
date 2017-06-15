@@ -22,7 +22,7 @@ namespace Next_Game
     public enum ConflictState { None, Relative_Army_Size, Relative_Fame, Relative_Honour, Relative_Justice, Known_Status } //game specific states that are used for situations
     public enum ResourceLevel { None, Meagre, Moderate, Subtantial, Prosperous, Wealthy }
     
-    public enum WorldGroup { None, Officials, Churches, Merchants, Crafters, Peasants, Count} //main population groupings within world
+    public enum WorldGroup { None, Lords, Officials, Churches, Merchants, Crafters, Peasants, Count} //main population groupings within world
     public enum ViewType { JusticeNeutralEduc, JusticeNeutralUned, JusticeGoodEduc, JusticeGoodUned, JusticeBadEduc, JusticeBadUned, LegendNeutralEduc, LegendNeutralUned, LegendGoodEduc, LegendGoodUned,
     LegendBadEduc, LegendBadUned, HonourNeutralEduc, HonourNeutralUned, HonourGoodEduc, HonourGoodUned, HonourBadEduc, HonourBadUned, KnownEduc, KnownUned, UnknownEduc, UnknownUned,
     FoodSurplusEduc, FoodSurplusUned, FoodNormalEduc, FoodNormalUned, FoodDeficitEduc, FoodDeficitUned, SummerEduc, SummerUned, AutumnEduc, AutumnUned, WinterEduc, WinterUned, SpringEduc, SpringUned, Count} //Market View

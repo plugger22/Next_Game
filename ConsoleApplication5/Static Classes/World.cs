@@ -7099,8 +7099,10 @@ namespace Next_Game
                 //
                 // Capital Groups -> initial relationship levels
                 //
-                for(int i = 1; i < (int)WorldGroup.Count; i++)
+                for(int i = 2; i < (int)WorldGroup.Count; i++)
                 { capitalHouse.SetGroupRelations((WorldGroup)i, rnd.Next(25, 75)); }
+                //Lords is the average of all Major Lords rels
+                capitalHouse.SetGroupRelations(WorldGroup.Lords, GetAverageLordRelations());
             }
             else { Game.SetError(new Error(303, "Invalid capitalHouse (null)")); }
 
@@ -7238,7 +7240,7 @@ namespace Next_Game
             int harbourTax = Game.constant.GetValue(Global.HARBOUR_TAX);
             int virginTax = Game.constant.GetValue(Global.VIRGIN_TAX);
             int balance = 0;
-            int tally, income, trade;
+            int tally, income, trade, relLvl;
             TaxRate taxRate;
             if (capital != null)
             {
@@ -7250,7 +7252,9 @@ namespace Next_Game
                 capital.SetLumpSumStatus(LumpSum.Treasury, true);
 
                 //Calculate value of Import taxes (Lords) based on num and type of imports (include any exports from Capital in this) -> Food is excluded
-                taxRate = TaxRate.Normal;
+                relLvl = (100 - capital.GetGroupRelations(WorldGroup.Lords)) / 20;
+                relLvl = Math.Min(4, relLvl);
+                taxRate = (TaxRate)relLvl;
                 int[,] arrayOfImports = capital.GetImports();
                 int[,] arrayOfExports = capital.GetExports();
                 trade = GetValueOfGoods(arrayOfImports);
@@ -7405,6 +7409,31 @@ namespace Next_Game
 
         internal int GetNumMajorHouses()
         { return dictMajorHouses.Count; }
+
+        /// <summary>
+        /// Returns the average relationship value (0 - 100) with Lords from all Major Houses
+        /// </summary>
+        /// <returns></returns>
+        public int GetAverageLordRelations()
+        {
+            int averageRel = 0;
+            float totalRel = 0;
+            float numLords = 0;
+            foreach (var house in dictMajorHouses)
+            {
+                Passive lord = Game.world.GetPassiveActor(house.Value.LordID);
+                if (lord != null)
+                {
+                    totalRel += (100 - lord.GetRelPlyr());
+                    numLords++;
+                }
+                else { Game.SetError(new Error(308, $"Invalid Lord (null) from house.Value.LordID {house.Value.LordID}")); }
+            }
+            averageRel = Convert.ToInt32(totalRel / numLords);
+            averageRel = Math.Min(100, averageRel);
+            averageRel = Math.Max(0, averageRel);
+            return averageRel;
+        }
 
         //new Methods above here
     }
