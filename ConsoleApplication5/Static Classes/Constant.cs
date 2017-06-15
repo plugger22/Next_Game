@@ -58,8 +58,12 @@ namespace Next_Game
         KNOWN_REVERT,
         INQUISITORS,
         HORSE_HEALTH,
+        //Finances
         LOAN_CHANCE,
         LOAN_AMOUNT,
+        IMPORT_TAX,
+        EXPORT_TAX,
+        CHURCH_TAX,
         //Events
         TRAIT_MULTIPLIER,
         TEST_MULTIPLIER,
@@ -209,6 +213,9 @@ namespace Next_Game
             arrayOfGlobals[84] = Global.SAFE_HOUSE;
             arrayOfGlobals[85] = Global.LOAN_CHANCE;
             arrayOfGlobals[86] = Global.LOAN_AMOUNT;
+            arrayOfGlobals[87] = Global.IMPORT_TAX;
+            arrayOfGlobals[88] = Global.EXPORT_TAX;
+            arrayOfGlobals[89] = Global.CHURCH_TAX;
         }
 
         /// <summary>

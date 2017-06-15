@@ -1,6 +1,2 @@
-//Exile Game file ops "LogError.txt" commenced at: 15/06/2017 15:29:11
-ERROR_24 "Cluster Forest tempList has no records, index 37"
-Method: InitialiseGeoClusters,  Line: 326,  Object: History.cs,  Turn: 0,  Local Time: 15:29:11 UTC +10:00
-ERROR_24 "Cluster Forest tempList has no records, index 42"
-Method: InitialiseGeoClusters,  Line: 326,  Object: History.cs,  Turn: 0,  Local Time: 15:29:11 UTC +10:00
-//Exile Game file ops "LogError.txt" Completed at: 15/06/2017 15:30:11
+//Exile Game file ops "LogError.txt" commenced at: 15/06/2017 17:11:00
+//Exile Game file ops "LogError.txt" Completed at: 15/06/2017 17:11:37

@@ -365,7 +365,7 @@ namespace Next_Game
         private List<Finance> listOfLoans; //who has lent money to the King
         private int[] arrayOfGroups; //relationship levels (0 - 100)  with the different WorldGroups (enum) within the Capital, Kingskeep
         private int[] arrayOfLenders; //relationship levels (0 - 100) with the different Lenders who you've obtained a loan from
-        private int[,] arrayOfIncome; // Director.cs enum Income -> [,0] Amount, [,1] Active Item (1 true, 0 false)
+        private int[,] arrayOfIncome; // Director.cs enum Income -> [,0] Amount, [,1] Active Item (1 true, 0 false), [,2] Tax Rate 0 None, 1 Low, 2 Normal, 3 High, 4 Excessive (Director.cs TaxRate enum)
         private int[,] arrayOfExpenses; // Director.cs enum Expense -> [,0] Amount, [,1] Active Item (1 true, 0 false)
         private int[,] arrayOfLumpSums; // Director.cs enum LumpSums -> [,0] Amount, [,1] Active Item (1 true, 0 false)
 
@@ -378,7 +378,7 @@ namespace Next_Game
             listOfLoans = new List<Finance>();
             arrayOfGroups = new int[(int)WorldGroup.Count];
             arrayOfLenders = new int[(int)Finance.Count];
-            arrayOfIncome = new int[(int)Income.Count, 2];
+            arrayOfIncome = new int[(int)Income.Count, 3];
             arrayOfExpenses = new int[(int)Expense.Count, 2];
             arrayOfLumpSums = new int[(int)LumpSum.Count, 2];
         }
@@ -466,6 +466,17 @@ namespace Next_Game
             if (status == true) { arrayOfIncome[(int)income, 1] = 1; }
             else { arrayOfIncome[(int)income, 1] = 0; }
         }
+
+        public void SetIncomeTax(Income income, TaxRate tax)
+        { arrayOfIncome[(int)income, 2] = (int)tax; }
+
+        /// <summary>
+        /// returns TaxRate for income item
+        /// </summary>
+        /// <param name="income"></param>
+        /// <returns></returns>
+        public TaxRate GetIncomeTax(Income income)
+        { return (TaxRate)arrayOfIncome[(int)income, 2]; }
         
         public void SetExpense(Expense expense, int amount)
         { arrayOfExpenses[(int)expense, 0] = amount; }

@@ -7230,8 +7230,12 @@ namespace Next_Game
         {
             CapitalHouse capital = GetCapital();
             int goldAmount = Game.constant.GetValue(Global.LOAN_AMOUNT);
+            int importTax = Game.constant.GetValue(Global.IMPORT_TAX);
+            int exportTax = Game.constant.GetValue(Global.EXPORT_TAX);
+            int churchTax = Game.constant.GetValue(Global.CHURCH_TAX);
             int balance = 0;
-            int tally, incomeImports;
+            int tally, income;
+            TaxRate taxRate;
             if (capital != null)
             {
                 //Treasury at game start (one gold LOAN_AMOUNT per level + random half level)
@@ -7242,18 +7246,30 @@ namespace Next_Game
                 capital.SetLumpSumStatus(LumpSum.Treasury, true);
 
                 //Calculate value of Import taxes (Lords) based on num and type of imports (include any exports from Capital in this) -> Food is excluded
+                taxRate = TaxRate.Normal;
                 int[,] arrayOfImports = capital.GetImports();
                 int[,] arrayOfExports = capital.GetExports();
                 tally = GetValueOfGoods(arrayOfImports);
                 tally += GetValueOfGoods(arrayOfExports);
-                incomeImports = tally * 100;
-                capital.SetIncome(Income.Lords, incomeImports);
+                income = tally * importTax * (int)taxRate / 2;
+                capital.SetIncome(Income.Lords, income);
                 capital.SetIncomeStatus(Income.Lords, true);
+                capital.SetIncomeTax(Income.Lords, taxRate);
 
+                //Calculate value of Export taxes (Merchants) base on num and type of Exports (finished products, essentially identical to above) -> Food is excluded
+                taxRate = TaxRate.Normal;
+                income = tally * exportTax * (int)taxRate / 2;
+                capital.SetIncome(Income.Merchants, income);
+                capital.SetIncomeStatus(Income.Merchants, true);
+                capital.SetIncomeTax(Income.Merchants, taxRate);
 
-
-
-
+                //Calculate value of Church tax (fixed amount * # Churches in Major Houses + Capital, that varies depending on tax Rate)
+                taxRate = TaxRate.Normal;
+                tally = 5 + GetNumMajorHouses();
+                income = tally * churchTax * (int)taxRate / 2;
+                capital.SetIncome(Income.Churches, income);
+                capital.SetIncomeStatus(Income.Churches, true);
+                capital.SetIncomeTax(Income.Churches, taxRate);
             }
             else { Game.SetError(new Error(310, "Invalid Capital (null) -> Royal Accounts not initialised")); }
         }
@@ -7326,6 +7342,9 @@ namespace Next_Game
 
         internal List<HorseRecord> GetHorses()
         { return listHorses; }
+
+        internal int GetNumMajorHouses()
+        { return dictMajorHouses.Count; }
 
         //new Methods above here
     }

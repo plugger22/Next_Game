@@ -201,11 +201,11 @@ namespace Next_Game
                     amount = capital.GetIncome((Income)i);
                     balance += amount;
                     if (capital.GetIncomeStatus((Income)i) == true) { displayColor = activeColor; } else { displayColor = inactiveColor; }
-                    listDisplay.Add(new Snippet($"{"Taxes on " + (Income)i, -30}{amount:N0}", displayColor, RLColor.Black));
+                    listDisplay.Add(new Snippet($"{"Taxes on " + (Income)i, -30}{amount, -12:N0}{"tax " + capital.GetIncomeTax((Income)i), -15}", displayColor, RLColor.Black));
                 }
                 cashflow += balance;
                 if (balance > 0) { displayColor = goodColor; } else { displayColor = badColor; }
-                listDisplay.Add(new Snippet($"{"Balance",-30}{balance:N0} gold coins", displayColor, RLColor.Black));
+                listDisplay.Add(new Snippet($"{"Balance",-30}{balance, -12:N0}gold coins", displayColor, RLColor.Black));
                 //spacer
                 for (int i = 0; i < spacer; i++)
                 { listDisplay.Add(new Snippet("")); }
@@ -221,7 +221,7 @@ namespace Next_Game
                 }
                 cashflow += balance;
                 if (balance > 0) { displayColor = goodColor; } else { displayColor = badColor; }
-                listDisplay.Add(new Snippet($"{"Balance",-30}{balance:N0} gold coins", displayColor, RLColor.Black));
+                listDisplay.Add(new Snippet($"{"Balance",-30}{balance, -12:N0}gold coins", displayColor, RLColor.Black));
                 //spacer
                 for (int i = 0; i < spacer; i++)
                 { listDisplay.Add(new Snippet("")); }
@@ -240,7 +240,7 @@ namespace Next_Game
                 listDisplay.Add(new Snippet($"{"Net Cashflow",-30}{cashflow:N0}", displayColor, RLColor.Black));
                 balance += cashflow;
                 if (balance > 0) { displayColor = goodColor; } else { displayColor = badColor; }
-                listDisplay.Add(new Snippet($"{"Balance", -30}{balance:N0} gold coins", displayColor, RLColor.Black));
+                listDisplay.Add(new Snippet($"{"Balance", -30}{balance, -12:N0}gold coins", displayColor, RLColor.Black));
                 //spacer
                 for (int i = 0; i < spacer; i++)
                 { listDisplay.Add(new Snippet("")); }

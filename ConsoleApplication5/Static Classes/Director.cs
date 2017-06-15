@@ -38,6 +38,7 @@ namespace Next_Game
     public enum Income { None, Lords, Merchants, Churches, Crafters, Roads, Harbours, Virgins, Count} //all are ... 'Tax on <Income>'
     public enum Expense { None, City_Watch_Wages, Officials_Wages, Capital_Defenses, Royal_Lifestyle, Loan_Interest, Food_Imports, Road_Patrols, Pirate_Patrols, Count}
     public enum LumpSum { None, Treasury, Loans, Appropriations, Count} //lump sum amounts
+    public enum TaxRate { None, Low, Normal, High, Excessive}
 
 
     /// <summary>
