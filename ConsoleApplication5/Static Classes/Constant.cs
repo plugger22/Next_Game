@@ -64,6 +64,10 @@ namespace Next_Game
         IMPORT_TAX,
         EXPORT_TAX,
         CHURCH_TAX,
+        CRAFTER_TAX,
+        ROAD_TAX,
+        HARBOUR_TAX,
+        VIRGIN_TAX,
         //Events
         TRAIT_MULTIPLIER,
         TEST_MULTIPLIER,
@@ -216,6 +220,10 @@ namespace Next_Game
             arrayOfGlobals[87] = Global.IMPORT_TAX;
             arrayOfGlobals[88] = Global.EXPORT_TAX;
             arrayOfGlobals[89] = Global.CHURCH_TAX;
+            arrayOfGlobals[90] = Global.CRAFTER_TAX;
+            arrayOfGlobals[91] = Global.ROAD_TAX;
+            arrayOfGlobals[92] = Global.HARBOUR_TAX;
+            arrayOfGlobals[93] = Global.VIRGIN_TAX;
         }
 
         /// <summary>

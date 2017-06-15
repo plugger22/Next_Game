@@ -49,6 +49,8 @@ namespace Next_Game
             listStats.Add(new Snippet(string.Format("{0} BannerLords", numBannerLords)));
             listStats.Add(new Snippet(string.Format("{0} Special Locations", numSpecialLocs)));
             listStats.Add(new Snippet("1 Capital"));
+            listStats.Add(new Snippet($"{Game.network.GetNumPorts()} Ports"));
+            listStats.Add(new Snippet($"{Game.map.KingsRoadLength} Length of King's Road"));
             listStats.Add(new Snippet(string.Format("{0} Actors ({1} Children)", numActors, numChildren)));
             listStats.Add(new Snippet(string.Format("{0} Secrets", numSecrets)));
             listStats.Add(new Snippet(string.Format("{0} Total Rumours  ({1} Normal, {2} Timed)", numRumours + numTimedRumours, numRumours, numTimedRumours)));
@@ -63,8 +65,8 @@ namespace Next_Game
             listStats.Add(new Snippet($"Total Population {population:N0}, Total Food Capacity {food:N0} Surplus/Shortfall {food - population:N0}"));
             string tradeText = string.Format("Total Net World Wealth {0}{1}", arrayTradeData[0] > 0 ? "+" : "", arrayTradeData[0]);
             listStats.Add(new Snippet(tradeText));
-            string goodsText = string.Format("Goods: Iron x {0}, Timber x {1}, Gold x {2}, Wine x {3}, Oil x {4}, Wool x {5}, Furs x {6}", arrayTradeData[(int)Goods.Iron], arrayTradeData[(int)Goods.Timber],
-                arrayTradeData[(int)Goods.Gold], arrayTradeData[(int)Goods.Wine], arrayTradeData[(int)Goods.Oil], arrayTradeData[(int)Goods.Wool], arrayTradeData[(int)Goods.Furs]);
+            string goodsText = string.Format("Goods: Iron x {0}, Timber x {1}, Wool x {2}, Fur x {3}, Oil x {4}, Wine x {5}, Gold x {6}", arrayTradeData[(int)Goods.Iron], arrayTradeData[(int)Goods.Timber],
+                arrayTradeData[(int)Goods.Wool], arrayTradeData[(int)Goods.Furs], arrayTradeData[(int)Goods.Oil], arrayTradeData[(int)Goods.Wine], arrayTradeData[(int)Goods.Gold]);
             listStats.Add(new Snippet(goodsText));
             //list of all Greathouses by power
             listStats.Add(new Snippet("Great Houses", RLColor.Yellow, RLColor.Black));

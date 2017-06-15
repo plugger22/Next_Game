@@ -8,7 +8,7 @@ namespace Next_Game.Cartographic
     //Capitals - all zero except where capital and shows house #, eg. '3'. Excludes Kings Capital
     //Topography - 1 is sea, 2 is land
     public enum MapLayer { Base, Movement, NPC, LocID, Debug, HouseID, Capitals, RefID, Geography, Terrain, GeoID, Road, Followers, Enemies, EnemiesDebug, Count } //Count must be last
-     
+
     //Main Map class (single instance, it's job is to set everything up at the start)
     public class Map
     {
@@ -19,7 +19,7 @@ namespace Next_Game.Cartographic
         private static int capitalX;
         private static int capitalY;
         private static int flashTimer; //controls flashing indicators on map
-        private int[,] arrayOfConnectors = new int[5,6];
+        private int[,] arrayOfConnectors = new int[5, 6];
         private List<Route> listOfRoutes = new List<Route>(); //list of all routes (excludes Connectors)
         private List<Route> listOfConnectors = new List<Route>(); //list of all special branch Connector routes
         private List<Location> listOfLocations = new List<Location>(); //list of all locations
@@ -29,6 +29,7 @@ namespace Next_Game.Cartographic
         private int offsetVertical; //number of rows to allow for header at top 
         private int offsetHorizontal; //number of rows to allow for indexes at left
         private bool _houses = false; //toggle, show house #'s (true) or location squares (false)
+        public int KingsRoadLength {get; set;}
         
 
         //default constructor assumes a square map/grid & random seed
@@ -2829,6 +2830,9 @@ namespace Next_Game.Cartographic
                 if (oldkingLoc != null)
                 {
                     List<Route> listRoute = oldkingLoc.GetRouteFromCapital();
+                    KingsRoadLength = 0; // needed for Road tax
+                    foreach (Route route in listRoute)
+                    { KingsRoadLength += route.GetDistance(); }
                     foreach (Route route in listRoute)
                     {
                         List<Position> pathList = route.GetPath();
@@ -2839,7 +2843,7 @@ namespace Next_Game.Cartographic
                 else { Game.SetError(new Error(45, "Invalid oldKingLoc (null)")); }
             }
             else { Game.SetError(new Error(45, "Invalid Old King LocID")); }
-
+            
             //Set up Connector Roads -> Road layer '3'
             List<Route> listConnectors = Game.map.GetConnectors();
             if (listConnectors.Count > 0)

@@ -32,7 +32,7 @@ namespace Next_Game
     public enum HorseStatus { None, Normal, Stabled, Lame, Exhausted, Gone}
     public enum HorseGone { None, Stolen, RunOff, Abandoned, Drowned, PutDown, Eaten, Murdered, Killed}
     public enum FoodInfo { None, Surplus, Deficit, House, Branch} //used to determine which food info is displayed / required
-    public enum Goods { None, Food, Iron, Timber, Gold, Wine, Oil, Wool, Furs, Count} //goods that are imported / exported throughout world. Tracked by House.
+    public enum Goods { None, Food, Iron, Timber, Oil, Wool, Furs, Wine, Gold, Count} //goods that are imported / exported throughout world. Tracked by House.
     public enum Season { None, Spring, Summer, Autumn, Winter} //controlled by Game.SeasonTimer
     public enum Finance { None, Gold_Bank, Merchant_Guild, Goblin_Bank, Count} //source of finance in decreasing order of respectibility
     public enum Income { None, Lords, Merchants, Churches, Crafters, Roads, Harbours, Virgins, Count} //all are ... 'Tax on <Income>'

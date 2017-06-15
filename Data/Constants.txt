@@ -128,6 +128,14 @@
 88: 100 @ 100 @ 200
 # CHURCH_TAX -> gold per church (total # of Major Houses plus big church in Capital worth 5 other churches)
 89: 100 @ 50 @ 200
+# CRAFTER_TAX -> gold amount, per finished good, from taxing crafters at the Normal Tax rate
+90: 50 @ 25 @ 100
+# ROAD_TAX -> tax on King's Road, gold amount per square length of road, at the Normal tax rate
+91: 50 @ 25 @ 100
+# HARBOUR_TAX -> gold amount per harbour, at the normal tax rate
+92: 200 @ 100 @ 500
+# VIRGIN_TAX -> gold amount per thousand people in the whole kingdom
+93: 10 @ 10 @ 40
 
 # Events ---
 
@@ -230,4 +238,4 @@
 # REL_RUMOUR_TIME -> how many tunrs a relationship rumour exists for and the interval (time + 1) before initialising new ones.
 75: 20 @ 5 @ 30
 
-# Next valid number -> 90
+# Next valid number -> 94

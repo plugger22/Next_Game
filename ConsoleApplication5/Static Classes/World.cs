@@ -7233,8 +7233,12 @@ namespace Next_Game
             int importTax = Game.constant.GetValue(Global.IMPORT_TAX);
             int exportTax = Game.constant.GetValue(Global.EXPORT_TAX);
             int churchTax = Game.constant.GetValue(Global.CHURCH_TAX);
+            int crafterTax = Game.constant.GetValue(Global.CRAFTER_TAX);
+            int roadTax = Game.constant.GetValue(Global.ROAD_TAX);
+            int harbourTax = Game.constant.GetValue(Global.HARBOUR_TAX);
+            int virginTax = Game.constant.GetValue(Global.VIRGIN_TAX);
             int balance = 0;
-            int tally, income;
+            int tally, income, trade;
             TaxRate taxRate;
             if (capital != null)
             {
@@ -7249,16 +7253,16 @@ namespace Next_Game
                 taxRate = TaxRate.Normal;
                 int[,] arrayOfImports = capital.GetImports();
                 int[,] arrayOfExports = capital.GetExports();
-                tally = GetValueOfGoods(arrayOfImports);
-                tally += GetValueOfGoods(arrayOfExports);
-                income = tally * importTax * (int)taxRate / 2;
+                trade = GetValueOfGoods(arrayOfImports);
+                trade += GetValueOfGoods(arrayOfExports);
+                income = trade * importTax * (int)taxRate / 2;
                 capital.SetIncome(Income.Lords, income);
                 capital.SetIncomeStatus(Income.Lords, true);
                 capital.SetIncomeTax(Income.Lords, taxRate);
 
                 //Calculate value of Export taxes (Merchants) base on num and type of Exports (finished products, essentially identical to above) -> Food is excluded
                 taxRate = TaxRate.Normal;
-                income = tally * exportTax * (int)taxRate / 2;
+                income = trade * exportTax * (int)taxRate / 2;
                 capital.SetIncome(Income.Merchants, income);
                 capital.SetIncomeStatus(Income.Merchants, true);
                 capital.SetIncomeTax(Income.Merchants, taxRate);
@@ -7270,6 +7274,37 @@ namespace Next_Game
                 capital.SetIncome(Income.Churches, income);
                 capital.SetIncomeStatus(Income.Churches, true);
                 capital.SetIncomeTax(Income.Churches, taxRate);
+
+                //Calculate value of Crafter tax (fixed amount * # of finished trade goods)
+                taxRate = TaxRate.Normal;
+                income = trade * crafterTax * (int)taxRate / 2;
+                capital.SetIncome(Income.Crafters, income);
+                capital.SetIncomeStatus(Income.Crafters, true);
+                capital.SetIncomeTax(Income.Crafters, taxRate);
+
+                //Calculates value of Road tax (fixed amount * # of squares length of King's Road)
+                taxRate = TaxRate.Normal;
+                tally = Game.map.KingsRoadLength;
+                income = tally * roadTax * (int)taxRate / 2;
+                capital.SetIncome(Income.Roads, income);
+                capital.SetIncomeStatus(Income.Roads, true);
+                capital.SetIncomeTax(Income.Roads, taxRate);
+
+                //Calculates value of Harbour tax (fixed amount per port in the Kingdom)
+                taxRate = TaxRate.Normal;
+                tally = Game.network.GetNumPorts();
+                income = tally * harbourTax * (int)taxRate / 2;
+                capital.SetIncome(Income.Harbours, income);
+                capital.SetIncomeStatus(Income.Harbours, true);
+                capital.SetIncomeTax(Income.Harbours, taxRate);
+
+                //Calculates value of Virgin tax (fixed amount per thousand population in the Kingdom)
+                taxRate = TaxRate.Normal;
+                tally = GetWorldPopulation() / 1000;
+                income = tally * virginTax * (int)taxRate / 2;
+                capital.SetIncome(Income.Virgins, income);
+                capital.SetIncomeStatus(Income.Virgins, true);
+                capital.SetIncomeTax(Income.Virgins, taxRate);
             }
             else { Game.SetError(new Error(310, "Invalid Capital (null) -> Royal Accounts not initialised")); }
         }
@@ -7312,6 +7347,17 @@ namespace Next_Game
             return total;
         }
 
+        /// <summary>
+        /// Returns total world population
+        /// </summary>
+        /// <returns></returns>
+        internal int GetWorldPopulation()
+        {
+            int population = 0;
+            foreach (var house in dictAllHouses)
+            { population += house.Value.Population; }
+            return population;
+        }
 
         /// <summary>
         /// End of Game Turn Game housekeeping

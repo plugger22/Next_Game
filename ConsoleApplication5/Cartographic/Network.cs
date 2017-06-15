@@ -2585,6 +2585,19 @@ namespace Next_Game.Cartographic
         public int[,] GetNetworkAnalysis()
         { return arrayOfNetworkAnalysis; }
 
+
+        /// <summary>
+        /// Returns the number of Ports in the world
+        /// </summary>
+        /// <returns></returns>
+        public int GetNumPorts()
+        {
+            int numPorts = 0;
+            foreach(var loc in dictLocations)
+            { if (loc.Value.isPort == true) { numPorts++; } }
+            return numPorts;
+        }
+
         //methods above here
     }
 }

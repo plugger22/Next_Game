@@ -195,8 +195,8 @@ namespace Next_Game
                     menuArrayText[0, 0] = "[G] Draw Route";
                     menuArrayText[0, 1] = "[D] Route Debug";
                     menuArrayText[0, 2] = "[R] Routes";
-                    menuArrayText[0, 3] = "[M] Map (House ID's)";
-                    menuArrayText[0, 4] = "[I] Toggle Info";
+                    menuArrayText[0, 3] = "[M] Map Toggle";
+                    menuArrayText[0, 4] = "[I] Info Toggle";
                     menuArrayText[0, 5] = "[A] Show GameVars";
                     menuArrayText[0, 6] = "[C] Show GameStats";
                     //Debug Info commands
