@@ -7259,6 +7259,8 @@ namespace Next_Game
                 capital.SetIncome(Income.Lords, income);
                 capital.SetIncomeStatus(Income.Lords, true);
                 capital.SetIncomeTax(Income.Lords, taxRate);
+                capital.SetIncomeReference(Income.Lords, trade);
+                capital.SetIncomeConstant(Income.Lords, importTax);
 
                 //Calculate value of Export taxes (Merchants) base on num and type of Exports (finished products, essentially identical to above) -> Food is excluded
                 taxRate = TaxRate.Normal;
@@ -7266,6 +7268,8 @@ namespace Next_Game
                 capital.SetIncome(Income.Merchants, income);
                 capital.SetIncomeStatus(Income.Merchants, true);
                 capital.SetIncomeTax(Income.Merchants, taxRate);
+                capital.SetIncomeReference(Income.Merchants, trade);
+                capital.SetIncomeConstant(Income.Merchants, exportTax);
 
                 //Calculate value of Church tax (fixed amount * # Churches in Major Houses + Capital, that varies depending on tax Rate)
                 taxRate = TaxRate.Normal;
@@ -7274,6 +7278,8 @@ namespace Next_Game
                 capital.SetIncome(Income.Churches, income);
                 capital.SetIncomeStatus(Income.Churches, true);
                 capital.SetIncomeTax(Income.Churches, taxRate);
+                capital.SetIncomeReference(Income.Churches, tally);
+                capital.SetIncomeConstant(Income.Churches, churchTax);
 
                 //Calculate value of Crafter tax (fixed amount * # of finished trade goods)
                 taxRate = TaxRate.Normal;
@@ -7281,6 +7287,8 @@ namespace Next_Game
                 capital.SetIncome(Income.Crafters, income);
                 capital.SetIncomeStatus(Income.Crafters, true);
                 capital.SetIncomeTax(Income.Crafters, taxRate);
+                capital.SetIncomeReference(Income.Crafters, trade);
+                capital.SetIncomeConstant(Income.Crafters, crafterTax);
 
                 //Calculates value of Road tax (fixed amount * # of squares length of King's Road)
                 taxRate = TaxRate.Normal;
@@ -7289,6 +7297,8 @@ namespace Next_Game
                 capital.SetIncome(Income.Roads, income);
                 capital.SetIncomeStatus(Income.Roads, true);
                 capital.SetIncomeTax(Income.Roads, taxRate);
+                capital.SetIncomeReference(Income.Roads, tally);
+                capital.SetIncomeConstant(Income.Roads, roadTax);
 
                 //Calculates value of Harbour tax (fixed amount per port in the Kingdom)
                 taxRate = TaxRate.Normal;
@@ -7297,6 +7307,8 @@ namespace Next_Game
                 capital.SetIncome(Income.Harbours, income);
                 capital.SetIncomeStatus(Income.Harbours, true);
                 capital.SetIncomeTax(Income.Harbours, taxRate);
+                capital.SetIncomeReference(Income.Harbours, tally);
+                capital.SetIncomeConstant(Income.Harbours, harbourTax);
 
                 //Calculates value of Virgin tax (fixed amount per thousand population in the Kingdom)
                 taxRate = TaxRate.Normal;
@@ -7305,6 +7317,8 @@ namespace Next_Game
                 capital.SetIncome(Income.Virgins, income);
                 capital.SetIncomeStatus(Income.Virgins, true);
                 capital.SetIncomeTax(Income.Virgins, taxRate);
+                capital.SetIncomeReference(Income.Virgins, tally);
+                capital.SetIncomeConstant(Income.Virgins, virginTax);
             }
             else { Game.SetError(new Error(310, "Invalid Capital (null) -> Royal Accounts not initialised")); }
         }

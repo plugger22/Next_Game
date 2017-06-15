@@ -30,3 +30,6 @@ Seed 41493 -> Thursday, 15 June 2017 8:55 PM
 Seed 42237 -> Thursday, 15 June 2017 9:05 PM
 Seed 60474 -> Thursday, 15 June 2017 9:05 PM
 Seed 22401 -> Thursday, 15 June 2017 9:06 PM
+Seed 1361 -> Friday, 16 June 2017 8:44 AM
+Seed 64720 -> Friday, 16 June 2017 9:03 AM
+Seed 40184 -> Friday, 16 June 2017 9:18 AM
