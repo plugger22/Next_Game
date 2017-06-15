@@ -169,6 +169,89 @@ namespace Next_Game
         }
 
         /// <summary>
+        /// Display Kingdom finances
+        /// </summary>
+        public void ShowKingFinancesRL()
+        {
+            List<Snippet> listDisplay = new List<Snippet>();
+            CapitalHouse capital = Game.world.GetCapital();
+            RLColor goodColor = Color._goodTrait;
+            RLColor badColor = Color._badTrait;
+            RLColor activeColor = RLColor.White;
+            RLColor inactiveColor = RLColor.LightGray;
+            RLColor displayColor;
+            int amount, balance;
+            int cashflow = 0; ;
+            int spacer = 2; //number of blank lines between data groups
+            if (capital != null)
+            {
+                //Income
+                balance = 0;
+                listDisplay.Add(new Snippet("--- Income", RLColor.Yellow, RLColor.Black));
+                for (int i = 1; i < (int)Income.Count; i++)
+                {
+                    amount = capital.GetIncome((Income)i);
+                    balance += amount;
+                    if (capital.GetIncomeStatus((Income)i) == true) { displayColor = activeColor; } else { displayColor = inactiveColor; }
+                    listDisplay.Add(new Snippet($"{"Taxes on " + (Income)i, -30}{amount:N0}", displayColor, RLColor.Black));
+                }
+                cashflow += balance;
+                if (balance > 0) { displayColor = goodColor; } else { displayColor = badColor; }
+                listDisplay.Add(new Snippet($"{"Balance",-30}{balance:N0} gold coins", displayColor, RLColor.Black));
+                //spacer
+                for (int i = 0; i < spacer; i++)
+                { listDisplay.Add(new Snippet("")); }
+                //Expenses
+                balance = 0;
+                listDisplay.Add(new Snippet("--- Expenses", RLColor.Yellow, RLColor.Black));
+                for (int i = 1; i < (int)Expense.Count; i++)
+                {
+                    amount = capital.GetExpense((Expense)i);
+                    balance += amount;
+                    if (capital.GetExpenseStatus((Expense)i) == true) { displayColor = activeColor; } else { displayColor = inactiveColor; amount = 0; }
+                    listDisplay.Add(new Snippet($"{"Cost of " + (Expense)i, -30}{amount:N0}", displayColor, RLColor.Black));
+                }
+                cashflow += balance;
+                if (balance > 0) { displayColor = goodColor; } else { displayColor = badColor; }
+                listDisplay.Add(new Snippet($"{"Balance",-30}{balance:N0} gold coins", displayColor, RLColor.Black));
+                //spacer
+                for (int i = 0; i < spacer; i++)
+                { listDisplay.Add(new Snippet("")); }
+                //Summary
+                balance = 0;
+                listDisplay.Add(new Snippet("--- Summary", RLColor.Yellow, RLColor.Black));
+                for (int i = 1; i < (int)LumpSum.Count; i++)
+                {
+                    amount = capital.GetLumpSum((LumpSum)i);
+                    balance += amount;
+                    if (capital.GetIncomeStatus((Income)i) == true) { displayColor = activeColor; } else { displayColor = inactiveColor; amount = 0; }
+                    listDisplay.Add(new Snippet($"{(LumpSum)i, -30}{amount:N0}", displayColor, RLColor.Black));
+                }
+                //cashflow (Income - Expenses)
+                if (cashflow > 0) { displayColor = goodColor; } else { displayColor = badColor; }
+                listDisplay.Add(new Snippet($"{"Net Cashflow",-30}{cashflow:N0}", displayColor, RLColor.Black));
+                balance += cashflow;
+                if (balance > 0) { displayColor = goodColor; } else { displayColor = badColor; }
+                listDisplay.Add(new Snippet($"{"Balance", -30}{balance:N0} gold coins", displayColor, RLColor.Black));
+                //spacer
+                for (int i = 0; i < spacer; i++)
+                { listDisplay.Add(new Snippet("")); }
+                //Outstanding Loans
+                listDisplay.Add(new Snippet("--- Loans", RLColor.Yellow, RLColor.Black));
+                if (capital.GetNumOfLoans() > 0)
+                {
+                    List<Finance> listOfLoans = capital.GetLoans();
+                    for (int i = 0; i < listOfLoans.Count; i++)
+                    { listDisplay.Add(new Snippet($"Loan with the {listOfLoans[i]} for 10,000 Gold")); }
+                }
+                else { listDisplay.Add(new Snippet("No Loans are currently outstanding")); }
+                //display data
+                Game.infoChannel.SetInfoList(listDisplay, ConsoleDisplay.Multi);
+            }
+            else { Game.SetError(new Error(309, "Invalid Capital (null) -> no rel's shown")); }
+        }
+
+        /// <summary>
         /// Generate a list of All Known Rumours
         /// <param name="displayMode">Which filtered set do you wish to display?</param>
         /// <param name="data">A multipurpose data point that can be used to further filter rumours, eg. RefID for House Rumours, has a default of '0'</param>

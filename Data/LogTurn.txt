@@ -1,18 +1,108 @@
-//Exile Game file ops "LogTurn.txt" commenced at: 15/06/2017 09:38:15
---- ProcessStartGame (World.cs)
---- AgePassiveCharacters (History.cs)
---- InitialiseGameVars (World.cs)
-[GameVar] View_Index changed from 0 to 1
-[GameVar] View_Rollover changed from 0 to 6
-[AddVisitedLoc] LocID 5, "Clegane's Keep", turn -3 -> record added to listLocsVisited
-[AddVisitedLoc] LocID 5, "Clegane's Keep", turn -3 -> new record added to dictLocsVisited
-[AddVisitedLoc] LocID 2, "The Pickled Prune", turn -2 -> record added to listLocsVisited
-[AddVisitedLoc] LocID 2, "The Pickled Prune", turn -2 -> new record added to dictLocsVisited
-[AddVisitedLoc] LocID 21, "Bloodkeep", turn -1 -> record added to listLocsVisited
-[AddVisitedLoc] LocID 21, "Bloodkeep", turn -1 -> new record added to dictLocsVisited
---- InitialiseFinalPlayer (World.cs)
-[AddVisitedLoc] LocID 20, "Fishfork", turn 0 -> record added to listLocsVisited
-[AddVisitedLoc] LocID 20, "Fishfork", turn 0 -> new record added to dictLocsVisited
+//Exile Game File "LogTurn.txt" opened at: 15/06/2017 12:02:12
+--- ProcessStartTurn (World.cs)
+Day 1, Turn 1, Harvest in 141 days, Winter in 156 days, SeasonTimer 246
+Usurper Jon Tully, "The Simpleton", AtLocation, Highgarden
+--- UpdateRumours (World.cs)
+dictRumoursTimed (Start) -> 101 records
+101 rumours -> TimerExpire decremented
+--- MoveActors -> 0 Records (World.cs)
+--- UpdatePlayerStatus (World.cs)
+--- UpdateWorldStatus (World.cs)
+--- CheckFollowerActivity (World.cs)
+--- GetRumour (Director.cs)
+arrayOfRumours [0] -> RumourID 66, Strength 4, Scope Global, Type Disguise, Global All
+arrayOfRumours [3] -> RumourID 449, Strength 2, Scope Global, Type HouseRel, Global South
+arrayOfRumours [5] -> RumourID 512, Strength 3, Scope Local, Type Goods, Global All
+RumourID 66 selected from the Pool
+Rumour "It is well known that Disguises can be had from Castellan Vayon Segar, ActID 33 at Eyrie" revealed to ActorID9 on turn 1 -> added to List
+RumourID 66 removed from listRumoursGlobal[2]
+Follower The Beast, ActID 9, added RumourID 66
+--- GetRumour (Director.cs)
+arrayOfRumours [0] -> RumourID 274, Strength 1, Scope Global, Type Item, Global All
+arrayOfRumours [3] -> RumourID 431, Strength 2, Scope Global, Type HouseRel, Global South
+arrayOfRumours [5] -> RumourID 185, Strength 4, Scope Local, Type Skill, Global All
+RumourID 274 selected from the Pool
+Rumour "It is said that the dreaded Chalice of Pain (Passive Item) is to be found at Riverrun" revealed to ActorID7 on turn 1 -> added to List
+RumourID 274 removed from listRumoursGlobal[12]
+Follower The Leper, ActID 7, added RumourID 274
+--- GetRumour (Director.cs)
+arrayOfRumours [0] -> RumourID 592, Strength 3, Scope Global, Type Enemy, Global All
+arrayOfRumours [1] -> RumourID 462, Strength 2, Scope Global, Type HouseRel, Global North
+arrayOfRumours [5] -> RumourID 252, Strength 4, Scope Local, Type Skill, Global All
+RumourID 252 selected from the Pool
+Rumour "BannerLord Gilibertus Bracken "The Disciplinarian", ActID 108 at Stone Hedge, is suspected to be Manipulative" revealed to ActorID4 on turn 1 -> added to List
+RumourID 252 removed from listRumoursHouse[2]
+Follower The Duchess, ActID 4, added RumourID 252
+BannerLord Gilibertus Bracken, ActID 108, has their Treachery changed to True
+--- GetMarketView (Director.cs)
+[GameVar] View_Index changed from 2 to 3
+--- CheckStationaryActiveActors (World.cs)
+ [Search -> Stationary] Usurper Jon Tully, ActID 1 is AtLocation
+--- CheckIfFoundActive (World.cs)
+ [Search -> Debug] Enemy, Brother Mastema, ID 134 at 13:16, Active Jon Tully, ID 1, at 3:11
+ [Search -> Debug] Enemy, Brother Dagon, ID 135 at 13:16, Active Jon Tully, ID 1, at 3:11
+ [Search -> Debug] Enemy, Brother Shiva, ID 136 at 13:16, Active Jon Tully, ID 1, at 3:11
+ [Search -> Debug] Enemy, Brother Haborym, ID 137 at 13:16, Active Jon Tully, ID 1, at 3:11
+ [Search -> Debug] Enemy, The Unrelenting, ID 138 at 13:16, Active Jon Tully, ID 1, at 3:11
+ [Search -> Stationary] Follower The Beast, ActID 9 is AtLocation
+ [Search -> Stationary] Follower The Leper, ActID 7 is AtLocation
+ [Search -> Stationary] Follower The Duchess, ActID 4 is AtLocation
+--- UpdateAIController (World.cs)
+ [AI -> Player Unknown] Inquisitor Brother Mastema, Act ID 134 Mode -> Normal
+ [AI -> Player Unknown] Inquisitor Brother Dagon, Act ID 135 Mode -> Normal
+ [AI -> Player Unknown] Inquisitor Brother Shiva, Act ID 136 Mode -> Normal
+ [AI -> Player Unknown] Inquisitor Brother Haborym, Act ID 137 Mode -> Normal
+ [AI -> Player Unknown] Nemesis The Unrelenting, Act ID 138 Mode -> Normal
+--- SetEnemyActivity (World.cs)
+ [Enemy -> Known] Brother Mastema ActID 134 has become KNOWN
+ [Enemy -> Goal] Brother Mastema, ActID 134 retains Goal -> Wait
+ [Enemy -> Goal] Brother Dagon, ActID 135 retains Goal -> Wait
+ [Enemy -> Goal] Brother Shiva, ActID 136 retains Goal -> Wait
+ [Enemy -> Goal] Brother Haborym, ActID 137 retains Goal -> Wait
+--- SetEnemyGoal (World.cs)
+ [Goal -> Branch] The Unrelenting, ActID 138 Assigned Branch -> 0 Current Branch -> 0
+ [Goal -> New] The Unrelenting, ActID 138, (loc 13:16), assigned new Goal -> Hide
+--- CheckPlayerEvents (Director.cs)
+Location event, Need 0, roll 4
+- CreateAutoLocEvent (Director.cs)
+ [AutoEvent -> ActorList] "Chayle Tyrell", ID 63 added to list of Actors
+ [AutoEvent -> ActorList] "Pereret Alane", ID 66 added to list of Actors
+ [AutoEvent -> ActorList] "Joseth Derric", ID 67 added to list of Actors
+ [AutoEvent -> ActorList] "Christy Remfrey", ID 68 added to list of Actors
+ [AutoEvent -> ActorList] "Rainald Tyrell", ID 69 added to list of Actors
+ [AutoEvent -> ActorList] "Walder Tyrell", ID 70 added to list of Actors
+ [AutoEvent -> ActorList] "Auelin Tyrell", ID 71 added to list of Actors
+ [AutoEvent -> ActorList] "Bela Tyrell", ID 72 added to list of Actors
+ [AutoEvent -> ActorList] "Tytos Tyrell", ID 73 added to list of Actors
+ [AutoEvent -> LocalList] "Chayle Tyrell", ID 63 added to list of Locals
+ [AutoEvent -> AdvisorList] "Pereret Alane", ID 66 added to list of Advisors
+ [AutoEvent -> AdvisorList] "Joseth Derric", ID 67 added to list of Advisors
+ [AutoEvent -> AdvisorList] "Christy Remfrey", ID 68 added to list of Advisors
+ [AutoEvent -> LocalList] "Rainald Tyrell", ID 69 added to list of Locals
+ [AutoEvent -> LocalList] "Walder Tyrell", ID 70 added to list of Locals
+ [AutoEvent -> LocalList] "Auelin Tyrell", ID 71 added to list of Locals
+ [AutoEvent -> LocalList] "Bela Tyrell", ID 72 added to list of Locals
+ [AutoEvent -> LocalList] "Tytos Tyrell", ID 73 added to list of Locals
+[Notification] No entry found in dictOfIntroductions for RefID 10
+ Chance of Player Location event 75 %
+--- ResolvePlayerEvents (Director.cs)
+ Trigger FAILED on "0" Equals 1
+ Trigger: Player is wrong type of Known status -> Trigger failed
+ Trigger FAILED on "0" Equals 1
+ Trigger: Player is wrong type of Known status -> Trigger failed
+ Trigger FAILED on "0" Equals 1
+ Trigger: Player is wrong type of Known status -> Trigger failed
+ Trigger FAILED on "0" Equals 1
+ Trigger: Player is wrong type of Known status -> Trigger failed
+ Event "What to do?" Timer Repeat now 999
+ Event "What to do?" Cooldown Timer has been reset to 0
+--- UpdateActiveActors (World.cs)
+ Usurper Jon Tully has had their TurnsUnknown Timer increased from 100 to 101
+ Follower The Beast has had their TurnsUnknown Timer increased from 0 to 1
+ Follower The Leper has had their TurnsUnknown Timer increased from 0 to 1
+ Follower The Duchess has had their TurnsUnknown Timer increased from 0 to 1
+--- ResolveOutcome (Director.cs)
+ Inactive (greyed out) Option chosen for "What to do?", option # 1
 --- SetEndGame (Game.cs)
 [Alert] Player chose to exit (pressed 'X')
-//Exile Game file ops "LogTurn.txt" Completed at: 15/06/2017 09:41:40
+//Exile Game file ops "LogTurn.txt" Completed at: 15/06/2017 12:02:15

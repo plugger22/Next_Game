@@ -670,6 +670,9 @@ namespace Next_Game
                                         infoChannel.SetInfoList(world.GetLoreSet(keyPress), ConsoleDisplay.Multi);
                                         infoChannel.InsertHeader(new Snippet("--- Fate of Royal Family LORE", RLColor.Yellow, RLColor.Black), ConsoleDisplay.Multi);
                                         break;
+                                    case MenuMode.King:
+                                        display.ShowKingFinancesRL();
+                                        break;
                                 }
                                 break;
                             case RLKey.G:

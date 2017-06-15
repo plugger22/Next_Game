@@ -358,19 +358,29 @@ namespace Next_Game
     /// 
     class CapitalHouse : House
     {
-        private List<Finance> listOfLoans; //who has lent money to the King
+        public int CashFlow { get; set; } //net financial balance (income - expenses)
+        public int Balance { get; set; } //total gold available in treasury
+
         //collections
-        int[] arrayOfGroups; //relationship levels (0 - 100)  with the different WorldGroups (enum) within the Capital, Kingskeep
-        int[] arrayOfLenders; //relationship levels (0 - 100) with the different Lenders who you've obtained a loan from
+        private List<Finance> listOfLoans; //who has lent money to the King
+        private int[] arrayOfGroups; //relationship levels (0 - 100)  with the different WorldGroups (enum) within the Capital, Kingskeep
+        private int[] arrayOfLenders; //relationship levels (0 - 100) with the different Lenders who you've obtained a loan from
+        private int[,] arrayOfIncome; // Director.cs enum Income -> [,0] Amount, [,1] Active Item (1 true, 0 false)
+        private int[,] arrayOfExpenses; // Director.cs enum Expense -> [,0] Amount, [,1] Active Item (1 true, 0 false)
+        private int[,] arrayOfLumpSums; // Director.cs enum LumpSums -> [,0] Amount, [,1] Active Item (1 true, 0 false)
 
         /// <summary>
         /// default constructor
         /// </summary>
         public CapitalHouse()
         {
+            
             listOfLoans = new List<Finance>();
             arrayOfGroups = new int[(int)WorldGroup.Count];
             arrayOfLenders = new int[(int)Finance.Count];
+            arrayOfIncome = new int[(int)Income.Count, 2];
+            arrayOfExpenses = new int[(int)Expense.Count, 2];
+            arrayOfLumpSums = new int[(int)LumpSum.Count, 2];
         }
 
         public void AddLoan(Finance loan)
@@ -422,6 +432,109 @@ namespace Next_Game
         /// <returns></returns>
         public int GetLenderRelations(Finance lender)
         { return arrayOfLenders[(int)lender]; }
+
+
+        public void SetIncome(Income income, int amount)
+        { arrayOfIncome[(int)income, 0] = amount; }
+
+        /// <summary>
+        /// Adds an amount to the exisitng income
+        /// </summary>
+        /// <param name="income"></param>
+        /// <param name="amount">Amount to Add (pass a negative number to subtract)</param>
+        public void ChangeIncome(Income income, int amount)
+        { arrayOfIncome[(int)income, 0] += amount; }
+
+        public int GetIncome(Income income)
+        { return arrayOfIncome[(int)income, 0]; }
+
+        /// <summary>
+        /// Returns true if income item is Active
+        /// </summary>
+        /// <param name="income"></param>
+        /// <returns></returns>
+        public bool GetIncomeStatus(Income income)
+        { if (arrayOfIncome[(int)income, 1] > 0) { return true; } return false; }
+
+        /// <summary>
+        /// Set Active status (true/false) for an income item
+        /// </summary>
+        /// <param name="income"></param>
+        /// <param name="status"></param>
+        public void SetIncomeStatus(Income income, bool status)
+        {
+            if (status == true) { arrayOfIncome[(int)income, 1] = 1; }
+            else { arrayOfIncome[(int)income, 1] = 0; }
+        }
+        
+        public void SetExpense(Expense expense, int amount)
+        { arrayOfExpenses[(int)expense, 0] = amount; }
+
+        /// <summary>
+        /// Adds an amount to the exisitng expense
+        /// </summary>
+        /// <param name="income"></param>
+        /// <param name="amount">Amount to Add (pass a negative number to subtract)</param>
+        public void ChangeExpense(Expense expense, int amount)
+        { arrayOfExpenses[(int)expense, 0] += amount; }
+
+        public int GetExpense(Expense expense)
+        { return arrayOfExpenses[(int)expense, 0]; }
+
+        /// <summary>
+        /// Returns true if Expense item is Active
+        /// </summary>
+        /// <param name="expense"></param>
+        /// <returns></returns>
+        public bool GetExpenseStatus(Expense expense)
+        { if (arrayOfExpenses[(int)expense, 1] > 0) { return true; } return false; }
+
+        /// <summary>
+        /// Set Active status (true/false) for an expense item
+        /// </summary>
+        /// <param name="expense"></param>
+        /// <param name="status"></param>
+        public void SetExpenseStatus(Expense expense, bool status)
+        {
+            if (status == true) { arrayOfExpenses[(int)expense, 1] = 1; }
+            else { arrayOfExpenses[(int)expense, 1] = 0; }
+        }
+
+        public void SetLumpSum(LumpSum lump, int amount)
+        { arrayOfLumpSums[(int)lump, 0] = amount; }
+
+        /// <summary>
+        /// Adds an amount to the exisitng LumpSum
+        /// </summary>
+        /// <param name="income"></param>
+        /// <param name="amount">Amount to Add (pass a negative number to subtract)</param>
+        public void ChangeLumpSum(LumpSum lump, int amount)
+        { arrayOfLumpSums[(int)lump, 0] += amount; }
+
+        public int GetLumpSum(LumpSum lump)
+        { return arrayOfLumpSums[(int)lump, 0]; }
+
+        /// <summary>
+        /// Returns true if LumpSum item is Active
+        /// </summary>
+        /// <param name="lump"></param>
+        /// <returns></returns>
+        public bool GetLumpSumStatus(LumpSum lump)
+        { if (arrayOfLumpSums[(int)lump, 1] > 0) { return true; } return false; }
+
+        /// <summary>
+        /// Set Active status (true/false) for a LumpSum item
+        /// </summary>
+        /// <param name="lump"></param>
+        /// <param name="status"></param>
+        public void SetLumpSumStatus(LumpSum lump, bool status)
+        {
+            if (status == true) { arrayOfLumpSums[(int)lump, 1] = 1; }
+            else { arrayOfLumpSums[(int)lump, 1] = 0; }
+        }
+
+
+        //end Capital Methods
     }
 
     //
