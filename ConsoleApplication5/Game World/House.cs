@@ -359,7 +359,7 @@ namespace Next_Game
     class CapitalHouse : House
     {
         public int CashFlow { get; set; } //net financial balance (income - expenses)
-        public int Balance { get; set; } //total gold available in treasury
+        //public int Balance { get; set; } //total gold available in treasury
 
         //collections
         private List<Finance> listOfLoans; //who has lent money to the King

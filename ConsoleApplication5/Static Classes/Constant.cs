@@ -59,6 +59,7 @@ namespace Next_Game
         INQUISITORS,
         HORSE_HEALTH,
         LOAN_CHANCE,
+        LOAN_AMOUNT,
         //Events
         TRAIT_MULTIPLIER,
         TEST_MULTIPLIER,
@@ -207,6 +208,7 @@ namespace Next_Game
             arrayOfGlobals[83] = Global.GOODS_MED;
             arrayOfGlobals[84] = Global.SAFE_HOUSE;
             arrayOfGlobals[85] = Global.LOAN_CHANCE;
+            arrayOfGlobals[86] = Global.LOAN_AMOUNT;
         }
 
         /// <summary>

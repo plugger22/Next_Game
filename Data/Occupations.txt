@@ -12,6 +12,7 @@ Jailer
 Judge 
 Pursuivant 
 Sherrif
+Tax Collector
 
 [Church]
 Pilgrim 

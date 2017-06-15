@@ -28,9 +28,9 @@
 # Followers ---
 
 # START_FOLLOWERS -> number of followers at game start (max 6)
-28: 3 @ 0 @ 4
+28: 1 @ 0 @ 4
 # MAX_FOLLOWERS -> can't have any more than this
-67: 6 @ 0 @ 8
+67: 3 @ 0 @ 8
 # RECRUIT_FOLLOWERS -> % chance of a 'Recruit Followers..' option appearing at an Inn each time
 68: 80 @ 10 @ 100
 
@@ -117,6 +117,8 @@
 78: 10 @ 3 @ 12
 # LOAN_CHANCE -> % chance of new King taking out a loan for every capital.Resourse level below max.
 85: 40 @ 10 @ 80
+# LOAN_AMOUNT -> Value of a loan in gold coins ALSO the value of one resource level for the Kingdom
+86: 10000 @ 10000 @ 10000
 
 # Events ---
 
@@ -219,4 +221,4 @@
 # REL_RUMOUR_TIME -> how many tunrs a relationship rumour exists for and the interval (time + 1) before initialising new ones.
 75: 20 @ 5 @ 30
 
-# Next valid number -> 86
+# Next valid number -> 87

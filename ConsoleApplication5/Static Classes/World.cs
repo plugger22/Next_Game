@@ -119,6 +119,7 @@ namespace Next_Game
             Game.StopTimer(timer_2, "W: InitialiseHistory");
             timer_2.Start();
             InitialiseHouseData(); //needs to be before InitialiseDesires but after InitialiseOverthrow
+            InitialiseRoyalAccounts();
             InitialiseConversionDicts(); //needs to be after history methods (above) & before InitialiseEnemyActors (below)
             InitialiseSecrets();
             InitialiseDesires();
@@ -7220,6 +7221,33 @@ namespace Next_Game
             }
             return tempList;
         }
+
+
+        /// <summary>
+        /// sets up financial situation at game start for the new King
+        /// </summary>
+        internal void InitialiseRoyalAccounts()
+        {
+            CapitalHouse capital = GetCapital();
+            int goldAmount = Game.constant.GetValue(Global.LOAN_AMOUNT);
+            int balance = 0;
+            if (capital != null)
+            {
+                //Treasury at game start (one gold LOAN_AMOUNT per level + random half level)
+                for (int i = 0; i < capital.Resources; i++)
+                { balance += goldAmount; }
+                balance += rnd.Next(goldAmount / 2);
+                capital.SetLumpSum(LumpSum.Treasury, balance);
+                capital.SetLumpSumStatus(LumpSum.Treasury, true);
+                //Calculate value of Import taxes (Lords) based on num and type of imports (include any exports from Capital in this)
+                int[,] arrayOfImports = capital.GetImports();
+                int[,] arrayOfExports = capital.GetExports();
+
+                
+            }
+            else { Game.SetError(new Error(310, "Invalid Capital (null) -> Royal Accounts not initialised")); }
+        }
+
 
         /// <summary>
         /// End of Game Turn Game housekeeping

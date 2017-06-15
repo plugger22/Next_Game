@@ -180,11 +180,19 @@ namespace Next_Game
             RLColor activeColor = RLColor.White;
             RLColor inactiveColor = RLColor.LightGray;
             RLColor displayColor;
-            int amount, balance;
+            int amount, balance, accounts;
             int cashflow = 0; ;
             int spacer = 2; //number of blank lines between data groups
             if (capital != null)
             {
+                //Header
+                listDisplay.Add(new Snippet("--- Ye Olde Financial Records", RLColor.Yellow, RLColor.Black));
+                accounts = 30 - (Game.gameTurn % 30) - 1;
+                accounts = Math.Max(1, accounts);
+                listDisplay.Add(new Snippet(string.Format("Next tally available in {0} day{1}", accounts, accounts != 1 ? "s" : "")));
+                //spacer
+                for (int i = 0; i < spacer; i++)
+                { listDisplay.Add(new Snippet("")); }
                 //Income
                 balance = 0;
                 listDisplay.Add(new Snippet("--- Income", RLColor.Yellow, RLColor.Black));
@@ -224,7 +232,7 @@ namespace Next_Game
                 {
                     amount = capital.GetLumpSum((LumpSum)i);
                     balance += amount;
-                    if (capital.GetIncomeStatus((Income)i) == true) { displayColor = activeColor; } else { displayColor = inactiveColor; amount = 0; }
+                    if (capital.GetLumpSumStatus((LumpSum)i) == true) { displayColor = activeColor; } else { displayColor = inactiveColor; amount = 0; }
                     listDisplay.Add(new Snippet($"{(LumpSum)i, -30}{amount:N0}", displayColor, RLColor.Black));
                 }
                 //cashflow (Income - Expenses)
@@ -240,9 +248,10 @@ namespace Next_Game
                 listDisplay.Add(new Snippet("--- Loans", RLColor.Yellow, RLColor.Black));
                 if (capital.GetNumOfLoans() > 0)
                 {
+                    amount = Game.constant.GetValue(Global.LOAN_AMOUNT);
                     List<Finance> listOfLoans = capital.GetLoans();
                     for (int i = 0; i < listOfLoans.Count; i++)
-                    { listDisplay.Add(new Snippet($"Loan with the {listOfLoans[i]} for 10,000 Gold")); }
+                    { listDisplay.Add(new Snippet($"Loan with the {listOfLoans[i]} for {amount:N0} Gold")); }
                 }
                 else { listDisplay.Add(new Snippet("No Loans are currently outstanding")); }
                 //display data
