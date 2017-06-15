@@ -7231,6 +7231,7 @@ namespace Next_Game
             CapitalHouse capital = GetCapital();
             int goldAmount = Game.constant.GetValue(Global.LOAN_AMOUNT);
             int balance = 0;
+            int tally, incomeImports;
             if (capital != null)
             {
                 //Treasury at game start (one gold LOAN_AMOUNT per level + random half level)
@@ -7239,13 +7240,60 @@ namespace Next_Game
                 balance += rnd.Next(goldAmount / 2);
                 capital.SetLumpSum(LumpSum.Treasury, balance);
                 capital.SetLumpSumStatus(LumpSum.Treasury, true);
-                //Calculate value of Import taxes (Lords) based on num and type of imports (include any exports from Capital in this)
+
+                //Calculate value of Import taxes (Lords) based on num and type of imports (include any exports from Capital in this) -> Food is excluded
                 int[,] arrayOfImports = capital.GetImports();
                 int[,] arrayOfExports = capital.GetExports();
+                tally = GetValueOfGoods(arrayOfImports);
+                tally += GetValueOfGoods(arrayOfExports);
+                incomeImports = tally * 100;
+                capital.SetIncome(Income.Lords, incomeImports);
+                capital.SetIncomeStatus(Income.Lords, true);
 
-                
+
+
+
+
             }
             else { Game.SetError(new Error(310, "Invalid Capital (null) -> Royal Accounts not initialised")); }
+        }
+
+        /// <summary>
+        /// private submethod to calculate the value of trade goods in capital (used for Imports/Exports). All goods are value 1 except wine being 2 and gold is worth 3. Food is excluded.
+        /// </summary>
+        /// <param name="tempGoods">arrayOfImports or arrayOfExports</param>
+        /// <returns></returns>
+        private int GetValueOfGoods(int[,] tempGoods)
+        {
+            Goods good;
+            
+            int total = 0;
+            for (int i = 0; i < tempGoods.GetUpperBound(0); i++)
+            {
+                int tally = 0;
+                if (tempGoods[i, 0] > 0)
+                {
+                    good = (Goods)i;
+                    //different goods have different effects
+                    switch (good)
+                    {
+                        case Goods.Gold:
+                            tally += 3;
+                            break;
+                        case Goods.Wine:
+                            tally += 2;
+                            break;
+                        case Goods.Furs:
+                        case Goods.Oil:
+                        case Goods.Iron:
+                        case Goods.Timber:
+                            tally += 1;
+                            break;
+                    }
+                    total += tally * tempGoods[i, 0];
+                }
+            }
+            return total;
         }
 
 
