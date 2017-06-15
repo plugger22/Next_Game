@@ -35,6 +35,8 @@ namespace Next_Game
     public enum Goods { None, Food, Iron, Timber, Gold, Wine, Oil, Wool, Furs, Count} //goods that are imported / exported throughout world. Tracked by House.
     public enum Season { None, Spring, Summer, Autumn, Winter} //controlled by Game.SeasonTimer
     public enum Finance { None, Gold_Bank, Merchant_Guild, Goblin_Bank, Count} //source of finance in decreasing order of respectibility
+    public enum Income { None, Lords, Merchants, Churches, Crafters, Roads, Harbours, Virgins, Count} //all are ... 'Tax on <Income>'
+    public enum Expenses { None, City_Watch_Wages, Capital_Defenses, Food_Imports, Royal_Lifestyle, Loan_Interest, Count}
 
 
     /// <summary>
@@ -5489,7 +5491,7 @@ namespace Next_Game
                             for(int i = 1; i < (int)Finance.Count; i++)
                             {
 
-                                strength = 5;
+                                strength = 3;
                                 view = GetRelationshipPrefix(capital.GetLenderRelations((Finance)i));
                                 startText = $"It is {arrayOfRumourTexts[rnd.Next(arrayOfRumourTexts.Length)]}";
                                 opinionText = $"{arrayOfOpinions[rnd.Next(arrayOfOpinions.Length)]}";
@@ -5504,7 +5506,7 @@ namespace Next_Game
                             //
                             for (int i = 1; i < (int)WorldGroup.Count; i++)
                             {
-                                strength = 5;
+                                strength = 3;
                                 view = GetRelationshipPrefix(capital.GetGroupRelations((WorldGroup)i));
                                 startText = $"It is {arrayOfRumourTexts[rnd.Next(arrayOfRumourTexts.Length)]}";
                                 opinionText = $"{arrayOfOpinions[rnd.Next(arrayOfOpinions.Length)]}";
