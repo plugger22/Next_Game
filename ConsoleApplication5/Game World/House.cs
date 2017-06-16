@@ -506,6 +506,62 @@ namespace Next_Game
             }
         }
 
+        /// <summary>
+        /// Set FinArray.Reference in any finance array (all indentically sized)
+        /// </summary>
+        /// <param name="account"></param>
+        /// <param name="index">Make sure you use the appropriate enum for this!</param>
+        /// <param name="ref"></param>
+        public void SetFinanceReference(Account account, int index, int refData)
+        {
+            switch (account)
+            {
+                case Account.Lender:
+                    arrayOfLenders[index, (int)FinArray.Reference] = refData;
+                    break;
+                case Account.Income:
+                    arrayOfIncome[index, (int)FinArray.Reference] = refData;
+                    break;
+                case Account.Expense:
+                    arrayOfExpenses[index, (int)FinArray.Reference] = refData;
+                    break;
+                case Account.LumpSum:
+                    arrayOfLumpSums[index, (int)FinArray.Reference] = refData;
+                    break;
+                default:
+                    Game.SetError(new Error(315, $"Invalid account option \"{account}\" -> reference not updated in array"));
+                    break;
+            }
+        }
+
+        /// <summary>
+        /// Set FinArray.Constant in any finance array (all indentically sized)
+        /// </summary>
+        /// <param name="account"></param>
+        /// <param name="index">Make sure you use the appropriate enum for this!</param>
+        /// <param name="ref"></param>
+        public void SetFinanceConstant(Account account, int index, int constant)
+        {
+            switch (account)
+            {
+                case Account.Lender:
+                    arrayOfLenders[index, (int)FinArray.Constant] = constant;
+                    break;
+                case Account.Income:
+                    arrayOfIncome[index, (int)FinArray.Constant] = constant;
+                    break;
+                case Account.Expense:
+                    arrayOfExpenses[index, (int)FinArray.Constant] = constant;
+                    break;
+                case Account.LumpSum:
+                    arrayOfLumpSums[index, (int)FinArray.Constant] = constant;
+                    break;
+                default:
+                    Game.SetError(new Error(316, $"Invalid account option \"{account}\" -> constant not updated in array"));
+                    break;
+            }
+        }
+
 
         public void SetLenderRelations(Finance lender, int newRelLvl)
         { arrayOfLenders[(int)lender, (int)FinArray.Data] = newRelLvl; }
