@@ -450,7 +450,7 @@ namespace Next_Game
         /// </summary>
         /// <param name="account"></param>
         /// <param name="index">Make sure you use the appropriate enum for this!</param>
-        /// <param name="bool"></param>
+        /// <param name="status"></param>
         public void SetFinanceStatus(Account account, int index, bool status)
         {
             switch (account)
@@ -511,7 +511,7 @@ namespace Next_Game
         /// </summary>
         /// <param name="account"></param>
         /// <param name="index">Make sure you use the appropriate enum for this!</param>
-        /// <param name="ref"></param>
+        /// <param name="refData"></param>
         public void SetFinanceReference(Account account, int index, int refData)
         {
             switch (account)
@@ -539,7 +539,7 @@ namespace Next_Game
         /// </summary>
         /// <param name="account"></param>
         /// <param name="index">Make sure you use the appropriate enum for this!</param>
-        /// <param name="ref"></param>
+        /// <param name="constant"></param>
         public void SetFinanceConstant(Account account, int index, int constant)
         {
             switch (account)
@@ -562,9 +562,39 @@ namespace Next_Game
             }
         }
 
+        /// <summary>
+        /// Get any FinArray in any finance array (all indentically sized)
+        /// </summary>
+        /// <param name="account"></param>
+        /// <param name="index">Make sure you use the appropriate enum for this!</param>
+        public int GetFinanceInfo(Account account, int index, FinArray type)
+        {
+            int data = 0;
+            switch (account)
+            {
+                case Account.Lender:
+                    data = arrayOfLenders[index, (int)type];
+                    break;
+                case Account.Income:
+                    data = arrayOfIncome[index, (int)type];
+                    break;
+                case Account.Expense:
+                    data = arrayOfExpenses[index, (int)type];
+                    break;
+                case Account.LumpSum:
+                    data = arrayOfLumpSums[index, (int)type];
+                    break;
+                default:
+                    Game.SetError(new Error(317, $"Invalid account option \"{account}\" -> default info value of Zero returned"));
+                    break;
+            }
+            return data;
+        }
 
-        public void SetLenderRelations(Finance lender, int newRelLvl)
-        { arrayOfLenders[(int)lender, (int)FinArray.Data] = newRelLvl; }
+
+
+        //public void SetLenderRelations(Finance lender, int newRelLvl)
+        //{ arrayOfLenders[(int)lender, (int)FinArray.Data] = newRelLvl; }
 
         /// <summary>
         /// Change by adding an amount to a lender relationship
@@ -583,8 +613,8 @@ namespace Next_Game
         { return arrayOfLenders[(int)lender, (int)FinArray.Data]; }
 
 
-        public void SetIncome(Income income, int amount)
-        { arrayOfIncome[(int)income, (int)FinArray.Data] = amount; }
+        //public void SetIncome(Income income, int amount)
+        //{ arrayOfIncome[(int)income, (int)FinArray.Data] = amount; }
 
         /// <summary>
         /// Adds an amount to the exisitng income
@@ -610,14 +640,14 @@ namespace Next_Game
         /// </summary>
         /// <param name="income"></param>
         /// <param name="status"></param>
-        public void SetIncomeStatus(Income income, bool status)
+        /*public void SetIncomeStatus(Income income, bool status)
         {
             if (status == true) { arrayOfIncome[(int)income, (int)FinArray.Status] = 1; }
             else { arrayOfIncome[(int)income, (int)FinArray.Status] = 0; }
         }
 
         public void SetIncomeTax(Income income, TaxRate tax)
-        { arrayOfIncome[(int)income, (int)FinArray.Rate] = (int)tax; }
+        { arrayOfIncome[(int)income, (int)FinArray.Rate] = (int)tax; }*/
 
         /// <summary>
         /// returns TaxRate for income item
@@ -627,20 +657,20 @@ namespace Next_Game
         public TaxRate GetIncomeTax(Income income)
         { return (TaxRate)arrayOfIncome[(int)income, (int)FinArray.Rate]; }
 
-        public void SetIncomeReference(Income income, int refData)
-        { arrayOfIncome[(int)income, (int)FinArray.Reference] = refData; }
+        //public void SetIncomeReference(Income income, int refData)
+        //{ arrayOfIncome[(int)income, (int)FinArray.Reference] = refData; }
 
         public int GetIncomeReference(Income income)
         { return arrayOfIncome[(int)income, (int)FinArray.Reference]; }
 
-        public void SetIncomeConstant(Income income, int conData)
-        { arrayOfIncome[(int)income, (int)FinArray.Constant] = conData; }
+        //public void SetIncomeConstant(Income income, int conData)
+        //{ arrayOfIncome[(int)income, (int)FinArray.Constant] = conData; }
 
         public int GetIncomeConstant(Income income)
         { return arrayOfIncome[(int)income, (int)FinArray.Constant]; }
 
-        public void SetExpense(Expense expense, int amount)
-        { arrayOfExpenses[(int)expense, (int)FinArray.Data] = amount; }
+        //public void SetExpense(Expense expense, int amount)
+        //{ arrayOfExpenses[(int)expense, (int)FinArray.Data] = amount; }
 
         /// <summary>
         /// Adds an amount to the exisitng expense
@@ -666,14 +696,14 @@ namespace Next_Game
         /// </summary>
         /// <param name="expense"></param>
         /// <param name="status"></param>
-        public void SetExpenseStatus(Expense expense, bool status)
+        /*public void SetExpenseStatus(Expense expense, bool status)
         {
             if (status == true) { arrayOfExpenses[(int)expense, (int)FinArray.Status] = 1; }
             else { arrayOfExpenses[(int)expense, (int)FinArray.Status] = 0; }
         }
 
         public void SetLumpSum(LumpSum lump, int amount)
-        { arrayOfLumpSums[(int)lump, (int)FinArray.Data] = amount; }
+        { arrayOfLumpSums[(int)lump, (int)FinArray.Data] = amount; }*/
 
         /// <summary>
         /// Adds an amount to the exisitng LumpSum
@@ -699,11 +729,11 @@ namespace Next_Game
         /// </summary>
         /// <param name="lump"></param>
         /// <param name="status"></param>
-        public void SetLumpSumStatus(LumpSum lump, bool status)
+        /*public void SetLumpSumStatus(LumpSum lump, bool status)
         {
             if (status == true) { arrayOfLumpSums[(int)lump, (int)FinArray.Status] = 1; }
             else { arrayOfLumpSums[(int)lump, (int)FinArray.Status] = 0; }
-        }
+        }*/
 
         
 
