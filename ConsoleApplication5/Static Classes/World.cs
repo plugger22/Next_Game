@@ -7101,9 +7101,9 @@ namespace Next_Game
                 //
                 int lower, upper;
                 int kingWits = Game.lore.NewKing.GetSkill(SkillType.Wits);
-                //adjust range of possible relationship levels by King's wits. Higher wits, tighter range, lower wits, wider range
-                lower = 5 + (kingWits - 1) * 10;
-                upper = 55 + (5 - kingWits) * 10;
+                //adjust range of possible relationship levels by King's wits. Higher wits, tighter lower range, lower wits, wider lower range
+                lower = 0 + (kingWits - 1) * 10;
+                upper = 100;
                 Game.logStart?.Write($"[Group Relations] King's Wits {kingWits}, Range -> lower {lower} to upper {upper}");
                 for(int i = 2; i < (int)WorldGroup.Count; i++)
                 { capitalHouse.SetGroupRelations((WorldGroup)i, rnd.Next(lower, upper)); }
