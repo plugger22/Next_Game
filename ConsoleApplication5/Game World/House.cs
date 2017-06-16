@@ -418,10 +418,10 @@ namespace Next_Game
         { return arrayOfGroups[(int)group]; }
 
         /// <summary>
-        /// Set CapArray.Data in any finance array (all indentically sized)
+        /// Set FinArray.Data in any finance array (all indentically sized)
         /// </summary>
         /// <param name="account"></param>
-        /// <param name="index"></param>
+        /// <param name="index">Make sure you use the appropriate enum for this!</param>
         /// <param name="data"></param>
         public void SetFinanceData(Account account, int index, int data)
         {
@@ -441,6 +441,67 @@ namespace Next_Game
                     break;
                 default:
                     Game.SetError(new Error(312, $"Invalid account option \"{account}\" -> data not added to array"));
+                    break;
+            }
+        }
+
+        /// <summary>
+        /// Set FinArray.Status in any finance array (all indentically sized)
+        /// </summary>
+        /// <param name="account"></param>
+        /// <param name="index">Make sure you use the appropriate enum for this!</param>
+        /// <param name="bool"></param>
+        public void SetFinanceStatus(Account account, int index, bool status)
+        {
+            switch (account)
+            {
+                case Account.Lender:
+                    if (status == true) { arrayOfLenders[index, (int)FinArray.Status] = 1; }
+                    else { arrayOfLenders[index, (int)FinArray.Status] = 0; }
+                    break;
+                case Account.Income:
+                    if (status == true) { arrayOfIncome[index, (int)FinArray.Status] = 1; }
+                    else { arrayOfIncome[index, (int)FinArray.Status] = 0; }
+                    break;
+                case Account.Expense:
+                    if (status == true) { arrayOfExpenses[index, (int)FinArray.Status] = 1; }
+                    else { arrayOfExpenses[index, (int)FinArray.Status] = 0; }
+                    break;
+                case Account.LumpSum:
+                    if (status == true) { arrayOfLumpSums[index, (int)FinArray.Status] = 1; }
+                    else { arrayOfLumpSums[index, (int)FinArray.Status] = 0; };
+                    break;
+                default:
+                    Game.SetError(new Error(313, $"Invalid account option \"{account}\" -> status not updated in array"));
+                    break;
+            }
+        }
+
+
+        /// <summary>
+        /// Set FinArray.Rate in any finance array (all indentically sized)
+        /// </summary>
+        /// <param name="account"></param>
+        /// <param name="index">Make sure you use the appropriate enum for this!</param>
+        /// <param name="rate"></param>
+        public void SetFinanceRate(Account account, int index, int rate)
+        {
+            switch (account)
+            {
+                case Account.Lender:
+                    arrayOfLenders[index, (int)FinArray.Rate] = rate;
+                    break;
+                case Account.Income:
+                    arrayOfIncome[index, (int)FinArray.Rate] = rate;
+                    break;
+                case Account.Expense:
+                    arrayOfExpenses[index, (int)FinArray.Rate] = rate;
+                    break;
+                case Account.LumpSum:
+                    arrayOfLumpSums[index, (int)FinArray.Rate] = rate;
+                    break;
+                default:
+                    Game.SetError(new Error(314, $"Invalid account option \"{account}\" -> rate not updated in array"));
                     break;
             }
         }

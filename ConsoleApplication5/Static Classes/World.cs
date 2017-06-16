@@ -7251,20 +7251,19 @@ namespace Next_Game
             int virginTax = Game.constant.GetValue(Global.VIRGIN_TAX);
             int balance = 0;
             int tally, income, trade, relLvl;
-            TaxRate taxRate;
+            int taxRate;
             if (capital != null)
             {
                 //Treasury at game start (one gold LOAN_AMOUNT per level + random half level)
                 for (int i = 0; i < capital.Resources; i++)
                 { balance += goldAmount; }
                 balance += rnd.Next(goldAmount / 2);
-                capital.SetLumpSum(LumpSum.Treasury, balance);
-                capital.SetLumpSumStatus(LumpSum.Treasury, true);
+                capital.SetFinanceData(Account.LumpSum, (int)LumpSum.Treasury, balance);
+                capital.SetFinanceStatus(Account.LumpSum, (int)LumpSum.Treasury, true);
 
                 //Calculate value of Import taxes (Lords) based on num and type of imports (include any exports from Capital in this) -> Food is excluded
                 relLvl = (100 - capital.GetGroupRelations(WorldGroup.Lords)) / 20;
-                relLvl = Math.Min(4, relLvl);
-                taxRate = (TaxRate)relLvl;
+                taxRate = Math.Min(4, relLvl);
                 int[,] arrayOfImports = capital.GetImports();
                 int[,] arrayOfExports = capital.GetExports();
                 trade = GetValueOfGoods(arrayOfImports);
@@ -7272,84 +7271,92 @@ namespace Next_Game
                 income = trade * importTax * (int)taxRate / 2;
                 //capital.SetIncome(Income.Lords, income);
                 capital.SetFinanceData(Account.Income, (int)Income.Lords, income);
-                capital.SetIncomeStatus(Income.Lords, true);
-                capital.SetIncomeTax(Income.Lords, taxRate);
+                capital.SetFinanceStatus(Account.Income, (int)Income.Lords, true);
+                capital.SetFinanceRate(Account.Income, (int)Income.Lords, taxRate);
+                //capital.SetIncomeStatus(Income.Lords, true);
+                //capital.SetIncomeTax(Income.Lords, taxRate);
                 capital.SetIncomeReference(Income.Lords, trade);
                 capital.SetIncomeConstant(Income.Lords, importTax);
 
                 //Calculate value of Export taxes (Merchants) base on num and type of Exports (finished products, essentially identical to above) -> Food is excluded
                 relLvl = (100 - capital.GetGroupRelations(WorldGroup.Merchants)) / 20;
-                relLvl = Math.Min(4, relLvl);
-                taxRate = (TaxRate)relLvl;
+                taxRate = Math.Min(4, relLvl);
                 income = trade * exportTax * (int)taxRate / 2;
                 //capital.SetIncome(Income.Merchants, income);
                 capital.SetFinanceData(Account.Income, (int)Income.Merchants, income);
-                capital.SetIncomeStatus(Income.Merchants, true);
-                capital.SetIncomeTax(Income.Merchants, taxRate);
+                capital.SetFinanceStatus(Account.Income, (int)Income.Merchants, true);
+                capital.SetFinanceRate(Account.Income, (int)Income.Merchants, taxRate);
+                //capital.SetIncomeStatus(Income.Merchants, true);
+                //capital.SetIncomeTax(Income.Merchants, taxRate);
                 capital.SetIncomeReference(Income.Merchants, trade);
                 capital.SetIncomeConstant(Income.Merchants, exportTax);
 
                 //Calculate value of Church tax (fixed amount * # Churches in Major Houses + Capital, that varies depending on tax Rate)
                 relLvl = (100 - capital.GetGroupRelations(WorldGroup.Churches)) / 20;
-                relLvl = Math.Min(4, relLvl);
-                taxRate = (TaxRate)relLvl;
+                taxRate = Math.Min(4, relLvl);
                 tally = 5 + GetNumMajorHouses();
                 income = tally * churchTax * (int)taxRate / 2;
                 //capital.SetIncome(Income.Churches, income);
                 capital.SetFinanceData(Account.Income, (int)Income.Churches, income);
-                capital.SetIncomeStatus(Income.Churches, true);
-                capital.SetIncomeTax(Income.Churches, taxRate);
+                capital.SetFinanceStatus(Account.Income, (int)Income.Churches, true);
+                capital.SetFinanceRate(Account.Income, (int)Income.Churches, taxRate);
+                //capital.SetIncomeStatus(Income.Churches, true);
+                //capital.SetIncomeTax(Income.Churches, taxRate);
                 capital.SetIncomeReference(Income.Churches, tally);
                 capital.SetIncomeConstant(Income.Churches, churchTax);
 
                 //Calculate value of Crafter tax (fixed amount * # of finished trade goods)
                 relLvl = (100 - capital.GetGroupRelations(WorldGroup.Crafters)) / 20;
-                relLvl = Math.Min(4, relLvl);
-                taxRate = (TaxRate)relLvl;
+                taxRate = Math.Min(4, relLvl);
                 income = trade * crafterTax * (int)taxRate / 2;
                 //capital.SetIncome(Income.Crafters, income);
                 capital.SetFinanceData(Account.Income, (int)Income.Crafters, income);
-                capital.SetIncomeStatus(Income.Crafters, true);
-                capital.SetIncomeTax(Income.Crafters, taxRate);
+                capital.SetFinanceStatus(Account.Income, (int)Income.Crafters, true);
+                capital.SetFinanceRate(Account.Income, (int)Income.Crafters, taxRate);
+                //capital.SetIncomeStatus(Income.Crafters, true);
+                //capital.SetIncomeTax(Income.Crafters, taxRate);
                 capital.SetIncomeReference(Income.Crafters, trade);
                 capital.SetIncomeConstant(Income.Crafters, crafterTax);
 
                 //Calculates value of Road tax (fixed amount * # of squares length of King's Road)
                 relLvl = (100 - capital.GetGroupRelations(WorldGroup.Officials)) / 20;
-                relLvl = Math.Min(4, relLvl);
-                taxRate = (TaxRate)relLvl;
+                taxRate = Math.Min(4, relLvl);
                 tally = Game.map.KingsRoadLength;
                 income = tally * roadTax * (int)taxRate / 2;
                 //capital.SetIncome(Income.Roads, income);
                 capital.SetFinanceData(Account.Income, (int)Income.Roads, income);
-                capital.SetIncomeStatus(Income.Roads, true);
-                capital.SetIncomeTax(Income.Roads, taxRate);
+                capital.SetFinanceStatus(Account.Income, (int)Income.Roads, true);
+                capital.SetFinanceRate(Account.Income, (int)Income.Roads, taxRate);
+                //capital.SetIncomeStatus(Income.Roads, true);
+                //capital.SetIncomeTax(Income.Roads, taxRate);
                 capital.SetIncomeReference(Income.Roads, tally);
                 capital.SetIncomeConstant(Income.Roads, roadTax);
 
                 //Calculates value of Harbour tax (fixed amount per port in the Kingdom)
                 relLvl = (100 - capital.GetGroupRelations(WorldGroup.Officials)) / 20;
-                relLvl = Math.Min(4, relLvl);
-                taxRate = (TaxRate)relLvl;
+                taxRate = Math.Min(4, relLvl);
                 tally = Game.network.GetNumPorts();
                 income = tally * harbourTax * (int)taxRate / 2;
                 //capital.SetIncome(Income.Harbours, income);
                 capital.SetFinanceData(Account.Income, (int)Income.Harbours, income);
-                capital.SetIncomeStatus(Income.Harbours, true);
-                capital.SetIncomeTax(Income.Harbours, taxRate);
+                capital.SetFinanceStatus(Account.Income, (int)Income.Harbours, true);
+                capital.SetFinanceRate(Account.Income, (int)Income.Harbours, taxRate);
+                //capital.SetIncomeStatus(Income.Harbours, true);
+                //capital.SetIncomeTax(Income.Harbours, taxRate);
                 capital.SetIncomeReference(Income.Harbours, tally);
                 capital.SetIncomeConstant(Income.Harbours, harbourTax);
 
                 //Calculates value of Virgin tax (fixed amount per thousand population in the Kingdom)
                 relLvl = (100 - capital.GetGroupRelations(WorldGroup.Peasants)) / 20;
-                relLvl = Math.Min(4, relLvl);
-                taxRate = (TaxRate)relLvl;
+                taxRate = Math.Min(4, relLvl);
                 tally = GetWorldPopulation() / 1000;
                 income = tally * virginTax * (int)taxRate / 2;
                 //capital.SetIncome(Income.Virgins, income);
                 capital.SetFinanceData(Account.Income, (int)Income.Virgins, income);
-                capital.SetIncomeStatus(Income.Virgins, true);
-                capital.SetIncomeTax(Income.Virgins, taxRate);
+                capital.SetFinanceStatus(Account.Income, (int)Income.Virgins, true);
+                capital.SetFinanceRate(Account.Income, (int)Income.Virgins, taxRate);
+                //capital.SetIncomeStatus(Income.Virgins, true);
+                //capital.SetIncomeTax(Income.Virgins, taxRate);
                 capital.SetIncomeReference(Income.Virgins, tally);
                 capital.SetIncomeConstant(Income.Virgins, virginTax);
             }
