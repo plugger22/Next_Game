@@ -7338,8 +7338,73 @@ namespace Next_Game
                 capital.SetFinanceRate(Account.Income, (int)Income.Virgins, taxRate);
                 capital.SetFinanceReference(Account.Income, (int)Income.Virgins, tally);
                 capital.SetFinanceConstant(Account.Income, (int)Income.Virgins, virginTax);
+
             }
             else { Game.SetError(new Error(310, "Invalid Capital (null) -> Royal Accounts not initialised")); }
+        }
+
+        /// <summary>
+        /// returns expected income from taxing a particular income item at a given tax rate
+        /// </summary>
+        /// <param name="income"></param>
+        /// <param name="rate"></param>
+        /// <returns></returns>
+        private int GetTaxableIncome(Income income, TaxRate rate)
+        {
+            int amount = 0;
+            CapitalHouse capital = GetCapital();
+            if (capital != null)
+            {
+                switch (income)
+                {
+                    case Income.Lords:
+                    case Income.Merchants:
+                    case Income.Crafters:
+                        //calculate trade 
+                        int[,] arrayOfImports = capital.GetImports();
+                        int[,] arrayOfExports = capital.GetExports();
+                        int trade = GetValueOfGoods(arrayOfImports);
+                        trade += GetValueOfGoods(arrayOfExports);
+                        //apply constant
+                        switch (income)
+                        {
+                            case Income.Lords:
+                                amount = trade * Game.constant.GetValue(Global.IMPORT_TAX);
+                                break;
+                            case Income.Merchants:
+                                amount = trade * Game.constant.GetValue(Global.EXPORT_TAX);
+                                break;
+                            case Income.Crafters:
+                                amount = trade * Game.constant.GetValue(Global.CRAFTER_TAX);
+                                break;
+                        }
+                        break;
+                    case Income.Churches:
+                        int tally = 5 + GetNumMajorHouses();
+                        amount = tally * Game.constant.GetValue(Global.CHURCH_TAX);
+                        break;
+                    case Income.Roads:
+                        tally = Game.map.KingsRoadLength;
+                        amount = tally * Game.constant.GetValue(Global.ROAD_TAX);
+                        break;
+                    case Income.Harbours:
+                        tally = Game.network.GetNumPorts();
+                        amount = tally * Game.constant.GetValue(Global.HARBOUR_TAX);
+                        break;
+                    case Income.Virgins:
+                        tally = GetWorldPopulation() / 1000;
+                        amount = tally * Game.constant.GetValue(Global.VIRGIN_TAX);
+                        break;
+                    default:
+                        Game.SetError(new Error(318, $"Invalid Income \"{income}\" -> Default taxable income of Zero returned"));
+                        break;
+                }
+                //adjust for tax rate
+                amount = amount * (int)rate / 2;
+            }
+            else { Game.SetError(new Error(318, "Invalid capital (null) -> default zero income returned")); }
+
+            return amount;
         }
 
         /// <summary>
