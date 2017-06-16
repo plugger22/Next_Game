@@ -41,3 +41,5 @@ Seed 46945 -> Friday, 16 June 2017 10:17 AM
 Seed 57452 -> Friday, 16 June 2017 10:27 AM
 Seed 51455 -> Friday, 16 June 2017 10:32 AM
 Seed 27249 -> Friday, 16 June 2017 10:37 AM
+Seed 50299 -> Friday, 16 June 2017 12:57 PM
+Seed 20838 -> Friday, 16 June 2017 1:31 PM

@@ -3996,8 +3996,9 @@ namespace Next_Game
             Game.director.CheckEventTimers();
             Game.director.InitialiseDynamicRumours();
             HousekeepActors();
+            HousekeepHouses();
             HousekeepRumours();
-            HouseKeepGame();
+            HousekeepGame();
             
         }
 
@@ -7042,7 +7043,10 @@ namespace Next_Game
                 }
                 //relationships with Lender (actual if loans and possible future lenders)
                 for(int i = 1; i < (int)Finance.Count; i++)
-                { capital.SetLenderRelations((Finance)i, rnd.Next(100)); }
+                {
+                    //capital.SetLenderRelations((Finance)i, rnd.Next(100)); 
+                    capital.SetFinanceData(Account.Lender, i, rnd.Next(100));
+                }
             }
             else { Game.SetError(new Error(303, "Invalid Capital (null) -> Resources not adjusted")); }
             //
@@ -7266,7 +7270,8 @@ namespace Next_Game
                 trade = GetValueOfGoods(arrayOfImports);
                 trade += GetValueOfGoods(arrayOfExports);
                 income = trade * importTax * (int)taxRate / 2;
-                capital.SetIncome(Income.Lords, income);
+                //capital.SetIncome(Income.Lords, income);
+                capital.SetFinanceData(Account.Income, (int)Income.Lords, income);
                 capital.SetIncomeStatus(Income.Lords, true);
                 capital.SetIncomeTax(Income.Lords, taxRate);
                 capital.SetIncomeReference(Income.Lords, trade);
@@ -7277,7 +7282,8 @@ namespace Next_Game
                 relLvl = Math.Min(4, relLvl);
                 taxRate = (TaxRate)relLvl;
                 income = trade * exportTax * (int)taxRate / 2;
-                capital.SetIncome(Income.Merchants, income);
+                //capital.SetIncome(Income.Merchants, income);
+                capital.SetFinanceData(Account.Income, (int)Income.Merchants, income);
                 capital.SetIncomeStatus(Income.Merchants, true);
                 capital.SetIncomeTax(Income.Merchants, taxRate);
                 capital.SetIncomeReference(Income.Merchants, trade);
@@ -7289,7 +7295,8 @@ namespace Next_Game
                 taxRate = (TaxRate)relLvl;
                 tally = 5 + GetNumMajorHouses();
                 income = tally * churchTax * (int)taxRate / 2;
-                capital.SetIncome(Income.Churches, income);
+                //capital.SetIncome(Income.Churches, income);
+                capital.SetFinanceData(Account.Income, (int)Income.Churches, income);
                 capital.SetIncomeStatus(Income.Churches, true);
                 capital.SetIncomeTax(Income.Churches, taxRate);
                 capital.SetIncomeReference(Income.Churches, tally);
@@ -7300,7 +7307,8 @@ namespace Next_Game
                 relLvl = Math.Min(4, relLvl);
                 taxRate = (TaxRate)relLvl;
                 income = trade * crafterTax * (int)taxRate / 2;
-                capital.SetIncome(Income.Crafters, income);
+                //capital.SetIncome(Income.Crafters, income);
+                capital.SetFinanceData(Account.Income, (int)Income.Crafters, income);
                 capital.SetIncomeStatus(Income.Crafters, true);
                 capital.SetIncomeTax(Income.Crafters, taxRate);
                 capital.SetIncomeReference(Income.Crafters, trade);
@@ -7312,7 +7320,8 @@ namespace Next_Game
                 taxRate = (TaxRate)relLvl;
                 tally = Game.map.KingsRoadLength;
                 income = tally * roadTax * (int)taxRate / 2;
-                capital.SetIncome(Income.Roads, income);
+                //capital.SetIncome(Income.Roads, income);
+                capital.SetFinanceData(Account.Income, (int)Income.Roads, income);
                 capital.SetIncomeStatus(Income.Roads, true);
                 capital.SetIncomeTax(Income.Roads, taxRate);
                 capital.SetIncomeReference(Income.Roads, tally);
@@ -7324,7 +7333,8 @@ namespace Next_Game
                 taxRate = (TaxRate)relLvl;
                 tally = Game.network.GetNumPorts();
                 income = tally * harbourTax * (int)taxRate / 2;
-                capital.SetIncome(Income.Harbours, income);
+                //capital.SetIncome(Income.Harbours, income);
+                capital.SetFinanceData(Account.Income, (int)Income.Harbours, income);
                 capital.SetIncomeStatus(Income.Harbours, true);
                 capital.SetIncomeTax(Income.Harbours, taxRate);
                 capital.SetIncomeReference(Income.Harbours, tally);
@@ -7336,7 +7346,8 @@ namespace Next_Game
                 taxRate = (TaxRate)relLvl;
                 tally = GetWorldPopulation() / 1000;
                 income = tally * virginTax * (int)taxRate / 2;
-                capital.SetIncome(Income.Virgins, income);
+                //capital.SetIncome(Income.Virgins, income);
+                capital.SetFinanceData(Account.Income, (int)Income.Virgins, income);
                 capital.SetIncomeStatus(Income.Virgins, true);
                 capital.SetIncomeTax(Income.Virgins, taxRate);
                 capital.SetIncomeReference(Income.Virgins, tally);
@@ -7396,9 +7407,9 @@ namespace Next_Game
         }
 
         /// <summary>
-        /// End of Game Turn Game housekeeping
+        /// End of Game Turn Game related housekeeping
         /// </summary>
-        public void HouseKeepGame()
+        private void HousekeepGame()
         {
             //update Game timers
             Game.gameTurn++;
@@ -7411,6 +7422,24 @@ namespace Next_Game
             if (Game.HarvestTimer == 0) { Game.HarvestTimer = 360; Game.PlantTimer = 35; }
             //determine season
             Game.UpdateSeason();
+        }
+
+        /// <summary>
+        /// End of Game turn House related housekeeping
+        /// </summary>
+        private void HousekeepHouses()
+        {
+            Game.logTurn?.Write("--- HouseKeepHouses (world.cs)");
+            //capital
+            CapitalHouse capital = GetCapital();
+            if (capital != null)
+            {
+                int lordRel = GetAverageLordRelations();
+                //Lords is the average of all Major Lords rels
+                capital.SetGroupRelations(WorldGroup.Lords, lordRel );
+                Game.logTurn?.Write($"Average Lord Relations updated, now {lordRel}");
+            }
+            else { Game.SetError(new Error(311, "Invalid capital (null)")); }
         }
 
 
