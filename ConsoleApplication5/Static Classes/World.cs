@@ -7099,8 +7099,14 @@ namespace Next_Game
                 //
                 // Capital Groups -> initial relationship levels
                 //
+                int lower, upper;
+                int kingWits = Game.lore.NewKing.GetSkill(SkillType.Wits);
+                //adjust range of possible relationship levels by King's wits. Higher wits, tighter range, lower wits, wider range
+                lower = 5 + (kingWits - 1) * 10;
+                upper = 55 + (5 - kingWits) * 10;
+                Game.logStart?.Write($"[Group Relations] King's Wits {kingWits}, Range -> lower {lower} to upper {upper}");
                 for(int i = 2; i < (int)WorldGroup.Count; i++)
-                { capitalHouse.SetGroupRelations((WorldGroup)i, rnd.Next(25, 75)); }
+                { capitalHouse.SetGroupRelations((WorldGroup)i, rnd.Next(lower, upper)); }
                 //Lords is the average of all Major Lords rels
                 capitalHouse.SetGroupRelations(WorldGroup.Lords, GetAverageLordRelations());
             }
@@ -7267,7 +7273,9 @@ namespace Next_Game
                 capital.SetIncomeConstant(Income.Lords, importTax);
 
                 //Calculate value of Export taxes (Merchants) base on num and type of Exports (finished products, essentially identical to above) -> Food is excluded
-                taxRate = TaxRate.Normal;
+                relLvl = (100 - capital.GetGroupRelations(WorldGroup.Merchants)) / 20;
+                relLvl = Math.Min(4, relLvl);
+                taxRate = (TaxRate)relLvl;
                 income = trade * exportTax * (int)taxRate / 2;
                 capital.SetIncome(Income.Merchants, income);
                 capital.SetIncomeStatus(Income.Merchants, true);
@@ -7276,7 +7284,9 @@ namespace Next_Game
                 capital.SetIncomeConstant(Income.Merchants, exportTax);
 
                 //Calculate value of Church tax (fixed amount * # Churches in Major Houses + Capital, that varies depending on tax Rate)
-                taxRate = TaxRate.Normal;
+                relLvl = (100 - capital.GetGroupRelations(WorldGroup.Churches)) / 20;
+                relLvl = Math.Min(4, relLvl);
+                taxRate = (TaxRate)relLvl;
                 tally = 5 + GetNumMajorHouses();
                 income = tally * churchTax * (int)taxRate / 2;
                 capital.SetIncome(Income.Churches, income);
@@ -7286,7 +7296,9 @@ namespace Next_Game
                 capital.SetIncomeConstant(Income.Churches, churchTax);
 
                 //Calculate value of Crafter tax (fixed amount * # of finished trade goods)
-                taxRate = TaxRate.Normal;
+                relLvl = (100 - capital.GetGroupRelations(WorldGroup.Crafters)) / 20;
+                relLvl = Math.Min(4, relLvl);
+                taxRate = (TaxRate)relLvl;
                 income = trade * crafterTax * (int)taxRate / 2;
                 capital.SetIncome(Income.Crafters, income);
                 capital.SetIncomeStatus(Income.Crafters, true);
@@ -7295,7 +7307,9 @@ namespace Next_Game
                 capital.SetIncomeConstant(Income.Crafters, crafterTax);
 
                 //Calculates value of Road tax (fixed amount * # of squares length of King's Road)
-                taxRate = TaxRate.Normal;
+                relLvl = (100 - capital.GetGroupRelations(WorldGroup.Officials)) / 20;
+                relLvl = Math.Min(4, relLvl);
+                taxRate = (TaxRate)relLvl;
                 tally = Game.map.KingsRoadLength;
                 income = tally * roadTax * (int)taxRate / 2;
                 capital.SetIncome(Income.Roads, income);
@@ -7305,7 +7319,9 @@ namespace Next_Game
                 capital.SetIncomeConstant(Income.Roads, roadTax);
 
                 //Calculates value of Harbour tax (fixed amount per port in the Kingdom)
-                taxRate = TaxRate.Normal;
+                relLvl = (100 - capital.GetGroupRelations(WorldGroup.Officials)) / 20;
+                relLvl = Math.Min(4, relLvl);
+                taxRate = (TaxRate)relLvl;
                 tally = Game.network.GetNumPorts();
                 income = tally * harbourTax * (int)taxRate / 2;
                 capital.SetIncome(Income.Harbours, income);
@@ -7315,7 +7331,9 @@ namespace Next_Game
                 capital.SetIncomeConstant(Income.Harbours, harbourTax);
 
                 //Calculates value of Virgin tax (fixed amount per thousand population in the Kingdom)
-                taxRate = TaxRate.Normal;
+                relLvl = (100 - capital.GetGroupRelations(WorldGroup.Peasants)) / 20;
+                relLvl = Math.Min(4, relLvl);
+                taxRate = (TaxRate)relLvl;
                 tally = GetWorldPopulation() / 1000;
                 income = tally * virginTax * (int)taxRate / 2;
                 capital.SetIncome(Income.Virgins, income);
