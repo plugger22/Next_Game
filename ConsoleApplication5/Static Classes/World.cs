@@ -118,9 +118,8 @@ namespace Next_Game
             Game.history.InitialiseBeasts(Game.file.GetFollowers("Beasts.txt"));
             Game.StopTimer(timer_2, "W: InitialiseHistory");
             timer_2.Start();
-            InitialiseHouseData(); //needs to be before InitialiseDesires but after InitialiseOverthrow
-            InitialiseRoyalAccounts();
-            InitialiseConversionDicts(); //needs to be after history methods (above) & before InitialiseEnemyActors (below)
+            InitialiseHouseData(); //needs to be BEFORE InitialiseDesires but AFTER InitialiseOverthrow
+            InitialiseConversionDicts(); //needs to be AFTER history methods (above) & BEFORE InitialiseEnemyActors (below)
             InitialiseSecrets();
             InitialiseDesires();
             InitialiseSafeHouses();
@@ -131,6 +130,7 @@ namespace Next_Game
             InitialiseEnemyActors();
             InitialiseItemPlacement();
             InitialiseLocTypes();
+            InitialiseRoyalAccounts(); //needs to be AFTER InitialiseEnemyActors
             Game.StopTimer(timer_2, "W: InitialiseAI");
         }
 
@@ -7475,6 +7475,41 @@ namespace Next_Game
                 capital.SetFinanceRate(Account.Expense, (int)Expense.Essential_Goods, budget);
                 capital.SetFinanceReference(Account.Expense, (int)Expense.Essential_Goods, tally);
                 capital.SetFinanceConstant(Account.Expense, (int)Expense.Essential_Goods, essentialCost);
+
+                //Road Patrols (Length of King's road * cost) 
+                budget = (int)Rate.Normal;
+                tally = Game.map.KingsRoadLength;
+                expense = tally * patrolCost * budget / 2;
+                if (expense > 0) { status = true; } else { status = false; budget = 0; }
+                capital.SetFinanceData(Account.Expense, (int)Expense.Road_Patrols, expense);
+                capital.SetFinanceStatus(Account.Expense, (int)Expense.Road_Patrols, status);
+                capital.SetFinanceRate(Account.Expense, (int)Expense.Road_Patrols, budget);
+                capital.SetFinanceReference(Account.Expense, (int)Expense.Road_Patrols, tally);
+                capital.SetFinanceConstant(Account.Expense, (int)Expense.Road_Patrols, patrolCost);
+
+                //Pirate Patrol Subsidy (Number of ports * cost) 
+                budget = (int)Rate.Normal;
+                tally = Game.network.GetNumPorts();
+                expense = tally * pirateCost * budget / 2;
+                if (expense > 0) { status = true; } else { status = false; budget = 0; }
+                capital.SetFinanceData(Account.Expense, (int)Expense.Pirate_Patrols, expense);
+                capital.SetFinanceStatus(Account.Expense, (int)Expense.Pirate_Patrols, status);
+                capital.SetFinanceRate(Account.Expense, (int)Expense.Pirate_Patrols, budget);
+                capital.SetFinanceReference(Account.Expense, (int)Expense.Pirate_Patrols, tally);
+                capital.SetFinanceConstant(Account.Expense, (int)Expense.Pirate_Patrols, pirateCost);
+
+                //Inquisitors (Number of Inquisitors * cost) 
+                budget = (int)Rate.Normal;
+                tally = 0;
+                foreach(var enemy in dictEnemyActors)
+                { if (enemy.Value is Inquisitor) { tally++; } }
+                expense = tally * inquisitorCost * budget / 2;
+                if (expense > 0) { status = true; } else { status = false; budget = 0; }
+                capital.SetFinanceData(Account.Expense, (int)Expense.Inquisitors, expense);
+                capital.SetFinanceStatus(Account.Expense, (int)Expense.Inquisitors, status);
+                capital.SetFinanceRate(Account.Expense, (int)Expense.Inquisitors, budget);
+                capital.SetFinanceReference(Account.Expense, (int)Expense.Inquisitors, tally);
+                capital.SetFinanceConstant(Account.Expense, (int)Expense.Inquisitors, inquisitorCost);
 
             }
             else { Game.SetError(new Error(310, "Invalid Capital (null) -> Royal Accounts not initialised")); }
