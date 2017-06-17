@@ -36,9 +36,9 @@ namespace Next_Game
     public enum Season { None, Spring, Summer, Autumn, Winter} //controlled by Game.SeasonTimer
     public enum Finance { None, Gold_Bank, Merchant_Guild, Goblin_Bank, Count} //source of finance in decreasing order of respectibility
     public enum Income { None, Lords, Merchants, Churches, Crafters, Roads, Harbours, Virgins, Count} //all are ... 'Tax on <Income>'
-    public enum Expense { None, City_Watch_Wages, Officials_Wages, Capital_Defenses, Royal_Lifestyle, Loan_Interest, Food_Imports, Road_Patrols, Pirate_Patrols, Count}
-    public enum LumpSum { None, Treasury, Loans, Appropriations, Count} //lump sum amounts
-    public enum TaxRate { None, Low, Normal, High, Excessive}
+    public enum Expense { None, City_Watch_Wages, Officials_Wages, Capital_Defenses, Royal_Lifestyle, Loan_Interest, Food_Imports, Essential_Goods, Road_Patrols, Pirate_Patrols, Inquisitors, Count}
+    public enum LumpSum { None, Treasury, Loans, Appropriations, Corruption, Count} //lump sum amounts
+    public enum Rate { None, Low, Normal, High, Excessive} //taxrate if Income, budget expenditure rate if Expense
    
 
 

@@ -68,6 +68,16 @@ namespace Next_Game
         ROAD_TAX,
         HARBOUR_TAX,
         VIRGIN_TAX,
+        CITYWATCH_COST,
+        OFFICIALS_COST,
+        DEFENSE_COST,
+        LIFESTYLE_COST,
+        LOAN_COST,
+        FOOD_COST,
+        ESSENTIAL_COST,
+        PATROL_COST,
+        PIRATE_COST,
+        INQUISITOR_COST,
         //Events
         TRAIT_MULTIPLIER,
         TEST_MULTIPLIER,
@@ -224,6 +234,16 @@ namespace Next_Game
             arrayOfGlobals[91] = Global.ROAD_TAX;
             arrayOfGlobals[92] = Global.HARBOUR_TAX;
             arrayOfGlobals[93] = Global.VIRGIN_TAX;
+            arrayOfGlobals[94] = Global.CITYWATCH_COST;
+            arrayOfGlobals[95] = Global.OFFICIALS_COST;
+            arrayOfGlobals[96] = Global.DEFENSE_COST;
+            arrayOfGlobals[97] = Global.LIFESTYLE_COST;
+            arrayOfGlobals[98] = Global.LOAN_COST;
+            arrayOfGlobals[99] = Global.FOOD_COST;
+            arrayOfGlobals[100] = Global.ESSENTIAL_COST;
+            arrayOfGlobals[101] = Global.PATROL_COST;
+            arrayOfGlobals[102] = Global.PIRATE_COST;
+            arrayOfGlobals[103] = Global.INQUISITOR_COST;
         }
 
         /// <summary>

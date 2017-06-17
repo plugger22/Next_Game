@@ -181,8 +181,10 @@ namespace Next_Game
             RLColor badColor = Color._badTrait;
             RLColor activeColor = RLColor.White;
             RLColor inactiveColor = RLColor.LightGray;
+            RLColor goodStar = RLColor.Yellow;
+            RLColor badStar = RLColor.LightRed;
             RLColor displayColor;
-            int amount, balance, accounts;
+            int amount, balance, accounts, rate;
             int cashflow = 0; ;
             int spacer = 2; //number of blank lines between data groups
             if (capital != null)
@@ -200,13 +202,13 @@ namespace Next_Game
                 listDisplay.Add(new Snippet("--- Income", RLColor.Yellow, RLColor.Black));
                 for (int i = 1; i < (int)Income.Count; i++)
                 {
-                    //amount = capital.GetIncome((Income)i);
                     amount = capital.GetFinanceInfo(Account.Income, i, FinArray.Data);
                     balance += amount;
-                    //if (capital.GetIncomeStatus((Income)i) == true)
                     if (capital.GetFinanceInfo(Account.Income, i, FinArray.Status) > 0 ) { displayColor = activeColor; } else { displayColor = inactiveColor; }
-                    //listDisplay.Add(new Snippet($"{"Taxes on " + (Income)i, -30}{amount, -12:N0}{"tax " + capital.GetIncomeTax((Income)i), -15}", displayColor, RLColor.Black));
-                    listDisplay.Add(new Snippet($"{"Taxes on " + (Income)i,-30}{amount,-12:N0}{"tax " + (TaxRate)capital.GetFinanceInfo(Account.Income, i, FinArray.Rate),-15}", displayColor, RLColor.Black));
+                    listDisplay.Add(new Snippet($"{"Taxes on " + (Income)i,-30}{amount,-12:N0}", displayColor, RLColor.Black, false));
+                    rate = capital.GetFinanceInfo(Account.Income, i, FinArray.Rate);
+                    if (rate > 3) { displayColor = badStar; } else { displayColor = goodStar; }
+                    listDisplay.Add(new Snippet($"{GetStars(rate),-15}", displayColor, RLColor.Black));
                 }
                 cashflow += balance;
                 if (balance > 0) { displayColor = goodColor; } else { displayColor = badColor; }
@@ -219,12 +221,15 @@ namespace Next_Game
                 listDisplay.Add(new Snippet("--- Expenses", RLColor.Yellow, RLColor.Black));
                 for (int i = 1; i < (int)Expense.Count; i++)
                 {
-                    amount = capital.GetExpense((Expense)i);
+                    amount = capital.GetFinanceInfo(Account.Expense, i, FinArray.Data);
                     balance += amount;
-                    if (capital.GetExpenseStatus((Expense)i) == true) { displayColor = activeColor; } else { displayColor = inactiveColor; amount = 0; }
-                    listDisplay.Add(new Snippet($"{"Cost of " + (Expense)i, -30}{amount:N0}", displayColor, RLColor.Black));
+                    if (capital.GetFinanceInfo(Account.Expense, i, FinArray.Status) > 0) { displayColor = activeColor; } else { displayColor = inactiveColor; }
+                    listDisplay.Add(new Snippet($"{"Cost of " + (Expense)i,-30}{amount,-12:N0}", displayColor, RLColor.Black, false));
+                    rate = capital.GetFinanceInfo(Account.Expense, i, FinArray.Rate);
+                    if (rate > 3) { displayColor = badStar; } else { displayColor = goodStar; }
+                    listDisplay.Add(new Snippet($"{GetStars(rate),-15}", displayColor, RLColor.Black));
                 }
-                cashflow += balance;
+                cashflow -= balance;
                 if (balance > 0) { displayColor = goodColor; } else { displayColor = badColor; }
                 listDisplay.Add(new Snippet($"{"Balance",-30}{balance, -12:N0}gold coins", displayColor, RLColor.Black));
                 //spacer
@@ -1134,7 +1139,7 @@ namespace Next_Game
         {
             string stars = null;
             num = Math.Min(5, num);
-            num = Math.Max(1, num);
+            num = Math.Max(0, num);
             for (int i = 0; i < num; i++)
             { stars += "o "; }
             return stars;

@@ -654,8 +654,8 @@ namespace Next_Game
         /// </summary>
         /// <param name="income"></param>
         /// <returns></returns>
-        public TaxRate GetIncomeTax(Income income)
-        { return (TaxRate)arrayOfIncome[(int)income, (int)FinArray.Rate]; }
+        public Rate GetIncomeTax(Income income)
+        { return (Rate)arrayOfIncome[(int)income, (int)FinArray.Rate]; }
 
         //public void SetIncomeReference(Income income, int refData)
         //{ arrayOfIncome[(int)income, (int)FinArray.Reference] = refData; }

@@ -7241,19 +7241,22 @@ namespace Next_Game
         internal void InitialiseRoyalAccounts()
         {
             CapitalHouse capital = GetCapital();
-            int goldAmount = Game.constant.GetValue(Global.LOAN_AMOUNT);
-            int importTax = Game.constant.GetValue(Global.IMPORT_TAX);
-            int exportTax = Game.constant.GetValue(Global.EXPORT_TAX);
-            int churchTax = Game.constant.GetValue(Global.CHURCH_TAX);
-            int crafterTax = Game.constant.GetValue(Global.CRAFTER_TAX);
-            int roadTax = Game.constant.GetValue(Global.ROAD_TAX);
-            int harbourTax = Game.constant.GetValue(Global.HARBOUR_TAX);
-            int virginTax = Game.constant.GetValue(Global.VIRGIN_TAX);
+            
             int balance = 0;
-            int tally, income, trade, relLvl;
-            int taxRate;
+            int tally, income, expense, trade, relLvl;
+            int taxRate, budget; //taxRate for Income, budget for Expenses -> both work off director.cs Rate enum
             if (capital != null)
             {
+                //Income ---
+                int goldAmount = Game.constant.GetValue(Global.LOAN_AMOUNT);
+                int importTax = Game.constant.GetValue(Global.IMPORT_TAX);
+                int exportTax = Game.constant.GetValue(Global.EXPORT_TAX);
+                int churchTax = Game.constant.GetValue(Global.CHURCH_TAX);
+                int crafterTax = Game.constant.GetValue(Global.CRAFTER_TAX);
+                int roadTax = Game.constant.GetValue(Global.ROAD_TAX);
+                int harbourTax = Game.constant.GetValue(Global.HARBOUR_TAX);
+                int virginTax = Game.constant.GetValue(Global.VIRGIN_TAX);
+
                 //Treasury at game start (one gold LOAN_AMOUNT per level + random half level)
                 for (int i = 0; i < capital.Resources; i++)
                 { balance += goldAmount; }
@@ -7261,7 +7264,7 @@ namespace Next_Game
                 capital.SetFinanceData(Account.LumpSum, (int)LumpSum.Treasury, balance);
                 capital.SetFinanceStatus(Account.LumpSum, (int)LumpSum.Treasury, true);
 
-                //Calculate value of Import taxes (Lords) based on num and type of imports (include any exports from Capital in this) -> Food is excluded
+                // Import taxes (Lords) based on num and type of imports (include any exports from Capital in this) -> Food is excluded
                 relLvl = (100 - capital.GetGroupRelations(WorldGroup.Lords)) / 20;
                 taxRate = Math.Min(4, relLvl);
                 int[,] arrayOfImports = capital.GetImports();
@@ -7275,7 +7278,7 @@ namespace Next_Game
                 capital.SetFinanceReference(Account.Income, (int)Income.Lords, trade);
                 capital.SetFinanceConstant(Account.Income, (int)Income.Lords, importTax);
 
-                //Calculate value of Export taxes (Merchants) base on num and type of Exports (finished products, essentially identical to above) -> Food is excluded
+                // Export taxes (Merchants) base on num and type of Exports (finished products, essentially identical to above) -> Food is excluded
                 relLvl = (100 - capital.GetGroupRelations(WorldGroup.Merchants)) / 20;
                 taxRate = Math.Min(4, relLvl);
                 income = trade * exportTax * (int)taxRate / 2;
@@ -7285,7 +7288,7 @@ namespace Next_Game
                 capital.SetFinanceReference(Account.Income, (int)Income.Merchants, trade);
                 capital.SetFinanceConstant(Account.Income, (int)Income.Merchants, exportTax);
 
-                //Calculate value of Church tax (fixed amount * # Churches in Major Houses + Capital, that varies depending on tax Rate)
+                // Church tax (fixed amount * # Churches in Major Houses + Capital, that varies depending on tax Rate)
                 relLvl = (100 - capital.GetGroupRelations(WorldGroup.Churches)) / 20;
                 taxRate = Math.Min(4, relLvl);
                 tally = 5 + GetNumMajorHouses();
@@ -7296,7 +7299,7 @@ namespace Next_Game
                 capital.SetFinanceReference(Account.Income, (int)Income.Churches, tally);
                 capital.SetFinanceConstant(Account.Income, (int)Income.Churches, churchTax);
 
-                //Calculate value of Crafter tax (fixed amount * # of finished trade goods)
+                // Crafter tax (fixed amount * # of finished trade goods)
                 relLvl = (100 - capital.GetGroupRelations(WorldGroup.Crafters)) / 20;
                 taxRate = Math.Min(4, relLvl);
                 income = trade * crafterTax * (int)taxRate / 2;
@@ -7306,7 +7309,7 @@ namespace Next_Game
                 capital.SetFinanceReference(Account.Income, (int)Income.Crafters, trade);
                 capital.SetFinanceConstant(Account.Income, (int)Income.Crafters, crafterTax);
 
-                //Calculates value of Road tax (fixed amount * # of squares length of King's Road)
+                // Road tax (fixed amount * # of squares length of King's Road)
                 relLvl = (100 - capital.GetGroupRelations(WorldGroup.Officials)) / 20;
                 taxRate = Math.Min(4, relLvl);
                 tally = Game.map.KingsRoadLength;
@@ -7317,7 +7320,7 @@ namespace Next_Game
                 capital.SetFinanceReference(Account.Income, (int)Income.Roads, tally);
                 capital.SetFinanceConstant(Account.Income, (int)Income.Roads, roadTax);
 
-                //Calculates value of Harbour tax (fixed amount per port in the Kingdom)
+                // Harbour tax (fixed amount per port in the Kingdom)
                 relLvl = (100 - capital.GetGroupRelations(WorldGroup.Officials)) / 20;
                 taxRate = Math.Min(4, relLvl);
                 tally = Game.network.GetNumPorts();
@@ -7328,7 +7331,7 @@ namespace Next_Game
                 capital.SetFinanceReference(Account.Income, (int)Income.Harbours, tally);
                 capital.SetFinanceConstant(Account.Income, (int)Income.Harbours, harbourTax);
 
-                //Calculates value of Virgin tax (fixed amount per thousand population in the Kingdom)
+                // Virgin tax (fixed amount per thousand population in the Kingdom)
                 relLvl = (100 - capital.GetGroupRelations(WorldGroup.Peasants)) / 20;
                 taxRate = Math.Min(4, relLvl);
                 tally = GetWorldPopulation() / 1000;
@@ -7339,6 +7342,27 @@ namespace Next_Game
                 capital.SetFinanceReference(Account.Income, (int)Income.Virgins, tally);
                 capital.SetFinanceConstant(Account.Income, (int)Income.Virgins, virginTax);
 
+                //Expenses ---
+                int cityWatchCost = Game.constant.GetValue(Global.CITYWATCH_COST);
+                int officialsCost = Game.constant.GetValue(Global.OFFICIALS_COST);
+                int defenseCost = Game.constant.GetValue(Global.DEFENSE_COST);
+                int lifestyleCost = Game.constant.GetValue(Global.LIFESTYLE_COST);
+                int loanCost = Game.constant.GetValue(Global.LOAN_COST);
+                int foodCost = Game.constant.GetValue(Global.FOOD_COST);
+                int essentialCost = Game.constant.GetValue(Global.ESSENTIAL_COST);
+                int patrolCost = Game.constant.GetValue(Global.PATROL_COST);
+                int pirateCost = Game.constant.GetValue(Global.PIRATE_COST);
+                int inquisitorCost = Game.constant.GetValue(Global.INQUISITOR_COST);
+
+                //City Watch
+                budget = (int)Rate.Normal;
+                tally = capital.MenAtArms / cityWatchCost;
+                expense = tally * budget / 2;
+                capital.SetFinanceData(Account.Expense, (int)Expense.City_Watch_Wages, expense);
+                capital.SetFinanceStatus(Account.Expense, (int)Expense.City_Watch_Wages, true);
+                capital.SetFinanceRate(Account.Expense, (int)Expense.City_Watch_Wages, budget);
+                capital.SetFinanceReference(Account.Expense, (int)Expense.City_Watch_Wages, tally);
+                capital.SetFinanceConstant(Account.Expense, (int)Expense.City_Watch_Wages, cityWatchCost);
             }
             else { Game.SetError(new Error(310, "Invalid Capital (null) -> Royal Accounts not initialised")); }
         }
@@ -7349,7 +7373,7 @@ namespace Next_Game
         /// <param name="income"></param>
         /// <param name="rate"></param>
         /// <returns></returns>
-        private int GetTaxableIncome(Income income, TaxRate rate)
+        private int GetTaxableIncome(Income income, Rate rate)
         {
             int amount = 0;
             CapitalHouse capital = GetCapital();
