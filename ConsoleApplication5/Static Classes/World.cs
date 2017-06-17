@@ -7272,7 +7272,7 @@ namespace Next_Game
                 trade = GetValueOfGoods(arrayOfImports);
                 trade += GetValueOfGoods(arrayOfExports);
                 income = trade * importTax * (int)taxRate / 2;
-                if (income > 0) { status = true; } else { status = false; }
+                if (income > 0) { status = true; } else { status = false; taxRate = 0; }
                 capital.SetFinanceData(Account.Income, (int)Income.Lords, income);
                 capital.SetFinanceStatus(Account.Income, (int)Income.Lords, status);
                 capital.SetFinanceRate(Account.Income, (int)Income.Lords, taxRate);
@@ -7283,7 +7283,7 @@ namespace Next_Game
                 relLvl = (100 - capital.GetGroupRelations(WorldGroup.Merchants)) / 20;
                 taxRate = Math.Min(4, relLvl);
                 income = trade * exportTax * (int)taxRate / 2;
-                if (income > 0) { status = true; } else { status = false; }
+                if (income > 0) { status = true; } else { status = false; taxRate = 0; }
                 capital.SetFinanceData(Account.Income, (int)Income.Merchants, income);
                 capital.SetFinanceStatus(Account.Income, (int)Income.Merchants, status);
                 capital.SetFinanceRate(Account.Income, (int)Income.Merchants, taxRate);
@@ -7295,7 +7295,7 @@ namespace Next_Game
                 taxRate = Math.Min(4, relLvl);
                 tally = 5 + GetNumMajorHouses();
                 income = tally * churchTax * (int)taxRate / 2;
-                if (income > 0) { status = true; } else { status = false; }
+                if (income > 0) { status = true; } else { status = false; taxRate = 0; }
                 capital.SetFinanceData(Account.Income, (int)Income.Churches, income);
                 capital.SetFinanceStatus(Account.Income, (int)Income.Churches, status);
                 capital.SetFinanceRate(Account.Income, (int)Income.Churches, taxRate);
@@ -7306,7 +7306,7 @@ namespace Next_Game
                 relLvl = (100 - capital.GetGroupRelations(WorldGroup.Crafters)) / 20;
                 taxRate = Math.Min(4, relLvl);
                 income = trade * crafterTax * (int)taxRate / 2;
-                if (income > 0) { status = true; } else { status = false; }
+                if (income > 0) { status = true; } else { status = false; taxRate = 0; }
                 capital.SetFinanceData(Account.Income, (int)Income.Crafters, income);
                 capital.SetFinanceStatus(Account.Income, (int)Income.Crafters, status);
                 capital.SetFinanceRate(Account.Income, (int)Income.Crafters, taxRate);
@@ -7318,7 +7318,7 @@ namespace Next_Game
                 taxRate = Math.Min(4, relLvl);
                 tally = Game.map.KingsRoadLength;
                 income = tally * roadTax * (int)taxRate / 2;
-                if (income > 0) { status = true; } else { status = false; }
+                if (income > 0) { status = true; } else { status = false; taxRate = 0; }
                 capital.SetFinanceData(Account.Income, (int)Income.Roads, income);
                 capital.SetFinanceStatus(Account.Income, (int)Income.Roads, status);
                 capital.SetFinanceRate(Account.Income, (int)Income.Roads, taxRate);
@@ -7330,7 +7330,7 @@ namespace Next_Game
                 taxRate = Math.Min(4, relLvl);
                 tally = Game.network.GetNumPorts();
                 income = tally * harbourTax * (int)taxRate / 2;
-                if (income > 0) { status = true; } else { status = false; }
+                if (income > 0) { status = true; } else { status = false; taxRate = 0; }
                 capital.SetFinanceData(Account.Income, (int)Income.Harbours, income);
                 capital.SetFinanceStatus(Account.Income, (int)Income.Harbours, status);
                 capital.SetFinanceRate(Account.Income, (int)Income.Harbours, taxRate);
@@ -7342,7 +7342,7 @@ namespace Next_Game
                 taxRate = Math.Min(4, relLvl);
                 tally = GetWorldPopulation() / 2000;
                 income = tally * virginTax * (int)taxRate / 2;
-                if (income > 0) { status = true; } else { status = false; }
+                if (income > 0) { status = true; } else { status = false; taxRate = 0; }
                 capital.SetFinanceData(Account.Income, (int)Income.Virgins, income);
                 capital.SetFinanceStatus(Account.Income, (int)Income.Virgins, status);
                 capital.SetFinanceRate(Account.Income, (int)Income.Virgins, taxRate);
@@ -7365,7 +7365,7 @@ namespace Next_Game
                 budget = (int)Rate.Normal;
                 tally = capital.MenAtArms / cityWatchCost;
                 expense = tally * budget / 2;
-                if (expense > 0) { status = true; } else { status = false; }
+                if (expense > 0) { status = true; } else { status = false; budget = 0; }
                 capital.SetFinanceData(Account.Expense, (int)Expense.City_Watch_Wages, expense);
                 capital.SetFinanceStatus(Account.Expense, (int)Expense.City_Watch_Wages, status);
                 capital.SetFinanceRate(Account.Expense, (int)Expense.City_Watch_Wages, budget);
@@ -7376,7 +7376,7 @@ namespace Next_Game
                 budget = (int)Rate.Normal;
                 tally = 5 + GetNumMajorHouses();
                 expense = tally * officialsCost * budget / 2;
-                if (expense > 0) { status = true; } else { status = false; }
+                if (expense > 0) { status = true; } else { status = false; budget = 0; }
                 capital.SetFinanceData(Account.Expense, (int)Expense.Officials_Wages, expense);
                 capital.SetFinanceStatus(Account.Expense, (int)Expense.Officials_Wages, status);
                 capital.SetFinanceRate(Account.Expense, (int)Expense.Officials_Wages, budget);
@@ -7387,7 +7387,7 @@ namespace Next_Game
                 budget = (int)Rate.Normal;
                 tally = capital.CastleWalls;
                 expense = tally * defenceCost * budget / 2;
-                if (expense > 0) { status = true; } else { status = false; }
+                if (expense > 0) { status = true; } else { status = false; budget = 0; }
                 capital.SetFinanceData(Account.Expense, (int)Expense.Capital_Defenses, expense);
                 capital.SetFinanceStatus(Account.Expense, (int)Expense.Capital_Defenses, status);
                 capital.SetFinanceRate(Account.Expense, (int)Expense.Capital_Defenses, budget);
@@ -7400,13 +7400,81 @@ namespace Next_Game
                 if (Game.lore.NewQueen.Status != ActorStatus.Gone) { witsTally += Game.lore.NewQueen.GetSkill(SkillType.Wits); } else { witsTally *= 2; }
                 tally = 12 - witsTally;
                 expense = tally * lifestyleCost * budget / 2;
-                if (expense > 0) { status = true; } else { status = false; }
+                if (expense > 0) { status = true; } else { status = false; budget = 0; }
                 capital.SetFinanceData(Account.Expense, (int)Expense.Royal_Lifestyle, expense);
                 capital.SetFinanceStatus(Account.Expense, (int)Expense.Royal_Lifestyle, status);
                 capital.SetFinanceRate(Account.Expense, (int)Expense.Royal_Lifestyle, budget);
                 capital.SetFinanceReference(Account.Expense, (int)Expense.Royal_Lifestyle, tally);
                 capital.SetFinanceConstant(Account.Expense, (int)Expense.Royal_Lifestyle, lifestyleCost);
 
+                //Loan interest (cost varies depending on who the loan was from -> Gold Bank is Normal, Merchant Guild is High and Goblin Bank is Excessive)
+                List<Finance> listOfLoans = capital.GetLoans();
+                expense = 0;
+                int averageInterestRate = 0;
+                int numLoans = listOfLoans.Count;
+                if (numLoans > 0)
+                {
+                    for(int i = 0; i < numLoans; i++)
+                    {
+                        switch (listOfLoans[i])
+                        {
+                            case Finance.Gold_Bank:      budget = (int)Rate.Normal;    break;
+                            case Finance.Merchant_Guild: budget = (int)Rate.High;      break;
+                            case Finance.Goblin_Bank:    budget = (int)Rate.Excessive; break;
+                            default:
+                                Game.SetError(new Error(310, $"Invalid Loan type \"{listOfLoans[i]}\""));
+                                break;
+                        }
+                        expense += loanCost * budget / 2;
+                        averageInterestRate += budget;
+                    }
+                    averageInterestRate /= numLoans;
+                }
+                if (expense > 0) { status = true; } else { status = false; budget = 0; }
+                capital.SetFinanceData(Account.Expense, (int)Expense.Loan_Interest, expense);
+                capital.SetFinanceStatus(Account.Expense, (int)Expense.Loan_Interest, status);
+                capital.SetFinanceRate(Account.Expense, (int)Expense.Loan_Interest, averageInterestRate);
+                capital.SetFinanceReference(Account.Expense, (int)Expense.Loan_Interest, numLoans);
+                capital.SetFinanceConstant(Account.Expense, (int)Expense.Loan_Interest, loanCost);
+
+                //Food imports (kingdom food deficit / cost, not required if a food surplus) 
+                budget = (int)Rate.Normal;
+                tally = GetWorldFoodBalance();
+                if (tally < 0) { expense = Math.Abs(tally) / foodCost * budget / 2; }
+                else { expense = 0; }
+                if (expense > 0) { status = true; } else { status = false; budget = 0; }
+                capital.SetFinanceData(Account.Expense, (int)Expense.Food_Imports, expense);
+                capital.SetFinanceStatus(Account.Expense, (int)Expense.Food_Imports, status);
+                capital.SetFinanceRate(Account.Expense, (int)Expense.Food_Imports, budget);
+                capital.SetFinanceReference(Account.Expense, (int)Expense.Food_Imports, tally);
+                capital.SetFinanceConstant(Account.Expense, (int)Expense.Food_Imports, foodCost);
+
+                //Essential Goods Imports (must one each available of all goods except wine and gold, number of unique imported goods * cost)
+                int[,] arrayImports = capital.GetImports();
+                int[,] arrayExports = capital.GetExports();
+                int[] arrayGoods = new int[(int)Goods.Count];
+                for(int i = 1; i < arrayGoods.Length; i++)
+                {
+                    //tally up number of goods 
+                    if (arrayImports[i, 0] > 0) { arrayGoods[i]++; }
+                    if (arrayExports[i, 0] > 0) { arrayGoods[i]++; }
+                }
+                //loop through looking for empty goods
+                tally = 0;
+                for(int i = 1; i < arrayGoods.Length; i++)
+                {
+                    //exclude luxury goods
+                    if ((Goods)i != Goods.Wine && (Goods)i != Goods.Gold)
+                    { if (arrayGoods[i] == 0) { tally++; } }
+                }
+                budget = (int)Rate.Normal;
+                expense = tally * essentialCost * budget / 2;
+                if (expense > 0) { status = true; } else { status = false; budget = 0; }
+                capital.SetFinanceData(Account.Expense, (int)Expense.Essential_Goods, expense);
+                capital.SetFinanceStatus(Account.Expense, (int)Expense.Essential_Goods, status);
+                capital.SetFinanceRate(Account.Expense, (int)Expense.Essential_Goods, budget);
+                capital.SetFinanceReference(Account.Expense, (int)Expense.Essential_Goods, tally);
+                capital.SetFinanceConstant(Account.Expense, (int)Expense.Essential_Goods, essentialCost);
 
             }
             else { Game.SetError(new Error(310, "Invalid Capital (null) -> Royal Accounts not initialised")); }
@@ -7524,6 +7592,30 @@ namespace Next_Game
             foreach (var house in dictAllHouses)
             { population += house.Value.Population; }
             return population;
+        }
+
+        /// <summary>
+        /// Returns total world food capacity (ignores stockpiles)
+        /// </summary>
+        /// <returns></returns>
+        internal int GetWorldFoodCapacity()
+        {
+            int capacity = 0;
+            foreach (var house in dictAllHouses)
+            { capacity += house.Value.FoodCapacity; }
+            return capacity;
+        }
+
+        /// <summary>
+        /// Returns total world food surplus / deficit (1 food feeds 1 person through winter)
+        /// </summary>
+        /// <returns></returns>
+        internal int GetWorldFoodBalance()
+        {
+            int population = 0; int food = 0;
+            foreach (var house in dictAllHouses)
+            { population += house.Value.Population; food += house.Value.FoodCapacity; }
+            return food - population;
         }
 
         /// <summary>

@@ -207,7 +207,7 @@ namespace Next_Game
                     if (capital.GetFinanceInfo(Account.Income, i, FinArray.Status) > 0 ) { displayColor = activeColor; } else { displayColor = inactiveColor; }
                     listDisplay.Add(new Snippet($"{"Taxes on " + (Income)i,-30}{amount,-12:N0}", displayColor, RLColor.Black, false));
                     rate = capital.GetFinanceInfo(Account.Income, i, FinArray.Rate);
-                    if (rate > 3) { displayColor = badStar; } else { displayColor = goodStar; }
+                    if (rate > 2) { displayColor = badStar; } else { displayColor = goodStar; }
                     listDisplay.Add(new Snippet($"{GetStars(rate),-15}", displayColor, RLColor.Black));
                 }
                 cashflow += balance;
@@ -226,7 +226,7 @@ namespace Next_Game
                     if (capital.GetFinanceInfo(Account.Expense, i, FinArray.Status) > 0) { displayColor = activeColor; } else { displayColor = inactiveColor; }
                     listDisplay.Add(new Snippet($"{"Cost of " + (Expense)i,-30}{amount,-12:N0}", displayColor, RLColor.Black, false));
                     rate = capital.GetFinanceInfo(Account.Expense, i, FinArray.Rate);
-                    if (rate > 3) { displayColor = badStar; } else { displayColor = goodStar; }
+                    if (rate > 2) { displayColor = badStar; } else { displayColor = goodStar; }
                     listDisplay.Add(new Snippet($"{GetStars(rate),-15}", displayColor, RLColor.Black));
                 }
                 cashflow -= balance;
