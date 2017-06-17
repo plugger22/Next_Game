@@ -7241,7 +7241,7 @@ namespace Next_Game
         internal void InitialiseRoyalAccounts()
         {
             CapitalHouse capital = GetCapital();
-            
+            bool status;
             int balance = 0;
             int tally, income, expense, trade, relLvl;
             int taxRate, budget; //taxRate for Income, budget for Expenses -> both work off director.cs Rate enum
@@ -7272,8 +7272,9 @@ namespace Next_Game
                 trade = GetValueOfGoods(arrayOfImports);
                 trade += GetValueOfGoods(arrayOfExports);
                 income = trade * importTax * (int)taxRate / 2;
+                if (income > 0) { status = true; } else { status = false; }
                 capital.SetFinanceData(Account.Income, (int)Income.Lords, income);
-                capital.SetFinanceStatus(Account.Income, (int)Income.Lords, true);
+                capital.SetFinanceStatus(Account.Income, (int)Income.Lords, status);
                 capital.SetFinanceRate(Account.Income, (int)Income.Lords, taxRate);
                 capital.SetFinanceReference(Account.Income, (int)Income.Lords, trade);
                 capital.SetFinanceConstant(Account.Income, (int)Income.Lords, importTax);
@@ -7282,8 +7283,9 @@ namespace Next_Game
                 relLvl = (100 - capital.GetGroupRelations(WorldGroup.Merchants)) / 20;
                 taxRate = Math.Min(4, relLvl);
                 income = trade * exportTax * (int)taxRate / 2;
+                if (income > 0) { status = true; } else { status = false; }
                 capital.SetFinanceData(Account.Income, (int)Income.Merchants, income);
-                capital.SetFinanceStatus(Account.Income, (int)Income.Merchants, true);
+                capital.SetFinanceStatus(Account.Income, (int)Income.Merchants, status);
                 capital.SetFinanceRate(Account.Income, (int)Income.Merchants, taxRate);
                 capital.SetFinanceReference(Account.Income, (int)Income.Merchants, trade);
                 capital.SetFinanceConstant(Account.Income, (int)Income.Merchants, exportTax);
@@ -7293,8 +7295,9 @@ namespace Next_Game
                 taxRate = Math.Min(4, relLvl);
                 tally = 5 + GetNumMajorHouses();
                 income = tally * churchTax * (int)taxRate / 2;
+                if (income > 0) { status = true; } else { status = false; }
                 capital.SetFinanceData(Account.Income, (int)Income.Churches, income);
-                capital.SetFinanceStatus(Account.Income, (int)Income.Churches, true);
+                capital.SetFinanceStatus(Account.Income, (int)Income.Churches, status);
                 capital.SetFinanceRate(Account.Income, (int)Income.Churches, taxRate);
                 capital.SetFinanceReference(Account.Income, (int)Income.Churches, tally);
                 capital.SetFinanceConstant(Account.Income, (int)Income.Churches, churchTax);
@@ -7303,8 +7306,9 @@ namespace Next_Game
                 relLvl = (100 - capital.GetGroupRelations(WorldGroup.Crafters)) / 20;
                 taxRate = Math.Min(4, relLvl);
                 income = trade * crafterTax * (int)taxRate / 2;
+                if (income > 0) { status = true; } else { status = false; }
                 capital.SetFinanceData(Account.Income, (int)Income.Crafters, income);
-                capital.SetFinanceStatus(Account.Income, (int)Income.Crafters, true);
+                capital.SetFinanceStatus(Account.Income, (int)Income.Crafters, status);
                 capital.SetFinanceRate(Account.Income, (int)Income.Crafters, taxRate);
                 capital.SetFinanceReference(Account.Income, (int)Income.Crafters, trade);
                 capital.SetFinanceConstant(Account.Income, (int)Income.Crafters, crafterTax);
@@ -7314,8 +7318,9 @@ namespace Next_Game
                 taxRate = Math.Min(4, relLvl);
                 tally = Game.map.KingsRoadLength;
                 income = tally * roadTax * (int)taxRate / 2;
+                if (income > 0) { status = true; } else { status = false; }
                 capital.SetFinanceData(Account.Income, (int)Income.Roads, income);
-                capital.SetFinanceStatus(Account.Income, (int)Income.Roads, true);
+                capital.SetFinanceStatus(Account.Income, (int)Income.Roads, status);
                 capital.SetFinanceRate(Account.Income, (int)Income.Roads, taxRate);
                 capital.SetFinanceReference(Account.Income, (int)Income.Roads, tally);
                 capital.SetFinanceConstant(Account.Income, (int)Income.Roads, roadTax);
@@ -7325,19 +7330,21 @@ namespace Next_Game
                 taxRate = Math.Min(4, relLvl);
                 tally = Game.network.GetNumPorts();
                 income = tally * harbourTax * (int)taxRate / 2;
+                if (income > 0) { status = true; } else { status = false; }
                 capital.SetFinanceData(Account.Income, (int)Income.Harbours, income);
-                capital.SetFinanceStatus(Account.Income, (int)Income.Harbours, true);
+                capital.SetFinanceStatus(Account.Income, (int)Income.Harbours, status);
                 capital.SetFinanceRate(Account.Income, (int)Income.Harbours, taxRate);
                 capital.SetFinanceReference(Account.Income, (int)Income.Harbours, tally);
                 capital.SetFinanceConstant(Account.Income, (int)Income.Harbours, harbourTax);
 
-                // Virgin tax (fixed amount per thousand population in the Kingdom)
+                // Virgin tax (fixed amount per two thousand population in the Kingdom)
                 relLvl = (100 - capital.GetGroupRelations(WorldGroup.Peasants)) / 20;
                 taxRate = Math.Min(4, relLvl);
-                tally = GetWorldPopulation() / 1000;
+                tally = GetWorldPopulation() / 2000;
                 income = tally * virginTax * (int)taxRate / 2;
+                if (income > 0) { status = true; } else { status = false; }
                 capital.SetFinanceData(Account.Income, (int)Income.Virgins, income);
-                capital.SetFinanceStatus(Account.Income, (int)Income.Virgins, true);
+                capital.SetFinanceStatus(Account.Income, (int)Income.Virgins, status);
                 capital.SetFinanceRate(Account.Income, (int)Income.Virgins, taxRate);
                 capital.SetFinanceReference(Account.Income, (int)Income.Virgins, tally);
                 capital.SetFinanceConstant(Account.Income, (int)Income.Virgins, virginTax);
@@ -7345,7 +7352,7 @@ namespace Next_Game
                 //Expenses ---
                 int cityWatchCost = Game.constant.GetValue(Global.CITYWATCH_COST);
                 int officialsCost = Game.constant.GetValue(Global.OFFICIALS_COST);
-                int defenseCost = Game.constant.GetValue(Global.DEFENSE_COST);
+                int defenceCost = Game.constant.GetValue(Global.DEFENSE_COST);
                 int lifestyleCost = Game.constant.GetValue(Global.LIFESTYLE_COST);
                 int loanCost = Game.constant.GetValue(Global.LOAN_COST);
                 int foodCost = Game.constant.GetValue(Global.FOOD_COST);
@@ -7354,15 +7361,53 @@ namespace Next_Game
                 int pirateCost = Game.constant.GetValue(Global.PIRATE_COST);
                 int inquisitorCost = Game.constant.GetValue(Global.INQUISITOR_COST);
 
-                //City Watch
+                //City Watch  (MenAtArms at Capital / cost)
                 budget = (int)Rate.Normal;
                 tally = capital.MenAtArms / cityWatchCost;
                 expense = tally * budget / 2;
+                if (expense > 0) { status = true; } else { status = false; }
                 capital.SetFinanceData(Account.Expense, (int)Expense.City_Watch_Wages, expense);
-                capital.SetFinanceStatus(Account.Expense, (int)Expense.City_Watch_Wages, true);
+                capital.SetFinanceStatus(Account.Expense, (int)Expense.City_Watch_Wages, status);
                 capital.SetFinanceRate(Account.Expense, (int)Expense.City_Watch_Wages, budget);
                 capital.SetFinanceReference(Account.Expense, (int)Expense.City_Watch_Wages, tally);
                 capital.SetFinanceConstant(Account.Expense, (int)Expense.City_Watch_Wages, cityWatchCost);
+
+                //Officials (number of Major Houses + 5 for capital * cost) 
+                budget = (int)Rate.Normal;
+                tally = 5 + GetNumMajorHouses();
+                expense = tally * officialsCost * budget / 2;
+                if (expense > 0) { status = true; } else { status = false; }
+                capital.SetFinanceData(Account.Expense, (int)Expense.Officials_Wages, expense);
+                capital.SetFinanceStatus(Account.Expense, (int)Expense.Officials_Wages, status);
+                capital.SetFinanceRate(Account.Expense, (int)Expense.Officials_Wages, budget);
+                capital.SetFinanceReference(Account.Expense, (int)Expense.Officials_Wages, tally);
+                capital.SetFinanceConstant(Account.Expense, (int)Expense.Officials_Wages, officialsCost);
+
+                //Maintain Castle Defences (capital.CastleWalls * cost) 
+                budget = (int)Rate.Normal;
+                tally = capital.CastleWalls;
+                expense = tally * defenceCost * budget / 2;
+                if (expense > 0) { status = true; } else { status = false; }
+                capital.SetFinanceData(Account.Expense, (int)Expense.Capital_Defenses, expense);
+                capital.SetFinanceStatus(Account.Expense, (int)Expense.Capital_Defenses, status);
+                capital.SetFinanceRate(Account.Expense, (int)Expense.Capital_Defenses, budget);
+                capital.SetFinanceReference(Account.Expense, (int)Expense.Capital_Defenses, tally);
+                capital.SetFinanceConstant(Account.Expense, (int)Expense.Capital_Defenses, defenceCost);
+
+                //Royal Lifestyle (12 - (Queen wits + kings wits) * cost) -> if Queen dead then King's wits x 2
+                budget = (int)Rate.Normal;
+                int witsTally = Game.lore.NewKing.GetSkill(SkillType.Wits);
+                if (Game.lore.NewQueen.Status != ActorStatus.Gone) { witsTally += Game.lore.NewQueen.GetSkill(SkillType.Wits); } else { witsTally *= 2; }
+                tally = 12 - witsTally;
+                expense = tally * lifestyleCost * budget / 2;
+                if (expense > 0) { status = true; } else { status = false; }
+                capital.SetFinanceData(Account.Expense, (int)Expense.Royal_Lifestyle, expense);
+                capital.SetFinanceStatus(Account.Expense, (int)Expense.Royal_Lifestyle, status);
+                capital.SetFinanceRate(Account.Expense, (int)Expense.Royal_Lifestyle, budget);
+                capital.SetFinanceReference(Account.Expense, (int)Expense.Royal_Lifestyle, tally);
+                capital.SetFinanceConstant(Account.Expense, (int)Expense.Royal_Lifestyle, lifestyleCost);
+
+
             }
             else { Game.SetError(new Error(310, "Invalid Capital (null) -> Royal Accounts not initialised")); }
         }

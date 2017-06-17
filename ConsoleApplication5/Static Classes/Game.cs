@@ -25,7 +25,7 @@ namespace Next_Game
 
         private static int seed = (int)DateTime.Now.Ticks & 0x0000FFFF;
         //DEBUG: insert seed here to test a particular map
-        //private static int seed = 54158;
+        //private static int seed = 21568;
 
         static Random rnd;
         

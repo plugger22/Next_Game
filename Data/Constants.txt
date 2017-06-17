@@ -134,16 +134,16 @@
 91: 50 @ 25 @ 100
 # HARBOUR_TAX -> gold amount per harbour, at the normal tax rate
 92: 200 @ 100 @ 500
-# VIRGIN_TAX -> gold amount per thousand people in the whole kingdom
+# VIRGIN_TAX -> gold amount per every two thousand people in the whole kingdom
 93: 10 @ 10 @ 40
 # CITYWATCH_COST -> gold amount is  capital MenAtArms divided by CityWatch_Cost divisor
 94: 3 @ 2 @ 5
-# OFFICIALS_COST -> gold amount is number of Major Houses times officials_cost
+# OFFICIALS_COST -> gold amount is number of Major Houses plus five for capital times officials_cost
 95: 50 @ 40 @ 100
 # DEFENSE_COST -> gold amount is number of capital.CastleWalls stars times defense_cost
 96: 100 @ 50 @ 200
 # LIFESTYLE_COST -> gold amount is 12 - (wits of Queen + wits of King) times Lifestyle_cost
-97: 100 @ 50 @ 200
+97: 200 @ 50 @ 300
 # LOAN_COST -> gold amount is for a Normal rate loan (Merchant_Guild) GoldBank is Low rate (1/2) and Goblin bank is excessive (2X)
 98: 200 @ 100 @ 300
 # FOOD_COST -> gold amount is overall food balance (deficit) divided by food_cost divisor
