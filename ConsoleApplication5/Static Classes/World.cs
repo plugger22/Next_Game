@@ -7248,6 +7248,7 @@ namespace Next_Game
             if (capital != null)
             {
                 //Income ---
+
                 int goldAmount = Game.constant.GetValue(Global.LOAN_AMOUNT);
                 int importTax = Game.constant.GetValue(Global.IMPORT_TAX);
                 int exportTax = Game.constant.GetValue(Global.EXPORT_TAX);
@@ -7350,6 +7351,7 @@ namespace Next_Game
                 capital.SetFinanceConstant(Account.Income, (int)Income.Virgins, virginTax);
 
                 //Expenses ---
+
                 int cityWatchCost = Game.constant.GetValue(Global.CITYWATCH_COST);
                 int officialsCost = Game.constant.GetValue(Global.OFFICIALS_COST);
                 int defenceCost = Game.constant.GetValue(Global.DEFENSE_COST);
@@ -7572,11 +7574,97 @@ namespace Next_Game
                         break;
                 }
                 //adjust for tax rate
-                amount = amount * (int)rate / 2;
+                amount *= ((int)rate / 2);
             }
             else { Game.SetError(new Error(318, "Invalid capital (null) -> default zero income returned")); }
 
             return amount;
+        }
+
+        /// <summary>
+        /// returns expected cost from budgeting a particular expense item at a given rate
+        /// </summary>
+        /// <param name="expense"></param>
+        /// <param name="budget"></param>
+        /// <returns></returns>
+        private int GetExpenseCost(Expense expense, Rate budget)
+        {
+            int tally = 0;
+            CapitalHouse capital = GetCapital();
+            if (capital != null)
+            {
+                int loanCost = Game.constant.GetValue(Global.LOAN_COST);
+                int foodCost = Game.constant.GetValue(Global.FOOD_COST);
+                int essentialCost = Game.constant.GetValue(Global.ESSENTIAL_COST);
+                int patrolCost = Game.constant.GetValue(Global.PATROL_COST);
+                int pirateCost = Game.constant.GetValue(Global.PIRATE_COST);
+                int inquisitorCost = Game.constant.GetValue(Global.INQUISITOR_COST);
+                switch (expense)
+                {
+                    case Expense.City_Watch_Wages:
+                        tally = capital.MenAtArms / Game.constant.GetValue(Global.CITYWATCH_COST);
+                        break;
+                    case Expense.Capital_Defenses:
+                        tally = capital.CastleWalls * Game.constant.GetValue(Global.DEFENSE_COST);
+                        break;
+                    case Expense.Officials_Wages:
+                        tally = 5 + GetNumMajorHouses() * Game.constant.GetValue(Global.OFFICIALS_COST);
+                        break;
+                    case Expense.Royal_Lifestyle:
+                        int witsTally = Game.lore.NewKing.GetSkill(SkillType.Wits);
+                        if (Game.lore.NewQueen.Status != ActorStatus.Gone) { witsTally += Game.lore.NewQueen.GetSkill(SkillType.Wits); } else { witsTally *= 2; }
+                        tally = (12 - witsTally) * Game.constant.GetValue(Global.LIFESTYLE_COST);
+                        break;
+                    case Expense.Loan_Interest:
+                        List<Finance> listOfLoans = capital.GetLoans();
+                        tally = 0;
+                        int averageInterestRate = 0;
+                        int numLoans = listOfLoans.Count;
+                        if (numLoans > 0)
+                        {
+                            for (int i = 0; i < numLoans; i++)
+                            {
+                                switch (listOfLoans[i])
+                                {
+                                    case Finance.Gold_Bank: budget = (int)Rate.Normal; break;
+                                    case Finance.Merchant_Guild: budget = (int)Rate.High; break;
+                                    case Finance.Goblin_Bank: budget = (int)Rate.Excessive; break;
+                                    default:
+                                        Game.SetError(new Error(310, $"Invalid Loan type \"{listOfLoans[i]}\""));
+                                        break;
+                                }
+                                tally += loanCost * budget / 2;
+                                averageInterestRate += budget;
+                            }
+                            averageInterestRate /= numLoans;
+                        }
+                        break;
+                    case Expense.Food_Imports:
+
+                        break;
+                    case Expense.Essential_Goods:
+
+                        break;
+                    case Expense.Road_Patrols:
+
+                        break;
+                    case Expense.Pirate_Patrols:
+
+                        break;
+                    case Expense.Inquisitors:
+
+                        break;
+                    
+
+                    default:
+                        Game.SetError(new Error(319, $"Invalid Expense \"{cost}\" -> default zero cost returned"));
+                        break;
+                }
+                //adjust for budget rate
+                tally *= ((int)budget / 2);
+            }
+            else { Game.SetError(new Error(319, "Invalid capital (null) -> default zero cost returned")); }
+            return tally;
         }
 
         /// <summary>

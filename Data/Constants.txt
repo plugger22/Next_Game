@@ -137,7 +137,7 @@
 # VIRGIN_TAX -> gold amount per every two thousand people in the whole kingdom
 93: 10 @ 10 @ 40
 # CITYWATCH_COST -> gold amount is  capital MenAtArms divided by CityWatch_Cost divisor
-94: 3 @ 2 @ 5
+94: 2 @ 2 @ 4
 # OFFICIALS_COST -> gold amount is number of Major Houses plus five for capital times officials_cost
 95: 50 @ 40 @ 100
 # DEFENSE_COST -> gold amount is number of capital.CastleWalls stars times defense_cost
@@ -155,7 +155,7 @@
 # PIRATE_COST -> cost of subsidising Major Houses Pirate Patrols of ports is the gold amount times the number of Ports
 102: 50 @ 20 @ 100
 # INQUISITOR_COST -> to maintain loyalty and effectiveness, gold coin cost times number of inquisitors
-103: 100 @ 50 @ 200
+103: 200 @ 50 @ 400
 
 # Events ---
 

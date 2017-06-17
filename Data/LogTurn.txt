@@ -1,18 +1,20 @@
-//Exile Game file ops "LogTurn.txt" commenced at: 17/06/2017 16:26:19
+//Exile Game file ops "LogTurn.txt" commenced at: 17/06/2017 16:37:22
 --- ProcessStartGame (World.cs)
 --- AgePassiveCharacters (History.cs)
 --- InitialiseGameVars (World.cs)
-[GameVar] View_Index changed from 0 to 3
+[GameVar] View_Index changed from 0 to 4
 [GameVar] View_Rollover changed from 0 to 6
-[AddVisitedLoc] LocID 32, "Winterfell", turn -3 -> record added to listLocsVisited
-[AddVisitedLoc] LocID 32, "Winterfell", turn -3 -> new record added to dictLocsVisited
-[AddVisitedLoc] LocID 18, "The Yellow Huntress", turn -2 -> record added to listLocsVisited
-[AddVisitedLoc] LocID 18, "The Yellow Huntress", turn -2 -> new record added to dictLocsVisited
-[AddVisitedLoc] LocID 2, "The Pickled Prune", turn -1 -> record added to listLocsVisited
-[AddVisitedLoc] LocID 2, "The Pickled Prune", turn -1 -> new record added to dictLocsVisited
+[AddVisitedLoc] LocID 11, "Bloodkeep", turn -3 -> record added to listLocsVisited
+[AddVisitedLoc] LocID 11, "Bloodkeep", turn -3 -> new record added to dictLocsVisited
+[AddVisitedLoc] LocID 19, "Lordsport", turn -2 -> record added to listLocsVisited
+[AddVisitedLoc] LocID 19, "Lordsport", turn -2 -> new record added to dictLocsVisited
+[AddVisitedLoc] LocID 19, "Lordsport", turn -1 -> record added to listLocsVisited
+[AddVisitedLoc] LocID 19, "Lordsport", turn -1 -> record updated in dictLocsVisited
 --- InitialiseFinalPlayer (World.cs)
-[AddVisitedLoc] LocID 27, "Deepwood Motte", turn 0 -> record added to listLocsVisited
-[AddVisitedLoc] LocID 27, "Deepwood Motte", turn 0 -> new record added to dictLocsVisited
+[AddVisitedLoc] LocID 25, "Starpike", turn 0 -> record added to listLocsVisited
+[AddVisitedLoc] LocID 25, "Starpike", turn 0 -> new record added to dictLocsVisited
+--- MultiKeyInput (Game.cs)
+10 input
 --- SetEndGame (Game.cs)
 [Alert] Player chose to exit (pressed 'X')
-//Exile Game file ops "LogTurn.txt" Completed at: 17/06/2017 16:30:58
+//Exile Game file ops "LogTurn.txt" Completed at: 17/06/2017 16:40:12
