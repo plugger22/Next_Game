@@ -155,7 +155,8 @@ namespace Next_Game
                 listDisplay.Add(new Snippet("--- Lenders", RLColor.Yellow, RLColor.Black));
                 for (int i = 1; i < (int)Finance.Count; i++)
                 {
-                    relLvl = capital.GetLenderRelations((Finance)i);
+                    //relLvl = capital.GetLenderRelations((Finance)i);
+                    relLvl = capital.GetFinanceInfo(Account.Lender, i, FinArray.Data);
                     stars = relLvl / 20 + 1;
                     stars = Math.Min(5, stars);
                     if (stars <= 2) { starColor = RLColor.LightRed; } else { starColor = RLColor.Yellow; }
@@ -184,8 +185,7 @@ namespace Next_Game
             RLColor goodStar = RLColor.Yellow;
             RLColor badStar = RLColor.LightRed;
             RLColor displayColor;
-            int amount, balance, accounts, rate;
-            int cashflow = 0; ;
+            int amount, balance, accounts, rate, cashflow;
             int spacer = 2; //number of blank lines between data groups
             if (capital != null)
             {
@@ -209,7 +209,6 @@ namespace Next_Game
                     if (rate > 2) { displayColor = badStar; } else { displayColor = goodStar; }
                     listDisplay.Add(new Snippet($"{GetStars(rate),-15}", displayColor, RLColor.Black));
                 }
-                cashflow += balance;
                 if (balance > 0) { displayColor = goodColor; } else { displayColor = badColor; }
                 listDisplay.Add(new Snippet($"{"Balance",-30}{balance, -12:N0}gold coins", displayColor, RLColor.Black));
                 //spacer
@@ -228,26 +227,27 @@ namespace Next_Game
                     if (rate > 2) { displayColor = badStar; } else { displayColor = goodStar; }
                     listDisplay.Add(new Snippet($"{GetStars(rate),-15}", displayColor, RLColor.Black));
                 }
-                cashflow -= balance;
                 if (balance > 0) { displayColor = goodColor; } else { displayColor = badColor; }
                 listDisplay.Add(new Snippet($"{"Balance",-30}{balance, -12:N0}gold coins", displayColor, RLColor.Black));
                 //spacer
                 for (int i = 0; i < spacer; i++)
                 { listDisplay.Add(new Snippet("")); }
                 //Summary
-                balance = 0;
                 listDisplay.Add(new Snippet("--- Summary", RLColor.Yellow, RLColor.Black));
+                //lump sums
                 for (int i = 1; i < (int)LumpSum.Count; i++)
                 {
-                    amount = capital.GetLumpSum((LumpSum)i);
-                    balance += amount;
-                    if (capital.GetLumpSumStatus((LumpSum)i) == true) { displayColor = activeColor; } else { displayColor = inactiveColor; amount = 0; }
+                    amount = capital.GetFinanceInfo(Account.LumpSum, i, FinArray.Data);
+                    //if (capital.GetLumpSumStatus((LumpSum)i) == true)
+                    if (capital.GetFinanceInfo(Account.LumpSum, i, FinArray.Status) > 0) { displayColor = activeColor; } else { displayColor = inactiveColor; amount = 0; }
                     listDisplay.Add(new Snippet($"{(LumpSum)i, -30}{amount:N0}", displayColor, RLColor.Black));
                 }
                 //cashflow (Income - Expenses)
+                cashflow = capital.GetFinanceInfo(Account.FinSummary, (int)FinSummary.CashFlow, FinArray.Data);
                 if (cashflow > 0) { displayColor = goodColor; } else { displayColor = badColor; }
                 listDisplay.Add(new Snippet($"{"Net Cashflow",-30}{cashflow:N0}", displayColor, RLColor.Black));
-                balance += cashflow;
+                //balance
+                balance = capital.GetFinanceInfo(Account.FinSummary, (int)FinSummary.Balance, FinArray.Data);
                 if (balance > 0) { displayColor = goodColor; } else { displayColor = badColor; }
                 listDisplay.Add(new Snippet($"{"Balance", -30}{balance, -12:N0}gold coins", displayColor, RLColor.Black));
                 //spacer

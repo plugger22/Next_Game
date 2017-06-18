@@ -7600,15 +7600,35 @@ namespace Next_Game
                     { balance += goldAmount; }
                     balance += rnd.Next(goldAmount / 2);
                     capital.SetFinanceData(Account.LumpSum, (int)LumpSum.Treasury, balance);
+                    capital.SetFinanceData(Account.FinSummary, (int)FinSummary.Balance, balance);
                     capital.SetFinanceStatus(Account.LumpSum, (int)LumpSum.Treasury, true);
-                    Game.logStart?.Write($"Initial Treasury Balance {balance:N0}, CashFlow {cashflow:N0}");
+                    Game.logStart?.Write($"Initial Treasury {balance:N0}");
                 }
-                //update treasury with current cashflow (so treasury, when displayed, has been adjusted for cashflow)
+                //current treasury = previous balance
                 balance = capital.GetFinanceInfo(Account.LumpSum, (int)LumpSum.Treasury, FinArray.Data);
-                Game.logTurn?.Write($"Initial Treasury Balance {balance:N0}, CashFlow {cashflow:N0}");
-                balance += cashflow;
-                capital.SetFinanceData(Account.LumpSum, (int)LumpSum.Treasury, balance);
-                Game.logTurn?.Write($"Final Treasury Balance {balance:N0}");
+                int previousBalance = capital.GetFinanceInfo(Account.FinSummary, (int)FinSummary.Balance, FinArray.Data);
+                capital.SetFinanceData(Account.LumpSum, (int)LumpSum.Treasury, previousBalance);
+                //Update previous corruption with recent corruption data (kept in FinArray.Reference)
+                int previousData = capital.GetFinanceInfo(Account.LumpSum, (int)LumpSum.Corruption, FinArray.Reference);
+                capital.SetFinanceData(Account.LumpSum, (int)LumpSum.Corruption, previousData);
+                int newData = 0; //to do -> latest corruption
+                balance -= newData;
+                capital.SetFinanceReference(Account.LumpSum, (int)LumpSum.Corruption, newData);
+                //Update previous appropriations with recent appropriation data (kept in FinArray.Reference)
+                previousData = capital.GetFinanceInfo(Account.LumpSum, (int)LumpSum.Appropriations, FinArray.Reference);
+                capital.SetFinanceData(Account.LumpSum, (int)LumpSum.Appropriations, 0);
+                newData = 0; //to do -> latest financial appropriations
+                balance += newData;
+                capital.SetFinanceReference(Account.LumpSum, (int)LumpSum.Appropriations, 0);
+                //Update previous loans with recent loan data (kept in FinArray.Reference)
+                previousData = capital.GetFinanceInfo(Account.LumpSum, (int)LumpSum.Loans, FinArray.Reference);
+                capital.SetFinanceData(Account.LumpSum, (int)LumpSum.Loans, previousData);
+                newData = 0; //to do -> latest loans
+                balance += newData;
+                capital.SetFinanceReference(Account.LumpSum, (int)LumpSum.Loans, 0);
+                //update cashflow with current data
+                capital.SetFinanceData(Account.FinSummary, (int)FinSummary.CashFlow, cashflow);
+                balance -= cashflow;
                 //admin
                 SetMessage(new Message($"Royal Scribes have update the Kingdom Accounts to show a Balance of {balance:N0} gold coins", MessageType.Finance));
             }

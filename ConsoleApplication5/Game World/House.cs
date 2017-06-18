@@ -11,7 +11,7 @@ namespace Next_Game
     public enum CastleDefences { None, Minimal, Weak, Average, Strong, Formidable }
     public enum HouseInfo { None, Resources, CastleWalls, FriendsEnemies, Food, SafeHouse, History, Military, Count} //toggles information display on/off depending on known status
     public enum FinArray { Data, Status, Rate, Reference, Constant, Count } //second index for CapitalHouse finance arrays
-    public enum Account { None, Lender, Income, Expense, LumpSum} //which CapitalHouse financial array are we referring to?
+    public enum Account { None, Lender, Income, Expense, LumpSum, FinSummary} //which CapitalHouse financial array are we referring to?
 
     //
     // Base class
@@ -367,10 +367,11 @@ namespace Next_Game
         private List<Finance> listOfLoans; //who has lent money to the King
         private int[] arrayOfGroups; //relationship levels (0 - 100)  with the different WorldGroups (enum) within the Capital, Kingskeep
         private int[,] arrayOfLenders; //relationship levels (0 - 100) with the different Lenders who you've obtained a loan from
-        private int[,] arrayOfIncome; // Director.cs enum Income -> [,0] Amount, [,1] Active Item (1 true, 0 false), [,2] Tax Rate 0 None, 1 Low, 2 Normal, 3 High, 4 Excessive (Director.cs TaxRate enum), 
-        //[,3] Ref (calc'd from), [,4] Constant value used, eg. LORD_TAX
-        private int[,] arrayOfExpenses; // Director.cs enum Expense -> [,0] Amount, [,1] Active Item (1 true, 0 false)
-        private int[,] arrayOfLumpSums; // Director.cs enum LumpSums -> [,0] Amount, [,1] Active Item (1 true, 0 false)
+        //all the following use the FinArray as their second index - 0 Amount, 1 Active Item, 2 Rate, 3 Reference, 4 constant value
+        private int[,] arrayOfIncome; // Director.cs enum Income (2 Rate is TaxRate)
+        private int[,] arrayOfExpenses; // Director.cs enum Expense (2 Rate is budget cost)
+        private int[,] arrayOfLumpSums; // Director.cs enum LumpSums
+        private int[,] arrayOfFinSummary; //Director.cs enum FinSummary (3 Reference holds previous account period's updated data for Corruption/Appropriations and Loans)
 
         /// <summary>
         /// default constructor
@@ -384,6 +385,7 @@ namespace Next_Game
             arrayOfIncome = new int[(int)Income.Count, (int)FinArray.Count];
             arrayOfExpenses = new int[(int)Expense.Count, (int)FinArray.Count];
             arrayOfLumpSums = new int[(int)LumpSum.Count, (int)FinArray.Count];
+            arrayOfFinSummary = new int[(int)FinSummary.Count, (int)FinArray.Count];
         }
 
         public void AddLoan(Finance loan)
@@ -438,6 +440,9 @@ namespace Next_Game
                     break;
                 case Account.LumpSum:
                     arrayOfLumpSums[index, (int)FinArray.Data] = data;
+                    break;
+                case Account.FinSummary:
+                    arrayOfFinSummary[index, (int)FinArray.Data] = data;
                     break;
                 default:
                     Game.SetError(new Error(312, $"Invalid account option \"{account}\" -> data not added to array"));
@@ -528,6 +533,9 @@ namespace Next_Game
                 case Account.LumpSum:
                     arrayOfLumpSums[index, (int)FinArray.Reference] = refData;
                     break;
+                case Account.FinSummary:
+                    arrayOfFinSummary[index, (int)FinArray.Reference] = refData;
+                    break;
                 default:
                     Game.SetError(new Error(315, $"Invalid account option \"{account}\" -> reference not updated in array"));
                     break;
@@ -563,7 +571,7 @@ namespace Next_Game
         }
 
         /// <summary>
-        /// Get any FinArray in any finance array (all indentically sized)
+        /// Get any FinArray in any finance array (all indentically sized). If Status will return 1 for true, 0 for false
         /// </summary>
         /// <param name="account"></param>
         /// <param name="index">Make sure you use the appropriate enum for this!</param>
@@ -584,6 +592,9 @@ namespace Next_Game
                 case Account.LumpSum:
                     data = arrayOfLumpSums[index, (int)type];
                     break;
+                case Account.FinSummary:
+                    data = arrayOfFinSummary[index, (int)type];
+                    break;
                 default:
                     Game.SetError(new Error(317, $"Invalid account option \"{account}\" -> default info value of Zero returned"));
                     break;
@@ -601,7 +612,7 @@ namespace Next_Game
         /// </summary>
         /// <param name="lender"></param>
         /// <param name="changeAmt">Adds this amount to existing lender relationship level</param>
-        public void ChangeLenderRelations(Finance lender, int changeAmt)
+        /*public void ChangeLenderRelations(Finance lender, int changeAmt)
         { arrayOfLenders[(int)lender, (int)FinArray.Data] += changeAmt; }
 
         /// <summary>
@@ -621,7 +632,7 @@ namespace Next_Game
         /// </summary>
         /// <param name="income"></param>
         /// <param name="amount">Amount to Add (pass a negative number to subtract)</param>
-        public void ChangeIncome(Income income, int amount)
+       /* public void ChangeIncome(Income income, int amount)
         { arrayOfIncome[(int)income, (int)FinArray.Data] += amount; }
 
         public int GetIncome(Income income)
@@ -654,7 +665,7 @@ namespace Next_Game
         /// </summary>
         /// <param name="income"></param>
         /// <returns></returns>
-        public Rate GetIncomeTax(Income income)
+        /*public Rate GetIncomeTax(Income income)
         { return (Rate)arrayOfIncome[(int)income, (int)FinArray.Rate]; }
 
         //public void SetIncomeReference(Income income, int refData)
@@ -689,7 +700,7 @@ namespace Next_Game
         /// <param name="expense"></param>
         /// <returns></returns>
         public bool GetExpenseStatus(Expense expense)
-        { if (arrayOfExpenses[(int)expense, (int)FinArray.Status] > 0) { return true; } return false; }
+        { if (arrayOfExpenses[(int)expense, (int)FinArray.Status] > 0) { return true; } return false; }*/
 
         /// <summary>
         /// Set Active status (true/false) for an expense item
@@ -710,7 +721,7 @@ namespace Next_Game
         /// </summary>
         /// <param name="income"></param>
         /// <param name="amount">Amount to Add (pass a negative number to subtract)</param>
-        public void ChangeLumpSum(LumpSum lump, int amount)
+        /*public void ChangeLumpSum(LumpSum lump, int amount)
         { arrayOfLumpSums[(int)lump, (int)FinArray.Data] += amount; }
 
         public int GetLumpSum(LumpSum lump)

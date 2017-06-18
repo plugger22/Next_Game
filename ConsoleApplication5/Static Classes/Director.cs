@@ -38,6 +38,7 @@ namespace Next_Game
     public enum Income { None, Lords, Merchants, Churches, Crafters, Roads, Harbours, Virgins, Count} //all are ... 'Tax on <Income>'
     public enum Expense { None, City_Watch_Wages, Officials_Wages, Capital_Defenses, Royal_Lifestyle, Loan_Interest, Food_Imports, Essential_Goods, Road_Patrols, Pirate_Patrols, Inquisitors, Count}
     public enum LumpSum { None, Treasury, Loans, Appropriations, Corruption, Count} //lump sum amounts
+    public enum FinSummary { None, CashFlow, Balance, Count} //totals for Royal Accounts
     public enum Rate { None, Low, Normal, High, Excessive} //taxrate if Income, budget expenditure rate if Expense
     public enum Act { One, Two} //Act One -> player is Ursurper, Act Two -> player is King
    
@@ -5496,7 +5497,7 @@ namespace Next_Game
                             {
 
                                 strength = 3;
-                                view = GetRelationshipPrefix(capital.GetLenderRelations((Finance)i));
+                                view = GetRelationshipPrefix(capital.GetFinanceInfo(Account.Lender, i, FinArray.Data)); 
                                 startText = $"It is {arrayOfRumourTexts[rnd.Next(arrayOfRumourTexts.Length)]}";
                                 opinionText = $"{arrayOfOpinions[rnd.Next(arrayOfOpinions.Length)]}";
                                 rumourText = $"{startText} that the {(Finance)i} has {view} {opinionText} of King {Game.lore.NewKing.Name}, \"{Game.lore.NewKing.Handle}\"";
