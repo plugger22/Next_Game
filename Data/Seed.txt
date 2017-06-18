@@ -30,3 +30,7 @@ Seed 34212 -> Saturday, 17 June 2017 4:24 PM
 Seed 58508 -> Saturday, 17 June 2017 4:25 PM
 Seed 49376 -> Saturday, 17 June 2017 4:33 PM
 Seed 47718 -> Saturday, 17 June 2017 4:37 PM
+Seed 37080 -> Sunday, 18 June 2017 11:03 AM
+Seed 44054 -> Sunday, 18 June 2017 11:09 AM
+Seed 48011 -> Sunday, 18 June 2017 11:13 AM
+Seed 50540 -> Sunday, 18 June 2017 11:15 AM

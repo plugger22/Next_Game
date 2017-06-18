@@ -7593,12 +7593,6 @@ namespace Next_Game
             CapitalHouse capital = GetCapital();
             if (capital != null)
             {
-                int loanCost = Game.constant.GetValue(Global.LOAN_COST);
-                int foodCost = Game.constant.GetValue(Global.FOOD_COST);
-                int essentialCost = Game.constant.GetValue(Global.ESSENTIAL_COST);
-                int patrolCost = Game.constant.GetValue(Global.PATROL_COST);
-                int pirateCost = Game.constant.GetValue(Global.PIRATE_COST);
-                int inquisitorCost = Game.constant.GetValue(Global.INQUISITOR_COST);
                 switch (expense)
                 {
                     case Expense.City_Watch_Wages:
@@ -7608,7 +7602,8 @@ namespace Next_Game
                         tally = capital.CastleWalls * Game.constant.GetValue(Global.DEFENSE_COST);
                         break;
                     case Expense.Officials_Wages:
-                        tally = 5 + GetNumMajorHouses() * Game.constant.GetValue(Global.OFFICIALS_COST);
+                        tally = 5 + GetNumMajorHouses();
+                        tally *= Game.constant.GetValue(Global.OFFICIALS_COST);
                         break;
                     case Expense.Royal_Lifestyle:
                         int witsTally = Game.lore.NewKing.GetSkill(SkillType.Wits);
@@ -7616,9 +7611,10 @@ namespace Next_Game
                         tally = (12 - witsTally) * Game.constant.GetValue(Global.LIFESTYLE_COST);
                         break;
                     case Expense.Loan_Interest:
+                        //budget is ignored for loans as the cost depends on their interest rates which vary depending on the source of finance
                         List<Finance> listOfLoans = capital.GetLoans();
                         tally = 0;
-                        int averageInterestRate = 0;
+                        int interestRate = 0;
                         int numLoans = listOfLoans.Count;
                         if (numLoans > 0)
                         {
@@ -7626,42 +7622,61 @@ namespace Next_Game
                             {
                                 switch (listOfLoans[i])
                                 {
-                                    case Finance.Gold_Bank: budget = (int)Rate.Normal; break;
-                                    case Finance.Merchant_Guild: budget = (int)Rate.High; break;
-                                    case Finance.Goblin_Bank: budget = (int)Rate.Excessive; break;
+                                    case Finance.Gold_Bank: interestRate = (int)Rate.Normal; break;
+                                    case Finance.Merchant_Guild: interestRate = (int)Rate.High; break;
+                                    case Finance.Goblin_Bank: interestRate = (int)Rate.Excessive; break;
                                     default:
                                         Game.SetError(new Error(310, $"Invalid Loan type \"{listOfLoans[i]}\""));
                                         break;
                                 }
-                                tally += loanCost * budget / 2;
-                                averageInterestRate += budget;
+                                tally += Game.constant.GetValue(Global.LOAN_COST) * interestRate / 2;
                             }
-                            averageInterestRate /= numLoans;
                         }
                         break;
                     case Expense.Food_Imports:
-
+                        int balance = GetWorldFoodBalance();
+                        if (balance < 0) { tally = Math.Abs(balance) / Game.constant.GetValue(Global.FOOD_COST); }
+                        else { tally = 0; }
                         break;
                     case Expense.Essential_Goods:
-
+                        int[,] arrayImports = capital.GetImports();
+                        int[,] arrayExports = capital.GetExports();
+                        int[] arrayGoods = new int[(int)Goods.Count];
+                        for (int i = 1; i < arrayGoods.Length; i++)
+                        {
+                            //add up number of goods 
+                            if (arrayImports[i, 0] > 0) { arrayGoods[i]++; }
+                            if (arrayExports[i, 0] > 0) { arrayGoods[i]++; }
+                        }
+                        //loop through looking for empty goods
+                        for (int i = 1; i < arrayGoods.Length; i++)
+                        {
+                            //exclude luxury goods
+                            if ((Goods)i != Goods.Wine && (Goods)i != Goods.Gold)
+                            { if (arrayGoods[i] == 0) { tally++; } }
+                        }
+                        tally *= Game.constant.GetValue(Global.ESSENTIAL_COST);
                         break;
                     case Expense.Road_Patrols:
-
+                        tally = Game.map.KingsRoadLength;
+                        tally *= Game.constant.GetValue(Global.PATROL_COST);
                         break;
                     case Expense.Pirate_Patrols:
-
+                        tally = Game.network.GetNumPorts();
+                        tally *= Game.constant.GetValue(Global.PIRATE_COST);
                         break;
                     case Expense.Inquisitors:
-
+                        foreach (var enemy in dictEnemyActors)
+                        { if (enemy.Value is Inquisitor) { tally++; } }
+                        tally *= Game.constant.GetValue(Global.INQUISITOR_COST);
                         break;
-                    
-
                     default:
-                        Game.SetError(new Error(319, $"Invalid Expense \"{cost}\" -> default zero cost returned"));
+                        Game.SetError(new Error(319, $"Invalid Expense \"{expense}\" -> default zero cost returned"));
                         break;
                 }
-                //adjust for budget rate
-                tally *= ((int)budget / 2);
+                //adjust for budget rate 
+                if (expense != Expense.Loan_Interest)
+                { tally *= ((int)budget / 2); }
             }
             else { Game.SetError(new Error(319, "Invalid capital (null) -> default zero cost returned")); }
             return tally;
