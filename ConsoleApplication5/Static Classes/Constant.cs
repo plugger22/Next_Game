@@ -78,6 +78,7 @@ namespace Next_Game
         PATROL_COST,
         PIRATE_COST,
         INQUISITOR_COST,
+        ACCOUNT_INTERVAL,
         //Events
         TRAIT_MULTIPLIER,
         TEST_MULTIPLIER,
@@ -244,6 +245,7 @@ namespace Next_Game
             arrayOfGlobals[101] = Global.PATROL_COST;
             arrayOfGlobals[102] = Global.PIRATE_COST;
             arrayOfGlobals[103] = Global.INQUISITOR_COST;
+            arrayOfGlobals[104] = Global.ACCOUNT_INTERVAL;
         }
 
         /// <summary>

@@ -39,6 +39,7 @@ namespace Next_Game
     public enum Expense { None, City_Watch_Wages, Officials_Wages, Capital_Defenses, Royal_Lifestyle, Loan_Interest, Food_Imports, Essential_Goods, Road_Patrols, Pirate_Patrols, Inquisitors, Count}
     public enum LumpSum { None, Treasury, Loans, Appropriations, Corruption, Count} //lump sum amounts
     public enum Rate { None, Low, Normal, High, Excessive} //taxrate if Income, budget expenditure rate if Expense
+    public enum Act { One, Two} //Act One -> player is Ursurper, Act Two -> player is King
    
 
 

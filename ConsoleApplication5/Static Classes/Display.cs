@@ -191,8 +191,7 @@ namespace Next_Game
             {
                 //Header
                 listDisplay.Add(new Snippet("--- Ye Olde Financial Records", RLColor.Yellow, RLColor.Black));
-                accounts = 30 - (Game.gameTurn % 30) - 1;
-                accounts = Math.Max(1, accounts);
+                accounts = Game.variable.GetValue(GameVar.Account_Timer);
                 listDisplay.Add(new Snippet(string.Format("Next tally available in {0} day{1}", accounts, accounts != 1 ? "s" : "")));
                 //spacer
                 for (int i = 0; i < spacer; i++)

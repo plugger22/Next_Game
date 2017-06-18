@@ -11,7 +11,7 @@ namespace Next_Game
     public enum HistHouseEvent { None, Allegiance, Ownership, Food, Goods, Population }
     public enum HistKingdomEvent { None, Battle, Siege }
     //categorires -> Used for Messages & current Records
-    public enum MessageType { None, System, God, Error, Move, Crow, Activation, Event, Conflict, Known, Search, Incarceration, Horse }
+    public enum MessageType { None, System, God, Error, Move, Crow, Activation, Event, Conflict, Known, Search, Incarceration, Horse, Finance }
     public enum CurrentActorEvent { None, Condition, Event, Challenge, Travel, Resource, Known, Search, Horse }
     public enum CurrentHouseEvent { None }
     //Relationship List Categories

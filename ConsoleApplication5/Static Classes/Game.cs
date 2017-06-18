@@ -60,6 +60,7 @@ namespace Next_Game
         private static int _updateTimer = 0; //controls redraws
 
         public static int gameTurn, gameGeneration, gameStart, gameRevolt, gameExile, gameYear, mapSize, HarvestTimer, PlantTimer, WinterTimer, SeasonTimer;
+        public static Act gameAct;
         public static Season gameSeason;
 
         //core objects
@@ -1815,6 +1816,7 @@ namespace Next_Game
             gameExile = constant.GetValue(Global.GAME_EXILE); //time elapsed between revolt and return of the heir (start of game)
             gameYear = gameStart;
             gameGeneration = 1; //current generation (25 years each)
+            gameAct = Act.One; //1 - player is Usurper, 2 - player is King
             mapSize = constant.GetValue(Global.MAP_SIZE);
             HarvestTimer = 120 + rnd.Next(90); //start game halfway through spring to halfway through summer (random) 
             WinterTimer = HarvestTimer + 15;
