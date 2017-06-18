@@ -1,19 +1,107 @@
-//Exile Game file ops "LogTurn.txt" commenced at: 18/06/2017 17:14:19
---- ProcessStartGame (World.cs)
---- AgePassiveCharacters (History.cs)
---- InitialiseGameVars (World.cs)
-[GameVar] View_Index changed from 0 to 3
-[GameVar] View_Rollover changed from 0 to 6
-[GameVar] Account_Timer changed from 0 to 3
-[AddVisitedLoc] LocID 25, "Hornwood", turn -3 -> record added to listLocsVisited
-[AddVisitedLoc] LocID 25, "Hornwood", turn -3 -> new record added to dictLocsVisited
-[AddVisitedLoc] LocID 15, "The Crag", turn -2 -> record added to listLocsVisited
-[AddVisitedLoc] LocID 15, "The Crag", turn -2 -> new record added to dictLocsVisited
-[AddVisitedLoc] LocID 15, "The Crag", turn -1 -> record added to listLocsVisited
-[AddVisitedLoc] LocID 15, "The Crag", turn -1 -> record updated in dictLocsVisited
---- InitialiseFinalPlayer (World.cs)
-[AddVisitedLoc] LocID 15, "The Crag", turn 0 -> record added to listLocsVisited
-[AddVisitedLoc] LocID 15, "The Crag", turn 0 -> record updated in dictLocsVisited
+//Exile Game File "LogTurn.txt" opened at: 18/06/2017 19:52:07
+--- ProcessStartTurn (World.cs)
+Day 7, Turn 7, Harvest in 116 days, Winter in 131 days, SeasonTimer 221
+Usurper Victarion Arryn, "The Trustworthy", AtLocation, Deepwood Motte
+--- UpdateRumours (World.cs)
+dictRumoursTimed (Start) -> 111 records
+[Rumour -> Removal] RID 623, "Inquisitor, Brother Azazel, ActID 138 has been spotted relaxing at Kingskeep (loc 15:13)" removed from Global All list
+[Rumour -> Removal] RID 624, "Inquisitor, Brother Diabolous, ActID 139 has been spotted gambling at Kingskeep (loc 15:13)" removed from Global All list
+109 rumours -> TimerExpire decremented
+2 records have expired and been removed
+dictRumoursTimed (End) -> 109 records
+--- MoveActors -> 1 Records (World.cs)
+ [Move -> MoveObject] Inquisitor Brother Gorgo, ActID 140 travelling to The Clumsy Hog (current Loc 19:15)
+--- CheckIfFoundEnemy (World.cs)
+ [Search -> Debug] Active Victarion Arryn, ID 1 at 14:2, Enemy at 19:15 (Brother Gorgo, ID 140
+--- CheckIfFoundEnemy (World.cs)
+ [Search -> Debug] Active Victarion Arryn, ID 1 at 14:2, Enemy at 19:16 (Brother Gorgo, ID 140
+--- UpdatePlayerStatus (World.cs)
+--- UpdateWorldStatus (World.cs)
+--- CheckFollowerActivity (World.cs)
+--- GetRumour (Director.cs)
+arrayOfRumours [0] -> RumourID 614, Strength 3, Scope Global, Type Event, Global All
+arrayOfRumours [2] -> RumourID 544, Strength 2, Scope Global, Type SafeHouse, Global East
+arrayOfRumours [5] -> RumourID 265, Strength 2, Scope Local, Type Secret, Global All
+RumourID 265 selected from the Pool
+Rumour "It is said that BannerLord Henry Clegane "The Absolute", ActID 103 at Clegane's Keep, conceals a dark truth" revealed to ActorID7 on turn 7 -> added to List
+RumourID 265 removed from listRumoursHouse[1]
+Follower The Viper, ActID 7, added RumourID 265
+--- GetMarketView (Director.cs)
+listPlayerChoices has 1 records, 10 % needed, rolled 54
+[GameVar] View_Index changed from 2 to 3
+--- CheckStationaryActiveActors (World.cs)
+ [Search -> Stationary] Usurper Victarion Arryn, ActID 1 is AtLocation
+--- CheckIfFoundActive (World.cs)
+ [Search -> Debug] Enemy, Brother Azazel, ID 138 at 15:13, Active Victarion Arryn, ID 1, at 14:2
+ [Search -> Debug] Enemy, Brother Diabolous, ID 139 at 15:13, Active Victarion Arryn, ID 1, at 14:2
+ [Search -> Debug] Enemy, Brother Gorgo, ID 140 at 19:17, Active Victarion Arryn, ID 1, at 14:2
+ [Search -> Debug] Enemy, Brother Damballa, ID 141 at 10:15, Active Victarion Arryn, ID 1, at 14:2
+ [Search -> Debug] Enemy, The Unrelenting, ID 142 at 15:13, Active Victarion Arryn, ID 1, at 14:2
+ [Search -> Stationary] Follower The Viper, ActID 7 is AtLocation
+--- UpdateAIController (World.cs)
+ [AI -> Player Unknown] Inquisitor Brother Azazel, Act ID 138 Mode -> Normal
+ [AI -> Player Unknown] Inquisitor Brother Diabolous, Act ID 139 Mode -> Normal
+ [AI -> Player Unknown] Inquisitor Brother Damballa, Act ID 141 Mode -> Normal
+ [AI -> Player Unknown] Nemesis The Unrelenting, Act ID 142 Mode -> Normal
+--- SetEnemyActivity (World.cs)
+ [Enemy -> Goal] Brother Azazel, ActID 138 retains Goal -> Wait
+--- SetEnemyGoal (World.cs)
+ [Goal -> Branch] Brother Diabolous, ActID 139 Assigned Branch -> 1 Current Branch -> 0
+ [Enemy -> Known] Brother Gorgo ActID 140 has become KNOWN
+--- SetEnemyGoal (World.cs)
+ [Goal -> Branch] Brother Damballa, ActID 141 Assigned Branch -> 3 Current Branch -> 3
+ [Goal -> New] Brother Damballa, ActID 141, (loc 10:15), assigned new Goal -> Move
+ [Goal -> Alert] Brother Damballa, ActID 141 has reversed their MoveOut status from True to False
+ [Goal -> Move] Brother Damballa, ActID 141 -> Move Inwards -> Kingskeep, LocID 1
+--- InitiateMoveActor (World.cs)
+--- Move Actor (Director.cs)
+ [Enemy -> Known] The Unrelenting ActID 142 has become KNOWN
+ [Enemy -> Goal] The Unrelenting, ActID 142 retains Goal -> Wait
+--- CheckRoyalAccounts (World.cs)
+New Accounts tallied in 2 days
+[GameVar] Account_Timer changed from 3 to 2
+--- CheckPlayerEvents (Director.cs)
+Location event, Need 37, roll 44
+- CreateAutoLocEvent (Director.cs)
+ [AutoEvent -> ActorList] "Martyn Glover", ID 90 added to list of Actors
+ [AutoEvent -> LocalList] "Martyn Glover", ID 90 added to list of Locals
+[Notification] No entry found in dictOfIntroductions for RefID 3
+ Chance of Player Location event 75 %
+--- ResolvePlayerEvents (Director.cs)
+ Trigger FAILED on "0" Equals 1
+ Trigger: Player is wrong type of Known status -> Trigger failed
+ Trigger FAILED on "0" Equals 1
+ Trigger: Player is wrong type of Known status -> Trigger failed
+ Event "What to do?" Timer Repeat now 999
+ Event "What to do?" Cooldown Timer has been reset to 0
+--- UpdateActiveActors (World.cs)
+ Usurper Victarion Arryn has had their TurnsUnknown Timer increased from 106 to 107
+ Follower The Viper has had their TurnsUnknown Timer increased from 6 to 7
+--- ResolveOutcome (Director.cs)
+ Inactive (greyed out) Option chosen for "What to do?", option # 1
 --- SetEndGame (Game.cs)
 [Alert] Player chose to exit (pressed 'X')
-//Exile Game file ops "LogTurn.txt" Completed at: 18/06/2017 17:14:35
+//Exile Game file ops "LogTurn.txt" Completed at: 18/06/2017 19:52:28
+tarion Arryn has had their TurnsUnknown Timer increased from 105 to 106
+ Follower The Viper has had their TurnsUnknown Timer increased from 5 to 6
+--- ResolveOutcome (Director.cs)
+[Player Choice View -> Added] "Remember that stranger? The scary one? Says he bumped into Victarion Arryn at Deepwood Motte recently."
+[Notification] listPlayerChoices now has 1 records
+--- ProcessEndTurn (World.cs)
+Day 7, Turn 6
+--- CheckEventTimers (Director.cs)
+ Event "Search and Detain" Dormant Timer decremented to 14
+--- InitialiseDynamicRumours (Director.cs)
+[Notification] Turn 6, generate new set of Relationship rumours on turn 21
+[Rumour -> Added] RID 628, "Inquisitor, Brother Diabolous, ActID 139 has been spotted drinking at Kingskeep (loc 15:13)" -> dict & List
+[Rumour -> Added] RID 629, "Inquisitor, Brother Gorgo, ActID 140 has been seen on the road to The Clumsy Hog (loc 19:19)" -> dict & List
+[Rumour -> Added] RID 630, "Inquisitor, Brother Damballa, ActID 141 has been spotted drinking at The Shaggy Parrot (loc 10:15)" -> dict & List
+[Rumour -> Added] RID 631, "Nemesis, The Unrelenting, ActID 142 has been spotted praying at Kingskeep (loc 15:13)" -> dict & List
+--- HouseKeepActors (World.cs)
+[GameStat] "Location_Days" -> increased from 6 to 7
+--- HouseKeepHouses (world.cs)
+Average Lord Relations updated, now 57
+--- HousekeepRumours (World.cs)
+dictRumoursKnown has 6 records
+
+//Exile Game File "LogTurn.txt" Close completed at: 18/06/2017 19:52:07

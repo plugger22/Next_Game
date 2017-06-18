@@ -7262,6 +7262,24 @@ namespace Next_Game
                 int harbourTax = Game.constant.GetValue(Global.HARBOUR_TAX);
                 int virginTax = Game.constant.GetValue(Global.VIRGIN_TAX);
 
+                //Treasury at game start (one gold LOAN_AMOUNT per level + random half level)
+                if (Game.gameTurn == 0)
+                {
+                    for (int i = 0; i < capital.Resources; i++)
+                    { balance += goldAmount; }
+                    balance += rnd.Next(goldAmount / 2);
+                    capital.SetFinanceData(Account.LumpSum, (int)LumpSum.Treasury, balance);
+                    capital.SetFinanceData(Account.FinSummary, (int)FinSummary.Balance, balance);
+                    //set key data to active status
+                    capital.SetFinanceStatus(Account.LumpSum, (int)LumpSum.Treasury, true);
+                    capital.SetFinanceStatus(Account.FinSummary, (int)FinSummary.CashFlow, true);
+                    capital.SetFinanceStatus(Account.FinSummary, (int)FinSummary.Balance, true);
+                    Game.logTurn?.Write($"Initial Treasury {balance:N0}");
+                }
+                //current treasury = previous balance
+                int previousBalance = capital.GetFinanceInfo(Account.FinSummary, (int)FinSummary.Balance, FinArray.Data);
+                capital.SetFinanceData(Account.LumpSum, (int)LumpSum.Treasury, previousBalance);
+
                 // Import taxes (Lords) based on num and type of imports (include any exports from Capital in this) -> Food is excluded
                 if (Game.gameAct == Act.One)
                 {
@@ -7591,44 +7609,47 @@ namespace Next_Game
                 capital.SetFinanceReference(Account.Expense, (int)Expense.Inquisitors, tally);
                 capital.SetFinanceConstant(Account.Expense, (int)Expense.Inquisitors, inquisitorCost);
 
-                //Lump Sums ---
+                //LumpSums & Summary ---
 
-                //Treasury at game start (one gold LOAN_AMOUNT per level + random half level)
-                if (Game.gameTurn == 0)
-                {
-                    for (int i = 0; i < capital.Resources; i++)
-                    { balance += goldAmount; }
-                    balance += rnd.Next(goldAmount / 2);
-                    capital.SetFinanceData(Account.LumpSum, (int)LumpSum.Treasury, balance);
-                    capital.SetFinanceData(Account.FinSummary, (int)FinSummary.Balance, balance);
-                    capital.SetFinanceStatus(Account.LumpSum, (int)LumpSum.Treasury, true);
-                    Game.logStart?.Write($"Initial Treasury {balance:N0}");
-                }
                 //current treasury = previous balance
                 balance = capital.GetFinanceInfo(Account.LumpSum, (int)LumpSum.Treasury, FinArray.Data);
-                int previousBalance = capital.GetFinanceInfo(Account.FinSummary, (int)FinSummary.Balance, FinArray.Data);
-                capital.SetFinanceData(Account.LumpSum, (int)LumpSum.Treasury, previousBalance);
+
                 //Update previous corruption with recent corruption data (kept in FinArray.Reference)
                 int previousData = capital.GetFinanceInfo(Account.LumpSum, (int)LumpSum.Corruption, FinArray.Reference);
                 capital.SetFinanceData(Account.LumpSum, (int)LumpSum.Corruption, previousData);
-                int newData = 0; //to do -> latest corruption
-                balance -= newData;
+                int newData = 0; //to do -> latest corruption (provided as a positive number)
+                newData *= -1;
+                if (newData != 0)
+                { balance += newData; capital.SetFinanceStatus(Account.LumpSum, (int)LumpSum.Corruption, true); }
+                else { capital.SetFinanceStatus(Account.LumpSum, (int)LumpSum.Corruption, false); }
                 capital.SetFinanceReference(Account.LumpSum, (int)LumpSum.Corruption, newData);
+                if (Game.gameTurn == 0) { capital.SetFinanceData(Account.LumpSum, (int)LumpSum.Corruption, newData); }
+
                 //Update previous appropriations with recent appropriation data (kept in FinArray.Reference)
                 previousData = capital.GetFinanceInfo(Account.LumpSum, (int)LumpSum.Appropriations, FinArray.Reference);
-                capital.SetFinanceData(Account.LumpSum, (int)LumpSum.Appropriations, 0);
+                capital.SetFinanceData(Account.LumpSum, (int)LumpSum.Appropriations, previousData);
                 newData = 0; //to do -> latest financial appropriations
-                balance += newData;
-                capital.SetFinanceReference(Account.LumpSum, (int)LumpSum.Appropriations, 0);
+                if (newData != 0)
+                { balance += newData; capital.SetFinanceStatus(Account.LumpSum, (int)LumpSum.Appropriations, true); }
+                else { capital.SetFinanceStatus(Account.LumpSum, (int)LumpSum.Appropriations, false); }
+                capital.SetFinanceReference(Account.LumpSum, (int)LumpSum.Appropriations, newData);
+                if (Game.gameTurn == 0) { capital.SetFinanceData(Account.LumpSum, (int)LumpSum.Appropriations, newData); }
+
                 //Update previous loans with recent loan data (kept in FinArray.Reference)
-                previousData = capital.GetFinanceInfo(Account.LumpSum, (int)LumpSum.Loans, FinArray.Reference);
-                capital.SetFinanceData(Account.LumpSum, (int)LumpSum.Loans, previousData);
+                previousData = capital.GetFinanceInfo(Account.LumpSum, (int)LumpSum.New_Loans, FinArray.Reference);
+                capital.SetFinanceData(Account.LumpSum, (int)LumpSum.New_Loans, previousData);
                 newData = 0; //to do -> latest loans
-                balance += newData;
-                capital.SetFinanceReference(Account.LumpSum, (int)LumpSum.Loans, 0);
+                if (newData != 0)
+                { balance += newData; capital.SetFinanceStatus(Account.LumpSum, (int)LumpSum.New_Loans, true); }
+                else { capital.SetFinanceStatus(Account.LumpSum, (int)LumpSum.New_Loans, false); }
+                capital.SetFinanceReference(Account.LumpSum, (int)LumpSum.New_Loans, newData);
+                if (Game.gameTurn == 0) { capital.SetFinanceData(Account.LumpSum, (int)LumpSum.New_Loans, newData); }
+
                 //update cashflow with current data
                 capital.SetFinanceData(Account.FinSummary, (int)FinSummary.CashFlow, cashflow);
-                balance -= cashflow;
+                balance += cashflow;
+                //update Balance
+                capital.SetFinanceData(Account.FinSummary, (int)FinSummary.Balance, balance);
                 //admin
                 SetMessage(new Message($"Royal Scribes have update the Kingdom Accounts to show a Balance of {balance:N0} gold coins", MessageType.Finance));
             }

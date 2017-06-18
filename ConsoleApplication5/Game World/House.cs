@@ -476,6 +476,10 @@ namespace Next_Game
                     if (status == true) { arrayOfLumpSums[index, (int)FinArray.Status] = 1; }
                     else { arrayOfLumpSums[index, (int)FinArray.Status] = 0; };
                     break;
+                case Account.FinSummary:
+                    if (status == true) { arrayOfFinSummary[index, (int)FinArray.Status] = 1; }
+                    else { arrayOfFinSummary[index, (int)FinArray.Status] = 0; };
+                    break;
                 default:
                     Game.SetError(new Error(313, $"Invalid account option \"{account}\" -> status not updated in array"));
                     break;
