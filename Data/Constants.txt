@@ -136,8 +136,8 @@
 92: 200 @ 100 @ 500
 # VIRGIN_TAX -> gold amount per every two thousand people in the whole kingdom
 93: 10 @ 10 @ 40
-# CITYWATCH_COST -> gold amount is  capital MenAtArms divided by CityWatch_Cost divisor
-94: 2 @ 2 @ 4
+# CITYWATCH_COST -> gold amount is  capital MenAtArms / 2 * citywatch_cost
+94: 1 @ 1 @ 4
 # OFFICIALS_COST -> gold amount is number of Major Houses plus five for capital times officials_cost
 95: 50 @ 40 @ 100
 # DEFENSE_COST -> gold amount is number of capital.CastleWalls stars times defense_cost
@@ -146,12 +146,12 @@
 97: 200 @ 50 @ 300
 # LOAN_COST -> gold amount is for a Normal rate loan (Merchant_Guild) GoldBank is Low rate (1/2) and Goblin bank is excessive (2X)
 98: 200 @ 100 @ 300
-# FOOD_COST -> gold amount is overall food balance (deficit) divided by food_cost divisor
-99: 2 @ 1 @ 4
+# FOOD_COST -> gold amount is overall food balance (deficit) / 2 * food_cost
+99: 1 @ 1 @ 4
 # ESSENTIAL_COST -> gold amount for importing essential goods (need one of each) is number of unique goods times essential_cost
 100: 200 @ 100 @ 500
 # PATROL_COST -> cost of patrolling king's road, gold amount times length of Kings roads in squares
-101: 10 @ 5 @ 40
+101: 20 @ 5 @ 40
 # PIRATE_COST -> cost of subsidising Major Houses Pirate Patrols of ports is the gold amount times the number of Ports
 102: 50 @ 20 @ 100
 # INQUISITOR_COST -> to maintain loyalty and effectiveness, gold coin cost times number of inquisitors
