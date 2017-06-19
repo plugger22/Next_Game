@@ -228,14 +228,15 @@
 53: 10 @ 5 @ 80
 # AI_SEARCH_FOOT -> % DM to add to search chance (improves) when Player is on foot while Travelling
 77: 25 @ 20 @ 40
+# AI_SEARCH_ BUDGET -> base multiplier for Expense.Inquisitor.Rate enum to provide a +ve global DM for all search chances, eg. enum Rate.Normal = 3 * AI_Budget
+105: 4 @ 3 @ 5
 # AI_CAPITAL -> Min % of total Enemies who should remain in the Capital during normal operations (player location unknown)
 54: 20 @ 10 @ 50
 # AI_CONNECTOR -> num of bonus Loc's on a branch (priority array) whenever a Connector is present (more flexibility -> greater value as a branch)
 55: 4 @ 0 @ 10
 # AI_HUNT_THRESHOLD -> max num of turns since player last known that AI will continue to hunt for player (if within range)
 56: 5 @ 4 @ 12
-# AI_BUDGET -> base multiplier for Expense.Inquisitor.Rate enum to provide a +ve global DM for all search chances, eg. enum Rate.Normal = 3 * AI_Budget
-105: 4 @ 3 @ 5
+
 
 # Incarceration ---
 

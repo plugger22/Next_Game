@@ -6200,7 +6200,7 @@ namespace Next_Game
                         educated = true;
                         break;
                     case WorldGroup.Crafters:
-                        innerArray = arrayOfOccupations[(int)Occupation.Merchant];
+                        innerArray = arrayOfOccupations[(int)Occupation.Craft];
                         educated = false;
                         break;
                     case WorldGroup.Peasants:

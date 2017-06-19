@@ -112,10 +112,10 @@ namespace Next_Game
         AI_SEARCH_MOVE,
         AI_SEARCH_SEARCH,
         AI_SEARCH_WAIT,
+        AI_SEARCH_BUDGET,
         AI_CAPITAL,
         AI_CONNECTOR,
         AI_HUNT_THRESHOLD,
-        AI_BUDGET,
         //Incarceration
         LOSS_OF_LEGEND,
         //Promises
@@ -247,7 +247,7 @@ namespace Next_Game
             arrayOfGlobals[102] = Global.PIRATE_COST;
             arrayOfGlobals[103] = Global.INQUISITOR_COST;
             arrayOfGlobals[104] = Global.ACCOUNT_INTERVAL;
-            arrayOfGlobals[105] = Global.AI_BUDGET;
+            arrayOfGlobals[105] = Global.AI_SEARCH_BUDGET;
         }
 
         /// <summary>

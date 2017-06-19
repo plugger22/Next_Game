@@ -4754,7 +4754,7 @@ namespace Next_Game
             int ai_move = Game.constant.GetValue(Global.AI_SEARCH_MOVE);
             int ai_search = Game.constant.GetValue(Global.AI_SEARCH_SEARCH);
             int ai_wait = Game.constant.GetValue(Global.AI_SEARCH_WAIT);
-            int budgetDM = Game.variable.GetValue(GameVar.Inquisitor_Budget) * Game.constant.GetValue(Global.AI_BUDGET); //DM for inquisitor budget allocation (higher the better)
+            int budgetDM = Game.variable.GetValue(GameVar.Inquisitor_Budget) * Game.constant.GetValue(Global.AI_SEARCH_BUDGET); //DM for inquisitor budget allocation (higher the better)
             //active characters only
             Actor actor = GetAnyActor(charID);
             if (actor != null && actor.Status != ActorStatus.Gone && actor.Status != ActorStatus.Captured)
@@ -4924,7 +4924,7 @@ namespace Next_Game
             int ai_move = Game.constant.GetValue(Global.AI_SEARCH_MOVE);
             int ai_search = Game.constant.GetValue(Global.AI_SEARCH_SEARCH);
             int ai_wait = Game.constant.GetValue(Global.AI_SEARCH_WAIT);
-            int budgetDM = Game.variable.GetValue(GameVar.Inquisitor_Budget) * Game.constant.GetValue(Global.AI_BUDGET); //DM for inquisitor budget allocation (higher the better)
+            int budgetDM = Game.variable.GetValue(GameVar.Inquisitor_Budget) * Game.constant.GetValue(Global.AI_SEARCH_BUDGET); //DM for inquisitor budget allocation (higher the better)
             int knownDM = 0; //modifier for search if player known
             int onFootDM = 20; //modifier for search if player is travelling and on foot
             //get enemy
@@ -4937,7 +4937,7 @@ namespace Next_Game
                     Game.logTurn?.Write("--- CheckIfFoundEnemy (World.cs)");
                     //loop Active Actors and check if in same position as enemy
                     foreach (var active in dictActiveActors)
-                    {
+                    { 
                         found = false;
                         Position posActive = active.Value.GetActorPosition();
                         if (posActive != null && pos != null)
