@@ -8,7 +8,7 @@ namespace Next_Game
 {
     public enum RumourScope { None, Local, Global }
     public enum RumourType { None, Terrain, Road, Skill, Secret, Item, Disguise, HouseRel, Friends, Desire, Enemy, Relationship, Event, SafeHouse, Goods, HouseHistory, Military, Loan, Lender, 
-    Group} //Corresponds to Rumour subclasses, set in subclass
+    GroupRel, Income, Expense} //Corresponds to Rumour subclasses, set in subclass
     public enum RumourGlobal { All, North, East, South, West }
     public enum RumourStatus { Normal, Timed, Inactive} //Normal -> dictRumoursNormal, Timed (TimerExpire > 0) -> dictRumoursTimed, Inactive (TimerStart > 0) -> dictRumoursInactive
     public enum RumourDisplay { All, Enemies} //used by Game.ShowRumoursRL to filter the required rumour set
@@ -274,7 +274,7 @@ namespace Next_Game
     {
 
         /// <summary>
-        /// Rumour Lender constructor
+        /// Rumour Group Rel constructor
         /// </summary>
         /// <param name="text"></param>
         /// <param name="strength"></param>
@@ -285,7 +285,52 @@ namespace Next_Game
         /// <param name="isActive"></param>
         public RumourGroup(string text, int strength, RumourScope scope, int turnCreated = 0, RumourGlobal global = RumourGlobal.All, bool isActive = true) : base(text, strength, scope, turnCreated, global, isActive)
         {
-            Type = RumourType.Group;
+            Type = RumourType.GroupRel;
+        }
+    }
+
+
+    /// <summary>
+    /// Rumour about royal accounts, Income item -> Local @ Kingskeep
+    /// </summary>
+    class RumourIncome : Rumour
+    {
+
+        /// <summary>
+        /// Rumour Income constructor
+        /// </summary>
+        /// <param name="text"></param>
+        /// <param name="strength"></param>
+        /// <param name="skill"></param>
+        /// <param name="scope"></param>
+        /// <param name="turnCreated">If '0' then defaults to current game turn</param>
+        /// <param name="global"></param>
+        /// <param name="isActive"></param>
+        public RumourIncome(string text, int strength, RumourScope scope, int turnCreated = 0, RumourGlobal global = RumourGlobal.All, bool isActive = true) : base(text, strength, scope, turnCreated, global, isActive)
+        {
+            Type = RumourType.Income;
+        }
+    }
+
+    /// <summary>
+    /// Rumour about royal accounts, Expense item -> Local @ Kingskeep
+    /// </summary>
+    class RumourExpense : Rumour
+    {
+
+        /// <summary>
+        /// Rumour Income constructor
+        /// </summary>
+        /// <param name="text"></param>
+        /// <param name="strength"></param>
+        /// <param name="skill"></param>
+        /// <param name="scope"></param>
+        /// <param name="turnCreated">If '0' then defaults to current game turn</param>
+        /// <param name="global"></param>
+        /// <param name="isActive"></param>
+        public RumourExpense(string text, int strength, RumourScope scope, int turnCreated = 0, RumourGlobal global = RumourGlobal.All, bool isActive = true) : base(text, strength, scope, turnCreated, global, isActive)
+        {
+            Type = RumourType.Expense;
         }
     }
 

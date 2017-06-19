@@ -253,8 +253,6 @@ namespace Next_Game
             dictChallenges = Game.file.GetChallenges("Challenge.txt");
             Game.logStart?.Write("--- InitialiseGameStates (Director.cs)");
             InitialiseGameStates();
-            Game.logStart?.Write("--- InitialiseRumours (Director.cs)");
-            InitialiseStartRumours();
             Game.logStart?.Write("--- InitialiseViewTexts (Director.cs)");
             arrayOfViews = Game.file.GetViews("ViewLists.txt");
             Game.logStart?.Write("--- InitialiseOccupations (Director.cs)");
@@ -5062,8 +5060,9 @@ namespace Next_Game
         /// <summary>
         /// create rumours at game start -> adds to dict and places rumourID in relevant pool
         /// </summary>
-        private void InitialiseStartRumours()
+        public void InitialiseStartRumours()
         {
+            Game.logTurn?.Write("--- InitialiseRumours (Director.cs)");
             Dictionary<int, Passive> dictPassiveActors = Game.world.GetAllPassiveActors();
             Dictionary<int, House> dictAllHouses = Game.world.GetAllHouses();
 
@@ -5073,12 +5072,13 @@ namespace Next_Game
                 int royalRefID = Game.lore.RoyalRefIDNew;
                 string trait, rumourText, immersionText, startText, locName;
                 string[] arrayOfRumourTexts = new string[] { "rumoured", "rumoured", "said", "known", "widely known", "suspected", "well known", "known by all", "commonly known", "whispered",
-                    "whispered", "murmured among friends" };
+                    "quietly whispered", "murmured among friends", "mentioned in passing", "mentioned in confidence", "discreetly mentioned" };
                 string[] arrayOfSecretTexts = new string[] { "has a dark secret", "is keeping something private", "knows more than they let on", "has a mysterious past",
                     "has hidden secrets carefully kept from view", "jealously guards a secret", "knows something important", "conceals a dark truth" };
                 string[] arrayOfPrefixTexts = new string[] { "has an unquenched hunger for", "thirsts for", "hungers for", "lusts after", "thinks only of", "is in thrall to", "is fixated upon" };
                 string[] arrayOfTitleTexts = new string[] { "is impatient for a Title", "desires a Title", "has their eyes set on a Title", "is determined to gain a Title", "would do anything for a Title" };
                 string[] arrayOfOpinions = new string[] { "impression", "opinion", "view" };
+                string[] arrayOfRates = new string[] { "None", "a minimal", "a low", "a normal", "a high", "an excessive" };
                 //
                 // Characters ---
                 //
@@ -5519,7 +5519,41 @@ namespace Next_Game
                                 RumourGroup rumour = new RumourGroup(rumourText, strength, RumourScope.Local);
                                 //add to dictionary and global list
                                 if (AddRumour(rumour, house.Value) == false)
-                                { Game.SetError(new Error(268, $"{rumour.Text}, RumourID {rumour.RumourID}, failed to load (Group) -> Rumour Cancelled")); }
+                                { Game.SetError(new Error(268, $"{rumour.Text}, RumourID {rumour.RumourID}, failed to load (Group rel's) -> Rumour Cancelled")); }
+                            }
+                            //
+                            // Income (Royal Accounts) -> Capital
+                            //
+                            for(int i = 1; i < (int)Income.Count; i++)
+                            {
+                                if (capital.GetFinanceInfo(Account.Income, i, FinArray.Data) > 0)
+                                {
+                                    strength = 3;
+                                    startText = $"It is {arrayOfRumourTexts[rnd.Next(arrayOfRumourTexts.Length)]}";
+                                    rumourText = string.Format("{0} that King {1}, \"{2}\", is taxing {3} at {4} rate", startText, Game.lore.NewKing.Name, Game.lore.NewKing.Handle, (Income)i,
+                                        arrayOfRates[capital.GetFinanceInfo(Account.Income, i, FinArray.Rate)]);
+                                    RumourIncome rumour = new RumourIncome(rumourText, strength, RumourScope.Local, rnd.Next(20) * -1);
+                                    //add to dictionary and global list
+                                    if (AddRumour(rumour, house.Value) == false)
+                                    { Game.SetError(new Error(268, $"{rumour.Text}, RumourID {rumour.RumourID}, failed to load (Income) -> Rumour Cancelled")); }
+                                }
+                            }
+                            //
+                            // Expenses (Royal Accounts) -> Capital
+                            //
+                            for (int i = 1; i < (int)Expense.Count; i++)
+                            {
+                                if (capital.GetFinanceInfo(Account.Expense, i, FinArray.Data) != 0)
+                                {
+                                    strength = 3;
+                                    startText = $"It is {arrayOfRumourTexts[rnd.Next(arrayOfRumourTexts.Length)]}";
+                                    rumourText = string.Format("{0} that King {1}, \"{2}\", has {3} budget allocation for {4}", startText, Game.lore.NewKing.Name, Game.lore.NewKing.Handle,
+                                        arrayOfRates[capital.GetFinanceInfo(Account.Expense, i, FinArray.Rate)], (Expense)i);
+                                    RumourExpense rumour = new RumourExpense(rumourText, strength, RumourScope.Local, rnd.Next(20) * -1);
+                                    //add to dictionary and global list
+                                    if (AddRumour(rumour, house.Value) == false)
+                                    { Game.SetError(new Error(268, $"{rumour.Text}, RumourID {rumour.RumourID}, failed to load (Expense) -> Rumour Cancelled")); }
+                                }
                             }
                         }
                         //Major Houses only

@@ -3371,6 +3371,7 @@ namespace Next_Game
             Game.history.AgePassiveCharacters(dictPassiveActors);
             InitialiseGameVars();
             InitialiseRoyalAccounts();
+            Game.director.InitialiseStartRumours(); //AFTER initialiseRoyalAccount and just about everything else
             CalculateCrows();
             //DEBUG -> populate dictionary with sample data
             for (int i = 3; i > 0; i--)
