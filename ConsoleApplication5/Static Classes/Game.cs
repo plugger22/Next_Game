@@ -366,7 +366,7 @@ namespace Next_Game
                             if (_menuMode != MenuMode.Actor_Passive)
                             {
                                 int locID = map.GetMapInfo(MapLayer.LocID, mouse.X, mouse.Y, true);
-                                infoChannel.SetInfoList(world.ShowLocationRL(locID, mouse.X, mouse.Y), ConsoleDisplay.Multi);
+                                infoChannel.SetInfoList(display.ShowLocationRL(locID, mouse.X, mouse.Y), ConsoleDisplay.Multi);
                                 _renderRequired = true;
                             }
                         }
@@ -649,7 +649,7 @@ namespace Next_Game
                                 {
                                     case MenuMode.Main:
                                         //Show Enemies (what player knows)
-                                        infoChannel.SetInfoList(world.ShowEnemiesRL(), ConsoleDisplay.Multi);
+                                        infoChannel.SetInfoList(display.ShowEnemiesRL(), ConsoleDisplay.Multi);
                                         break;
                                     case MenuMode.Reference:
                                         //Show Enemy Rumours
@@ -813,7 +813,7 @@ namespace Next_Game
                                 {
                                     case MenuMode.Main:
                                         //Show Player Characters
-                                        infoChannel.SetInfoList(world.ShowActiveActorsRL(), ConsoleDisplay.Multi);
+                                        infoChannel.SetInfoList(display.ShowActiveActorsRL(), ConsoleDisplay.Multi);
                                         break;
                                     case MenuMode.Actor_Active:
                                         //move Active characters around map (must be AtLocation in order to move)
@@ -862,7 +862,7 @@ namespace Next_Game
                                         break;
                                     case MenuMode.Debug:
                                         //Show Enemies (full info)
-                                        infoChannel.SetInfoList(world.ShowEnemiesRL(true), ConsoleDisplay.Multi);
+                                        infoChannel.SetInfoList(display.ShowEnemiesRL(true), ConsoleDisplay.Multi);
                                         break;
                                 }
                                 break;
@@ -1001,7 +1001,7 @@ namespace Next_Game
                                             _menuMode = menu.SwitchMenuMode(MenuMode.Actor_Active);
                                             _charIDSelected = (int)keyPress.Key - 109; //based on a system where '1' is '110'
                                             List<Snippet> infoList = new List<Snippet>();
-                                            infoList.Add(world.ShowSelectedActor(_charIDSelected));
+                                            infoList.Add(display.ShowSelectedActor(_charIDSelected));
                                             infoChannel.SetInfoList(infoList, ConsoleDisplay.Input);
                                             break;
                                     }
@@ -1115,7 +1115,7 @@ namespace Next_Game
             if (_renderRequired == true)
             {
                 //update status console
-                infoChannel.SetInfoList(world.ShowActiveActorsRL(), ConsoleDisplay.Status);
+                infoChannel.SetInfoList(display.ShowActiveActorsRL(), ConsoleDisplay.Status);
                 infoChannel.SetInfoList(world.ShowRecentMessagesRL(), ConsoleDisplay.Message);
                 //draw to consoles
                 map.DrawMapRL(_mapConsole);
