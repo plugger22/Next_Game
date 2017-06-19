@@ -427,27 +427,34 @@ namespace Next_Game
         /// <param name="data"></param>
         public void SetFinanceData(Account account, int index, int data)
         {
+            string item = "Unknown";
             switch (account)
             {
                 case Account.Lender:
                     arrayOfLenders[index, (int)FinArray.Data] = data;
+                    item = Convert.ToString((Finance)index);
                     break;
                 case Account.Income:
                     arrayOfIncome[index, (int)FinArray.Data] = data;
+                    item = Convert.ToString((Income)index);
                     break;
                 case Account.Expense:
                     arrayOfExpenses[index, (int)FinArray.Data] = data;
+                    item = Convert.ToString((Expense)index);
                     break;
                 case Account.LumpSum:
                     arrayOfLumpSums[index, (int)FinArray.Data] = data;
+                    item = Convert.ToString((LumpSum)index);
                     break;
                 case Account.FinSummary:
                     arrayOfFinSummary[index, (int)FinArray.Data] = data;
+                    item = Convert.ToString((FinSummary)index);
                     break;
                 default:
                     Game.SetError(new Error(312, $"Invalid account option \"{account}\" -> data not added to array"));
                     break;
             }
+            Game.logTurn?.Write($"[SetFinanceData] {account} {item}, new data -> {data}");
         }
 
         /// <summary>
@@ -458,32 +465,39 @@ namespace Next_Game
         /// <param name="status"></param>
         public void SetFinanceStatus(Account account, int index, bool status)
         {
+            string item = "Unknown";
             switch (account)
             {
                 case Account.Lender:
                     if (status == true) { arrayOfLenders[index, (int)FinArray.Status] = 1; }
                     else { arrayOfLenders[index, (int)FinArray.Status] = 0; }
+                    item = Convert.ToString((Finance)index);
                     break;
                 case Account.Income:
                     if (status == true) { arrayOfIncome[index, (int)FinArray.Status] = 1; }
                     else { arrayOfIncome[index, (int)FinArray.Status] = 0; }
+                    item = Convert.ToString((Income)index);
                     break;
                 case Account.Expense:
                     if (status == true) { arrayOfExpenses[index, (int)FinArray.Status] = 1; }
                     else { arrayOfExpenses[index, (int)FinArray.Status] = 0; }
+                    item = Convert.ToString((Expense)index);
                     break;
                 case Account.LumpSum:
                     if (status == true) { arrayOfLumpSums[index, (int)FinArray.Status] = 1; }
                     else { arrayOfLumpSums[index, (int)FinArray.Status] = 0; };
+                    item = Convert.ToString((LumpSum)index);
                     break;
                 case Account.FinSummary:
                     if (status == true) { arrayOfFinSummary[index, (int)FinArray.Status] = 1; }
                     else { arrayOfFinSummary[index, (int)FinArray.Status] = 0; };
+                    item = Convert.ToString((FinSummary)index);
                     break;
                 default:
                     Game.SetError(new Error(313, $"Invalid account option \"{account}\" -> status not updated in array"));
                     break;
             }
+            Game.logTurn?.Write($"[SetFinanceStatus] {account} {item}, new status -> {status}");
         }
 
 
@@ -495,24 +509,33 @@ namespace Next_Game
         /// <param name="rate"></param>
         public void SetFinanceRate(Account account, int index, int rate)
         {
+            string item = "Unknown";
             switch (account)
             {
                 case Account.Lender:
                     arrayOfLenders[index, (int)FinArray.Rate] = rate;
+                    item = Convert.ToString((Finance)index);
                     break;
                 case Account.Income:
                     arrayOfIncome[index, (int)FinArray.Rate] = rate;
+                    item = Convert.ToString((Income)index);
                     break;
                 case Account.Expense:
                     arrayOfExpenses[index, (int)FinArray.Rate] = rate;
+                    item = Convert.ToString((Expense)index);
+                    //Inquisitor budget allocation (used for AI search routines) -> stored in GameVar
+                    if (index == (int)Expense.Inquisitors)
+                    { Game.variable.SetValue(GameVar.Inquisitor_Budget, rate); }
                     break;
                 case Account.LumpSum:
                     arrayOfLumpSums[index, (int)FinArray.Rate] = rate;
+                    item = Convert.ToString((LumpSum)index);
                     break;
                 default:
                     Game.SetError(new Error(314, $"Invalid account option \"{account}\" -> rate not updated in array"));
                     break;
             }
+            Game.logTurn?.Write($"[SetFinanceRate] {account} {item}, new rate -> {(Rate)rate}");
         }
 
         /// <summary>
@@ -523,27 +546,34 @@ namespace Next_Game
         /// <param name="refData"></param>
         public void SetFinanceReference(Account account, int index, int refData)
         {
+            string item = "Unknown";
             switch (account)
             {
                 case Account.Lender:
                     arrayOfLenders[index, (int)FinArray.Reference] = refData;
+                    item = Convert.ToString((Finance)index);
                     break;
                 case Account.Income:
                     arrayOfIncome[index, (int)FinArray.Reference] = refData;
+                    item = Convert.ToString((Income)index);
                     break;
                 case Account.Expense:
                     arrayOfExpenses[index, (int)FinArray.Reference] = refData;
+                    item = Convert.ToString((Expense)index);
                     break;
                 case Account.LumpSum:
                     arrayOfLumpSums[index, (int)FinArray.Reference] = refData;
+                    item = Convert.ToString((LumpSum)index);
                     break;
                 case Account.FinSummary:
                     arrayOfFinSummary[index, (int)FinArray.Reference] = refData;
+                    item = Convert.ToString((FinSummary)index);
                     break;
                 default:
                     Game.SetError(new Error(315, $"Invalid account option \"{account}\" -> reference not updated in array"));
                     break;
             }
+            Game.logTurn?.Write($"[SetFinanceReference] {account} {item}, new reference -> {refData}");
         }
 
         /// <summary>
@@ -554,24 +584,30 @@ namespace Next_Game
         /// <param name="constant"></param>
         public void SetFinanceConstant(Account account, int index, int constant)
         {
+            string item = "Unknown";
             switch (account)
             {
                 case Account.Lender:
                     arrayOfLenders[index, (int)FinArray.Constant] = constant;
+                    item = Convert.ToString((Finance)index);
                     break;
                 case Account.Income:
                     arrayOfIncome[index, (int)FinArray.Constant] = constant;
+                    item = Convert.ToString((Income)index);
                     break;
                 case Account.Expense:
                     arrayOfExpenses[index, (int)FinArray.Constant] = constant;
+                    item = Convert.ToString((Expense)index);
                     break;
                 case Account.LumpSum:
                     arrayOfLumpSums[index, (int)FinArray.Constant] = constant;
+                    item = Convert.ToString((LumpSum)index);
                     break;
                 default:
                     Game.SetError(new Error(316, $"Invalid account option \"{account}\" -> constant not updated in array"));
                     break;
             }
+            Game.logTurn?.Write($"[SetFinanceConstant] {account} {item}, new constant -> {constant}");
         }
 
         /// <summary>

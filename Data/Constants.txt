@@ -156,8 +156,8 @@
 102: 50 @ 20 @ 100
 # INQUISITOR_COST -> to maintain loyalty and effectiveness, gold coin cost times number of inquisitors
 103: 200 @ 50 @ 400
-# ACCOUNT_INTERVAL -> a new set of accounts are tallied by scribes every Account_interval number of turns
-104: 3 @ 1 @ 60
+# ACCOUNT_INTERVAL -> a new set of accounts are tallied by scribes every Account_interval number of turns (make it one less than needed)
+104: 29 @ 1 @ 60
 
 # Events ---
 
@@ -219,13 +219,13 @@
 # AI_SEARCH_KNOWN -> % DM to add to search chance (improves) when active character is 'Known'
 49: 30 @ 5 @ 50
 # AI_SEARCH_HIDE -> % chance to find active character when enemy has the Hide goal
-50: 30 @ 5 @ 80
+50: 20 @ 5 @ 80
 # AI_SEARCH_MOVE -> % chance to find active character when enemy has the Move goal
-51: 20 @ 5 @ 80
+51: 10 @ 5 @ 80
 # AI_SEARCH_SEARCH -> % chance to find active character when enemy has the Search goal
-52: 60 @ 5 @ 80
+52: 50 @ 5 @ 80
 # AI_SEARCH_WAIT -> % chance to find active character when enemy has the Wait goal
-53: 20 @ 5 @ 80
+53: 10 @ 5 @ 80
 # AI_SEARCH_FOOT -> % DM to add to search chance (improves) when Player is on foot while Travelling
 77: 25 @ 20 @ 40
 # AI_CAPITAL -> Min % of total Enemies who should remain in the Capital during normal operations (player location unknown)
@@ -233,7 +233,9 @@
 # AI_CONNECTOR -> num of bonus Loc's on a branch (priority array) whenever a Connector is present (more flexibility -> greater value as a branch)
 55: 4 @ 0 @ 10
 # AI_HUNT_THRESHOLD -> max num of turns since player last known that AI will continue to hunt for player (if within range)
-56: 4 @ 4 @ 12
+56: 5 @ 4 @ 12
+# AI_BUDGET -> base multiplier for Expense.Inquisitor.Rate enum to provide a +ve global DM for all search chances, eg. enum Rate.Normal = 3 * AI_Budget
+105: 4 @ 3 @ 5
 
 # Incarceration ---
 
@@ -260,4 +262,4 @@
 # REL_RUMOUR_TIME -> how many tunrs a relationship rumour exists for and the interval (time + 1) before initialising new ones.
 75: 20 @ 5 @ 30
 
-# Next valid number -> 105
+# Next valid number -> 106

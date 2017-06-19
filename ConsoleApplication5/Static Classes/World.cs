@@ -3369,8 +3369,8 @@ namespace Next_Game
             Message message = new Message($"Game world created with seed {seed}", MessageType.System);
             SetMessage(message);
             Game.history.AgePassiveCharacters(dictPassiveActors);
-            InitialiseGameVars();
             InitialiseRoyalAccounts();
+            InitialiseGameVars();
             Game.director.InitialiseStartRumours(); //AFTER initialiseRoyalAccount and just about everything else
             CalculateCrows();
             //DEBUG -> populate dictionary with sample data
@@ -4754,6 +4754,7 @@ namespace Next_Game
             int ai_move = Game.constant.GetValue(Global.AI_SEARCH_MOVE);
             int ai_search = Game.constant.GetValue(Global.AI_SEARCH_SEARCH);
             int ai_wait = Game.constant.GetValue(Global.AI_SEARCH_WAIT);
+            int budgetDM = Game.variable.GetValue(GameVar.Inquisitor_Budget) * Game.constant.GetValue(Global.AI_BUDGET); //DM for inquisitor budget allocation (higher the better)
             //active characters only
             Actor actor = GetAnyActor(charID);
             if (actor != null && actor.Status != ActorStatus.Gone && actor.Status != ActorStatus.Captured)
@@ -4792,21 +4793,21 @@ namespace Next_Game
                                         switch (enemy.Value.Goal)
                                         {
                                             case ActorAIGoal.Hide:
-                                                threshold = ai_hide + knownDM;
+                                                threshold = ai_hide + knownDM + budgetDM;
                                                 break;
                                             case ActorAIGoal.Move:
-                                                threshold = ai_move + knownDM + onFootDM;
+                                                threshold = ai_move + knownDM + onFootDM + budgetDM;
                                                 break;
                                             case ActorAIGoal.Search:
-                                                threshold = ai_search + knownDM ;
+                                                threshold = ai_search + knownDM + budgetDM;
                                                 break;
                                             case ActorAIGoal.Wait:
-                                                threshold = ai_wait + knownDM;
+                                                threshold = ai_wait + knownDM + budgetDM;
                                                 break;
                                         }
                                         if (rndNum < threshold) { found = true; }
-                                        Game.logTurn?.Write(string.Format(" [SEARCH -> Active] Random {0} < {1} (ai {2} + known {3} + foot {4}) -> {5} ", rndNum, threshold, threshold - knownDM, knownDM,
-                                            onFootDM, rndNum < threshold ? "Success" : "Fail"));
+                                        Game.logTurn?.Write(string.Format(" [SEARCH -> Active] Random {0} < {1} (ai {2} + known {3} + foot {4} + budget {5}) -> {6} ", rndNum, threshold, 
+                                            threshold - knownDM - onFootDM - budgetDM, knownDM, onFootDM, budgetDM, rndNum < threshold ? "Success" : "Fail"));
                                         //add to list of searched to prevent same enemy making multiple searches per turn
                                         if (active.AddSearched(enemy.Value.ActID) == true)
                                         { Game.logTurn?.Write(string.Format(" [Search -> ListSearched] {0} {1}, ActID {2} Searched -> Enemy ActID {3} added", active.Title, active.Name, active.ActID, enemy.Value.ActID)); }
@@ -4923,6 +4924,7 @@ namespace Next_Game
             int ai_move = Game.constant.GetValue(Global.AI_SEARCH_MOVE);
             int ai_search = Game.constant.GetValue(Global.AI_SEARCH_SEARCH);
             int ai_wait = Game.constant.GetValue(Global.AI_SEARCH_WAIT);
+            int budgetDM = Game.variable.GetValue(GameVar.Inquisitor_Budget) * Game.constant.GetValue(Global.AI_BUDGET); //DM for inquisitor budget allocation (higher the better)
             int knownDM = 0; //modifier for search if player known
             int onFootDM = 20; //modifier for search if player is travelling and on foot
             //get enemy
@@ -4964,22 +4966,22 @@ namespace Next_Game
                                         switch (enemy.Goal)
                                         {
                                             case ActorAIGoal.Hide:
-                                                threshold = ai_hide + knownDM;
+                                                threshold = ai_hide + knownDM + budgetDM;
                                                 break;
                                             case ActorAIGoal.Move:
-                                                threshold = ai_move + knownDM + onFootDM;
+                                                threshold = ai_move + knownDM + onFootDM + budgetDM;
                                                 break;
                                             case ActorAIGoal.Search:
-                                                threshold = ai_search + knownDM;
+                                                threshold = ai_search + knownDM + budgetDM;
                                                 break;
                                             case ActorAIGoal.Wait:
-                                                threshold = ai_wait + knownDM;
+                                                threshold = ai_wait + knownDM + budgetDM;
                                                 break;
                                         }
                                         if (rndNum < threshold)
                                         { found = true; }
-                                        Game.logTurn?.Write(string.Format(" [SEARCH -> Active] Random {0} < {1} (ai {2} + known {3} + foot {4}) -> {5} ", rndNum, threshold, threshold - knownDM, knownDM,
-                                            onFootDM, rndNum < threshold ? "Success" : "Fail"));
+                                        Game.logTurn?.Write(string.Format(" [SEARCH -> Active] Random {0} < {1} (ai {2} + known {3} + foot {4} + budget {5}) -> {6} ", rndNum, threshold, 
+                                            threshold - knownDM - onFootDM - budgetDM, knownDM, onFootDM, budgetDM, rndNum < threshold ? "Success" : "Fail"));
                                         //add to list of Searched to prevent same enemy making multiple search attempts on this actor per turn
                                         if (active.Value.AddSearched(enemy.ActID) == true)
                                         { Game.logTurn?.Write(string.Format(" [Search -> ListSearched] {0} {1}, ActID {2} Searched -> Enemy ActID {3} added", active.Value.Title, active.Value.Name, active.Value.ActID, enemy.ActID)); }
@@ -6113,6 +6115,14 @@ namespace Next_Game
             Game.variable.SetValue(GameVar.View_Index, rnd.Next(1, numOfMarketViews));
             Game.variable.SetValue(GameVar.View_Rollover, numOfMarketViews);
             Game.variable.SetValue(GameVar.Account_Timer, Game.constant.GetValue(Global.ACCOUNT_INTERVAL));
+            /*//Inquisitor budget allocation -> NOTE: SUPERCEDED BY HOUSE CODE
+            CapitalHouse capital = GetCapital();
+            if (capital != null)
+            {
+                int rate = capital.GetFinanceInfo(Account.Expense, (int)Expense.Inquisitors, FinArray.Rate);
+                Game.variable.SetValue(GameVar.Inquisitor_Budget, rate);
+            }
+            else { Game.SetError(new Error(320, "Invalid capital (null) -> GameVar Inquisitor_Budget not set")); }*/
         }
 
         /// <summary>
@@ -6695,8 +6705,7 @@ namespace Next_Game
         /// </summary>
         internal void InitialiseRoyalAccounts()
         {
-            if (Game.gameTurn == 0) { Game.logStart?.Write("--- InitialiseRoyalAccounts (World.cs)"); }
-            else { Game.logTurn?.Write("--- InitialiseRoyalAccounts (World.cs)"); }
+            Game.logTurn?.Write("--- InitialiseRoyalAccounts (World.cs)");
             CapitalHouse capital = GetCapital();
             bool status;
             int divisor = 15; //used to work out default tax rates based on initial relationships (slightly skewed to good relations & low tax rates)
