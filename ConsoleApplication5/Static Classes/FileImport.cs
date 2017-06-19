@@ -3885,7 +3885,7 @@ namespace Next_Game
             //master jagged array which will be returned, NOTE: add to enum 'RelListType' (Tracker.cs) for each unique new Relationship lis
             string[][] arrayOfViews = new string[(int)ViewType.Count][];
             string tempString;
-            //temporary sub lists for each category of geoNames
+            //Game states -> temporary sub lists for each category of geoNames
             List<string> listJusticeNeutralEduc = new List<string>();
             List<string> listJusticeNeutralUned = new List<string>();
             List<string> listJusticeGoodEduc = new List<string>();
@@ -3908,12 +3908,14 @@ namespace Next_Game
             List<string> listKnownUned = new List<string>();
             List<string> listUnknownEduc = new List<string>();
             List<string> listUnknownUned = new List<string>();
+            //food
             List<string> listFoodSurplusEduc = new List<string>();
             List<string> listFoodSurplusUned = new List<string>();
             List<string> listFoodNormalEduc = new List<string>();
             List<string> listFoodNormalUned = new List<string>();
             List<string> listFoodDeficitEduc = new List<string>();
             List<string> listFoodDeficitUned = new List<string>();
+            //weather
             List<string> listSummerEduc = new List<string>();
             List<string> listSummerUned = new List<string>();
             List<string> listSpringEduc = new List<string>();
@@ -3922,6 +3924,19 @@ namespace Next_Game
             List<string> listAutumnUned = new List<string>();
             List<string> listWinterEduc = new List<string>();
             List<string> listWinterUned = new List<string>();
+            //taxes
+            List<string> listTaxOfficialHigh = new List<string>();
+            List<string> listTaxOfficialLow = new List<string>();
+            List<string> listTaxChurchHigh = new List<string>();
+            List<string> listTaxChurchLow = new List<string>();
+            List<string> listTaxMerchantHigh = new List<string>();
+            List<string> listTaxMerchantLow = new List<string>();
+            List<string> listTaxCraferHigh = new List<string>();
+            List<string> listTaxCrafterLow = new List<string>();
+            List<string> listTaxPeasantHigh = new List<string>();
+            List<string> listTaxPeasantLow = new List<string>();
+            List<string> listTaxNoneEduc = new List<string>();
+            List<string> listTaxNoneUned = new List<string>();
             //import data from file
             string[] arrayOfViewTexts = ImportDataFile(fileName);
             if (arrayOfViewTexts != null)
@@ -4052,6 +4067,42 @@ namespace Next_Game
                                 case "SpringUned":
                                     listSpringUned.Add(tempString);
                                     break;
+                                case "TaxOfficialHigh":
+                                    listTaxOfficialHigh.Add(tempString);
+                                    break;
+                                case "TaxOfficialLow":
+                                    listTaxOfficialLow.Add(tempString);
+                                    break;
+                                case "TaxChurchHigh":
+                                    listTaxChurchHigh.Add(tempString);
+                                    break;
+                                case "TaxChurchLow":
+                                    listTaxChurchLow.Add(tempString);
+                                    break;
+                                case "TaxMerchantHigh":
+                                    listTaxMerchantHigh.Add(tempString);
+                                    break;
+                                case "TaxMerchantLow":
+                                    listTaxMerchantLow.Add(tempString);
+                                    break;
+                                case "TaxCrafterHigh":
+                                    listTaxCraferHigh.Add(tempString);
+                                    break;
+                                case "TaxCrafterLow":
+                                    listTaxCrafterLow.Add(tempString);
+                                    break;
+                                case "TaxPeasantHigh":
+                                    listTaxPeasantHigh.Add(tempString);
+                                    break;
+                                case "TaxPeasantLow":
+                                    listTaxPeasantLow.Add(tempString);
+                                    break;
+                                case "TaxNoneEduc":
+                                    listTaxNoneEduc.Add(tempString);
+                                    break;
+                                case "TaxNoneUned":
+                                    listTaxNoneUned.Add(tempString);
+                                    break;
                                 default:
                                     Game.SetError(new Error(287, string.Format("Invalid ViewType {0}, record {1}", nameType, i)));
                                     break;
@@ -4096,6 +4147,18 @@ namespace Next_Game
                 arrayOfViews[(int)ViewType.WinterUned] = new string[listWinterUned.Count];
                 arrayOfViews[(int)ViewType.SpringEduc] = new string[listSpringEduc.Count];
                 arrayOfViews[(int)ViewType.SpringUned] = new string[listSpringUned.Count];
+                arrayOfViews[(int)ViewType.TaxOfficialHigh] = new string[listTaxOfficialHigh.Count];
+                arrayOfViews[(int)ViewType.TaxOfficialLow] = new string[listTaxOfficialLow.Count];
+                arrayOfViews[(int)ViewType.TaxChurchHigh] = new string[listTaxChurchHigh.Count];
+                arrayOfViews[(int)ViewType.TaxChurchLow] = new string[listTaxChurchLow.Count];
+                arrayOfViews[(int)ViewType.TaxMerchantHigh] = new string[listTaxMerchantHigh.Count];
+                arrayOfViews[(int)ViewType.TaxMerchantLow] = new string[listTaxMerchantLow.Count];
+                arrayOfViews[(int)ViewType.TaxCrafterHigh] = new string[listTaxCraferHigh.Count];
+                arrayOfViews[(int)ViewType.TaxCrafterLow] = new string[listTaxCrafterLow.Count];
+                arrayOfViews[(int)ViewType.TaxPeasantHigh] = new string[listTaxPeasantHigh.Count];
+                arrayOfViews[(int)ViewType.TaxPeasantLow] = new string[listTaxPeasantLow.Count];
+                arrayOfViews[(int)ViewType.TaxNoneEduc] = new string[listTaxNoneEduc.Count];
+                arrayOfViews[(int)ViewType.TaxNoneUned] = new string[listTaxNoneUned.Count];
                 //populate from lists
                 arrayOfViews[(int)ViewType.JusticeNeutralEduc] = listJusticeNeutralEduc.ToArray();
                 arrayOfViews[(int)ViewType.JusticeNeutralUned] = listJusticeNeutralUned.ToArray();
@@ -4133,6 +4196,18 @@ namespace Next_Game
                 arrayOfViews[(int)ViewType.WinterUned] = listWinterUned.ToArray();
                 arrayOfViews[(int)ViewType.SpringEduc] = listSpringEduc.ToArray();
                 arrayOfViews[(int)ViewType.SpringUned] = listSpringUned.ToArray();
+                arrayOfViews[(int)ViewType.TaxOfficialHigh] = listTaxOfficialHigh.ToArray();
+                arrayOfViews[(int)ViewType.TaxOfficialLow] = listTaxOfficialLow.ToArray();
+                arrayOfViews[(int)ViewType.TaxChurchHigh] = listTaxChurchHigh.ToArray();
+                arrayOfViews[(int)ViewType.TaxChurchLow] = listTaxChurchLow.ToArray();
+                arrayOfViews[(int)ViewType.TaxMerchantHigh] = listTaxMerchantHigh.ToArray();
+                arrayOfViews[(int)ViewType.TaxMerchantLow] = listTaxMerchantLow.ToArray();
+                arrayOfViews[(int)ViewType.TaxCrafterHigh] = listTaxCraferHigh.ToArray();
+                arrayOfViews[(int)ViewType.TaxCrafterLow] = listTaxCrafterLow.ToArray();
+                arrayOfViews[(int)ViewType.TaxPeasantHigh] = listTaxPeasantHigh.ToArray();
+                arrayOfViews[(int)ViewType.TaxPeasantLow] = listTaxPeasantLow.ToArray();
+                arrayOfViews[(int)ViewType.TaxNoneEduc] = listTaxNoneEduc.ToArray();
+                arrayOfViews[(int)ViewType.TaxNoneUned] = listTaxNoneUned.ToArray();
                 //output stat data
                 for (int i = 0; i < arrayOfViews.Length; i++)
                 { Game.logStart?.Write($"{(ViewType)i} -> {arrayOfViews[i].Length} records imported"); }
