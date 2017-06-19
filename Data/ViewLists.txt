@@ -15,6 +15,82 @@
 # <curse> -> random curse, What in ...<curse>... is that
 # <food> -> Check's loc terrain -> fish, grown crops, hunting -> gets random food from Assorted (varies if Educ / Uned)
 
+# Taxes
+
+[TaxOfficialHigh]
+It's a good thing that King <newKing> is doing with his high road tax. If it was up to me I tax it even more.
+The Kingdom needs all the tax revenue it can collect. Tax 'em until they drop is my motto.
+If King <newKing> keeps taxing the King's Road like he is I might be in for a pay rise.
+The Road Tax is high but there is more juice that can be squeezed out of the lemon if King <newKing> is man enough.
+
+[TaxOfficialLow]
+The King's Road should be taxed at a higher rate than it is. Taxes pay for our wages.
+The more taxes that King <newKing> collects the more likely it is that we are paid. I'm all for more taxes.
+If the tax on the King's Road isn't raised soon then how will King <newKing> pay for the likes of us?
+It is wrong of King <newKing> to undertax the King's Road. Without a high tax how can he afford people such as me?
+
+[TaxChurchHigh]
+King <newKing> wants to be careful that he doesn't upset the Gods by excessively taxing their churches here at <locName>.
+If King <newKing> doesn't remove the ridiculously high tax on our Church then he will have to face the wrath of the Gods.
+Judgement day is fast approaching for King <newKing> unless he does something about the excessive tax on our church.
+The Gods do not view kindly Kings who try to tax their churches into extinction. King <newKing> wants to be careful.
+
+[TaxChurchLow]
+The Church at <locName> should not be obliged to pay tax to King <newKing> or any other King.
+The Gods have clearly stated that the Church is not under any obligation to pay taxes.
+Something is wrong when our lowly church, here at <locName>, is compelled to pay taxes to King <newKing>.
+Churches and taxes don't mix. The Gods have said so. King <newKing> needs to listen to the Gods more often.
+
+[TaxMerchantHigh]
+Ursury is what it is. Taxes this high? Why am I still here in <locName> and not on a ship to somewhere else?
+What future is there for the Kingdom if we are to be taxed at such a ruinouos rate?
+It's criminal the amount of tax that King <newKing> is levying on us here at <locName>.
+King <newKing> and his ridiculous taxes are what is going to be the end of us all.
+
+[TaxMerchantLow]
+Trade is an uncertain business at the best of times here at <locName>. Taxes, any taxes, dnn't help.
+The sooner King <newKing> comes to his senses and gets rid of the taxes, the better.
+I could enjoy living here at <locName> if it wasn't for the taxes. Damn King <newKing>.
+Some say that the taxes are low but I'm not one of them. A tax is a tax and that's all there is to it.
+
+[TaxCrafterHigh]
+There's talk about stopping work if King <newKing> doesn't drop the tax. Even <randomFemale> is upset.
+How can we be expected to make a living when taxes are so high?
+What in <curse> does King <newKing> think we are, cows to be milked at will for more gold?
+There is no future here in <locName>. King <newKing> has made sure of that with his ridiculous taxes.
+
+[TaxCrafterLow]
+It's hard enough trying to eke out a living here at <locName> without having to pay taxes.
+Over the oceans they don't pay any tax. <randomMale> swears he heard it said at the Inn.
+Can you begrudge King <newKing> from wanting the likes of me to pay some tax? Don't ask me, 'cause I'm drunk.
+There's taxes and there's Kings. Funny isn't that the two always go together.
+
+[TaxPeasantHigh]
+If King <newKing> is going to tax Girls that much then there won't be any soon.
+What in <curse> does King <newKing> think he is doing? Taxing Girls like they are made of Gold?
+If King <newKing> wants to tax Girls that much then he can start feeding them.
+<randomMale> says they are taxing Girls more than they taxing Lords. I'd like a word with King <newKing>.
+
+[TaxPeasantLow]
+You shouldn't have to pay no taxes on your daughters. It ain't fair.
+Girls aren't supposed to be taxed. King <newKing> has got it all wrong.
+Who said Girls have to be taxed? King <newKing> you say? Stuff him.
+It's alright to tax pigs but not Girls. Everybody knows that.
+
+[TaxNoneEduc]
+It's all well can good to have to pay taxes but what's the point when it's all spent on Royal parties?
+Taxes are for the little people. I don't pay any and nor should you.
+If the Gods meant for us to pay taxes then we'd have been born with gold teeth.
+If King <newKing> wants to tax other people then that's alright as long as he leaves me alone.
+
+[TaxNoneUned]
+I don't pay no tax to no King <newKing>. Why should I?
+Who is stupid enough to pay taxes? King <newKing> can manage without my help, thankyou.
+Is there a law that says you have to pay taxes to King <newKing>? Never heard of it.
+<randomMale> says only fools and idiots pay taxes. Hasn't King <newKing> got enough gold already?
+
+# Weather
+
 [SummerEduc]
 The gentle caress of a Summer breeze here in <locName> is one of life's greatest joys.
 Summer is my favourite time here in <locName>.
@@ -56,6 +132,8 @@ It'd be nice if somebody gave me some new clothes for Spring. The ones I have st
 The best part about Spring is that you can go to the toilet anywhere, not just in that smelly hole in the corner.
 Some people like Spring. I'm not one of them. If I had a pair of shoes I might feel better about it.
 
+# Food
+
 [FoodSurplusEduc]
 The food here at <locName> is a delight. Have you tasted the <food>?
 My table is never empty of food. There is an abundance. Especially of <food>.
@@ -85,6 +163,8 @@ I'm getting sick of eating <food> every day. Isn't there something different?
 What's the point of dinner if all you get to eat is <food>?
 I love <food>. Just as well. I don't eat a lot else.
 If you had told me that I would grow to like <food> I wouldn't have believed you.
+
+# Game States
 
 [JusticeNeutralEduc]
 Does <player> have a right to be King? Hard to say.
@@ -176,6 +256,8 @@ Why would I want to trust <player>, the pretend King? Nobody else does.
 <player> is about as honourable as a snake in the grass. At least you can rely on King <newKing> to do as he says.
 <randomFemale> and I both think that <player> should crawl back to where <he> came from. <He> isn't King material.
 <He>, that <player> person, is nothing but a greasy pig knee deep in a moorish bog. Honourable? Huh!
+
+# Known
 
 [KnownEduc]
 They say that the Usurper, <player>, was seen in <locRecent> recently. What is <he> up to?

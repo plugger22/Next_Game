@@ -25,7 +25,9 @@ namespace Next_Game
     public enum WorldGroup { None, Lords, Officials, Churches, Merchants, Crafters, Peasants, Count} //main population groupings within world
     public enum ViewType { JusticeNeutralEduc, JusticeNeutralUned, JusticeGoodEduc, JusticeGoodUned, JusticeBadEduc, JusticeBadUned, LegendNeutralEduc, LegendNeutralUned, LegendGoodEduc, LegendGoodUned,
     LegendBadEduc, LegendBadUned, HonourNeutralEduc, HonourNeutralUned, HonourGoodEduc, HonourGoodUned, HonourBadEduc, HonourBadUned, KnownEduc, KnownUned, UnknownEduc, UnknownUned,
-    FoodSurplusEduc, FoodSurplusUned, FoodNormalEduc, FoodNormalUned, FoodDeficitEduc, FoodDeficitUned, SummerEduc, SummerUned, AutumnEduc, AutumnUned, WinterEduc, WinterUned, SpringEduc, SpringUned, Count} //Market View
+    FoodSurplusEduc, FoodSurplusUned, FoodNormalEduc, FoodNormalUned, FoodDeficitEduc, FoodDeficitUned, SummerEduc, SummerUned, AutumnEduc, AutumnUned, WinterEduc, WinterUned, SpringEduc, SpringUned,
+        TaxOfficialHigh, TaxOfficialLow, TaxChurchHigh, TaxChurchLow, TaxMerchantHigh, TaxMerchantLow, TaxCrafterHigh, TaxCrafterLow, TaxPeasantHigh, TaxPeasantLow, TaxNoneEduc, TaxNoneUned,
+        Count } //Market View
     public enum Occupation { Offical, Church, Merchant, Craft, PeasantMale, PeasantFemale, Count}
     public enum TravelMode { None, Foot, Mounted} //default Mounted for all characters
     public enum Assorted { HorseName, HorseType, Curse, AnimalBig, FoodFishEduc, FoodFishUned, FoodCropEduc, FoodCropUned, FoodHuntEduc, FoodHuntUned, Count}
@@ -6422,6 +6424,63 @@ namespace Next_Game
                                 { innerArray = arrayOfViews[(int)ViewType.SpringUned]; }
                             }
                             else { Game.SetError(new Error(282, $"Invalid SeasonTimer Value \"{Game.SeasonTimer}\"")); }
+                            break;
+                        case 7:
+                            //taxes
+                            CapitalHouse capital = Game.world.GetCapital();
+                            if (capital != null)
+                            {
+                                int rate;
+                                //taxes are considered high if they are at normal rate, or above
+                                //if tax rate is zero then use TaxNoneEduc or Uned, as appropriate
+                                switch (group)
+                                {
+                                    case WorldGroup.Officials:
+                                        //based on road tax
+                                        rate = capital.GetFinanceInfo(Account.Income, (int)Income.Roads, FinArray.Rate);
+                                        if ( rate > 2)
+                                        { innerArray = arrayOfViews[(int)ViewType.TaxOfficialHigh]; }
+                                        else if (rate > 0) { innerArray = arrayOfViews[(int)ViewType.TaxOfficialLow]; }
+                                        else { innerArray = arrayOfViews[(int)ViewType.TaxNoneEduc]; }
+                                        break;
+                                    case WorldGroup.Churches:
+                                        //based on church tax
+                                        rate = capital.GetFinanceInfo(Account.Income, (int)Income.Churches, FinArray.Rate);
+                                        if (rate > 2)
+                                        { innerArray = arrayOfViews[(int)ViewType.TaxChurchHigh]; }
+                                        else if (rate > 0) { innerArray = arrayOfViews[(int)ViewType.TaxChurchLow]; }
+                                        else { innerArray = arrayOfViews[(int)ViewType.TaxNoneEduc]; }
+                                        break;
+                                    case WorldGroup.Merchants:
+                                        //based on export tax
+                                        rate = capital.GetFinanceInfo(Account.Income, (int)Income.Merchants, FinArray.Rate);
+                                        if (rate > 2)
+                                        { innerArray = arrayOfViews[(int)ViewType.TaxMerchantHigh]; }
+                                        else if (rate > 0) { innerArray = arrayOfViews[(int)ViewType.TaxMerchantLow]; }
+                                        else { innerArray = arrayOfViews[(int)ViewType.TaxNoneEduc]; }
+                                        break;
+                                    case WorldGroup.Crafters:
+                                        //based on crafter tax
+                                        rate = capital.GetFinanceInfo(Account.Income, (int)Income.Crafters, FinArray.Rate);
+                                        if (rate > 2)
+                                        { innerArray = arrayOfViews[(int)ViewType.TaxCrafterHigh]; }
+                                        else if (rate > 0) { innerArray = arrayOfViews[(int)ViewType.TaxCrafterLow]; }
+                                        else { innerArray = arrayOfViews[(int)ViewType.TaxNoneUned]; }
+                                        break;
+                                    case WorldGroup.Peasants:
+                                        //based on virgin tax
+                                        rate = capital.GetFinanceInfo(Account.Income, (int)Income.Virgins, FinArray.Rate);
+                                        if (rate > 2)
+                                        { innerArray = arrayOfViews[(int)ViewType.TaxPeasantHigh]; }
+                                        else if (rate > 0) { innerArray = arrayOfViews[(int)ViewType.TaxPeasantLow]; }
+                                        else { innerArray = arrayOfViews[(int)ViewType.TaxNoneUned]; }
+                                        break;
+                                    default:
+                                        Game.SetError(new Error(282, $"Invalid Group \"{group}\" for case 7, taxes -> Street View cancelled"));
+                                        break;
+                                }
+                            }
+                            else { Game.SetError(new Error(282, "Invalid capital (null) for xase 7, taxes -> Street View cancelled")); }
                             break;
                         default:
                             Game.SetError(new Error(282, $"Invalid Street_View \"{viewIndex} -> Street View cancelled"));

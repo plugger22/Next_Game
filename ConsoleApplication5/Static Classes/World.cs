@@ -6109,7 +6109,7 @@ namespace Next_Game
         private void InitialiseGameVars()
         {
             Game.logTurn?.Write("--- InitialiseGameVars (World.cs)");
-            int numOfMarketViews = 6;
+            int numOfMarketViews = 7;
             Game.variable.SetValue(GameVar.View_Index, rnd.Next(1, numOfMarketViews));
             Game.variable.SetValue(GameVar.View_Rollover, numOfMarketViews);
             Game.variable.SetValue(GameVar.Account_Timer, Game.constant.GetValue(Global.ACCOUNT_INTERVAL));
