@@ -3034,13 +3034,11 @@ namespace Next_Game
                                     //instigate Relationship
                                     if (relLord >= 0)
                                     {
-                                        //actor.SetRelLord(relLord);
                                         lordStars = relLord;
                                         lordStars /= 20;
                                         lordStars += 1;
                                         lordStars = Math.Min(5, lordStars);
                                         //get a random tag from the appropriate list
-                                        //lordStars = actor.GetRelLordStars();
                                         relTag = "";
                                         switch (lordStars)
                                         {

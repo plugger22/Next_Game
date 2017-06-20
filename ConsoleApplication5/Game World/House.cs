@@ -409,7 +409,10 @@ namespace Next_Game
         /// <param name="group"></param>
         /// <param name="changeAmt">Adds this amount to existing group relationship level</param>
         public void ChangeGroupRelations(WorldGroup group, int changeAmt)
-        { arrayOfGroups[(int)group] += changeAmt; }
+        {
+            arrayOfGroups[(int)group] += changeAmt;
+            Game.logTurn?.Write($"[ChangeGroupRelations] {group} relations with King changed by {changeAmt}, now {arrayOfGroups[(int)group]}");
+        }
 
         /// <summary>
         /// returns relationship level of a particular group
@@ -533,6 +536,10 @@ namespace Next_Game
                         case Expense.Royal_Lifestyle:
                             //Lifestyle budget allocation (used to adjust King's legend every account period)
                             Game.variable.SetValue(GameVar.Lifestyle_Budget, rate);
+                            break;
+                        case Expense.Officials_Wages:
+                            //Official Wages budget allocation (chance of them extorting money and dropping group relations)
+                            Game.variable.SetValue(GameVar.Official_Budget, rate);
                             break;
                     }
                     break;

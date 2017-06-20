@@ -1,2 +1,2 @@
-//Exile Game file ops "LogError.txt" commenced at: 20/06/2017 15:02:03
-//Exile Game file ops "LogError.txt" Completed at: 20/06/2017 15:02:42
+//Exile Game file ops "LogError.txt" commenced at: 20/06/2017 17:42:14
+//Exile Game file ops "LogError.txt" Completed at: 20/06/2017 17:44:34

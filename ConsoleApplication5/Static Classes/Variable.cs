@@ -19,6 +19,7 @@ namespace Next_Game
         Inquisitor_Budget,
         Lifestyle_Budget,
         Corruption_Factor,
+        Official_Budget,
         //keep as last, DO NOT change order of GameVars
         Count
     }
@@ -46,6 +47,7 @@ namespace Next_Game
             arrayOfGameVars[6] = GameVar.Inquisitor_Budget;
             arrayOfGameVars[7] = GameVar.Lifestyle_Budget;
             arrayOfGameVars[8] = GameVar.Corruption_Factor;
+            arrayOfGameVars[9] = GameVar.Official_Budget;
         }
 
         public GameVar[] GetArrayOfGameVars()

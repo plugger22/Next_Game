@@ -80,6 +80,7 @@ namespace Next_Game
         INQUISITOR_COST,
         CORRUPTION_COST,
         ACCOUNT_INTERVAL,
+        OFFICIALS_EFFECT,
         //Events
         TRAIT_MULTIPLIER,
         TEST_MULTIPLIER,
@@ -252,6 +253,7 @@ namespace Next_Game
             arrayOfGlobals[105] = Global.AI_SEARCH_BUDGET;
             arrayOfGlobals[106] = Global.LEGEND_LIFESTYLE;
             arrayOfGlobals[107] = Global.CORRUPTION_COST;
+            arrayOfGlobals[108] = Global.OFFICIALS_EFFECT;
         }
 
         /// <summary>

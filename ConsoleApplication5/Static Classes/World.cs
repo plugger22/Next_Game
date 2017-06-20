@@ -7313,7 +7313,8 @@ namespace Next_Game
             { Game.variable.SetValue(GameVar.Account_Timer, timer); }
             else
             {
-                int oldData, newData, adjustment;
+                int oldData, newData, adjustment, chance, rndNum, amount;
+                string description;
                 //new set of accounts
                 InitialiseRoyalAccounts();
                 //reset timer
@@ -7331,9 +7332,31 @@ namespace Next_Game
                     oldData = Game.director.GetGameState(GameState.Legend_King, state);
                     newData = oldData + Math.Abs(adjustment);
                     Game.director.SetGameState(GameState.Legend_King, state, newData, true);
-                    string description = $"King {Game.lore.NewKing.Name}'s, \"{Game.lore.NewKing.Handle}\", Royal Lifestyle has affected how people view him (Legend {state} +{adjustment})";
+                    description = $"King {Game.lore.NewKing.Name}'s, \"{Game.lore.NewKing.Handle}\", Royal Lifestyle has affected how people view him (Legend {state} +{adjustment})";
                     SetMessage(new Message(description, MessageType.Finance));
                 }
+                //Official wages -> can extort money from people they deal with. Chance of relationship change with group (higher wage allocation the less chance of them extorting to supplement their income)
+                CapitalHouse capital = GetCapital();
+                if (capital != null)
+                {
+                    amount = Game.constant.GetValue(Global.OFFICIALS_EFFECT) * -1;
+                    chance = 5 - Game.variable.GetValue(GameVar.Official_Budget);
+                    for (int i = 1; i < (int)WorldGroup.Count; i++)
+                    {
+                        rndNum = rnd.Next(10);
+                        if (rndNum< chance)
+                        {
+                            //exclude officials extorting money from officials
+                            if (i != (int)WorldGroup.Officials)
+                            {
+                                capital.ChangeGroupRelations((WorldGroup)i, amount);
+                                description = $"{(WorldGroup)i} relationship level has deteriorated {amount} due to Officials extorting money from them";
+                                SetMessage(new Message(description, MessageType.Finance));
+                            }
+                        }
+                    }
+                }
+                else { Game.SetError(new Error(320, "Invalid capital (null) -> Official Wages effect cancelled")); }
             }
         }
 

@@ -176,7 +176,7 @@ namespace Next_Game
         {
             List<Snippet> listDisplay = new List<Snippet>();
             Dictionary<int, Passive> dictRoyalCourt = Game.world.GetRoyalCourt();
-            RLColor goodColor = RLColor.Yellow;
+            RLColor goodColor = Color._godMode;
             RLColor badColor = RLColor.LightRed;
             RLColor goodTrait = Color._goodTrait;
             RLColor badTrait = Color._badTrait;
@@ -241,8 +241,7 @@ namespace Next_Game
             RLColor goodStar = RLColor.Yellow;
             RLColor badStar = RLColor.LightRed;
             RLColor displayColor;
-            int amount, previous, balance, accounts, rate, cashflow;
-            string change;
+            int amount, balance, accounts, rate, cashflow;
             int spacer = 2; //number of blank lines between data groups
             bool newLine;
             if (capital != null)
@@ -304,15 +303,8 @@ namespace Next_Game
                 for (int i = 1; i < (int)LumpSum.Count; i++)
                 {
                     amount = capital.GetFinanceInfo(Account.LumpSum, i, FinArray.Data);
-                    previous = capital.GetFinanceInfo(Account.LumpSum, i, FinArray.Reference);
-                    
                     if (capital.GetFinanceInfo(Account.LumpSum, i, FinArray.Status) > 0) { displayColor = activeColor; } else { displayColor = inactiveColor; amount = 0; }
-                    newLine = true; change = "";
-                    if (amount != previous)
-                    { newLine = false; if (amount > previous) { change = "increasing"; } else { change = "decreasing"; } }
-                    listDisplay.Add(new Snippet($"{(LumpSum)i, -30}{amount, -12:N0}", displayColor, RLColor.Black, newLine));
-                    if (newLine == false)
-                    { listDisplay.Add(new Snippet($"{change, -25}")); }
+                    listDisplay.Add(new Snippet($"{(LumpSum)i, -30}{amount, -12:N0}", displayColor, RLColor.Black));
                 }
                 //cashflow (Income - Expenses)
                 cashflow = capital.GetFinanceInfo(Account.FinSummary, (int)FinSummary.CashFlow, FinArray.Data);
