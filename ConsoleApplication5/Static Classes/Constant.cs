@@ -116,8 +116,9 @@ namespace Next_Game
         AI_CAPITAL,
         AI_CONNECTOR,
         AI_HUNT_THRESHOLD,
-        //Incarceration
-        LOSS_OF_LEGEND,
+        //legend
+        LEGEND_CAPTURED,
+        LEGEND_LIFESTYLE,
         //Promises
         PROMISES_BASE,
         PROMISES_HALVED,
@@ -199,7 +200,7 @@ namespace Next_Game
             arrayOfGlobals[54] = Global.AI_CAPITAL;
             arrayOfGlobals[55] = Global.AI_CONNECTOR;
             arrayOfGlobals[56] = Global.AI_HUNT_THRESHOLD;
-            arrayOfGlobals[57] = Global.LOSS_OF_LEGEND;
+            arrayOfGlobals[57] = Global.LEGEND_CAPTURED;
             arrayOfGlobals[58] = Global.FRIEND_THRESHOLD;
             arrayOfGlobals[59] = Global.NUM_SUPPORTERS;
             arrayOfGlobals[60] = Global.ENEMY_THRESHOLD;
@@ -248,6 +249,7 @@ namespace Next_Game
             arrayOfGlobals[103] = Global.INQUISITOR_COST;
             arrayOfGlobals[104] = Global.ACCOUNT_INTERVAL;
             arrayOfGlobals[105] = Global.AI_SEARCH_BUDGET;
+            arrayOfGlobals[106] = Global.LEGEND_LIFESTYLE;
         }
 
         /// <summary>

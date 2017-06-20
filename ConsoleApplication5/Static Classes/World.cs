@@ -3860,7 +3860,7 @@ namespace Next_Game
                             Game.statistic.AddStat(GameStatistic.Dungeon_Days);
                             actor.Value.Known = true; actor.Value.Revert = 2;
                             //raise Legend_King each turn player is held in dungeon
-                            int legendLoss = Game.constant.GetValue(Global.LOSS_OF_LEGEND);
+                            int legendLoss = Game.constant.GetValue(Global.LEGEND_CAPTURED);
                             int currentValue = Game.director.GetGameState(GameState.Legend_King, DataState.Good);
                             int newValue = Math.Abs(Game.director.ChangeData(currentValue, legendLoss, Event_System.EventCalc.Add));
                             Game.director.SetGameState(GameState.Legend_King, DataState.Good, newValue, true);
@@ -7317,10 +7317,27 @@ namespace Next_Game
             { Game.variable.SetValue(GameVar.Account_Timer, timer); }
             else
             {
+                int oldData, newData, adjustment;
                 //new set of accounts
                 InitialiseRoyalAccounts();
                 //reset timer
                 Game.variable.SetValue(GameVar.Account_Timer, Game.constant.GetValue(Global.ACCOUNT_INTERVAL));
+                //
+                //updates as a result of accounts
+                //
+                //King legend adjusted as a result of the budget allocation to Royal lifestyle (+ve adjustment if budget > normal, -ve if less, no effect if budget normal)
+                adjustment = Game.variable.GetValue(GameVar.Lifestyle_Budget) - (int)Rate.Normal;
+                adjustment *= Game.constant.GetValue(Global.LEGEND_LIFESTYLE);
+                if (adjustment != 0)
+                {
+                    DataState state = DataState.Good;
+                    if (adjustment < 0) { state = DataState.Bad; }
+                    oldData = Game.director.GetGameState(GameState.Legend_King, state);
+                    newData = oldData + Math.Abs(adjustment);
+                    Game.director.SetGameState(GameState.Legend_King, state, newData, true);
+                    string description = $"King {Game.lore.NewKing.Name}'s, \"{Game.lore.NewKing.Handle}\", Royal Lifestyle has affected how people view him (Legend {state} +{adjustment})";
+                    SetMessage(new Message(description, MessageType.Finance));
+                }
             }
         }
 

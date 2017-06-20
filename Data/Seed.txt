@@ -24,3 +24,9 @@ Seed 45741 -> Monday, 19 June 2017 8:40 PM
 Seed 15762 -> Monday, 19 June 2017 8:44 PM
 Seed 5996 -> Monday, 19 June 2017 8:49 PM
 Seed 41027 -> Monday, 19 June 2017 9:21 PM
+Seed 18268 -> Monday, 19 June 2017 9:26 PM
+Seed 9090 -> Tuesday, 20 June 2017 9:32 AM
+Seed 42205 -> Tuesday, 20 June 2017 10:32 AM
+Seed 23600 -> Tuesday, 20 June 2017 10:34 AM
+Seed 56058 -> Tuesday, 20 June 2017 10:37 AM
+Seed 24798 -> Tuesday, 20 June 2017 10:42 AM

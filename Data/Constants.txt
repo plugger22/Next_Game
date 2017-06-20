@@ -156,8 +156,8 @@
 102: 50 @ 20 @ 100
 # INQUISITOR_COST -> to maintain loyalty and effectiveness, gold coin cost times number of inquisitors
 103: 200 @ 50 @ 400
-# ACCOUNT_INTERVAL -> a new set of accounts are tallied by scribes every Account_interval number of turns (make it one less than needed)
-104: 29 @ 1 @ 60
+# ACCOUNT_INTERVAL -> a new set of accounts are tallied by scribes every Account_interval number of turns
+104: 30 @ 1 @ 60
 
 # Events ---
 
@@ -238,10 +238,12 @@
 56: 5 @ 4 @ 12
 
 
-# Incarceration ---
+# Legend ---
 
-# LOSS_OF_LEGEND -> amount of increase to 'Good' value of Legend_King each turn the Usurper is held in a dungeon by the King
+# LEGEND_CAPTURED -> amount of increase to 'Good' value of Legend_King each turn the Usurper is held in a dungeon by the King
 57: 1 @ 0 @ 4
+# LEGEND_LIFESTYLE -> base adjustment to King's legend fpr budget allocation for Royal_lifestyle -> [(int)Rate - (int)Rate.Normal] * legend_lifestyle
+106: 2 @ 1 @ 4
 
 # Promises ---
 
@@ -263,4 +265,4 @@
 # REL_RUMOUR_TIME -> how many tunrs a relationship rumour exists for and the interval (time + 1) before initialising new ones.
 75: 20 @ 5 @ 30
 
-# Next valid number -> 106
+# Next valid number -> 107

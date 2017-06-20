@@ -523,9 +523,18 @@ namespace Next_Game
                 case Account.Expense:
                     arrayOfExpenses[index, (int)FinArray.Rate] = rate;
                     item = Convert.ToString((Expense)index);
-                    //Inquisitor budget allocation (used for AI search routines) -> stored in GameVar
-                    if (index == (int)Expense.Inquisitors)
-                    { Game.variable.SetValue(GameVar.Inquisitor_Budget, rate); }
+                    //handle updates of GameVars where applicable
+                    switch ((Expense)index)
+                    {
+                        case Expense.Inquisitors:
+                            //Inquisitor budget allocation (used for AI search routines)
+                            Game.variable.SetValue(GameVar.Inquisitor_Budget, rate);
+                            break;
+                        case Expense.Royal_Lifestyle:
+                            //Lifestyle budget allocation (used to adjust King's legend every account period)
+                            Game.variable.SetValue(GameVar.Lifestyle_Budget, rate);
+                            break;
+                    }
                     break;
                 case Account.LumpSum:
                     arrayOfLumpSums[index, (int)FinArray.Rate] = rate;

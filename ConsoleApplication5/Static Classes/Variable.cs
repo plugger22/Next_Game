@@ -17,6 +17,7 @@ namespace Next_Game
         View_Rollover,
         Account_Timer,
         Inquisitor_Budget,
+        Lifestyle_Budget,
         //keep as last, DO NOT change order of GameVars
         Count
     }
@@ -42,6 +43,7 @@ namespace Next_Game
             arrayOfGameVars[4] = GameVar.View_Rollover;
             arrayOfGameVars[5] = GameVar.Account_Timer;
             arrayOfGameVars[6] = GameVar.Inquisitor_Budget;
+            arrayOfGameVars[7] = GameVar.Lifestyle_Budget;
         }
 
         public GameVar[] GetArrayOfGameVars()
