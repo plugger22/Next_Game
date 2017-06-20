@@ -1,11 +1,12 @@
-# list of Variables -> Info only as Hardcoded
+# list of Variables -> Info only as Hardcoded, file not imported
 # Format -> Index Number (used in events) & Variable Name
 
 
-1: Promises_Num        # Number of Promises made
-2: View_Index		   # used to rotate GetMarketView through Gamestates (Justice/Legend/Honour/Known) on a regular basis
-4: View_Rollover	   # View_Index rollsover to 1 when it reaches this 
-3: New_RelRumours	   # turn number for creating the next set of relationship rumoursc
-5: Account_Timer       # countdown in turns until new set of accounts are tallied
-6: Inquisitor_Budget   # budget rate for inquistor expenses (gives a DM to search chances, higher budget, bigger DM)
-7: Lifestyle_Budget    # budget rate for Royal lifestyle (gives a legend adjustment at every account period)
+1: Promises_Num         # Number of Promises made
+2: View_Index		    # used to rotate GetMarketView through Gamestates (Justice/Legend/Honour/Known) on a regular basis
+4: View_Rollover	    # View_Index rollsover to 1 when it reaches this 
+3: New_RelRumours	    # turn number for creating the next set of relationship rumoursc
+5: Account_Timer        # countdown in turns until new set of accounts are tallied
+6: Inquisitor_Budget    # budget rate for inquistor expenses (gives a DM to search chances, higher budget, bigger DM)
+7: Lifestyle_Budget     # budget rate for Royal lifestyle (gives a legend adjustment at every account period)
+8: Corruption_Factor 	# base figure for all corruption calculations (set to constant at game start but can vary from then on)

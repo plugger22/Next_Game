@@ -156,8 +156,11 @@
 102: 50 @ 20 @ 100
 # INQUISITOR_COST -> to maintain loyalty and effectiveness, gold coin cost times number of inquisitors
 103: 200 @ 50 @ 400
+# CORRUPTION_COST -> base cost for all corruption calculations
+107: 100 @ 50 @ 200
 # ACCOUNT_INTERVAL -> a new set of accounts are tallied by scribes every Account_interval number of turns
-104: 30 @ 1 @ 60
+104: 3 @ 1 @ 60
+
 
 # Events ---
 
@@ -265,4 +268,4 @@
 # REL_RUMOUR_TIME -> how many tunrs a relationship rumour exists for and the interval (time + 1) before initialising new ones.
 75: 20 @ 5 @ 30
 
-# Next valid number -> 107
+# Next valid number -> 108

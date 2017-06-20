@@ -1089,6 +1089,8 @@ namespace Next_Game
         public AdvisorRoyal advisorRoyal { get; set; } = AdvisorRoyal.None;
         public AdvisorNoble advisorNoble { get; set; } = AdvisorNoble.None;
         public int CommenceService { get; set; } //year commenced service with the Great House
+        public int CorruptionRecent { get; set; } //gold coins from most recent accounting period
+        public int CorruptionTotal { get; set; } //overall gold taken
         private List<int> listOfDisguises; //list of Disguise PossID's
 
         public Advisor(string name, ActorType type = ActorType.Advisor, int locID = 1, ActorSex sex = ActorSex.Male) : base(name, type, sex)

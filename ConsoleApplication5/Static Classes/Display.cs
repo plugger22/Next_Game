@@ -176,42 +176,52 @@ namespace Next_Game
         {
             List<Snippet> listDisplay = new List<Snippet>();
             Dictionary<int, Passive> dictRoyalCourt = Game.world.GetRoyalCourt();
-            RLColor goodColor = Color._goodTrait;
-            RLColor badColor = Color._badTrait;
+            RLColor goodColor = RLColor.Yellow;
+            RLColor badColor = RLColor.LightRed;
+            RLColor goodTrait = Color._goodTrait;
+            RLColor badTrait = Color._badTrait;
             RLColor displayColor;
             listDisplay.Add(new Snippet("--- Royal Council", RLColor.Yellow, RLColor.Black));
             int wits, treachery, loyalty, stars;
             string trait;
             bool newLine;
-            foreach(var advisor in dictRoyalCourt)
+            foreach (var advisor in dictRoyalCourt)
             {
                 trait = "";
                 listDisplay.Add(new Snippet(""));
-                listDisplay.Add(new Snippet($"{advisor.Value.Title} {advisor.Value.Name}, \"{advisor.Value.Handle}\""));
+                listDisplay.Add(new Snippet($"{advisor.Value.Title} {advisor.Value.Name}, \"{advisor.Value.Handle}\"", RLColor.Yellow, RLColor.Black));
                 //Wits -> Ability
                 wits = advisor.Value.GetSkill(SkillType.Wits);
                 if (wits != 3) { trait = advisor.Value.GetTraitName(SkillType.Wits); newLine = false; } else { newLine = true; }
                 if (wits > 2) { displayColor = goodColor; } else { displayColor = badColor; }
-                listDisplay.Add(new Snippet($"{"Ability (Wits), -30"}", false));
+                listDisplay.Add(new Snippet($"{"Ability (Wits)",-30}", false));
                 listDisplay.Add(new Snippet($"{GetStars(wits),-15}", displayColor, RLColor.Black, newLine));
                 if (newLine == false)
-                { listDisplay.Add(new Snippet($"{trait,-20}")); }
+                {
+                    if (wits > 3) { displayColor = goodTrait; } else { displayColor = badTrait; }
+                    listDisplay.Add(new Snippet($"{trait,-20}", displayColor, RLColor.Black));
+                }
                 //Treachery -> Corruption
                 treachery = advisor.Value.GetSkill(SkillType.Treachery);
                 if (treachery != 3) { trait = advisor.Value.GetTraitName(SkillType.Treachery); newLine = false; } else { newLine = true; }
-                if (treachery < 3) { displayColor = goodColor; } else { displayColor = badColor; }
-                listDisplay.Add(new Snippet($"{"Corruption (Treachery), -30"}", false));
+                if (treachery <= 3) { displayColor = goodColor; } else { displayColor = badColor; }
+                listDisplay.Add(new Snippet($"{"Corruption (Treachery)", -30}", false));
                 listDisplay.Add(new Snippet($"{GetStars(treachery),-15}", displayColor, RLColor.Black, newLine));
                 if (newLine == false)
-                { listDisplay.Add(new Snippet($"{trait,-20}")); }
+                {
+                    if (treachery < 3) { displayColor = goodTrait; } else { displayColor = badTrait; }
+                    listDisplay.Add(new Snippet($"{trait,-20}", displayColor, RLColor.Black));
+                }
                 //Relationship with the King
                 loyalty = advisor.Value.GetRelPlyr();
                 if (Game.gameAct == Act.One) { loyalty = 100 - loyalty; }
-                stars = (loyalty / 20) +1;
+                stars = (loyalty / 20) + 1;
                 stars = Math.Min(5, stars);
                 if (stars > 2) { displayColor = goodColor; } else { displayColor = badColor; }
-                listDisplay.Add(new Snippet($"Loyalty (Rel), -30", false));
-                listDisplay.Add(new Snippet($"{GetStars(stars),-15}", displayColor, RLColor.Black));
+                listDisplay.Add(new Snippet($"{"Loyalty (Rel)", -30}", false));
+                listDisplay.Add(new Snippet($"{GetStars(stars),-15}", displayColor, RLColor.Black, false));
+                if (loyalty >= 50) { displayColor = goodTrait; } else { displayColor = badTrait; }
+                listDisplay.Add(new Snippet($"{"Rel " + loyalty + "%",-20}", displayColor, RLColor.Black));
             }
             //display data
             Game.infoChannel.SetInfoList(listDisplay, ConsoleDisplay.Multi);
@@ -231,7 +241,8 @@ namespace Next_Game
             RLColor goodStar = RLColor.Yellow;
             RLColor badStar = RLColor.LightRed;
             RLColor displayColor;
-            int amount, balance, accounts, rate, cashflow;
+            int amount, previous, balance, accounts, rate, cashflow;
+            string change;
             int spacer = 2; //number of blank lines between data groups
             bool newLine;
             if (capital != null)
@@ -293,9 +304,15 @@ namespace Next_Game
                 for (int i = 1; i < (int)LumpSum.Count; i++)
                 {
                     amount = capital.GetFinanceInfo(Account.LumpSum, i, FinArray.Data);
-                    //if (capital.GetLumpSumStatus((LumpSum)i) == true)
+                    previous = capital.GetFinanceInfo(Account.LumpSum, i, FinArray.Reference);
+                    
                     if (capital.GetFinanceInfo(Account.LumpSum, i, FinArray.Status) > 0) { displayColor = activeColor; } else { displayColor = inactiveColor; amount = 0; }
-                    listDisplay.Add(new Snippet($"{(LumpSum)i, -30}{amount:N0}", displayColor, RLColor.Black));
+                    newLine = true; change = "";
+                    if (amount != previous)
+                    { newLine = false; if (amount > previous) { change = "increasing"; } else { change = "decreasing"; } }
+                    listDisplay.Add(new Snippet($"{(LumpSum)i, -30}{amount, -12:N0}", displayColor, RLColor.Black, newLine));
+                    if (newLine == false)
+                    { listDisplay.Add(new Snippet($"{change, -25}")); }
                 }
                 //cashflow (Income - Expenses)
                 cashflow = capital.GetFinanceInfo(Account.FinSummary, (int)FinSummary.CashFlow, FinArray.Data);

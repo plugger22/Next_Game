@@ -78,6 +78,7 @@ namespace Next_Game
         PATROL_COST,
         PIRATE_COST,
         INQUISITOR_COST,
+        CORRUPTION_COST,
         ACCOUNT_INTERVAL,
         //Events
         TRAIT_MULTIPLIER,
@@ -250,6 +251,7 @@ namespace Next_Game
             arrayOfGlobals[104] = Global.ACCOUNT_INTERVAL;
             arrayOfGlobals[105] = Global.AI_SEARCH_BUDGET;
             arrayOfGlobals[106] = Global.LEGEND_LIFESTYLE;
+            arrayOfGlobals[107] = Global.CORRUPTION_COST;
         }
 
         /// <summary>

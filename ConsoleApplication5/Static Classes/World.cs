@@ -6115,14 +6115,7 @@ namespace Next_Game
             Game.variable.SetValue(GameVar.View_Index, rnd.Next(1, numOfMarketViews));
             Game.variable.SetValue(GameVar.View_Rollover, numOfMarketViews);
             Game.variable.SetValue(GameVar.Account_Timer, Game.constant.GetValue(Global.ACCOUNT_INTERVAL));
-            /*//Inquisitor budget allocation -> NOTE: SUPERCEDED BY HOUSE CODE
-            CapitalHouse capital = GetCapital();
-            if (capital != null)
-            {
-                int rate = capital.GetFinanceInfo(Account.Expense, (int)Expense.Inquisitors, FinArray.Rate);
-                Game.variable.SetValue(GameVar.Inquisitor_Budget, rate);
-            }
-            else { Game.SetError(new Error(320, "Invalid capital (null) -> GameVar Inquisitor_Budget not set")); }*/
+            Game.variable.SetValue(GameVar.Corruption_Factor, Game.constant.GetValue(Global.CORRUPTION_COST));
         }
 
         /// <summary>
@@ -7078,36 +7071,39 @@ namespace Next_Game
                 //current treasury = previous balance
                 balance = capital.GetFinanceInfo(Account.LumpSum, (int)LumpSum.Treasury, FinArray.Data);
 
-                //Update previous corruption with recent corruption data (kept in FinArray.Reference)
-                int previousData = capital.GetFinanceInfo(Account.LumpSum, (int)LumpSum.Corruption, FinArray.Reference);
-                capital.SetFinanceData(Account.LumpSum, (int)LumpSum.Corruption, previousData);
-                int newData = 0; //to do -> latest corruption (provided as a positive number)
+                //Corruption
+                /*int previousData = capital.GetFinanceInfo(Account.LumpSum, (int)LumpSum.Corruption, FinArray.Reference);
+                capital.SetFinanceData(Account.LumpSum, (int)LumpSum.Corruption, previousData);*/
+                int previousData = capital.GetFinanceInfo(Account.LumpSum, (int)LumpSum.Corruption, FinArray.Data);
+                int newData = CheckCorruption();
                 newData *= -1;
                 if (newData != 0)
                 { balance += newData; capital.SetFinanceStatus(Account.LumpSum, (int)LumpSum.Corruption, true); }
                 else { capital.SetFinanceStatus(Account.LumpSum, (int)LumpSum.Corruption, false); }
-                capital.SetFinanceReference(Account.LumpSum, (int)LumpSum.Corruption, newData);
-                if (Game.gameTurn == 0) { capital.SetFinanceData(Account.LumpSum, (int)LumpSum.Corruption, newData); }
+                capital.SetFinanceReference(Account.LumpSum, (int)LumpSum.Corruption, previousData); //used to enable previous period comparisons
+                capital.SetFinanceData(Account.LumpSum, (int)LumpSum.Corruption, newData);
 
-                //Update previous appropriations with recent appropriation data (kept in FinArray.Reference)
-                previousData = capital.GetFinanceInfo(Account.LumpSum, (int)LumpSum.Appropriations, FinArray.Reference);
-                capital.SetFinanceData(Account.LumpSum, (int)LumpSum.Appropriations, previousData);
+                //Appropriations
+                /*previousData = capital.GetFinanceInfo(Account.LumpSum, (int)LumpSum.Appropriations, FinArray.Reference);
+                capital.SetFinanceData(Account.LumpSum, (int)LumpSum.Appropriations, previousData);*/
+                previousData = capital.GetFinanceInfo(Account.LumpSum, (int)LumpSum.Appropriations, FinArray.Data);
                 newData = 0; //to do -> latest financial appropriations
                 if (newData != 0)
                 { balance += newData; capital.SetFinanceStatus(Account.LumpSum, (int)LumpSum.Appropriations, true); }
                 else { capital.SetFinanceStatus(Account.LumpSum, (int)LumpSum.Appropriations, false); }
-                capital.SetFinanceReference(Account.LumpSum, (int)LumpSum.Appropriations, newData);
-                if (Game.gameTurn == 0) { capital.SetFinanceData(Account.LumpSum, (int)LumpSum.Appropriations, newData); }
+                capital.SetFinanceReference(Account.LumpSum, (int)LumpSum.Appropriations, previousData); //used to enable previous period comparisons
+                capital.SetFinanceData(Account.LumpSum, (int)LumpSum.Appropriations, newData);
 
-                //Update previous loans with recent loan data (kept in FinArray.Reference)
-                previousData = capital.GetFinanceInfo(Account.LumpSum, (int)LumpSum.New_Loans, FinArray.Reference);
-                capital.SetFinanceData(Account.LumpSum, (int)LumpSum.New_Loans, previousData);
+                //Loan Data
+                /*previousData = capital.GetFinanceInfo(Account.LumpSum, (int)LumpSum.New_Loans, FinArray.Reference);
+                capital.SetFinanceData(Account.LumpSum, (int)LumpSum.New_Loans, previousData);*/
+                previousData = capital.GetFinanceInfo(Account.LumpSum, (int)LumpSum.New_Loans, FinArray.Data);
                 newData = 0; //to do -> latest loans
                 if (newData != 0)
                 { balance += newData; capital.SetFinanceStatus(Account.LumpSum, (int)LumpSum.New_Loans, true); }
                 else { capital.SetFinanceStatus(Account.LumpSum, (int)LumpSum.New_Loans, false); }
-                capital.SetFinanceReference(Account.LumpSum, (int)LumpSum.New_Loans, newData);
-                if (Game.gameTurn == 0) { capital.SetFinanceData(Account.LumpSum, (int)LumpSum.New_Loans, newData); }
+                capital.SetFinanceReference(Account.LumpSum, (int)LumpSum.New_Loans, previousData); //used to enable previous period comparisons
+                capital.SetFinanceData(Account.LumpSum, (int)LumpSum.New_Loans, newData);
 
                 //update cashflow with current data
                 capital.SetFinanceData(Account.FinSummary, (int)FinSummary.CashFlow, cashflow);
@@ -7489,6 +7485,47 @@ namespace Next_Game
             averageRel = Math.Min(100, averageRel);
             averageRel = Math.Max(0, averageRel);
             return averageRel;
+        }
+
+        /// <summary>
+        /// Returns the amount of corruption (in gold coins) taken from the Kingdom Coffers by the Royal Council of Advisors
+        /// </summary>
+        /// <returns></returns>
+        private int CheckCorruption()
+        {
+            Game.logTurn?.Write("--- CheckCorruption (World.cs)");
+            int corruption = 0;
+            int treachery, wits, rndNum, amount;
+            int factor = Game.variable.GetValue(GameVar.Corruption_Factor);
+            //due to sequencing issues
+            if (Game.gameTurn == 0) { factor = Game.constant.GetValue(Global.CORRUPTION_COST); }
+            string description;
+            foreach(var advisor in dictRoyalCourt)
+            {
+                amount = 0;
+                rndNum = rnd.Next(10);
+                Advisor actor = advisor.Value as Advisor;
+                //chance of corruption is treachery * 10 %
+                treachery = actor.GetSkill(SkillType.Treachery);
+                if (rndNum <= treachery)
+                {
+                    //amount of treachery is wits * corruption_factor
+                    wits = actor.GetSkill(SkillType.Wits);
+                    amount = wits * factor;
+                    //update actor
+                    actor.CorruptionRecent = amount;
+                    actor.CorruptionTotal += amount;
+                    corruption += amount;
+                    description = $"{actor.Title} {actor.Name} is corrupt (treachery {treachery}, rolled {rndNum}), amount taken {amount} (Wits {wits} * factor {factor}), Total {actor.CorruptionTotal}";
+                    Game.logTurn?.Write(description);
+                }
+                else
+                {
+                    //no corruption occurred, zero recent amount
+                    actor.CorruptionRecent = amount;
+                }
+            }
+            return corruption;
         }
 
         //new Methods above here
