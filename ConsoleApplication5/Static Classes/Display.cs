@@ -128,6 +128,7 @@ namespace Next_Game
                 { listDisplay.Add(new Snippet("")); }
                 //Lords
                 Dictionary<int, MajorHouse> dictMajorHouses = Game.world.GetMajorHouses();
+                int kingID = Game.lore.NewKing.ActID;
                 if (dictMajorHouses != null)
                 {
                     listDisplay.Add(new Snippet("--- Major Houses", RLColor.Yellow, RLColor.Black));
@@ -136,13 +137,17 @@ namespace Next_Game
                         Passive lord = Game.world.GetPassiveActor(house.Value.LordID);
                         if (lord != null)
                         {
-                            relLvl = 100 - lord.GetRelPlyr();
-                            stars = relLvl / 20 + 1;
-                            stars = Math.Min(5, stars);
-                            if (stars <= 2) { starColor = RLColor.LightRed; } else { starColor = RLColor.Yellow; }
-                            listDisplay.Add(new Snippet($"{"House " + house.Value.Name,-25}", false));
-                            listDisplay.Add(new Snippet($"{GetStars(stars),-15}", starColor, RLColor.Black, false));
-                            listDisplay.Add(new Snippet($"Lord {lord.Name}, \"{ lord.Handle }\""));
+                            //exclude King's own house
+                            if (lord.ActID != kingID)
+                            {
+                                relLvl = 100 - lord.GetRelPlyr();
+                                stars = relLvl / 20 + 1;
+                                stars = Math.Min(5, stars);
+                                if (stars <= 2) { starColor = RLColor.LightRed; } else { starColor = RLColor.Yellow; }
+                                listDisplay.Add(new Snippet($"{"House " + house.Value.Name,-25}", false));
+                                listDisplay.Add(new Snippet($"{GetStars(stars),-15}", starColor, RLColor.Black, false));
+                                listDisplay.Add(new Snippet($"Lord {lord.Name}, \"{ lord.Handle }\""));
+                            }
                         }
                         else { Game.SetError(new Error(308, $"Invalid Lord (null) from house.Value.LordID {house.Value.LordID}")); }
                     }
@@ -189,7 +194,7 @@ namespace Next_Game
             {
                 trait = "";
                 listDisplay.Add(new Snippet(""));
-                listDisplay.Add(new Snippet($"{advisor.Value.Title} {advisor.Value.Name}, \"{advisor.Value.Handle}\"", RLColor.Yellow, RLColor.Black));
+                listDisplay.Add(new Snippet($"{advisor.Value.Title} {advisor.Value.Name}, \"{advisor.Value.Handle}\", ActID {advisor.Value.ActID}", RLColor.Yellow, RLColor.Black));
                 //Wits -> Ability
                 wits = advisor.Value.GetSkill(SkillType.Wits);
                 if (wits != 3) { trait = advisor.Value.GetTraitName(SkillType.Wits); newLine = false; } else { newLine = true; }

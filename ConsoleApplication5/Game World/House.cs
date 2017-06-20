@@ -412,6 +412,35 @@ namespace Next_Game
         {
             arrayOfGroups[(int)group] += changeAmt;
             Game.logTurn?.Write($"[ChangeGroupRelations] {group} relations with King changed by {changeAmt}, now {arrayOfGroups[(int)group]}");
+            //handle any specific Worldgroup changes required
+            switch(group)
+            {
+                case WorldGroup.Merchants:
+                    //Lender relationship with Merchant Guild should mirror Merchant group relationship
+                    SetFinanceData(Account.Lender, (int)Finance.Merchant_Guild, arrayOfGroups[(int)group]);
+                    Game.logTurn?.Write($"{group} relationship now {arrayOfGroups[(int)group]}");
+                    break;
+                case WorldGroup.Lords:
+                    //Lords all change by the same amount
+                    int lordID;
+                    int kingID = Game.lore.NewKing.ActID;
+                    int factor = Game.constant.GetValue(Global.OFFICIALS_EFFECT);
+                    Dictionary<int, MajorHouse> dictMajorHouses = Game.world.GetMajorHouses();
+                    foreach(var majorHouse in dictMajorHouses)
+                    {
+                        //change all except the king
+                        lordID = majorHouse.Value.LordID;
+                        if (lordID != kingID)
+                        {
+                            Passive lord = Game.world.GetPassiveActor(lordID);
+                            if (lord != null)
+                            { lord.AddRelEventPlyr(new Relation($"Upset over Kingdom Officials extorting money from House {majorHouse.Value.Name}", "Overzealous Officials", factor)); }
+                            else
+                            { Game.SetError(new Error(321, $"Invalid Lord (null) for LordID {lordID}, House {majorHouse.Value.Name}")); }
+                        }
+                    }
+                    break;
+            }
         }
 
         /// <summary>

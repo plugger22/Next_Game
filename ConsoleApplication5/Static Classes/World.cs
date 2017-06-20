@@ -7494,13 +7494,18 @@ namespace Next_Game
             int averageRel = 0;
             float totalRel = 0;
             float numLords = 0;
+            int kingID = Game.lore.NewKing.ActID;
             foreach (var house in dictMajorHouses)
             {
                 Passive lord = Game.world.GetPassiveActor(house.Value.LordID);
                 if (lord != null)
                 {
-                    totalRel += (100 - lord.GetRelPlyr());
-                    numLords++;
+                    //exclude king from calcs
+                    if (lord.ActID != kingID)
+                    {
+                        totalRel += (100 - lord.GetRelPlyr());
+                        numLords++;
+                    }
                 }
                 else { Game.SetError(new Error(308, $"Invalid Lord (null) from house.Value.LordID {house.Value.LordID}")); }
             }
