@@ -218,7 +218,7 @@ Yeah, <player> is a legend. Ask <randomMale> 'cause he swears that he saw <him> 
 I consider myself a true legend around here. Just like that <player> person. <He>'s one of us.
 
 [LegendBadEduc]
-<player>, the so called Usurper, I heard the <he> was frightened to crawk out of <his> bed in the morning.
+<player>, the so called Usurper, I heard the <he> was frightened to crawl out of <his> bed in the morning.
 King <newKing> is a real legend. Singlehandedly ate an entire pig at a feast. <player>, you say? Who?
 
 [LegendBadUned]

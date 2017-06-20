@@ -610,6 +610,9 @@ namespace Next_Game
                                     case MenuMode.Balance:
                                         infoChannel.SetInfoList(world.ShowFoodRL(FoodInfo.House), ConsoleDisplay.Multi);
                                         break;
+                                    case MenuMode.King:
+                                        display.ShowKingCouncilRL();
+                                        break;
                                     case MenuMode.Debug:
                                         //ShowGameStats
                                         infoChannel.SetInfoList(display.ShowGameStatsRL(), ConsoleDisplay.Multi);
