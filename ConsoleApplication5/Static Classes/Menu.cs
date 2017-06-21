@@ -67,157 +67,318 @@ namespace Next_Game
                     menuArrayStatus[row, column] = 1;
                 }
             }
-            //change menu structure depending on mode (NOTE: make sure each menu structure has a means of returning to the main menu)
-            switch (menuMode)
+            if (Game.gameAct == Act.One)
             {
-                case MenuMode.Main:
-                    menuColorFore = RLColor.White;
-                    menuColorBack = RLColor.Gray;
-                    //input categories
-                    menuArrayCategories[0] = "Main MENU ---";
-                    menuArrayCategories[1] = "Info ---";
-                    menuArrayCategories[3] = "Switch ---";
-                    //Main menu commands
-                    menuArrayText[0, 0] = "[C] Crow";
-                    menuArrayText[0, 1] = "[ENTER] End Turn";
-                    menuArrayText[0, 2] = "[I] Toggle Info";
-                    menuArrayText[0, 3] = "[U] Toggle Disguise";
-                    //Info category commands
-                    menuArrayText[1, 0] = "[P] Show Player Actors";
-                    menuArrayText[1, 1] = "[M] Show Messages";
-                    menuArrayText[1, 2] = "[H] Show House";
-                    menuArrayText[1, 3] = "[G] Show Generator Stats";
-                    menuArrayText[1, 4] = "[A] Show Actor";
-                    menuArrayText[1, 5] = "[E] Show Enemies";
-                    //Switch Menu commands
-                    menuArrayText[3, 0] = "[1..9] Character MENU";
-                    menuArrayText[3, 1] = "[D] Debug MENU";
-                    menuArrayText[3, 2] = "[O] God MENU";
-                    menuArrayText[3, 3] = "[R] Reference MENU";
-                    menuArrayText[3, 4] = "[B] Balance MENU";
-                    menuArrayText[3, 5] = "[K] King MENU";
-                    //menuArrayText[3, 4] = "[L] Lore MENU";
-                    menuArrayText[3, 6] = "[X] Quit";
-                    break;
-                case MenuMode.Actor_Active:
-                    menuColorFore = RLColor.Blue;
-                    menuColorBack = RLColor.LightGray;
-                    //input categories
-                    menuArrayCategories[0] = "Character MENU ---";
-                    menuArrayCategories[3] = "Switch ---";
-                    //Character menu commands
-                    menuArrayText[0, 0] = "[M] Map";
-                    menuArrayText[0, 1] = "[P] Move Player Actor";
-                    //switch commands
-                    menuArrayText[3, 0] = "[ESC] Main Menu";
-                    menuArrayText[3, 1] = "[ENTER] End Turn";
-                    break;
-                case MenuMode.Reference:
-                    menuColorFore = RLColor.LightMagenta;
-                    menuColorBack = RLColor.Gray;
-                    //input categories
-                    menuArrayCategories[0] = "Records MENU ---";
-                    menuArrayCategories[1] = "Rumours MENU ---";
-                    menuArrayCategories[2] = "Lore MENU ---";
-                    menuArrayCategories[3] = "Switch ---";
-                    //Record menu commands
-                    menuArrayText[0, 0] = "[A] All";
-                    menuArrayText[0, 1] = "[C] Custom";
-                    menuArrayText[0, 2] = "[D] Dead Actors";
-                    menuArrayText[0, 3] = "[G] Marriages";
-                    menuArrayText[0, 4] = "[K] Kingdom Events";
-                    menuArrayText[0, 5] = "[H] Horses";
-                    //Rumours menu commands
-                    menuArrayText[1, 0] = "[R] All";
-                    menuArrayText[1, 1] = "[S] Show Rumour";
-                    menuArrayText[1, 2] = "[E] Show Enemies";
-                    //Lore menu commands
-                    menuArrayText[2, 0] = "[U] Uprising";
-                    menuArrayText[2, 1] = "[F] Fate of Royals";
-                    //switch commands
-                    menuArrayText[3, 0] = "[ESC] Main Menu";
-                    menuArrayText[3, 1] = "[ENTER] End Turn";
-                    break;
-                case MenuMode.God:
-                    menuColorFore = Color._godMode;
-                    menuColorBack = RLColor.Gray;
-                    //input categories
-                    menuArrayCategories[0] = "God MENU ---";
-                    menuArrayCategories[1] = "Player Menu ---";
-                    menuArrayCategories[3] = "Switch ---";
-                    //Main God Menu
-                    menuArrayText[1, 0] = "[P] Move Player";
-                    menuArrayText[1, 1] = "[K] Known Status";
-                    //Switch commands
-                    menuArrayText[3, 0] = "[ESC] Main Menu";
-                    menuArrayText[3, 1] = "[ENTER] End Turn";
-                    break;
-                case MenuMode.King:
-                    menuColorFore = RLColor.LightCyan;
-                    menuColorBack = RLColor.Gray;
-                    //input categories
-                    menuArrayCategories[0] = "King MENU ---";
-                    //menuArrayCategories[1] = "Player Menu ---";
-                    menuArrayCategories[3] = "Switch ---";
-                    //Main King Menu
-                    menuArrayText[0, 0] = "[R] Relationships";
-                    menuArrayText[0, 1] = "[F] Finances";
-                    menuArrayText[0, 2] = "[C} Council";
-                    menuArrayText[0, 3] = "[P] Policies";
-                    //Switch commands
-                    menuArrayText[3, 0] = "[ESC] Main Menu";
-                    menuArrayText[3, 1] = "[ENTER] End Turn";
-                    break;
-                case MenuMode.Balance:
-                    menuColorFore = RLColor.LightBlue;
-                    menuColorBack = RLColor.LightGray;
-                    //input categories
-                    menuArrayCategories[0] = "Food MENU ---";
-                    menuArrayCategories[3] = "Switch ---";
-                    //Food menu commands
-                    menuArrayText[0, 0] = "[A] Surpluses";
-                    menuArrayText[0, 1] = "[B] Deficits";
-                    menuArrayText[0, 2] = "[C} Houses";
-                    menuArrayText[0, 3] = "[D] Branches";
-                    //Switch commands
-                    menuArrayText[3, 0] = "[ESC] Main Menu";
-                    menuArrayText[3, 1] = "[ENTER] End Turn";
-                    break;
-                case MenuMode.Debug:
-                    menuColorFore = RLColor.LightRed;
-                    menuColorBack = RLColor.Gray;
-                    //input categories
-                    menuArrayCategories[0] = "Debug Map ---";
-                    menuArrayCategories[1] = "Info ---";
-                    menuArrayCategories[2] = "Spy ---";
-                    menuArrayCategories[3] = "Switch ---";
-                    //Debug Map commands
-                    menuArrayText[0, 0] = "[G] Draw Route";
-                    menuArrayText[0, 1] = "[D] Route Debug";
-                    menuArrayText[0, 2] = "[R] Routes";
-                    menuArrayText[0, 3] = "[M] Map Toggle";
-                    menuArrayText[0, 4] = "[I] Info Toggle";
-                    menuArrayText[0, 5] = "[A] Show GameVars";
-                    menuArrayText[0, 6] = "[C] Show GameStats";
-                    //Debug Info commands
-                    menuArrayText[1, 0] = "[S] Show Secrets";
-                    menuArrayText[1, 1] = "[L] Show Items";
-                    menuArrayText[1, 2] = "[E] Show Errors";
-                    menuArrayText[1, 3] = "[T] Show Timers";
-                    menuArrayText[1, 4] = "[P] Show Dup's";
-                    menuArrayText[1, 5] = "[K] Show Old K's Hse";
-                    menuArrayText[1, 6] = "[H] Show Hse Rels";
-                    menuArrayText[1, 7] = "[Q] Show Enemies";
-                    //Debug Spy commands
-                    menuArrayText[2, 0] = "[U] Show All";
-                    menuArrayText[2, 1] = "[V] Show Actor";
-                    menuArrayText[2, 2] = "[Y] Show Active";
-                    menuArrayText[2, 3] = "[Z] Show Enemies";
-                    //Debug Switch commands
-                    menuArrayText[3, 0] = "[ESC] Main Menu";
-                    menuArrayText[3, 1] = "[ENTER] End Turn";
-                    break;
+                //change menu structure depending on mode (NOTE: make sure each menu structure has a means of returning to the main menu)
+                switch (menuMode)
+                {
+                    //Player as Usurper
+                    case MenuMode.Main:
+                        menuColorFore = RLColor.White;
+                        menuColorBack = RLColor.Gray;
+                        //input categories
+                        menuArrayCategories[0] = "Main MENU ---";
+                        menuArrayCategories[1] = "Info ---";
+                        menuArrayCategories[3] = "Switch ---";
+                        //Main menu commands
+                        menuArrayText[0, 0] = "[C] Crow";
+                        menuArrayText[0, 1] = "[ENTER] End Turn";
+                        menuArrayText[0, 2] = "[I] Toggle Info";
+                        menuArrayText[0, 3] = "[U] Toggle Disguise";
+                        //Info category commands
+                        menuArrayText[1, 0] = "[P] Show Player Actors";
+                        menuArrayText[1, 1] = "[M] Show Messages";
+                        menuArrayText[1, 2] = "[H] Show House";
+                        menuArrayText[1, 3] = "[G] Show Generator Stats";
+                        menuArrayText[1, 4] = "[A] Show Actor";
+                        menuArrayText[1, 5] = "[E] Show Enemies";
+                        //Switch Menu commands
+                        menuArrayText[3, 0] = "[1..9] Character MENU";
+                        menuArrayText[3, 1] = "[D] Debug MENU";
+                        menuArrayText[3, 2] = "[O] God MENU";
+                        menuArrayText[3, 3] = "[R] Reference MENU";
+                        menuArrayText[3, 4] = "[B] Balance MENU";
+                        menuArrayText[3, 5] = "[K] King MENU";
+                        //menuArrayText[3, 4] = "[L] Lore MENU";
+                        menuArrayText[3, 6] = "[X] Quit";
+                        break;
+                    case MenuMode.Actor_Active:
+                        menuColorFore = RLColor.Blue;
+                        menuColorBack = RLColor.LightGray;
+                        //input categories
+                        menuArrayCategories[0] = "Character MENU ---";
+                        menuArrayCategories[3] = "Switch ---";
+                        //Character menu commands
+                        menuArrayText[0, 0] = "[M] Map";
+                        menuArrayText[0, 1] = "[P] Move Player Actor";
+                        //switch commands
+                        menuArrayText[3, 0] = "[ESC] Main Menu";
+                        menuArrayText[3, 1] = "[ENTER] End Turn";
+                        break;
+                    case MenuMode.Reference:
+                        menuColorFore = RLColor.LightMagenta;
+                        menuColorBack = RLColor.Gray;
+                        //input categories
+                        menuArrayCategories[0] = "Records MENU ---";
+                        menuArrayCategories[1] = "Rumours MENU ---";
+                        menuArrayCategories[2] = "Lore MENU ---";
+                        menuArrayCategories[3] = "Switch ---";
+                        //Record menu commands
+                        menuArrayText[0, 0] = "[A] All";
+                        menuArrayText[0, 1] = "[C] Custom";
+                        menuArrayText[0, 2] = "[D] Dead Actors";
+                        menuArrayText[0, 3] = "[G] Marriages";
+                        menuArrayText[0, 4] = "[K] Kingdom Events";
+                        menuArrayText[0, 5] = "[H] Horses";
+                        //Rumours menu commands
+                        menuArrayText[1, 0] = "[R] All";
+                        menuArrayText[1, 1] = "[S] Show Rumour";
+                        menuArrayText[1, 2] = "[E] Show Enemies";
+                        //Lore menu commands
+                        menuArrayText[2, 0] = "[U] Uprising";
+                        menuArrayText[2, 1] = "[F] Fate of Royals";
+                        //switch commands
+                        menuArrayText[3, 0] = "[ESC] Main Menu";
+                        menuArrayText[3, 1] = "[ENTER] End Turn";
+                        break;
+                    case MenuMode.God:
+                        menuColorFore = Color._godMode;
+                        menuColorBack = RLColor.Gray;
+                        //input categories
+                        menuArrayCategories[0] = "God MENU ---";
+                        menuArrayCategories[1] = "Player Menu ---";
+                        menuArrayCategories[3] = "Switch ---";
+                        //Main God Menu
+                        menuArrayText[0, 0] = "[A] Toggle Act";
+                        //Player God Menu
+                        menuArrayText[1, 0] = "[P] Move Player";
+                        menuArrayText[1, 1] = "[K] Known Status";
+                        //Switch commands
+                        menuArrayText[3, 0] = "[ESC] Main Menu";
+                        menuArrayText[3, 1] = "[ENTER] End Turn";
+                        break;
+                    case MenuMode.King:
+                        menuColorFore = RLColor.LightCyan;
+                        menuColorBack = RLColor.Gray;
+                        //input categories
+                        menuArrayCategories[0] = "King MENU ---";
+                        //menuArrayCategories[1] = "Player Menu ---";
+                        menuArrayCategories[3] = "Switch ---";
+                        //Main King Menu
+                        menuArrayText[0, 0] = "[R] Relationships";
+                        menuArrayText[0, 1] = "[F] Finances";
+                        menuArrayText[0, 2] = "[C} Council";
+                        menuArrayText[0, 3] = "[P] Policies";
+                        //Switch commands
+                        menuArrayText[3, 0] = "[ESC] Main Menu";
+                        menuArrayText[3, 1] = "[ENTER] End Turn";
+                        break;
+                    case MenuMode.Balance:
+                        menuColorFore = RLColor.LightBlue;
+                        menuColorBack = RLColor.LightGray;
+                        //input categories
+                        menuArrayCategories[0] = "Food MENU ---";
+                        menuArrayCategories[3] = "Switch ---";
+                        //Food menu commands
+                        menuArrayText[0, 0] = "[A] Surpluses";
+                        menuArrayText[0, 1] = "[B] Deficits";
+                        menuArrayText[0, 2] = "[C} Houses";
+                        menuArrayText[0, 3] = "[D] Branches";
+                        //Switch commands
+                        menuArrayText[3, 0] = "[ESC] Main Menu";
+                        menuArrayText[3, 1] = "[ENTER] End Turn";
+                        break;
+                    case MenuMode.Debug:
+                        menuColorFore = RLColor.LightRed;
+                        menuColorBack = RLColor.Gray;
+                        //input categories
+                        menuArrayCategories[0] = "Debug Map ---";
+                        menuArrayCategories[1] = "Info ---";
+                        menuArrayCategories[2] = "Spy ---";
+                        menuArrayCategories[3] = "Switch ---";
+                        //Debug Map commands
+                        menuArrayText[0, 0] = "[G] Draw Route";
+                        menuArrayText[0, 1] = "[D] Route Debug";
+                        menuArrayText[0, 2] = "[R] Routes";
+                        menuArrayText[0, 3] = "[M] Map Toggle";
+                        menuArrayText[0, 4] = "[I] Info Toggle";
+                        menuArrayText[0, 5] = "[A] Show GameVars";
+                        menuArrayText[0, 6] = "[C] Show GameStats";
+                        //Debug Info commands
+                        menuArrayText[1, 0] = "[S] Show Secrets";
+                        menuArrayText[1, 1] = "[L] Show Items";
+                        menuArrayText[1, 2] = "[E] Show Errors";
+                        menuArrayText[1, 3] = "[T] Show Timers";
+                        menuArrayText[1, 4] = "[P] Show Dup's";
+                        menuArrayText[1, 5] = "[K] Show Old K's Hse";
+                        menuArrayText[1, 6] = "[H] Show Hse Rels";
+                        menuArrayText[1, 7] = "[Q] Show Enemies";
+                        //Debug Spy commands
+                        menuArrayText[2, 0] = "[U] Show All";
+                        menuArrayText[2, 1] = "[V] Show Actor";
+                        menuArrayText[2, 2] = "[Y] Show Active";
+                        menuArrayText[2, 3] = "[Z] Show Enemies";
+                        //Debug Switch commands
+                        menuArrayText[3, 0] = "[ESC] Main Menu";
+                        menuArrayText[3, 1] = "[ENTER] End Turn";
+                        break;
+                }
             }
+            else if (Game.gameAct == Act.Two)
+            {
+                //Player as King
+                switch (menuMode)
+                {
+                    case MenuMode.Main:
+                        menuColorFore = RLColor.White;
+                        menuColorBack = RLColor.Gray;
+                        //input categories
+                        menuArrayCategories[0] = "Main MENU ---";
+                        menuArrayCategories[1] = "Info ---";
+                        menuArrayCategories[3] = "Switch ---";
+                        //Main menu commands
+                        menuArrayText[0, 0] = "[C] Crow";
+                        menuArrayText[0, 1] = "[ENTER] End Turn";
+                        menuArrayText[0, 2] = "[I] Toggle Info";
+                        //Info category commands
+                        menuArrayText[1, 0] = "[Q] Show Inquisitors *";
+                        menuArrayText[1, 1] = "[M] Show Messages";
+                        menuArrayText[1, 2] = "[H] Show House";
+                        menuArrayText[1, 3] = "[G] Show Generator Stats";
+                        menuArrayText[1, 4] = "[A] Show Actor";
+                        menuArrayText[1, 5] = "[E] Show Enemies";
+                        //Switch Menu commands
+                        menuArrayText[3, 0] = "[1..9] Character MENU";
+                        menuArrayText[3, 1] = "[D] Debug MENU";
+                        menuArrayText[3, 2] = "[O] God MENU";
+                        menuArrayText[3, 3] = "[R] Reference MENU";
+                        menuArrayText[3, 4] = "[B] Balance MENU";
+                        menuArrayText[3, 5] = "[K] King MENU";
+                        //menuArrayText[3, 4] = "[L] Lore MENU";
+                        menuArrayText[3, 6] = "[X] Quit";
+                        break;
+                    case MenuMode.Actor_Active:
+                        menuColorFore = RLColor.Blue;
+                        menuColorBack = RLColor.LightGray;
+                        //input categories
+                        menuArrayCategories[0] = "Character MENU ---";
+                        menuArrayCategories[3] = "Switch ---";
+                        //Character menu commands
+                        menuArrayText[0, 0] = "[M] Map";
+                        menuArrayText[0, 1] = "[P] Move Player Actor";
+                        //switch commands
+                        menuArrayText[3, 0] = "[ESC] Main Menu";
+                        menuArrayText[3, 1] = "[ENTER] End Turn";
+                        break;
+                    case MenuMode.Reference:
+                        menuColorFore = RLColor.LightMagenta;
+                        menuColorBack = RLColor.Gray;
+                        //input categories
+                        menuArrayCategories[0] = "Records MENU ---";
+                        menuArrayCategories[1] = "Rumours MENU ---";
+                        menuArrayCategories[2] = "Lore MENU ---";
+                        menuArrayCategories[3] = "Switch ---";
+                        //Record menu commands
+                        menuArrayText[0, 0] = "[A] All";
+                        menuArrayText[0, 1] = "[C] Custom";
+                        menuArrayText[0, 2] = "[D] Dead Actors";
+                        menuArrayText[0, 3] = "[G] Marriages";
+                        menuArrayText[0, 4] = "[K] Kingdom Events";
+                        menuArrayText[0, 5] = "[H] Horses";
+                        //Rumours menu commands
+                        menuArrayText[1, 0] = "[R] All";
+                        menuArrayText[1, 1] = "[S] Show Rumour";
+                        menuArrayText[1, 2] = "[E] Show Enemies";
+                        //Lore menu commands
+                        menuArrayText[2, 0] = "[U] Uprising";
+                        menuArrayText[2, 1] = "[F] Fate of Royals";
+                        //switch commands
+                        menuArrayText[3, 0] = "[ESC] Main Menu";
+                        menuArrayText[3, 1] = "[ENTER] End Turn";
+                        break;
+                    case MenuMode.God:
+                        menuColorFore = Color._godMode;
+                        menuColorBack = RLColor.Gray;
+                        //input categories
+                        menuArrayCategories[0] = "God MENU ---";
+                        menuArrayCategories[1] = "Player Menu ---";
+                        menuArrayCategories[3] = "Switch ---";
+                        //Main God Menu
+                        menuArrayText[0, 0] = "[A] Toggle Act";
+                        //Player God Menu
+                        menuArrayText[1, 0] = "[P] Move Player";
+                        //Switch commands
+                        menuArrayText[3, 0] = "[ESC] Main Menu";
+                        menuArrayText[3, 1] = "[ENTER] End Turn";
+                        break;
+                    case MenuMode.King:
+                        menuColorFore = RLColor.LightCyan;
+                        menuColorBack = RLColor.Gray;
+                        //input categories
+                        menuArrayCategories[0] = "King MENU ---";
+                        //menuArrayCategories[1] = "Player Menu ---";
+                        menuArrayCategories[3] = "Switch ---";
+                        //Main King Menu
+                        menuArrayText[0, 0] = "[R] Relationships";
+                        menuArrayText[0, 1] = "[F] Finances";
+                        menuArrayText[0, 2] = "[C} Council";
+                        menuArrayText[0, 3] = "[P] Policies";
+                        //Switch commands
+                        menuArrayText[3, 0] = "[ESC] Main Menu";
+                        menuArrayText[3, 1] = "[ENTER] End Turn";
+                        break;
+                    case MenuMode.Balance:
+                        menuColorFore = RLColor.LightBlue;
+                        menuColorBack = RLColor.LightGray;
+                        //input categories
+                        menuArrayCategories[0] = "Food MENU ---";
+                        menuArrayCategories[3] = "Switch ---";
+                        //Food menu commands
+                        menuArrayText[0, 0] = "[A] Surpluses";
+                        menuArrayText[0, 1] = "[B] Deficits";
+                        menuArrayText[0, 2] = "[C} Houses";
+                        menuArrayText[0, 3] = "[D] Branches";
+                        //Switch commands
+                        menuArrayText[3, 0] = "[ESC] Main Menu";
+                        menuArrayText[3, 1] = "[ENTER] End Turn";
+                        break;
+                    case MenuMode.Debug:
+                        menuColorFore = RLColor.LightRed;
+                        menuColorBack = RLColor.Gray;
+                        //input categories
+                        menuArrayCategories[0] = "Debug Map ---";
+                        menuArrayCategories[1] = "Info ---";
+                        menuArrayCategories[2] = "Spy ---";
+                        menuArrayCategories[3] = "Switch ---";
+                        //Debug Map commands
+                        menuArrayText[0, 0] = "[G] Draw Route";
+                        menuArrayText[0, 1] = "[D] Route Debug";
+                        menuArrayText[0, 2] = "[R] Routes";
+                        menuArrayText[0, 3] = "[M] Map Toggle";
+                        menuArrayText[0, 4] = "[I] Info Toggle";
+                        menuArrayText[0, 5] = "[A] Show GameVars";
+                        menuArrayText[0, 6] = "[C] Show GameStats";
+                        //Debug Info commands
+                        menuArrayText[1, 0] = "[S] Show Secrets";
+                        menuArrayText[1, 1] = "[L] Show Items";
+                        menuArrayText[1, 2] = "[E] Show Errors";
+                        menuArrayText[1, 3] = "[T] Show Timers";
+                        menuArrayText[1, 4] = "[P] Show Dup's";
+                        menuArrayText[1, 5] = "[K] Show Old K's Hse";
+                        menuArrayText[1, 6] = "[H] Show Hse Rels";
+                        menuArrayText[1, 7] = "[Q] Show Enemies";
+                        //Debug Spy commands
+                        menuArrayText[2, 0] = "[U] Show All";
+                        menuArrayText[2, 1] = "[V] Show Actor";
+                        menuArrayText[2, 2] = "[Y] Show Active";
+                        menuArrayText[2, 3] = "[Z] Show Enemies";
+                        //Debug Switch commands
+                        menuArrayText[3, 0] = "[ESC] Main Menu";
+                        menuArrayText[3, 1] = "[ENTER] End Turn";
+                        break;
+                }
+            }
+            else { Game.SetError(new Error(322, $"Invalid Game.gameAct \"{Game.gameAct}\"")); }
             return menuMode;
         }
 

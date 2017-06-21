@@ -1766,6 +1766,56 @@ namespace Next_Game
 
 
         /// <summary>
+        /// Generate a list of All Messages
+        /// </summary>
+        /// <returns></returns>
+        public List<Snippet> ShowMessagesRL()
+        {
+            List<Snippet> tempList = new List<Snippet>();
+            RLColor color = RLColor.White;
+            Dictionary<int, Message> dictMessages = Game.world.GetMessages();
+            foreach (var message in dictMessages)
+            {
+                if (message.Value.Type == MessageType.Activation) { color = Color._active; }
+                else { color = RLColor.White; }
+                tempList.Add(new Snippet(string.Format("Day {0}, {1}, {2}", message.Value.Day, message.Value.Year, message.Value.Text), color, RLColor.Black));
+            }
+            return tempList;
+        }
+
+        /// <summary>
+        /// return 8 most recent messages to display at bottom right console window
+        /// </summary>
+        /// <returns></returns>
+        public List<Snippet> ShowRecentMessagesRL()
+        {
+            List<Snippet> tempList = new List<Snippet>();
+            Dictionary<int, Message> dictMessages = Game.world.GetMessages();
+            tempList.Add(new Snippet("--- Message Log Recent", RLColor.Yellow, RLColor.Black));
+            tempList.AddRange(Game.world.GetMessageQueue());
+            return tempList;
+        }
+
+
+        public List<Snippet> ShowFoodRL(FoodInfo mode)
+        {
+            List<Snippet> tempList = new List<Snippet>();
+            if (mode != FoodInfo.None)
+            {
+                List<String> listOfFoodInfo = Game.world.GetFoodInfo(mode);
+                tempList.Add(new Snippet($"--- {mode} Food Info", RLColor.Yellow, RLColor.Black));
+                if (listOfFoodInfo.Count > 0)
+                {
+                    foreach (var text in listOfFoodInfo)
+                    { tempList.Add(new Snippet(text)); }
+                }
+                else { tempList.Add(new Snippet($"No records have been returned for FoodInfo mode \"{mode}\"", RLColor.LightRed, RLColor.Black)); }
+            }
+            else { tempList.Add(new Snippet("ERROR -> Invalid FoodInfo mode provided", RLColor.LightRed, RLColor.Black)); }
+            return tempList;
+        }
+
+        /// <summary>
         /// creates a string showing the number of stars for traits, secrets, etc. (1 to 5 stars)
         /// </summary>
         /// <param name="num">number of stars</param>

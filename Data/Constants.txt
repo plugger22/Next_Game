@@ -159,7 +159,7 @@
 # CORRUPTION_COST -> base cost for all corruption calculations
 107: 100 @ 50 @ 200
 # ACCOUNT_INTERVAL -> a new set of accounts are tallied by scribes every Account_interval number of turns
-104: 3 @ 1 @ 60
+104: 30 @ 1 @ 60
 # OFFICIALS_EFFECT -> drop in relations with a worldgroup by this amount due to officials extorting money from those they are dealing with
 108: 5 @ 1 @ 10
 

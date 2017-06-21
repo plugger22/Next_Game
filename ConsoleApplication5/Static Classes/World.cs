@@ -3205,54 +3205,6 @@ namespace Next_Game
         }
 
         /// <summary>
-        /// Generate a list of All Messages
-        /// </summary>
-        /// <returns></returns>
-        public List<Snippet> ShowMessagesRL()
-        {
-            List<Snippet> tempList = new List<Snippet>();
-            RLColor color = RLColor.White;
-            foreach (var message in dictMessages)
-            {
-                if (message.Value.Type == MessageType.Activation) { color = Color._active; }
-                else { color = RLColor.White; }
-                tempList.Add(new Snippet(string.Format("Day {0}, {1}, {2}", message.Value.Day, message.Value.Year, message.Value.Text), color, RLColor.Black));
-            }
-            return tempList;
-        }
-
-        /// <summary>
-        /// return 8 most recent messages to display at bottom right console window
-        /// </summary>
-        /// <returns></returns>
-        public List<Snippet> ShowRecentMessagesRL()
-        {
-            List<Snippet> tempList = new List<Snippet>();
-            tempList.Add(new Snippet("--- Message Log Recent", RLColor.Yellow, RLColor.Black));
-            tempList.AddRange(messageQueue.ToList());
-            return tempList;
-        }
-
-
-        public List<Snippet> ShowFoodRL(FoodInfo mode)
-        {
-            List<Snippet> tempList = new List<Snippet>();
-            if (mode != FoodInfo.None)
-            {
-                List<String> listOfFoodInfo = GetFoodInfo(mode);
-                tempList.Add(new Snippet($"--- {mode} Food Info", RLColor.Yellow, RLColor.Black));
-                if (listOfFoodInfo.Count > 0)
-                {
-                    foreach (var text in listOfFoodInfo)
-                    { tempList.Add(new Snippet(text)); }
-                }
-                else { tempList.Add(new Snippet($"No records have been returned for FoodInfo mode \"{mode}\"", RLColor.LightRed, RLColor.Black)); }
-            }
-            else { tempList.Add(new Snippet("ERROR -> Invalid FoodInfo mode provided", RLColor.LightRed, RLColor.Black)); }
-            return tempList;
-        }
-
-        /// <summary>
         /// gets the correct advisor type and returns as a string for display purposes
         /// </summary>
         /// <param name="advisor"></param>
@@ -7554,6 +7506,40 @@ namespace Next_Game
                 }
             }
             return corruption;
+        }
+
+
+        public Dictionary<int, Message> GetMessages()
+        { return dictMessages; }
+
+        public List<Snippet> GetMessageQueue()
+        { return messageQueue.ToList(); }
+
+        /// <summary>
+        /// Toggles Game Act between One & Two and handles are game state changes -> God Mode
+        /// </summary>
+        public List<Snippet> GodChangeGameAct()
+        {
+            List<Snippet> listDisplay = new List<Snippet>();
+            RLColor goodColor = Color._goodTrait;
+            RLColor badColor = Color._badTrait;
+            RLColor displayColor = RLColor.White;
+            listDisplay.Add(new Snippet("God Mode -> Toggle Game Act", Color._godMode, RLColor.Black));
+            if (Game.gameAct == Act.One)
+            {
+                //Act Two -> Player as King
+                Game.gameAct = Act.Two;
+                displayColor = goodColor;
+            }
+            else
+            {
+                //Act One -> Player as Usurper
+                Game.gameAct = Act.One;
+                displayColor = badColor;
+            }
+            listDisplay.Add(new Snippet($"Game changed to Act {Game.gameAct}", displayColor, RLColor.Black));
+            Game.world.SetMessage(new Message($"Game changed to Act {Game.gameAct}", MessageType.God));
+            return listDisplay;
         }
 
         //new Methods above here

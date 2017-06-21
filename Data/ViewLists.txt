@@ -242,7 +242,7 @@ If I do the right thing am I given a pat on the back? Who cares if Kings are hon
 Yes, <player> is a <man> of honour. I fully support <his> claim on the throne. We need a <man> like <him>.
 
 [HonourGoodUned]
-Can I rely on that Usurper, <player> to make my life better? I hear that you can trust <him>.
+Can I rely on that Usurper, <player>, to make my life better? I hear that you can trust <him>.
 <player> is a man of honour. Sure <he> is. Old <randomFemale> swears on it and she's always right.
 If <player> is going to be our King then <he> had better keep <his> honourable reputation. I can't stand fakers.
 That <player> <man>. They say that <he> is honourable but what in <curse> do I know?

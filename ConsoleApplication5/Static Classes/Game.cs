@@ -564,7 +564,10 @@ namespace Next_Game
                                         infoChannel.InsertHeader(new Snippet("--- ALL RECORDS", RLColor.Yellow, RLColor.Black), ConsoleDisplay.Multi);
                                         break;
                                     case MenuMode.Balance:
-                                        infoChannel.SetInfoList(world.ShowFoodRL(FoodInfo.Surplus), ConsoleDisplay.Multi);
+                                        infoChannel.SetInfoList(display.ShowFoodRL(FoodInfo.Surplus), ConsoleDisplay.Multi);
+                                        break;
+                                    case MenuMode.God:
+                                        infoChannel.SetInfoList(world.GodChangeGameAct(), ConsoleDisplay.Input);
                                         break;
                                     case MenuMode.Debug:
                                         //ShowGameVars
@@ -580,7 +583,7 @@ namespace Next_Game
                                         _menuMode = menu.SwitchMenuMode(MenuMode.Balance);
                                         break;
                                     case MenuMode.Balance:
-                                        infoChannel.SetInfoList(world.ShowFoodRL(FoodInfo.Deficit), ConsoleDisplay.Multi);
+                                        infoChannel.SetInfoList(display.ShowFoodRL(FoodInfo.Deficit), ConsoleDisplay.Multi);
                                         break;
                                 }
                                 break;
@@ -608,7 +611,7 @@ namespace Next_Game
                                         infoChannel.InsertHeader(new Snippet("--- CUSTOM", RLColor.Yellow, RLColor.Black), ConsoleDisplay.Multi);
                                         break;
                                     case MenuMode.Balance:
-                                        infoChannel.SetInfoList(world.ShowFoodRL(FoodInfo.House), ConsoleDisplay.Multi);
+                                        infoChannel.SetInfoList(display.ShowFoodRL(FoodInfo.House), ConsoleDisplay.Multi);
                                         break;
                                     case MenuMode.King:
                                         display.ShowKingCouncilRL();
@@ -634,7 +637,7 @@ namespace Next_Game
                                         infoChannel.InsertHeader(new Snippet("--- all DEATHS", RLColor.Yellow, RLColor.Black), ConsoleDisplay.Multi);
                                         break;
                                     case MenuMode.Balance:
-                                        infoChannel.SetInfoList(world.ShowFoodRL(FoodInfo.Branch), ConsoleDisplay.Multi);
+                                        infoChannel.SetInfoList(display.ShowFoodRL(FoodInfo.Branch), ConsoleDisplay.Multi);
                                         break;
                                     case MenuMode.Debug:
                                         //show debug route
@@ -792,7 +795,7 @@ namespace Next_Game
                                 {
                                     case MenuMode.Main:
                                         //Show Full message log
-                                        infoChannel.SetInfoList(world.ShowMessagesRL(), ConsoleDisplay.Multi);
+                                        infoChannel.SetInfoList(display.ShowMessagesRL(), ConsoleDisplay.Multi);
                                         infoChannel.InsertHeader(new Snippet("--- Message Log ALL", RLColor.Yellow, RLColor.Black), ConsoleDisplay.Multi);
                                         break;
                                     case MenuMode.Debug:
@@ -1119,7 +1122,7 @@ namespace Next_Game
             {
                 //update status console
                 infoChannel.SetInfoList(display.ShowActiveActorsRL(), ConsoleDisplay.Status);
-                infoChannel.SetInfoList(world.ShowRecentMessagesRL(), ConsoleDisplay.Message);
+                infoChannel.SetInfoList(display.ShowRecentMessagesRL(), ConsoleDisplay.Message);
                 //draw to consoles
                 map.DrawMapRL(_mapConsole);
                 menu.DrawMenuRL(_menuConsole);
