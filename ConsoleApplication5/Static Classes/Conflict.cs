@@ -2003,7 +2003,7 @@ namespace Next_Game
             Active player = Game.world.GetPlayer();
             if (player != null)
             {
-                Position pos = player.GetActorPosition();
+                Position pos = player.GetPosition();
                 if (pos != null)
                 {
                     //get terrain type (1 - Mountain, 2 - Forest)

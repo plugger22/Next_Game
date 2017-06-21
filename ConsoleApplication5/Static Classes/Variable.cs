@@ -20,6 +20,7 @@ namespace Next_Game
         Lifestyle_Budget,
         Corruption_Factor,
         Official_Budget,
+        God_PlayerLocID,
         //keep as last, DO NOT change order of GameVars
         Count
     }
@@ -48,6 +49,7 @@ namespace Next_Game
             arrayOfGameVars[7] = GameVar.Lifestyle_Budget;
             arrayOfGameVars[8] = GameVar.Corruption_Factor;
             arrayOfGameVars[9] = GameVar.Official_Budget;
+            arrayOfGameVars[10] = GameVar.God_PlayerLocID;
         }
 
         public GameVar[] GetArrayOfGameVars()

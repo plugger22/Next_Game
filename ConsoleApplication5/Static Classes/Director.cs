@@ -607,7 +607,7 @@ namespace Next_Game
         {
             int geoID, terrain, road, locID, refID, houseID;
             string tempText;
-            Cartographic.Position pos = actor.GetActorPosition();
+            Cartographic.Position pos = actor.GetPosition();
             List<Event> listEventPool = new List<Event>();
             locID = actor.LocID;
             refID = 0;
@@ -745,7 +745,7 @@ namespace Next_Game
             int geoID, terrain, road, locID, refID, houseID;
             string tempText;
             houseID = 0; refID = 0;
-            Cartographic.Position pos = actor.GetActorPosition();
+            Cartographic.Position pos = actor.GetPosition();
             List<Event> listEventPool = new List<Event>();
             locID = Game.map.GetMapInfo(Cartographic.MapLayer.LocID, pos.PosX, pos.PosY);
             switch (eventType)
@@ -2190,7 +2190,7 @@ namespace Next_Game
                     else { Game.SetError(new Error(70, "Invalid ListOfOptions input (null)")); break; }
                     Active actor = package.Person;
                     //create event description
-                    Position pos = actor.GetActorPosition();
+                    Position pos = actor.GetPosition();
                     switch (eventObject.Type)
                     {
                         case ArcType.GeoCluster:
@@ -2399,7 +2399,7 @@ namespace Next_Game
                     Game._eventID = eventObject.EventPID;
                     string locName = Game.world.GetLocationName(actor.LocID);
                     //create event description
-                    Position pos = actor.GetActorPosition();
+                    Position pos = actor.GetPosition();
                     switch (eventObject.Type)
                     {
                         case ArcType.GeoCluster:
@@ -3216,7 +3216,7 @@ namespace Next_Game
                             }
                             else { Game.SetError(new Error(73, "Invalid list of Outcomes")); }
                             //display message
-                            Position pos = player.GetActorPosition();
+                            Position pos = player.GetPosition();
                             switch (eventObject.Type)
                             {
                                 case ArcType.GeoCluster:
@@ -4632,7 +4632,7 @@ namespace Next_Game
                         loc.AddActor(follower.ActID);
                         follower.LocID = locID;
                         follower.LastKnownLocID = locID;
-                        follower.SetActorPosition(loc.GetPosition());
+                        follower.SetPosition(loc.GetPosition());
                     }
                     else { Game.SetError(new Error(227, $"Invalid locID \"{locID}\" -> Follower not added to Location")); }
                     //Add to dictionaries

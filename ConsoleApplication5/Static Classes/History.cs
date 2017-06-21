@@ -377,7 +377,7 @@ namespace Next_Game
                 player.LocID = locID;
                 player.LastKnownLocID = locID;
                 player.TurnsUnknown = 100; //start player off unknown
-                player.SetActorPosition(loc.GetPosition());
+                player.SetPosition(loc.GetPosition());
                 //randomly assign resource level (placeholder)
                 player.Resources = rnd.Next(1, 6);
                 player.Type = ActorType.Usurper;
@@ -577,7 +577,7 @@ namespace Next_Game
                         Game.world.SetHistoricalRecord(record);
                         //place characters at Location
                         inquisitor.LocID = locID;
-                        inquisitor.SetActorPosition(loc.GetPosition());
+                        inquisitor.SetPosition(loc.GetPosition());
                         loc.AddActor(inquisitor.ActID);
                         //add actor to relevant dictionaries (All and Enemies)
                         Game.world.AddEnemyActor(inquisitor);
@@ -631,7 +631,7 @@ namespace Next_Game
                         Game.world.SetHistoricalRecord(record);
                         //place characters at Location
                         nemesis.LocID = locID;
-                        nemesis.SetActorPosition(loc.GetPosition());
+                        nemesis.SetPosition(loc.GetPosition());
                         loc.AddActor(nemesis.ActID);
                         //add actor to relevant dictionaries (All and Enemies)
                         Game.world.AddEnemyActor(nemesis);
@@ -683,7 +683,7 @@ namespace Next_Game
             actor.Born = Game.gameRevolt - age;
             actor.Age = age;
             //data
-            actor.SetActorPosition(pos);
+            actor.SetPosition(pos);
             actor.LocID = locID;
             actor.RefID = refID;
             actor.HouseID = houseID;
@@ -830,7 +830,7 @@ namespace Next_Game
             actor.Born = Game.gameRevolt - age;
             actor.Age = age;
             //data
-            actor.SetActorPosition(pos);
+            actor.SetPosition(pos);
             actor.LocID = locID;
             actor.RefID = refID;
             actor.HouseID = houseID;
@@ -877,7 +877,7 @@ namespace Next_Game
             actor.Born = Game.gameRevolt - age;
             actor.Age = age;
             //data
-            actor.SetActorPosition(pos);
+            actor.SetPosition(pos);
             actor.LocID = locID;
             actor.RefID = refID;
             actor.HouseID = houseID;
@@ -925,7 +925,7 @@ namespace Next_Game
             {
                 loc.AddActor(knight.ActID);
                 //data
-                knight.SetActorPosition(pos);
+                knight.SetPosition(pos);
                 knight.LocID = locID;
                 knight.RefID = refID;
                 knight.HouseID = houseID;
@@ -967,7 +967,7 @@ namespace Next_Game
                 string descriptor;
                 string name = GetActorName();
                 Advisor advisor = new Advisor(name, ActorType.Advisor, locID, sex);
-                advisor.SetActorPosition(pos);
+                advisor.SetPosition(pos);
                 advisor.LocID = locID;
                 advisor.RefID = refID;
                 advisor.HouseID = houseID;

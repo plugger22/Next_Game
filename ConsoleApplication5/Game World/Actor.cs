@@ -161,10 +161,10 @@ namespace Next_Game
             }
         }
 
-        public void SetActorPosition(Position posLoc)
+        public void SetPosition(Position posLoc)
         { actorPos = new Position(posLoc); }
 
-        public Position GetActorPosition()
+        public Position GetPosition()
         { return actorPos; }
 
         internal void SetFollowerEvents(List<int> listEvents)

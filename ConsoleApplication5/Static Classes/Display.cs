@@ -670,7 +670,7 @@ namespace Next_Game
                             locString = string.Format("Located at {0} {1}, Lid {2}, Rid {3}", Game.world.GetLocationName(locID), Game.world.GetLocationCoords(locID), locID, refID);
                             break;
                         case ActorStatus.Travelling:
-                            Position pos = person.GetActorPosition();
+                            Position pos = person.GetPosition();
                             locString = string.Format("Currently at {0}:{1}, {2} towards {3} {4}, Lid {5}, Rid {6}", pos.PosX, pos.PosY, person.Travel == TravelMode.Mounted ? "Riding" : "Walking",
                                 Game.world.GetLocationName(locID), Game.world.GetLocationCoords(locID), locID, refID);
                             break;
@@ -1268,7 +1268,7 @@ namespace Next_Game
                     //only show chosen characters (at Location or not depending on parameter)
                     if (locationsOnly == true && status == ActorStatus.AtLocation || !locationsOnly)
                     {
-                        Position pos = actor.Value.GetActorPosition();
+                        Position pos = actor.Value.GetPosition();
                         coordinates = string.Format("(Loc {0}:{1})", pos.PosX, pos.PosY);
                         if (actor.Value is Player)
                         {
@@ -1487,7 +1487,7 @@ namespace Next_Game
             if (dictActiveActors.ContainsKey(charID))
             {
                 Actor person = dictActiveActors[charID];
-                Position pos = person.GetActorPosition();
+                Position pos = person.GetPosition();
                 returnText = $"{person.Name} at {Game.world.GetLocationName(person.LocID)} ({pos.PosX}:{pos.PosY}) has been selected";
             }
             return new Snippet(returnText);

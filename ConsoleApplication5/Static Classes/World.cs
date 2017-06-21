@@ -164,7 +164,7 @@ namespace Next_Game
                             //place characters at Location
                             follower.LocID = locID;
                             follower.LastKnownLocID = locID;
-                            follower.SetActorPosition(loc.GetPosition());
+                            follower.SetPosition(loc.GetPosition());
                             //set to activated
                             follower.Activated = true;
                             //add to Location list of Characters
@@ -495,7 +495,7 @@ namespace Next_Game
                             if (dictAllActors.ContainsKey(charID))
                             {
                                 Actor person = dictAllActors[charID];
-                                person.SetActorPosition(pos);
+                                person.SetPosition(pos);
                             }
                         }
                     }
@@ -549,7 +549,7 @@ namespace Next_Game
                             Actor person = new Actor();
                             person = dictAllActors[actorID];
                             person.Status = ActorStatus.AtLocation;
-                            person.SetActorPosition(posDestination);
+                            person.SetPosition(posDestination);
                             person.LocID = locID;
                             int refID = ConvertLocToRef(locID);
                             string tempText = string.Format("{0}, Aid {1}, has arrived safely at {2}", person.Name, person.ActID, locDestination.LocName);
@@ -799,7 +799,7 @@ namespace Next_Game
                                     locString = string.Format("at {0} {1}", GetLocationName(person.LocID), GetLocationCoords(person.LocID));
                                     break;
                                 case ActorStatus.Travelling:
-                                    Position pos = person.GetActorPosition();
+                                    Position pos = person.GetPosition();
                                     locString = string.Format("travelling to {0} {1}", GetLocationName(person.LocID), GetLocationCoords(person.LocID));
                                     break;
                                 case ActorStatus.Gone:
@@ -844,7 +844,7 @@ namespace Next_Game
                                 locString = string.Format("at {0} {1}", GetLocationName(person.LocID), GetLocationCoords(person.LocID));
                                 break;
                             case ActorStatus.Travelling:
-                                Position pos = person.GetActorPosition();
+                                Position pos = person.GetPosition();
                                 locString = string.Format("travelling to {0} {1}", GetLocationName(person.LocID), GetLocationCoords(person.LocID));
                                 break;
                             case ActorStatus.Gone:
@@ -1019,7 +1019,7 @@ namespace Next_Game
                                 locString = string.Format("at {0} {1}", GetLocationName(person.LocID), GetLocationCoords(person.LocID));
                                 break;
                             case ActorStatus.Travelling:
-                                Position pos = person.GetActorPosition();
+                                Position pos = person.GetPosition();
                                 locString = string.Format("travelling to {0} {1}", GetLocationName(person.LocID), GetLocationCoords(person.LocID));
                                 break;
                             case ActorStatus.Gone:
@@ -1363,7 +1363,7 @@ namespace Next_Game
                 { charReturn += " isn't currently available (must be at a Location in order to be Moved)"; foreColor = RLColor.LightRed; }
                 else
                 {
-                    Position pos = person.GetActorPosition();
+                    Position pos = person.GetPosition();
                     charReturn += " is awaiting your orders at ";
                     charReturn += GetLocationName(person.LocID);
                     charReturn += string.Format(" (loc {0}:{1})", pos.PosX, pos.PosY);
@@ -1538,7 +1538,7 @@ namespace Next_Game
             if (dictActiveActors.ContainsKey(charID))
             {
                 Active person = dictActiveActors[charID];
-                pos = person.GetActorPosition();
+                pos = person.GetPosition();
                 //can't be selected if not at a Location
                 if (person.Status != ActorStatus.AtLocation) { pos = null; }
                 //can't be selected if not activated
@@ -3591,7 +3591,7 @@ namespace Next_Game
             int distance, chance;
             //Player is assumed to be the first record in dictActiveActors
             Player player = GetPlayer();
-            Position posPlayer = player.GetActorPosition();
+            Position posPlayer = player.GetPosition();
             //Top up Player Crows to the maximum allowed
             player.CrowsNumber = Game.constant.GetValue(Global.CROW_NUMBER);
             //loop through active players
@@ -3601,7 +3601,7 @@ namespace Next_Game
                 {
                     actor.Value.ClearCrowTooltips();
                     actor.Value.Activated = false;
-                    Position pos = actor.Value.GetActorPosition();
+                    Position pos = actor.Value.GetPosition();
                     distance = Game.utility.GetDistance(posPlayer.PosX, posPlayer.PosY, pos.PosX, pos.PosY);
                     chance = 100 - (distance * 2) + actor.Value.CrowBonus;
                     chance = Math.Min(100, chance);
@@ -3955,7 +3955,7 @@ namespace Next_Game
             {
                 if (follower.Key > 0 && follower.Value.Status != ActorStatus.Gone)
                 {
-                    Position pos = follower.Value.GetActorPosition();
+                    Position pos = follower.Value.GetPosition();
                     if (pos != null)
                     { Game.map.SetMapInfo(MapLayer.Followers, pos.PosX, pos.PosY, follower.Key); }
                 }
@@ -3975,7 +3975,7 @@ namespace Next_Game
             {
                 if (enemy.Value.Status != ActorStatus.Gone)
                 {
-                    Position pos = enemy.Value.GetActorPosition();
+                    Position pos = enemy.Value.GetPosition();
                     //add to enemiesDebug layer regardless (shows all enemies at current positions)
                     Game.map.SetMapInfo(MapLayer.EnemiesDebug, pos.PosX, pos.PosY, 1);
                     //normal enemies Layer (only what is known by the player)
@@ -4177,7 +4177,7 @@ namespace Next_Game
                                 foreach (var enemy in dictEnemyActors)
                                 {
                                     //store enemies in tempDict by dist to player (key is ActID, value distance)
-                                    Position enemyPos = enemy.Value.GetActorPosition();
+                                    Position enemyPos = enemy.Value.GetPosition();
                                     if (playerPos != null && enemyPos != null)
                                     {
                                         //only check enemies at a location (those who are travelling will have to wait)
@@ -4291,7 +4291,7 @@ namespace Next_Game
                         //known
                         enemy.Value.TurnsUnknown = 0;
                         enemy.Value.LastKnownLocID = enemy.Value.LocID;
-                        enemy.Value.LastKnownPos = enemy.Value.GetActorPosition();
+                        enemy.Value.LastKnownPos = enemy.Value.GetPosition();
                         enemy.Value.LastKnownGoal = enemy.Value.Goal;
                         enemy.Value.Revert--;
                         if (enemy.Value.Revert <= 0)
@@ -4491,7 +4491,7 @@ namespace Next_Game
                         //
                         if (newGoal == ActorAIGoal.Move)
                         {
-                            Position posOrigin = enemy.GetActorPosition();
+                            Position posOrigin = enemy.GetPosition();
                             List<int> listNeighbours = loc.GetNeighboursLocID();
                             int destinationLocID = 0;
                             //
@@ -4721,7 +4721,7 @@ namespace Next_Game
                         foreach (var enemy in dictEnemyActors)
                         {
                             found = false;
-                            Position posEnemy = enemy.Value.GetActorPosition();
+                            Position posEnemy = enemy.Value.GetPosition();
                             if (posEnemy != null && pos != null)
                             {
                                 //debug
@@ -4891,7 +4891,7 @@ namespace Next_Game
                     foreach (var active in dictActiveActors)
                     { 
                         found = false;
-                        Position posActive = active.Value.GetActorPosition();
+                        Position posActive = active.Value.GetPosition();
                         if (posActive != null && pos != null)
                         {
                             //find player in any situation, find follower only if Known
@@ -5045,7 +5045,7 @@ namespace Next_Game
                 if (actor.Value.Status == ActorStatus.AtLocation)
                 {
                     Game.logTurn?.Write(string.Format(" [Search -> Stationary] {0} {1}, ActID {2} is AtLocation", actor.Value.Title, actor.Value.Name, actor.Value.ActID));
-                    Position pos = actor.Value.GetActorPosition();
+                    Position pos = actor.Value.GetPosition();
                     if (pos != null)
                     {
                         if (actor.Value is Player)
@@ -5284,14 +5284,14 @@ namespace Next_Game
             //active actors
             foreach (var active in dictActiveActors)
             {
-                ActorSpy activeSpy = new ActorSpy(active.Value.ActID, active.Value.GetActorPosition(), active.Value.Status, active.Value.Known);
+                ActorSpy activeSpy = new ActorSpy(active.Value.ActID, active.Value.GetPosition(), active.Value.Status, active.Value.Known);
                 listTempActiveActors.Add(activeSpy);
             }
             bloodhound.SetActiveActors(listTempActiveActors);
             //enemy actors
             foreach (var enemy in dictEnemyActors)
             {
-                ActorSpy enemySpy = new ActorSpy(enemy.Value.ActID, enemy.Value.GetActorPosition(), enemy.Value.Status, enemy.Value.Known, enemy.Value.Goal, enemy.Value.HuntMode);
+                ActorSpy enemySpy = new ActorSpy(enemy.Value.ActID, enemy.Value.GetPosition(), enemy.Value.Status, enemy.Value.Known, enemy.Value.Goal, enemy.Value.HuntMode);
                 listTempEnemyActors.Add(enemySpy);
             }
             bloodhound.SetEnemyActors(listTempEnemyActors);
@@ -6068,6 +6068,7 @@ namespace Next_Game
             Game.variable.SetValue(GameVar.View_Rollover, numOfMarketViews);
             Game.variable.SetValue(GameVar.Account_Timer, Game.constant.GetValue(Global.ACCOUNT_INTERVAL));
             Game.variable.SetValue(GameVar.Corruption_Factor, Game.constant.GetValue(Global.CORRUPTION_COST));
+            Game.variable.SetValue(GameVar.God_PlayerLocID, 1); //set to Capital
         }
 
         /// <summary>
@@ -7520,23 +7521,77 @@ namespace Next_Game
         /// </summary>
         public List<Snippet> GodChangeGameAct()
         {
+            Game.logTurn?.Write("--- GodChangeGameAct (World.cs)");
             List<Snippet> listDisplay = new List<Snippet>();
             RLColor goodColor = Color._goodTrait;
             RLColor badColor = Color._badTrait;
             RLColor displayColor = RLColor.White;
+            int locID;
             listDisplay.Add(new Snippet("God Mode -> Toggle Game Act", Color._godMode, RLColor.Black));
-            if (Game.gameAct == Act.One)
+            Player player = GetPlayer();
+            if (player != null)
             {
-                //Act Two -> Player as King
-                Game.gameAct = Act.Two;
-                displayColor = goodColor;
+                CapitalHouse capital = GetCapital();
+                if (capital != null)
+                {
+                    Location locCapital = Game.network.GetLocation(capital.LocID);
+                    if (locCapital != null)
+                    {
+                        Position posCapital = locCapital.GetPosition();
+                        if (posCapital != null)
+                        {
+                            //
+                            //Act Two -> Player as King ---
+                            //
+                            if (Game.gameAct == Act.One)
+                            {
+
+                                Game.gameAct = Act.Two;
+                                displayColor = goodColor;
+                                //store current player position to enable seamless transition back to Act 1 if required
+                                Game.variable.SetValue(GameVar.God_PlayerLocID, player.LocID);
+                                //teleport player to Capital
+                                InitialiseMoveActor(1, player.GetPosition(), posCapital);
+                                Game.logTurn?.Write("Player teleported to Capital");
+                                //change Title and Office
+                                player.Office = ActorOffice.King;
+                                player.Title = $"{player.Office}";
+                            }
+                            //
+                            //Act One -> Player as Usurper ---
+                            //
+                            else
+                            {
+                                Game.gameAct = Act.One;
+                                displayColor = badColor;
+                                //get player's previous position in Act One
+                                locID = Game.variable.GetValue(GameVar.God_PlayerLocID);
+                                //check that there is a viable, non-Capital location available
+                                if (locID > 1)
+                                {
+                                    Location locReturn = Game.network.GetLocation(locID);
+                                    if (locReturn != null)
+                                    {
+                                        //teleport Player back to previous location prior to ActTwo
+                                        InitialiseMoveActor(1, player.GetPosition(), locReturn.GetPosition());
+                                        Game.logTurn?.Write($"Player teleported back to {locReturn.LocName}, LocID {locID}");
+                                        //change Title and Office
+                                        player.Office = ActorOffice.Usurper;
+                                        player.Title = $"{player.Office}";
+                                    }
+                                    else { Game.SetError(new Error(323, $"Invalid locReturn (null) for LocID \"{locReturn}\"")); }
+                                }
+                                else { Game.logTurn?.Write($"Player remains in capital due to previous LocID \"{locID}\""); }
+                            }
+                            // ---
+                        }
+                        else { Game.SetError(new Error(323, "Invalid Location (null) for Act Two")); }
+                    }
+                    else { Game.SetError(new Error(323, "Invalid Capital position (null)")); }
+                }
+                else { Game.SetError(new Error(323, "Invalid Capital (null)")); }
             }
-            else
-            {
-                //Act One -> Player as Usurper
-                Game.gameAct = Act.One;
-                displayColor = badColor;
-            }
+            else { Game.SetError(new Error(323, "Invalid player (null)")); }
             listDisplay.Add(new Snippet($"Game changed to Act {Game.gameAct}", displayColor, RLColor.Black));
             Game.world.SetMessage(new Message($"Game changed to Act {Game.gameAct}", MessageType.God));
             return listDisplay;

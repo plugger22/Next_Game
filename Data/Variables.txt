@@ -11,3 +11,4 @@
 7: Lifestyle_Budget     # budget rate for Royal lifestyle (gives a legend adjustment at every account period)
 8: Corruption_Factor 	# base figure for all corruption calculations (set to constant at game start but can vary from then on)
 9: Offical_Budget 		# budget rate for Official Wages (higher wages, less chance of them extorting money and dropping Group Relations)
+10: God_PlayerLocID		# God mode -> refID of player location immediately prior to being teleported to Capital for Act 2, default '1' Capital

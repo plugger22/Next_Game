@@ -162,7 +162,7 @@ namespace Next_Game
                                     replaceText = string.Format("{0}", opponent.Sex == ActorSex.Male ? "his" : "her");
                                     break;
                                 case "geocluster":
-                                    Position pos = player.GetActorPosition();
+                                    Position pos = player.GetPosition();
                                     if (pos != null)
                                     {
                                         int data = Game.map.GetMapInfo(MapLayer.GeoID, pos.PosX, pos.PosY);
@@ -363,7 +363,7 @@ namespace Next_Game
                                 replaceText = Game.history.GetFirstName(ActorSex.Female);
                                 break;
                             case "geocluster":
-                                Position pos = player.GetActorPosition();
+                                Position pos = player.GetPosition();
                                 if (pos != null)
                                 {
                                     data = Game.map.GetMapInfo(MapLayer.GeoID, pos.PosX, pos.PosY);
