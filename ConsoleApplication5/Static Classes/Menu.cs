@@ -241,7 +241,7 @@ namespace Next_Game
                         menuArrayText[0, 1] = "[ENTER] End Turn";
                         menuArrayText[0, 2] = "[I] Toggle Info";
                         //Info category commands
-                        menuArrayText[1, 0] = "[Q] Show Inquisitors *";
+                        menuArrayText[1, 0] = "[P] Show Inquisitors";
                         menuArrayText[1, 1] = "[M] Show Messages";
                         menuArrayText[1, 2] = "[H] Show House";
                         menuArrayText[1, 3] = "[G] Show Generator Stats";

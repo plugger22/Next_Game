@@ -24,6 +24,7 @@ namespace Next_Game
         private Dictionary<int, Enemy> dictEnemyActors; //list of all Enemy actors keyed of actorID
         private Dictionary<int, Special> dictSpecialActors; //list of all Special NPC actors -> key is SpecialID
         private Dictionary<int, Actor> dictAllActors; //list of all Actors keyed of actorID
+        private Dictionary<int, Passive> dictRoyalActors; //list of New King royal family & advisors (populated at completion of Act 1), key is ActID
         private Dictionary<int, MajorHouse> dictMajorHouses; //list of all Greathouses keyed off houseID (Does NOT contain CapitalHouse)
         private Dictionary<int, House> dictAllHouses; //list of all houses & special locations keyed off RefID (Does contain CapitalHouse)
         private Dictionary<int, int> dictMajorHouseID; //list of Great Houses, unsorted (Key is House ID, value is # of bannerlords)
@@ -66,6 +67,7 @@ namespace Next_Game
             dictEnemyActors = new Dictionary<int, Enemy>();
             dictSpecialActors = new Dictionary<int, Special>();
             dictAllActors = new Dictionary<int, Actor>();
+            dictRoyalActors = new Dictionary<int, Passive>();
             dictMajorHouses = new Dictionary<int, MajorHouse>();
             dictAllHouses = new Dictionary<int, House>();
             dictMajorHouseID = new Dictionary<int, int>();
@@ -7573,6 +7575,7 @@ namespace Next_Game
                                         //teleport Player back to previous location prior to ActTwo
                                         InitialiseMoveActor(1, player.GetPosition(), locReturn.GetPosition());
                                         Game.logTurn?.Write($"Player teleported back to {locReturn.LocName}, LocID {locID}");
+                                        Game.gameReturn = 0; //reset
                                         //change Title and Office
                                         player.Office = ActorOffice.Usurper;
                                         player.Title = $"{player.Office}";
@@ -7582,6 +7585,14 @@ namespace Next_Game
                                             if (enemy.Value is Inquisitor)
                                             { enemy.Value.GoodEnemy = false; Game.logTurn?.Write($"Inquisitor {enemy.Value.Name}, ActID {enemy.Value.ActID}, GoodEnemy -> {enemy.Value.GoodEnemy}"); }
                                         }
+                                        //repopulate Royal Family and Advisors to Capital with correct Status
+                                        foreach(var passive in dictRoyalActors)
+                                        {
+                                            passive.Value.Status = ActorStatus.AtLocation;
+                                            Game.logTurn?.Write($"{passive.Value.Title} {passive.Value.Name}, \"{passive.Value.Handle}\", ActID {passive.Value.ActID}, has been restored to the Capital");
+                                        }
+                                        //clear dictionary
+                                        dictRoyalActors.Clear();
                                     }
                                     else { Game.SetError(new Error(323, $"Invalid locReturn (null) for LocID \"{locReturn}\"")); }
                                 }
@@ -7611,17 +7622,50 @@ namespace Next_Game
             Player player = GetPlayer();
             if (player != null)
             {
-                Game.gameAct = Act.Two;
-                Game.logTurn?.Write($"[Notification] Game now in Act {Game.gameAct}");
-                //change Title and Office
-                player.Office = ActorOffice.King;
-                player.Title = $"{player.Office}";
-                //Set Inquisitors to 'GoodEnemies'
-                foreach(var enemy in dictEnemyActors)
+                CapitalHouse capital = GetCapital();
+                if (capital != null)
                 {
-                    if (enemy.Value is Inquisitor)
-                    { enemy.Value.GoodEnemy = true; Game.logTurn?.Write($"Inquisitor {enemy.Value.Name}, ActID {enemy.Value.ActID}, GoodEnemy -> {enemy.Value.GoodEnemy}"); }
+                    Location locCapital = Game.network.GetLocation(capital.LocID);
+                    if (locCapital != null)
+                    {
+                        Game.gameAct = Act.Two;
+                        Game.logTurn?.Write($"[Notification] Game now in Act {Game.gameAct}");
+                        Game.gameReturn = Game.gameTurn;
+                        //change Title and Office
+                        player.Office = ActorOffice.King;
+                        player.Title = $"{player.Office}";
+                        //Set Inquisitors to 'GoodEnemies'
+                        foreach (var enemy in dictEnemyActors)
+                        {
+                            if (enemy.Value is Inquisitor)
+                            { enemy.Value.GoodEnemy = true; Game.logTurn?.Write($"Inquisitor {enemy.Value.Name}, ActID {enemy.Value.ActID}, GoodEnemy -> {enemy.Value.GoodEnemy}"); }
+                        }
+                        //Populate dict Of Royal Actors
+                        List<int> listOfActors = locCapital.GetActorList();
+                        int newKingHouseID = Game.lore.NewKing.HouseID;
+                        for(int i = 0; i < listOfActors.Count; i++)
+                        {
+                            Actor actor = GetAnyActor(listOfActors[i]);
+                            if (actor != null)
+                            {
+                                //actor passive and a royal (if they come from the Loc list of Actors then can be assumed to be alive)
+                                if (actor is Passive)
+                                {
+                                    Passive passive = actor as Passive;
+                                    if (passive.HouseID == 9999 || passive.HouseID == newKingHouseID )
+                                    {
+                                        //DEBUG -> set all to Captured
+                                        passive.Status = ActorStatus.Captured;
+                                        dictRoyalActors.Add(actor.ActID, passive);
+                                        Game.logTurn?.Write($"{passive.Title} {passive.Name}, \"{passive.Handle}\", ActID {passive.ActID}, has been added to dictRoyalActors");
+                                    }
+                                }
+                            }
+                        }
+                    }
+                    else { Game.SetError(new Error(324, "Invalid locCapital (null)")); }
                 }
+                else { Game.SetError(new Error(324, "Invalid Capital (null)")); }
             }
             else { Game.SetError(new Error(324, "Invalid player (null)")); }
         }

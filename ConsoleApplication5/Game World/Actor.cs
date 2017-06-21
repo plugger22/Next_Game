@@ -1172,14 +1172,21 @@ namespace Next_Game
         public bool MoveOut { get; set; } //direction of movement along branch, 'true' -> outward from capital, 'false' -> inwards to Capital
         public bool HuntMode { get; set; } //'true' -> actively hunting player, 'false' -> patrolling branch
         public bool GoodEnemy { get; set; } //true if on your side, eg. Inquisitor in Act Two, default false
+        public bool AIControl { get; set; } //true if AI controlled (can be manual in Act Two), default true;
         //other
         public int Threat { get; set; } //how big a threat to Player (if multiple enemies find player in a turn, highest threat enemy deals with him in an CreateAutoEnemyEvent
 
         public Enemy()
-        { }
+        {
+            GoodEnemy = false;
+            AIControl = true;
+        }
 
         public Enemy(string name, ActorType type = ActorType.None, ActorSex sex = ActorSex.Male) : base(name, type, sex)
-        { GoodEnemy = false; }
+        {
+            GoodEnemy = false;
+            AIControl = true;
+        }
     }
 
     /// <summary>

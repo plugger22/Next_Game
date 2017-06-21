@@ -59,7 +59,7 @@ namespace Next_Game
 
         private static int _updateTimer = 0; //controls redraws
 
-        public static int gameTurn, gameGeneration, gameStart, gameRevolt, gameExile, gameYear, mapSize, HarvestTimer, PlantTimer, WinterTimer, SeasonTimer;
+        public static int gameTurn, gameGeneration, gameStart, gameRevolt, gameExile, gameReturn, gameYear, mapSize, HarvestTimer, PlantTimer, WinterTimer, SeasonTimer;
         public static Act gameAct;
         public static Season gameSeason;
 
@@ -818,8 +818,8 @@ namespace Next_Game
                                 switch (_menuMode)
                                 {
                                     case MenuMode.Main:
-                                        //Show Player Characters
-                                        infoChannel.SetInfoList(display.ShowActiveActorsRL(), ConsoleDisplay.Multi);
+                                        //Show Player Minions (Followers or Inquisitors depending on Act)
+                                        infoChannel.SetInfoList(display.ShowPlayerMinionsRL(gameAct), ConsoleDisplay.Multi);
                                         break;
                                     case MenuMode.Actor_Active:
                                         //move Active characters around map (must be AtLocation in order to move)
@@ -865,8 +865,6 @@ namespace Next_Game
                                 switch (_menuMode)
                                 {
                                     case MenuMode.Main:
-                                        if (Game.gameAct == Act.Two)
-                                        { infoChannel.SetInfoList(display.ShowInquisitorsRL(), ConsoleDisplay.Multi); }
                                         break;
                                     case MenuMode.Debug:
                                         //Show Enemies (full info)
@@ -1123,7 +1121,7 @@ namespace Next_Game
             if (_renderRequired == true)
             {
                 //update status console
-                infoChannel.SetInfoList(display.ShowActiveActorsRL(), ConsoleDisplay.Status);
+                infoChannel.SetInfoList(display.ShowPlayerMinionsRL(gameAct), ConsoleDisplay.Status);
                 infoChannel.SetInfoList(display.ShowRecentMessagesRL(), ConsoleDisplay.Message);
                 //draw to consoles
                 map.DrawMapRL(_mapConsole);
@@ -1822,6 +1820,7 @@ namespace Next_Game
             gameRevolt = constant.GetValue(Global.GAME_REVOLT); //year of revolt (old king replaced by the new king)
             gameStart = constant.GetValue(Global.GAME_EXILE) + gameRevolt; //start of game from Player's point of view
             gameExile = constant.GetValue(Global.GAME_EXILE); //time elapsed between revolt and return of the heir (start of game)
+            gameReturn = 0; //turn the Player takes over as King
             gameYear = gameStart;
             gameGeneration = 1; //current generation (25 years each)
             gameAct = Act.One; //1 - player is Usurper, 2 - player is King

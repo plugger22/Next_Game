@@ -1206,6 +1206,18 @@ namespace Next_Game
 
 
         /// <summary>
+        /// Method to switch info call 
+        /// </summary>
+        /// <param name="act"></param>
+        public List<Snippet> ShowPlayerMinionsRL(Act act)
+        {
+            List<Snippet> listToDisplay = new List<Snippet>();
+            if (act == Act.One) { listToDisplay.AddRange(ShowActiveActorsRL()); }
+            else if (act == Act.Two) { listToDisplay.AddRange(ShowInquisitorsRL()); }
+            return listToDisplay;
+        }
+
+        /// <summary>
         /// Returns a list of characters in string format to pass to InfoChannel to display in multi-Console
         /// </summary>
         /// <returns>List with info on each character a single, sequential, entry in the list</returns>
@@ -1321,19 +1333,18 @@ namespace Next_Game
         {
             List<Snippet> listToDisplay = new List<Snippet>();
             Dictionary<int, Enemy> dictEnemyActors = Game.world.GetEnemyActors();
-            foreach(var enemy in dictEnemyActors)
+            listToDisplay.Add(new Snippet("--- Inquisitors", RLColor.Yellow, RLColor.Black));
+            int locID;
+            ActorStatus status;
+            string locName, coordinates/*concealText, distText, ,  crowText*/;
+            string locStatus = "Unknown";
+            string charString; //overall string
+            RLColor textColor = RLColor.White;
+            foreach (var enemy in dictEnemyActors)
             {
                 if (enemy.Value.GoodEnemy == true)
                 {
-                    listToDisplay.Add(new Snippet("--- Inquisitors", RLColor.Yellow, RLColor.Black));
-                    int chance, locID;
-                    ActorStatus status;
-                    string locName, concealText, coordinates, distText, crowText;
-                    string locStatus = "Unknown";
-                    string charString; //overall string
-                    RLColor textColor = RLColor.White;
                     status = enemy.Value.Status;
-                    concealText = "";
                     //ignore dead actors
                     if (status != ActorStatus.Gone)
                     {
@@ -1356,7 +1367,7 @@ namespace Next_Game
                         crowText = string.Format("{0} {1}{2}", "crow:", chance, "%");
                         charString = string.Format("Aid {0,-2} {1,-18} {2,-30}{3,-15} {4,-11} {5,-12} {6,-12}", enemy.Key, enemy.Value.Name, locStatus, coordinates, distText, crowText,
                             enemy.Value.Known == true ? "Known" : "Unknown");*/
-                        charString = string.Format("Aid {0,-2} {1,-18} {2,-30}{3,-15}", enemy.Key, enemy.Value.Name, locStatus, coordinates);
+                        charString = string.Format("Aid {0,-2} {1,-25} {2,-30}{3,-15}", enemy.Key, enemy.Value.Name, locStatus, coordinates);
                         listToDisplay.Add(new Snippet(charString, textColor, RLColor.Black));
                     }
                 }
