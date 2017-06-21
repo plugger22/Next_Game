@@ -7545,17 +7545,14 @@ namespace Next_Game
                             //
                             if (Game.gameAct == Act.One)
                             {
-
-                                Game.gameAct = Act.Two;
                                 displayColor = goodColor;
                                 //store current player position to enable seamless transition back to Act 1 if required
                                 Game.variable.SetValue(GameVar.God_PlayerLocID, player.LocID);
                                 //teleport player to Capital
                                 InitialiseMoveActor(1, player.GetPosition(), posCapital);
                                 Game.logTurn?.Write("Player teleported to Capital");
-                                //change Title and Office
-                                player.Office = ActorOffice.King;
-                                player.Title = $"{player.Office}";
+                                //take care of all necessary details -> keep as much stuff here as possible, only God mode specifics in this method
+                                InitialiseChangeOver();
                             }
                             //
                             //Act One -> Player as Usurper ---
@@ -7563,6 +7560,7 @@ namespace Next_Game
                             else
                             {
                                 Game.gameAct = Act.One;
+                                Game.logTurn?.Write($"[Notification] Game now in Act {Game.gameAct}");
                                 displayColor = badColor;
                                 //get player's previous position in Act One
                                 locID = Game.variable.GetValue(GameVar.God_PlayerLocID);
@@ -7578,6 +7576,12 @@ namespace Next_Game
                                         //change Title and Office
                                         player.Office = ActorOffice.Usurper;
                                         player.Title = $"{player.Office}";
+                                        //Set Inquisitors back to 'BadEnemies'
+                                        foreach (var enemy in dictEnemyActors)
+                                        {
+                                            if (enemy.Value is Inquisitor)
+                                            { enemy.Value.GoodEnemy = false; Game.logTurn?.Write($"Inquisitor {enemy.Value.Name}, ActID {enemy.Value.ActID}, GoodEnemy -> {enemy.Value.GoodEnemy}"); }
+                                        }
                                     }
                                     else { Game.SetError(new Error(323, $"Invalid locReturn (null) for LocID \"{locReturn}\"")); }
                                 }
@@ -7595,6 +7599,31 @@ namespace Next_Game
             listDisplay.Add(new Snippet($"Game changed to Act {Game.gameAct}", displayColor, RLColor.Black));
             Game.world.SetMessage(new Message($"Game changed to Act {Game.gameAct}", MessageType.God));
             return listDisplay;
+        }
+
+        
+        /// <summary>
+        /// Handles all matters for when the Player first takes power at start of Act 2
+        /// </summary>
+        public void InitialiseChangeOver()
+        {
+            Game.logTurn?.Write("--- InitialiseChangeOver (World.cs)");
+            Player player = GetPlayer();
+            if (player != null)
+            {
+                Game.gameAct = Act.Two;
+                Game.logTurn?.Write($"[Notification] Game now in Act {Game.gameAct}");
+                //change Title and Office
+                player.Office = ActorOffice.King;
+                player.Title = $"{player.Office}";
+                //Set Inquisitors to 'GoodEnemies'
+                foreach(var enemy in dictEnemyActors)
+                {
+                    if (enemy.Value is Inquisitor)
+                    { enemy.Value.GoodEnemy = true; Game.logTurn?.Write($"Inquisitor {enemy.Value.Name}, ActID {enemy.Value.ActID}, GoodEnemy -> {enemy.Value.GoodEnemy}"); }
+                }
+            }
+            else { Game.SetError(new Error(324, "Invalid player (null)")); }
         }
 
         //new Methods above here

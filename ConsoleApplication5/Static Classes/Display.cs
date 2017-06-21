@@ -1313,6 +1313,56 @@ namespace Next_Game
             return listToDisplay;
         }
 
+        /// <summary>
+        /// Display Inquisitors (Act Two)
+        /// </summary>
+        /// <returns></returns>
+        public List<Snippet> ShowInquisitorsRL()
+        {
+            List<Snippet> listToDisplay = new List<Snippet>();
+            Dictionary<int, Enemy> dictEnemyActors = Game.world.GetEnemyActors();
+            foreach(var enemy in dictEnemyActors)
+            {
+                if (enemy.Value.GoodEnemy == true)
+                {
+                    listToDisplay.Add(new Snippet("--- Inquisitors", RLColor.Yellow, RLColor.Black));
+                    int chance, locID;
+                    ActorStatus status;
+                    string locName, concealText, coordinates, distText, crowText;
+                    string locStatus = "Unknown";
+                    string charString; //overall string
+                    RLColor textColor = RLColor.White;
+                    status = enemy.Value.Status;
+                    concealText = "";
+                    //ignore dead actors
+                    if (status != ActorStatus.Gone)
+                    {
+                        locID = enemy.Value.LocID;
+                        locName = Game.world.GetLocationName(locID);
+                        switch (status)
+                        {
+                            case ActorStatus.AtLocation:
+                                locStatus = $"At {locName}";
+                                break;
+                            case ActorStatus.Travelling:
+                                locStatus = string.Format("Riding to {0}", locName);
+                                break;
+                        }
+                        Position pos = enemy.Value.GetPosition();
+                        coordinates = string.Format("(Loc {0}:{1})", pos.PosX, pos.PosY);
+                        /*distText = string.Format("{0} {1}", "dist:", enemy.Value.CrowDistance);
+                        chance = enemy.Value.CrowChance + enemy.Value.CrowBonus;
+                        chance = Math.Min(100, chance);
+                        crowText = string.Format("{0} {1}{2}", "crow:", chance, "%");
+                        charString = string.Format("Aid {0,-2} {1,-18} {2,-30}{3,-15} {4,-11} {5,-12} {6,-12}", enemy.Key, enemy.Value.Name, locStatus, coordinates, distText, crowText,
+                            enemy.Value.Known == true ? "Known" : "Unknown");*/
+                        charString = string.Format("Aid {0,-2} {1,-18} {2,-30}{3,-15}", enemy.Key, enemy.Value.Name, locStatus, coordinates);
+                        listToDisplay.Add(new Snippet(charString, textColor, RLColor.Black));
+                    }
+                }
+            }
+            return listToDisplay;
+        }
 
         /// <summary>
         /// Display a list of all enemies

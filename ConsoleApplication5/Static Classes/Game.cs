@@ -25,7 +25,7 @@ namespace Next_Game
 
         private static int seed = (int)DateTime.Now.Ticks & 0x0000FFFF;
         //DEBUG: insert seed here to test a particular map
-        //private static int seed = 21568;
+        //private static int seed = 9716;
 
         static Random rnd;
         
@@ -865,6 +865,8 @@ namespace Next_Game
                                 switch (_menuMode)
                                 {
                                     case MenuMode.Main:
+                                        if (Game.gameAct == Act.Two)
+                                        { infoChannel.SetInfoList(display.ShowInquisitorsRL(), ConsoleDisplay.Multi); }
                                         break;
                                     case MenuMode.Debug:
                                         //Show Enemies (full info)
