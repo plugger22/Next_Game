@@ -599,6 +599,7 @@ namespace Next_Game
             Actor person = new Actor();
             RLColor foreColor, tagColor;
             RLColor unknownColor = RLColor.LightGray;
+            bool royalAdvisor = false;
             string actorType;
             if (dictAllActors.TryGetValue(actorID, out person))
             {
@@ -608,6 +609,7 @@ namespace Next_Game
                 //Set up people types
                 Player player = null;
                 Active active = null;
+                Advisor advisor = null;
                 Disguise disguise = null;
                 //player
                 if (person is Player)
@@ -624,7 +626,12 @@ namespace Next_Game
                 if (person is Active)
                 { active = person as Active; }
                 //advisors can be one of three different categories
-                if (person is Advisor) { actorType = Game.world.GetAdvisorType((Advisor)person); }
+                if (person is Advisor)
+                {
+                    advisor = person as Advisor;
+                    actorType = Game.world.GetAdvisorType((Advisor)person);
+                    if (advisor.advisorRoyal > AdvisorRoyal.None) { royalAdvisor = true; }
+                }
                 else { actorType = person.Title; }
                 if ((int)person.Office > 0)
                 { actorType = Convert.ToString(person.Office); }
@@ -927,7 +934,7 @@ namespace Next_Game
                     listToDisplay.Add(new Snippet(string.Format("{0}, Rel {1}, {2}", person.GetPlayerTag(), relPlyr, tagText),
                         tagColor, RLColor.Black, true));
                     //with Lord
-                    if (person.Type != ActorType.Lord && person is Passive || person is Inquisitor && person.Status != ActorStatus.Gone)
+                    if (royalAdvisor == false && person.Type != ActorType.Lord && person is Passive || person is Inquisitor && person.Status != ActorStatus.Gone)
                     {
                         relStars = person.GetRelLordStars();
                         listToDisplay.Add(new Snippet(string.Format("{0, -16}", "Lord"), false));
@@ -977,7 +984,6 @@ namespace Next_Game
                 else if (person is Advisor)
                 {
                     //Show any Disguises available to give to the Player
-                    Advisor advisor = person as Advisor;
                     if (advisor.CheckDisguises() == true)
                     {
                         listToDisplay.Add(new Snippet("Disguises", RLColor.Brown, RLColor.Black));
@@ -1179,14 +1185,17 @@ namespace Next_Game
                         foreach (Relation relationship in playerRelations)
                         { listToDisplay.Add(new Snippet(relationship.GetRelationText(), foreColor, RLColor.Black)); }
                     }
-                    //with Lord
-                    List<Relation> lordRelations = person.GetRelEventLord();
-                    lordRelations = person.GetRelEventLord();
-                    if (lordRelations.Count > 0)
+                    //with Lord (exclude royal advisors)
+                    if (royalAdvisor == false)
                     {
-                        listToDisplay.Add(new Snippet("Relationship History with Lord", RLColor.Brown, RLColor.Black));
-                        foreach (Relation relationship in lordRelations)
-                        { listToDisplay.Add(new Snippet(relationship.GetRelationText(), foreColor, RLColor.Black)); }
+                        List<Relation> lordRelations = person.GetRelEventLord();
+                        lordRelations = person.GetRelEventLord();
+                        if (lordRelations.Count > 0)
+                        {
+                            listToDisplay.Add(new Snippet("Relationship History with Lord", RLColor.Brown, RLColor.Black));
+                            foreach (Relation relationship in lordRelations)
+                            { listToDisplay.Add(new Snippet(relationship.GetRelationText(), foreColor, RLColor.Black)); }
+                        }
                     }
                 }
             }

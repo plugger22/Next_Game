@@ -878,7 +878,7 @@ namespace Next_Game
                 string eventText;
                 int range = 100;
                 //the kings guard and the hand are automatically dismissed
-                if (advisor.advisorRoyal == AdvisorRoyal.Commander_of_Kings_Guard || advisor.advisorRoyal == AdvisorRoyal.Hand_of_the_King) { range = 1; }
+                if (/*advisor.advisorRoyal == AdvisorRoyal.Commander_of_Kings_Guard || */ advisor.advisorRoyal == AdvisorRoyal.Hand_of_the_King) { range = 1; }
                 if (rnd.Next(range) < Game.constant.GetValue(Global.ADVISOR_REFUSAL))
                 {
                     //advisor dismissed

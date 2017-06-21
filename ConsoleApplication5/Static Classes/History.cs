@@ -995,10 +995,10 @@ namespace Next_Game
                     advisor.advisorRoyal = advisorRoyal;
                     advisor.Title = string.Format("{0}", advisorRoyal);
                     negativeTrait = SkillType.Combat;
-                    if (advisorRoyal == AdvisorRoyal.Master_of_Whisperers) { positiveTrait = SkillType.Treachery; }
+                    if (advisorRoyal == AdvisorRoyal.Master_of_Whisperers) { positiveTrait = SkillType.Wits; }
                     else if (advisorRoyal == AdvisorRoyal.High_Septon) { positiveTrait = SkillType.Charm; negativeTrait = SkillType.Treachery; }
-                    else if (advisorRoyal == AdvisorRoyal.Commander_of_Kings_Guard) { positiveTrait = SkillType.Combat; negativeTrait = SkillType.Treachery; }
-                    else if (advisorRoyal == AdvisorRoyal.Commander_of_City_Watch) { positiveTrait = SkillType.Leadership; negativeTrait = SkillType.Treachery; }
+                    //else if (advisorRoyal == AdvisorRoyal.Commander_of_Kings_Guard) { positiveTrait = SkillType.Combat; negativeTrait = SkillType.Treachery; }
+                    else if (advisorRoyal == AdvisorRoyal.Commander_of_City_Watch) { positiveTrait = SkillType.Leadership; negativeTrait = SkillType.Charm; }
                     else if (advisorRoyal == AdvisorRoyal.Hand_of_the_King) { positiveTrait = SkillType.Wits; negativeTrait = SkillType.Treachery; }
                     else { positiveTrait = SkillType.Wits;  }
                     //record
@@ -2369,14 +2369,14 @@ namespace Next_Game
             amt = rnd.Next(40); royalCoin.AddRelEventPlyr(new Relation("Grateful to the Old King for their position", "Supports Old King", amt));
             Advisor royalLaw = CreateAdvisor(pos, 1, 9999, 9999, ActorSex.Male, AdvisorNoble.None, AdvisorRoyal.Master_of_Laws); tempListOfAdvisors.Add(royalLaw);
             amt = rnd.Next(40); royalLaw.AddRelEventPlyr(new Relation("Grateful to the Old King for their position", "Supports Old King", amt));
-            Advisor royalShip = CreateAdvisor(pos, 1, 9999, 9999, ActorSex.Male, AdvisorNoble.None, AdvisorRoyal.Master_of_Ships); tempListOfAdvisors.Add(royalShip);
-            amt = rnd.Next(40); royalShip.AddRelEventPlyr(new Relation("Grateful to the Old King for their position", "Supports Old King", amt));
+            /*Advisor royalShip = CreateAdvisor(pos, 1, 9999, 9999, ActorSex.Male, AdvisorNoble.None, AdvisorRoyal.Master_of_Ships); tempListOfAdvisors.Add(royalShip);
+            amt = rnd.Next(40); royalShip.AddRelEventPlyr(new Relation("Grateful to the Old King for their position", "Supports Old King", amt));*/
             Advisor royalWhisperer = CreateAdvisor(pos, 1, 9999, 9999, ActorSex.Male, AdvisorNoble.None, AdvisorRoyal.Master_of_Whisperers); tempListOfAdvisors.Add(royalWhisperer);
             amt = rnd.Next(40); royalWhisperer.AddRelEventPlyr(new Relation("Grateful to the Old King for their position", "Supports Old King", amt));
             Advisor royalHand = CreateAdvisor(pos, 1, 9999, 9999, ActorSex.Male, AdvisorNoble.None, AdvisorRoyal.Hand_of_the_King); tempListOfAdvisors.Add(royalHand);
             amt = rnd.Next(40); royalHand.AddRelEventPlyr(new Relation("Grateful to the Old King for their position", "Supports Old King", amt));
-            Advisor royalGuard = CreateAdvisor(pos, 1, 9999, 9999, ActorSex.Male, AdvisorNoble.None, AdvisorRoyal.Commander_of_Kings_Guard); tempListOfAdvisors.Add(royalGuard);
-            amt = rnd.Next(40); royalGuard.AddRelEventPlyr(new Relation("Grateful to the Old King for their position", "Supports Old King", amt));
+            /*Advisor royalGuard = CreateAdvisor(pos, 1, 9999, 9999, ActorSex.Male, AdvisorNoble.None, AdvisorRoyal.Commander_of_Kings_Guard); tempListOfAdvisors.Add(royalGuard);
+            amt = rnd.Next(40); royalGuard.AddRelEventPlyr(new Relation("Grateful to the Old King for their position", "Supports Old King", amt));*/
             Advisor royalWatch = CreateAdvisor(pos, 1, 9999, 9999, ActorSex.Male, AdvisorNoble.None, AdvisorRoyal.Commander_of_City_Watch); tempListOfAdvisors.Add(royalWatch);
             amt = rnd.Next(40); royalWatch.AddRelEventPlyr(new Relation("Grateful to the Old King for their position", "Supports Old King", amt));
 

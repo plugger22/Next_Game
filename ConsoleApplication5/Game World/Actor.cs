@@ -11,7 +11,7 @@ namespace Next_Game
     public enum ActorType { None, Usurper, Follower, Lord, Lady, Prince, Princess, Heir, lord, lady, BannerLord, Knight, Advisor, Special, Inquisitor, Nemesis };
     public enum ActorOffice { None, Usurper, King, Queen, Lord_of_the_North, Lord_of_the_East, Lord_of_the_South, Lord_of_the_West }
     public enum ActorRealm { None, Head_of_Noble_House, Head_of_House, Regent }
-    public enum AdvisorRoyal { None, Hand_of_the_King, Master_of_Coin, Master_of_Whisperers, Master_of_Laws, Master_of_Ships, High_Septon, Commander_of_Kings_Guard, Commander_of_City_Watch, Count }
+    public enum AdvisorRoyal { None, Hand_of_the_King, Master_of_Coin, Master_of_Whisperers, Master_of_Laws, /*Master_of_Ships,*/ High_Septon, /*Commander_of_Kings_Guard,*/ Commander_of_City_Watch, Count }
     public enum AdvisorNoble { None, Maester, Castellan, Septon }
     public enum ActorSex { None, Male, Female, Count };
     public enum ActorParents { Normal, Bastard, Adopted };
