@@ -1740,13 +1740,15 @@ namespace Next_Game
                     }
                     //characters at location
                     List<int> charList = loc.GetActorList();
+                    List<string> listAtLocation = new List<string>();
+                    List<string> listInDungeon = new List<string>();
                     charList.Sort();
                     if (charList.Count > 0)
                     {
                         RLColor textColor = RLColor.White;
                         int row = 3;
-                        locList.Add(new Snippet(string.Format("Characters at {0}", loc.LocName), RLColor.Brown, RLColor.Black));
-                        string actorDetails;
+                        
+                        string actorDetails = "";
                         string actorType;
                         foreach (int charID in charList)
                         {
@@ -1777,11 +1779,27 @@ namespace Next_Game
                                     if (relPlyr >= relFriends) { numFriends++; }
                                     else if (relPlyr <= relEnemies) { numEnemies++; }
                                 }
+                                if (person.Status == ActorStatus.AtLocation) { listAtLocation.Add(actorDetails); }
+                                else if (person.Status == ActorStatus.Captured) { listInDungeon.Add(actorDetails); }
+                                else { Game.SetError(new Error(187, $"Invalid person.Status \"{person.Status}\"")); }
                             }
-                            else
-                            { actorDetails = "unknown ID " + Convert.ToString(charID); }
-                            locList.Add(new Snippet(actorDetails, textColor, RLColor.Black));
+                            else { Game.SetError(new Error(187, $"Invalid ActorID \"{charID}\"")); }
                         }
+                            //At Location
+                            locList.Add(new Snippet(string.Format("Characters at {0}", loc.LocName), RLColor.Brown, RLColor.Black));
+                            if (listAtLocation.Count > 0)
+                            {
+                                for (int i = 0; i < listAtLocation.Count; i++)
+                                { locList.Add(new Snippet(listAtLocation[i], textColor, RLColor.Black)); }
+                            }
+                            else { locList.Add(new Snippet("None present", textColor, RLColor.Black)); }
+                            //In Dungeon
+                            if (listInDungeon.Count > 0)
+                            {
+                                locList.Add(new Snippet(string.Format("Characters in the {0} Dungeons", loc.LocName), RLColor.Brown, RLColor.Black));
+                                for (int i = 0; i < listInDungeon.Count; i++)
+                                { locList.Add(new Snippet(listInDungeon[i], textColor, RLColor.Black)); }
+                            }
                         //display friends and enemies
                         if (numFriends > 0 || numEnemies > 0)
                         {

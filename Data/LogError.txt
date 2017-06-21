@@ -1,6 +1,2 @@
-//Exile Game file ops "LogError.txt" commenced at: 21/06/2017 20:23:20
-ERROR_29 "Location Deleted 2:10"
-Method: LocationSweeper,  Line: 1676,  Object: Map.cs,  Turn: 0,  Local Time: 20:23:20 UTC +10:00
-ERROR_24 "Cluster Forest tempList has no records, index 33"
-Method: InitialiseGeoClusters,  Line: 326,  Object: History.cs,  Turn: 0,  Local Time: 20:23:21 UTC +10:00
-//Exile Game file ops "LogError.txt" Completed at: 21/06/2017 20:26:27
+//Exile Game file ops "LogError.txt" commenced at: 22/06/2017 09:18:47
+//Exile Game file ops "LogError.txt" Completed at: 22/06/2017 09:23:27
