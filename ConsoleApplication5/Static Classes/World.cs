@@ -3351,11 +3351,13 @@ namespace Next_Game
             CalculateCrows();
             if (UpdateWorldStatus() == true) { notificationStatus = true; }
             CheckStationaryActiveActors();
-            
-            //Enemies
-            UpdateAIController();
-            SetEnemyActivity();
 
+            //Enemies (if AI Controlled)
+            if (Game.variable.GetValue(GameVar.Inquisitor_AI) > 0)
+            {
+                UpdateAIController();
+                SetEnemyActivity();
+            }
             //Finances
             CheckRoyalAccounts();
             
@@ -3367,7 +3369,6 @@ namespace Next_Game
         /// </summary>
         public void ProcessStartTurnLate()
         {
-            //Game.infoChannel.ClearConsole(ConsoleDisplay.Event);
             //Create events
             Game.director.CheckPlayerEvents();
             Game.director.CheckFollowerEvents(dictActiveActors);
@@ -4689,6 +4690,29 @@ namespace Next_Game
             else { Game.SetError(new Error(156, "Invalid enemy input (null), existing goal retained")); }
         }
 
+        /// <summary>
+        /// All inquisitors must have the same setting (the AI needs all of them to work properly). AI Control if True, Manual if False.
+        /// </summary>
+        /// <param name="AIcontrol"></param>
+        internal void SetInquisitorControlStatus(bool AIcontrol)
+        {
+            if (Game.gameAct == Act.Two)
+            {
+                int state;
+                foreach (var enemy in dictEnemyActors)
+                {
+                    if (enemy.Value is Inquisitor)
+                    {
+                        state = 0;
+                        if (AIcontrol == true) { state = 1; }
+                        enemy.Value.AIControl = AIcontrol;
+                        Game.variable.SetValue(GameVar.Inquisitor_AI, state);
+                        Game.logTurn?.Write($"{enemy.Value.Title} {enemy.Value.Name}, ActID {enemy.Value.ActID} has AIControl -> {AIcontrol}");
+                    }
+                }
+            }
+            else { Game.SetError(new Error(325, "[Alert] Can only change Inquisitor control status in Act Two")); }
+        }
 
         /// <summary>
         /// checks Active Character when moving for presence of Enemy in same place
@@ -6071,6 +6095,7 @@ namespace Next_Game
             Game.variable.SetValue(GameVar.Account_Timer, Game.constant.GetValue(Global.ACCOUNT_INTERVAL));
             Game.variable.SetValue(GameVar.Corruption_Factor, Game.constant.GetValue(Global.CORRUPTION_COST));
             Game.variable.SetValue(GameVar.God_PlayerLocID, 1); //set to Capital
+            Game.variable.SetValue(GameVar.Inquisitor_AI, 1); //set to AI control (both Acts)
         }
 
         /// <summary>
@@ -6514,7 +6539,7 @@ namespace Next_Game
                 for(int i = 2; i < (int)WorldGroup.Count; i++)
                 { capitalHouse.SetGroupRelations((WorldGroup)i, rnd.Next(lower, upper)); }
                 //Lords is the average of all Major Lords rels
-                capitalHouse.SetGroupRelations(WorldGroup.Lords, GetAverageLordRelations());
+                capitalHouse.SetGroupRelations(WorldGroup.Lord, GetAverageLordRelations());
                 //
                 // Relationships with Lender (actual if loans and possible future lenders)
                 //
@@ -6524,7 +6549,7 @@ namespace Next_Game
                     capitalHouse.SetFinanceData(Account.Lender, i, rnd.Next(100));
                 }
                 //Merchant Guild relationship  same as King's relationship with Merchants
-                int relLvl = capitalHouse.GetGroupRelations(WorldGroup.Merchants);
+                int relLvl = capitalHouse.GetGroupRelations(WorldGroup.Merchant);
                 capitalHouse.SetFinanceData(Account.Lender, (int)Finance.Merchant_Guild, relLvl);
             }
             else { Game.SetError(new Error(303, "Invalid capitalHouse (null)")); }
@@ -6695,7 +6720,7 @@ namespace Next_Game
                 // Import taxes (Lords) based on num and type of imports (include any exports from Capital in this) -> Food is excluded
                 if (Game.gameAct == Act.One)
                 {
-                    relLvl = (100 - capital.GetGroupRelations(WorldGroup.Lords)) / divisor;
+                    relLvl = (100 - capital.GetGroupRelations(WorldGroup.Lord)) / divisor;
                     taxRate = Math.Min(5, relLvl);
                     capital.SetFinanceRate(Account.Income, (int)Income.Lords, taxRate);
                 }
@@ -6715,7 +6740,7 @@ namespace Next_Game
                 // Export taxes (Merchants) base on num and type of Exports (finished products, essentially identical to above) -> Food is excluded
                 if (Game.gameAct == Act.One)
                 {
-                    relLvl = (100 - capital.GetGroupRelations(WorldGroup.Merchants)) / divisor;
+                    relLvl = (100 - capital.GetGroupRelations(WorldGroup.Merchant)) / divisor;
                     taxRate = Math.Min(5, relLvl);
                     capital.SetFinanceRate(Account.Income, (int)Income.Merchants, taxRate);
                 }
@@ -6731,7 +6756,7 @@ namespace Next_Game
                 // Church tax (fixed amount * # Churches in Major Houses + Capital, that varies depending on tax Rate)
                 if (Game.gameAct == Act.One)
                 {
-                    relLvl = (100 - capital.GetGroupRelations(WorldGroup.Churches)) / divisor;
+                    relLvl = (100 - capital.GetGroupRelations(WorldGroup.Church)) / divisor;
                     taxRate = Math.Min(5, relLvl);
                     capital.SetFinanceRate(Account.Income, (int)Income.Churches, taxRate);
                 }
@@ -6748,7 +6773,7 @@ namespace Next_Game
                 // Crafter tax (fixed amount * # of finished trade goods)
                 if (Game.gameAct == Act.One)
                 {
-                    relLvl = (100 - capital.GetGroupRelations(WorldGroup.Crafters)) / divisor;
+                    relLvl = (100 - capital.GetGroupRelations(WorldGroup.Crafter)) / divisor;
                     taxRate = Math.Min(5, relLvl);
                     capital.SetFinanceRate(Account.Income, (int)Income.Crafters, taxRate);
                 }
@@ -6764,7 +6789,7 @@ namespace Next_Game
                 // Road tax (fixed amount * # of squares length of King's Road)
                 if (Game.gameAct == Act.One)
                 {
-                    relLvl = (100 - capital.GetGroupRelations(WorldGroup.Officials)) / divisor;
+                    relLvl = (100 - capital.GetGroupRelations(WorldGroup.Official)) / divisor;
                     taxRate = Math.Min(5, relLvl);
                     capital.SetFinanceRate(Account.Income, (int)Income.Roads, taxRate);
                 }
@@ -6781,7 +6806,7 @@ namespace Next_Game
                 // Harbour tax (fixed amount per port in the Kingdom)
                 if (Game.gameAct == Act.One)
                 {
-                    relLvl = (100 - capital.GetGroupRelations(WorldGroup.Officials)) / divisor;
+                    relLvl = (100 - capital.GetGroupRelations(WorldGroup.Official)) / divisor;
                     taxRate = Math.Min(5, relLvl);
                     capital.SetFinanceRate(Account.Income, (int)Income.Harbours, taxRate);
                 }
@@ -6798,7 +6823,7 @@ namespace Next_Game
                 // Virgin tax (fixed amount per two thousand population in the Kingdom)
                 if (Game.gameAct == Act.One)
                 {
-                    relLvl = (100 - capital.GetGroupRelations(WorldGroup.Peasants)) / divisor;
+                    relLvl = (100 - capital.GetGroupRelations(WorldGroup.Peasant)) / divisor;
                     taxRate = Math.Min(5, relLvl);
                     capital.SetFinanceRate(Account.Income, (int)Income.Virgins, taxRate);
                 }
@@ -7302,7 +7327,7 @@ namespace Next_Game
                         if (rndNum< chance)
                         {
                             //exclude officials extorting money from officials
-                            if (i != (int)WorldGroup.Officials)
+                            if (i != (int)WorldGroup.Official)
                             {
                                 capital.ChangeGroupRelations((WorldGroup)i, amount);
                                 description = $"{(WorldGroup)i} relationship level has deteriorated {amount} due to Officials extorting money from them";
@@ -7419,7 +7444,7 @@ namespace Next_Game
             {
                 int lordRel = GetAverageLordRelations();
                 //Lords is the average of all Major Lords rels
-                capital.SetGroupRelations(WorldGroup.Lords, lordRel );
+                capital.SetGroupRelations(WorldGroup.Lord, lordRel );
                 Game.logTurn?.Write($"Average Lord Relations updated, now {lordRel}");
             }
             else { Game.SetError(new Error(311, "Invalid capital (null)")); }

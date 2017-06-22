@@ -184,7 +184,7 @@ When your cause is just the wind blows from behind. <player> should set <his> sa
 So <player> thinks that they should be King? Doesn't everybody?
 If <player> wants to be King then let <him> win the crown. Justice doesn't count for much around here.
 <player> has a right to the throne, does <he>? Where's my right to a decent wage?
-Yes, yes, <player> is the rightful King. What in <curse> do you expect me to say?
+Yes, yes, <player> is the rightful King. What else in <curse> do you expect me to say?
 
 [JusticeBadEduc]
 King <newKing> sits rightfully upon the throne. <player> is nothing but an imposter.

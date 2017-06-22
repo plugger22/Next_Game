@@ -415,12 +415,12 @@ namespace Next_Game
             //handle any specific Worldgroup changes required
             switch(group)
             {
-                case WorldGroup.Merchants:
+                case WorldGroup.Merchant:
                     //Lender relationship with Merchant Guild should mirror Merchant group relationship
                     SetFinanceData(Account.Lender, (int)Finance.Merchant_Guild, arrayOfGroups[(int)group]);
                     Game.logTurn?.Write($"{group} relationship now {arrayOfGroups[(int)group]}");
                     break;
-                case WorldGroup.Lords:
+                case WorldGroup.Lord:
                     //Lords all change by the same amount
                     int lordID;
                     int kingID = Game.lore.NewKing.ActID;

@@ -21,6 +21,7 @@ namespace Next_Game
         Corruption_Factor,
         Official_Budget,
         God_PlayerLocID,
+        Inquisitor_AI,
         //keep as last, DO NOT change order of GameVars
         Count
     }
@@ -50,6 +51,7 @@ namespace Next_Game
             arrayOfGameVars[8] = GameVar.Corruption_Factor;
             arrayOfGameVars[9] = GameVar.Official_Budget;
             arrayOfGameVars[10] = GameVar.God_PlayerLocID;
+            arrayOfGameVars[11] = GameVar.Inquisitor_AI;
         }
 
         public GameVar[] GetArrayOfGameVars()

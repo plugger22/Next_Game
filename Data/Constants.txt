@@ -111,8 +111,8 @@
 
 # KNOWN_REVERT -> number of turns before Known status reverts to Unknown (player and enemies) (also how long old info shown for)
 44: 4 @ 1 @ 6
-# INQUISITORS -> base number of inquisitors at game start (normal difficulty)
-45: 4 @ 2 @ 8
+# INQUISITORS -> base number of inquisitors at game start (normal difficulty). Min 4 for optimum AI operation.
+45: 4 @ 4 @ 8
 # HORSE_HEALTH -> max cap for horsehealth random roll -> health = rnd.Next(1, HORSE_HEALTH) & health = Math.Min(5, health)
 78: 10 @ 3 @ 12
 

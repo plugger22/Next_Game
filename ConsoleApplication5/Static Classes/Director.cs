@@ -22,7 +22,7 @@ namespace Next_Game
     public enum ConflictState { None, Relative_Army_Size, Relative_Fame, Relative_Honour, Relative_Justice, Known_Status } //game specific states that are used for situations
     public enum ResourceLevel { None, Meagre, Moderate, Subtantial, Prosperous, Wealthy }
     
-    public enum WorldGroup { None, Lords, Officials, Churches, Merchants, Crafters, Peasants, Count} //main population groupings within world
+    public enum WorldGroup { None, Lord, Official, Church, Merchant, Crafter, Peasant, Count} //main population groupings within world
     public enum ViewType { JusticeNeutralEduc, JusticeNeutralUned, JusticeGoodEduc, JusticeGoodUned, JusticeBadEduc, JusticeBadUned, LegendNeutralEduc, LegendNeutralUned, LegendGoodEduc, LegendGoodUned,
     LegendBadEduc, LegendBadUned, HonourNeutralEduc, HonourNeutralUned, HonourGoodEduc, HonourGoodUned, HonourBadEduc, HonourBadUned, KnownEduc, KnownUned, UnknownEduc, UnknownUned,
     FoodSurplusEduc, FoodSurplusUned, FoodNormalEduc, FoodNormalUned, FoodDeficitEduc, FoodDeficitUned, SummerEduc, SummerUned, AutumnEduc, AutumnUned, WinterEduc, WinterUned, SpringEduc, SpringUned,
@@ -6148,8 +6148,8 @@ namespace Next_Game
             RLColor backColor = Color._background1;
             string streetView = "";
             int viewIndex = Game.variable.GetValue(GameVar.View_Index);
-            WorldGroup[] arrayOfGroupsMale = new WorldGroup[] { WorldGroup.Officials, WorldGroup.Merchants, WorldGroup.Churches, WorldGroup.Crafters, WorldGroup.Crafters,
-                WorldGroup.Peasants, WorldGroup.Peasants };
+            WorldGroup[] arrayOfGroupsMale = new WorldGroup[] { WorldGroup.Official, WorldGroup.Merchant, WorldGroup.Church, WorldGroup.Crafter, WorldGroup.Crafter,
+                WorldGroup.Peasant, WorldGroup.Peasant };
             WorldGroup group = WorldGroup.None;
             bool proceedFlag = true;
             string name, place;
@@ -6181,29 +6181,29 @@ namespace Next_Game
                 else
                 {
                     //female
-                    group = WorldGroup.Peasants;
+                    group = WorldGroup.Peasant;
                     name = Game.history.GetFirstName(ActorSex.Female);
                     sex = ActorSex.Female;
                 }
                 switch (group)
                 {
-                    case WorldGroup.Officials:
+                    case WorldGroup.Official:
                         innerArray = arrayOfOccupations[(int)Occupation.Offical];
                         educated = true;
                         break;
-                    case WorldGroup.Churches:
+                    case WorldGroup.Church:
                         innerArray = arrayOfOccupations[(int)Occupation.Church];
                         educated = true;
                         break;
-                    case WorldGroup.Merchants:
+                    case WorldGroup.Merchant:
                         innerArray = arrayOfOccupations[(int)Occupation.Merchant];
                         educated = true;
                         break;
-                    case WorldGroup.Crafters:
+                    case WorldGroup.Crafter:
                         innerArray = arrayOfOccupations[(int)Occupation.Craft];
                         educated = false;
                         break;
-                    case WorldGroup.Peasants:
+                    case WorldGroup.Peasant:
                         if (sex == ActorSex.Male)
                         { innerArray = arrayOfOccupations[(int)Occupation.PeasantMale]; }
                         else
@@ -6435,7 +6435,7 @@ namespace Next_Game
                                 //if tax rate is zero then use TaxNoneEduc or Uned, as appropriate
                                 switch (group)
                                 {
-                                    case WorldGroup.Officials:
+                                    case WorldGroup.Official:
                                         //based on road tax
                                         rate = capital.GetFinanceInfo(Account.Income, (int)Income.Roads, FinArray.Rate);
                                         if ( rate > 2)
@@ -6443,7 +6443,7 @@ namespace Next_Game
                                         else if (rate > 0) { innerArray = arrayOfViews[(int)ViewType.TaxOfficialLow]; }
                                         else { innerArray = arrayOfViews[(int)ViewType.TaxNoneEduc]; }
                                         break;
-                                    case WorldGroup.Churches:
+                                    case WorldGroup.Church:
                                         //based on church tax
                                         rate = capital.GetFinanceInfo(Account.Income, (int)Income.Churches, FinArray.Rate);
                                         if (rate > 2)
@@ -6451,7 +6451,7 @@ namespace Next_Game
                                         else if (rate > 0) { innerArray = arrayOfViews[(int)ViewType.TaxChurchLow]; }
                                         else { innerArray = arrayOfViews[(int)ViewType.TaxNoneEduc]; }
                                         break;
-                                    case WorldGroup.Merchants:
+                                    case WorldGroup.Merchant:
                                         //based on export tax
                                         rate = capital.GetFinanceInfo(Account.Income, (int)Income.Merchants, FinArray.Rate);
                                         if (rate > 2)
@@ -6459,7 +6459,7 @@ namespace Next_Game
                                         else if (rate > 0) { innerArray = arrayOfViews[(int)ViewType.TaxMerchantLow]; }
                                         else { innerArray = arrayOfViews[(int)ViewType.TaxNoneEduc]; }
                                         break;
-                                    case WorldGroup.Crafters:
+                                    case WorldGroup.Crafter:
                                         //based on crafter tax
                                         rate = capital.GetFinanceInfo(Account.Income, (int)Income.Crafters, FinArray.Rate);
                                         if (rate > 2)
@@ -6467,7 +6467,7 @@ namespace Next_Game
                                         else if (rate > 0) { innerArray = arrayOfViews[(int)ViewType.TaxCrafterLow]; }
                                         else { innerArray = arrayOfViews[(int)ViewType.TaxNoneUned]; }
                                         break;
-                                    case WorldGroup.Peasants:
+                                    case WorldGroup.Peasant:
                                         //based on virgin tax
                                         rate = capital.GetFinanceInfo(Account.Income, (int)Income.Virgins, FinArray.Rate);
                                         if (rate > 2)

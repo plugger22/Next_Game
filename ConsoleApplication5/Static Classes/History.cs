@@ -567,6 +567,8 @@ namespace Next_Game
                         inquisitor.LastKnownLocID = locID;
                         inquisitor.LastKnownPos = loc.GetPosition();
                         inquisitor.LastKnownGoal = ActorAIGoal.Wait;
+                        inquisitor.AIControl = true;
+                        inquisitor.GoodEnemy = false;
                         //relationship
                         inquisitor.AddRelEventPlyr(new Relation("Sworn to hunt down Player", "Agents of Doom", -50));
                         inquisitor.AddRelEventLord(new Relation("Loyal to the point of death", "Totally loyal", +50));
@@ -621,6 +623,8 @@ namespace Next_Game
                         nemesis.LastKnownLocID = locID;
                         nemesis.LastKnownPos = loc.GetPosition();
                         nemesis.LastKnownGoal = ActorAIGoal.Wait;
+                        nemesis.AIControl = true;
+                        nemesis.GoodEnemy = false;
                         //relationship
                         nemesis.AddRelEventPlyr(new Relation("Answers only to the Gods", "Irrelevant", -50));
                         nemesis.AddRelEventLord(new Relation("Answers only to the Gods", "Irrelevant", -50));
