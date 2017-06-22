@@ -4300,6 +4300,125 @@ namespace Next_Game
         /// </summary>
         private void SetEnemyActivity()
         {
+            //get target
+            int targetActID = Game.variable.GetValue(GameVar.Inquisitor_Target);
+            Actor target = GetAnyActor(targetActID);
+            if (target != null)
+            {
+                int turnsDM; //DM for the # of turns spent on the same goal (prevents enemy being locked into a set goal due to bad rolls)
+                int targetLocID = target.LocID;
+                int turnsUnknown = target.TurnsUnknown;
+                bool huntStatus;
+                int ai_search = Game.constant.GetValue(Global.AI_CONTINUE_SEARCH);
+                int ai_hide = Game.constant.GetValue(Global.AI_CONTINUE_HIDE);
+                int ai_wait = Game.constant.GetValue(Global.AI_CONTINUE_WAIT);
+                int revert = Game.constant.GetValue(Global.KNOWN_REVERT);
+                Game.logTurn?.Write("--- SetEnemyActivity (World.cs)");
+                //loop enemy dictionary
+                foreach (var enemy in dictEnemyActors)
+                {
+                    //debug -> random chance of enemy being known
+                    if (enemy.Value.Known == false && rnd.Next(100) < 20)
+                    {
+                        enemy.Value.Known = true; enemy.Value.Revert = revert;
+                        Game.logTurn?.Write(string.Format(" [Enemy -> Known] {0} ActID {1} has become KNOWN", enemy.Value.Name, enemy.Value.ActID));
+                    }
+
+                    //update status -> unknown
+                    if (enemy.Value.Known == false) { enemy.Value.TurnsUnknown++; enemy.Value.Revert = 0; }
+                    else
+                    {
+                        //known
+                        enemy.Value.TurnsUnknown = 0;
+                        enemy.Value.LastKnownLocID = enemy.Value.LocID;
+                        enemy.Value.LastKnownPos = enemy.Value.GetPosition();
+                        enemy.Value.LastKnownGoal = enemy.Value.Goal;
+                        enemy.Value.Revert--;
+                        if (enemy.Value.Revert <= 0)
+                        {
+                            enemy.Value.Revert = 0; enemy.Value.Known = false; enemy.Value.TurnsUnknown++;
+                            Game.logTurn?.Write(string.Format(" [Enemy -> Unknown] {0} ActID {1} has reverted to Unknown status (timer elapsed)", enemy.Value.Name, enemy.Value.ActID));
+                        }
+                    }
+                    //continue on with existing goal or get a new one?
+                    if (enemy.Value is Inquisitor || enemy.Value is Nemesis)
+                    {
+                        //inquisitors -> if Move then automatic (continues on with Move)
+                        if (enemy.Value.Goal != ActorAIGoal.Move)
+                        {
+                            huntStatus = enemy.Value.HuntMode;
+                            turnsDM = enemy.Value.GoalTurns; //+1 % chance of changing goal per turn spent on existing goal
+                            enemy.Value.GoalTurns++;
+                            switch (enemy.Value.Goal)
+                            {
+                                case ActorAIGoal.None:
+                                    //auto assign new goal
+                                    SetEnemyGoal(enemy.Value, huntStatus, targetLocID, turnsUnknown);
+                                    break;
+                                case ActorAIGoal.Wait:
+                                    if (huntStatus == true)
+                                    {
+                                        //Player Known -> Will Search if same Loc
+                                        SetEnemyGoal(enemy.Value, huntStatus, targetLocID, turnsUnknown);
+                                    }
+                                    else
+                                    {
+                                        //Player Unknown
+                                        if (rnd.Next(100) > (ai_wait + turnsDM))
+                                        { SetEnemyGoal(enemy.Value, huntStatus, targetLocID, turnsUnknown); }
+                                        else { Game.logTurn?.Write(string.Format(" [Enemy -> Goal] {0}, ActID {1} retains Goal -> {2}", enemy.Value.Name, enemy.Value.ActID, enemy.Value.Goal)); }
+                                    }
+                                    break;
+                                case ActorAIGoal.Search:
+                                    if (huntStatus == true)
+                                    {
+                                        //Player Known -> if actor at different location then new goal
+                                        if (enemy.Value.LocID != targetLocID)
+                                        { SetEnemyGoal(enemy.Value, huntStatus, targetLocID, turnsUnknown); }
+                                    }
+                                    else
+                                    {
+                                        //Player Unknown
+                                        if (rnd.Next(100) > (ai_search + turnsDM))
+                                        { SetEnemyGoal(enemy.Value, huntStatus, targetLocID, turnsUnknown); }
+                                        else { Game.logTurn?.Write(string.Format(" [Enemy -> Goal] {0}, ActID {1} retains Goal -> {2}", enemy.Value.Name, enemy.Value.ActID, enemy.Value.Goal)); }
+                                    }
+                                    break;
+                                case ActorAIGoal.Hide:
+                                    if (huntStatus == true)
+                                    {
+                                        //Player Known -> if actor at different location then new goal
+                                        if (enemy.Value.LocID != targetLocID)
+                                        { SetEnemyGoal(enemy.Value, huntStatus, targetLocID, turnsUnknown); }
+                                    }
+                                    else
+                                    {
+                                        //Player Unknown
+                                        if (rnd.Next(100) > (ai_hide + turnsDM))
+                                        { SetEnemyGoal(enemy.Value, huntStatus, targetLocID, turnsUnknown); }
+                                        else { Game.logTurn?.Write(string.Format(" [Enemy -> Goal] {0}, ActID {1} retains Goal -> {2}", enemy.Value.Name, enemy.Value.ActID, enemy.Value.Goal)); }
+                                    }
+                                    break;
+                                default:
+                                    Game.SetError(new Error(155, string.Format("Invalid Enemy Goal (\"{0}\")", enemy.Value.Goal)));
+                                    break;
+                            }
+                        }
+                    }
+                    else
+                    {
+                        //all other enemies
+                    }
+                }
+            }
+            else { Game.SetError(new Error(155, "Invalid Target (null)")); }
+        }
+
+        /*/// <summary>
+        /// handles AI for all enemies, also updates status (known, etc.)
+        /// </summary>
+        private void SetEnemyActivity()
+        {
             Player player = GetPlayer();
             if (player != null)
             {
@@ -4410,7 +4529,7 @@ namespace Next_Game
                 }
             }
             else { Game.SetError(new Error(155, "Invalid Player (null)")); }
-        }
+        }*/
 
         /// <summary>
         /// sub method to provide a new goal when required -> Incorporates all necessary AI logic
