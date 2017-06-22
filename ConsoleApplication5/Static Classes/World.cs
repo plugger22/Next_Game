@@ -5806,6 +5806,8 @@ namespace Next_Game
                             }
                         }
                         else { Game.SetError(new Error(174, $"Invalid locDungeon (null) for heldLocID {heldLocID} -> not placed in Location")); }
+                        //Statistics
+                        Game.statistic.AddStat(GameStatistic.Times_Captured);
                         //Player loses any items they possess (needs to be a reverse loop as you're deleting as you go
                         if (player.CheckItems() == true)
                         {
@@ -5846,7 +5848,8 @@ namespace Next_Game
                         if (player.Resources > 1)
                         {
                             player.Resources = 1;
-                            description = $"{player.Name} \"{player.Handle}\", has had most of their gold confiscated by the {dungeonLoc} Dungeon Master";
+                            description = string.Format("{0} \"{1}\", has had most of {2} gold confiscated by the {3} Dungeon Master", player.Name, player.Handle, 
+                                player.Sex == ActorSex.Male ? "his" : "her", dungeonLoc);
                             SetMessage(new Message(description, MessageType.Incarceration));
                             SetPlayerRecord(new Record(description, player.ActID, player.LocID, CurrentActorEvent.Challenge));
                         }

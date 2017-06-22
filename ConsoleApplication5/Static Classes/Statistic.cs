@@ -18,6 +18,7 @@ namespace Next_Game
         AtSea_Days,
         Adrift_Days,
         Known_Days,
+        Times_Captured,
         //keep as last
         Count
     }
@@ -43,6 +44,7 @@ namespace Next_Game
             arrayOfGameStats[6] = GameStatistic.AtSea_Days;
             arrayOfGameStats[7] = GameStatistic.Adrift_Days;
             arrayOfGameStats[8] = GameStatistic.Known_Days;
+            arrayOfGameStats[9] = GameStatistic.Times_Captured;
         }
 
         public int[] GetArrayOfStatistics()
