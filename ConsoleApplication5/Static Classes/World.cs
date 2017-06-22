@@ -4534,11 +4534,11 @@ namespace Next_Game
         /// <summary>
         /// sub method to provide a new goal when required -> Incorporates all necessary AI logic
         /// <param name="knowStatus">if '0' then player status is Unknown</param>
-        /// <param name="playerLocID">current locID or Player's destination locId if travelling</param>
+        /// <param name="targetLocID">current locID or Target's destination locId if travelling</param>
         /// <param name="turnsUnknown">Number of Turns player has been unknown for ('0' -> known)</param>
         /// </summary>
         /// <param name="enemy"></param>
-        private void SetEnemyGoal(Enemy enemy, bool huntStatus, int playerLocID, int turnsUnknown)
+        private void SetEnemyGoal(Enemy enemy, bool huntStatus, int targetLocID, int turnsUnknown)
         {
             Game.logTurn?.Write("--- SetEnemyGoal (World.cs)");
             bool huntMoveFlag = false;
@@ -4547,7 +4547,7 @@ namespace Next_Game
             ActorAIGoal newGoal = ActorAIGoal.None;
             if (enemy != null)
             {
-                if (playerLocID > 0)
+                if (targetLocID > 0)
                 {
                     //get location of enemy
                     Location loc = Game.network.GetLocation(enemy.LocID);
@@ -4571,7 +4571,7 @@ namespace Next_Game
                             if (huntStatus == true)
                             {
                                 //Player Known, Hunt Mode -> not at same location
-                                if (enemy.LocID != playerLocID)
+                                if (enemy.LocID != targetLocID)
                                 {
                                     newGoal = ActorAIGoal.Move;
                                     huntMoveFlag = true;
@@ -4659,7 +4659,7 @@ namespace Next_Game
                                 // - Move One Node closer to Player's last known location
                                 if (turnsUnknown > 3 && rnd.Next(100) < 50)
                                 {
-                                    Location locTarget = Game.network.GetLocation(playerLocID);
+                                    Location locTarget = Game.network.GetLocation(targetLocID);
                                     if (locTarget != null)
                                     {
                                         Position posTarget = locTarget.GetPosition();
@@ -4673,7 +4673,7 @@ namespace Next_Game
                                                 tempLocID = Game.map.GetMapInfo(MapLayer.LocID, posTemp.PosX, posTemp.PosY);
                                                 if (tempLocID > 0)
                                                 {
-                                                    Game.logTurn?.Write(string.Format(" [Goal -> Move] {0}, ActID {1} -> One Node closer to Player -> {2}, LocID {3}", enemy.Name, enemy.ActID,
+                                                    Game.logTurn?.Write(string.Format(" [Goal -> Move] {0}, ActID {1} -> One Node closer to Target -> {2}, LocID {3}", enemy.Name, enemy.ActID,
                                                     GetLocationName(tempLocID), tempLocID));
                                                     destinationLocID = tempLocID; break;
                                                 }
@@ -4683,8 +4683,8 @@ namespace Next_Game
                                         //error check
                                         if (destinationLocID == 0)
                                         {
-                                            destinationLocID = playerLocID;
-                                            Game.logTurn?.Write(string.Format(" [Goal -> Alert] {0}, ActID [1} has been assigned a default PlayerLocID [move One Node closer] as no viable node was found",
+                                            destinationLocID = targetLocID;
+                                            Game.logTurn?.Write(string.Format(" [Goal -> Alert] {0}, ActID [1} has been assigned a default TargetLocID [move One Node closer] as no viable node was found",
                                                 enemy.Name, enemy.ActID));
                                         }
                                     }
@@ -4693,9 +4693,9 @@ namespace Next_Game
                                 // - Move Directly to Player's last known location
                                 else
                                 {
-                                    Game.logTurn?.Write(string.Format(" [Goal -> Move] {0}, ActID {1} -> Player's last known location -> {2}, LocID {3}", enemy.Name, enemy.ActID,
-                                                   GetLocationName(playerLocID), playerLocID));
-                                    destinationLocID = playerLocID;
+                                    Game.logTurn?.Write(string.Format(" [Goal -> Move] {0}, ActID {1} -> Target's last known location -> {2}, LocID {3}", enemy.Name, enemy.ActID,
+                                                   GetLocationName(targetLocID), targetLocID));
+                                    destinationLocID = targetLocID;
                                 }
                             }
                             //
@@ -4760,8 +4760,8 @@ namespace Next_Game
                                         {
                                             //randomly select a destination
                                             destinationLocID = tempLocList[rnd.Next(0, tempLocList.Count)];
-                                            Game.logTurn?.Write(string.Format(" [Goal -> Move] {0}, ActID {1} -> Move {2} -> {3}, LocID {4}", enemy.Name, enemy.ActID, enemy.MoveOut == true ? "Outwards" : "Inwards",
-                                                   GetLocationName(destinationLocID), destinationLocID));
+                                            Game.logTurn?.Write(string.Format(" [Goal -> Move] {0}, ActID {1} -> Move {2} -> {3}, LocID {4}", enemy.Name, enemy.ActID, 
+                                                enemy.MoveOut == true ? "Outwards" : "Inwards", GetLocationName(destinationLocID), destinationLocID));
                                         }
                                         else
                                         {
@@ -4831,13 +4831,12 @@ namespace Next_Game
                             if (locMove != null)
                             {
                                 Position posDestination = locMove.GetPosition();
-                                //List<Position> pathToTravel = Game.network.GetPathAnywhere(posOrigin, posDestination);
                                 InitialiseMoveActor(enemy.ActID, posOrigin, posDestination);
                             }
                             else { Game.SetError(new Error(156, "Invalid locMove (null) Enemy isn't Moved")); }
                         }
                     }
-                    else { Game.SetError(new Error(156, string.Format("Invalid playerLocID (zero or less), existing goal retained for actID {0}", enemy.ActID))); }
+                    else { Game.SetError(new Error(156, string.Format("Invalid targetLocID (zero or less), existing goal retained for actID {0}", enemy.ActID))); }
                 }
                 else { Game.SetError(new Error(156, string.Format("Invalid Enemy Location (null), for LocID {0}, Enemy ID {1}", enemy.LocID, enemy.ActID))); }
             }
