@@ -4137,28 +4137,29 @@ namespace Next_Game
             int playerLocID, distance, enemyDM;
             int turnsToDestination = 0; //# of turns for Player to reach their destination if travelling (used to adjust threshold)
             Game.logTurn?.Write("--- UpdateAIController (World.cs)");
-            //get player
-            Player player = GetPlayer();
-            if (player != null)
+            //get target
+            int targetActID = Game.variable.GetValue(GameVar.Inquisitor_Target);
+            Actor target = GetAnyActor(targetActID);
+            if (target != null)
             {
                 //Travelling? Allow for time taken to reach destination
-                if (player.Status == ActorStatus.Travelling)
+                if (target.Status == ActorStatus.Travelling)
                 {
                     //loop List of Move objects looking for Player's party
                     for (int i = 0; i < listMoveObjects.Count; i++)
                     {
                         Move moveObject = listMoveObjects[i];
-                        if (moveObject.PlayerInParty == true)
+                        if (moveObject.CheckAITargetInParty() == true)
                         {
                             //player found, determine how many route segments left
                             turnsToDestination = moveObject.CheckTurnsToDestination();
-                            Game.logTurn?.Write(string.Format(" [AI -> Notification] Player is Travelling -> {0} turns from their destination", turnsToDestination));
+                            Game.logTurn?.Write(string.Format(" [AI -> Notification] Target is Travelling -> {0} turns from their destination", turnsToDestination));
                             break;
                         }
                     }
                 }
                 //ignore all this if player Incarcerated in a dungeon?
-                if (player.Status == ActorStatus.AtLocation || player.Status == ActorStatus.Travelling)
+                if (target.Status == ActorStatus.AtLocation || target.Status == ActorStatus.Travelling)
                 {
                     //threshold is adjusted upwards if Player enroute to a destination
                     threshold += turnsToDestination;
@@ -4199,7 +4200,7 @@ namespace Next_Game
                                     }
                                     else
                                     {
-                                        Game.SetError(new Error(167, string.Format("Invalid Player ({0}:{1}) or Enemy Position ({2}:{3})", playerPos.PosX, playerPos.PosY,
+                                        Game.SetError(new Error(167, string.Format("Invalid Target ({0}:{1}) or Enemy Position ({2}:{3})", playerPos.PosX, playerPos.PosY,
                                      enemyPos.PosX, enemyPos.PosY)));
                                     }
                                 }
@@ -4237,14 +4238,14 @@ namespace Next_Game
                                 if (enemy.Value.Status == ActorStatus.AtLocation)
                                 {
                                     enemy.Value.HuntMode = false;
-                                    Game.logTurn?.Write(string.Format(" [AI -> Player Unknown] {0} {1}, Act ID {2} Mode -> Normal", enemy.Value.Title, enemy.Value.Name, enemy.Value.ActID));
+                                    Game.logTurn?.Write(string.Format(" [AI -> Target Unknown] {0} {1}, Act ID {2} Mode -> Normal", enemy.Value.Title, enemy.Value.Name, enemy.Value.ActID));
                                 }
                             }
                         }
                     }
-                    else { Game.SetError(new Error(167, "Warning -> LocID of Player has returned Zero")); }
+                    else { Game.SetError(new Error(167, "Warning -> LocID of Target has returned Zero")); }
                 }
-                else if (player.Status == ActorStatus.Captured)
+                else if (target.Status == ActorStatus.Captured)
                 {
                     //Incarcerated in a dungeon -> all enemies at a location are set to normal mode (huntmode 'false')
                     foreach (var enemy in dictEnemyActors)
@@ -4252,12 +4253,12 @@ namespace Next_Game
                         if (enemy.Value.Status == ActorStatus.AtLocation)
                         {
                             enemy.Value.HuntMode = false;
-                            Game.logTurn?.Write(string.Format(" [AI -> Player Captured] {0} {1}, Act ID {2} Mode -> Normal", enemy.Value.Title, enemy.Value.Name, enemy.Value.ActID));
+                            Game.logTurn?.Write(string.Format(" [AI -> Target Captured] {0} {1}, Act ID {2} Mode -> Normal", enemy.Value.Title, enemy.Value.Name, enemy.Value.ActID));
                         }
                     }
                 }
             }
-            else { Game.SetError(new Error(167, "Invalid player (Null), set Enemy AI bypassed")); }
+            else { Game.SetError(new Error(167, "Invalid Target (Null), set Enemy AI bypassed")); }
         }
 
         /// <summary>
@@ -6096,6 +6097,15 @@ namespace Next_Game
             Game.variable.SetValue(GameVar.Corruption_Factor, Game.constant.GetValue(Global.CORRUPTION_COST));
             Game.variable.SetValue(GameVar.God_PlayerLocID, 1); //set to Capital
             Game.variable.SetValue(GameVar.Inquisitor_AI, 1); //set to AI control (both Acts)
+            if (Game.gameAct == Act.One)
+            {
+                Game.variable.SetValue(GameVar.Inquisitor_Target, 1); //player as target
+            }
+            else if (Game.gameAct == Act.Two)
+            {
+                //debug
+                Game.variable.SetValue(GameVar.Inquisitor_Target, 25); //random NPC
+            }
         }
 
         /// <summary>

@@ -7,9 +7,11 @@
 4: View_Rollover	    # View_Index rollsover to 1 when it reaches this 
 3: Next_RelRumours	    # turn number for creating the next set of relationship rumoursc
 5: Account_Timer        # countdown in turns until new set of accounts are tallied
-6: Inquisitor_Budget    # budget rate for inquistor expenses (gives a DM to search chances, higher budget, bigger DM)
 7: Lifestyle_Budget     # budget rate for Royal lifestyle (gives a legend adjustment at every account period)
 8: Corruption_Factor 	# base figure for all corruption calculations (set to constant at game start but can vary from then on)
 9: Offical_Budget 		# budget rate for Official Wages (higher wages, less chance of them extorting money and dropping Group Relations)
 10: God_PlayerLocID		# God mode -> refID of player location immediately prior to being teleported to Capital for Act 2, default '1' Capital
+
+6: Inquisitor_Budget    # budget rate for inquistor expenses (gives a DM to search chances, higher budget, bigger DM)
 11: Inquisitor_AI		# if > 0 then AI controls all Inquisitors ('True'), if 0 ('False') then Player manually controls Inquisitors (Act Two only)
+12: Inquisitor_Target   # Actor ID of the character (could be Player) who is the target of the Inquisitors

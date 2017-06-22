@@ -376,6 +376,47 @@ namespace Next_Game
                             //last pressed key indicates context of mouse press
                             switch (_keyLast?.Key)
                             {
+                                case RLKey.A:
+                                    switch (_menuMode)
+                                    {
+                                        case MenuMode.Debug:
+                                            _renderRequired = true;
+                                            //Origin location
+                                            if (_inputState == 1)
+                                            {
+                                                //valid location?
+                                                int locID = map.GetMapInfo(MapLayer.LocID, mouse.X, mouse.Y, true);
+                                                if (locID > 0)
+                                                {
+                                                    string locName = world.GetLocationName(locID);
+                                                    infoChannel.AppendInfoList(new Snippet(locName), ConsoleDisplay.Input);
+                                                    _posSelect1 = new Position(map.ConvertMouseCoords(mouse.X, mouse.Y));
+                                                    infoChannel.AppendInfoList(new Snippet("Select DESTINATION Location by Mouse (press ESC to Exit)"), ConsoleDisplay.Input);
+                                                    _inputState = 2;
+                                                }
+                                            }
+                                            //Destination location
+                                            else if (_inputState == 2)
+                                            {
+                                                //valid location?
+                                                int locID = map.GetMapInfo(MapLayer.LocID, mouse.X, mouse.Y, true);
+                                                if (locID > 0)
+                                                {
+                                                    //process two positions to show on map.
+                                                    _posSelect2 = new Position(map.ConvertMouseCoords(mouse.X, mouse.Y));
+                                                    if ((_posSelect1 != null && _posSelect2 != null) && (_posSelect1.PosX != _posSelect2.PosX || _posSelect1.PosY != _posSelect2.PosY))
+                                                    {
+                                                        List<Route> listOfRoutes = network.GetRouteAnywhere(_posSelect1, _posSelect2);
+                                                        map.DrawRouteRL(listOfRoutes);
+                                                        infoChannel.AppendInfoList(new Snippet(network.ShowRouteDetails(listOfRoutes)), ConsoleDisplay.Input);
+                                                    }
+                                                    _inputState = 0;
+                                                    _mouseOn = false;
+                                                }
+                                            }
+                                            break;
+                                    }
+                                    break;
                                 case RLKey.D:
                                     switch (_menuMode)
                                     {
@@ -410,47 +451,6 @@ namespace Next_Game
                                                     {
                                                         List<Route> listOfRoutes = network.GetRouteAnywhere(_posSelect1, _posSelect2);
                                                         map.DrawRouteDebug(listOfRoutes);
-                                                        infoChannel.AppendInfoList(new Snippet(network.ShowRouteDetails(listOfRoutes)), ConsoleDisplay.Input);
-                                                    }
-                                                    _inputState = 0;
-                                                    _mouseOn = false;
-                                                }
-                                            }
-                                            break;
-                                    }
-                                    break;
-                                case RLKey.A:
-                                    switch (_menuMode)
-                                    {
-                                        case MenuMode.Debug:
-                                            _renderRequired = true;
-                                            //Origin location
-                                            if (_inputState == 1)
-                                            {
-                                                //valid location?
-                                                int locID = map.GetMapInfo(MapLayer.LocID, mouse.X, mouse.Y, true);
-                                                if (locID > 0)
-                                                {
-                                                    string locName = world.GetLocationName(locID);
-                                                    infoChannel.AppendInfoList(new Snippet(locName), ConsoleDisplay.Input);
-                                                    _posSelect1 = new Position(map.ConvertMouseCoords(mouse.X, mouse.Y));
-                                                    infoChannel.AppendInfoList(new Snippet("Select DESTINATION Location by Mouse (press ESC to Exit)"), ConsoleDisplay.Input);
-                                                    _inputState = 2;
-                                                }
-                                            }
-                                            //Destination location
-                                            else if (_inputState == 2)
-                                            {
-                                                //valid location?
-                                                int locID = map.GetMapInfo(MapLayer.LocID, mouse.X, mouse.Y, true);
-                                                if (locID > 0)
-                                                {
-                                                    //process two positions to show on map.
-                                                    _posSelect2 = new Position(map.ConvertMouseCoords(mouse.X, mouse.Y));
-                                                    if ((_posSelect1 != null && _posSelect2 != null) && (_posSelect1.PosX != _posSelect2.PosX || _posSelect1.PosY != _posSelect2.PosY))
-                                                    {
-                                                        List<Route> listOfRoutes = network.GetRouteAnywhere(_posSelect1, _posSelect2);
-                                                        map.DrawRouteRL(listOfRoutes);
                                                         infoChannel.AppendInfoList(new Snippet(network.ShowRouteDetails(listOfRoutes)), ConsoleDisplay.Input);
                                                     }
                                                     _inputState = 0;

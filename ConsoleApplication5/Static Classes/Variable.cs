@@ -22,6 +22,7 @@ namespace Next_Game
         Official_Budget,
         God_PlayerLocID,
         Inquisitor_AI,
+        Inquisitor_Target,
         //keep as last, DO NOT change order of GameVars
         Count
     }
@@ -52,6 +53,7 @@ namespace Next_Game
             arrayOfGameVars[9] = GameVar.Official_Budget;
             arrayOfGameVars[10] = GameVar.God_PlayerLocID;
             arrayOfGameVars[11] = GameVar.Inquisitor_AI;
+            arrayOfGameVars[12] = GameVar.Inquisitor_Target;
         }
 
         public GameVar[] GetArrayOfGameVars()

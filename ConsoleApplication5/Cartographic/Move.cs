@@ -59,6 +59,21 @@ namespace Next_Game.Cartographic
         }
 
         /// <summary>
+        /// Returns true if current GameVar.Inquisitor_Target is in the Move object party, false otherwise
+        /// </summary>
+        /// <returns></returns>
+        public bool CheckAITargetInParty()
+        {
+            bool status = false;
+            int targetActID = Game.variable.GetValue(GameVar.Inquisitor_Target);
+            for(int i = 0; i < characterList.Count; i++)
+            {
+                if (characterList[i] == targetActID) { status = true;  Game.logTurn?.Write($"Target ActID {targetActID} found in MoveObject \"{MapMarker}\""); }
+            }
+            return status;
+        }
+
+        /// <summary>
         /// gives # of turns to reach destination from current position
         /// </summary>
         /// <returns></returns>
