@@ -5218,7 +5218,204 @@ namespace Next_Game
         }*/
 
         /// <summary>
-        /// checks Enemy Character when moving for presence of Active character in same place
+        /// checks Enemy Character when moving for presence of target character in same place
+        /// <param name="charID">ActID of Enemy character</param>
+        /// <param name="pos">Current Position of Enemy character</param>
+        /// </summary>
+        internal bool CheckIfFoundEnemy(Position pos, int charID)
+        {
+            int rndNum, threshold;
+            bool found = false;
+            int known_revert = Game.constant.GetValue(Global.KNOWN_REVERT);
+            int ai_known = Game.constant.GetValue(Global.AI_SEARCH_KNOWN);
+            int ai_foot = Game.constant.GetValue(Global.AI_SEARCH_FOOT);
+            int ai_hide = Game.constant.GetValue(Global.AI_SEARCH_HIDE);
+            int ai_move = Game.constant.GetValue(Global.AI_SEARCH_MOVE);
+            int ai_search = Game.constant.GetValue(Global.AI_SEARCH_SEARCH);
+            int ai_wait = Game.constant.GetValue(Global.AI_SEARCH_WAIT);
+            int budgetDM = Game.variable.GetValue(GameVar.Inquisitor_Budget) * Game.constant.GetValue(Global.AI_SEARCH_BUDGET); //DM for inquisitor budget allocation (higher the better)
+            int knownDM = 0; //modifier for search if player known
+            int onFootDM = 20; //modifier for search if player is travelling and on foot
+            int targetActID = Game.variable.GetValue(GameVar.Inquisitor_Target);
+            //get enemy
+            Actor actor = GetAnyActor(charID);
+            if (actor != null && actor.Status != ActorStatus.Gone)
+            {
+                if (actor is Enemy)
+                {
+                    Enemy enemy = actor as Enemy;
+                    Game.logTurn?.Write("--- CheckIfFoundEnemy (World.cs)");
+                    //create a temp list with the target and any others, eg. followers
+                    List<Actor> listOfTargets = new List<Actor>();
+                    Actor person = GetAnyActor(targetActID);
+                    if (person != null) { listOfTargets.Add(person); }
+                    else { Game.SetError(new Error(161, $"Invalid target, ActID \"{targetActID}\"")); }
+                    if (Game.gameAct == Act.One)
+                    {
+                        //get followers -> Act One only
+                        foreach (var active in dictActiveActors)
+                        {
+                            if (active.Value is Follower && active.Value.Status != ActorStatus.Gone)
+                            { listOfTargets.Add(active.Value); }
+                        }
+                    }
+                    //loop Active Actors and check if in same position as enemy
+                    foreach (Actor target in listOfTargets)
+                    { 
+                        found = false;
+                        Position posActive = target.GetPosition();
+                        if (posActive != null && pos != null)
+                        {
+                            //find target in any situation, find follower only if Known
+                            if (target is Player && target.Status != ActorStatus.Captured || (target is Follower && target.Known == true))
+                            {
+                                //debug
+                                Game.logTurn?.Write(string.Format(" [Search -> Debug] Active {0}, ID {1} at {2}:{3}, Enemy at {4}:{5} ({6}, ID {7}", target.Name, target.ActID,
+                                    posActive.PosX, posActive.PosY, pos.PosX, pos.PosY, enemy.Name, enemy.ActID));
+                                if (posActive.PosX == pos.PosX && posActive.PosY == pos.PosY)
+                                {
+                                    //in same spot
+                                    Game.logTurn?.Write(string.Format(" [Search -> Alert] {0} {1}, ActID {2}, is in the same place as the Enemy, loc {3}:{4} ({5}, ID {6})", target.Title, target.Name,
+                                        target.ActID, pos.PosX, pos.PosY, enemy.Name, enemy.ActID));
+                                    //only search if enemy hasn't already searched for this actor this turn
+                                    if (target.CheckSearchedOnList(enemy.ActID) == false)
+                                    {
+                                        //figure out if spotted and handle disguise and safe house star reduction
+                                        if (target.Known == true) { knownDM = ai_known; }
+                                        //add DM if Player ONLY and on foot (travelling)
+                                        if (target is Player && target.Travel == TravelMode.Foot) { onFootDM = ai_foot; }
+                                        rndNum = rnd.Next(100);
+                                        threshold = 0;
+                                        //chance depends on enemies current activity
+                                        switch (enemy.Goal)
+                                        {
+                                            case ActorAIGoal.Hide:
+                                                threshold = ai_hide + knownDM + budgetDM;
+                                                break;
+                                            case ActorAIGoal.Move:
+                                                threshold = ai_move + knownDM + onFootDM + budgetDM;
+                                                break;
+                                            case ActorAIGoal.Search:
+                                                threshold = ai_search + knownDM + budgetDM;
+                                                break;
+                                            case ActorAIGoal.Wait:
+                                                threshold = ai_wait + knownDM + budgetDM;
+                                                break;
+                                        }
+                                        if (rndNum < threshold)
+                                        { found = true; }
+                                        Game.logTurn?.Write(string.Format(" [SEARCH -> Active] Random {0} < {1} (ai {2} + known {3} + foot {4} + budget {5}) -> {6} ", rndNum, threshold, 
+                                            threshold - knownDM - onFootDM - budgetDM, knownDM, onFootDM, budgetDM, rndNum < threshold ? "Success" : "Fail"));
+                                        //add to list of Searched to prevent same enemy making multiple search attempts on this actor per turn
+                                        if (target.AddSearched(enemy.ActID) == true)
+                                        { Game.logTurn?.Write(string.Format(" [Search -> ListSearched] {0} {1}, ActID {2} Searched -> Enemy ActID {3} added", target.Title, target.Name, target.ActID, 
+                                            enemy.ActID)); }
+                                        //Found
+                                        if (found == true)
+                                        {
+                                            string locName = GetLocationName(pos);
+                                            if (locName.Equals("Unknown") == true) { locName = string.Format("Loc {0}:{1}", pos.PosX, pos.PosY); } //travelling
+                                            if (String.IsNullOrEmpty(locName) == true) { locName = string.Format("Loc {0}:{1}", pos.PosX, pos.PosY); }
+                                            Game.logTurn?.Write(string.Format(" [SEARCH -> Enemy] {0} {1} has been Spotted by {2}, ActID {3} at {4} -> Activated {5}", target.Title, target.Name,
+                                                enemy.Name, enemy.ActID, locName, enemy.Activated));
+                                            target.Found = true;
+                                            Game.logTurn?.Write(string.Format(" [Search -> ListEnemies] {0} {1}, ActID {2} is Found -> True and Enemy ActID {3} added", target.Title, target.Name, 
+                                                target.ActID, enemy.ActID));
+                                            //Stuff that happens when found
+                                            string description = "Unknown";
+                                            int locID = Game.map.GetMapInfo(MapLayer.LocID, pos.PosX, pos.PosY);
+                                            int refID = Game.map.GetMapInfo(MapLayer.RefID, pos.PosX, pos.PosY);
+                                            if (target is Player || target is Passive)
+                                            {
+                                                //target has concealment
+                                                if (target.Conceal > ActorConceal.None && enemy.Activated == true)
+                                                { CheckConcealment(); }
+                                                //no concealment -> normal
+                                                else
+                                                {
+                                                    //if unknown then becomes known
+                                                    if (target.Known == false)
+                                                    {
+                                                        if (target.AddEnemy(enemy.ActID, enemy.Activated) == true)
+                                                        {
+                                                            target.Known = true; target.Revert = known_revert;
+                                                            description = string.Format("{0} {1}, ActID {2}, has been Spotted by {3} {4}, ActID {5} at {6}", target.Title, target.Name,
+                                                                target.ActID, enemy.Title, enemy.Name, enemy.ActID, locName);
+                                                            if (target is Player)
+                                                            {
+                                                                Record record = new Record(description, target.ActID, locID, CurrentActorEvent.Known);
+                                                                SetPlayerRecord(record);
+                                                            }
+                                                            SetMessage(new Message(description, MessageType.Search));
+                                                        }
+                                                    }
+                                                    else if (target.Known == true)
+                                                    {
+                                                        if (target.CheckEnemyOnList(enemy.ActID) == false)
+                                                        {
+                                                            //if already known then challenge/capture (But only if character hasn't already found target in the same turn -> must be another character)
+                                                            if (target.AddEnemy(enemy.ActID, enemy.Activated) == true)
+                                                            {
+                                                                target.Revert = known_revert;
+                                                                description = string.Format("{0} {1}, ActID {2}, has been Found by {3} {4}, ActID {5} at {6}", target.Title, target.Name,
+                                                                    target.ActID, enemy.Title, enemy.Name, enemy.ActID, locName);
+                                                                if (enemy.Activated == true)
+                                                                {
+                                                                    //only activated enemies can capture (Inquisitors are always activated, Nemesis only when gods are angry)
+                                                                    target.Capture = true;
+                                                                }
+                                                                if (target is Player)
+                                                                {
+                                                                    Record record = new Record(description, target.ActID, locID, CurrentActorEvent.Search);
+                                                                    SetPlayerRecord(record);
+                                                                }
+                                                                SetMessage(new Message(description, MessageType.Search));
+                                                            }
+                                                        }
+                                                        else
+                                                        {
+                                                            //enemy has already found target this turn
+                                                            Game.logTurn?.Write(string.Format(" [Search -> Previous] {0} {1}, ActID {2} has previously Found the Target -> Result Cancelled", enemy.Title, 
+                                                                enemy.Name, enemy.ActID));
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                            else if (target is Follower)
+                                            {
+                                                //can only be captured (assumed to be Known)
+                                                if (target.AddEnemy(enemy.ActID, enemy.Activated) == true)
+                                                {
+                                                    if (enemy is Inquisitor)
+                                                    {
+                                                        target.Known = true; target.Revert = known_revert; target.Capture = true;
+                                                        description = string.Format("{0} {1}, ActID {2}, has been Spotted by {3} {4}, ActID {5} at {6}", target.Title, target.Name, target.ActID,
+                                                            enemy.Title, enemy.Name, enemy.ActID, locName);
+                                                        Record record = new Record(description, target.ActID, locID, CurrentActorEvent.Search);
+                                                        SetCurrentRecord(record);
+                                                        SetMessage(new Message(description, MessageType.Search));
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+                                    else { Game.logTurn?.Write(string.Format(" [Search -> Notification] {0} {1}, ActID {2} already on List, not Searched -> Enemy ActID {3}", target.Title, 
+                                        target.Name, target.ActID, enemy.ActID)); }
+                                }
+                            }
+                        }
+                        else { Game.SetError(new Error(161, string.Format("Invalid Enemy (actID {0}) Pos (null) or Active (actID {1}) Pos (null)", enemy.ActID, target.ActID))); }
+                    }
+                }
+                else { Game.SetError(new Error(161, string.Format("Invalid actor (NOT Enemy) charID \"{0}\"", charID))); }
+            }
+            else { Game.SetError(new Error(161, string.Format("Invalid Enemy actor (null or ActorStatus.Gone) charID \"{0}\", Status {1}", charID, actor.Status))); }
+            return found;
+        }
+
+        /*
+                 /// <summary>
+        /// checks Enemy Character when moving for presence of target character in same place
         /// <param name="charID">ActID of Enemy character</param>
         /// <param name="pos">Current Position of Enemy character</param>
         /// </summary>
@@ -5389,6 +5586,7 @@ namespace Next_Game
             else { Game.SetError(new Error(161, string.Format("Invalid Enemy actor (null or ActorStatus.Gone) charID \"{0}\", Status {1}", charID, actor.Status))); }
             return found;
         }
+         */
 
         /// <summary>
         /// Checks Active actors who haven't moved to see if they have been found
@@ -5780,7 +5978,12 @@ namespace Next_Game
                                         Game.logTurn?.Write(string.Format(" [Captured -> Debug] refIn -> {0} distIn -> {1} refOut -> {2} distOut -> {3} tempRefID -> {4}",
                                             refIn, distIn, refOut, distOut, tempRefID));
                                     }
-                                    else { Game.logTurn?.Write(" [Captured] Major House dungeon"); }
+                                    else
+                                    {
+                                        //Captured in a Major House
+                                        tempRefID = loc.RefID;
+                                        Game.logTurn?.Write(" [Captured] Major House dungeon");
+                                    }
                                 }
                                 else { Game.SetError(new Error(174, string.Format("Invalid House returned (null) from player.LocID \"{0}\"", player.LocID))); }
                             }

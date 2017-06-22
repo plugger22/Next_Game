@@ -18,7 +18,7 @@
 # Taxes
 
 [TaxOfficialHigh]
-It's a good thing that King <newKing> is doing with his high road tax. If it was up to me I tax it even more.
+It's a good thing that King <newKing> is doing with his high road tax. If it was up to me I'd tax it even more.
 The Kingdom needs all the tax revenue it can collect. Tax 'em until they drop is my motto.
 If King <newKing> keeps taxing the King's Road like he is I might be in for a pay rise.
 The Road Tax is high but there is more juice that can be squeezed out of the lemon if King <newKing> is man enough.
@@ -216,6 +216,7 @@ That heir, <player>, <he> will chew King <newKing>'s balls off before breakfast
 They say that <he> sh*ts arrows and farts bolts. <player> sure is a legend around here.
 Yeah, <player> is a legend. Ask <randomMale> 'cause he swears that he saw <him> kill a full grown <animalBig> with <his> bare hands.
 I consider myself a true legend around here. Just like that <player> person. <He>'s one of us.
+I'd like me some roast <animalBig>. Is <player> the <man> to get it for me?
 
 [LegendBadEduc]
 <player>, the so called Usurper, I heard the <he> was frightened to crawl out of <his> bed in the morning.
