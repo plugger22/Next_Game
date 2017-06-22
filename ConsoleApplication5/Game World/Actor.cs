@@ -18,8 +18,8 @@ namespace Next_Game
     public enum ActorGone { None, Missing, Childbirth, Battle, Executed, Murdered, Accident, Disease, Injuries } //how died (or gone missing)?
     public enum WifeStatus { None, First_Wife, Second_Wife, Third_Wife, Fourth_Wife, Fifth_Wife, Sixth_Wife, Seventh_Wife }
     public enum ActorRelation { None, Wife, Husband, Son, Daughter, Father, Mother, Brother, Sister, Half_Brother, Half_Sister }
-    public enum ActorAIGoal { None, Wait, Hide, Search, Move} //specific for AI controlled actors
-    public enum ActorConceal { None, Disguise, SafeHouse} //specific to Player
+    public enum ActorAIGoal { None, Wait, Hide, Search, Move } //specific for AI controlled actors
+    public enum ActorConceal { None, Disguise, SafeHouse } //specific to Player
 
     public class Actor
     {
@@ -58,6 +58,10 @@ namespace Next_Game
         public int Revert { get; set; } //# of turns before Known status reverts to unknown
         public int LastKnownLocID { get; set; } //updated every turn Actor is known
         public int TurnsUnknown { get; set; } //how many turns ago was the last known position? -> increments when actor unknown, reset to zero when known
+        public bool Found { get; set; } //found by enemies if true, reset each at end of each turn
+        public bool Capture { get; set; } //if found when already Known, then 'true' and enemy about to capture active actor, reset at the end of each turn
+        private List<int> listOfEnemies; //if found, contains actID of all enemies who found you, cleared at end of each turn
+        private List<int> listOfSearched; //tracks every enemy who searches (in same place) for character to prevent enemies making multiple searches each turn. Reset at end of turn.
         //stats 
         public int Combat { get; set; } = 3;
         public int Wits { get; set; } = 3;
@@ -146,11 +150,13 @@ namespace Next_Game
             listOfRelLord = new List<Relation>();
             listOfRelPlyr = new List<Relation>();
             listOfConditions = new List<Condition>();
+            listOfEnemies = new List<int>();
+            listOfSearched = new List<int>();
         }
 
         public void SetTravelMode(TravelMode mode)
         {
-            switch(mode)
+            switch (mode)
             {
                 case TravelMode.Mounted:
                     Travel = TravelMode.Mounted;
@@ -377,7 +383,7 @@ namespace Next_Game
         /// <param name="status"></param>
         public void SetAllSkillsKnownStatus(bool status)
         {
-            for(int i = 0; i < arrayOfKnown.Length; i++)
+            for (int i = 0; i < arrayOfKnown.Length; i++)
             { arrayOfKnown[i] = status; }
         }
 
@@ -392,7 +398,7 @@ namespace Next_Game
             { arrayOfKnown[(int)skill] = status; return true; }
             return false;
         }
-            
+
         /// <summary>
         /// returns prefix for trait name, eg. 'to be', 'to have a'
         /// </summary>
@@ -493,7 +499,7 @@ namespace Next_Game
             {
                 //return filtered list -> either Active or Passive
                 List<int> tempItems = new List<int>(listOfItems);
-                for (int i = tempItems.Count - 1; i >= 0;  i--)
+                for (int i = tempItems.Count - 1; i >= 0; i--)
                 {
                     Item item = Game.world.GetItem(tempItems[i]);
                     if (item != null)
@@ -517,7 +523,7 @@ namespace Next_Game
             else
             {
                 int counter = 0;
-                for(int i = 0; i < listOfItems.Count; i++)
+                for (int i = 0; i < listOfItems.Count; i++)
                 {
                     Item item = Game.world.GetItem(listOfItems[i]);
                     if (item != null)
@@ -710,70 +716,6 @@ namespace Next_Game
             Resources = Math.Max(0, Resources);
             return messageText;
         }
-    }
-
-
-    //
-    //Active actors - player controlled ---
-    //
-
-    public class Active : Actor
-    {
-        public int ArcID { get; set; } //archetype ID
-        public int VoyageTimer { get; set; } //number of turns remaining for a sea voyage (arrives when zero)
-        public string ShipName { get; set; } //name of ship while undergoing a sea voyage
-        public string SeaName { get; set; } //name of sea that is being crossed
-        public int SeaGeoID { get; set; } //geoID of sea being traversed
-        public bool VoyageSafe { get; set; } //true if a safe ship, false if a risky ship
-        public int DeathTimer { get; set; } //default '999', if it gets to zero (dungeons, adrift) game over
-        public int CrowChance { get; set; } //chance of crow getting through
-        public int CrowDistance { get; set; } //distance between player and follower
-        public int CrowBonus { get; set; } //carry over bonus to CrowChance from previous turn
-        public bool Activated { get; set; } //can move/be given orders this turn, or not
-        //public bool Known { get; set; } //Presence is known or unknown?
-        //public int Revert { get; set; } //# of turns before Known status reverts to unknown
-        //public int TurnsUnknown { get; set; } //# of continuous turns spent 'Unknown' (used by conflict for game situations)
-        //public int LastKnownLocID { get; set; } //updated every turn Actor is known
-        public bool IntroPresented { get; set; } //true if actor has presented an introduction to gain access to a court
-        public bool Found { get; set; } //found by enemies if true, reset each at end of each turn
-        public bool Capture { get; set; } //if found when already Known, then 'true' and enemy about to capture active actor, reset at the end of each turn
-        private List<int> listOfEnemies; //if found, contains actID of all enemies who found you, cleared at end of each turn
-        private List<int> listOfSearched; //tracks every enemy who searches (in same place) for character to prevent enemies making multiple searches each turn. Reset at end of turn.
-        private List<string> crowTooltip;//explanation of factors influencing crow chance
-
-
-        public Active()
-        {
-            listOfEnemies = new List<int>();
-            listOfSearched = new List<int>();
-            crowTooltip = new List<string>();
-            Title = string.Format("{0}", Type);
-            DeathTimer = 999; //default value, ignored unless < 999
-            Known = false;
-            Found = false;
-        }
-
-        public Active(string name, ActorType type, ActorSex sex = ActorSex.Male) : base(name, type, sex)
-        {
-            listOfEnemies = new List<int>();
-            listOfSearched = new List<int>();
-            crowTooltip = new List<string>();
-            DeathTimer = 999;
-            Title = string.Format("{0}", Type);
-            Known = false;
-        }
-
-        public void AddCrowTooltip(string tooltip)
-        {
-            if (String.IsNullOrEmpty(tooltip) == false) { crowTooltip.Add(tooltip); }
-            else { Game.SetError(new Error(159, "Invalid tooltip input (null or Empty)")); }
-        }
-
-        public List<string> GetCrowTooltips()
-        { return crowTooltip; }
-
-        public void ClearCrowTooltips()
-        { crowTooltip.Clear(); }
 
         /// <summary>
         /// Add enemy to list, returns true if successfull, false if already on list
@@ -848,6 +790,70 @@ namespace Next_Game
     }
 
 
+    //
+    //Active actors - player controlled ---
+    //
+
+    public class Active : Actor
+    {
+        public int ArcID { get; set; } //archetype ID
+        public int VoyageTimer { get; set; } //number of turns remaining for a sea voyage (arrives when zero)
+        public string ShipName { get; set; } //name of ship while undergoing a sea voyage
+        public string SeaName { get; set; } //name of sea that is being crossed
+        public int SeaGeoID { get; set; } //geoID of sea being traversed
+        public bool VoyageSafe { get; set; } //true if a safe ship, false if a risky ship
+        public int DeathTimer { get; set; } //default '999', if it gets to zero (dungeons, adrift) game over
+        public int CrowChance { get; set; } //chance of crow getting through
+        public int CrowDistance { get; set; } //distance between player and follower
+        public int CrowBonus { get; set; } //carry over bonus to CrowChance from previous turn
+        public bool Activated { get; set; } //can move/be given orders this turn, or not
+        //public bool Known { get; set; } //Presence is known or unknown?
+        //public int Revert { get; set; } //# of turns before Known status reverts to unknown
+        //public int TurnsUnknown { get; set; } //# of continuous turns spent 'Unknown' (used by conflict for game situations)
+        //public int LastKnownLocID { get; set; } //updated every turn Actor is known
+        public bool IntroPresented { get; set; } //true if actor has presented an introduction to gain access to a court
+        //public bool Capture { get; set; } //if found when already Known, then 'true' and enemy about to capture active actor, reset at the end of each turn
+        //private List<int> listOfEnemies; //if found, contains actID of all enemies who found you, cleared at end of each turn
+        //private List<int> listOfSearched; //tracks every enemy who searches (in same place) for character to prevent enemies making multiple searches each turn. Reset at end of turn.
+        private List<string> crowTooltip;//explanation of factors influencing crow chance
+
+
+        public Active()
+        {
+            //listOfEnemies = new List<int>();
+            //listOfSearched = new List<int>();
+            crowTooltip = new List<string>();
+            Title = string.Format("{0}", Type);
+            DeathTimer = 999; //default value, ignored unless < 999
+            Known = false;
+            Found = false;
+        }
+
+        public Active(string name, ActorType type, ActorSex sex = ActorSex.Male) : base(name, type, sex)
+        {
+            //listOfEnemies = new List<int>();
+            //listOfSearched = new List<int>();
+            crowTooltip = new List<string>();
+            DeathTimer = 999;
+            Title = string.Format("{0}", Type);
+            Known = false;
+        }
+
+        public void AddCrowTooltip(string tooltip)
+        {
+            if (String.IsNullOrEmpty(tooltip) == false) { crowTooltip.Add(tooltip); }
+            else { Game.SetError(new Error(159, "Invalid tooltip input (null or Empty)")); }
+        }
+
+        public List<string> GetCrowTooltips()
+        { return crowTooltip; }
+
+        public void ClearCrowTooltips()
+        { crowTooltip.Clear(); }
+
+    }
+
+
     //Player avatar
     public class Player : Active
     {
@@ -865,7 +871,7 @@ namespace Next_Game
         public HorseStatus horseStatus { get; set; } //if no horse then HorseStatus.Gone
         private SortedDictionary<int, ActorRelation> dictFamily; //stores list of all relations (keyed off actorID)
         private List<int> listOfFavours; //stores possessionId of favours granted to Player
-        //private List<int> listOfIntroductions; //stores possessionId of introductions granted to the Player
+                                         //private List<int> listOfIntroductions; //stores possessionId of introductions granted to the Player
         private Dictionary<int, int> dictOfIntroductions; //Major House introductions, key is RefID, value is # of introductions to that house (all intro's are considered equal)
 
 
@@ -930,7 +936,7 @@ namespace Next_Game
         public void DeleteIntroduction(int refID)
         {
             int newRefID = refID; //newRefID used for search
-            //Bannerlord?
+                                  //Bannerlord?
             if (refID > 100 && refID < 1000)
             { newRefID = Game.world.GetLiegeLord(newRefID); }
             if (dictOfIntroductions.ContainsKey(newRefID))
@@ -951,7 +957,7 @@ namespace Next_Game
         public int GetNumOfIntroductions(int refID)
         {
             int newRefID = refID; //newRefID used for search
-            //Bannerlord?
+                                  //Bannerlord?
             if (refID > 100 && refID < 1000)
             { newRefID = Game.world.GetLiegeLord(refID); }
             if (dictOfIntroductions.ContainsKey(newRefID))
@@ -972,7 +978,7 @@ namespace Next_Game
     {
         public int FollowerID { get; set; } //FID
         public string Role { get; set; } //one or two word description of who they represent, eg. Beggar, Assasssin, etc.
-        //public int Loyalty_Player { get; set; } //loyalty to the player (1 to 5 stars) NOTE: superceded by RelPlyr instead
+                                         //public int Loyalty_Player { get; set; } //loyalty to the player (1 to 5 stars) NOTE: superceded by RelPlyr instead
 
         public Follower(string name, ActorType type, int followerID, ActorSex sex = ActorSex.Male) : base(name, type, sex)
         {
@@ -981,7 +987,6 @@ namespace Next_Game
             Title = string.Format("{0}", Type);
         }
     }
-
 
     //
     //Passive actors - all NPC's ---
@@ -1000,10 +1005,10 @@ namespace Next_Game
 
 
         public Passive()
-        { }
+        { Known = true; }
 
         public Passive(string name, ActorType type, ActorSex sex = ActorSex.Male) : base(name, type, sex)
-        { }
+        { Known = true; }
 
         /// <summary>
         /// Can be set directly but used to generate a msg
@@ -1062,7 +1067,7 @@ namespace Next_Game
         /// <returns></returns>
         public string GetFamilyRelationship(int withActorID)
         {
-            if( dictFamily.ContainsKey(withActorID))
+            if (dictFamily.ContainsKey(withActorID))
             { return Convert.ToString(dictFamily[withActorID]); }
             return "Unknown";
         }
@@ -1103,7 +1108,7 @@ namespace Next_Game
         {
             //Title set in history.CreateAdvisor
             listOfDisguises = new List<int>();
-        } 
+        }
 
         public void AddDisguise(int possID)
         {
@@ -1194,7 +1199,7 @@ namespace Next_Game
     /// </summary>
     public class Inquisitor : Enemy
     {
-        
+
         public Inquisitor(string name, ActorType type = ActorType.Inquisitor, ActorSex sex = ActorSex.Male) : base(name, type, sex)
         {
             Name = "Brother " + name;
@@ -1208,7 +1213,7 @@ namespace Next_Game
     /// </summary>
     public class Nemesis : Enemy
     {
-        
+
 
         public Nemesis(string name, ActorType type = ActorType.Nemesis, ActorSex sex = ActorSex.Male) : base(name, type, sex)
         {
@@ -1219,6 +1224,6 @@ namespace Next_Game
 
     }
 
-
+//new classes above here
 }
 

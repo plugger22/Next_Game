@@ -117,7 +117,7 @@ namespace Next_Game.Cartographic
                         if (person is Active)
                         {
                             //Active character moving
-                            Game.world.CheckIfFoundActive(pos, charID);
+                            Game.world.CheckIfFoundTarget(pos, charID);
                         }
                         else if (person is Enemy)
                         {
