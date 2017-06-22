@@ -60,6 +60,10 @@ namespace Next_Game
         public int TurnsUnknown { get; set; } //how many turns ago was the last known position? -> increments when actor unknown, reset to zero when known
         public bool Found { get; set; } //found by enemies if true, reset each at end of each turn
         public bool Capture { get; set; } //if found when already Known, then 'true' and enemy about to capture active actor, reset at the end of each turn
+        public ActorConceal Conceal { get; set; } //type of Concealment (disguise, safehouse)
+        public int ConcealLevel { get; set; } //number of stars the current type of concealment offers
+        public int ConcealDisguise { get; set; } //possID of current disguise (can only have one at any time)
+        public string ConcealText { get; set; } //short descriptive text giving name of Safe house or type of disguise
         private List<int> listOfEnemies; //if found, contains actID of all enemies who found you, cleared at end of each turn
         private List<int> listOfSearched; //tracks every enemy who searches (in same place) for character to prevent enemies making multiple searches each turn. Reset at end of turn.
         //stats 
@@ -859,10 +863,10 @@ namespace Next_Game
     {
         public int CrowsNumber { get; set; }
         public int HistoryID { get; set; } //actorID of character who becomes the usurper
-        public ActorConceal Conceal { get; set; } //type of Concealment (disguise, safehouse)
+        /*public ActorConceal Conceal { get; set; } //type of Concealment (disguise, safehouse)
         public int ConcealLevel { get; set; } //number of stars the current type of concealment offers
         public int ConcealDisguise { get; set; } //possID of current disguise (can only have one at any time)
-        public string ConcealText { get; set; } //short descriptive text giving name of Safe house or type of disguise
+        public string ConcealText { get; set; } //short descriptive text giving name of Safe house or type of disguise*/
         public string HorseName { get; set; }
         public string HorseType { get; set; }
         public int HorseHealth { get; set; } //if health reaches 0, horse is dead, range 1 to 5

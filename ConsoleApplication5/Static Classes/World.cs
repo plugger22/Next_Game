@@ -4893,7 +4893,7 @@ namespace Next_Game
                 //enemies can't be targets
                 if (!(target is Enemy))
                 {
-                    //find player in any situation, find follower only if Known
+                    //find Player or Passive in any situation, find follower only if Known
                     if (target is Player || target is Passive || (target is Follower && target.Known == true))
                     {
                         Game.logTurn?.Write("--- CheckIfFoundActive (World.cs)");
@@ -4916,7 +4916,7 @@ namespace Next_Game
                                     {
                                         //add DM if actor Known
                                         if (target.Known == true) { knownDM = ai_known; }
-                                        //add DM if Player and on foot (travelling)
+                                        //add DM if Player ONLY and on foot (travelling)
                                         if (target is Player && target.Travel == TravelMode.Foot) { onFootDM = ai_foot; }
                                         rndNum = rnd.Next(100);
                                         threshold = 0;
@@ -4957,12 +4957,11 @@ namespace Next_Game
                                             string description = "Unknown";
                                             int locID = Game.map.GetMapInfo(MapLayer.LocID, pos.PosX, pos.PosY);
                                             int refID = Game.map.GetMapInfo(MapLayer.RefID, pos.PosX, pos.PosY);
-                                            //different outcomes for Player and Followers
-                                            if (target is Player)
+                                            //different outcomes for Player, Passive or Followers
+                                            if (target is Player || target is Passive)
                                             {
-                                                Player player = target as Player;
-                                                //player has concealment
-                                                if (player.Conceal > ActorConceal.None && enemy.Value.Activated == true)
+                                                //target has concealment
+                                                if (target.Conceal > ActorConceal.None && enemy.Value.Activated == true)
                                                 { CheckConcealment(); }
                                                 //no concealment -> normal
                                                 else
@@ -4984,7 +4983,7 @@ namespace Next_Game
                                                     {
                                                         if (target.CheckEnemyOnList(enemy.Value.ActID) == false)
                                                         {
-                                                            //if already known then challenge/capture (But only if character hasn't already found player in the same turn -> must be another character)
+                                                            //if already known then challenge/capture (But only if character hasn't already found target in the same turn -> must be another character)
                                                             if (target.AddEnemy(enemy.Value.ActID, enemy.Value.Activated) == true)
                                                             {
                                                                 target.Revert = known_revert;
@@ -4995,14 +4994,17 @@ namespace Next_Game
                                                                     //only activated enemies can capture (Inquisitors ae always activated, Nemesis only if the gods are angry)
                                                                     target.Capture = true;
                                                                 }
-                                                                Record record = new Record(description, target.ActID, locID, CurrentActorEvent.Search);
-                                                                SetPlayerRecord(record);
+                                                                if (target is Player)
+                                                                {
+                                                                    Record record = new Record(description, target.ActID, locID, CurrentActorEvent.Search);
+                                                                    SetPlayerRecord(record);
+                                                                }
                                                                 SetMessage(new Message(description, MessageType.Search));
                                                             }
                                                             else
                                                             {
-                                                                //enemy has already found Player this turn
-                                                                Game.logTurn?.Write(string.Format(" [Search -> Previous] {0} {1}, ActID {2} has already Found Player this turn -> Result Cancelled", 
+                                                                //enemy has already found Target this turn
+                                                                Game.logTurn?.Write(string.Format(" [Search -> Previous] {0} {1}, ActID {2} has already Found Target this turn -> Result Cancelled", 
                                                                     enemy.Value.Title, enemy.Value.Name, enemy.Value.ActID));
                                                             }
                                                         }
