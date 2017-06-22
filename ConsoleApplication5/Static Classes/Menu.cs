@@ -197,12 +197,12 @@ namespace Next_Game
                         menuArrayCategories[2] = "Spy ---";
                         menuArrayCategories[3] = "Switch ---";
                         //Debug Map commands
-                        menuArrayText[0, 0] = "[G] Draw Route";
+                        menuArrayText[0, 0] = "[A] Draw Route";
                         menuArrayText[0, 1] = "[D] Route Debug";
                         menuArrayText[0, 2] = "[R] Routes";
                         menuArrayText[0, 3] = "[M] Map Toggle";
                         menuArrayText[0, 4] = "[I] Info Toggle";
-                        menuArrayText[0, 5] = "[A] Show GameVars";
+                        menuArrayText[0, 5] = "[G] Show GameVars";
                         menuArrayText[0, 6] = "[C] Show GameStats";
                         //Debug Info commands
                         menuArrayText[1, 0] = "[S] Show Secrets";

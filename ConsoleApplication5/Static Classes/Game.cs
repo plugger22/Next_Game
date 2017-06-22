@@ -419,7 +419,7 @@ namespace Next_Game
                                             break;
                                     }
                                     break;
-                                case RLKey.G:
+                                case RLKey.A:
                                     switch (_menuMode)
                                     {
                                         case MenuMode.Debug:
@@ -570,8 +570,12 @@ namespace Next_Game
                                         infoChannel.SetInfoList(world.GodChangeGameAct(), ConsoleDisplay.Input);
                                         break;
                                     case MenuMode.Debug:
-                                        //ShowGameVars
-                                        infoChannel.SetInfoList(display.ShowGameVarsRL(), ConsoleDisplay.Multi);
+                                        List<Snippet> inputList = new List<Snippet>();
+                                        inputList.Add(new Snippet("--- Show the Route between two Locations", RLColor.Magenta, RLColor.Black));
+                                        inputList.Add(new Snippet("Select ORIGIN Location by Mouse (press ESC to Exit)"));
+                                        infoChannel.SetInfoList(inputList, ConsoleDisplay.Input);
+                                        _inputState = 1;
+                                        _mouseOn = true;
                                         break;
                                 }
                                 break;
@@ -694,12 +698,8 @@ namespace Next_Game
                                         infoChannel.InsertHeader(new Snippet("--- all MARRIAGES", RLColor.Yellow, RLColor.Black), ConsoleDisplay.Multi);
                                         break;
                                     case MenuMode.Debug:
-                                        List<Snippet> inputList = new List<Snippet>();
-                                        inputList.Add(new Snippet("--- Show the Route between two Locations", RLColor.Magenta, RLColor.Black));
-                                        inputList.Add(new Snippet("Select ORIGIN Location by Mouse (press ESC to Exit)"));
-                                        infoChannel.SetInfoList(inputList, ConsoleDisplay.Input);
-                                        _inputState = 1;
-                                        _mouseOn = true;
+                                        //ShowGameVars
+                                        infoChannel.SetInfoList(display.ShowGameVarsRL(), ConsoleDisplay.Multi);
                                         break;
                                 }
                                 break;

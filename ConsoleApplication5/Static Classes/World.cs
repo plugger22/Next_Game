@@ -4703,13 +4703,13 @@ namespace Next_Game
                 {
                     if (enemy.Value is Inquisitor)
                     {
-                        state = 0;
-                        if (AIcontrol == true) { state = 1; }
                         enemy.Value.AIControl = AIcontrol;
-                        Game.variable.SetValue(GameVar.Inquisitor_AI, state);
                         Game.logTurn?.Write($"{enemy.Value.Title} {enemy.Value.Name}, ActID {enemy.Value.ActID} has AIControl -> {AIcontrol}");
                     }
                 }
+                state = 0;
+                if (AIcontrol == true) { state = 1; }
+                Game.variable.SetValue(GameVar.Inquisitor_AI, state);
             }
             else { Game.SetError(new Error(325, "[Alert] Can only change Inquisitor control status in Act Two")); }
         }
@@ -7586,6 +7586,8 @@ namespace Next_Game
                             //
                             else
                             {
+                                //Reset Inquisitors to AI control -> needs to be BEFORE gameAct is swung over to Act.One
+                                SetInquisitorControlStatus(true);
                                 Game.gameAct = Act.One;
                                 Game.logTurn?.Write($"[Notification] Game now in Act {Game.gameAct}");
                                 displayColor = badColor;
@@ -7618,6 +7620,7 @@ namespace Next_Game
                                         }
                                         //clear dictionary
                                         dictRoyalActors.Clear();
+                                        
                                     }
                                     else { Game.SetError(new Error(323, $"Invalid locReturn (null) for LocID \"{locReturn}\"")); }
                                 }
@@ -7668,7 +7671,7 @@ namespace Next_Game
                         //Populate dict Of Royal Actors
                         List<int> listOfActors = locCapital.GetActorList();
                         int newKingHouseID = Game.lore.NewKing.HouseID;
-                        for(int i = 0; i < listOfActors.Count; i++)
+                        for (int i = 0; i < listOfActors.Count; i++)
                         {
                             Actor actor = GetAnyActor(listOfActors[i]);
                             if (actor != null)
@@ -7677,7 +7680,7 @@ namespace Next_Game
                                 if (actor is Passive)
                                 {
                                     Passive passive = actor as Passive;
-                                    if (passive.HouseID == 9999 || passive.HouseID == newKingHouseID )
+                                    if (passive.HouseID == 9999 || passive.HouseID == newKingHouseID)
                                     {
                                         //DEBUG -> set all to Captured
                                         passive.Status = ActorStatus.Captured;
@@ -7687,6 +7690,9 @@ namespace Next_Game
                                 }
                             }
                         }
+                        //debug
+                        //SetInquisitorControlStatus(false);
+                        //
                     }
                     else { Game.SetError(new Error(324, "Invalid locCapital (null)")); }
                 }

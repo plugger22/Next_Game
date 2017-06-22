@@ -13,7 +13,7 @@ namespace Next_Game
         None,
         Promises_Num,
         View_Index,
-        New_RelRumours,
+        Next_RelRumours,
         View_Rollover,
         Account_Timer,
         Inquisitor_Budget,
@@ -43,7 +43,7 @@ namespace Next_Game
             //set up array of Globals
             arrayOfGameVars[1] = GameVar.Promises_Num;
             arrayOfGameVars[2] = GameVar.View_Index;
-            arrayOfGameVars[3] = GameVar.New_RelRumours;
+            arrayOfGameVars[3] = GameVar.Next_RelRumours;
             arrayOfGameVars[4] = GameVar.View_Rollover;
             arrayOfGameVars[5] = GameVar.Account_Timer;
             arrayOfGameVars[6] = GameVar.Inquisitor_Budget;

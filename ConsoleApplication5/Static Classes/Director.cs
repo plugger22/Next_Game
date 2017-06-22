@@ -5329,7 +5329,7 @@ namespace Next_Game
                 //set turn number to generate the next set of relationship rumours (turn after the first set has expired)
                 int newValue = Game.constant.GetValue(Global.REL_RUMOUR_TIME);
                 newValue += 1;
-                Game.variable.SetValue(GameVar.New_RelRumours, newValue);
+                Game.variable.SetValue(GameVar.Next_RelRumours, newValue);
                 //
                 //Houses ---
                 //
@@ -5671,14 +5671,14 @@ namespace Next_Game
             //
             // Relationship rumours
             //
-            int newSet = Game.variable.GetValue(GameVar.New_RelRumours);
+            int newSet = Game.variable.GetValue(GameVar.Next_RelRumours);
             Game.logTurn?.Write($"[Notification] Turn {Game.gameTurn}, generate new set of Relationship rumours on turn {newSet}");
             if (Game.gameTurn >= newSet)
             {
                 InitialiseRelationshipRumours();
                 //set turn number to generate the next set of relationship rumours (turn after the current set has expired)
                 int newValue = Game.gameTurn + newSet + 1 ;
-                Game.variable.SetValue(GameVar.New_RelRumours, newValue);
+                Game.variable.SetValue(GameVar.Next_RelRumours, newValue);
                 Game.logTurn?.Write($"[Notification] A new set of Relationship Rumours is set to be generated on turn {newValue}");
             }
             //

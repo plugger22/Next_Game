@@ -224,7 +224,7 @@
 # AI_SEARCH_KNOWN -> % DM to add to search chance (improves) when active character is 'Known'
 49: 30 @ 5 @ 50
 # AI_SEARCH_HIDE -> % chance to find active character when enemy has the Hide goal
-50: 20 @ 5 @ 80
+50: 25 @ 5 @ 80
 # AI_SEARCH_MOVE -> % chance to find active character when enemy has the Move goal
 51: 10 @ 5 @ 80
 # AI_SEARCH_SEARCH -> % chance to find active character when enemy has the Search goal
