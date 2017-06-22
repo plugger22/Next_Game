@@ -4134,7 +4134,7 @@ namespace Next_Game
         {
             int threshold = Game.constant.GetValue(Global.AI_HUNT_THRESHOLD); //max # turns since Player last known that AI will continue to hunt
             int knownStatus = GetActiveActorTrackingStatus(1); //if '0' then Known, if > 0 then # of days since last known
-            int playerLocID, distance, enemyDM;
+            int targetLocID, distance, enemyDM;
             int turnsToDestination = 0; //# of turns for Player to reach their destination if travelling (used to adjust threshold)
             Game.logTurn?.Write("--- UpdateAIController (World.cs)");
             //get target
@@ -4164,30 +4164,30 @@ namespace Next_Game
                     //threshold is adjusted upwards if Player enroute to a destination
                     threshold += turnsToDestination;
                     //Player location is current, if known, or last known if not. Will be destination if travelling.
-                    if (knownStatus == 0) { playerLocID = GetActiveActorLocByID(1); }
-                    else { playerLocID = GetActiveActorLastKnownLoc(1); }
-                    if (playerLocID > 0)
+                    if (knownStatus == 0) { targetLocID = GetActiveActorLocByID(1); }
+                    else { targetLocID = GetActiveActorLastKnownLoc(1); }
+                    if (targetLocID > 0)
                     {
                         //can only hunt a recently known player for so long before reverting back to normal behaviour (there is a time taken test below which tests threshold on a tighter basis)
                         if (knownStatus <= threshold)
                         {
                             //Known
-                            Location loc = Game.network.GetLocation(playerLocID);
+                            Location loc = Game.network.GetLocation(targetLocID);
                             if (loc != null)
                             {
-                                Position playerPos = loc.GetPosition();
+                                Position targetPos = loc.GetPosition();
                                 //dictionary to handle sorted distance data
                                 Dictionary<int, int> tempDict = new Dictionary<int, int>();
                                 foreach (var enemy in dictEnemyActors)
                                 {
                                     //store enemies in tempDict by dist to player (key is ActID, value distance)
                                     Position enemyPos = enemy.Value.GetPosition();
-                                    if (playerPos != null && enemyPos != null)
+                                    if (targetPos != null && enemyPos != null)
                                     {
                                         //only check enemies at a location (those who are travelling will have to wait)
                                         if (enemy.Value.Status == ActorStatus.AtLocation)
                                         {
-                                            List<Route> route = Game.network.GetRouteAnywhere(enemyPos, playerPos);
+                                            List<Route> route = Game.network.GetRouteAnywhere(enemyPos, targetPos);
                                             distance = Game.network.GetDistance(route);
                                             try
                                             { tempDict.Add(enemy.Value.ActID, distance); }
@@ -4200,7 +4200,7 @@ namespace Next_Game
                                     }
                                     else
                                     {
-                                        Game.SetError(new Error(167, string.Format("Invalid Target ({0}:{1}) or Enemy Position ({2}:{3})", playerPos.PosX, playerPos.PosY,
+                                        Game.SetError(new Error(167, string.Format("Invalid Target ({0}:{1}) or Enemy Position ({2}:{3})", targetPos.PosX, targetPos.PosY,
                                      enemyPos.PosX, enemyPos.PosY)));
                                     }
                                 }
