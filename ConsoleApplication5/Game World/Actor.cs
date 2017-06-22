@@ -53,6 +53,11 @@ namespace Next_Game
         public KingLoyalty Loyalty_Current { get; set; } = KingLoyalty.None; //current loyalty
         public TravelMode Travel { get; private set; } //on foot or mounted or incapacitated?
         public string Handle { get; set; } = null; //eg. Nickname
+        //hide and seek (only when applicable, eg. Player, followers, enemy, etc)
+        public bool Known { get; set; } //Presence is known or unknown?
+        public int Revert { get; set; } //# of turns before Known status reverts to unknown
+        public int LastKnownLocID { get; set; } //updated every turn Actor is known
+        public int TurnsUnknown { get; set; } //how many turns ago was the last known position? -> increments when actor unknown, reset to zero when known
         //stats 
         public int Combat { get; set; } = 3;
         public int Wits { get; set; } = 3;
@@ -93,6 +98,7 @@ namespace Next_Game
             RelKnown = false;
             InitialiseDataCollections();
             SetTravelMode(TravelMode.Mounted);
+            Known = true;
             //set title but only if not already set by lower level constructor
             if (String.IsNullOrEmpty(Title) == true) { Title = string.Format("{0}", Type); }
         }
@@ -724,10 +730,10 @@ namespace Next_Game
         public int CrowDistance { get; set; } //distance between player and follower
         public int CrowBonus { get; set; } //carry over bonus to CrowChance from previous turn
         public bool Activated { get; set; } //can move/be given orders this turn, or not
-        public bool Known { get; set; } //Presence is known or unknown?
-        public int Revert { get; set; } //# of turns before Known status reverts to unknown
-        public int TurnsUnknown { get; set; } //# of continuous turns spent 'Unknown' (used by conflict for game situations)
-        public int LastKnownLocID { get; set; } //updated every turn Actor is known
+        //public bool Known { get; set; } //Presence is known or unknown?
+        //public int Revert { get; set; } //# of turns before Known status reverts to unknown
+        //public int TurnsUnknown { get; set; } //# of continuous turns spent 'Unknown' (used by conflict for game situations)
+        //public int LastKnownLocID { get; set; } //updated every turn Actor is known
         public bool IntroPresented { get; set; } //true if actor has presented an introduction to gain access to a court
         public bool Found { get; set; } //found by enemies if true, reset each at end of each turn
         public bool Capture { get; set; } //if found when already Known, then 'true' and enemy about to capture active actor, reset at the end of each turn
@@ -1159,12 +1165,12 @@ namespace Next_Game
     public class Enemy : Actor
     {
         public bool Activated { get; set; } //Nemesis set to false at start, Inquisitor set to true. Can't capture unless activated.
-        public bool Known { get; set; } = false; //known or unknown?
-        public int Revert { get; set; } //# of turns before Known status reverts to unknown
-        public int LastKnownLocID { get; set; } //last known locId (could be destination if moving) -> updated every turn that actor is known
+        //public bool Known { get; set; } = false; //known or unknown?
+        //public int Revert { get; set; } //# of turns before Known status reverts to unknown
+        //public int LastKnownLocID { get; set; } //last known locId (could be destination if moving) -> updated every turn that actor is known
         public Position LastKnownPos { get; set; } //last known Position -> updated every turn that actor is known
         public ActorAIGoal LastKnownGoal { get; set; } //last known activity status -> updated every turn actor is known
-        public int TurnsUnknown { get; set; } //how many turns ago was the last known position? -> increments when actor unknown, reset to zero when known
+        //public int TurnsUnknown { get; set; } //how many turns ago was the last known position? -> increments when actor unknown, reset to zero when known
         public ActorAIGoal Goal { get; set; } //current goal (mission) for an AI controlled actor
         public int GoalTurns { get; set; } //number of turns currently spent on existing goal
         //ai related

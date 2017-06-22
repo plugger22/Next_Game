@@ -1552,7 +1552,7 @@ namespace Next_Game
         }
 
 
-        /// <summary>
+        /*/// <summary>
         /// returns current Loc (their destination if travelling)
         /// </summary>
         /// <param name="actID"></param>
@@ -1567,9 +1567,26 @@ namespace Next_Game
                 locID = person.LocID;
             }
             return locID;
-        }
+        }*/
 
-        /// <summary>
+        /*/// <summary>
+        /// returns current Loc (their destination if travelling)
+        /// </summary>
+        /// <param name="actID"></param>
+        /// <returns></returns>
+        public int GetActorLocationID(int actID)
+        {
+            int locID = 0;
+            //find in dictionary
+            if (dictAllActors.ContainsKey(actID))
+            {
+                Actor person = dictAllActors[actID];
+                locID = person.LocID;
+            }
+            return locID;
+        }*/
+
+        /*/// <summary>
         /// returns Last Known Loc of Active Actor (their destination if travelling)
         /// </summary>
         /// <param name="actID"></param>
@@ -1584,7 +1601,24 @@ namespace Next_Game
                 locID = person.LastKnownLocID;
             }
             return locID;
-        }
+        }*/
+
+        /*/// <summary>
+        /// returns Last Known Loc of Actor (their destination if travelling)
+        /// </summary>
+        /// <param name="actID"></param>
+        /// <returns></returns>
+        public int GetActorsLastKnownLoc(int actID)
+        {
+            int locID = 0;
+            //find in dictionary
+            if (dictAllActors.ContainsKey(actID))
+            {
+                Actor person = dictAllActors[actID];
+                locID = person.LastKnownLocID;
+            }
+            return locID;
+        }*/
 
         /// <summary>
         /// Checks dictSpecialActors and, if found, returns ActorID, otherwise '0'
@@ -4163,9 +4197,9 @@ namespace Next_Game
                 {
                     //threshold is adjusted upwards if Player enroute to a destination
                     threshold += turnsToDestination;
-                    //Player location is current, if known, or last known if not. Will be destination if travelling.
-                    if (knownStatus == 0) { targetLocID = GetActiveActorLocByID(1); }
-                    else { targetLocID = GetActiveActorLastKnownLoc(1); }
+                    //Target location is current, if known, or last known if not. Will be destination if travelling.
+                    if (knownStatus == 0) { targetLocID = target.LocID; }
+                    else { targetLocID = target.LastKnownLocID; }
                     if (targetLocID > 0)
                     {
                         //can only hunt a recently known player for so long before reverting back to normal behaviour (there is a time taken test below which tests threshold on a tighter basis)
