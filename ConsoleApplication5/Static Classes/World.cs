@@ -4896,7 +4896,7 @@ namespace Next_Game
                     //find Player or Passive in any situation, find follower only if Known
                     if (target is Player || target is Passive || (target is Follower && target.Known == true))
                     {
-                        Game.logTurn?.Write("--- CheckIfFoundActive (World.cs)");
+                        Game.logTurn?.Write("--- CheckIfFoundTarget (World.cs)");
                         foreach (var enemy in dictEnemyActors)
                         {
                             found = false;
@@ -5794,6 +5794,18 @@ namespace Next_Game
                         player.LocID = heldLocID;
                         player.Known = true;
                         dungeonLoc = GetLocationName(heldLocID);
+                        //place Player in Location
+                        Location locDungeon = Game.network.GetLocation(heldLocID);
+                        if (locDungeon != null)
+                        {
+                            //only do so if player not already there, eg. captured while travelling.
+                            if (locDungeon.CheckActorStatus(player.ActID) == false)
+                            {
+                                locDungeon.AddActor(player.ActID);
+                                Game.logTurn?.Write($"{player.Title} {player.Name}, ActID {player.ActID}, placed in dungeon Location at {locDungeon.LocName}, LocID {locDungeon.LocationID}");
+                            }
+                        }
+                        else { Game.SetError(new Error(174, $"Invalid locDungeon (null) for heldLocID {heldLocID} -> not placed in Location")); }
                         //Player loses any items they possess (needs to be a reverse loop as you're deleting as you go
                         if (player.CheckItems() == true)
                         {
@@ -5822,6 +5834,13 @@ namespace Next_Game
                             player.Conceal = ActorConceal.None;
                             player.ConcealLevel = 0;
                             player.ConcealText = "";
+                        }
+                        //Player loses horse
+                        if (player.horseStatus != HorseStatus.Gone)
+                        {
+                            description = Game.director.ChangeHorseStatus(HorseStatus.Gone, HorseGone.Confiscated);
+                            SetMessage(new Message(description, MessageType.Horse));
+                            SetPlayerRecord(new Record(description, player.ActID, player.LocID, CurrentActorEvent.Horse));
                         }
                         //Player any most Resources they have
                         if (player.Resources > 1)

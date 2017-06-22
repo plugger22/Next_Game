@@ -1,4 +1,4 @@
-# list of Statistics -> Info only as Hardcoded
+# list of Statistics -> Info only as Hardcoded, file NOT imported
 # Format -> Index Number (used in events) & Statistic Name
 
 
@@ -10,3 +10,4 @@
 6: AtSea_Days			# Number of Days spent At Sea
 7: Adrift_Days			# Number of Days spent Adrift
 8: Known_Days			# Number of Days spent Known
+9: Times_Captured		# Number of Times captured

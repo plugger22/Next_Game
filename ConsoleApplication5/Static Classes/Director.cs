@@ -32,7 +32,7 @@ namespace Next_Game
     public enum TravelMode { None, Foot, Mounted} //default Mounted for all characters
     public enum Assorted { HorseName, HorseType, Curse, AnimalBig, FoodFishEduc, FoodFishUned, FoodCropEduc, FoodCropUned, FoodHuntEduc, FoodHuntUned, Count}
     public enum HorseStatus { None, Normal, Stabled, Lame, Exhausted, Gone}
-    public enum HorseGone { None, Stolen, RunOff, Abandoned, Drowned, PutDown, Eaten, Murdered, Killed}
+    public enum HorseGone { None, Stolen, RunOff, Abandoned, Drowned, PutDown, Eaten, Murdered, Killed, Confiscated}
     public enum FoodInfo { None, Surplus, Deficit, House, Branch} //used to determine which food info is displayed / required
     public enum Goods { None, Food, Iron, Timber, Oil, Wool, Furs, Wine, Gold, Count} //goods that are imported / exported throughout world. Tracked by House.
     public enum Season { None, Spring, Summer, Autumn, Winter} //controlled by Game.SeasonTimer
@@ -4019,7 +4019,7 @@ namespace Next_Game
         /// </summary>
         /// <param name="newStatus"></param>
         /// <returns></returns>
-        private string ChangeHorseStatus(HorseStatus newStatus, HorseGone goneStatus = HorseGone.None)
+        internal string ChangeHorseStatus(HorseStatus newStatus, HorseGone goneStatus = HorseGone.None)
         {
             string resultText = "";
             Player player = (Player)Game.world.GetPlayer();
@@ -4074,6 +4074,9 @@ namespace Next_Game
                                     break;
                                 case ActorStatus.Adrift:
                                     locText = $"while adrift in {player.SeaName}";
+                                    break;
+                                case ActorStatus.Captured:
+                                    locText = "by the guards";
                                     break;
                                 default:
                                     Game.SetError(new Error(300, $"Invalid player.Status \"{player.Status}\""));
