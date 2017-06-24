@@ -59,16 +59,16 @@ namespace Next_Game.Cartographic
         }
 
         /// <summary>
-        /// Returns true if current GameVar.Inquisitor_Target is in the Move object party, false otherwise
+        /// Returns true if nominated actor is in Party
         /// </summary>
         /// <returns></returns>
-        public bool CheckAITargetInParty()
+        public bool CheckInParty(int actorID)
         {
             bool status = false;
-            int targetActID = Game.variable.GetValue(GameVar.Inquisitor_Target);
+            //int targetActID = Game.variable.GetValue(GameVar.Inquisitor_Target);
             for(int i = 0; i < characterList.Count; i++)
             {
-                if (characterList[i] == targetActID) { status = true;  Game.logTurn?.Write($"Target ActID {targetActID} found in MoveObject \"{MapMarker}\""); }
+                if (characterList[i] == actorID) { status = true;  Game.logTurn?.Write($"Actor ActID {actorID} found in MoveObject \"{MapMarker}\""); }
             }
             return status;
         }

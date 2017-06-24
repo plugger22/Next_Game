@@ -1451,21 +1451,21 @@ namespace Next_Game
         }
 
         /// <summary>
-        /// returns num days since player was last Known
+        /// returns num days since target was last Known
         /// </summary>
         /// <param name="actID"></param>
         /// <returns></returns>
-        public int GetActiveActorTrackingStatus(int actID)
+        public int GetTrackingStatus(int actID)
         {
             //check active actor in dictionary
-            if (dictActiveActors.ContainsKey(actID))
+            if (dictAllActors.ContainsKey(actID))
             {
-                Active active = dictActiveActors[actID];
-                if (active.Status != ActorStatus.Gone)
-                { return active.TurnsUnknown; }
-                else { Game.SetError(new Error(137, string.Format("Active Actor, actID {0},  \"Gone\"", active.ActID))); }
+                Actor actor = dictAllActors[actID];
+                if (actor.Status != ActorStatus.Gone)
+                { return actor.TurnsUnknown; }
+                else { Game.SetError(new Error(137, string.Format("Actor, actID {0},  \"Gone\"", actor.ActID))); }
             }
-            else { Game.SetError(new Error(137, "Active Actor not found in dictActiveActors")); }
+            else { Game.SetError(new Error(137, "Actor not found in dictAllActors")); }
             return 0;
         }
 
@@ -3389,8 +3389,8 @@ namespace Next_Game
             //Enemies (if AI Controlled)
             if (Game.variable.GetValue(GameVar.Inquisitor_AI) > 0)
             {
-                UpdateAIController();
-                SetEnemyActivity();
+                Game.ai.UpdateAIController();
+                Game.ai.SetEnemyActivity();
             }
             //Finances
             CheckRoyalAccounts();
@@ -4160,7 +4160,7 @@ namespace Next_Game
         }
 
 
-
+        /*
         /// <summary>
         /// Master AI controller, checked each turn, determines HuntMode for each enemy based on big picture analysis
         /// </summary>
@@ -4414,7 +4414,7 @@ namespace Next_Game
             else { Game.SetError(new Error(155, "Invalid Target (null)")); }
         }
 
-        /*/// <summary>
+        /// <summary>
         /// handles AI for all enemies, also updates status (known, etc.)
         /// </summary>
         private void SetEnemyActivity()
@@ -4529,7 +4529,7 @@ namespace Next_Game
                 }
             }
             else { Game.SetError(new Error(155, "Invalid Player (null)")); }
-        }*/
+        }
 
         /// <summary>
         /// sub method to provide a new goal when required -> Incorporates all necessary AI logic
@@ -4841,7 +4841,7 @@ namespace Next_Game
                 else { Game.SetError(new Error(156, string.Format("Invalid Enemy Location (null), for LocID {0}, Enemy ID {1}", enemy.LocID, enemy.ActID))); }
             }
             else { Game.SetError(new Error(156, "Invalid enemy input (null), existing goal retained")); }
-        }
+        }*/
 
         /// <summary>
         /// All inquisitors must have the same setting (the AI needs all of them to work properly). AI Control if True, Manual if False.
@@ -5758,80 +5758,6 @@ namespace Next_Game
             }
         }
 
-        /*/// <summary>
-        /// Analyses map and sets up the desired part of the AI array (# enemies at capital and # enemies to allocate to each branch)
-        /// </summary>
-        private void InitialiseAI()
-        {
-            Game.logStart?.Write("--- InitialiseAI (World.cs)");
-            int connectorBonus = Game.constant.GetValue(Global.AI_CONNECTOR);
-            //work out branch priorities
-            int numBranches = Game.network.GetNumBranches();
-            int numLocs = Game.network.GetNumLocations() - 1; //ignore capital
-            int[] arrayTemp = new int[5]; // (1 to 4 branches with 0 being Capital)
-            //allocate # loc's to each branch
-            int tempNumLocs = 0;
-            for (int i = 1; i < arrayTemp.Length; i++)
-            { arrayTemp[i] = Game.network.GetNumLocsByBranch(i); tempNumLocs += arrayTemp[i]; }
-            //tallies match?
-            if (tempNumLocs != numLocs)
-            { Game.SetError(new Error(165, string.Format("Loc's don't tally (tempNumLocs (GetNumLocsByBranch) {0} numLocs (GetNumLocations) {1})", tempNumLocs, numLocs))); }
-            //allow for connectors (provide more flexibility and make a branch more valuable to the enemy if present)
-            int adjustedNumLocs = 0;
-            for (int i = 1; i < arrayTemp.Length; i++)
-            {
-                if (Game.network.GetBranchConnectorStatus(i) == true)
-                { arrayTemp[i] += connectorBonus; }
-                adjustedNumLocs += arrayTemp[i];
-            }
-            //work out how many enemies should stay in the captial (normal operations)
-            int totalEnemies = Game.constant.GetValue(Global.INQUISITORS);
-            int enemiesInCapital = (int)Math.Round((double)(totalEnemies * Game.constant.GetValue(Global.AI_CAPITAL)) / 100);
-            int remainingEnemies = totalEnemies - enemiesInCapital;
-            //boundary check
-            if (remainingEnemies == 0)
-            {
-                Game.SetError(new Error(165, "Invalid Remaining Enemies (Zero)"));
-                remainingEnemies = 1; enemiesInCapital -= 1; enemiesInCapital = Math.Max(enemiesInCapital, 1);
-            }
-            arrayAI[1, 0] = enemiesInCapital;
-            //assign the desired number of enemies to each relevant branch
-            int percent, branchEnemies;
-            int poolOfEnemies = remainingEnemies;
-            for (int i = 1; i < arrayTemp.Length; i++)
-            {
-                percent = (int)Math.Round((double)(arrayTemp[i] * 100) / adjustedNumLocs);
-                branchEnemies = (int)Math.Round((double)(remainingEnemies * percent) / 100);
-                //check we aren't over allocating
-                if (branchEnemies > poolOfEnemies)
-                {
-                    if (poolOfEnemies == 0)
-                    {
-                        if (enemiesInCapital > 0)
-                        {
-                            //move an enemy from Capital duty to branch duty
-                            arrayAI[1, 0]--;
-                        }
-                        else { branchEnemies = 0; }
-                    }
-                    else { branchEnemies = poolOfEnemies; }
-                }
-                arrayAI[1, i] = branchEnemies;
-                //track total number of allocated enemies
-                poolOfEnemies -= branchEnemies;
-            }
-            //any unallocated actors get placed in the capital
-            if (poolOfEnemies > 0)
-            { arrayAI[1, 0] += poolOfEnemies; }
-            //copy finalised data from range 1 to range 2 (temp data used for assigning enemies in InitialiseEnemyActors)
-            for (int i = 0; i <= arrayAI.GetUpperBound(1); i++)
-            { arrayAI[2, i] = arrayAI[1, i]; }
-            //display arrayAI
-
-            for (int i = 0; i <= arrayAI.GetUpperBound(1); i++)
-            { Game.logStart?.Write(string.Format(" {0} {1} -> Current {2} -> Desired {3} -> adjusted Loc's {4}", i > 0 ? "Branch " : "Capital", i, arrayAI[0, i], arrayAI[1, i],
-                arrayTemp[i])); }
-        }*/
 
         /// <summary>
         /// tracks active and enemy actors at the start of each turn
