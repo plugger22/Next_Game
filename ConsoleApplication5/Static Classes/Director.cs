@@ -5687,7 +5687,7 @@ namespace Next_Game
             //
             //Enemies
             //
-            Dictionary<int, Enemy> dictEnemyActors = Game.world.GetEnemyActors();
+            Dictionary<int, Enemy> dictEnemyActors = Game.world.GetAllEnemyActors();
             if (dictEnemyActors != null)
             {
                 chanceOfRumour = Game.constant.GetValue(Global.ENEMY_RUMOURS);

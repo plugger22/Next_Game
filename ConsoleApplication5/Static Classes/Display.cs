@@ -1332,7 +1332,7 @@ namespace Next_Game
         public List<Snippet> ShowInquisitorsRL()
         {
             List<Snippet> listToDisplay = new List<Snippet>();
-            Dictionary<int, Enemy> dictEnemyActors = Game.world.GetEnemyActors();
+            Dictionary<int, Enemy> dictEnemyActors = Game.world.GetAllEnemyActors();
             listToDisplay.Add(new Snippet("--- Inquisitors", RLColor.Yellow, RLColor.Black));
             int locID;
             ActorStatus status;
@@ -1382,7 +1382,7 @@ namespace Next_Game
         /// <returns></returns>
         public List<Snippet> ShowEnemiesRL(bool debugMode = false)
         {
-            Dictionary<int, Enemy> dictEnemyActors = Game.world.GetEnemyActors();
+            Dictionary<int, Enemy> dictEnemyActors = Game.world.GetAllEnemyActors();
             ActorStatus status;
             int locID;
             int expire = Game.constant.GetValue(Global.KNOWN_REVERT);

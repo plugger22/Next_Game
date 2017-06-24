@@ -1,6 +1,6 @@
-//Exile Game file ops "LogError.txt" commenced at: 24/06/2017 14:56:44
-ERROR_29 "Location Deleted 2:3"
-Method: LocationSweeper,  Line: 1676,  Object: Map.cs,  Turn: 0,  Local Time: 14:56:44 UTC +10:00
-ERROR_29 "Location Deleted 4:3"
-Method: LocationSweeper,  Line: 1676,  Object: Map.cs,  Turn: 0,  Local Time: 14:56:44 UTC +10:00
-//Exile Game file ops "LogError.txt" Completed at: 24/06/2017 14:58:22
+//Exile Game file ops "LogError.txt" commenced at: 24/06/2017 16:11:07
+ERROR_78 ""Active" identical to existing, eventID 4 status unchanged"
+Method: ChangePlayerEventStatus,  Line: 3804,  Object: Director.cs,  Turn: 7,  Local Time: 16:15:23 UTC +10:00
+ERROR_78 ""Active" identical to existing, eventID 4 status unchanged"
+Method: ChangePlayerEventStatus,  Line: 3804,  Object: Director.cs,  Turn: 11,  Local Time: 16:15:59 UTC +10:00
+//Exile Game file ops "LogError.txt" Completed at: 24/06/2017 16:16:52

@@ -117,12 +117,12 @@ namespace Next_Game.Cartographic
                         if (person is Active)
                         {
                             //Active character moving
-                            Game.world.CheckIfFoundTarget(pos, charID);
+                            Game.ai.CheckIfFoundTarget(pos, charID);
                         }
                         else if (person is Enemy)
                         {
                             //Enemy character moving
-                            Game.world.CheckIfFoundEnemy(pos, charID);
+                            Game.ai.CheckIfFoundEnemy(pos, charID);
                         }
                     }
                     else { Game.SetError(new Error(160, string.Format("Invalid charID \"{0}\" Position (null)", charID))); }
