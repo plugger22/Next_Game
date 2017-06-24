@@ -1796,7 +1796,7 @@ namespace Next_Game
                             //In Dungeon
                             if (listInDungeon.Count > 0)
                             {
-                                locList.Add(new Snippet(string.Format("Characters in the {0} Dungeons", loc.LocName), RLColor.Brown, RLColor.Black));
+                                locList.Add(new Snippet(string.Format("Characters in the {0} Dungeons", loc.LocName), RLColor.LightRed, RLColor.Black));
                                 for (int i = 0; i < listInDungeon.Count; i++)
                                 { locList.Add(new Snippet(listInDungeon[i], textColor, RLColor.Black)); }
                             }

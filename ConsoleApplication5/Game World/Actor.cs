@@ -863,10 +863,6 @@ namespace Next_Game
     {
         public int CrowsNumber { get; set; }
         public int HistoryID { get; set; } //actorID of character who becomes the usurper
-        /*public ActorConceal Conceal { get; set; } //type of Concealment (disguise, safehouse)
-        public int ConcealLevel { get; set; } //number of stars the current type of concealment offers
-        public int ConcealDisguise { get; set; } //possID of current disguise (can only have one at any time)
-        public string ConcealText { get; set; } //short descriptive text giving name of Safe house or type of disguise*/
         public string HorseName { get; set; }
         public string HorseType { get; set; }
         public int HorseHealth { get; set; } //if health reaches 0, horse is dead, range 1 to 5
@@ -1174,12 +1170,8 @@ namespace Next_Game
     public class Enemy : Actor
     {
         public bool Activated { get; set; } //Nemesis set to false at start, Inquisitor set to true. Can't capture unless activated.
-        //public bool Known { get; set; } = false; //known or unknown?
-        //public int Revert { get; set; } //# of turns before Known status reverts to unknown
-        //public int LastKnownLocID { get; set; } //last known locId (could be destination if moving) -> updated every turn that actor is known
         public Position LastKnownPos { get; set; } //last known Position -> updated every turn that actor is known
         public ActorAIGoal LastKnownGoal { get; set; } //last known activity status -> updated every turn actor is known
-        //public int TurnsUnknown { get; set; } //how many turns ago was the last known position? -> increments when actor unknown, reset to zero when known
         public ActorAIGoal Goal { get; set; } //current goal (mission) for an AI controlled actor
         public int GoalTurns { get; set; } //number of turns currently spent on existing goal
         //ai related

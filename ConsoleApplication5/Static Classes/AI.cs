@@ -846,7 +846,7 @@ namespace Next_Game
                                             {
                                                 //target has concealment
                                                 if (target.Conceal > ActorConceal.None && enemy.Activated == true)
-                                                { Game.world.CheckConcealment(); }
+                                                { CheckConcealment(); }
                                                 //no concealment -> normal
                                                 else
                                                 {
@@ -882,7 +882,7 @@ namespace Next_Game
                                                                     target.Capture = true;
                                                                     //if a passive NPC then automatically captured (player only captured through an event or conflict)
                                                                     if (target is Passive)
-                                                                    { Game.world.SetTargetCaptured(enemy.ActID, target.ActID); }
+                                                                    { SetTargetCaptured(enemy.ActID, target.ActID); }
                                                                 }
                                                                 if (target is Player)
                                                                 {
@@ -1035,7 +1035,7 @@ namespace Next_Game
                                             {
                                                 //target has concealment
                                                 if (target.Conceal > ActorConceal.None && enemy.Value.Activated == true)
-                                                { Game.world.CheckConcealment(); }
+                                                { CheckConcealment(); }
                                                 //no concealment -> normal
                                                 else
                                                 {
@@ -1068,7 +1068,7 @@ namespace Next_Game
                                                                     target.Capture = true;
                                                                     //if a passive NPC then automatically captured (player only captured through an event or conflict)
                                                                     if (target is Passive)
-                                                                    { Game.world.SetTargetCaptured(enemy.Value.ActID, target.ActID); }
+                                                                    { SetTargetCaptured(enemy.Value.ActID, target.ActID); }
                                                                 }
                                                                 if (target is Player)
                                                                 {
@@ -1176,6 +1176,310 @@ namespace Next_Game
             }
         }
 
-            //new methods above here
+
+
+        /// <summary>
+        /// handles logistics when Player or Passive NPC is captured
+        /// </summary>
+        /// <param name="actID"></param>
+        /// <param name="enemyID">actID of enemy who captured the target</param>
+        public void SetTargetCaptured(int enemyID, int targetActID)
+        {
+            Game.logTurn?.Write("--- SetPlayerCaptured (World.cs)");
+            string description, dungeonLoc;
+            Actor target = Game.world.GetAnyActor(targetActID);
+            if (target != null)
+            {
+                List<Move> listMoveObjects = Game.world.GetMoveObjects();
+                //player travelling when captured?
+                if (target.Status == ActorStatus.Travelling)
+                {
+                    //loop list Move Objects and delete the Players
+                    for (int i = 0; i < listMoveObjects.Count; i++)
+                    {
+                        Move moveObject = listMoveObjects[i];
+                        if (moveObject.PlayerInParty == true)
+                        {
+                            Game.logTurn?.Write(string.Format(" [Capture -> Move Object] {0} {1}'s journey to {2} has been deleted", target.Title, target.Name, moveObject.GetDestination()));
+                            listMoveObjects.RemoveAt(i);
+                            break;
+                        }
+                    }
+                }
+                //change status
+                target.Status = ActorStatus.Captured;
+
+                Enemy enemy = Game.world.GetEnemyActor(enemyID);
+                if (enemy != null)
+                {
+                    if (enemy is Inquisitor)
+                    {
+                        //assign nearest major House / capital locID as the place where the target is held
+                        int heldLocID = 0;
+                        int tempRefID = 0;
+                        int refID = 0;
+                        if (target.LocID == 1) { tempRefID = 9999; Game.logTurn?.Write(" [Captured] dungeon -> Capital"); }
+                        else
+                        {
+                            Location loc = Game.network.GetLocation(target.LocID);
+                            if (loc != null)
+                            {
+                                //not at Capital -> At Major House?
+                                House house = Game.world.GetHouse(loc.RefID);
+                                if (house != null)
+                                {
+                                    if ((house is MajorHouse) == false)
+                                    {
+                                        //find nearest Major house/Capital moving Inwards
+                                        List<Route> routeToCapital = loc.GetRouteToCapital();
+                                        List<Position> pathToCapital = routeToCapital[0].GetPath();
+                                        int distIn = 0; int refIn = 0;
+                                        for (int i = 0; i < pathToCapital.Count; i++)
+                                        {
+                                            Position pos = pathToCapital[i];
+                                            if (pos != null)
+                                            {
+                                                refID = Game.map.GetMapInfo(MapLayer.RefID, pos.PosX, pos.PosY);
+                                                if (refID > 0)
+                                                {
+                                                    if (refID == 9999 || refID < 100)
+                                                    { refIn = refID; distIn = i; break; }
+                                                }
+                                            }
+                                        }
+                                        //find nearest Major house moving Outwards
+                                        int branch = loc.GetBranch();
+                                        List<Location> listBranchLocs = Game.network.GetBranchLocs(branch);
+                                        int distOut = 0; int refOut = 0;
+                                        int playerLocIndex = -1;
+                                        if (listBranchLocs != null && listBranchLocs.Count > 0)
+                                        {
+                                            //loop through list and find player's current location
+                                            for (int i = 0; i < listBranchLocs.Count; i++)
+                                            {
+                                                if (listBranchLocs[i].LocationID == target.LocID)
+                                                { playerLocIndex = i; break; }
+                                            }
+                                            //found Player's loc in the list?
+                                            if (playerLocIndex > -1)
+                                            {
+                                                //loop through branch list starting from player's current loc, moving outwards (redundantly start at player's current loc to avoid possible index overshoot)
+                                                for (int i = playerLocIndex; i < listBranchLocs.Count; i++)
+                                                {
+                                                    House tempHouse = Game.world.GetHouse(listBranchLocs[i].RefID);
+                                                    if (tempHouse is MajorHouse)
+                                                    {
+                                                        //found the first Major House along
+                                                        distOut = listBranchLocs[i].DistanceToCapital - loc.DistanceToCapital;
+                                                        refOut = listBranchLocs[i].RefID;
+                                                        //need to check the actual distance as it could be on a seperate branch and be much further than initially assumed
+                                                        List<Route> route = Game.network.GetRouteAnywhere(loc.GetPosition(), listBranchLocs[i].GetPosition());
+                                                        int checkDistance = Game.network.GetDistance(route);
+                                                        if (checkDistance > distOut)
+                                                        {
+                                                            Game.logTurn?.Write(string.Format(" [Captured -> CheckDistance] distOut increased from {0} to {1}", distOut, checkDistance));
+                                                            distOut = checkDistance;
+                                                        }
+                                                        break;
+                                                    }
+                                                }
+                                            }
+                                            else { Game.SetError(new Error(174, "Player's Loc not found in search through listBranchLocs.Search outwards Cancelled")); }
+                                        }
+                                        else { Game.SetError(new Error(174, "Invalid listBranchLocs (Null or Zero Count) Search outwards cancelled")); }
+                                        //Compare in and out and find closest, favouring inwards (if equal distance)
+                                        if (refIn > 0 && refOut == 0) { tempRefID = refIn; Game.logTurn?.Write(" [Captured] dungeon -> In (no out)"); }
+                                        else if (refOut > 0 && refIn == 0) { tempRefID = refOut; Game.logTurn?.Write(" [Captured] dungeon -> Out (no in)"); }
+                                        else if (distIn <= distOut) { tempRefID = refIn; Game.logTurn?.Write(" [Captured] dungeon -> In (distance <= out)"); }
+                                        else if (distIn > distOut) { tempRefID = refOut; Game.logTurn?.Write(" [Captured] dungeon -> Out (distance < in)"); }
+                                        else
+                                        {
+                                            Game.SetError(new Error(174, string.Format("Unable to get a valid dungeon loc, refIn -> {0} distIn -> {1} refOut -> {2} distOut -> {3}, default to Capital",
+                                            refIn, distIn, refOut, distOut)));
+                                        }
+                                        Game.logTurn?.Write(string.Format(" [Captured -> Debug] refIn -> {0} distIn -> {1} refOut -> {2} distOut -> {3} tempRefID -> {4}",
+                                            refIn, distIn, refOut, distOut, tempRefID));
+                                    }
+                                    else
+                                    {
+                                        //Captured in a Major House
+                                        tempRefID = loc.RefID;
+                                        Game.logTurn?.Write(" [Captured] Major House dungeon");
+                                    }
+                                }
+                                else { Game.SetError(new Error(174, string.Format("Invalid House returned (null) from target.LocID \"{0}\"", target.LocID))); }
+                            }
+                            else { Game.SetError(new Error(174, string.Format("Invalid Location returned (null) from target.LocID \"{0}\"", target.LocID))); }
+                        }
+                        //found a dungeon?
+                        if (tempRefID > 0)
+                        { heldLocID = Game.world.ConvertRefToLoc(tempRefID); }
+                        else { Game.logTurn?.Write("Unable to find a suitable location for Incarceration -> Default to KingsKeep"); heldLocID = 1; }
+                        //update Player LocID (dungeon), set Known to true (should be already)
+                        target.LocID = heldLocID;
+                        target.Known = true;
+                        dungeonLoc = Game.world.GetLocationName(heldLocID);
+                        //place Player in Location
+                        Location locDungeon = Game.network.GetLocation(heldLocID);
+                        if (locDungeon != null)
+                        {
+                            //only do so if player not already there, eg. captured while travelling.
+                            if (locDungeon.CheckActorStatus(target.ActID) == false)
+                            {
+                                locDungeon.AddActor(target.ActID);
+                                Game.logTurn?.Write($"{target.Title} {target.Name}, ActID {target.ActID}, placed in dungeon Location at {locDungeon.LocName}, LocID {locDungeon.LocationID}");
+                            }
+                        }
+                        else { Game.SetError(new Error(174, $"Invalid locDungeon (null) for heldLocID {heldLocID} -> not placed in Location")); }
+                        //
+                        //Player ONLY ---
+                        //
+                        if (target is Player)
+                        {
+                            Player player = target as Player;
+                            //administration
+                            description = string.Format("{0} has been Captured by {1} {2}, ActID {3} and is to be held at {4}", player.Name, enemy.Title, enemy.Name, enemy.ActID, dungeonLoc);
+                            Game.world.SetMessage(new Message(description, MessageType.Search));
+                            Game.world.SetPlayerRecord(new Record(description, player.ActID, player.LocID, CurrentActorEvent.Search));
+                            Game.world.SetCurrentRecord(new Record(description, enemy.ActID, player.LocID, CurrentActorEvent.Search));
+                            //Statistics
+                            Game.statistic.AddStat(GameStatistic.Times_Captured);
+                            //set death timer
+                            player.DeathTimer = 20;
+                            //Player loses any items they possess (needs to be a reverse loop as you're deleting as you go
+                            if (player.CheckItems() == true)
+                            {
+                                int possID;
+                                List<int> tempItems = player.GetItems();
+                                for (int k = tempItems.Count - 1; k >= 0; k--)
+                                {
+                                    possID = tempItems[k];
+                                    if (player.RemoveItem(possID) == true)
+                                    {
+                                        Item item = Game.world.GetItem(possID);
+                                        //admin
+                                        description = string.Format("ItemID {0}, {1}, has been confiscated by the {2} Dungeon Master", item.ItemID, item.Description, dungeonLoc);
+                                        Game.world.SetMessage(new Message(description, MessageType.Incarceration));
+                                        Game.world.SetPlayerRecord(new Record(description, player.ActID, player.LocID, CurrentActorEvent.Challenge));
+                                    }
+                                }
+                            }
+                            //Player loses a disguise if they have one
+                            if (player.ConcealDisguise > 0)
+                            {
+                                description = $"The disguise, {player.ConcealText}, has been confiscated by the {dungeonLoc} Dungeon Master";
+                                Game.world.SetMessage(new Message(description, MessageType.Incarceration));
+                                Game.world.SetPlayerRecord(new Record(description, player.ActID, player.LocID, CurrentActorEvent.Challenge));
+                                player.ConcealDisguise = 0;
+                                player.Conceal = ActorConceal.None;
+                                player.ConcealLevel = 0;
+                                player.ConcealText = "";
+                            }
+                            //Player loses horse
+                            if (player.horseStatus != HorseStatus.Gone)
+                            {
+                                description = Game.director.ChangeHorseStatus(HorseStatus.Gone, HorseGone.Confiscated);
+                                Game.world.SetMessage(new Message(description, MessageType.Horse));
+                                Game.world.SetPlayerRecord(new Record(description, player.ActID, player.LocID, CurrentActorEvent.Horse));
+                            }
+                            //Player any most Resources they have
+                            if (player.Resources > 1)
+                            {
+                                player.Resources = 1;
+                                description = string.Format("{0} \"{1}\", has had most of {2} gold confiscated by the {3} Dungeon Master", player.Name, player.Handle,
+                                    player.Sex == ActorSex.Male ? "his" : "her", dungeonLoc);
+                                Game.world.SetMessage(new Message(description, MessageType.Incarceration));
+                                Game.world.SetPlayerRecord(new Record(description, player.ActID, player.LocID, CurrentActorEvent.Challenge));
+                            }
+
+                        }
+                    }
+                    else if (enemy is Nemesis && target is Player)
+                    {
+                        //Nemsis capturing Player logic goes here -> TODO
+                    }
+                }
+                else { Game.SetError(new Error(174, "Invalid Enemy (null)")); }
+            }
+            else { Game.SetError(new Error(174, "Invalid Player (null)")); }
         }
+
+
+
+        /// <summary>
+        /// sub method to check a Target's (Player or Passive NPC) concealment when spotted. Handles all details of Concealment changes.
+        /// </summary>
+        internal void CheckConcealment()
+        {
+            int targetActID = Game.variable.GetValue(GameVar.Inquisitor_Target);
+            Actor target = Game.world.GetAnyActor(targetActID);
+            int refID = Game.world.ConvertLocToRef(target.LocID);
+            string lostText = "";
+            //target not found but concealment level takes a hit
+            target.ConcealLevel--;
+            Game.logTurn?.Write($" [Search -> Concealment] Target has been spotted by an Enemy but their concealment keeps their presence hidden");
+            //update concealment method
+            switch (target.Conceal)
+            {
+                case ActorConceal.Disguise:
+                    if (target.ConcealDisguise > 0)
+                    {
+                        Possession possession = Game.world.GetPossession(target.ConcealDisguise);
+                        if (possession != null)
+                        {
+                            if (possession is Disguise)
+                            {
+                                Disguise disguise = possession as Disguise;
+                                disguise.Strength--;
+                                //only show msg if remaining concealment otherwise just doubling up on msg's
+                                if (disguise.Strength > 0)
+                                {
+                                    lostText = $"The disguise, {target.ConcealText}, has lost a level of concealment (now {disguise.Strength} stars)";
+                                    Game.logTurn?.Write(lostText);
+                                    Game.world.SetMessage(new Message(lostText, MessageType.Search));
+                                }
+                                else
+                                {
+                                    //disguise revealed, no longer of any use
+                                    target.ConcealDisguise = 0;
+                                }
+                            }
+                            else { Game.SetError(new Error(251, $"Invalid possession type (not a disguise) for PossID {possession.PossID}")); }
+                        }
+                        else { Game.SetError(new Error(251, "Invalid Possession (null)")); }
+                    }
+                    else { Game.SetError(new Error(251, "Invalid target.ConcealDisguise (zero or less)")); }
+                    break;
+                case ActorConceal.SafeHouse:
+                    House house = Game.world.GetHouse(refID);
+                    if (house != null)
+                    {
+                        house.SafeHouse--;
+                        //only show msg if remaining concealment otherwise just doubling up on msg's
+                        if (house.SafeHouse > 0)
+                        {
+                            lostText = $"{target.ConcealText} Safe House at {house.LocName} has lost a level of concealment (now {house.SafeHouse} stars)";
+                            Game.logTurn?.Write(lostText);
+                            Game.world.SetMessage(new Message(lostText, MessageType.Search));
+                        }
+                    }
+                    else { Game.SetError(new Error(251, "Invalid house (null)")); }
+                    break;
+                default:
+                    Game.SetError(new Error(251, $"Unknown target.Conceal method \"{target.Conceal}\""));
+                    break;
+            }
+            if (target.ConcealLevel <= 0)
+            {
+                //concealment has expired
+                string expireText = $"The {target.Conceal} \"{target.ConcealText}\" has become known to the Enemy and no longer provides any benefit";
+                Game.logTurn?.Write($" [Search -> Conceal] {expireText}");
+                Game.world.SetMessage(new Message(expireText, MessageType.Search));
+                target.Conceal = ActorConceal.None;
+                target.ConcealText = "None";
+            }
+        }
+
+        //new methods above here
+    }
 }
