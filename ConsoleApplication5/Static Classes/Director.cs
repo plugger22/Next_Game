@@ -2919,7 +2919,7 @@ namespace Next_Game
                                                 else { Game.SetError(new Error(73, "Player Status isn't currently 'Captured' (Outcome)")); }
                                             }
                                             //captured -> records and message handled by called Method
-                                            else if (outcome.Data < 0) { Game.world.SetPlayerCaptured(option.ActorID); }
+                                            else if (outcome.Data < 0) { Game.world.SetTargetCaptured(option.ActorID, player.ActID); }
                                             else { Game.SetError(new Error(73, "Invalid Data value (zero) for OutcomeType -> Freedom")); }
                                             break;
                                         case OutcomeType.EventTimer:

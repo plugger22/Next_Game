@@ -22,3 +22,5 @@ Seed 18474 -> Thursday, 22 June 2017 5:30 PM
 Seed 58069 -> Thursday, 22 June 2017 5:31 PM
 Seed 55658 -> Thursday, 22 June 2017 8:03 PM
 Seed 55658 -> Thursday, 22 June 2017 8:23 PM
+Seed 63247 -> Saturday, 24 June 2017 11:00 AM
+Seed 19784 -> Saturday, 24 June 2017 11:21 AM

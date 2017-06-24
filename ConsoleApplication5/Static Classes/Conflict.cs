@@ -2430,7 +2430,7 @@ namespace Next_Game
                                         tempText += " and any Possessions that you possess will be confiscated";
                                     }
                                     //Incarcerated
-                                    Game.world.SetPlayerCaptured(opponent.ActID);
+                                    Game.world.SetTargetCaptured(opponent.ActID, player.ActID);
                                 }
                                 else { Game.SetError(new Error(113, "Invalid Data value (zero) for Freedom Result")); }
                                 if (String.IsNullOrEmpty(tempText) == false)

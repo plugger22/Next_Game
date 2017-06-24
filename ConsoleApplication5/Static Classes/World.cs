@@ -4993,6 +4993,9 @@ namespace Next_Game
                                                                 {
                                                                     //only activated enemies can capture (Inquisitors ae always activated, Nemesis only if the gods are angry)
                                                                     target.Capture = true;
+                                                                    //if a passive NPC then automatically captured (player only captured through an event or conflict)
+                                                                    if (target is Passive)
+                                                                    { SetTargetCaptured(enemy.Value.ActID, target.ActID); }
                                                                 }
                                                                 if (target is Player)
                                                                 {
@@ -5259,7 +5262,7 @@ namespace Next_Game
                             { listOfTargets.Add(active.Value); }
                         }
                     }
-                    //loop Active Actors and check if in same position as enemy
+                    //loop targets and check if in same position as enemy
                     foreach (Actor target in listOfTargets)
                     { 
                         found = false;
@@ -5363,6 +5366,9 @@ namespace Next_Game
                                                                 {
                                                                     //only activated enemies can capture (Inquisitors are always activated, Nemesis only when gods are angry)
                                                                     target.Capture = true;
+                                                                    //if a passive NPC then automatically captured (player only captured through an event or conflict)
+                                                                    if (target is Passive)
+                                                                    { SetTargetCaptured(enemy.ActID, target.ActID); }
                                                                 }
                                                                 if (target is Player)
                                                                 {
@@ -5858,19 +5864,19 @@ namespace Next_Game
         }
 
         /// <summary>
-        /// handles logistics when Player is captured
+        /// handles logistics when Player or Passive NPC is captured
         /// </summary>
         /// <param name="actID"></param>
-        /// <param name="enemyID">actID of enemy who captured the player</param>
-        public void SetPlayerCaptured(int enemyID)
+        /// <param name="enemyID">actID of enemy who captured the target</param>
+        public void SetTargetCaptured(int enemyID, int targetActID)
         {
             Game.logTurn?.Write("--- SetPlayerCaptured (World.cs)");
             string description, dungeonLoc;
-            Player player = GetPlayer();
-            if (player != null)
+            Actor target = GetAnyActor(targetActID);
+            if (target != null)
             {
                 //player travelling when captured?
-                if (player.Status == ActorStatus.Travelling)
+                if (target.Status == ActorStatus.Travelling)
                 {
                     //loop list Move Objects and delete the Players
                     for (int i = 0; i < listMoveObjects.Count; i++)
@@ -5878,28 +5884,28 @@ namespace Next_Game
                         Move moveObject = listMoveObjects[i];
                         if (moveObject.PlayerInParty == true)
                         {
-                            Game.logTurn?.Write(string.Format(" [Capture -> Move Object] {0} {1}'s journey to {2} has been deleted", player.Title, player.Name, moveObject.GetDestination()));
+                            Game.logTurn?.Write(string.Format(" [Capture -> Move Object] {0} {1}'s journey to {2} has been deleted", target.Title, target.Name, moveObject.GetDestination()));
                             listMoveObjects.RemoveAt(i);
                             break;
                         }
                     }
                 }
                 //change status
-                player.Status = ActorStatus.Captured;
-                player.DeathTimer = 20;
+                target.Status = ActorStatus.Captured;
+                
                 Enemy enemy = GetEnemyActor(enemyID);
                 if (enemy != null)
                 {
                     if (enemy is Inquisitor)
                     {
-                        //assign nearest major House / capital locID as the place where the player is held
+                        //assign nearest major House / capital locID as the place where the target is held
                         int heldLocID = 0;
                         int tempRefID = 0;
                         int refID = 0;
-                        if (player.LocID == 1) { tempRefID = 9999; Game.logTurn?.Write(" [Captured] dungeon -> Capital"); }
+                        if (target.LocID == 1) { tempRefID = 9999; Game.logTurn?.Write(" [Captured] dungeon -> Capital"); }
                         else
                         {
-                            Location loc = Game.network.GetLocation(player.LocID);
+                            Location loc = Game.network.GetLocation(target.LocID);
                             if (loc != null)
                             {
                                 //not at Capital -> At Major House?
@@ -5935,7 +5941,7 @@ namespace Next_Game
                                             //loop through list and find player's current location
                                             for (int i = 0; i < listBranchLocs.Count; i++)
                                             {
-                                                if (listBranchLocs[i].LocationID == player.LocID)
+                                                if (listBranchLocs[i].LocationID == target.LocID)
                                                 { playerLocIndex = i; break; }
                                             }
                                             //found Player's loc in the list?
@@ -5985,84 +5991,93 @@ namespace Next_Game
                                         Game.logTurn?.Write(" [Captured] Major House dungeon");
                                     }
                                 }
-                                else { Game.SetError(new Error(174, string.Format("Invalid House returned (null) from player.LocID \"{0}\"", player.LocID))); }
+                                else { Game.SetError(new Error(174, string.Format("Invalid House returned (null) from target.LocID \"{0}\"", target.LocID))); }
                             }
-                            else { Game.SetError(new Error(174, string.Format("Invalid Location returned (null) from player.LocID \"{0}\"", player.LocID))); }
+                            else { Game.SetError(new Error(174, string.Format("Invalid Location returned (null) from target.LocID \"{0}\"", target.LocID))); }
                         }
                         //found a dungeon?
                         if (tempRefID > 0)
                         { heldLocID = ConvertRefToLoc(tempRefID); }
                         else { Game.logTurn?.Write("Unable to find a suitable location for Incarceration -> Default to KingsKeep"); heldLocID = 1; }
                         //update Player LocID (dungeon), set Known to true (should be already)
-                        player.LocID = heldLocID;
-                        player.Known = true;
+                        target.LocID = heldLocID;
+                        target.Known = true;
                         dungeonLoc = GetLocationName(heldLocID);
                         //place Player in Location
                         Location locDungeon = Game.network.GetLocation(heldLocID);
                         if (locDungeon != null)
                         {
                             //only do so if player not already there, eg. captured while travelling.
-                            if (locDungeon.CheckActorStatus(player.ActID) == false)
+                            if (locDungeon.CheckActorStatus(target.ActID) == false)
                             {
-                                locDungeon.AddActor(player.ActID);
-                                Game.logTurn?.Write($"{player.Title} {player.Name}, ActID {player.ActID}, placed in dungeon Location at {locDungeon.LocName}, LocID {locDungeon.LocationID}");
+                                locDungeon.AddActor(target.ActID);
+                                Game.logTurn?.Write($"{target.Title} {target.Name}, ActID {target.ActID}, placed in dungeon Location at {locDungeon.LocName}, LocID {locDungeon.LocationID}");
                             }
                         }
                         else { Game.SetError(new Error(174, $"Invalid locDungeon (null) for heldLocID {heldLocID} -> not placed in Location")); }
-                        //Statistics
-                        Game.statistic.AddStat(GameStatistic.Times_Captured);
-                        //Player loses any items they possess (needs to be a reverse loop as you're deleting as you go
-                        if (player.CheckItems() == true)
+                        //
+                        //Player ONLY ---
+                        //
+                        if (target is Player)
                         {
-                            int possID;
-                            List<int> tempItems = player.GetItems();
-                            for (int k = tempItems.Count - 1; k >= 0; k--)
+                            Player player = target as Player;
+                            //Statistics
+                            Game.statistic.AddStat(GameStatistic.Times_Captured);
+                            //set death timer
+                            player.DeathTimer = 20;
+                            //Player loses any items they possess (needs to be a reverse loop as you're deleting as you go
+                            if (player.CheckItems() == true)
                             {
-                                possID = tempItems[k];
-                                if (player.RemoveItem(possID) == true)
+                                int possID;
+                                List<int> tempItems = player.GetItems();
+                                for (int k = tempItems.Count - 1; k >= 0; k--)
                                 {
-                                    Item item = GetItem(possID);
-                                    //admin
-                                    description = string.Format("ItemID {0}, {1}, has been confiscated by the {2} Dungeon Master", item.ItemID, item.Description, dungeonLoc);
-                                    SetMessage(new Message(description, MessageType.Incarceration));
-                                    SetPlayerRecord(new Record(description, player.ActID, player.LocID, CurrentActorEvent.Challenge));
+                                    possID = tempItems[k];
+                                    if (player.RemoveItem(possID) == true)
+                                    {
+                                        Item item = GetItem(possID);
+                                        //admin
+                                        description = string.Format("ItemID {0}, {1}, has been confiscated by the {2} Dungeon Master", item.ItemID, item.Description, dungeonLoc);
+                                        SetMessage(new Message(description, MessageType.Incarceration));
+                                        SetPlayerRecord(new Record(description, player.ActID, player.LocID, CurrentActorEvent.Challenge));
+                                    }
                                 }
                             }
+                            //Player loses a disguise if they have one
+                            if (player.ConcealDisguise > 0)
+                            {
+                                description = $"The disguise, {player.ConcealText}, has been confiscated by the {dungeonLoc} Dungeon Master";
+                                SetMessage(new Message(description, MessageType.Incarceration));
+                                SetPlayerRecord(new Record(description, player.ActID, player.LocID, CurrentActorEvent.Challenge));
+                                player.ConcealDisguise = 0;
+                                player.Conceal = ActorConceal.None;
+                                player.ConcealLevel = 0;
+                                player.ConcealText = "";
+                            }
+                            //Player loses horse
+                            if (player.horseStatus != HorseStatus.Gone)
+                            {
+                                description = Game.director.ChangeHorseStatus(HorseStatus.Gone, HorseGone.Confiscated);
+                                SetMessage(new Message(description, MessageType.Horse));
+                                SetPlayerRecord(new Record(description, player.ActID, player.LocID, CurrentActorEvent.Horse));
+                            }
+                            //Player any most Resources they have
+                            if (player.Resources > 1)
+                            {
+                                player.Resources = 1;
+                                description = string.Format("{0} \"{1}\", has had most of {2} gold confiscated by the {3} Dungeon Master", player.Name, player.Handle,
+                                    player.Sex == ActorSex.Male ? "his" : "her", dungeonLoc);
+                                SetMessage(new Message(description, MessageType.Incarceration));
+                                SetPlayerRecord(new Record(description, player.ActID, player.LocID, CurrentActorEvent.Challenge));
+                            }
+                            //administration
+                            description = string.Format("{0} has been Captured by {1} {2}, ActID {3} and is to be held at {4}", player.Name, enemy.Title, enemy.Name, enemy.ActID, dungeonLoc);
+                            SetMessage(new Message(description, MessageType.Search));
+                            SetPlayerRecord(new Record(description, player.ActID, player.LocID, CurrentActorEvent.Search));
+                            SetCurrentRecord(new Record(description, enemy.ActID, player.LocID, CurrentActorEvent.Search));
                         }
-                        //Player loses a disguise if they have one
-                        if (player.ConcealDisguise > 0)
-                        {
-                            description = $"The disguise, {player.ConcealText}, has been confiscated by the {dungeonLoc} Dungeon Master";
-                            SetMessage(new Message(description, MessageType.Incarceration));
-                            SetPlayerRecord(new Record(description, player.ActID, player.LocID, CurrentActorEvent.Challenge));
-                            player.ConcealDisguise = 0;
-                            player.Conceal = ActorConceal.None;
-                            player.ConcealLevel = 0;
-                            player.ConcealText = "";
-                        }
-                        //Player loses horse
-                        if (player.horseStatus != HorseStatus.Gone)
-                        {
-                            description = Game.director.ChangeHorseStatus(HorseStatus.Gone, HorseGone.Confiscated);
-                            SetMessage(new Message(description, MessageType.Horse));
-                            SetPlayerRecord(new Record(description, player.ActID, player.LocID, CurrentActorEvent.Horse));
-                        }
-                        //Player any most Resources they have
-                        if (player.Resources > 1)
-                        {
-                            player.Resources = 1;
-                            description = string.Format("{0} \"{1}\", has had most of {2} gold confiscated by the {3} Dungeon Master", player.Name, player.Handle, 
-                                player.Sex == ActorSex.Male ? "his" : "her", dungeonLoc);
-                            SetMessage(new Message(description, MessageType.Incarceration));
-                            SetPlayerRecord(new Record(description, player.ActID, player.LocID, CurrentActorEvent.Challenge));
-                        }
-                        //administration
-                        description = string.Format("{0} has been Captured by {1} {2}, ActID {3} and is to be held at {4}", player.Name, enemy.Title, enemy.Name, enemy.ActID, dungeonLoc);
-                        SetMessage(new Message(description, MessageType.Search));
-                        SetPlayerRecord(new Record(description, player.ActID, player.LocID, CurrentActorEvent.Search));
-                        SetCurrentRecord(new Record(description, enemy.ActID, player.LocID, CurrentActorEvent.Search));
                     }
-                    else if (enemy is Nemesis)
+                    else if (enemy is Nemesis && target is Player)
                     {
                         //Nemsis capturing Player logic goes here -> TODO
                     }
