@@ -76,6 +76,7 @@
     <Compile Include="Event_System\Situation.cs" />
     <Compile Include="Game World\Condition.cs" />
     <Compile Include="Game World\Rumour.cs" />
+    <Compile Include="Static Classes\AI.cs" />
     <Compile Include="Static Classes\Display.cs" />
     <Compile Include="Static Classes\Statistic.cs" />
     <Compile Include="Static Classes\Variable.cs" />

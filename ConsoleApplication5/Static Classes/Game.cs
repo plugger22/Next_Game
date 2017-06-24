@@ -71,6 +71,7 @@ namespace Next_Game
         public static Display display;
         public static History history;
         public static World world;
+        public static AI ai;
         public static Lore lore;
         public static Director director;
         public static InfoChannel infoChannel;
@@ -160,6 +161,8 @@ namespace Next_Game
                 StopTimer(timer_1, "History Initialisation");
                 world = new World(seed);
                 world.InitialiseWorld();
+                ai = new AI(seed);
+                ai.InitialiseAI();
                 infoChannel = new InfoChannel();
                 timer_1.Start();
                 director = new Director(seed);

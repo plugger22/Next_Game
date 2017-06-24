@@ -16,7 +16,7 @@ namespace Next_Game
         private List<ActorSpy> listTempActiveActors; //bloodhound temp lists
         private List<ActorSpy> listTempEnemyActors; //bloodhound temp lists
         private List<HorseRecord> listHorses; //record of all Player's past horses
-        private int[,] arrayAI; //'0' -> # enemies at capital, '1,2,3,4' -> # enemies patrolling each branch, [0,] -> actual, [1,] -> desired [2,] -> temp data
+        //private int[,] arrayAI; //'0' -> # enemies at capital, '1,2,3,4' -> # enemies patrolling each branch, [0,] -> actual, [1,] -> desired [2,] -> temp data
         private int[] arrayTradeData; //0 -> Total Wealth, 1 # of Food, 2 # Iron, 3 # Timber, 4 # Gold, 5 # Wine, 6 # Oil, 7 # Wool, 8 # Furs
         private readonly Queue<Snippet> messageQueue; //short term queue to display recent messages
         private Dictionary<int, Active> dictActiveActors; //list of all Player controlled actors keyed off actorID (non-activated followers aren't in dictionary)
@@ -59,7 +59,7 @@ namespace Next_Game
             listTempActiveActors = new List<ActorSpy>();
             listTempEnemyActors = new List<ActorSpy>();
             listHorses = new List<HorseRecord>();
-            arrayAI = new int[3, 5];
+            //arrayAI = new int[3, 5];
             arrayTradeData = new int[(int)Goods.Count];
             messageQueue = new Queue<Snippet>();
             dictActiveActors = new Dictionary<int, Active>();
@@ -128,8 +128,8 @@ namespace Next_Game
             InitialiseDisguises();
             Game.StopTimer(timer_2, "W: InitialiseVarious");
             timer_2.Start();
-            InitialiseAI();
-            InitialiseEnemyActors();
+            //Game.ai.SetAI(); -> moved to ai.cs
+            //Game.ai.InitialiseEnemyActors(); -> moved to ai.cs
             InitialiseItemPlacement();
             InitialiseLocTypes();
             Game.StopTimer(timer_2, "W: InitialiseAI");
@@ -252,7 +252,7 @@ namespace Next_Game
             else { Game.SetError(new Error(63, "No Inns present on Map -> No followers available to recruit")); }
         }
 
-        /// <summary>
+        /*/// <summary>
         /// set up inquisitors and any other enemies -> NOTE: must come AFTER InitialiseAI
         /// </summary>
         private void InitialiseEnemyActors()
@@ -296,7 +296,7 @@ namespace Next_Game
                     }
                 }
             }
-        }
+        }*/
 
         /// <summary>
         /// Initiate character Movement (creates a Move object)
@@ -5758,7 +5758,7 @@ namespace Next_Game
             }
         }
 
-        /// <summary>
+        /*/// <summary>
         /// Analyses map and sets up the desired part of the AI array (# enemies at capital and # enemies to allocate to each branch)
         /// </summary>
         private void InitialiseAI()
@@ -5831,7 +5831,7 @@ namespace Next_Game
             for (int i = 0; i <= arrayAI.GetUpperBound(1); i++)
             { Game.logStart?.Write(string.Format(" {0} {1} -> Current {2} -> Desired {3} -> adjusted Loc's {4}", i > 0 ? "Branch " : "Capital", i, arrayAI[0, i], arrayAI[1, i],
                 arrayTemp[i])); }
-        }
+        }*/
 
         /// <summary>
         /// tracks active and enemy actors at the start of each turn
