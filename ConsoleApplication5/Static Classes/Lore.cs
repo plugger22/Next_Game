@@ -329,13 +329,13 @@ namespace Next_Game
                 else
                 { kingdomEvent = HistKingdomEvent.Battle; descriptor = string.Format("The Battle of {0}", loc.LocName); }
                 //create record
-                string details = string.Format("{0} {1}", descriptor, Game.world.GetLocationCoords(loc.LocationID));
+                string details = string.Format("{0} {1}", descriptor, Game.display.GetLocationCoords(loc.LocationID));
                 Record record = new Record(details, loc.LocationID, loc.RefID, year, kingdomEvent);
                 Game.world.SetHistoricalRecord(record);
                 //add to list of battles to enable actor events to be fleshed out
                 listOfUprisingBattles.Add(descriptor);
                 //debug
-                Game.logStart?.Write(string.Format("{0} {1} {2}", year, descriptor, Game.world.GetLocationCoords(loc.LocationID)));
+                Game.logStart?.Write(string.Format("{0} {1} {2}", year, descriptor, Game.display.GetLocationCoords(loc.LocationID)));
 
                 //Battle descriptions - first (rebels always prevail, battle is smallest, rebel forces larger than royalists)
                 string text_1 = null;
@@ -928,7 +928,7 @@ namespace Next_Game
             Game.logStart?.Write("--- CreateNewMajorHouse (Lore.cs)");
             Passive oldBannerLord = Game.world.GetPassiveActor(TurnCoat);
             Game.logStart?.Write(string.Format("turncoatActor {0}, {1}, ActID: {2} RefID: {3} Loc: {4}", oldBannerLord.Name, oldBannerLord.Handle, oldBannerLord.ActID, oldBannerLord.RefID, 
-                Game.world.GetLocationName(oldBannerLord.LocID)));
+                Game.display.GetLocationName(oldBannerLord.LocID)));
 
             if (oldBannerLord != null && oldBannerLord.Status == ActorStatus.AtLocation)
             {
@@ -1012,7 +1012,7 @@ namespace Next_Game
                 Location locBannerLord = Game.network.GetLocation(bannerLocID);
                 if (locBannerLord == null) { Game.SetError(new Error(33, "Invalid locBannerLord Loc (null) Major issues ahead")); }
 
-                Game.logStart?.Write(string.Format("bannerlord comes from {0}, LocID: {1} ({2}:{3})", Game.world.GetLocationName(bannerLocID), bannerLocID, 
+                Game.logStart?.Write(string.Format("bannerlord comes from {0}, LocID: {1} ({2}:{3})", Game.display.GetLocationName(bannerLocID), bannerLocID, 
                     locBannerLord.GetPosX(), locBannerLord.GetPosY()));
                 Position pos = locBannerLord.GetPosition();
                 BannerLord newBannerLord = Game.history.CreateBannerLord(minorStruct.Name, pos, bannerLocID, minorStruct.RefID, houseID);

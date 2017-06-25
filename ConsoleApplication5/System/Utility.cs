@@ -329,7 +329,7 @@ namespace Next_Game
                                     data = Game.network.GetRandomLocation();
                                     Game.logTurn?.Write("[Alert -> LocRecent] No viable locID returned from director.GetRecentlyVisited -> default Network.GetRandomLocation");
                                 }
-                                replaceText = Game.world.GetLocationName(data);
+                                replaceText = Game.display.GetLocationName(data);
                                 break;
                             case "locRandom":
                                 data = Game.director.GetRandomVisited();
@@ -339,12 +339,12 @@ namespace Next_Game
                                     data = Game.network.GetRandomLocation();
                                     Game.logTurn?.Write("[Alert -> LocRandom] No viable locID returned from director.GetRandomVisited -> default Network.GetRandomLocation");
                                 }
-                                replaceText = Game.world.GetLocationName(data);
+                                replaceText = Game.display.GetLocationName(data);
                                 break;
                             case "roadTo":
                             case "locName":
                                 data = player.LocID;
-                                replaceText = Game.world.GetLocationName(data);
+                                replaceText = Game.display.GetLocationName(data);
                                 break;
                             case "court":
                                 data = Game.director.GetRandomCourt();

@@ -75,7 +75,7 @@ namespace Next_Game
             {
                 MajorHouse house = Game.world.GetMajorHouse(power.Key);
                 housePower = string.Format("Hid {0} House {1} has {2} BannerLords  {3}, Loyal to the {4} (orig {5})", house.HouseID, house.Name, house.GetNumBannerLords(),
-                    Game.world.GetLocationCoords(house.LocID), house.Loyalty_Current, house.Loyalty_AtStart);
+                    GetLocationCoords(house.LocID), house.Loyalty_Current, house.Loyalty_AtStart);
                 //highlight great houses still loyal to the old king
                 if (house.Loyalty_Current == KingLoyalty.New_King) { houseColor = RLColor.White; }
                 else { houseColor = Color._goodTrait; }
@@ -401,7 +401,7 @@ namespace Next_Game
                 {
                     age = Game.gameTurn - rumour.TurnRevealed;
                     string description = string.Format("First heard by {0}, ActID {1}, {2} day{3} ago at {4}", active.Name, active.ActID, age, age != 0 ? "s" : "",
-                        Game.world.GetLocationName(Game.world.ConvertRefToLoc(rumour.RefID)));
+                        GetLocationName(Game.world.ConvertRefToLoc(rumour.RefID)));
                     listData.Add(new Snippet(description));
                 }
 
@@ -629,7 +629,7 @@ namespace Next_Game
                 if (person is Advisor)
                 {
                     advisor = person as Advisor;
-                    actorType = Game.world.GetAdvisorType((Advisor)person);
+                    actorType = GetAdvisorType((Advisor)person);
                     if (advisor.advisorRoyal > AdvisorRoyal.None) { royalAdvisor = true; }
                 }
                 else { actorType = person.Title; }
@@ -667,22 +667,22 @@ namespace Next_Game
                     switch (person.Status)
                     {
                         case ActorStatus.AtLocation:
-                            locString = string.Format("Located at {0} {1}, Lid {2}, Rid {3}", Game.world.GetLocationName(locID), Game.world.GetLocationCoords(locID), locID, refID);
+                            locString = string.Format("Located at {0} {1}, Lid {2}, Rid {3}", GetLocationName(locID), GetLocationCoords(locID), locID, refID);
                             break;
                         case ActorStatus.Travelling:
                             Position pos = person.GetPosition();
                             locString = string.Format("Currently at {0}:{1}, {2} towards {3} {4}, Lid {5}, Rid {6}", pos.PosX, pos.PosY, person.Travel == TravelMode.Mounted ? "Riding" : "Walking",
-                                Game.world.GetLocationName(locID), Game.world.GetLocationCoords(locID), locID, refID);
+                                GetLocationName(locID), GetLocationCoords(locID), locID, refID);
                             break;
                         case ActorStatus.AtSea:
                             if (person is Player)
                             {
-                                locString = string.Format("At Sea onboard the S.S \"{0}\" bound for {1}, arriving in {2} more day{3}", player.ShipName, Game.world.GetLocationName(locID),
+                                locString = string.Format("At Sea onboard the S.S \"{0}\" bound for {1}, arriving in {2} more day{3}", player.ShipName, GetLocationName(locID),
                                     player.VoyageTimer, player.VoyageTimer != 1 ? "s" : "");
                             }
                             break;
                         case ActorStatus.Captured:
-                            locString = string.Format("Incarcerated in the bowels of the {0} dungeons. Survival time {1} more day{2}", Game.world.GetLocationName(locID), player.DeathTimer,
+                            locString = string.Format("Incarcerated in the bowels of the {0} dungeons. Survival time {1} more day{2}", GetLocationName(locID), player.DeathTimer,
                                 player.DeathTimer != 1 ? "s" : "");
                             break;
                         case ActorStatus.Adrift:
@@ -702,11 +702,11 @@ namespace Next_Game
                         {
                             case ActorConceal.SafeHouse:
                                 listToDisplay.Add(new Snippet(string.Format("{0, -16}", "At SafeHouse"), RLColor.Yellow, RLColor.Black, false));
-                                listToDisplay.Add(new Snippet(string.Format("{0, -12}", Game.display.GetStars(player.ConcealLevel)), RLColor.LightRed, RLColor.Black));
+                                listToDisplay.Add(new Snippet(string.Format("{0, -12}", GetStars(player.ConcealLevel)), RLColor.LightRed, RLColor.Black));
                                 break;
                             case ActorConceal.Disguise:
                                 listToDisplay.Add(new Snippet(string.Format("{0, -16}", "In Disguise"), RLColor.Yellow, RLColor.Black, false));
-                                listToDisplay.Add(new Snippet(string.Format("{0, -12}", Game.display.GetStars(player.ConcealLevel)), RLColor.LightRed, RLColor.Black, false));
+                                listToDisplay.Add(new Snippet(string.Format("{0, -12}", GetStars(player.ConcealLevel)), RLColor.LightRed, RLColor.Black, false));
                                 listToDisplay.Add(new Snippet($"{disguise?.Description}", unknownColor, RLColor.Black));
                                 break;
                         }
@@ -763,7 +763,7 @@ namespace Next_Game
                     if ((age == SkillAge.Five && abilityStars != 3) || age == SkillAge.Fifteen)
                     {
                         listToDisplay.Add(new Snippet(string.Format("{0, -16}", "Combat"), skillColor, RLColor.Black, false));
-                        listToDisplay.Add(new Snippet(string.Format("{0, -12}", Game.display.GetStars(abilityStars)), starColor, RLColor.Black, newLine));
+                        listToDisplay.Add(new Snippet(string.Format("{0, -12}", GetStars(abilityStars)), starColor, RLColor.Black, newLine));
                         if (abilityStars != 3)
                         { listToDisplay.Add(new Snippet(string.Format("{0} {1}", person.arrayOfTraitNames[(int)trait], effectText), traitColor, RLColor.Black)); }
                     }
@@ -784,7 +784,7 @@ namespace Next_Game
                     if ((age == SkillAge.Five && abilityStars != 3) || age == SkillAge.Fifteen)
                     {
                         listToDisplay.Add(new Snippet(string.Format("{0, -16}", "Wits"), skillColor, RLColor.Black, false));
-                        listToDisplay.Add(new Snippet(string.Format("{0, -12}", Game.display.GetStars(abilityStars)), starColor, RLColor.Black, newLine));
+                        listToDisplay.Add(new Snippet(string.Format("{0, -12}", GetStars(abilityStars)), starColor, RLColor.Black, newLine));
                         if (abilityStars != 3)
                         { listToDisplay.Add(new Snippet(string.Format("{0} {1}", person.arrayOfTraitNames[(int)trait], effectText), traitColor, RLColor.Black)); }
                     }
@@ -805,7 +805,7 @@ namespace Next_Game
                     if ((age == SkillAge.Five && abilityStars != 3) || age == SkillAge.Fifteen)
                     {
                         listToDisplay.Add(new Snippet(string.Format("{0, -16}", "Charm"), skillColor, RLColor.Black, false));
-                        listToDisplay.Add(new Snippet(string.Format("{0, -12}", Game.display.GetStars(abilityStars)), starColor, RLColor.Black, newLine));
+                        listToDisplay.Add(new Snippet(string.Format("{0, -12}", GetStars(abilityStars)), starColor, RLColor.Black, newLine));
                         if (abilityStars != 3)
                         { listToDisplay.Add(new Snippet(string.Format("{0} {1}", person.arrayOfTraitNames[(int)trait], effectText), traitColor, RLColor.Black)); }
                     }
@@ -826,7 +826,7 @@ namespace Next_Game
                     if ((age == SkillAge.Five && abilityStars != 3) || age == SkillAge.Fifteen)
                     {
                         listToDisplay.Add(new Snippet(string.Format("{0, -16}", "Treachery"), skillColor, RLColor.Black, false));
-                        listToDisplay.Add(new Snippet(string.Format("{0, -12}", Game.display.GetStars(abilityStars)), starColor, RLColor.Black, newLine));
+                        listToDisplay.Add(new Snippet(string.Format("{0, -12}", GetStars(abilityStars)), starColor, RLColor.Black, newLine));
                         if (abilityStars != 3)
                         { listToDisplay.Add(new Snippet(string.Format("{0} {1}", person.arrayOfTraitNames[(int)trait], effectText), traitColor, RLColor.Black)); }
                     }
@@ -847,7 +847,7 @@ namespace Next_Game
                     if ((age == SkillAge.Five && abilityStars != 3) || age == SkillAge.Fifteen)
                     {
                         listToDisplay.Add(new Snippet(string.Format("{0, -16}", "Leadership"), skillColor, RLColor.Black, false));
-                        listToDisplay.Add(new Snippet(string.Format("{0, -12}", Game.display.GetStars(abilityStars)), starColor, RLColor.Black, newLine));
+                        listToDisplay.Add(new Snippet(string.Format("{0, -12}", GetStars(abilityStars)), starColor, RLColor.Black, newLine));
                         if (abilityStars != 3)
                         { listToDisplay.Add(new Snippet(string.Format("{0} {1}", person.arrayOfTraitNames[(int)trait], effectText), traitColor, RLColor.Black)); }
                     }
@@ -870,7 +870,7 @@ namespace Next_Game
                         if ((age == SkillAge.Five && abilityStars != 3) || age == SkillAge.Fifteen)
                         {
                             listToDisplay.Add(new Snippet(string.Format("{0, -16}", "Touched"), skillColor, RLColor.Black, false));
-                            listToDisplay.Add(new Snippet(string.Format("{0, -12}", Game.display.GetStars(abilityStars)), starColor, RLColor.Black, newLine));
+                            listToDisplay.Add(new Snippet(string.Format("{0, -12}", GetStars(abilityStars)), starColor, RLColor.Black, newLine));
                             if (abilityStars != 3)
                             { listToDisplay.Add(new Snippet(string.Format("{0} {1}", person.arrayOfTraitNames[(int)trait], effectText), traitColor, RLColor.Black)); }
                         }
@@ -920,7 +920,7 @@ namespace Next_Game
                     int relStars = person.GetRelPlyrStars();
                     listToDisplay.Add(new Snippet(string.Format("{0, -16}", "Player"), false));
                     if (person.RelKnown == true) { foreColor = RLColor.LightRed; } else { foreColor = unknownColor; }
-                    listToDisplay.Add(new Snippet(string.Format("{0, -12}", Game.display.GetStars(relStars)), foreColor, RLColor.Black, false));
+                    listToDisplay.Add(new Snippet(string.Format("{0, -12}", GetStars(relStars)), foreColor, RLColor.Black, false));
                     int change = person.GetPlayerChange();
                     int relPlyr = person.GetRelPlyr();
                     string tagText = string.Format("(Change {0}{1})", change > 0 ? "+" : "", change);
@@ -938,7 +938,7 @@ namespace Next_Game
                     {
                         relStars = person.GetRelLordStars();
                         listToDisplay.Add(new Snippet(string.Format("{0, -16}", "Lord"), false));
-                        listToDisplay.Add(new Snippet(string.Format("{0, -12}", Game.display.GetStars(relStars)), foreColor, RLColor.Black, false));
+                        listToDisplay.Add(new Snippet(string.Format("{0, -12}", GetStars(relStars)), foreColor, RLColor.Black, false));
                         change = person.GetLordChange();
                         int relLord = person.GetRelLord();
                         tagText = string.Format("(Change {0}{1})", change > 0 ? "+" : "", change);
@@ -961,13 +961,13 @@ namespace Next_Game
                     resources = Math.Min(5, resources);
                     listToDisplay.Add(new Snippet("Possessions", RLColor.Brown, RLColor.Black));
                     listToDisplay.Add(new Snippet(string.Format("{0, -16}", "Resources"), false));
-                    listToDisplay.Add(new Snippet(string.Format("{0, -12}", Game.display.GetStars(resources)), RLColor.LightRed, RLColor.Black, false));
+                    listToDisplay.Add(new Snippet(string.Format("{0, -12}", GetStars(resources)), RLColor.LightRed, RLColor.Black, false));
                     listToDisplay.Add(new Snippet(string.Format("{0}", (ResourceLevel)resources), true));
                     //Disguise
                     if (player?.ConcealDisguise > 0 && disguise != null)
                     {
                         listToDisplay.Add(new Snippet(string.Format("{0, -16}", "Disguise"), false));
-                        listToDisplay.Add(new Snippet(string.Format("{0, -12}", Game.display.GetStars(disguise.Strength)), RLColor.LightRed, RLColor.Black, false));
+                        listToDisplay.Add(new Snippet(string.Format("{0, -12}", GetStars(disguise.Strength)), RLColor.LightRed, RLColor.Black, false));
                         listToDisplay.Add(new Snippet(string.Format("{0}", disguise.Description), true));
                     }
                 }
@@ -978,7 +978,7 @@ namespace Next_Game
                     resources = Math.Min(5, resources);
                     listToDisplay.Add(new Snippet("Possessions", RLColor.Brown, RLColor.Black));
                     listToDisplay.Add(new Snippet(string.Format("{0, -16}", "Resources"), false));
-                    listToDisplay.Add(new Snippet(string.Format("{0, -12}", Game.display.GetStars(resources)), RLColor.LightRed, RLColor.Black, false));
+                    listToDisplay.Add(new Snippet(string.Format("{0, -12}", GetStars(resources)), RLColor.LightRed, RLColor.Black, false));
                     listToDisplay.Add(new Snippet(string.Format("{0}", (ResourceLevel)resources), true));
                 }
                 else if (person is Advisor)
@@ -998,7 +998,7 @@ namespace Next_Game
                                     if (possession is Disguise)
                                     {
                                         Disguise tempDisguise = possession as Disguise;
-                                        listToDisplay.Add(new Snippet($"Disguise \"{tempDisguise.Description}\", PossID {tempDisguise.PossID} {Game.display.GetStars(tempDisguise.Strength)}", unknownColor, RLColor.Black));
+                                        listToDisplay.Add(new Snippet($"Disguise \"{tempDisguise.Description}\", PossID {tempDisguise.PossID} {GetStars(tempDisguise.Strength)}", unknownColor, RLColor.Black));
                                     }
                                     else { Game.SetError(new Error(245, $"Invalid Possession (not a Disguise) for PossID {possession.PossID}")); }
                                 }
@@ -1033,7 +1033,7 @@ namespace Next_Game
                         string horseText = string.Format("A {0}, {1}, owned for {2} day{3}", player.HorseType, player.horseStatus, player.HorseDays, player.HorseDays != 1 ? "s" : "");
                         string horseName = $"\"{player.HorseName}\"";
                         listToDisplay.Add(new Snippet(string.Format("{0, -16}", horseName), false));
-                        listToDisplay.Add(new Snippet(string.Format("{0, -12}", Game.display.GetStars(player.HorseHealth)), RLColor.LightRed, RLColor.Black, false));
+                        listToDisplay.Add(new Snippet(string.Format("{0, -12}", GetStars(player.HorseHealth)), RLColor.LightRed, RLColor.Black, false));
                         listToDisplay.Add(new Snippet(horseText, true));
                     }
                     else { listToDisplay.Add(new Snippet("None", RLColor.White, RLColor.Black)); }
@@ -1094,7 +1094,7 @@ namespace Next_Game
                         if (secret != null)
                         {
                             listToDisplay.Add(new Snippet(string.Format("{0} {1} ", secret.Year, secret.Description), false));
-                            listToDisplay.Add(new Snippet(string.Format("{0}", Game.display.GetStars(secret.Strength)), RLColor.LightRed, RLColor.Black));
+                            listToDisplay.Add(new Snippet(string.Format("{0}", GetStars(secret.Strength)), RLColor.LightRed, RLColor.Black));
                         }
                     }
                 }
@@ -1112,7 +1112,7 @@ namespace Next_Game
                             if (favour != null)
                             {
                                 listToDisplay.Add(new Snippet(string.Format("{0} {1} ", favour.Year, favour.Description), false));
-                                listToDisplay.Add(new Snippet(string.Format("{0}", Game.display.GetStars(favour.Strength)), RLColor.LightRed, RLColor.Black));
+                                listToDisplay.Add(new Snippet(string.Format("{0}", GetStars(favour.Strength)), RLColor.LightRed, RLColor.Black));
                             }
                         }
                     }
@@ -1143,7 +1143,7 @@ namespace Next_Game
                         if (promise != null)
                         {
                             listToDisplay.Add(new Snippet(string.Format("{0} {1}", promise.Year, promise.Description), false));
-                            listToDisplay.Add(new Snippet(string.Format("    {0}", Game.display.GetStars(promise.Strength)), RLColor.LightRed, RLColor.Black));
+                            listToDisplay.Add(new Snippet(string.Format("    {0}", GetStars(promise.Strength)), RLColor.LightRed, RLColor.Black));
                         }
                     }
                 }
@@ -1242,7 +1242,7 @@ namespace Next_Game
                 if (status != ActorStatus.Gone)
                 {
                     locID = actor.Value.LocID;
-                    locName = Game.world.GetLocationName(locID);
+                    locName = GetLocationName(locID);
                     switch (status)
                     {
                         case ActorStatus.AtLocation:
@@ -1264,7 +1264,7 @@ namespace Next_Game
                                 if (player.Conceal == ActorConceal.Disguise)
                                 { concealText = string.Format("In Disguise ({0} star{1})", player.ConcealLevel, player.ConcealLevel != 1 ? "s" : ""); }
                                 else if (player.Travel == TravelMode.Mounted)
-                                { concealText = Game.display.GetStars(player.HorseHealth); }
+                                { concealText = GetStars(player.HorseHealth); }
                             }
                             break;
                         case ActorStatus.AtSea:
@@ -1349,7 +1349,7 @@ namespace Next_Game
                     if (status != ActorStatus.Gone)
                     {
                         locID = enemy.Value.LocID;
-                        locName = Game.world.GetLocationName(locID);
+                        locName = GetLocationName(locID);
                         switch (status)
                         {
                             case ActorStatus.AtLocation:
@@ -1398,7 +1398,7 @@ namespace Next_Game
             {
                 status = enemy.Value.Status;
                 locID = enemy.Value.LocID;
-                locName = Game.world.GetLocationName(locID);
+                locName = GetLocationName(locID);
                 //known
                 if (enemy.Value.Known == true || debugMode == true)
                 {
@@ -1426,7 +1426,7 @@ namespace Next_Game
                 else
                 {
                     locID = enemy.Value.LastKnownLocID;
-                    locName = Game.world.GetLocationName(locID);
+                    locName = GetLocationName(locID);
                     if (enemy.Value.LastKnownGoal == ActorAIGoal.Move)
                     { locStatus = "Moving to " + locName; }
                     else
@@ -1549,7 +1549,7 @@ namespace Next_Game
             {
                 Actor person = dictActiveActors[charID];
                 Position pos = person.GetPosition();
-                returnText = $"{person.Name} at {Game.world.GetLocationName(person.LocID)} ({pos.PosX}:{pos.PosY}) has been selected";
+                returnText = $"{person.Name} at {GetLocationName(person.LocID)} ({pos.PosX}:{pos.PosY}) has been selected";
             }
             return new Snippet(returnText);
         }
@@ -1593,7 +1593,7 @@ namespace Next_Game
                                     loc.HouseID, loc.GetBranch()), highlightColor, RLColor.Black));
                                 locList.Add(new Snippet(string.Format("Motto \"{0}\"", house.Motto)));
                                 locList.Add(new Snippet(string.Format("Banner \"{0}\"", house.Banner)));
-                                locList.Add(new Snippet(string.Format("Seated at {0} {1}", house.LocName, Game.world.GetLocationCoords(locID))));
+                                locList.Add(new Snippet(string.Format("Seated at {0} {1}", house.LocName, GetLocationCoords(locID))));
                                 RLColor loyaltyColor = Color._goodTrait;
                                 if (house.Loyalty_Current == KingLoyalty.New_King) { loyaltyColor = Color._badTrait; }
                                 locList.Add(new Snippet(string.Format("Loyal to the {0}", house.Loyalty_Current), loyaltyColor, RLColor.Black));
@@ -1613,18 +1613,18 @@ namespace Next_Game
                                     displayColor = unknownColor; if (house.GetInfoStatus(HouseInfo.SafeHouse) == true) { displayColor = knownColor; }
                                     locList.Add(new Snippet($"Safe House available ", displayColor, RLColor.Black, false));
                                     displayColor = unknownColor; if (house.GetInfoStatus(HouseInfo.SafeHouse) == true) { displayColor = RLColor.LightRed; }
-                                    locList.Add(new Snippet(string.Format("{0}", Game.display.GetStars(house.SafeHouse)), displayColor, RLColor.Black));
+                                    locList.Add(new Snippet(string.Format("{0}", GetStars(house.SafeHouse)), displayColor, RLColor.Black));
                                 }
                                 //castle wall info
                                 displayColor = unknownColor; if (house.GetInfoStatus(HouseInfo.CastleWalls) == true) { displayColor = knownColor; }
                                 locList.Add(new Snippet(string.Format("Strength of Castle Walls ({0}) ", (CastleDefences)house.CastleWalls), displayColor, RLColor.Black, false));
                                 displayColor = unknownColor; if (house.GetInfoStatus(HouseInfo.CastleWalls) == true) { displayColor = RLColor.LightRed; }
-                                locList.Add(new Snippet(string.Format("{0}", Game.display.GetStars((int)house.CastleWalls)), displayColor, RLColor.Black));
+                                locList.Add(new Snippet(string.Format("{0}", GetStars((int)house.CastleWalls)), displayColor, RLColor.Black));
                                 //resources info
                                 displayColor = unknownColor; if (house.GetInfoStatus(HouseInfo.Resources) == true) { displayColor = knownColor; }
                                 locList.Add(new Snippet(string.Format("House Resources ({0}) ", (ResourceLevel)resources), displayColor, RLColor.Black, false));
                                 displayColor = unknownColor; if (house.GetInfoStatus(HouseInfo.Resources) == true) { displayColor = RLColor.LightRed; }
-                                locList.Add(new Snippet(string.Format("{0}", Game.display.GetStars((int)resources)), displayColor, RLColor.Black));
+                                locList.Add(new Snippet(string.Format("{0}", GetStars((int)resources)), displayColor, RLColor.Black));
                                 //Men At Arms info
                                 displayColor = unknownColor; if (house.GetInfoStatus(HouseInfo.Military) == true) { displayColor = knownColor; }
                                 locList.Add(new Snippet($"Men At Arms {house.MenAtArms:N0}", displayColor, RLColor.Black));
@@ -1641,7 +1641,7 @@ namespace Next_Game
                                 locList.Add(new Snippet(string.Format("{0} Inn, LocID {1}, RefID {2}, Branch {3}", house.Name, loc.LocationID, loc.RefID, loc.GetBranch()), highlightColor, RLColor.Black));
                                 locList.Add(new Snippet(string.Format("Motto \"{0}\"", house.Motto)));
                                 locList.Add(new Snippet(string.Format("Signage \"{0}\"", house.Banner)));
-                                locList.Add(new Snippet(string.Format("Found at {0}", Game.world.GetLocationCoords(locID))));
+                                locList.Add(new Snippet(string.Format("Found at {0}", GetLocationCoords(locID))));
                                 if (eventCount > 0)
                                 {
                                     locList.Add(new Snippet(string.Format("Archetype \"{0}\" with {1} events", Game.director.GetArchetypeName(house.ArcID), eventCount),
@@ -1670,11 +1670,11 @@ namespace Next_Game
                         displayColor = unknownColor; if (capital.GetInfoStatus(HouseInfo.CastleWalls) == true) { displayColor = knownColor; }
                         locList.Add(new Snippet($"Strength of Castle Walls {(CastleDefences)capital.CastleWalls} ", displayColor, RLColor.Black, false));
                         displayColor = unknownColor; if (capital.GetInfoStatus(HouseInfo.CastleWalls) == true) { displayColor = RLColor.LightRed; }
-                        locList.Add(new Snippet($"{Game.display.GetStars(capital.CastleWalls)}", displayColor, RLColor.Black));
+                        locList.Add(new Snippet($"{GetStars(capital.CastleWalls)}", displayColor, RLColor.Black));
                         displayColor = unknownColor; if (capital.GetInfoStatus(HouseInfo.Resources) == true) { displayColor = knownColor; }
                         locList.Add(new Snippet($"House Resources {(ResourceLevel)capital.Resources} ", displayColor, RLColor.Black, false));
                         displayColor = unknownColor; if (capital.GetInfoStatus(HouseInfo.Resources) == true) { displayColor = RLColor.LightRed; }
-                        locList.Add(new Snippet($"{Game.display.GetStars(capital.Resources)}", displayColor, RLColor.Black));
+                        locList.Add(new Snippet($"{GetStars(capital.Resources)}", displayColor, RLColor.Black));
                         displayColor = unknownColor; if (capital.GetInfoStatus(HouseInfo.Military) == true) { displayColor = knownColor; }
                         locList.Add(new Snippet($"Men At Arms {capital.MenAtArms:N0}", displayColor, RLColor.Black));
                         displayColor = unknownColor; if (capital.GetInfoStatus(HouseInfo.Food) == true) { displayColor = knownColor; }
@@ -1759,7 +1759,7 @@ namespace Next_Game
                                 //Actor person = new Actor();
                                 Actor person = dictAllActors[charID];
                                 //advisors can be one of three different categories
-                                if (person is Advisor) { actorType = Game.world.GetAdvisorType((Advisor)person); }
+                                if (person is Advisor) { actorType = GetAdvisorType((Advisor)person); }
                                 else { actorType = Convert.ToString(person.Type); }
                                 if ((int)person.Office > 0)
                                 { actorType = Convert.ToString(person.Office); }
@@ -1935,11 +1935,11 @@ namespace Next_Game
                 displayColor = unknownColor; if (majorHouse.GetInfoStatus(HouseInfo.CastleWalls) == true) { displayColor = knownColor; }
                 houseList.Add(new Snippet(string.Format("Strength of Castle Walls ({0}) ", (CastleDefences)majorHouse.CastleWalls), displayColor, RLColor.Black, false));
                 displayColor = unknownColor; if (majorHouse.GetInfoStatus(HouseInfo.CastleWalls) == true) { displayColor = RLColor.LightRed; }
-                houseList.Add(new Snippet(string.Format("{0}", Game.display.GetStars(majorHouse.CastleWalls)), displayColor, RLColor.Black));
+                houseList.Add(new Snippet(string.Format("{0}", GetStars(majorHouse.CastleWalls)), displayColor, RLColor.Black));
                 displayColor = unknownColor; if (majorHouse.GetInfoStatus(HouseInfo.Resources) == true) { displayColor = knownColor; }
                 houseList.Add(new Snippet(string.Format("House Resources ({0}) ", (ResourceLevel)majorHouse.Resources), displayColor, RLColor.Black, false));
                 displayColor = unknownColor; if (majorHouse.GetInfoStatus(HouseInfo.Resources) == true) { displayColor = RLColor.LightRed; }
-                houseList.Add(new Snippet(string.Format("{0}", Game.display.GetStars((int)majorHouse.Resources)), displayColor, RLColor.Black));
+                houseList.Add(new Snippet(string.Format("{0}", GetStars((int)majorHouse.Resources)), displayColor, RLColor.Black));
                 //bannerlords
                 int food = majorHouse.FoodCapacity; int granary = majorHouse.FoodStockpile; int popTotal = majorHouse.Population;
                 if (listLordLocations.Count > 0)
@@ -1953,7 +1953,7 @@ namespace Next_Game
                         {
                             refID = Game.map.GetMapInfo(MapLayer.RefID, loc.GetPosX(), loc.GetPosY());
                             House house = Game.world.GetHouse(refID);
-                            bannerLord = string.Format("House {0} at {1} {2}", house.Name, Game.world.GetLocationName(locID), GetLocationCoords(locID));
+                            bannerLord = string.Format("House {0} at {1} {2}", house.Name, GetLocationName(locID), GetLocationCoords(locID));
                             houseList.Add(new Snippet(bannerLord));
                             food += house.FoodCapacity;
                             granary += house.FoodStockpile;
@@ -2079,7 +2079,7 @@ namespace Next_Game
                 {
                     Passive person = Game.world.GetPassiveActor(actorID);
                     //advisors can be one of three different categories
-                    if (person is Advisor) { type = Game.world.GetAdvisorType((Advisor)person); }
+                    if (person is Advisor) { type = GetAdvisorType((Advisor)person); }
                     else { type = Convert.ToString(person.Type); }
                     personText = string.Format("Aid {0} {1} {2}, age {3}, ", person.ActID, type, person.Name, person.Age);
                     //valid actor?
@@ -2176,11 +2176,11 @@ namespace Next_Game
                 displayColor = unknownColor; if (minorHouse.GetInfoStatus(HouseInfo.CastleWalls) == true) { displayColor = knownColor; }
                 houseList.Add(new Snippet(string.Format("Strength of Castle Walls ({0}) ", (CastleDefences)minorHouse.CastleWalls), displayColor, RLColor.Black, false));
                 displayColor = unknownColor; if (minorHouse.GetInfoStatus(HouseInfo.CastleWalls) == true) { displayColor = RLColor.LightRed; }
-                houseList.Add(new Snippet(string.Format("{0}", Game.display.GetStars(minorHouse.CastleWalls)), displayColor, RLColor.Black));
+                houseList.Add(new Snippet(string.Format("{0}", GetStars(minorHouse.CastleWalls)), displayColor, RLColor.Black));
                 displayColor = unknownColor; if (minorHouse.GetInfoStatus(HouseInfo.Resources) == true) { displayColor = knownColor; }
                 houseList.Add(new Snippet(string.Format("House Resources ({0}) ", (ResourceLevel)minorHouse.Resources), displayColor, RLColor.Black, false));
                 displayColor = unknownColor; if (minorHouse.GetInfoStatus(HouseInfo.Resources) == true) { displayColor = RLColor.LightRed; }
-                houseList.Add(new Snippet(string.Format("{0}", Game.display.GetStars((int)minorHouse.Resources)), displayColor, RLColor.Black));
+                houseList.Add(new Snippet(string.Format("{0}", GetStars((int)minorHouse.Resources)), displayColor, RLColor.Black));
                 //bannerlords
                 int food = minorHouse.FoodCapacity; int granary = minorHouse.FoodStockpile; int popTotal = minorHouse.Population;
                 //Food and pop realm summary
@@ -2301,6 +2301,9 @@ namespace Next_Game
         /// <returns></returns>
         public List<Snippet> ShowCapitalRL()
         {
+            Dictionary<int, Passive> dictPassiveActors = Game.world.GetAllPassiveActors();
+            Dictionary<int, Active> dictActiveActors = Game.world.GetAllActiveActors();
+            Dictionary<int, Passive> dictRoyalCourt = Game.world.GetAllRoyals();
             CapitalHouse capital = Game.world.GetCapital();
             List<Snippet> capitalList = new List<Snippet>();
             RLColor unknownColor = RLColor.LightGray;
@@ -2314,11 +2317,11 @@ namespace Next_Game
             displayColor = unknownColor; if (capital.GetInfoStatus(HouseInfo.CastleWalls) == true) { displayColor = knownColor; }
             capitalList.Add(new Snippet(string.Format("Strength of Castle Walls ({0}) ", (CastleDefences)capitalWalls), displayColor, RLColor.Black, false));
             displayColor = unknownColor; if (capital.GetInfoStatus(HouseInfo.CastleWalls) == true) { displayColor = RLColor.LightRed; }
-            capitalList.Add(new Snippet(string.Format("{0}", Game.display.GetStars(capitalWalls)), displayColor, RLColor.Black));
+            capitalList.Add(new Snippet(string.Format("{0}", GetStars(capitalWalls)), displayColor, RLColor.Black));
             displayColor = unknownColor; if (capital.GetInfoStatus(HouseInfo.Resources) == true) { displayColor = knownColor; }
             capitalList.Add(new Snippet(string.Format("Kingdom Treasury Resources ({0}) ", (ResourceLevel)capitalResources), displayColor, RLColor.Black, false));
             displayColor = unknownColor; if (capital.GetInfoStatus(HouseInfo.Resources) == true) { displayColor = RLColor.LightRed; }
-            capitalList.Add(new Snippet(string.Format("{0}", Game.display.GetStars(capitalResources)), displayColor, RLColor.Black));
+            capitalList.Add(new Snippet(string.Format("{0}", GetStars(capitalResources)), displayColor, RLColor.Black));
             capitalList.Add(new Snippet("Kingdom Realm", RLColor.Yellow, RLColor.Black));
             displayColor = unknownColor; if (capital.GetInfoStatus(HouseInfo.Food) == true) { displayColor = knownColor; }
             capitalList.Add(new Snippet(string.Format("Population: {0:N0} Harvest: {1:N0} Food Balance: {2:N0} Granary: {3:N0} ", capital.Population, capital.FoodCapacity,
@@ -2478,6 +2481,11 @@ namespace Next_Game
 
             return capitalList;
         }
+
+
+        //
+        // Display Sub Methods ---
+        //
 
         /// <summary>
         /// creates a string showing the number of stars for traits, secrets, etc. (1 to 5 stars)

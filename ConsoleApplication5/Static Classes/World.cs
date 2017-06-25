@@ -676,6 +676,10 @@ namespace Next_Game
         { return dictActiveActors; }
 
 
+        internal Dictionary<int, Passive> GetAllRoyals()
+        { return dictRoyalActors; }
+
+
         /// <summary>
         /// returns true if Player at specified location and their status is 'AtLocation' (used by DrawMapRL)
         /// </summary>

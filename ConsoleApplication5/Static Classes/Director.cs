@@ -552,7 +552,7 @@ namespace Next_Game
                                     Location loc = Game.network.GetLocation(player.LocID);
                                     if (loc != null)
                                     {
-                                        string tempText = $"Ursurper {player.Name} at {loc.LocName}, {Game.world.GetLocationCoords(loc.LocationID)}, [Event] \"What to do?\"";
+                                        string tempText = $"Ursurper {player.Name} at {loc.LocName}, {Game.display.GetLocationCoords(loc.LocationID)}, [Event] \"What to do?\"";
                                         Record recordEvent = new Record(tempText, 1, loc.LocationID, CurrentActorEvent.Event);
                                         Game.world.SetPlayerRecord(recordEvent);
                                         Game.world.SetMessage(new Message(tempText, MessageType.Event));
@@ -713,13 +713,13 @@ namespace Next_Game
                 Message message = null; tempText = "";
                 if (type == EventType.Travelling)
                 {
-                    tempText = string.Format("{0}, Aid {1} {2}, [{3} Event] \"{4}\"", actor.Name, actor.ActID, Game.world.GetLocationCoords(actor.LocID),
+                    tempText = string.Format("{0}, Aid {1} {2}, [{3} Event] \"{4}\"", actor.Name, actor.ActID, Game.display.GetLocationCoords(actor.LocID),
                       type, eventChosen.Name);
                     message = new Message(tempText, MessageType.Event);
                 }
                 else if (type == EventType.Location)
                 {
-                    tempText = string.Format("{0}, Aid {1} at {2}, [{3} Event] \"{4}\"", actor.Name, actor.ActID, Game.world.GetLocationName(actor.LocID),
+                    tempText = string.Format("{0}, Aid {1} at {2}, [{3} Event] \"{4}\"", actor.Name, actor.ActID, Game.display.GetLocationName(actor.LocID),
                       type, eventChosen.Name);
                     message = new Message(tempText, MessageType.Event);
                 }
@@ -895,12 +895,12 @@ namespace Next_Game
                 switch (eventType)
                 {
                     case EventType.Location:
-                        tempText = string.Format("{0}, Aid {1} at {2}, [{3} Event] \"{4}\"", actor.Name, actor.ActID, Game.world.GetLocationName(actor.LocID),
+                        tempText = string.Format("{0}, Aid {1} at {2}, [{3} Event] \"{4}\"", actor.Name, actor.ActID, Game.display.GetLocationName(actor.LocID),
                       eventType, eventChosen.Name);
                         message = new Message(tempText, MessageType.Event);
                         break;
                     case EventType.Travelling:
-                        tempText = string.Format("{0}, Aid {1} {2}, [{3} Event] \"{4}\"", actor.Name, actor.ActID, Game.world.GetLocationCoords(actor.LocID),
+                        tempText = string.Format("{0}, Aid {1} {2}, [{3} Event] \"{4}\"", actor.Name, actor.ActID, Game.display.GetLocationCoords(actor.LocID),
                           eventType, eventChosen.Name);
                         message = new Message(tempText, MessageType.Event);
                         break;
@@ -916,7 +916,7 @@ namespace Next_Game
                         break;
                     case EventType.Dungeon:
                         tempText = string.Format("{0}, Aid {1} incarcerated in the dungeons of {2}, [{3} Event] \"{4}\"", actor.Name, actor.ActID,
-                            Game.world.GetLocationName(actor.LocID), eventType, eventChosen.Name);
+                            Game.display.GetLocationName(actor.LocID), eventType, eventChosen.Name);
                         message = new Message(tempText, MessageType.Event);
                         break;
                     case EventType.Adrift:
@@ -1052,8 +1052,8 @@ namespace Next_Game
                         dictPlayerEvents.Add(1000, eventObject);
                         //message
                         string locText = "Unknown";
-                        if (player.Status == ActorStatus.AtLocation) { locText = "at " + Game.world.GetLocationName(player.LocID); }
-                        else if (player.Status == ActorStatus.Travelling) { locText = "travelling to " + Game.world.GetLocationName(player.LocID); }
+                        if (player.Status == ActorStatus.AtLocation) { locText = "at " + Game.display.GetLocationName(player.LocID); }
+                        else if (player.Status == ActorStatus.Travelling) { locText = "travelling to " + Game.display.GetLocationName(player.LocID); }
                         string tempText = string.Format("{0}, Aid {1} {2}, [{3} Event] \"{4}\"", player.Name, player.ActID, locText, eventObject.Type, eventObject.Name);
                         Message message = new Message(tempText, MessageType.Event);
                         Game.world.SetMessage(message);
@@ -1094,7 +1094,7 @@ namespace Next_Game
                 string actorText = "unknown"; string optionText = "unknown"; string locName = "unknown";
                 Location loc = Game.network.GetLocation(locID);
                 if (loc != null)
-                { locName = Game.world.GetLocationName(locID); }
+                { locName = Game.display.GetLocationName(locID); }
                 else { Game.SetError(new Error(73, "Invalid Loc (null)")); }
                 int houseID = Game.map.GetMapInfo(MapLayer.HouseID, loc.GetPosX(), loc.GetPosY());
                 int refID = Game.map.GetMapInfo(MapLayer.RefID, loc.GetPosX(), loc.GetPosY());
@@ -1613,7 +1613,7 @@ namespace Next_Game
                                     chance = (rnd.Next(1, 10) - 1) * 10;
                                     chance = Math.Max(10, chance);
                                     optionText = string.Format("Obtain passage to {0} {1}, a voyage of {2} day{3}. {4}% chance of success.", locDestination.LocName,
-                                        Game.world.GetLocationCoords(locDestination.LocationID), voyageTime, voyageTime != 1 ? "s" : "", chance);
+                                        Game.display.GetLocationCoords(locDestination.LocationID), voyageTime, voyageTime != 1 ? "s" : "", chance);
                                     OptionInteractive option = new OptionInteractive(optionText) { LocID = locDestination.LocationID, Test = chance };
                                     option.ReplyGood = "A suitable ship is available. You board immediately";
                                     option.ReplyBad = $"No ship is available to take you to {locDestination.LocName} today";
@@ -1674,7 +1674,7 @@ namespace Next_Game
                                     voyageTime = passage.Value / fastSpeed;
                                     voyageTime = Math.Max(1, voyageTime);
                                     optionText = string.Format("Buy a fast passage to {0} {1}, a voyage of {2} day{3} (costs a Resource)", locDestination.LocName,
-                                        Game.world.GetLocationCoords(locDestination.LocationID), voyageTime, voyageTime != 1 ? "s" : "");
+                                        Game.display.GetLocationCoords(locDestination.LocationID), voyageTime, voyageTime != 1 ? "s" : "");
                                     OptionInteractive option = new OptionInteractive(optionText) { LocID = locDestination.LocationID };
                                     option.ReplyGood = "Money talks. The Captain pockets the gold and bids you come aboard";
                                     OutResource outResource = new OutResource(eventObject.EventPID, true, 1, EventCalc.Subtract);
@@ -1718,7 +1718,7 @@ namespace Next_Game
                                     if (player.Conceal == ActorConceal.None) { AddCourtVisit(refID); } //add to list of Court's visited (not if in disguise)
                                     person.SetRelationshipStatus(true); //reveal relationship levels and history
                                     //How to refer to them?
-                                    if (person is Advisor) { actorText = $"{Game.world.GetAdvisorType((Advisor)person)} {person.Name}"; }
+                                    if (person is Advisor) { actorText = $"{Game.display.GetAdvisorType((Advisor)person)} {person.Name}"; }
                                     else { actorText = string.Format("{0} {1}", person.Type, person.Name); }
                                     actorText = $"{person.Title} {person.Name}";
                                     eventObject.Name = "Interact";
@@ -1804,7 +1804,7 @@ namespace Next_Game
                                 else if (personWant.Office > ActorOffice.None)
                                 { actorText = string.Format("{0} {1}", personWant.Office, personWant.Name); }
                                 else { actorText = string.Format("{0} {1}", personWant.Type, personWant.Name); }*/
-                                if (personWant is Advisor) { actorText = $"{Game.world.GetAdvisorType((Advisor)personWant)} {personWant.Name}"; }
+                                if (personWant is Advisor) { actorText = $"{Game.display.GetAdvisorType((Advisor)personWant)} {personWant.Name}"; }
                                 else { actorText = string.Format("{0} {1}", personWant.Type, personWant.Name); }
                                 if (personWant is Passive)
                                 {
@@ -1883,7 +1883,7 @@ namespace Next_Game
                                     actorText = string.Format("{0} {1}", personNeed.Office, personNeed.Name);
                                 }
                                 else { actorText = string.Format("{0} {1}", personNeed.Type, personNeed.Name); }*/
-                                if (personNeed is Advisor) { actorText = $"{Game.world.GetAdvisorType((Advisor)personNeed)} {personNeed.Name}"; }
+                                if (personNeed is Advisor) { actorText = $"{Game.display.GetAdvisorType((Advisor)personNeed)} {personNeed.Name}"; }
                                 else { actorText = string.Format("{0} {1}", personNeed.Type, personNeed.Name); }
                                 if (personNeed is Passive)
                                 {
@@ -2196,14 +2196,14 @@ namespace Next_Game
                         case ArcType.GeoCluster:
                         case ArcType.Road:
                             eventList.Add(new Snippet(string.Format("{0}, Aid {1}, at Loc {2}:{3} travelling towards {4}", actor.Name, actor.ActID, pos.PosX, pos.PosY,
-                                Game.world.GetLocationName(actor.LocID)), RLColor.LightGray, backColor));
+                                Game.display.GetLocationName(actor.LocID)), RLColor.LightGray, backColor));
                             break;
                         case ArcType.Location:
-                            eventList.Add(new Snippet(string.Format("{0}, Aid {1}. at {2} (Loc {3}:{4})", actor.Name, actor.ActID, Game.world.GetLocationName(actor.LocID),
+                            eventList.Add(new Snippet(string.Format("{0}, Aid {1}. at {2} (Loc {3}:{4})", actor.Name, actor.ActID, Game.display.GetLocationName(actor.LocID),
                                 pos.PosX, pos.PosY), RLColor.LightGray, backColor));
                             break;
                         case ArcType.Actor:
-                            if (actor.Status == ActorStatus.AtLocation) { status = Game.world.GetLocationName(actor.LocID) + " "; }
+                            if (actor.Status == ActorStatus.AtLocation) { status = Game.display.GetLocationName(actor.LocID) + " "; }
                             else { status = null; }
                             eventList.Add(new Snippet(string.Format("{0}, Aid {1}. at {2}(Loc {3}:{4})", actor.Name, actor.ActID, status,
                                 pos.PosX, pos.PosY), RLColor.LightGray, backColor));
@@ -2397,7 +2397,7 @@ namespace Next_Game
                     EventPlayer eventObject = (EventPlayer)package.EventObject;
                     Active actor = package.Person;
                     Game._eventID = eventObject.EventPID;
-                    string locName = Game.world.GetLocationName(actor.LocID);
+                    string locName = Game.display.GetLocationName(actor.LocID);
                     //create event description
                     Position pos = actor.GetPosition();
                     switch (eventObject.Type)
@@ -2849,7 +2849,7 @@ namespace Next_Game
                                             if (String.IsNullOrEmpty(outcomeText) == false)
                                             {
                                                 resultList.Add(new Snippet(outcomeText, foreColor, backColor)); resultList.Add(new Snippet(""));
-                                                outcomeText = $"{player.Name} spends the day observing {Game.world.GetLocationName(player.LocID)}";
+                                                outcomeText = $"{player.Name} spends the day observing {Game.display.GetLocationName(player.LocID)}";
                                                 //message
                                                 Game.world.SetMessage(new Message(outcomeText, 1, 0, MessageType.Event));
                                                 Game.world.SetPlayerRecord(new Record(outcomeText, player.ActID, player.LocID, CurrentActorEvent.Event));
@@ -2912,7 +2912,7 @@ namespace Next_Game
                                                 {
                                                     //free'd from captivity
                                                     player.Status = ActorStatus.AtLocation;
-                                                    tempText = string.Format("{0} {1} has escaped from the dungeons of {2}", player.Title, player.Name, Game.world.GetLocationName(player.LocID));
+                                                    tempText = string.Format("{0} {1} has escaped from the dungeons of {2}", player.Title, player.Name, Game.display.GetLocationName(player.LocID));
                                                     Game.world.SetMessage(new Message(tempText, 1, 0, MessageType.Event));
                                                     Game.world.SetPlayerRecord(new Record(tempText, player.ActID, player.LocID, CurrentActorEvent.Event));
                                                 }
@@ -3222,14 +3222,14 @@ namespace Next_Game
                                 case ArcType.GeoCluster:
                                 case ArcType.Road:
                                     eventList.Add(new Snippet(string.Format("{0}, Aid {1}, at Loc {2}:{3} travelling towards {4}", player.Name, player.ActID, pos.PosX, pos.PosY,
-                                        Game.world.GetLocationName(player.LocID)), RLColor.LightGray, backColor));
+                                        Game.display.GetLocationName(player.LocID)), RLColor.LightGray, backColor));
                                     break;
                                 case ArcType.Location:
-                                    eventList.Add(new Snippet(string.Format("{0}, Aid {1}. at {2} (Loc {3}:{4})", player.Name, player.ActID, Game.world.GetLocationName(player.LocID),
+                                    eventList.Add(new Snippet(string.Format("{0}, Aid {1}. at {2} (Loc {3}:{4})", player.Name, player.ActID, Game.display.GetLocationName(player.LocID),
                                         pos.PosX, pos.PosY), RLColor.LightGray, backColor));
                                     break;
                                 case ArcType.Actor:
-                                    if (player.Status == ActorStatus.AtLocation) { status = Game.world.GetLocationName(player.LocID) + " "; }
+                                    if (player.Status == ActorStatus.AtLocation) { status = Game.display.GetLocationName(player.LocID) + " "; }
                                     else { status = null; }
                                     eventList.Add(new Snippet(string.Format("{0}, Aid {1}. at {2}(Loc {3}:{4})", player.Name, player.ActID, status,
                                         pos.PosX, pos.PosY), RLColor.LightGray, backColor));
@@ -3501,7 +3501,7 @@ namespace Next_Game
                                     if (arcMajor.GetNumPlayerEvents() > 0) { loc.Value.SetPlayerEvents(arcMajor.GetPlayerEvents()); }
                                     loc.Value.ArcID = arcMajor.ArcID;
                                     //debug
-                                    Game.logStart?.Write(string.Format("{0}, locID {1}, has been initialised with \"{2}\", arcID {3}", Game.world.GetLocationName(loc.Key), loc.Key, arcMajor.Name, arcMajor.ArcID));
+                                    Game.logStart?.Write(string.Format("{0}, locID {1}, has been initialised with \"{2}\", arcID {3}", Game.display.GetLocationName(loc.Key), loc.Key, arcMajor.Name, arcMajor.ArcID));
                                 }
                             }
                             break;
@@ -3516,7 +3516,7 @@ namespace Next_Game
                                     if (arcMinor.GetNumPlayerEvents() > 0) { loc.Value.SetPlayerEvents(arcMajor.GetPlayerEvents()); }
                                     loc.Value.ArcID = arcMinor.ArcID;
                                     //debug
-                                    Game.logStart?.Write(string.Format("{0}, locID {1}, has been initialised with \"{2}\", arcID {3}", Game.world.GetLocationName(loc.Key), loc.Key, arcMinor.Name, arcMinor.ArcID));
+                                    Game.logStart?.Write(string.Format("{0}, locID {1}, has been initialised with \"{2}\", arcID {3}", Game.display.GetLocationName(loc.Key), loc.Key, arcMinor.Name, arcMinor.ArcID));
                                 }
                             }
                             break;
@@ -3531,7 +3531,7 @@ namespace Next_Game
                                     if (arcInn.GetNumPlayerEvents() > 0) { loc.Value.SetPlayerEvents(arcMajor.GetPlayerEvents()); }
                                     loc.Value.ArcID = arcInn.ArcID;
                                     //debug
-                                    Game.logStart?.Write(string.Format("{0}, locID {1}, has been initialised with \"{2}\", arcID {3}", Game.world.GetLocationName(loc.Key), loc.Key, arcInn.Name, arcInn.ArcID));
+                                    Game.logStart?.Write(string.Format("{0}, locID {1}, has been initialised with \"{2}\", arcID {3}", Game.display.GetLocationName(loc.Key), loc.Key, arcInn.Name, arcInn.ArcID));
                                 }
                             }
                             break;
@@ -4064,10 +4064,10 @@ namespace Next_Game
                             switch (player.Status)
                             {
                                 case ActorStatus.AtLocation:
-                                    locText = $"at {Game.world.GetLocationName(player.LocID)}";
+                                    locText = $"at {Game.display.GetLocationName(player.LocID)}";
                                     break;
                                 case ActorStatus.Travelling:
-                                    locText = $"on the road to {Game.world.GetLocationName(player.LocID)}";
+                                    locText = $"on the road to {Game.display.GetLocationName(player.LocID)}";
                                     break;
                                 case ActorStatus.AtSea:
                                     locText = $"while sailing {player.SeaName}";
@@ -4185,8 +4185,8 @@ namespace Next_Game
                         player.VoyageSafe = safePassage;
                         player.ShipName = Game.history.GetShipName(player.VoyageSafe);
                         player.SeaName = Game.network.GetSeaName(currentLocID, destID);
-                        string locNameOrigin = Game.world.GetLocationName(currentLocID);
-                        string locNameDestination = Game.world.GetLocationName(destID);
+                        string locNameOrigin = Game.display.GetLocationName(currentLocID);
+                        string locNameDestination = Game.display.GetLocationName(destID);
                         //get Sea GeoID
                         player.SeaGeoID = 0;
                         Location loc = Game.network.GetLocation(currentLocID);
@@ -4333,7 +4333,7 @@ namespace Next_Game
                 player.ShipName = Game.history.GetShipName(player.VoyageSafe);
                 player.Status = ActorStatus.AtSea;
                 resultText = string.Format("{0} has been rescued by the S.S \"{1}\", bound for {2}, arriving in {3} day{4}", player.Name, player.ShipName,
-                    Game.world.GetLocationName(player.LocID), player.VoyageTimer, player.VoyageTimer != 1 ? "s" : "");
+                    Game.display.GetLocationName(player.LocID), player.VoyageTimer, player.VoyageTimer != 1 ? "s" : "");
             }
             else { Game.SetError(new Error(222, "Invalid Player (null)")); }
             return resultText;
@@ -4667,7 +4667,7 @@ namespace Next_Game
                     if (removed == false)
                     { Game.SetError(new Error(227, $"ActID {actID} wasn't found in listActiveActors -> Not removed")); }
                     //return string
-                    resultText = string.Format("\"{0}\", ActID {1}, has joined your cause at \"{2}\"", follower.Name, follower.ActID, Game.world.GetLocationName(locID));
+                    resultText = string.Format("\"{0}\", ActID {1}, has joined your cause at \"{2}\"", follower.Name, follower.ActID, Game.display.GetLocationName(locID));
                 }
                 else { Game.SetError(new Error(227, "Invalid Player (null)")); }
             }
@@ -5102,7 +5102,7 @@ namespace Next_Game
                                 switch (actor.Status)
                                 {
                                     case ActorStatus.AtLocation:
-                                        locName = Game.world.GetLocationName(actor.LocID);
+                                        locName = Game.display.GetLocationName(actor.LocID);
                                         //
                                         //Skills -> (all skills except touched)
                                         //
@@ -5635,7 +5635,7 @@ namespace Next_Game
                             if (house.Value.RefID != Game.lore.RoyalRefIDOld)
                             {
                                 strength = 2;
-                                rumourText = $"Underground supporters of Old King {Game.lore.OldKing.Name}, \"{Game.lore.OldKing.Handle}\", will offer Safe Refuge at {house.Value.LocName}, {Game.world.GetLocationCoords(house.Value.LocID)}";
+                                rumourText = $"Underground supporters of Old King {Game.lore.OldKing.Name}, \"{Game.lore.OldKing.Handle}\", will offer Safe Refuge at {house.Value.LocName}, {Game.display.GetLocationCoords(house.Value.LocID)}";
                                 RumourSafeHouse rumour = new RumourSafeHouse(rumourText, strength, RumourScope.Global, rnd.Next(100) * -1, (RumourGlobal)house.Value.Branch) { RefID = house.Value.RefID };
                                 //add to dictionary and global list
                                 if (AddRumour(rumour) == false)
@@ -5649,7 +5649,7 @@ namespace Next_Game
                         if (house.Value.SafeHouse > 0 && house.Value.GetInfoStatus(HouseInfo.SafeHouse) == false)
                         {
                             strength = 2;
-                            rumourText = $"Underground supporters of Old King {Game.lore.OldKing.Name}, \"{Game.lore.OldKing.Handle}\", will offer Safe Refuge at {house.Value.LocName}, {Game.world.GetLocationCoords(house.Value.LocID)}";
+                            rumourText = $"Underground supporters of Old King {Game.lore.OldKing.Name}, \"{Game.lore.OldKing.Handle}\", will offer Safe Refuge at {house.Value.LocName}, {Game.display.GetLocationCoords(house.Value.LocID)}";
                             RumourSafeHouse rumour = new RumourSafeHouse(rumourText, strength, RumourScope.Global, rnd.Next(100) * -1, (RumourGlobal)house.Value.Branch) { RefID = house.Value.RefID };
                             //add to dictionary and global list
                             if (AddRumour(rumour) == false)
@@ -5715,7 +5715,7 @@ namespace Next_Game
                                         //halved chance for an enemy in hiding -> hunt mode not possible
                                         if (rndNum < (chanceOfRumour / 2))
                                         { rumourText = string.Format("{0}, {1}, ActID {2} has been spotted hiding at {3} {4}", enemy.Value.Title, enemy.Value.Name,
-                                             enemy.Value.ActID, loc.LocName, Game.world.GetLocationCoords(loc.LocationID)); }
+                                             enemy.Value.ActID, loc.LocName, Game.display.GetLocationCoords(loc.LocationID)); }
                                         break;
                                     case ActorAIGoal.Wait:
                                         //hunt mode not possible for 'wait'
@@ -5726,7 +5726,7 @@ namespace Next_Game
                                             else
                                             { waitText = arrayOfInquisitorWaitTexts[rnd.Next(arrayOfInquisitorWaitTexts.Length)]; }
                                             rumourText = string.Format("{0}, {1}, ActID {2} has been spotted {3} at {4} {5}", enemy.Value.Title, enemy.Value.Name,
-                                                  enemy.Value.ActID, waitText, loc.LocName, Game.world.GetLocationCoords(loc.LocationID));
+                                                  enemy.Value.ActID, waitText, loc.LocName, Game.display.GetLocationCoords(loc.LocationID));
                                         }
                                         break;
                                     case ActorAIGoal.Search:
@@ -5734,10 +5734,10 @@ namespace Next_Game
                                         {
                                             if (enemy.Value.HuntMode == true)
                                             { rumourText = string.Format("{0}, {1}, ActID {2} has been spotted asking about the Usurper's whereabouts at {3} {4} with {5} sword at the ready", enemy.Value.Title, enemy.Value.Name,
-                                                  enemy.Value.ActID, loc.LocName, Game.world.GetLocationCoords(loc.LocationID), enemy.Value.Sex == ActorSex.Male ? "his" : "her"); }
+                                                  enemy.Value.ActID, loc.LocName, Game.display.GetLocationCoords(loc.LocationID), enemy.Value.Sex == ActorSex.Male ? "his" : "her"); }
                                             else
                                             { rumourText = string.Format("{0}, {1}, ActID {2} has been spotted asking about the Usurper's whereabouts at {3} {4}", enemy.Value.Title, enemy.Value.Name,
-                                             enemy.Value.ActID, loc.LocName, Game.world.GetLocationCoords(loc.LocationID)); }
+                                             enemy.Value.ActID, loc.LocName, Game.display.GetLocationCoords(loc.LocationID)); }
                                         }
                                         break;
                                     case ActorAIGoal.Move:
@@ -5745,10 +5745,10 @@ namespace Next_Game
                                         {
                                             if (enemy.Value.HuntMode == true)
                                             { rumourText = string.Format("{0}, {1}, ActID {2} has been seen on the road to {3} {4} with {5} sword at the ready", enemy.Value.Title, enemy.Value.Name,
-                                                    enemy.Value.ActID, loc.LocName, Game.world.GetLocationCoords(loc.LocationID), enemy.Value.Sex == ActorSex.Male ? "his" : "her"); }
+                                                    enemy.Value.ActID, loc.LocName, Game.display.GetLocationCoords(loc.LocationID), enemy.Value.Sex == ActorSex.Male ? "his" : "her"); }
                                             else
                                             { rumourText = string.Format("{0}, {1}, ActID {2} has been seen on the road to {3} {4}", enemy.Value.Title, enemy.Value.Name,
-                                               enemy.Value.ActID, loc.LocName, Game.world.GetLocationCoords(loc.LocationID)); }
+                                               enemy.Value.ActID, loc.LocName, Game.display.GetLocationCoords(loc.LocationID)); }
                                         }
                                         break;
                                 }
@@ -6171,8 +6171,8 @@ namespace Next_Game
                 string oldKingName = Game.lore.OldKing.Name;
                 string newKingName = Game.lore.NewKing.Name;
                 //location of person
-                if (rnd.Next(100) < 30) { place = $"visiting {Game.world.GetLocationName(player.LocID)}"; }
-                else { place = $"at {Game.world.GetLocationName(player.LocID)}"; }
+                if (rnd.Next(100) < 30) { place = $"visiting {Game.display.GetLocationName(player.LocID)}"; }
+                else { place = $"at {Game.display.GetLocationName(player.LocID)}"; }
                 //higher chance of male (more variety available)
                 if (rnd.Next(100) <= 70)
                 {
@@ -6574,14 +6574,14 @@ namespace Next_Game
             {
                 //add to list (sequential record of loc's visited whereas dict is unique places visited)
                 listLocsVisited.Add(locID);
-                Game.logTurn?.Write($"[AddVisitedLoc] LocID {locID}, \"{Game.world.GetLocationName(locID)}\", turn {turn} -> record added to listLocsVisited");
+                Game.logTurn?.Write($"[AddVisitedLoc] LocID {locID}, \"{Game.display.GetLocationName(locID)}\", turn {turn} -> record added to listLocsVisited");
                 //existing record for that loc?
                 if (dictLocsVisited.ContainsKey(locID) == true)
                 {
                     //add turn # visited to list
                     List<int> tempList = dictLocsVisited[locID];
                     tempList.Add(turn);
-                    Game.logTurn?.Write($"[AddVisitedLoc] LocID {locID}, \"{Game.world.GetLocationName(locID)}\", turn {turn} -> record updated in dictLocsVisited");
+                    Game.logTurn?.Write($"[AddVisitedLoc] LocID {locID}, \"{Game.display.GetLocationName(locID)}\", turn {turn} -> record updated in dictLocsVisited");
                     return true;
                 }
                 else
@@ -6590,7 +6590,7 @@ namespace Next_Game
                     List<int> tempList = new List<int>();
                     tempList.Add(turn);
                     dictLocsVisited.Add(locID, tempList);
-                    Game.logTurn?.Write($"[AddVisitedLoc] LocID {locID}, \"{Game.world.GetLocationName(locID)}\", turn {turn} -> new record added to dictLocsVisited");
+                    Game.logTurn?.Write($"[AddVisitedLoc] LocID {locID}, \"{Game.display.GetLocationName(locID)}\", turn {turn} -> new record added to dictLocsVisited");
                     return true;
                 }
             }
@@ -6706,7 +6706,7 @@ namespace Next_Game
                                     //check actor alive and kicking (doesn't have to be at a location)
                                     if (actor.Status != ActorStatus.Gone)
                                     {
-                                        locName = Game.world.GetLocationName(actor.LocID);
+                                        locName = Game.display.GetLocationName(actor.LocID);
                                         //create a rumour -> make more important characters rumours more visible (higher strength)
                                         switch (actor.Type)
                                         {

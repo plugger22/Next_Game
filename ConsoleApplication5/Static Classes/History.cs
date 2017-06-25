@@ -758,7 +758,7 @@ namespace Next_Game
             //create records of being born
             if (type == ActorType.Lord)
             {
-                descriptor = string.Format("{0} born, Aid {1}, at {2}", actor.Name, actor.ActID, Game.world.GetLocationName(locID));
+                descriptor = string.Format("{0} born, Aid {1}, at {2}", actor.Name, actor.ActID, Game.display.GetLocationName(locID));
                 Record recordLord = new Record(descriptor, actor.ActID, locID, loc.RefID, actor.Born, HistActorEvent.Born);
                 Game.world.SetHistoricalRecord(recordLord);
             }
@@ -780,7 +780,7 @@ namespace Next_Game
             {
                 //create records of being born
                 BannerLord bannerLord = actor as BannerLord;
-                descriptor = string.Format("{0}, Aid {1}, born at {2}", bannerLord.Name, bannerLord.ActID, Game.world.GetLocationName(locID));
+                descriptor = string.Format("{0}, Aid {1}, born at {2}", bannerLord.Name, bannerLord.ActID, Game.display.GetLocationName(locID));
                 Record recordBannerLord = new Record(descriptor, bannerLord.ActID, locID, refID, bannerLord.Born, HistActorEvent.Born);
                 Game.world.SetHistoricalRecord(recordBannerLord);
             }
@@ -851,7 +851,7 @@ namespace Next_Game
                 //house at birth (males the same)
                 actor.BornRefID = refID;
                 //create records of being born
-                string descriptor = string.Format("{0}, Aid {1}, born at {2}", actor.Name, actor.ActID, Game.world.GetLocationName(locID));
+                string descriptor = string.Format("{0}, Aid {1}, born at {2}", actor.Name, actor.ActID, Game.display.GetLocationName(locID));
                 Record recordBannerLord = new Record(descriptor, actor.ActID, locID, refID, actor.Born, HistActorEvent.Born);
                 Game.world.SetHistoricalRecord(recordBannerLord);
             }
@@ -893,7 +893,7 @@ namespace Next_Game
                 //house at birth (males the same)
                 actor.BornRefID = refID;
                 //create records of being born
-                string descriptor = string.Format("{0}, Aid {1}, born at {2}", actor.Name, actor.ActID, Game.world.GetLocationName(locID));
+                string descriptor = string.Format("{0}, Aid {1}, born at {2}", actor.Name, actor.ActID, Game.display.GetLocationName(locID));
                 Record recordBannerLord = new Record(descriptor, actor.ActID, locID, refID, actor.Born, HistActorEvent.Born);
                 Game.world.SetHistoricalRecord(recordBannerLord);
             }
@@ -1622,7 +1622,7 @@ namespace Next_Game
         internal void CreateFamily(Noble lord, Noble lady, string place = null)
         {
             //different house? (case of newLord in Lore.cs)
-            string houseName = Game.world.GetLocationName(lady.LocID);
+            string houseName = Game.display.GetLocationName(lady.LocID);
             if (!String.IsNullOrEmpty(place)) { houseName = place; }
             //age
             int ladyAge = lady.Age;
@@ -1908,9 +1908,9 @@ namespace Next_Game
             //allow for possibility lady died during childbirth
             int locID = Lady.LocID;
             if (locID == 0) { locID = Lord.LocID; }
-            houseName = Game.world.GetLocationName(locID);
+            houseName = Game.display.GetLocationName(locID);
             //covers case of wife who died at time of birth when adding heirs in world.CheckGreatLords()
-            if (Lady.LocID == 0 && String.IsNullOrEmpty(place)) { houseName = Game.world.GetLocationName(Lord.LocID); }
+            if (Lady.LocID == 0 && String.IsNullOrEmpty(place)) { houseName = Game.display.GetLocationName(Lord.LocID); }
             //child born in specified place, not home of lord or lady
             else if (!String.IsNullOrEmpty(place)) { houseName = place; }
 

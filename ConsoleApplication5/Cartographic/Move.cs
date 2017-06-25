@@ -220,7 +220,7 @@ namespace Next_Game.Cartographic
             string destination = "Unknown";
             Position pos = pathList[pathList.Count - 1];
             if (pos != null)
-            { destination = Game.world.GetLocationName(pos); }
+            { destination = Game.display.GetLocationName(pos); }
             return destination;
         }
     }

@@ -153,7 +153,8 @@ namespace Next_Game
                 network = new Network(seed);
                 network.InitialiseNetwork();
                 StopTimer(timer_1, "Network Initialisation");
-                lore = new Lore(seed);
+                display = new Display(); //needs to be before lore.cs
+                lore = new Lore(seed); //needs to be before history.cs
                 timer_1.Start();
                 history = new History(seed);
                 history.InitialiseHistory(network.GetNumUniqueHouses());
@@ -168,8 +169,6 @@ namespace Next_Game
                 director = new Director(seed);
                 director.InitialiseDirector();
                 StopTimer(timer_1, "Director Initialisation");
-                display = new Display();
-                
             }
             catch(Exception e)
             {
