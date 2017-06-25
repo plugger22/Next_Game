@@ -286,8 +286,8 @@ namespace Next_Game
                             int distance = path.Count;
                             int time = (distance / speed) + 1; //prevents 0 result
                                                                //return string
-                            string originLocation = GetLocationName(posOrigin);
-                            string destinationLocation = GetLocationName(posDestination);
+                            string originLocation = Game.display.GetLocationName(posOrigin);
+                            string destinationLocation = Game.display.GetLocationName(posDestination);
                             returnText = string.Format("{0} commences a {1} day journey from {2} to {3}", name, time, originLocation, destinationLocation);
                             //remove character from current location 
                             int locID_Origin = Game.map.GetMapInfo(MapLayer.LocID, posOrigin.PosX, posOrigin.PosY);
@@ -531,7 +531,7 @@ namespace Next_Game
                                     case HorseStatus.Exhausted:
                                     case HorseStatus.Lame:
                                     case HorseStatus.Gone:
-                                        CreateHorseRecord(HorseGone.Abandoned, $"at {GetLocationName(player.LocID)}");
+                                        CreateHorseRecord(HorseGone.Abandoned, $"at {Game.display.GetLocationName(player.LocID)}");
                                         GetNewHorse();
                                         break;
                                 }
@@ -558,631 +558,6 @@ namespace Next_Game
             return true;
         }
 
-
-        internal string GetLocationName(int locID)
-        {
-            string locName = "Unknown";
-            Location loc = Game.network.GetLocation(locID);
-            if (loc != null)
-            { locName = loc.LocName; }
-            else { Game.SetError(new Error(185, "Invalid Loc (null) -> By LocID")); }
-            return locName;
-        }
-
-        /// <summary>
-        /// returns 'Unknown' string if not found
-        /// </summary>
-        /// <param name="pos"></param>
-        /// <returns></returns>
-        internal string GetLocationName(Position pos)
-        {
-            string locName = "Unknown";
-            int locID = Game.map.GetMapInfo(MapLayer.LocID, pos.PosX, pos.PosY);
-            if (locID > 0)
-            {
-                Location loc = Game.network.GetLocation(locID);
-                if (loc != null) { locName = loc.LocName; }
-                else { Game.SetError(new Error(185, "Invalid Loc (null) -> By Position")); }
-            }
-            return locName;
-        }
-
-        /// <summary>
-        /// Get location coords in a formatted string
-        /// </summary>
-        /// <param name="locID"></param>
-        /// <returns>returns '(loc 20:4)' format string</returns>
-        public string GetLocationCoords(int locID)
-        {
-            string coords = "Unknown";
-            Location loc = Game.network.GetLocation(locID);
-            if (loc != null) { coords = string.Format("(loc {0}:{1})", loc.GetPosX(), loc.GetPosY()); }
-            else { Game.SetError(new Error(186, "Invalid Loc (null) Unknown Coordinates")); }
-            return coords;
-        }
-
-        /// <summary>
-        /// Display Major House data to main infoConsole (input either houseID or refID, will check houseID first)
-        /// </summary>
-        /// <param name="houseID"></param>
-        /// <param name="refID"></param>
-        /// <returns></returns>
-        internal List<Snippet> ShowMajorHouseRL(int refID)
-        {
-            MajorHouse majorHouse = null;
-            if (refID > 0)
-            { House house = GetHouse(refID); majorHouse = house as MajorHouse; }
-            else
-            { Game.SetError(new Error(36, "Invalid input RefID (zero, or less)")); return null; }
-            List<Snippet> houseList = new List<Snippet>();
-            RLColor unknownColor = RLColor.LightGray;
-            RLColor knownColor = RLColor.White;
-            RLColor displayColor;
-            if (majorHouse != null)
-            {
-                List<int> listLordLocations = majorHouse.GetBannerLordLocations();
-                //details
-                houseList.Add(new Snippet("House " + majorHouse.Name, RLColor.Yellow, RLColor.Black));
-                string motto = string.Format("Motto \"{0}\"", majorHouse.Motto);
-                houseList.Add(new Snippet(motto));
-                string banner = string.Format("Banner \"{0}\"", majorHouse.Banner);
-                houseList.Add(new Snippet(banner));
-                string seat = string.Format("Seated at {0} {1}", majorHouse.LocName, GetLocationCoords(majorHouse.LocID));
-                houseList.Add(new Snippet(seat));
-                string loyalty = string.Format("Loyal to the {0} (originally: {1})", majorHouse.Loyalty_Current, majorHouse.Loyalty_AtStart);
-                houseList.Add(new Snippet(loyalty));
-                string population = string.Format("Populatinn {0:N0} at {1}", majorHouse.Population, majorHouse.LocName);
-                houseList.Add(new Snippet(population));
-                int bannerTotal = listLordLocations.Count * Game.constant.GetValue(Global.MEN_AT_ARMS) / 2;
-                int armyTotal = bannerTotal + majorHouse.MenAtArms;
-                displayColor = unknownColor; if (majorHouse.GetInfoStatus(HouseInfo.Military) == true) { displayColor = knownColor; }
-                string army = string.Format("Can call upon {0:N0} Men At Arms in Total ({1:N0} from Lord, {2:N0} from Bannerlords)", armyTotal, majorHouse.MenAtArms, bannerTotal);
-                houseList.Add(new Snippet(army, displayColor, RLColor.Black));
-                displayColor = unknownColor; if (majorHouse.GetInfoStatus(HouseInfo.CastleWalls) == true) { displayColor = knownColor; }
-                houseList.Add(new Snippet(string.Format("Strength of Castle Walls ({0}) ", (CastleDefences)majorHouse.CastleWalls), displayColor, RLColor.Black, false));
-                displayColor = unknownColor; if (majorHouse.GetInfoStatus(HouseInfo.CastleWalls) == true) { displayColor = RLColor.LightRed; }
-                houseList.Add(new Snippet(string.Format("{0}", Game.display.GetStars(majorHouse.CastleWalls)), displayColor, RLColor.Black));
-                displayColor = unknownColor; if (majorHouse.GetInfoStatus(HouseInfo.Resources) == true) { displayColor = knownColor; }
-                houseList.Add(new Snippet(string.Format("House Resources ({0}) ", (ResourceLevel)majorHouse.Resources), displayColor, RLColor.Black, false));
-                displayColor = unknownColor; if (majorHouse.GetInfoStatus(HouseInfo.Resources) == true) { displayColor = RLColor.LightRed; }
-                houseList.Add(new Snippet(string.Format("{0}", Game.display.GetStars((int)majorHouse.Resources)), displayColor, RLColor.Black));
-                //bannerlords
-                int food = majorHouse.FoodCapacity; int granary = majorHouse.FoodStockpile; int popTotal = majorHouse.Population;
-                if (listLordLocations.Count > 0)
-                {
-                    houseList.Add(new Snippet("BannerLords", RLColor.Yellow, RLColor.Black));
-                    string bannerLord;
-                    foreach (int locID in listLordLocations)
-                    {
-                        Location loc = Game.network.GetLocation(locID);
-                        if (loc != null)
-                        {
-                            refID = Game.map.GetMapInfo(MapLayer.RefID, loc.GetPosX(), loc.GetPosY());
-                            House house = GetHouse(refID);
-                            bannerLord = string.Format("House {0} at {1} {2}", house.Name, GetLocationName(locID), GetLocationCoords(locID));
-                            houseList.Add(new Snippet(bannerLord));
-                            food += house.FoodCapacity;
-                            granary += house.FoodStockpile;
-                            popTotal += house.Population;
-                        }
-                        else { Game.SetError(new Error(36, "Invalid Loc (null) BannerLord not added to list")); }
-                    }
-                }
-                //Food and pop realm summary
-                houseList.Add(new Snippet("House Realm", RLColor.Yellow, RLColor.Black));
-                displayColor = unknownColor; if (majorHouse.GetInfoStatus(HouseInfo.Food) == true) { displayColor = knownColor; }
-                houseList.Add(new Snippet($"Realm Population: {popTotal:N0} Realm Harvest: {food:N0} Food Balance: {food - popTotal:N0} Realm Granary: {granary:N0}", displayColor, RLColor.Black));
-                //imports & exports
-                if (majorHouse.GetNumImports() > 0 || majorHouse.GetNumExports() > 0)
-                {
-                    int upper, sumGoods;
-                    bool newLine;
-                    //Imports
-                    int numGoods = majorHouse.GetNumImports();
-                    if (numGoods > 0)
-                    {
-                        sumGoods = 0;
-                        houseList.Add(new Snippet("Imports -> ", false));
-                        int[,] tempImports = majorHouse.GetImports();
-                        upper = tempImports.GetUpperBound(0);
-                        for (int i = 0; i <= upper; i++)
-                        {
-                            //at least one present and is known
-                            if (tempImports[i, 0] > 0)
-                            {
-                                sumGoods++;
-                                displayColor = unknownColor;
-                                if (tempImports[i, 1] > 0) { displayColor = knownColor; }
-                                newLine = true;
-                                if (sumGoods < numGoods) { newLine = false; }
-                                houseList.Add(new Snippet($"{(Goods)i} x {tempImports[i, 0]} ", displayColor, RLColor.Black, newLine));
-                            }
-                        }
-                    }
-                    //Exports
-                    numGoods = majorHouse.GetNumExports();
-                    if (numGoods > 0)
-                    {
-                        sumGoods = 0;
-                        houseList.Add(new Snippet("Exports -> ", false));
-                        int[,] tempExports = majorHouse.GetExports();
-                        upper = tempExports.GetUpperBound(0);
-                        for (int i = 0; i <= upper; i++)
-                        {
-                            //at least one present and is known
-                            if (tempExports[i, 0] > 0)
-                            {
-                                sumGoods++;
-                                displayColor = unknownColor;
-                                if (tempExports[i, 1] > 0) { displayColor = knownColor; }
-                                newLine = true;
-                                if (sumGoods < numGoods) { newLine = false; }
-                                houseList.Add(new Snippet($"{(Goods)i} x {tempExports[i, 0]} ", displayColor, RLColor.Black, newLine));
-                            }
-                        }
-                    }
-                }
-                //family - get list of all actorID's in family
-                houseList.Add(new Snippet("Family", RLColor.Brown, RLColor.Black));
-                List<int> listOfFamily = new List<int>();
-                refID = majorHouse.RefID;
-                IEnumerable<int> familyMembers =
-                    from person in dictPassiveActors
-                    where person.Value.RefID == refID && person.Value is Noble
-                    orderby person.Value.ActID
-                    select person.Value.ActID;
-                listOfFamily = familyMembers.ToList();
-                //loop list and display each actor appropriately (dead, or missing, in Lt.Gray)
-                string personText;
-                string actorType;
-                if (listOfFamily.Count > 0)
-                {
-                    foreach (int actorID in listOfFamily)
-                    {
-                        Passive person = GetPassiveActor(actorID);
-                        if ((int)person.Office > 0) { actorType = Convert.ToString(person.Office); }
-                        else { actorType = Convert.ToString(person.Type); }
-                        personText = string.Format("Aid {0} {1} {2}, age {3}, ", person.ActID, actorType, person.Name, person.Age);
-                        //valid actor?
-                        if (person.Name != null)
-                        {
-                            RLColor locColor = RLColor.White;
-                            string locString = "?";
-                            //location descriptor
-                            switch (person.Status)
-                            {
-                                case ActorStatus.AtLocation:
-                                    locString = string.Format("at {0} {1}", GetLocationName(person.LocID), GetLocationCoords(person.LocID));
-                                    break;
-                                case ActorStatus.Travelling:
-                                    Position pos = person.GetPosition();
-                                    locString = string.Format("travelling to {0} {1}", GetLocationName(person.LocID), GetLocationCoords(person.LocID));
-                                    break;
-                                case ActorStatus.Gone:
-                                    locString = string.Format("Passed away ({0}) in {1}", person.ReasonGone, person.Gone);
-                                    locColor = RLColor.LightGray;
-                                    break;
-                            }
-                            houseList.Add(new Snippet(personText + locString, locColor, RLColor.Black));
-                        }
-                    }
-                }
-                else if (majorHouse.RefID == Game.lore.RoyalRefIDCurrent)
-                { houseList.Add(new Snippet("Family members are in residence at KingsKeep (Capital)")); }
-                //House Retainers - get list of all actorID's
-                houseList.Add(new Snippet("Retainers", RLColor.Brown, RLColor.Black));
-                List<int> listOfRetainers = new List<int>();
-                refID = majorHouse.RefID;
-                IEnumerable<int> Retainers =
-                    from person in dictPassiveActors
-                    where person.Value.RefID == refID && !(person.Value is Noble)
-                    orderby person.Value.ActID
-                    select person.Value.ActID;
-                listOfRetainers = Retainers.ToList();
-                // loop list and display each actor appropriately (dead in Lt.Gray)
-                string type;
-                foreach (int actorID in listOfRetainers)
-                {
-                    Passive person = GetPassiveActor(actorID);
-                    //advisors can be one of three different categories
-                    if (person is Advisor) { type = GetAdvisorType((Advisor)person); }
-                    else { type = Convert.ToString(person.Type); }
-                    personText = string.Format("Aid {0} {1} {2}, age {3}, ", person.ActID, type, person.Name, person.Age);
-                    //valid actor?
-                    if (person.Name != null)
-                    {
-                        RLColor locColor = RLColor.White;
-                        string locString = "?";
-                        //location descriptor
-                        switch (person.Status)
-                        {
-                            case ActorStatus.AtLocation:
-                                locString = string.Format("at {0} {1}", GetLocationName(person.LocID), GetLocationCoords(person.LocID));
-                                break;
-                            case ActorStatus.Travelling:
-                                Position pos = person.GetPosition();
-                                locString = string.Format("travelling to {0} {1}", GetLocationName(person.LocID), GetLocationCoords(person.LocID));
-                                break;
-                            case ActorStatus.Gone:
-                                locString = string.Format("passed away ({0}) in {1}", person.ReasonGone, person.Gone);
-                                locColor = RLColor.LightGray;
-                                break;
-                        }
-                        houseList.Add(new Snippet(personText + locString, locColor, RLColor.Black));
-                    }
-                }
-                //Relationships
-                List<Relation> tempListRelations = majorHouse.GetRelations();
-                if (tempListRelations != null && tempListRelations.Count > 0)
-                {
-                    houseList.Add(new Snippet("Relations with Other Houses", RLColor.Brown, RLColor.Black));
-                    //display relations in chronological order
-                    IEnumerable<Relation> relOrdered =
-                        from relation in tempListRelations
-                        orderby relation.Year
-                        select relation;
-                    List<Relation> tempRelRecords = relOrdered.ToList();
-                    //add snippets
-                    string relText;
-                    foreach (var relation in tempRelRecords)
-                    {
-                        if (relation.Known == true) { displayColor = knownColor; } else { displayColor = unknownColor; }
-                        relText = string.Format("{0}  {1} {2}, \"{3}\", Rel {4}{5}", relation.Year, relation.RefID >= 100 ? "(Minor)" : "(Major)",
-                        GetHouseName(relation.RefID), relation.Text, relation.Change > 0 ? "+" : "", relation.Change);
-                        houseList.Add(new Snippet(relText, displayColor, RLColor.Black));
-                    }
-                }
-                //house history
-                if (majorHouse.GetInfoStatus(HouseInfo.History) == true) { displayColor = knownColor; } else { displayColor = unknownColor; }
-                List<string> houseHistory = GetHistoricalHouseRecords(majorHouse.RefID);
-                if (houseHistory.Count > 0)
-                {
-                    houseList.Add(new Snippet("House History", RLColor.Brown, RLColor.Black));
-                    foreach (string text in houseHistory)
-                    { houseList.Add(new Snippet(text, displayColor, RLColor.Black)); }
-                }
-            }
-            return houseList;
-        }
-
-        /// <summary>
-        /// Display Minor House data to main infoConsole (input either houseID or refID, will check houseID first)
-        /// </summary>
-        /// <param name="houseID"></param>
-        /// <param name="refID"></param>
-        /// <returns></returns>
-        internal List<Snippet> ShowMinorHouseRL(int refID)
-        {
-            MinorHouse minorHouse = null;
-            if (refID > 0)
-            { House house = GetHouse(refID); minorHouse = house as MinorHouse; }
-            else
-            { Game.SetError(new Error(306, "Invalid input RefID (Zero, or less)")); return null; }
-            List<Snippet> houseList = new List<Snippet>();
-            RLColor unknownColor = RLColor.LightGray;
-            RLColor knownColor = RLColor.White;
-            RLColor displayColor;
-            if (minorHouse != null)
-            {
-                //details
-                houseList.Add(new Snippet("House " + minorHouse.Name, RLColor.Yellow, RLColor.Black));
-                string motto = string.Format("Motto \"{0}\"", minorHouse.Motto);
-                houseList.Add(new Snippet(motto));
-                string banner = string.Format("Banner \"{0}\"", minorHouse.Banner);
-                houseList.Add(new Snippet(banner));
-                string seat = string.Format("Seated at {0} {1}", minorHouse.LocName, GetLocationCoords(minorHouse.LocID));
-                houseList.Add(new Snippet(seat));
-                string loyalty = string.Format("Loyal to the {0} (originally: {1})", minorHouse.Loyalty_Current, minorHouse.Loyalty_AtStart);
-                houseList.Add(new Snippet(loyalty));
-                string population = string.Format("Populatinn {0:N0} at {1}", minorHouse.Population, minorHouse.LocName);
-                houseList.Add(new Snippet(population));
-                displayColor = unknownColor; if (minorHouse.GetInfoStatus(HouseInfo.Military) == true) { displayColor = knownColor; }
-                houseList.Add(new Snippet($"Can call upon {minorHouse.MenAtArms:N0} Men At Arms", displayColor, RLColor.Black));
-                displayColor = unknownColor; if (minorHouse.GetInfoStatus(HouseInfo.CastleWalls) == true) { displayColor = knownColor; }
-                houseList.Add(new Snippet(string.Format("Strength of Castle Walls ({0}) ", (CastleDefences)minorHouse.CastleWalls), displayColor, RLColor.Black, false));
-                displayColor = unknownColor; if (minorHouse.GetInfoStatus(HouseInfo.CastleWalls) == true) { displayColor = RLColor.LightRed; }
-                houseList.Add(new Snippet(string.Format("{0}", Game.display.GetStars(minorHouse.CastleWalls)), displayColor, RLColor.Black));
-                displayColor = unknownColor; if (minorHouse.GetInfoStatus(HouseInfo.Resources) == true) { displayColor = knownColor; }
-                houseList.Add(new Snippet(string.Format("House Resources ({0}) ", (ResourceLevel)minorHouse.Resources), displayColor, RLColor.Black, false));
-                displayColor = unknownColor; if (minorHouse.GetInfoStatus(HouseInfo.Resources) == true) { displayColor = RLColor.LightRed; }
-                houseList.Add(new Snippet(string.Format("{0}", Game.display.GetStars((int)minorHouse.Resources)), displayColor, RLColor.Black));
-                //bannerlords
-                int food = minorHouse.FoodCapacity; int granary = minorHouse.FoodStockpile; int popTotal = minorHouse.Population;
-                //Food and pop realm summary
-                houseList.Add(new Snippet("House Realm", RLColor.Yellow, RLColor.Black));
-                food = minorHouse.FoodCapacity; popTotal = minorHouse.Population; granary = minorHouse.FoodStockpile;
-                displayColor = unknownColor; if (minorHouse.GetInfoStatus(HouseInfo.Food) == true) { displayColor = knownColor; }
-                houseList.Add(new Snippet($"Population: {popTotal:N0} Harvest: {food:N0} Food Balance: {food - popTotal:N0} Realm Granary: {granary:N0}", displayColor, RLColor.Black));
-                //imports & exports
-                if (minorHouse.GetNumImports() > 0 || minorHouse.GetNumExports() > 0)
-                {
-                    int upper, sumGoods;
-                    bool newLine;
-                    //Imports
-                    int numGoods = minorHouse.GetNumImports();
-                    if (numGoods > 0)
-                    {
-                        sumGoods = 0;
-                        houseList.Add(new Snippet("Imports -> ", false));
-                        int[,] tempImports = minorHouse.GetImports();
-                        upper = tempImports.GetUpperBound(0);
-                        for (int i = 0; i <= upper; i++)
-                        {
-                            //at least one present and is known
-                            if (tempImports[i, 0] > 0)
-                            {
-                                sumGoods++;
-                                displayColor = unknownColor;
-                                if (tempImports[i, 1] > 0) { displayColor = knownColor; }
-                                newLine = true;
-                                if (sumGoods < numGoods) { newLine = false; }
-                                houseList.Add(new Snippet($"{(Goods)i} x {tempImports[i, 0]} ", displayColor, RLColor.Black, newLine));
-                            }
-                        }
-                    }
-                    //Exports
-                    numGoods = minorHouse.GetNumExports();
-                    if (numGoods > 0)
-                    {
-                        sumGoods = 0;
-                        houseList.Add(new Snippet("Exports -> ", false));
-                        int[,] tempExports = minorHouse.GetExports();
-                        upper = tempExports.GetUpperBound(0);
-                        for (int i = 0; i <= upper; i++)
-                        {
-                            //at least one present and is known
-                            if (tempExports[i, 0] > 0)
-                            {
-                                sumGoods++;
-                                displayColor = unknownColor;
-                                if (tempExports[i, 1] > 0) { displayColor = knownColor; }
-                                newLine = true;
-                                if (sumGoods < numGoods) { newLine = false; }
-                                houseList.Add(new Snippet($"{(Goods)i} x {tempExports[i, 0]} ", displayColor, RLColor.Black, newLine));
-                            }
-                        }
-                    }
-                }
-
-                //family - get list of all actorID's in family
-                houseList.Add(new Snippet("Family", RLColor.Brown, RLColor.Black));
-                List<int> listOfFamily = new List<int>();
-                refID = minorHouse.RefID;
-                IEnumerable<int> familyMembers =
-                    from person in dictPassiveActors
-                    where person.Value.RefID == refID && person.Value is BannerLord
-                    orderby person.Value.ActID
-                    select person.Value.ActID;
-                listOfFamily = familyMembers.ToList();
-                //loop list and display each actor appropriately (dead, or missing, in Lt.Gray)
-                string personText;
-                string actorType;
-                foreach (int actorID in listOfFamily)
-                {
-                    Passive person = GetPassiveActor(actorID);
-                    if ((int)person.Office > 0) { actorType = Convert.ToString(person.Office); }
-                    else { actorType = Convert.ToString(person.Type); }
-                    personText = string.Format("Aid {0} {1} {2}, age {3}, ", person.ActID, actorType, person.Name, person.Age);
-                    //valid actor?
-                    if (person.Name != null)
-                    {
-                        RLColor locColor = RLColor.White;
-                        string locString = "?";
-                        //location descriptor
-                        switch (person.Status)
-                        {
-                            case ActorStatus.AtLocation:
-                                locString = string.Format("at {0} {1}", GetLocationName(person.LocID), GetLocationCoords(person.LocID));
-                                break;
-                            case ActorStatus.Travelling:
-                                Position pos = person.GetPosition();
-                                locString = string.Format("travelling to {0} {1}", GetLocationName(person.LocID), GetLocationCoords(person.LocID));
-                                break;
-                            case ActorStatus.Gone:
-                                locString = string.Format("Passed away ({0}) in {1}", person.ReasonGone, person.Gone);
-                                locColor = RLColor.LightGray;
-                                break;
-                        }
-                        houseList.Add(new Snippet(personText + locString, locColor, RLColor.Black));
-                    }
-                }
-                //house history
-                if (minorHouse.GetInfoStatus(HouseInfo.History) == true) { displayColor = knownColor; } else { displayColor = unknownColor; }
-                List<string> houseHistory = GetHistoricalHouseRecords(minorHouse.RefID);
-                if (houseHistory.Count > 0)
-                {
-                    houseList.Add(new Snippet("House History", RLColor.Brown, RLColor.Black));
-                    foreach (string text in houseHistory)
-                    { houseList.Add(new Snippet(text, displayColor, RLColor.Black)); }
-                }
-            }
-            return houseList;
-        }
-
-
-        /// <summary>
-        /// display Royal Court, retainers and others at Kingskeep
-        /// </summary>
-        /// <returns></returns>
-        public List<Snippet> ShowCapitalRL()
-        {
-            CapitalHouse capital = GetCapital();
-            List<Snippet> capitalList = new List<Snippet>();
-            RLColor unknownColor = RLColor.LightGray;
-            RLColor knownColor = RLColor.White;
-            RLColor displayColor;
-            capitalList.Add(new Snippet(string.Format("Kingskeep, Kingdom Capital {0}", GetLocationCoords(1)), RLColor.Yellow, RLColor.Black));
-            int capitalWalls = capital.CastleWalls;
-            int capitalResources = capital.Resources;
-            displayColor = unknownColor; if (capital.GetInfoStatus(HouseInfo.Military) == true) { displayColor = knownColor; }
-            capitalList.Add(new Snippet(string.Format("City Watch has {0:N0} Men At Arms", capital.MenAtArms), displayColor, RLColor.Black));
-            displayColor = unknownColor; if (capital.GetInfoStatus(HouseInfo.CastleWalls) == true) { displayColor = knownColor; }
-            capitalList.Add(new Snippet(string.Format("Strength of Castle Walls ({0}) ", (CastleDefences)capitalWalls), displayColor, RLColor.Black, false));
-            displayColor = unknownColor; if (capital.GetInfoStatus(HouseInfo.CastleWalls) == true) { displayColor = RLColor.LightRed; }
-            capitalList.Add(new Snippet(string.Format("{0}", Game.display.GetStars(capitalWalls)), displayColor, RLColor.Black));
-            displayColor = unknownColor; if (capital.GetInfoStatus(HouseInfo.Resources) == true) { displayColor = knownColor; }
-            capitalList.Add(new Snippet(string.Format("Kingdom Treasury Resources ({0}) ", (ResourceLevel)capitalResources), displayColor, RLColor.Black, false));
-            displayColor = unknownColor; if (capital.GetInfoStatus(HouseInfo.Resources) == true) { displayColor = RLColor.LightRed; }
-            capitalList.Add(new Snippet(string.Format("{0}", Game.display.GetStars(capitalResources)), displayColor, RLColor.Black));
-            capitalList.Add(new Snippet("Kingdom Realm", RLColor.Yellow, RLColor.Black));
-            displayColor = unknownColor; if (capital.GetInfoStatus(HouseInfo.Food) == true) { displayColor = knownColor; }
-            capitalList.Add(new Snippet(string.Format("Population: {0:N0} Harvest: {1:N0} Food Balance: {2:N0} Granary: {3:N0} ", capital.Population, capital.FoodCapacity, 
-                capital.FoodCapacity - capital.Population, capital.FoodStockpile ), displayColor, RLColor.Black));
-            //imports & exports
-            if (capital.GetNumImports() > 0 || capital.GetNumExports() > 0)
-            {
-                int upper, sumGoods;
-                bool newLine;
-                //Imports
-                int numGoods = capital.GetNumImports();
-                if (numGoods > 0)
-                {
-                    sumGoods = 0;
-                    capitalList.Add(new Snippet("Imports -> ", false));
-                    int[,] tempImports = capital.GetImports();
-                    upper = tempImports.GetUpperBound(0);
-                    for (int i = 0; i <= upper; i++)
-                    {
-                        //at least one present and is known
-                        if (tempImports[i, 0] > 0)
-                        {
-                            sumGoods++;
-                            displayColor = unknownColor;
-                            if (tempImports[i, 1] > 0) { displayColor = knownColor; }
-                            newLine = true;
-                            if (sumGoods < numGoods) { newLine = false; }
-                            capitalList.Add(new Snippet($"{(Goods)i} x {tempImports[i, 0]} ", displayColor, RLColor.Black, newLine));
-                        }
-                    }
-                }
-                //Exports
-                numGoods = capital.GetNumExports();
-                if (numGoods > 0)
-                {
-                    sumGoods = 0;
-                    capitalList.Add(new Snippet("Exports -> ", false));
-                    int[,] tempExports = capital.GetExports();
-                    upper = tempExports.GetUpperBound(0);
-                    for (int i = 0; i <= upper; i++)
-                    {
-                        //at least one present and is known
-                        if (tempExports[i, 0] > 0)
-                        {
-                            sumGoods++;
-                            displayColor = unknownColor;
-                            if (tempExports[i, 1] > 0) { displayColor = knownColor; }
-                            newLine = true;
-                            if (sumGoods < numGoods) { newLine = false; }
-                            capitalList.Add(new Snippet($"{(Goods)i} x {tempExports[i, 0]} ", displayColor, RLColor.Black, newLine));
-                        }
-                    }
-                }
-            }
-            //ROYAL FAMILY
-            capitalList.Add(new Snippet("Royal Family", RLColor.Brown, RLColor.Black));
-            //query royal family members at capital
-            List<Passive> royalFamily = new List<Passive>();
-            IEnumerable<Passive> listOfNobles =
-                from actor in dictPassiveActors
-                where actor.Value.LocID == 1 && actor.Value is Noble && actor.Value.Status == ActorStatus.AtLocation
-                orderby actor.Value.ActID
-                select actor.Value;
-            royalFamily = listOfNobles.ToList();
-            //add to list
-            string actorOffice;
-            foreach (Passive actor in royalFamily)
-            {
-                Noble noble = actor as Noble;
-                if (noble.Office > ActorOffice.None)
-                { actorOffice = Convert.ToString(noble.Office); }
-                else { actorOffice = Convert.ToString(noble.Type); }
-                capitalList.Add(new Snippet(string.Format("Aid {0} {1} {2}, age {3} at Kingskeep {4}", noble.ActID, actorOffice, noble.Name, noble.Age, GetLocationCoords(1))));
-            }
-            //ROYAL COURT
-            capitalList.Add(new Snippet("Royal Court", RLColor.Brown, RLColor.Black));
-            foreach (KeyValuePair<int, Passive> kvp in dictRoyalCourt)
-            {
-                if (kvp.Value is Advisor)
-                {
-                    Advisor advisor = kvp.Value as Advisor;
-                    actorOffice = Convert.ToString(advisor.advisorRoyal);
-                }
-                else { actorOffice = Convert.ToString(kvp.Value.Office); }
-                capitalList.Add(new Snippet(string.Format("Aid {0} {1} {2}, age {3} at Kingskeep {4}", kvp.Value.ActID, actorOffice, kvp.Value.Name, kvp.Value.Age, GetLocationCoords(1))));
-            }
-            //OTHERS
-            List<Actor> assortedActors = new List<Actor>();
-            IEnumerable<Actor> listOfActors =
-                from actor in dictActiveActors
-                where actor.Value.LocID == 1
-                orderby actor.Value.ActID
-                select actor.Value;
-            assortedActors = listOfActors.ToList();
-            //add to list
-            if (assortedActors.Count > 0)
-            {
-                capitalList.Add(new Snippet("Others", RLColor.Brown, RLColor.Black));
-                RLColor textColor;
-                foreach (Actor actor in assortedActors)
-                {
-                    if (actor.Office > ActorOffice.None)
-                    { actorOffice = Convert.ToString(actor.Office); }
-                    else { actorOffice = Convert.ToString(actor.Type); }
-                    //highlight active players
-                    textColor = RLColor.White;
-                    if (actor is Active)
-                    {
-                        if (actor is Player)
-                        { textColor = Color._player; }
-                        else
-                        { textColor = Color._active; }
-                    }
-                    capitalList.Add(new Snippet(string.Format("Aid {0} {1} {2}, age {3} at Kingskeep {4}", actor.ActID, actorOffice, actor.Name, actor.Age, GetLocationCoords(1)),
-                        textColor, RLColor.Black));
-                }
-            }
-            //Relationships (identical for the King's house)
-            MajorHouse majorHouse = (MajorHouse)GetHouse(Game.lore.RoyalRefIDNew);
-            if (majorHouse != null)
-            {
-                List<Relation> tempListRelations = majorHouse.GetRelations();
-                if (tempListRelations != null && tempListRelations.Count > 0)
-                {
-                    string relText;
-                    capitalList.Add(new Snippet("Relations with Other Houses", RLColor.Brown, RLColor.Black));
-                    //display relations in chronological order
-                    /*IEnumerable<string> relRecords =
-                        from relation in tempListRelations
-                        orderby relation.Year
-                        select string.Format("{0}  {1} {2}, \"{3}\", Rel {4}{5}", relation.Year, relation.RefID >= 100 ? "(Minor)" : "(Major)",
-                        GetHouseName(relation.RefID), relation.Text, relation.Change > 0 ? "+" : "", relation.Change);
-                    List<string> tempRelRecords = relRecords.ToList();
-                    //add snippets
-                    foreach (string relText in tempRelRecords)
-                    {
-                        
-                        capitalList.Add(new Snippet(relText));
-                    }*/
-
-                    IEnumerable<Relation> relOrdered =
-                        from relation in tempListRelations
-                        orderby relation.Year
-                        select relation;
-                    List<Relation> tempRelRecords = relOrdered.ToList();
-                    //add snippets
-                    foreach (var relation in tempRelRecords)
-                    {
-                        if (relation.Known == true) { displayColor = knownColor; } else { displayColor = unknownColor; }
-                        relText = string.Format("{0}  {1} {2}, \"{3}\", Rel {4}{5}", relation.Year, relation.RefID >= 100 ? "(Minor)" : "(Major)",
-                        GetHouseName(relation.RefID), relation.Text, relation.Change > 0 ? "+" : "", relation.Change);
-                        capitalList.Add(new Snippet(relText, displayColor, RLColor.Black));
-                    }
-                }
-            }
-            else { Game.SetError(new Error(136, "New King's House not found (null)")); }
-
-            return capitalList;
-        }
 
         /// <summary>
         /// Select a Player Character from the displayed list
@@ -1300,33 +675,6 @@ namespace Next_Game
         internal Dictionary<int, Active> GetAllActiveActors()
         { return dictActiveActors; }
 
-        /// <summary>
-        /// returns string showing character name (at 'x' loc)
-        /// </summary>
-        /// <param name="actID"></param>
-        /// <returns></returns>
-        public Snippet GetActorStatusRL(int actID)
-        {
-            Actor person = new Actor();
-            RLColor foreColor = RLColor.White;
-            string charReturn = "Character doesn't exist!";
-            //check character exists
-            if (dictActiveActors.ContainsKey(actID))
-            {
-                person = dictActiveActors[actID];
-                charReturn = person.Name;
-                if (person.Status != ActorStatus.AtLocation)
-                { charReturn += " isn't currently available (must be at a Location in order to be Moved)"; foreColor = RLColor.LightRed; }
-                else
-                {
-                    Position pos = person.GetPosition();
-                    charReturn += " is awaiting your orders at ";
-                    charReturn += GetLocationName(person.LocID);
-                    charReturn += string.Format(" (loc {0}:{1})", pos.PosX, pos.PosY);
-                }
-            }
-            return new Snippet(charReturn, foreColor, RLColor.Black);
-        }
 
         /// <summary>
         /// returns true if Player at specified location and their status is 'AtLocation' (used by DrawMapRL)
@@ -1382,27 +730,6 @@ namespace Next_Game
             return false;
         }
 
-
-        /// <summary>
-        /// nameOnly true -> actor.Name, nameOnly false -> actors Title + Name + ActID + 'at' + Location ('Coords)
-        /// </summary>
-        /// <param name="actID"></param>
-        /// <returns></returns>
-        public string GetActorDetails(int actID, bool nameOnly = true)
-        {
-            string details = "";
-            //check active actor in dictionary
-            if (dictAllActors.ContainsKey(actID))
-            {
-                Actor actor = dictAllActors[actID];
-                if (nameOnly == true)
-                { return actor.Name; }
-                else
-                { return string.Format("{0} {1}, ActID {2} at {3} {4}", actor.Title, actor.Name, actor.ActID, GetLocationName(actor.LocID), GetLocationCoords(actor.LocID)); }
-            }
-            else { Game.SetError(new Error(172, string.Format("Actor not found in dictAllActors (ActID {0})", actID))); }
-            return details;
-        }
 
         /// <summary>
         /// returns num days since target was last Known
@@ -2594,7 +1921,7 @@ namespace Next_Game
         /// </summary>
         /// <param name="refID"></param>
         /// <returns></returns>
-        private List<string> GetHistoricalHouseRecords(int refID)
+        internal List<string> GetHistoricalHouseRecords(int refID)
         {
             List<string> houseRecords = new List<string>();
             //query
@@ -3055,7 +2382,7 @@ namespace Next_Game
                 {
                     foreach (ActorSpy spy in listTempActive)
                     {
-                        description = string.Format("ID {0,-5} {1,-26} Pos {2,2}:{3,-5} Status -> {4,-12} Known -> {5,-8} Goal -> {6, -8} Mode -> {7}", spy.ActID, GetActorDetails(spy.ActID),
+                        description = string.Format("ID {0,-5} {1,-26} Pos {2,2}:{3,-5} Status -> {4,-12} Known -> {5,-8} Goal -> {6, -8} Mode -> {7}", spy.ActID, Game.display.GetActorDetails(spy.ActID),
                             spy.Pos.PosX, spy.Pos.PosY, spy.Status, spy.Known, "n.a", "n.a");
                         listData.Add(new Snippet(description));
                     }
@@ -3065,8 +2392,8 @@ namespace Next_Game
                 {
                     foreach (ActorSpy spy in listTempEnemy)
                     {
-                        description = string.Format("ID {0,-5} {1,-26} Pos {2,2}:{3,-5} Status -> {4,-12} Known -> {5,-8} Goal -> {6, -8} Mode -> {7}", spy.ActID, GetActorDetails(spy.ActID), spy.Pos.PosX,
-                            spy.Pos.PosY, spy.Status, spy.Known, spy.Goal, spy.HuntMode == true ? "Hunt" : "normal");
+                        description = string.Format("ID {0,-5} {1,-26} Pos {2,2}:{3,-5} Status -> {4,-12} Known -> {5,-8} Goal -> {6, -8} Mode -> {7}", spy.ActID, Game.display.GetActorDetails(spy.ActID), 
+                            spy.Pos.PosX, spy.Pos.PosY, spy.Status, spy.Known, spy.Goal, spy.HuntMode == true ? "Hunt" : "normal");
                         listData.Add(new Snippet(description));
                     }
                 }
@@ -3115,7 +2442,7 @@ namespace Next_Game
                     {
                         if (spy.Known == true) { foreColor = Color._badTrait; }
                         else { foreColor = RLColor.White; }
-                        description = string.Format("Day {0,-5} {1,-26} Pos {2,2}:{3,-5} Status -> {4,-12} Known -> {5,-8} Goal -> {6, -8} Mode -> {7}", spy.Turn, GetActorDetails(spy.ActID),
+                        description = string.Format("Day {0,-5} {1,-26} Pos {2,2}:{3,-5} Status -> {4,-12} Known -> {5,-8} Goal -> {6, -8} Mode -> {7}", spy.Turn, Game.display.GetActorDetails(spy.ActID),
                             spy.Pos.PosX, spy.Pos.PosY, spy.Status, spy.Known, spy.Goal, spy.HuntMode == true ? "Hunt" : "normal");
                         listData.Add(new Snippet(description, foreColor, RLColor.Black));
                     }
@@ -3127,20 +2454,7 @@ namespace Next_Game
             return listData;
         }
 
-        /// <summary>
-        /// gets the correct advisor type and returns as a string for display purposes
-        /// </summary>
-        /// <param name="advisor"></param>
-        /// <returns></returns>
-        internal string GetAdvisorType(Advisor advisor)
-        {
-            string type = "unknown";
-            if (advisor.advisorRoyal > 0)
-            { type = Convert.ToString(advisor.advisorRoyal); }
-            else if (advisor.advisorNoble > 0)
-            { type = Convert.ToString(advisor.advisorNoble); }
-            return type;
-        }
+
 
 
         /// <summary>
@@ -3265,7 +2579,7 @@ namespace Next_Game
             Game.infoChannel.ClearConsole(ConsoleDisplay.Event);
             Game.logTurn?.Write("--- ProcessStartTurn (World.cs)");
             Game.logTurn?.Write($"Day {Game.gameTurn}, Turn {Game.gameTurn}, Harvest in {Game.HarvestTimer} days, Winter in {Game.WinterTimer} days, SeasonTimer {Game.SeasonTimer}");
-            Game.logTurn?.Write($"{GetPlayerStatusReport()}");
+            Game.logTurn?.Write($"{Game.display.GetPlayerStatusReport()}");
             UpdateRumours();
             UpdateActorMoveStatus(MoveActors());
             if (UpdatePlayerStatus() == true) { notificationStatus = true; }
@@ -3345,7 +2659,7 @@ namespace Next_Game
                     if (player.VoyageTimer == 0)
                     {
                         //arrived at Location
-                        string locName = GetLocationName(player.LocID);
+                        string locName = Game.display.GetLocationName(player.LocID);
                         description = string.Format("{0} {1} has arrived at {2} onboard the S.S \"{3}\"", player.Title, player.Name, locName, player.ShipName);
                         SetPlayerRecord(new Record(description, 1, player.LocID, CurrentActorEvent.Travel));
                         SetMessage(new Message(description, MessageType.Move));
@@ -3366,7 +2680,7 @@ namespace Next_Game
                     else
                     {
                         description = string.Format("{0} {1} is at Sea onboard the S.S \"{2}\", bound for {3}, arriving in {4} days", player.Title, player.Name, player.ShipName,
-                            GetLocationName(player.LocID), player.VoyageTimer);
+                            Game.display.GetLocationName(player.LocID), player.VoyageTimer);
                         SetMessage(new Message(description, MessageType.Move));
                     }
                     Game.logTurn?.Write(description);
@@ -3608,7 +2922,7 @@ namespace Next_Game
                                         {
                                             if (actor.Activated == false)
                                             {
-                                                locName = GetLocationName(actor.LocID);
+                                                locName = Game.display.GetLocationName(actor.LocID);
                                                 num = rnd.Next(100);
                                                 chance = actor.CrowChance + actor.CrowBonus;
                                                 description = string.Format("chance of Crow arriving {0}%, or less. Roll {1}", chance, num);
@@ -3850,12 +3164,12 @@ namespace Next_Game
                     IEnumerable<string> itemListActive =
                         from items in dictPossessions.Values.OfType<Item>()
                         where items.ItemType == PossItemType.Active && items.WhoHas > 0
-                        select Convert.ToString("ItemID " + items.ItemID + ", \"" + items.Description + "\", Type: " + items.ItemType + ", " + GetActorDetails(items.WhoHas, false));
+                        select Convert.ToString("ItemID " + items.ItemID + ", \"" + items.Description + "\", Type: " + items.ItemType + ", " + Game.display.GetActorDetails(items.WhoHas, false));
                     tempList = itemListActive.ToList();
                     IEnumerable<string> itemListPassive =
                         from items in dictPossessions.Values.OfType<Item>()
                         where items.ItemType == PossItemType.Passive && items.WhoHas > 0
-                        select Convert.ToString("ItemID " + items.ItemID + ", \"" + items.Description + "\", Type: " + items.ItemType + ", " + GetActorDetails(items.WhoHas, false));
+                        select Convert.ToString("ItemID " + items.ItemID + ", \"" + items.Description + "\", Type: " + items.ItemType + ", " + Game.display.GetActorDetails(items.WhoHas, false));
                     tempList.AddRange(itemListPassive.ToList());
                     break;
                 case PossessionType.None:
@@ -4115,7 +3429,7 @@ namespace Next_Game
                                     }
                                     else { Game.SetError(new Error(276, $"Invalid rumour from RumourID {rumourID}")); }
                                 }
-                                else { Game.logTurn?.Write($"[Notification] No rumour returned for {actor.Value.Name} at {GetLocationName(actor.Value.LocID)}"); }
+                                else { Game.logTurn?.Write($"[Notification] No rumour returned for {actor.Value.Name} at {Game.display.GetLocationName(actor.Value.LocID)}"); }
                             }
                             else { Game.logTurn?.Write($"{actor.Value.Title} {actor.Value.Name}, ActID {actor.Value.ActID}, has no contact with the Player -> No rumours"); }
                             break;
@@ -4207,7 +3521,7 @@ namespace Next_Game
                 Passive passive = listPassiveActors[rndIndex];
                 passive.AddItem(item.PossID);
                 Game.logStart?.Write(string.Format("ItemID {0}, \"{1}\", given to {2} {3}, ActID {4}, at {5} {6}", item.ItemID, item.Description, passive.Title, passive.Name, passive.ActID,
-                    GetLocationName(passive.LocID), GetLocationCoords(passive.LocID)));
+                    Game.display.GetLocationName(passive.LocID), Game.display.GetLocationCoords(passive.LocID)));
                 //item possession a secret? Not for a Lord (known)
                 if (proceedFlag == true)
                 {
@@ -4757,15 +4071,6 @@ namespace Next_Game
             }
         }
 
-        /// <summary>
-        /// returns short string of Player's status and whereabouts
-        /// </summary>
-        /// <returns></returns>
-        private string GetPlayerStatusReport()
-        {
-            Player player = GetPlayer();
-            return $"{player.Title} {player.Name}, \"{player.Handle}\", {player.Status}, {GetLocationName(player.LocID)}";
-        }
 
         /// <summary>
         /// returns a random Major house name
@@ -5232,7 +4537,7 @@ namespace Next_Game
                         let surplus = house.Value.GetFoodBalance()
                         where surplus > 0
                         orderby surplus descending
-                        select Convert.ToString($"House {house.Value.Name} at {house.Value.LocName}, {GetLocationCoords(house.Value.LocID)}, has a food Surplus of {surplus:N0}");
+                        select Convert.ToString($"House {house.Value.Name} at {house.Value.LocName}, {Game.display.GetLocationCoords(house.Value.LocID)}, has a food Surplus of {surplus:N0}");
                     tempList = surplusHouses.ToList();
                     break;
                 case FoodInfo.Deficit:
@@ -5241,7 +4546,7 @@ namespace Next_Game
                         let deficit = house.Value.GetFoodBalance()
                         where deficit < 0
                         orderby deficit
-                        select Convert.ToString($"House {house.Value.Name} at {house.Value.LocName}, {GetLocationCoords(house.Value.LocID)}, has a food Deficit of {deficit:N0}");
+                        select Convert.ToString($"House {house.Value.Name} at {house.Value.LocName}, {Game.display.GetLocationCoords(house.Value.LocID)}, has a food Deficit of {deficit:N0}");
                     tempList = deficitHouses.ToList();
                     break;
                 case FoodInfo.House:

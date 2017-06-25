@@ -391,7 +391,7 @@ namespace Next_Game
                                                 int locID = map.GetMapInfo(MapLayer.LocID, mouse.X, mouse.Y, true);
                                                 if (locID > 0)
                                                 {
-                                                    string locName = world.GetLocationName(locID);
+                                                    string locName = display.GetLocationName(locID);
                                                     infoChannel.AppendInfoList(new Snippet(locName), ConsoleDisplay.Input);
                                                     _posSelect1 = new Position(map.ConvertMouseCoords(mouse.X, mouse.Y));
                                                     infoChannel.AppendInfoList(new Snippet("Select DESTINATION Location by Mouse (press ESC to Exit)"), ConsoleDisplay.Input);
@@ -433,7 +433,7 @@ namespace Next_Game
                                                 int locID = map.GetMapInfo(MapLayer.LocID, mouse.X, mouse.Y, true);
                                                 if (locID > 0)
                                                 {
-                                                    string locName = world.GetLocationName(locID);
+                                                    string locName = display.GetLocationName(locID);
                                                     infoChannel.AppendInfoList(new Snippet(locName), ConsoleDisplay.Input);
                                                     _posSelect1 = new Position(map.ConvertMouseCoords(mouse.X, mouse.Y));
                                                     infoChannel.AppendInfoList(new Snippet("Select DESTINATION Location by Mouse (press ESC to Exit)"), ConsoleDisplay.Input);
@@ -475,9 +475,9 @@ namespace Next_Game
                                                 //int houseID = map.GetMapInfo(MapLayer.HouseID, mouse.X, mouse.Y, true);
                                                 int refID = map.GetMapInfo(MapLayer.RefID, mouse.X, mouse.Y, true);
                                                 //int locID = map.GetMapInfo(MapLayer.LocID, mouse.X, mouse.Y, true);
-                                                if (refID == 9999) { infoChannel.SetInfoList(world.ShowCapitalRL(), ConsoleDisplay.Multi); }
-                                                else if (refID < 100) { infoChannel.SetInfoList(world.ShowMajorHouseRL(refID), ConsoleDisplay.Multi); }
-                                                else if (refID > 100 && refID < 1000) { infoChannel.SetInfoList(world.ShowMinorHouseRL(refID), ConsoleDisplay.Multi); }
+                                                if (refID == 9999) { infoChannel.SetInfoList(display.ShowCapitalRL(), ConsoleDisplay.Multi); }
+                                                else if (refID < 100) { infoChannel.SetInfoList(display.ShowMajorHouseRL(refID), ConsoleDisplay.Multi); }
+                                                else if (refID > 100 && refID < 1000) { infoChannel.SetInfoList(display.ShowMinorHouseRL(refID), ConsoleDisplay.Multi); }
                                             }
                                             _mouseOn = false;
                                             break;
@@ -772,7 +772,7 @@ namespace Next_Game
                                         infoChannel.InsertHeader(new Snippet("--- all KINGDOM EVENTS", RLColor.Yellow, RLColor.Black), ConsoleDisplay.Multi);
                                         break;
                                     case MenuMode.Debug:
-                                        infoChannel.SetInfoList(world.ShowMajorHouseRL(lore.OldKing.RefID), ConsoleDisplay.Multi);
+                                        infoChannel.SetInfoList(display.ShowMajorHouseRL(lore.OldKing.RefID), ConsoleDisplay.Multi);
                                         break;
                                     case MenuMode.God:
                                         infoChannel.SetInfoList(world.GodChangeKnownStatus(), ConsoleDisplay.Input);
@@ -827,7 +827,7 @@ namespace Next_Game
                                     case MenuMode.Actor_Active:
                                         //move Active characters around map (must be AtLocation in order to move)
                                         List<Snippet> charList = new List<Snippet>();
-                                        charList.Add(world.GetActorStatusRL(_charIDSelected));
+                                        charList.Add(display.GetActorStatusRL(_charIDSelected));
                                         _posSelect1 = world.GetActiveActorLocationByPos(_charIDSelected);
                                         if (_posSelect1 != null)
                                         {
