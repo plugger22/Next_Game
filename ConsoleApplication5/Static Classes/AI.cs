@@ -882,7 +882,7 @@ namespace Next_Game
                                                                     target.Capture = true;
                                                                     //if a passive NPC then automatically captured (player only captured through an event or conflict)
                                                                     if (target is Passive)
-                                                                    { SetTargetCaptured(enemy.ActID, target.ActID); }
+                                                                    { SetTargetCaptured(enemy.ActID, target.ActID, true); }
                                                                 }
                                                                 if (target is Player)
                                                                 {
@@ -1068,7 +1068,7 @@ namespace Next_Game
                                                                     target.Capture = true;
                                                                     //if a passive NPC then automatically captured (player only captured through an event or conflict)
                                                                     if (target is Passive)
-                                                                    { SetTargetCaptured(enemy.Value.ActID, target.ActID); }
+                                                                    { SetTargetCaptured(enemy.Value.ActID, target.ActID, true); }
                                                                 }
                                                                 if (target is Player)
                                                                 {
@@ -1183,13 +1183,15 @@ namespace Next_Game
         /// </summary>
         /// <param name="actID"></param>
         /// <param name="enemyID">actID of enemy who captured the target</param>
-        public void SetTargetCaptured(int enemyID, int targetActID)
+        /// <param name="atCapital">if 'true' then target auto incarcerated at Capital, if 'false' then code determines nearest major location (which could also be the capital)</param>
+        public void SetTargetCaptured(int enemyID, int targetActID, bool atCapital = false)
         {
             Game.logTurn?.Write("--- SetPlayerCaptured (World.cs)");
             string description, dungeonLoc;
             Actor target = Game.world.GetAnyActor(targetActID);
             if (target != null)
             {
+                int origLocID = target.LocID;
                 List<Move> listMoveObjects = Game.world.GetMoveObjects();
                 //player travelling when captured?
                 if (target.Status == ActorStatus.Travelling)
@@ -1224,90 +1226,94 @@ namespace Next_Game
                             Location loc = Game.network.GetLocation(target.LocID);
                             if (loc != null)
                             {
-                                //not at Capital -> At Major House?
-                                House house = Game.world.GetHouse(loc.RefID);
-                                if (house != null)
+                                if (atCapital == false)
                                 {
-                                    if ((house is MajorHouse) == false)
+                                    //not at Capital -> At Major House?
+                                    House house = Game.world.GetHouse(loc.RefID);
+                                    if (house != null)
                                     {
-                                        //find nearest Major house/Capital moving Inwards
-                                        List<Route> routeToCapital = loc.GetRouteToCapital();
-                                        List<Position> pathToCapital = routeToCapital[0].GetPath();
-                                        int distIn = 0; int refIn = 0;
-                                        for (int i = 0; i < pathToCapital.Count; i++)
+                                        if ((house is MajorHouse) == false)
                                         {
-                                            Position pos = pathToCapital[i];
-                                            if (pos != null)
+                                            //find nearest Major house/Capital moving Inwards
+                                            List<Route> routeToCapital = loc.GetRouteToCapital();
+                                            List<Position> pathToCapital = routeToCapital[0].GetPath();
+                                            int distIn = 0; int refIn = 0;
+                                            for (int i = 0; i < pathToCapital.Count; i++)
                                             {
-                                                refID = Game.map.GetMapInfo(MapLayer.RefID, pos.PosX, pos.PosY);
-                                                if (refID > 0)
+                                                Position pos = pathToCapital[i];
+                                                if (pos != null)
                                                 {
-                                                    if (refID == 9999 || refID < 100)
-                                                    { refIn = refID; distIn = i; break; }
-                                                }
-                                            }
-                                        }
-                                        //find nearest Major house moving Outwards
-                                        int branch = loc.GetBranch();
-                                        List<Location> listBranchLocs = Game.network.GetBranchLocs(branch);
-                                        int distOut = 0; int refOut = 0;
-                                        int playerLocIndex = -1;
-                                        if (listBranchLocs != null && listBranchLocs.Count > 0)
-                                        {
-                                            //loop through list and find player's current location
-                                            for (int i = 0; i < listBranchLocs.Count; i++)
-                                            {
-                                                if (listBranchLocs[i].LocationID == target.LocID)
-                                                { playerLocIndex = i; break; }
-                                            }
-                                            //found Player's loc in the list?
-                                            if (playerLocIndex > -1)
-                                            {
-                                                //loop through branch list starting from player's current loc, moving outwards (redundantly start at player's current loc to avoid possible index overshoot)
-                                                for (int i = playerLocIndex; i < listBranchLocs.Count; i++)
-                                                {
-                                                    House tempHouse = Game.world.GetHouse(listBranchLocs[i].RefID);
-                                                    if (tempHouse is MajorHouse)
+                                                    refID = Game.map.GetMapInfo(MapLayer.RefID, pos.PosX, pos.PosY);
+                                                    if (refID > 0)
                                                     {
-                                                        //found the first Major House along
-                                                        distOut = listBranchLocs[i].DistanceToCapital - loc.DistanceToCapital;
-                                                        refOut = listBranchLocs[i].RefID;
-                                                        //need to check the actual distance as it could be on a seperate branch and be much further than initially assumed
-                                                        List<Route> route = Game.network.GetRouteAnywhere(loc.GetPosition(), listBranchLocs[i].GetPosition());
-                                                        int checkDistance = Game.network.GetDistance(route);
-                                                        if (checkDistance > distOut)
-                                                        {
-                                                            Game.logTurn?.Write(string.Format(" [Captured -> CheckDistance] distOut increased from {0} to {1}", distOut, checkDistance));
-                                                            distOut = checkDistance;
-                                                        }
-                                                        break;
+                                                        if (refID == 9999 || refID < 100)
+                                                        { refIn = refID; distIn = i; break; }
                                                     }
                                                 }
                                             }
-                                            else { Game.SetError(new Error(174, "Player's Loc not found in search through listBranchLocs.Search outwards Cancelled")); }
+                                            //find nearest Major house moving Outwards
+                                            int branch = loc.GetBranch();
+                                            List<Location> listBranchLocs = Game.network.GetBranchLocs(branch);
+                                            int distOut = 0; int refOut = 0;
+                                            int playerLocIndex = -1;
+                                            if (listBranchLocs != null && listBranchLocs.Count > 0)
+                                            {
+                                                //loop through list and find player's current location
+                                                for (int i = 0; i < listBranchLocs.Count; i++)
+                                                {
+                                                    if (listBranchLocs[i].LocationID == target.LocID)
+                                                    { playerLocIndex = i; break; }
+                                                }
+                                                //found Player's loc in the list?
+                                                if (playerLocIndex > -1)
+                                                {
+                                                    //loop through branch list starting from player's current loc, moving outwards (redundantly start at player's current loc to avoid possible index overshoot)
+                                                    for (int i = playerLocIndex; i < listBranchLocs.Count; i++)
+                                                    {
+                                                        House tempHouse = Game.world.GetHouse(listBranchLocs[i].RefID);
+                                                        if (tempHouse is MajorHouse)
+                                                        {
+                                                            //found the first Major House along
+                                                            distOut = listBranchLocs[i].DistanceToCapital - loc.DistanceToCapital;
+                                                            refOut = listBranchLocs[i].RefID;
+                                                            //need to check the actual distance as it could be on a seperate branch and be much further than initially assumed
+                                                            List<Route> route = Game.network.GetRouteAnywhere(loc.GetPosition(), listBranchLocs[i].GetPosition());
+                                                            int checkDistance = Game.network.GetDistance(route);
+                                                            if (checkDistance > distOut)
+                                                            {
+                                                                Game.logTurn?.Write(string.Format(" [Captured -> CheckDistance] distOut increased from {0} to {1}", distOut, checkDistance));
+                                                                distOut = checkDistance;
+                                                            }
+                                                            break;
+                                                        }
+                                                    }
+                                                }
+                                                else { Game.SetError(new Error(174, "Player's Loc not found in search through listBranchLocs.Search outwards Cancelled")); }
+                                            }
+                                            else { Game.SetError(new Error(174, "Invalid listBranchLocs (Null or Zero Count) Search outwards cancelled")); }
+                                            //Compare in and out and find closest, favouring inwards (if equal distance)
+                                            if (refIn > 0 && refOut == 0) { tempRefID = refIn; Game.logTurn?.Write(" [Captured] dungeon -> In (no out)"); }
+                                            else if (refOut > 0 && refIn == 0) { tempRefID = refOut; Game.logTurn?.Write(" [Captured] dungeon -> Out (no in)"); }
+                                            else if (distIn <= distOut) { tempRefID = refIn; Game.logTurn?.Write(" [Captured] dungeon -> In (distance <= out)"); }
+                                            else if (distIn > distOut) { tempRefID = refOut; Game.logTurn?.Write(" [Captured] dungeon -> Out (distance < in)"); }
+                                            else
+                                            {
+                                                Game.SetError(new Error(174, string.Format("Unable to get a valid dungeon loc, refIn -> {0} distIn -> {1} refOut -> {2} distOut -> {3}, default to Capital",
+                                                refIn, distIn, refOut, distOut)));
+                                            }
+                                            Game.logTurn?.Write(string.Format(" [Captured -> Debug] refIn -> {0} distIn -> {1} refOut -> {2} distOut -> {3} tempRefID -> {4}",
+                                                refIn, distIn, refOut, distOut, tempRefID));
                                         }
-                                        else { Game.SetError(new Error(174, "Invalid listBranchLocs (Null or Zero Count) Search outwards cancelled")); }
-                                        //Compare in and out and find closest, favouring inwards (if equal distance)
-                                        if (refIn > 0 && refOut == 0) { tempRefID = refIn; Game.logTurn?.Write(" [Captured] dungeon -> In (no out)"); }
-                                        else if (refOut > 0 && refIn == 0) { tempRefID = refOut; Game.logTurn?.Write(" [Captured] dungeon -> Out (no in)"); }
-                                        else if (distIn <= distOut) { tempRefID = refIn; Game.logTurn?.Write(" [Captured] dungeon -> In (distance <= out)"); }
-                                        else if (distIn > distOut) { tempRefID = refOut; Game.logTurn?.Write(" [Captured] dungeon -> Out (distance < in)"); }
                                         else
                                         {
-                                            Game.SetError(new Error(174, string.Format("Unable to get a valid dungeon loc, refIn -> {0} distIn -> {1} refOut -> {2} distOut -> {3}, default to Capital",
-                                            refIn, distIn, refOut, distOut)));
+                                            //Captured in a Major House
+                                            tempRefID = loc.RefID;
+                                            Game.logTurn?.Write(" [Captured] Major House dungeon");
                                         }
-                                        Game.logTurn?.Write(string.Format(" [Captured -> Debug] refIn -> {0} distIn -> {1} refOut -> {2} distOut -> {3} tempRefID -> {4}",
-                                            refIn, distIn, refOut, distOut, tempRefID));
                                     }
-                                    else
-                                    {
-                                        //Captured in a Major House
-                                        tempRefID = loc.RefID;
-                                        Game.logTurn?.Write(" [Captured] Major House dungeon");
-                                    }
+                                    else { Game.SetError(new Error(174, string.Format("Invalid House returned (null) from target.LocID \"{0}\"", target.LocID))); }
                                 }
-                                else { Game.SetError(new Error(174, string.Format("Invalid House returned (null) from target.LocID \"{0}\"", target.LocID))); }
+                                else { tempRefID = 9999; } // auto sent to Capital, eg. for Passive NPC's
                             }
                             else { Game.SetError(new Error(174, string.Format("Invalid Location returned (null) from target.LocID \"{0}\"", target.LocID))); }
                         }
@@ -1319,11 +1325,23 @@ namespace Next_Game
                         target.LocID = heldLocID;
                         target.Known = true;
                         dungeonLoc = Game.world.GetLocationName(heldLocID);
-                        //place Player in Location
+                        //place Target in Location
                         Location locDungeon = Game.network.GetLocation(heldLocID);
                         if (locDungeon != null)
                         {
-                            //only do so if player not already there, eg. captured while travelling.
+                            //dungeon is a different location to targets current location?
+                            if (heldLocID != origLocID)
+                            {
+                                //remove player from original Location
+                                Location origLoc = Game.network.GetLocation(origLocID);
+                                if (origLoc != null)
+                                {
+                                    origLoc.RemoveActor(target.ActID);
+                                    Game.logTurn?.Write($"[Notification -> Captured] {target.Title} {target.Name}, ActID {target.ActID}, has been removed from {origLoc.LocName}, LocID {origLoc.LocationID}");
+                                }
+                                else { Game.SetError(new Error(174, "Invalid origLoc (null)")); }
+                            }
+                            //only do so if target not already there, eg. captured while travelling.
                             if (locDungeon.CheckActorStatus(target.ActID) == false)
                             {
                                 locDungeon.AddActor(target.ActID);
