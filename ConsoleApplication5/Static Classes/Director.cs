@@ -4827,27 +4827,63 @@ namespace Next_Game
                     string[] arrayOfAirTexts = new string[] { "None", "neglect", "modesty", "consequence", "prosperity", "opulence" };
                     //food
                     string foodText = "to be healthy enough";
-                    int balance = house.GetFoodBalance();
-                    if (balance >= foodCapacity) { foodText = "plump and well fed"; }
-                    else if (balance < 0 && Math.Abs(balance) >= foodCapacity) { foodText = "thin and underfed"; }
+                    if (!(house is CapitalHouse))
+                    {
+                        int balance = house.GetFoodBalance();
+                        if (balance >= foodCapacity) { foodText = "plump and well fed"; }
+                        else if (balance < 0 && Math.Abs(balance) >= foodCapacity) { foodText = "thin and underfed"; }
+                    }
+                    else { foodText = "well fed although imported food appears to play a large role"; }
                     //goods
                     string goodsText = "no evidence of any meaningful trade";
-                    numGoods = house.GetNumExports();
-                    if ( numGoods > 0)
+                    //Normal House
+                    if (!(house is CapitalHouse))
                     {
-                        goodsText = "signs of trade in ";
-                        int[,] arrayOfExports = house.GetExports();
-                        int upper = arrayOfExports.GetUpperBound(0);
-                        for(int i = 0; i <= upper; i++)
+                        numGoods = house.GetNumExports();
+                        if (numGoods > 0)
                         {
-                            if (arrayOfExports[i, 0] > 0)
+                            goodsText = "signs of trade in ";
+                            int[,] arrayOfExports = house.GetExports();
+                            int upper = arrayOfExports.GetUpperBound(0);
+                            int goodsCounter = 0;
+                            for (int i = 0; i <= upper; i++)
                             {
-                                goodsText += $"{(Goods)i}"; 
-                                if (numGoods > 1)
+                                if (arrayOfExports[i, 0] > 0)
                                 {
-                                    if (i < (numGoods - 1))
-                                    { goodsText += ", "; }
-                                    else if (i == (numGoods - 1)) { goodsText += " and "; }
+                                    goodsText += $"{(Goods)i}";
+                                    goodsCounter++;
+                                    if (numGoods > 1)
+                                    {
+                                        if (goodsCounter < (numGoods - 1))
+                                        { goodsText += ", "; }
+                                        else if (goodsCounter == (numGoods - 1)) { goodsText += " and "; }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                    //Capital
+                    else if (house is CapitalHouse)
+                    {
+                        numGoods = house.GetNumImports();
+                        if (numGoods > 0)
+                        {
+                            goodsText = "signs of finished goods made from ";
+                            int[,] arrayOfImports = house.GetImports();
+                            int upper = arrayOfImports.GetUpperBound(0);
+                            int goodsCounter = 0;
+                            for (int i = 0; i <= upper; i++)
+                            {
+                                if (arrayOfImports[i, 0] > 0)
+                                {
+                                    goodsText += $"{(Goods)i}";
+                                    goodsCounter++;
+                                    if (numGoods > 1)
+                                    {
+                                        if (goodsCounter < (numGoods - 1))
+                                        { goodsText += ", "; }
+                                        else if (goodsCounter == (numGoods - 1)) { goodsText += " and "; }
+                                    }
                                 }
                             }
                         }
