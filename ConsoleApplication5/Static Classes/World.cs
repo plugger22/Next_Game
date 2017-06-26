@@ -2613,21 +2613,33 @@ namespace Next_Game
         public void ProcessStartTurnLate()
         {
             //Create events
-            Game.director.CheckPlayerEvents();
-            Game.director.CheckFollowerEvents(dictActiveActors);
-            //Player events first
-            if (Game.director.ResolvePlayerEvents())
-            { Game._specialMode = SpecialMode.PlayerEvent; }
-            else
+            switch (Game.gameAct)
             {
-                //Follwer events last
-                if (Game.director.ResolveFollowerEvents())
-                { Game._specialMode = SpecialMode.FollowerEvent; }
+                case Act.One:
+                    Game.director.CheckPlayerEvents();
+                    Game.director.CheckFollowerEvents(dictActiveActors);
+                    //Player events first
+                    if (Game.director.ResolvePlayerEvents())
+                    { Game._specialMode = SpecialMode.PlayerEvent; }
+                    else
+                    {
+                        //Follwer events last
+                        if (Game.director.ResolveFollowerEvents())
+                        { Game._specialMode = SpecialMode.FollowerEvent; }
+                    }
+                    //update position of all key characters on map layers
+                    UpdateFollowerPositions();
+                    UpdateEnemiesPositions();
+                    UpdateActiveActors();
+                    break;
+                case Act.Two:
+                    Game.director.CheckPlayerEvents();
+                    if (Game.director.ResolvePlayerEvents())
+                    { Game._specialMode = SpecialMode.PlayerEvent; }
+                    UpdateEnemiesPositions();
+                    break;
             }
-            //update position of all key characters on map layers
-            UpdateFollowerPositions();
-            UpdateEnemiesPositions();
-            UpdateActiveActors();
+            //applies to both Acts
             UpdateBloodHound(); //needs to be right at the end of ProcessStartTurn
         }
 
@@ -5645,8 +5657,8 @@ namespace Next_Game
                             if (enemy.Value is Inquisitor)
                             { enemy.Value.GoodEnemy = true; Game.logTurn?.Write($"Inquisitor {enemy.Value.Name}, ActID {enemy.Value.ActID}, GoodEnemy -> {enemy.Value.GoodEnemy}"); }
                         }
-                        //Populate dict Of Royal Actors
-                        /*List<int> listOfActors = locCapital.GetActorList();
+                        //Populate dictRoyalBackUp
+                        List<int> listOfActors = locCapital.GetActorList();
                         int newKingHouseID = Game.lore.NewKing.HouseID;
                         for (int i = 0; i < listOfActors.Count; i++)
                         {
@@ -5659,31 +5671,16 @@ namespace Next_Game
                                     Passive passive = actor as Passive;
                                     if (passive.HouseID == 9999 || passive.HouseID == newKingHouseID)
                                     {
-                                        //DEBUG -> set all to Captured
-                                        passive.Status = ActorStatus.Captured;
+                                        //DEBUG -> set all Royal Family to Captured and keep Advisors in their jobs
+                                        if (!(passive is Advisor)) { passive.Status = ActorStatus.Captured; }
                                         dictRoyalBackUp.Add(actor.ActID, passive);
-                                        Game.logTurn?.Write($"{passive.Title} {passive.Name}, \"{passive.Handle}\", ActID {passive.ActID}, has been added to dictRoyalActors");
+                                        Game.logTurn?.Write($"{passive.Title} {passive.Name}, \"{passive.Handle}\", ActID {passive.ActID}, has been added to dictRoyalBackUp");
                                     }
                                 }
                             }
-                        }*/
-                        int newKingHouseID = Game.lore.NewKing.HouseID;
-                        foreach ( var actor in dictRoyalCourt)
-                        {
-                            //copy to Back Up dictionary (enables restoration for a god mode flip back to Act One)
-                            if (actor.Value is Passive)
-                            {
-                                Passive passive = actor.Value as Passive;
-                                //royal Family, not advisors
-                                if (passive.RefID == 9999 || passive.HouseID == newKingHouseID)
-                                {
-                                    passive.Status = ActorStatus.Captured;
-                                    dictRoyalBackUp.Add(passive.ActID, passive);
-                                    Game.logTurn?.Write($"{passive.Title} {passive.Name}, \"{passive.Handle}\", ActID {passive.ActID}, has been added to dictRoyalActors");
-                                }
-                            }
                         }
-
+                        
+                      
                         //debug
                         //SetInquisitorControlStatus(false);
                         //

@@ -811,14 +811,7 @@ namespace Next_Game
         public int CrowDistance { get; set; } //distance between player and follower
         public int CrowBonus { get; set; } //carry over bonus to CrowChance from previous turn
         public bool Activated { get; set; } //can move/be given orders this turn, or not
-        //public bool Known { get; set; } //Presence is known or unknown?
-        //public int Revert { get; set; } //# of turns before Known status reverts to unknown
-        //public int TurnsUnknown { get; set; } //# of continuous turns spent 'Unknown' (used by conflict for game situations)
-        //public int LastKnownLocID { get; set; } //updated every turn Actor is known
         public bool IntroPresented { get; set; } //true if actor has presented an introduction to gain access to a court
-        //public bool Capture { get; set; } //if found when already Known, then 'true' and enemy about to capture active actor, reset at the end of each turn
-        //private List<int> listOfEnemies; //if found, contains actID of all enemies who found you, cleared at end of each turn
-        //private List<int> listOfSearched; //tracks every enemy who searches (in same place) for character to prevent enemies making multiple searches each turn. Reset at end of turn.
         private List<string> crowTooltip;//explanation of factors influencing crow chance
 
 
