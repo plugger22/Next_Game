@@ -140,7 +140,13 @@ namespace Next_Game.Event_System
                     {
                         case EventFilter.None:
                             eventObject.Text = string.Format("You are at {0}. How will you fill your day, sire?", locName);
-
+                            //option -> default Leave
+                            OptionInteractive option_L = new OptionInteractive("Leave");
+                            if (player.Known == true) { option_L.ReplyGood = "You realise you have matters to attend to elsewhere"; }
+                            else { option_L.ReplyGood = "You depart, a retinue of minons scurrying in your wake"; }
+                            OutNone outcome_L = new OutNone(eventObject.EventPID);
+                            option_L.SetGoodOutcome(outcome_L);
+                            eventObject.SetOption(option_L);
                             //option -> audience with local House member
                             if (listCourt.Count() > 0)
                             {
@@ -172,7 +178,7 @@ namespace Next_Game.Event_System
                                 else
                                 {
                                     //capital
-                                    option = new OptionInteractive(string.Format("Grant an Audience with a Royal Advisor ({0} present)", listAdvisors.Count));
+                                    option = new OptionInteractive(string.Format("Speak with a Royal Advisor ({0} present)", listAdvisors.Count));
                                     option.ReplyGood = string.Format("The Royal Clerk has advised that the Council awaits you, sire");
                                 }
                                 OutEventChain outcome = new OutEventChain(1000, EventFilter.Advisors);
@@ -197,13 +203,6 @@ namespace Next_Game.Event_System
                                 option.SetGoodOutcome(outcome);
                                 eventObject.SetOption(option);
                             }
-                            //option -> Leave
-                            OptionInteractive option_L = new OptionInteractive("Leave");
-                            if (player.Known == true) { option_L.ReplyGood = "You realise you have matters to attend to elsewhere"; }
-                            else { option_L.ReplyGood = "You depart, a retinue of minons scurrying in your wake"; }
-                            OutNone outcome_L = new OutNone(eventObject.EventPID);
-                            option_L.SetGoodOutcome(outcome_L);
-                            eventObject.SetOption(option_L);
                             break;
                         case EventFilter.Court:
                             eventObject.Name = "Talk to members of the Court";
@@ -254,10 +253,10 @@ namespace Next_Game.Event_System
                             {
                                 Passive local = listAdvisors[i];
                                 actorText = string.Format("{0} {1}", local.Title, local.Name);
-                                optionText = string.Format("Seek an audience with {0}", actorText);
+                                optionText = string.Format("Consult with {0}", actorText);
                                 OptionInteractive option = new OptionInteractive(optionText) { ActorID = local.ActID };
                                 option.ReplyGood = string.Format("{0} bows and looks at your expectantly", actorText);
-                                OutEventChain outcome = new OutEventChain(1000, EventFilter.Interact);
+                                OutEventChain outcome = new OutEventChain(1000, EventFilter.SpeakCouncil);
                                 option.SetGoodOutcome(outcome);
                                 eventObject.SetOption(option);
                             }
@@ -284,7 +283,7 @@ namespace Next_Game.Event_System
                                 optionText = string.Format("Speak with {0}", actorText);
                                 OptionInteractive option = new OptionInteractive(optionText) { ActorID = local.ActID };
                                 option.ReplyGood = string.Format("{0} sprawls before you, filthy and rank", actorText);
-                                OutEventChain outcome = new OutEventChain(1000, EventFilter.Interact);
+                                OutEventChain outcome = new OutEventChain(1000, EventFilter.SpeakPrisoner);
                                 option.SetGoodOutcome(outcome);
                                 eventObject.SetOption(option);
                             }
@@ -320,6 +319,60 @@ namespace Next_Game.Event_System
                                 option.SetGoodOutcome(outcome);
                                 eventObject.SetOption(option);
                             }
+                            break;
+                        case EventFilter.SpeakCouncil:
+                            //Royal Council of Advisors -> inteact with the selected individual
+                            if (actorID > 1 && Game.world.CheckActorPresent(actorID, locID) == true)
+                            {
+                                Actor person = Game.world.GetAnyActor(actorID);
+                                if (person != null)
+                                {
+                                    //How to refer to them?
+                                    if (person is Advisor) { actorText = $"{Game.display.GetAdvisorType((Advisor)person)} {person.Name}"; }
+                                    else { actorText = string.Format("{0} {1}", person.Type, person.Name); }
+                                    actorText = $"{person.Title} {person.Name}";
+                                    eventObject.Name = "Interact";
+                                    eventObject.Text = string.Format("How would you like to interact with {0}?", actorText);
+                                    //default -> flip back to court or advisor options
+                                    OptionInteractive option_0 = new OptionInteractive("Excuse Yourself") { ActorID = actorID };
+                                    option_0.ReplyGood = $"{actorText} stares at you with narrowed eyes";
+                                    if (person is Advisor) { OutEventChain outcome_0 = new OutEventChain(1000, EventFilter.Advisors); option_0.SetGoodOutcome(outcome_0); }
+                                    else { OutEventChain outcome_0 = new OutEventChain(1000, EventFilter.None); option_0.SetGoodOutcome(outcome_0); }
+                                    eventObject.SetOption(option_0);
+                                    if (person is Advisor)
+                                    {
+                                        Advisor advisor = person as Advisor;
+                                        switch (advisor.advisorRoyal)
+                                        {
+                                            case AdvisorRoyal.High_Septon:
+                                                break;
+                                            case AdvisorRoyal.Master_of_Coin:
+                                                break;
+                                            case AdvisorRoyal.Master_of_Laws:
+                                                break;
+                                            case AdvisorRoyal.Master_of_Whisperers:
+                                                if (Game.variable.GetValue(GameVar.Inquisitor_AI) > 0)
+                                                {
+                                                    //assume direct control of Inquisitors
+                                                }
+                                                else
+                                                {
+                                                    //hand control of Inquistors back to Whisperer
+                                                }
+                                                break;
+                                            case AdvisorRoyal.Hand_of_the_King:
+                                                break;
+                                            case AdvisorRoyal.Commander_of_City_Watch:
+                                                break;
+                                        }
+                                    }
+
+                                }
+                                else { Game.SetError(new Error(328, $"Invalid actorID \"{actorID}\", from AutoCreateEvent (null from dict)")); }
+                            }
+                            break;
+                        case EventFilter.SpeakPrisoner:
+                            
                             break;
                         default:
                             Game.SetError(new Error(328, string.Format("Invalid EventFilter (\"{0}\")", filter)));

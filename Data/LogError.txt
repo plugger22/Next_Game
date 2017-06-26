@@ -1,6 +1,2 @@
-//Exile Game file ops "LogError.txt" commenced at: 26/06/2017 16:45:04
-ERROR_29 "Location Deleted 2:1"
-Method: LocationSweeper,  Line: 1676,  Object: Map.cs,  Turn: 0,  Local Time: 16:45:04 UTC +10:00
-ERROR_162 "Invalid Target (null) for targetActID 63"
-Method: CheckStationaryTargetActors,  Line: 1174,  Object: AI.cs,  Turn: 1,  Local Time: 16:45:15 UTC +10:00
-//Exile Game file ops "LogError.txt" Completed at: 26/06/2017 16:45:50
+//Exile Game file ops "LogError.txt" commenced at: 26/06/2017 20:23:55
+//Exile Game file ops "LogError.txt" Completed at: 26/06/2017 20:25:08
