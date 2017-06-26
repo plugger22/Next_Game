@@ -24,12 +24,207 @@ namespace Next_Game.Event_System
         /// <summary>
         /// Auto Location Event for Act Two
         /// </summary>
-        internal void CreateAutoEventTwo()
+        internal void CreateAutoEvent(EventAutoFilter filter, int actorID = 0)
         {
             //get player
             Player player = (Player)Game.world.GetPlayer();
             if (player != null)
             {
+                Game.logTurn?.Write("- CreateAutoEventTwo (ActTwo.cs)");
+                List<Actor> listActors = new List<Actor>();
+                List<Passive> listCourt = new List<Passive>();
+                List<Passive> listAdvisors = new List<Passive>();
+                List<Passive> listVisitors = new List<Passive>();
+                List<Follower> listFollowers = new List<Follower>();
+                List<Actor> listCaptured = new List<Actor>();
+                List<Trigger> listTriggers = new List<Trigger>();
+                int limit; //loop counter, prevents overshooting the # of available function keys
+                int locID = player.LocID;
+                int rndLocID, voyageDistance;
+                int locType = 0; //1 - capital, 2 - MajorHouse, 3 - MinorHouse, 4 - Inn
+                int talkRel = Game.constant.GetValue(Global.TALK_THRESHOLD);
+                int speed = Game.constant.GetValue(Global.SEA_SPEED);
+                int chance, voyageTime;
+                string actorText = "unknown"; string optionText = "unknown"; string locName = "unknown";
+                Location loc = Game.network.GetLocation(locID);
+                if (loc != null)
+                { locName = Game.display.GetLocationName(locID); }
+                else { Game.SetError(new Error(328, "Invalid Loc (null)")); }
+                int houseID = Game.map.GetMapInfo(MapLayer.HouseID, loc.GetPosX(), loc.GetPosY());
+                int refID = Game.map.GetMapInfo(MapLayer.RefID, loc.GetPosX(), loc.GetPosY());
+                House house = Game.world.GetHouse(refID);
+                if (house == null && refID != 9999) { Game.SetError(new Error(328, "Invalid house (null)")); }
+                string houseName = "Unknown";
+                string tempText;
+                if (refID > 0) { houseName = Game.world.GetHouseName(refID); }
+                int testRefID; //which refID (loc) to use when checking who's present
+                //what type of location?
+                switch (loc.Type)
+                {
+                    case LocType.Capital: locType = 1; break;
+                    case LocType.MajorHouse: locType = 2; break;
+                    case LocType.MinorHouse: locType = 3; break;
+                    case LocType.Inn:
+                        {
+                            locType = 4;
+                            //can't be locals present at an Inn, only Visitors and Followers
+                            if (filter == EventAutoFilter.Court) { filter = EventAutoFilter.Visitors; Game.SetError(new Error(118, "Invalid filter (Locals when at an Inn)")); }
+                        }
+                        break;
+                    default:
+                        Game.SetError(new Error(328, $"Invalid loc.Type \"{loc.Type}\""));
+                        break;
+                }
+                //Get actors present at location
+                List<int> actorIDList = loc.GetActorList();
+                if (actorIDList.Count > 0)
+                {
+                    //get actual actors
+                    for (int i = 0; i < actorIDList.Count; i++)
+                    {
+                        Actor tempActor = Game.world.GetAnyActor(actorIDList[i]);
+                        if (tempActor != null)
+                        {   //exclude player from list (they are always present) & you
+                            if (tempActor.ActID != 1)
+                            { listActors.Add(tempActor); Game.logTurn?.Write(string.Format(" [AutoEventTwo -> ActorList] \"{0}\", ID {1} added to list of Actors", tempActor.Name, tempActor.ActID)); }
+                        }
+                        else { Game.SetError(new Error(328, string.Format("Invalid tempActor ID {0} (Null)", actorIDList[i]))); }
+                    }
+                    //filter actors accordingly
+                    for (int i = 0; i < listActors.Count; i++)
+                    {
+                        Actor actor = listActors[i];
+                        if (actor.Status == ActorStatus.Captured)
+                        { listCaptured.Add(actor); }
+                        else if (actor is Passive)
+                        {
+                            Passive tempPassive = actor as Passive;
+                            testRefID = refID;
+                            if (locType == 1) { testRefID = Game.lore.RoyalRefIDNew; }
+                            if (tempPassive.RefID == testRefID && !(actor is Advisor))
+                            {
+                                if (tempPassive.Type == ActorType.Lord || tempPassive.Age >= 15)
+                                {
+                                    listCourt.Add(tempPassive); Game.logTurn?.Write(string.Format(" [AutoEventTwo -> LocalList] \"{0}\", ID {1} added to list of Locals",
+                                      tempPassive.Name, tempPassive.ActID));
+                                }
+                            }
+                            else if (actor is Advisor)
+                            {
+                                listAdvisors.Add(tempPassive); Game.logTurn?.Write(string.Format(" [AutoEventTwo -> AdvisorList] \"{0}\", ID {1} added to list of Advisors",
+                                  tempPassive.Name, tempPassive.ActID));
+                            }
+                            else
+                            {
+                                if (tempPassive.Age >= 15)
+                                {
+                                    listVisitors.Add(tempPassive); Game.logTurn?.Write(string.Format(" [AutoEventTwo -> VisitorList] \"{0}\", ID {1} added to list of Visitors",
+                                      tempPassive.Name, tempPassive.ActID));
+                                }
+                            }
+                        }
+                        else if (actor is Follower)
+                        {
+                            Follower tempFollower = actor as Follower;
+                            listFollowers.Add(tempFollower);
+                            Game.logTurn?.Write(string.Format(" [AutoEventTwo -> FollowerList] \"{0}\", ID {1} added to list of Followers", tempFollower.Name, tempFollower.ActID));
+                        }
+                    }
+                    //new event (auto location events always have eventPID of '1000' -> old version in Player dict is deleted before new one added)
+                    EventPlayer eventObject = new EventPlayer(1000, "What to do?", EventFrequency.Low) { Category = EventCategory.AutoCreate, Status = EventStatus.Active, Type = ArcType.Location };
+                    tempText = "";
+                    //
+                    // Resolution ---
+                    //
+                    switch (filter)
+                    {
+                        case EventAutoFilter.None:
+                            eventObject.Text = string.Format("You are at {0}. How will you fill your day, sire?", locName);
+
+                            //option -> audience with local House member
+                            if (listCourt.Count() > 0)
+                            {
+                                OptionInteractive option = null;
+                                if (locType != 1)
+                                {
+                                    option = new OptionInteractive(string.Format("Seek an Audience with a member of House {0} ({1} present)", houseName, listCourt.Count));
+                                    option.ReplyGood = string.Format("House {0} awaits your presence, sire", houseName);
+                                }
+                                else
+                                {
+                                    //capital
+                                    option = new OptionInteractive(string.Format("Seek an Audience with the Royal Household ({0} present)", listCourt.Count));
+                                    option.ReplyGood = string.Format("The Royal Usher has prepared for your arrival, sire");
+                                }
+                                OutEventChain outcome = new OutEventChain(1000, EventAutoFilter.Court);
+                                option.SetGoodOutcome(outcome);
+                                eventObject.SetOption(option);
+                            }
+                            //option -> audience with Advisor
+                            if (listAdvisors.Count() > 0)
+                            {
+                                OptionInteractive option = null;
+                                if (locType != 1)
+                                {
+                                    option = new OptionInteractive(string.Format("Seek an Audience with an Advisor to House {0} ({1} present)", houseName, listAdvisors.Count));
+                                    option.ReplyGood = string.Format("House {0} is willing to let you talk to whoever you wish", houseName);
+                                }
+                                else
+                                {
+                                    //capital
+                                    option = new OptionInteractive(string.Format("Grant an Audience with a Royal Advisor ({0} present)", listAdvisors.Count));
+                                    option.ReplyGood = string.Format("The Royal Clerk has advised that the Royal Council awaits you, sire");
+                                }
+                                OutEventChain outcome = new OutEventChain(1000, EventAutoFilter.Advisors);
+                                option.SetGoodOutcome(outcome);
+                                eventObject.SetOption(option);
+                            }
+                            //option -> audience with Visitor
+                            if (listVisitors.Count() > 0)
+                            {
+                                OptionInteractive option = new OptionInteractive(string.Format("Grant an Audience with a Visitor to House {0} ({1} present)", houseName, listVisitors.Count));
+                                option.ReplyGood = string.Format("House {0} is willing to let you talk to whoever you wish", houseName);
+                                OutEventChain outcome = new OutEventChain(1000, EventAutoFilter.Visitors);
+                                option.SetGoodOutcome(outcome);
+                                eventObject.SetOption(option);
+                            }
+                            //option -> audience with Captured actor in Dungeons
+                            if (listCaptured.Count() > 0)
+                            {
+                                OptionInteractive option = new OptionInteractive(string.Format("Visit a Prisoner ({0} present)", listCaptured.Count));
+                                option.ReplyGood = "It isn't savoury down there in the Dungeons, sire, but if you insist...";
+                                OutEventChain outcome = new OutEventChain(1000, EventAutoFilter.Dungeon);
+                                option.SetGoodOutcome(outcome);
+                                eventObject.SetOption(option);
+                            }
+                            //option -> Leave
+                            OptionInteractive option_L = new OptionInteractive("Leave");
+                            if (player.Known == true) { option_L.ReplyGood = "You realise you have matters to attend to elsewhere"; }
+                            else { option_L.ReplyGood = "You depart, a retinue of minons scurrying in your wake"; }
+                            OutNone outcome_L = new OutNone(eventObject.EventPID);
+                            option_L.SetGoodOutcome(outcome_L);
+                            eventObject.SetOption(option_L);
+                            break;
+                        default:
+                            Game.SetError(new Error(328, string.Format("Invalid EventFilter (\"{0}\")", filter)));
+                            break;
+                    }
+                    //Create & Add Event Package
+                    EventPackage package = new EventPackage() { Person = player, EventObject = eventObject, Done = false };
+                    Game.director.AddPlyrCurrentEvent(package);
+                    //if more than the current event present the original one (autocreated) needs to be deleted
+                    if (Game.director.GetPlyrCurrentEventsCount() > 1) { Game.director.RemoveAtPlyrCurrentEvents(0); }
+                    //add to Player dictionary (ResolveOutcome looks for it there) -> check not an instance present already
+                    Game.director.RemovePlayerEvent(1000);
+                    Game.director.AddPlayerEvent(eventObject);
+                    //message
+                    if (tempText.Length > 0)
+                    {
+                        Game.world.SetMessage(new Message(tempText, MessageType.Event));
+                        Game.world.SetPlayerRecord(new Record(tempText, player.ActID, player.LocID, CurrentActorEvent.Event));
+                    }
+                }
+                else { Game.SetError(new Error(328, "Invalid List of Actors (Zero present at Location")); }
             }
             else { Game.SetError(new Error(328, "Invalid Player (null)")); }
         }

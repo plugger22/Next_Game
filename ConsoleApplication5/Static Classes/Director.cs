@@ -532,37 +532,46 @@ namespace Next_Game
                     switch (player.Status)
                     {
                         case ActorStatus.AtLocation:
-                            //in a safe house
-                            if (player.Conceal == ActorConceal.SafeHouse)
-                            { Game.actOne.CreateAutoEventOne(EventAutoFilter.SafeHouse); }
-                            //Location event
-                            else
+                            //Act One
+                            if (Game.gameAct == Act.One)
                             {
-                                Game.logTurn?.Write($"Location event, Need {story.Ev_Player_Loc_Current}, roll {rndNum}");
-                                if (rndNum <= story.Ev_Player_Loc_Current)
-                                {
-                                    DeterminePlayerEvent(player, EventType.Location);
-                                    //chance of event halved after each occurence (prevents a long string of random events and gives space for necessary system events)
-                                    story.Ev_Player_Loc_Current /= 2;
-                                    Game.logTurn?.Write(string.Format(" Chance of Player Location event {0} %", story.Ev_Player_Loc_Current));
-                                }
+                                //in a safe house
+                                if (player.Conceal == ActorConceal.SafeHouse)
+                                { Game.actOne.CreateAutoEvent(EventAutoFilter.SafeHouse); }
+                                //Location event
                                 else
                                 {
-                                    //intro record/msg (only one that mentions 'event', all the rest are narrative
-                                    Location loc = Game.network.GetLocation(player.LocID);
-                                    if (loc != null)
+                                    Game.logTurn?.Write($"Location event, Need {story.Ev_Player_Loc_Current}, roll {rndNum}");
+                                    if (rndNum <= story.Ev_Player_Loc_Current)
                                     {
-                                        string tempText = $"Ursurper {player.Name} at {loc.LocName}, {Game.display.GetLocationCoords(loc.LocationID)}, [Event] \"What to do?\"";
-                                        Record recordEvent = new Record(tempText, 1, loc.LocationID, CurrentActorEvent.Event);
-                                        Game.world.SetPlayerRecord(recordEvent);
-                                        Game.world.SetMessage(new Message(tempText, MessageType.Event));
+                                        DeterminePlayerEvent(player, EventType.Location);
+                                        //chance of event halved after each occurence (prevents a long string of random events and gives space for necessary system events)
+                                        story.Ev_Player_Loc_Current /= 2;
+                                        Game.logTurn?.Write(string.Format(" Chance of Player Location event {0} %", story.Ev_Player_Loc_Current));
                                     }
-                                    else { Game.SetError(new Error(71, "Invalid loc (null) in Player AutoLocEvent -> No Record created")); }
-                                    Game.actOne.CreateAutoEventOne(EventAutoFilter.None);
-                                    //reset back to base figure
-                                    story.Ev_Player_Loc_Current = story.Ev_Player_Loc_Base;
-                                    Game.logTurn?.Write(string.Format(" Chance of Player Location event {0} %", story.Ev_Player_Loc_Current));
+                                    else
+                                    {
+                                        //intro record/msg (only one that mentions 'event', all the rest are narrative
+                                        Location loc = Game.network.GetLocation(player.LocID);
+                                        if (loc != null)
+                                        {
+                                            string tempText = $"Ursurper {player.Name} at {loc.LocName}, {Game.display.GetLocationCoords(loc.LocationID)}, [Event] \"What to do?\"";
+                                            Record recordEvent = new Record(tempText, 1, loc.LocationID, CurrentActorEvent.Event);
+                                            Game.world.SetPlayerRecord(recordEvent);
+                                            Game.world.SetMessage(new Message(tempText, MessageType.Event));
+                                        }
+                                        else { Game.SetError(new Error(71, "Invalid loc (null) in Player AutoLocEvent -> No Record created")); }
+                                        Game.actOne.CreateAutoEvent(EventAutoFilter.None);
+                                        //reset back to base figure
+                                        story.Ev_Player_Loc_Current = story.Ev_Player_Loc_Base;
+                                        Game.logTurn?.Write(string.Format(" Chance of Player Location event {0} %", story.Ev_Player_Loc_Current));
+                                    }
                                 }
+                            }
+                            else
+                            {
+                                //Act Two
+                                Game.actTwo.CreateAutoEvent(EventAutoFilter.None);
                             }
                             break;
                         case ActorStatus.Travelling:
@@ -3175,7 +3184,7 @@ namespace Next_Game
                                             //if introduction used to gain access to Court, or Advisors, make sure it can't be reused
                                             if (chainOutcome.Filter == EventAutoFilter.Court || chainOutcome.Filter == EventAutoFilter.Advisors)
                                             { player.IntroPresented = false; }
-                                            Game.actOne.CreateAutoEventOne(chainOutcome.Filter, actorID);
+                                            Game.actOne.CreateAutoEvent(chainOutcome.Filter, actorID);
                                             Game._eventID = eventObject.EventPID;
                                             break;
                                         case OutcomeType.Conflict:

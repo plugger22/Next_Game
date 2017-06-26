@@ -5559,8 +5559,22 @@ namespace Next_Game
                                 displayColor = goodColor;
                                 //store current player position to enable seamless transition back to Act 1 if required
                                 Game.variable.SetValue(GameVar.God_PlayerLocID, player.LocID);
-                                //New Enemy -> DEBUG (temporary)
-                                Game.variable.SetValue(GameVar.Inquisitor_Target, 40);
+                                //New Enemy -> DEBUG (temporary) -> find Lord, alive, At Location who dislikes player
+                                int targetActID = 0;
+                                for(int i = 20; i < dictPassiveActors.Count; i++)
+                                {
+                                   Passive target = dictPassiveActors[i];
+                                   if (target is Noble && target.Type == ActorType.Lord && target.Status == ActorStatus.AtLocation)
+                                    {
+                                        if (target.GetRelPlyr() < 40)
+                                        {
+                                            targetActID = target.ActID;
+                                            break;
+                                        }
+                                    }
+                                }
+                                if (targetActID == 0) { targetActID = 40; } //give a default value, just in case
+                                Game.variable.SetValue(GameVar.Inquisitor_Target, targetActID);
                                 //teleport player to Capital
                                 InitialiseMoveActor(1, player.GetPosition(), posCapital);
                                 Game.logTurn?.Write("Player teleported to Capital");

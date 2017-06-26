@@ -25,13 +25,13 @@ namespace Next_Game.Event_System
         /// create a dynamic auto player location event for Act one - assumed to be at player's current location
         /// <param name="filter">Which group of people should the event focus on (from pool of people present at the location)</param>
         /// </summary>
-        internal void CreateAutoEventOne(EventAutoFilter filter, int actorID = 0)
+        internal void CreateAutoEvent(EventAutoFilter filter, int actorID = 0)
         {
             //get player
             Player player = (Player)Game.world.GetPlayer();
             if (player != null)
             {
-                Game.logTurn?.Write("- CreateAutoLocEvent (Director.cs)");
+                Game.logTurn?.Write("- CreateAutoEventOne (ActOne.cs)");
                 List<Actor> listActors = new List<Actor>();
                 List<Passive> listCourt = new List<Passive>();
                 List<Passive> listAdvisors = new List<Passive>();
@@ -321,7 +321,7 @@ namespace Next_Game.Event_System
                             //option -> Leave
                             OptionInteractive option_L = new OptionInteractive("Leave");
                             if (player.Known == true) { option_L.ReplyGood = "You depart, head held high, shoulders back, meeting the eye of everyone you pass"; }
-                            else { option_L.ReplyGood = "You quietly depart, moving quietly through the mottled shadows"; }
+                            else { option_L.ReplyGood = "You quietly depart, moving softly through the mottled shadows"; }
                             OutNone outcome_L = new OutNone(eventObject.EventPID);
                             option_L.SetGoodOutcome(outcome_L);
                             eventObject.SetOption(option_L);
