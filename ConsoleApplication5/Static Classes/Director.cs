@@ -537,7 +537,7 @@ namespace Next_Game
                             {
                                 //in a safe house
                                 if (player.Conceal == ActorConceal.SafeHouse)
-                                { Game.actOne.CreateAutoEvent(EventAutoFilter.SafeHouse); }
+                                { Game.actOne.CreateAutoEventOne(EventFilter.SafeHouse); }
                                 //Location event
                                 else
                                 {
@@ -561,7 +561,7 @@ namespace Next_Game
                                             Game.world.SetMessage(new Message(tempText, MessageType.Event));
                                         }
                                         else { Game.SetError(new Error(71, "Invalid loc (null) in Player AutoLocEvent -> No Record created")); }
-                                        Game.actOne.CreateAutoEvent(EventAutoFilter.None);
+                                        Game.actOne.CreateAutoEventOne(EventFilter.None);
                                         //reset back to base figure
                                         story.Ev_Player_Loc_Current = story.Ev_Player_Loc_Base;
                                         Game.logTurn?.Write(string.Format(" Chance of Player Location event {0} %", story.Ev_Player_Loc_Current));
@@ -571,7 +571,7 @@ namespace Next_Game
                             else
                             {
                                 //Act Two
-                                Game.actTwo.CreateAutoEvent(EventAutoFilter.None);
+                                Game.actTwo.CreateAutoEventTwo(EventFilter.None);
                             }
                             break;
                         case ActorStatus.Travelling:
@@ -3182,9 +3182,10 @@ namespace Next_Game
                                             actorID = option.ActorID;
                                             OutEventChain chainOutcome = outcome as OutEventChain;
                                             //if introduction used to gain access to Court, or Advisors, make sure it can't be reused
-                                            if (chainOutcome.Filter == EventAutoFilter.Court || chainOutcome.Filter == EventAutoFilter.Advisors)
+                                            if (chainOutcome.Filter == EventFilter.Court || chainOutcome.Filter == EventFilter.Advisors)
                                             { player.IntroPresented = false; }
-                                            Game.actOne.CreateAutoEvent(chainOutcome.Filter, actorID);
+                                            if (Game.gameAct == Act.One) { Game.actOne.CreateAutoEventOne(chainOutcome.Filter, actorID); }
+                                            else { Game.actTwo.CreateAutoEventTwo(chainOutcome.Filter, actorID); }
                                             Game._eventID = eventObject.EventPID;
                                             break;
                                         case OutcomeType.Conflict:

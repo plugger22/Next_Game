@@ -25,7 +25,7 @@ namespace Next_Game.Event_System
         /// create a dynamic auto player location event for Act one - assumed to be at player's current location
         /// <param name="filter">Which group of people should the event focus on (from pool of people present at the location)</param>
         /// </summary>
-        internal void CreateAutoEvent(EventAutoFilter filter, int actorID = 0)
+        internal void CreateAutoEventOne(EventFilter filter, int actorID = 0)
         {
             //get player
             Player player = (Player)Game.world.GetPlayer();
@@ -68,7 +68,7 @@ namespace Next_Game.Event_System
                         {
                             locType = 4;
                             //can't be locals present at an Inn, only Visitors and Followers
-                            if (filter == EventAutoFilter.Court) { filter = EventAutoFilter.Visitors; Game.SetError(new Error(118, "Invalid filter (Locals when at an Inn)")); }
+                            if (filter == EventFilter.Court) { filter = EventFilter.Visitors; Game.SetError(new Error(118, "Invalid filter (Locals when at an Inn)")); }
                         }
                         break;
                     default:
@@ -133,7 +133,7 @@ namespace Next_Game.Event_System
                     tempText = "";
                     switch (filter)
                     {
-                        case EventAutoFilter.None:
+                        case EventFilter.None:
                             eventObject.Text = string.Format("You are at {0}. How will you fill your day?", locName);
 
                             //option -> audience with local House member
@@ -151,7 +151,7 @@ namespace Next_Game.Event_System
                                     option = new OptionInteractive(string.Format("Seek an Audience with a member of the Royal Household ({0} present)", listCourt.Count));
                                     option.ReplyGood = string.Format("The Royal Clerk has advised that the Ursurper has permission to enter the Court");
                                 }
-                                OutEventChain outcome = new OutEventChain(1000, EventAutoFilter.Court);
+                                OutEventChain outcome = new OutEventChain(1000, EventFilter.Court);
                                 option.SetGoodOutcome(outcome);
                                 listTriggers.Clear();
                                 listTriggers.Add(new Trigger(TriggerCheck.Known, 0, 1, EventCalc.Equals, false));
@@ -174,7 +174,7 @@ namespace Next_Game.Event_System
                                     option = new OptionInteractive(string.Format("Seek an Audience with a Royal Advisor ({0} present)", listAdvisors.Count));
                                     option.ReplyGood = string.Format("The Royal Clerk has advised that the household is willing to consider the matter");
                                 }
-                                OutEventChain outcome = new OutEventChain(1000, EventAutoFilter.Advisors);
+                                OutEventChain outcome = new OutEventChain(1000, EventFilter.Advisors);
                                 option.SetGoodOutcome(outcome);
                                 listTriggers.Clear();
                                 listTriggers.Add(new Trigger(TriggerCheck.Known, 0, 1, EventCalc.Equals, false));
@@ -187,7 +187,7 @@ namespace Next_Game.Event_System
                             {
                                 OptionInteractive option = new OptionInteractive(string.Format("Seek an Audience with a Visitor to House {0} ({1} present)", houseName, listVisitors.Count));
                                 option.ReplyGood = string.Format("House {0} is willing to let you talk to whoever you wish", houseName);
-                                OutEventChain outcome = new OutEventChain(1000, EventAutoFilter.Visitors);
+                                OutEventChain outcome = new OutEventChain(1000, EventFilter.Visitors);
                                 option.SetGoodOutcome(outcome);
                                 eventObject.SetOption(option);
                             }
@@ -196,7 +196,7 @@ namespace Next_Game.Event_System
                             {
                                 OptionInteractive option = new OptionInteractive(string.Format("Talk to one of your Loyal Followers ({0} present)", listFollowers.Count));
                                 option.ReplyGood = "A conversation may well be possible";
-                                OutEventChain outcome = new OutEventChain(1000, EventAutoFilter.Followers);
+                                OutEventChain outcome = new OutEventChain(1000, EventFilter.Followers);
                                 option.SetGoodOutcome(outcome);
                                 eventObject.SetOption(option);
                             }
@@ -209,7 +209,7 @@ namespace Next_Game.Event_System
                                     OptionInteractive optionKnown = new OptionInteractive("Make yourself Known");
                                     optionKnown.ReplyGood = "You reveal your identity and gain access to the Court";
                                     OutKnown outKnown = new OutKnown(eventObject.EventPID, -1);
-                                    OutEventChain outcome = new OutEventChain(1000, EventAutoFilter.None);
+                                    OutEventChain outcome = new OutEventChain(1000, EventFilter.None);
                                     optionKnown.SetGoodOutcome(outKnown);
                                     optionKnown.SetGoodOutcome(outcome);
                                     eventObject.SetOption(optionKnown);
@@ -221,7 +221,7 @@ namespace Next_Game.Event_System
                                     OptionInteractive optionIntro = new OptionInteractive($"Use an Introduction (you have {numIntros})");
                                     optionIntro.ReplyGood = $"You present your written Introduction to House \"{houseName}\"";
                                     OutIntroduction outIntro = new OutIntroduction(eventObject.EventPID, refID);
-                                    OutEventChain outEvent = new OutEventChain(1000, EventAutoFilter.None);
+                                    OutEventChain outEvent = new OutEventChain(1000, EventFilter.None);
                                     optionIntro.SetGoodOutcome(outIntro);
                                     optionIntro.SetGoodOutcome(outEvent);
                                     eventObject.SetOption(optionIntro);
@@ -255,7 +255,7 @@ namespace Next_Game.Event_System
                                                     {
                                                         OptionInteractive option = new OptionInteractive(string.Format("Recruit a Follower ({0} present)", numAvailable));
                                                         option.ReplyGood = "You are always on the lookout for loyal followers";
-                                                        OutEventChain outcome = new OutEventChain(1000, EventAutoFilter.Recruit);
+                                                        OutEventChain outcome = new OutEventChain(1000, EventFilter.Recruit);
                                                         option.SetGoodOutcome(outcome);
                                                         eventObject.SetOption(option);
                                                     }
@@ -299,7 +299,7 @@ namespace Next_Game.Event_System
                                 OptionInteractive option = new OptionInteractive("Seek Sea Passage to another Port");
                                 option.ReplyGood = "You head to the harbour and search for a suitable ship";
                                 //OutNone outcome = new OutNone(eventObject.EventPID);
-                                OutEventChain outcome = new OutEventChain(1000, EventAutoFilter.Docks);
+                                OutEventChain outcome = new OutEventChain(1000, EventFilter.Docks);
                                 option.SetGoodOutcome(outcome);
                                 eventObject.SetOption(option);
                             }
@@ -326,7 +326,7 @@ namespace Next_Game.Event_System
                             option_L.SetGoodOutcome(outcome_L);
                             eventObject.SetOption(option_L);
                             break;
-                        case EventAutoFilter.SafeHouse:
+                        case EventFilter.SafeHouse:
                             eventObject.Name = $"Safe House at {house.LocName} ({house.SafeHouse} stars)";
                             eventObject.Text = "What do you wish to do, Sire?";
                             //option -> Remain in the safe house (default)
@@ -342,7 +342,7 @@ namespace Next_Game.Event_System
                             optionLeave.SetGoodOutcome(outcomeLeave);
                             eventObject.SetOption(optionLeave);
                             break;
-                        case EventAutoFilter.Court:
+                        case EventFilter.Court:
                             eventObject.Name = "Talk to members of the Court";
                             eventObject.Text = string.Format("Which members of House {0} do you wish to talk to?", houseName);
                             //options -> one for each member present
@@ -367,12 +367,12 @@ namespace Next_Game.Event_System
                                 OptionInteractive option = new OptionInteractive(optionText) { ActorID = local.ActID };
                                 option.ReplyGood = string.Format("{0} has agreed to meet with you", actorText);
                                 //OutNone outcome = new OutNone(eventObject.EventPID);
-                                OutEventChain outcome = new OutEventChain(1000, EventAutoFilter.Interact);
+                                OutEventChain outcome = new OutEventChain(1000, EventFilter.Interact);
                                 option.SetGoodOutcome(outcome);
                                 eventObject.SetOption(option);
                             }
                             break;
-                        case EventAutoFilter.Advisors:
+                        case EventFilter.Advisors:
                             eventObject.Name = "Talk to Advisors";
                             eventObject.Text = string.Format("Which Advisor do you wish to talk to?");
                             //options -> one for each member present
@@ -397,12 +397,12 @@ namespace Next_Game.Event_System
                                 listTriggers.Clear();
                                 listTriggers.Add(new Trigger(TriggerCheck.RelPlyr, local.GetRelPlyr(), talkRel, EventCalc.GreaterThanOrEqual));
                                 option.SetTriggers(listTriggers);
-                                OutEventChain outcome = new OutEventChain(1000, EventAutoFilter.Interact);
+                                OutEventChain outcome = new OutEventChain(1000, EventFilter.Interact);
                                 option.SetGoodOutcome(outcome);
                                 eventObject.SetOption(option);
                             }
                             break;
-                        case EventAutoFilter.Visitors:
+                        case EventFilter.Visitors:
                             eventObject.Name = "Talk to Visitors";
                             eventObject.Text = string.Format("You are at {0}. Which visitor do you wish to talk to?", locName);
                             //options -> one for each member present
@@ -429,12 +429,12 @@ namespace Next_Game.Event_System
                                 listTriggers.Add(new Trigger(TriggerCheck.RelPlyr, visitor.GetRelPlyr(), talkRel, EventCalc.GreaterThanOrEqual));
                                 option.SetTriggers(listTriggers);
                                 //OutNone outcome = new OutNone(eventObject.EventPID);
-                                OutEventChain outcome = new OutEventChain(1000, EventAutoFilter.Interact);
+                                OutEventChain outcome = new OutEventChain(1000, EventFilter.Interact);
                                 option.SetGoodOutcome(outcome);
                                 eventObject.SetOption(option);
                             }
                             break;
-                        case EventAutoFilter.Followers:
+                        case EventFilter.Followers:
                             eventObject.Name = "Talk to Followers";
                             eventObject.Text = string.Format("You are at {0}. Which follower do you wish to talk to?", locName);
                             //options -> one for each member present
@@ -457,13 +457,13 @@ namespace Next_Game.Event_System
                                 OptionInteractive option = new OptionInteractive(optionText) { ActorID = follower.ActID };
                                 option.ReplyGood = string.Format("{0} is happy to sit down for a chat", actorText);
                                 //OutNone outcome = new OutNone(eventObject.EventPID);
-                                OutEventChain outcome = new OutEventChain(1000, EventAutoFilter.Interact);
+                                OutEventChain outcome = new OutEventChain(1000, EventFilter.Interact);
                                 option.SetGoodOutcome(outcome);
                                 eventObject.SetOption(option);
                             }
                             break;
 
-                        case EventAutoFilter.Recruit:
+                        case EventFilter.Recruit:
                             eventObject.Name = "Recruit a Follower";
                             eventObject.Text = string.Format("You are at {0}. Which follower do you wish to Recruit?", locName);
                             //options -> one for each recruit present
@@ -513,7 +513,7 @@ namespace Next_Game.Event_System
                             }
                             break;
 
-                        case EventAutoFilter.Docks:
+                        case EventFilter.Docks:
                             //visit the docks and assess your options
                             eventObject.Name = "Seek Passage to another Port";
                             eventObject.Text = $"You are at {locName}'s Docks. Squawk! How do you wish to proceed?";
@@ -526,20 +526,20 @@ namespace Next_Game.Event_System
                             //Option -> Look for a ship
                             OptionInteractive option_d1 = new OptionInteractive("Look for a suitable ship (Possible success)");
                             option_d1.ReplyGood = "A ship might be found, but where to?";
-                            OutEventChain outcome_d1 = new OutEventChain(eventObject.EventPID, EventAutoFilter.FindShip);
+                            OutEventChain outcome_d1 = new OutEventChain(eventObject.EventPID, EventFilter.FindShip);
                             option_d1.SetGoodOutcome(outcome_d1);
                             eventObject.SetOption(option_d1);
                             //Option -> Bribe a Captain
                             OptionInteractive option_d2 = new OptionInteractive("Bribe a Captain to take you (Guaranteed success)");
                             option_d2.ReplyGood = "There is always a ship for those prepared to pay";
-                            OutEventChain outcome_d2 = new OutEventChain(eventObject.EventPID, EventAutoFilter.BribeCaptain);
+                            OutEventChain outcome_d2 = new OutEventChain(eventObject.EventPID, EventFilter.BribeCaptain);
                             option_d2.SetGoodOutcome(outcome_d2);
                             eventObject.SetOption(option_d2);
                             List<Trigger> listDockTriggers = new List<Trigger>();
                             listDockTriggers.Add(new Trigger(TriggerCheck.ResourcePlyr, 0, 2, EventCalc.GreaterThanOrEqual));
                             option_d2.SetTriggers(listDockTriggers);
                             break;
-                        case EventAutoFilter.FindShip:
+                        case EventFilter.FindShip:
                             //look for a suitable ship -> may find one, may not
                             eventObject.Name = "Look for a suitable ship";
                             eventObject.Text = $"You are at {locName}. Which Port do you wish to travel to?";
@@ -601,7 +601,7 @@ namespace Next_Game.Event_System
                                 else { Game.SetError(new Error(73, "Invalid locRandom (null)")); }
                             }
                             break;
-                        case EventAutoFilter.BribeCaptain:
+                        case EventFilter.BribeCaptain:
                             //Bribe a Captain -> Guaranteed
                             eventObject.Name = "Look for a suitable ship";
                             eventObject.Text = $"You are at {locName}. Which Port do you wish to travel to?";
@@ -661,7 +661,7 @@ namespace Next_Game.Event_System
                                 else { Game.SetError(new Error(73, "Invalid locRandom (null)")); }
                             }
                             break;
-                        case EventAutoFilter.Interact:
+                        case EventFilter.Interact:
                             //inteact with the selected individual
                             if (actorID > 1 && Game.world.CheckActorPresent(actorID, locID) == true)
                             {
@@ -681,8 +681,8 @@ namespace Next_Game.Event_System
                                     //default -> flip back to court or advisor options
                                     OptionInteractive option_0 = new OptionInteractive("Excuse Yourself") { ActorID = actorID };
                                     option_0.ReplyGood = $"{actorText} stares at you with narrowed eyes";
-                                    if (person is Advisor) { OutEventChain outcome_0 = new OutEventChain(1000, EventAutoFilter.Advisors); option_0.SetGoodOutcome(outcome_0); }
-                                    else { OutEventChain outcome_0 = new OutEventChain(1000, EventAutoFilter.Court); option_0.SetGoodOutcome(outcome_0); }
+                                    if (person is Advisor) { OutEventChain outcome_0 = new OutEventChain(1000, EventFilter.Advisors); option_0.SetGoodOutcome(outcome_0); }
+                                    else { OutEventChain outcome_0 = new OutEventChain(1000, EventFilter.Court); option_0.SetGoodOutcome(outcome_0); }
                                     eventObject.SetOption(option_0);
                                     //improve relationship (befriend)
                                     OptionInteractive option_1 = new OptionInteractive("Befriend") { ActorID = actorID };
@@ -721,7 +721,7 @@ namespace Next_Game.Event_System
                                     //You want Something from them
                                     OptionInteractive option_5 = new OptionInteractive("You want something") { ActorID = actorID };
                                     option_5.ReplyGood = $"{actorText} sits back and cautiously agrees to discuss your needs";
-                                    OutEventChain outcome_5 = new OutEventChain(eventObject.EventPID, EventAutoFilter.YouWant);
+                                    OutEventChain outcome_5 = new OutEventChain(eventObject.EventPID, EventFilter.YouWant);
                                     option_5.SetGoodOutcome(outcome_5);
                                     List<Trigger> listTriggers_5 = new List<Trigger>();
                                     listTriggers_5.Add(new Trigger(TriggerCheck.RelPlyr, person.GetRelPlyr(), talkRel, EventCalc.GreaterThanOrEqual));
@@ -735,7 +735,7 @@ namespace Next_Game.Event_System
                                     listTriggers_6.Add(new Trigger(TriggerCheck.Desire, 0, 0, EventCalc.None));
                                     listTriggers_6.Add(new Trigger(TriggerCheck.Promise, 0, 0, EventCalc.None));
                                     option_6.SetTriggers(listTriggers_6);
-                                    OutEventChain outcome_6 = new OutEventChain(eventObject.EventPID, EventAutoFilter.TheyWant);
+                                    OutEventChain outcome_6 = new OutEventChain(eventObject.EventPID, EventFilter.TheyWant);
                                     //OutNone outcome_6 = new OutNone(eventObject.EventPID);
                                     option_6.SetGoodOutcome(outcome_6);
                                     eventObject.SetOption(option_6);
@@ -744,7 +744,7 @@ namespace Next_Game.Event_System
                                 else { Game.SetError(new Error(73, "Invalid actorID from AutoCreateEvent (null from dict)")); }
                             }
                             break;
-                        case EventAutoFilter.TheyWant:
+                        case EventFilter.TheyWant:
                             //Character has a desire that you can meet in return for a relationship boost
                             Actor personWant = Game.world.GetAnyActor(actorID);
                             if (personWant != null)
@@ -781,7 +781,7 @@ namespace Next_Game.Event_System
                                     //default
                                     OptionInteractive option_w0 = new OptionInteractive("Sorry, you can't help") { ActorID = actorID };
                                     option_w0.ReplyGood = $"{actorText} shrugs their shoulders";
-                                    OutEventChain outcome_w0 = new OutEventChain(eventObject.EventPID, EventAutoFilter.Interact);
+                                    OutEventChain outcome_w0 = new OutEventChain(eventObject.EventPID, EventFilter.Interact);
                                     option_w0.SetGoodOutcome(outcome_w0);
                                     eventObject.SetOption(option_w0);
                                     //Give it some thought
@@ -821,7 +821,7 @@ namespace Next_Game.Event_System
                                 }
                             }
                             break;
-                        case EventAutoFilter.YouWant:
+                        case EventFilter.YouWant:
                             //You want something from the NPC character
                             Actor personNeed = Game.world.GetAnyActor(actorID);
                             if (personNeed != null)
@@ -848,7 +848,7 @@ namespace Next_Game.Event_System
                                     //default -> flip back to advisor options
                                     OptionInteractive option_n0 = new OptionInteractive("Excuse Yourself") { ActorID = actorID };
                                     option_n0.ReplyGood = $"{actorText} stares at you with narrowed eyes";
-                                    OutEventChain outcome_n0 = new OutEventChain(1000, EventAutoFilter.Advisors);
+                                    OutEventChain outcome_n0 = new OutEventChain(1000, EventFilter.Advisors);
                                     option_n0.SetGoodOutcome(outcome_n0);
                                     eventObject.SetOption(option_n0);
 

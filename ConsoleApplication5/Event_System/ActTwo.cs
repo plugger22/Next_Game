@@ -24,7 +24,7 @@ namespace Next_Game.Event_System
         /// <summary>
         /// Auto Location Event for Act Two
         /// </summary>
-        internal void CreateAutoEvent(EventAutoFilter filter, int actorID = 0)
+        internal void CreateAutoEventTwo(EventFilter filter, int actorID = 0)
         {
             //get player
             Player player = (Player)Game.world.GetPlayer();
@@ -68,7 +68,7 @@ namespace Next_Game.Event_System
                         {
                             locType = 4;
                             //can't be locals present at an Inn, only Visitors and Followers
-                            if (filter == EventAutoFilter.Court) { filter = EventAutoFilter.Visitors; Game.SetError(new Error(118, "Invalid filter (Locals when at an Inn)")); }
+                            if (filter == EventFilter.Court) { filter = EventFilter.Visitors; Game.SetError(new Error(118, "Invalid filter (Locals when at an Inn)")); }
                         }
                         break;
                     default:
@@ -138,7 +138,7 @@ namespace Next_Game.Event_System
                     //
                     switch (filter)
                     {
-                        case EventAutoFilter.None:
+                        case EventFilter.None:
                             eventObject.Text = string.Format("You are at {0}. How will you fill your day, sire?", locName);
 
                             //option -> audience with local House member
@@ -156,7 +156,7 @@ namespace Next_Game.Event_System
                                     option = new OptionInteractive(string.Format("Seek an Audience with the Royal Household ({0} present)", listCourt.Count));
                                     option.ReplyGood = string.Format("The Royal Usher has prepared for your arrival, sire");
                                 }
-                                OutEventChain outcome = new OutEventChain(1000, EventAutoFilter.Court);
+                                OutEventChain outcome = new OutEventChain(1000, EventFilter.Court);
                                 option.SetGoodOutcome(outcome);
                                 eventObject.SetOption(option);
                             }
@@ -173,9 +173,9 @@ namespace Next_Game.Event_System
                                 {
                                     //capital
                                     option = new OptionInteractive(string.Format("Grant an Audience with a Royal Advisor ({0} present)", listAdvisors.Count));
-                                    option.ReplyGood = string.Format("The Royal Clerk has advised that the Royal Council awaits you, sire");
+                                    option.ReplyGood = string.Format("The Royal Clerk has advised that the Council awaits you, sire");
                                 }
-                                OutEventChain outcome = new OutEventChain(1000, EventAutoFilter.Advisors);
+                                OutEventChain outcome = new OutEventChain(1000, EventFilter.Advisors);
                                 option.SetGoodOutcome(outcome);
                                 eventObject.SetOption(option);
                             }
@@ -184,7 +184,7 @@ namespace Next_Game.Event_System
                             {
                                 OptionInteractive option = new OptionInteractive(string.Format("Grant an Audience with a Visitor to House {0} ({1} present)", houseName, listVisitors.Count));
                                 option.ReplyGood = string.Format("House {0} is willing to let you talk to whoever you wish", houseName);
-                                OutEventChain outcome = new OutEventChain(1000, EventAutoFilter.Visitors);
+                                OutEventChain outcome = new OutEventChain(1000, EventFilter.Visitors);
                                 option.SetGoodOutcome(outcome);
                                 eventObject.SetOption(option);
                             }
@@ -193,7 +193,7 @@ namespace Next_Game.Event_System
                             {
                                 OptionInteractive option = new OptionInteractive(string.Format("Visit a Prisoner ({0} present)", listCaptured.Count));
                                 option.ReplyGood = "It isn't savoury down there in the Dungeons, sire, but if you insist...";
-                                OutEventChain outcome = new OutEventChain(1000, EventAutoFilter.Dungeon);
+                                OutEventChain outcome = new OutEventChain(1000, EventFilter.Dungeon);
                                 option.SetGoodOutcome(outcome);
                                 eventObject.SetOption(option);
                             }
@@ -204,6 +204,122 @@ namespace Next_Game.Event_System
                             OutNone outcome_L = new OutNone(eventObject.EventPID);
                             option_L.SetGoodOutcome(outcome_L);
                             eventObject.SetOption(option_L);
+                            break;
+                        case EventFilter.Court:
+                            eventObject.Name = "Talk to members of the Court";
+                            eventObject.Text = string.Format("Which members of House {0} do you wish to talk to?", houseName);
+                            //options -> one for each member present
+                            limit = listCourt.Count();
+                            limit = Math.Min(12, limit); //max 12 options possible (F1 - F12)
+                            if (limit > 0)
+                            {
+                                //default option
+                                OptionInteractive option = new OptionInteractive("You've changed your mind");
+                                option.ReplyGood = string.Format("You depart {0} with a swirl of your cape", Game.world.GetHouseName(refID));
+                                OutEventChain outcome = new OutEventChain(1000, EventFilter.None);
+                                option.SetGoodOutcome(outcome);
+                                eventObject.SetOption(option);
+                            }
+                            for (int i = 0; i < limit; i++)
+                            {
+                                Passive local = listCourt[i];
+                                if (local.Office > ActorOffice.None)
+                                { actorText = string.Format("{0} {1}", local.Office, local.Name); }
+                                else { actorText = string.Format("{0} {1}", local.Type, local.Name); }
+                                optionText = string.Format("Seek an audience with {0}", actorText);
+                                OptionInteractive option = new OptionInteractive(optionText) { ActorID = local.ActID };
+                                option.ReplyGood = string.Format("{0} has agreed to meet with you", actorText);
+                                //OutNone outcome = new OutNone(eventObject.EventPID);
+                                OutEventChain outcome = new OutEventChain(1000, EventFilter.Interact);
+                                option.SetGoodOutcome(outcome);
+                                eventObject.SetOption(option);
+                            }
+                            break;
+                        case EventFilter.Advisors:
+                            eventObject.Name = "Talk to the Royal Council";
+                            eventObject.Text = string.Format("Which Advisor do you wish to consult?");
+                            //options -> one for each member present
+                            limit = listAdvisors.Count();
+                            limit = Math.Min(12, limit); //max 12 options possible (F1 - F12)
+                            if (limit > 0)
+                            {
+                                //default option
+                                OptionInteractive option = new OptionInteractive("You've changed your mind");
+                                option.ReplyGood = string.Format("You depart {0} with a swirl of your cape", Game.world.GetHouseName(refID));
+                                OutEventChain outcome = new OutEventChain(1000, EventFilter.None);
+                                option.SetGoodOutcome(outcome);
+                                eventObject.SetOption(option);
+                            }
+                            for (int i = 0; i < limit; i++)
+                            {
+                                Passive local = listAdvisors[i];
+                                actorText = string.Format("{0} {1}", local.Title, local.Name);
+                                optionText = string.Format("Seek an audience with {0}", actorText);
+                                OptionInteractive option = new OptionInteractive(optionText) { ActorID = local.ActID };
+                                option.ReplyGood = string.Format("{0} bows and looks at your expectantly", actorText);
+                                OutEventChain outcome = new OutEventChain(1000, EventFilter.Interact);
+                                option.SetGoodOutcome(outcome);
+                                eventObject.SetOption(option);
+                            }
+                            break;
+                        case EventFilter.Dungeon:
+                            eventObject.Name = "Descend to the dark, putrid, bowels of the castle";
+                            eventObject.Text = string.Format("Which Prisoner do you wish to speak with?");
+                            //options -> one for each member present
+                            limit = listCaptured.Count();
+                            limit = Math.Min(12, limit); //max 12 options possible (F1 - F12)
+                            if (limit > 0)
+                            {
+                                //default option
+                                OptionInteractive option = new OptionInteractive("You've changed your mind");
+                                option.ReplyGood = string.Format("You depart {0} with a swirl of your cape", Game.world.GetHouseName(refID));
+                                OutEventChain outcome = new OutEventChain(1000, EventFilter.None);
+                                option.SetGoodOutcome(outcome);
+                                eventObject.SetOption(option);
+                            }
+                            for (int i = 0; i < limit; i++)
+                            {
+                                Actor local = listCaptured[i];
+                                actorText = string.Format("{0} {1}", local.Title, local.Name);
+                                optionText = string.Format("Speak with {0}", actorText);
+                                OptionInteractive option = new OptionInteractive(optionText) { ActorID = local.ActID };
+                                option.ReplyGood = string.Format("{0} sprawls before you, filthy and rank", actorText);
+                                OutEventChain outcome = new OutEventChain(1000, EventFilter.Interact);
+                                option.SetGoodOutcome(outcome);
+                                eventObject.SetOption(option);
+                            }
+                            break;
+                        case EventFilter.Visitors:
+                            eventObject.Name = "Grant an Audience to a Visitor";
+                            eventObject.Text = string.Format("You are at {0}. Which visitor do you wish to talk to?", locName);
+                            //options -> one for each member present
+                            limit = listVisitors.Count();
+                            limit = Math.Min(12, limit); //max 12 options possible (F1 - F12)
+                            if (limit > 0)
+                            {
+                                //default option
+                                OptionInteractive option = new OptionInteractive("You've changed your mind");
+                                option.ReplyGood = string.Format("You depart {0} without further ado", Game.world.GetHouseName(refID));
+                                OutEventChain outcome = new OutEventChain(1000, EventFilter.None);
+                                option.SetGoodOutcome(outcome);
+                                eventObject.SetOption(option);
+                            }
+                            for (int i = 0; i < limit; i++)
+                            {
+                                Passive visitor = listVisitors[i];
+                                actorText = string.Format("{0} {1}", visitor.Title, visitor.Name);
+                                //actorText = string.Format("{0} {1}", visitor.Type, visitor.Name);
+                                optionText = string.Format("Seek an audience with {0}", actorText);
+                                OptionInteractive option = new OptionInteractive(optionText) { ActorID = visitor.ActID };
+                                option.ReplyGood = string.Format("{0} has agreed to meet with you", actorText);
+                                listTriggers.Clear();
+                                listTriggers.Add(new Trigger(TriggerCheck.RelPlyr, visitor.GetRelPlyr(), talkRel, EventCalc.GreaterThanOrEqual));
+                                option.SetTriggers(listTriggers);
+                                //OutNone outcome = new OutNone(eventObject.EventPID);
+                                OutEventChain outcome = new OutEventChain(1000, EventFilter.Interact);
+                                option.SetGoodOutcome(outcome);
+                                eventObject.SetOption(option);
+                            }
                             break;
                         default:
                             Game.SetError(new Error(328, string.Format("Invalid EventFilter (\"{0}\")", filter)));
