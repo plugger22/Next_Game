@@ -12,7 +12,7 @@ using System.IO;
 
 namespace Next_Game
 {
-    public enum MenuMode {Main, Actor_Active, Actor_Passive, Debug, Reference, Special, God, Balance, King} //distinct menu sets (Menu.cs)
+    public enum MenuMode {Main, Actor_Control, Actor_Passive, Debug, Reference, Special, God, Balance, King} //distinct menu sets (Menu.cs)
     public enum ConsoleDisplay {Status, Input, Multi, Message, Event, Conflict} //different console windows (Menu window handled independently by Menu.cs) -> Event & Conflict are within Multi
     public enum InputMode {Normal, MultiKey, Scrolling} //special input modes
     public enum SpecialMode {None, FollowerEvent, PlayerEvent, Conflict, Outcome, Notification, Confirm} //if MenuMode.Special then -> type of special (Notification -> msg, Confirm -> Y/N)
@@ -74,6 +74,8 @@ namespace Next_Game
         public static AI ai;
         public static Lore lore;
         public static Director director;
+        public static ActOne actOne;
+        public static ActTwo actTwo;
         public static InfoChannel infoChannel;
         public static Constant constant;
         public static Variable variable;
@@ -168,6 +170,8 @@ namespace Next_Game
                 timer_1.Start();
                 director = new Director(seed);
                 director.InitialiseDirector();
+                actOne = new ActOne(seed);
+                actTwo = new ActTwo(seed);
                 StopTimer(timer_1, "Director Initialisation");
             }
             catch(Exception e)
@@ -486,7 +490,7 @@ namespace Next_Game
                                     switch (_menuMode)
                                     {
                                         case MenuMode.God:
-                                        case MenuMode.Actor_Active:
+                                        case MenuMode.Actor_Control:
                                             //move Player character from A to B
                                             _renderRequired = true;
                                             //valid location?
@@ -823,7 +827,7 @@ namespace Next_Game
                                         //Show Player Minions (Followers or Inquisitors depending on Act)
                                         infoChannel.SetInfoList(display.ShowPlayerMinionsRL(gameAct), ConsoleDisplay.Multi);
                                         break;
-                                    case MenuMode.Actor_Active:
+                                    case MenuMode.Actor_Control:
                                         //move Active characters around map (must be AtLocation in order to move)
                                         List<Snippet> charList = new List<Snippet>();
                                         charList.Add(display.GetActorStatusRL(_charIDSelected));
@@ -1006,7 +1010,7 @@ namespace Next_Game
                                     switch (_menuMode)
                                     {
                                         case MenuMode.Main:
-                                            _menuMode = menu.SwitchMenuMode(MenuMode.Actor_Active);
+                                            _menuMode = menu.SwitchMenuMode(MenuMode.Actor_Control);
                                             _charIDSelected = (int)keyPress.Key - 109; //based on a system where '1' is '110'
                                             List<Snippet> infoList = new List<Snippet>();
                                             infoList.Add(display.ShowSelectedActor(_charIDSelected));

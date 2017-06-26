@@ -24,7 +24,6 @@ namespace Next_Game
         private Dictionary<int, Enemy> dictEnemyActors; //list of all Enemy actors keyed of actorID
         private Dictionary<int, Special> dictSpecialActors; //list of all Special NPC actors -> key is SpecialID
         private Dictionary<int, Actor> dictAllActors; //list of all Actors keyed of actorID
-        private Dictionary<int, Passive> dictRoyalActors; //list of New King royal family & advisors (populated at completion of Act 1), key is ActID
         private Dictionary<int, MajorHouse> dictMajorHouses; //list of all Greathouses keyed off houseID (Does NOT contain CapitalHouse)
         private Dictionary<int, House> dictAllHouses; //list of all houses & special locations keyed off RefID (Does contain CapitalHouse)
         private Dictionary<int, int> dictMajorHouseID; //list of Great Houses, unsorted (Key is House ID, value is # of bannerlords)
@@ -41,6 +40,7 @@ namespace Next_Game
         private Dictionary<int, Rumour> dictRumoursKnown; //all rumours known to the Player (key is rumourID)
         private Dictionary<int, Possession> dictPossessions; //all possession (key is PossID)
         private Dictionary<int, Passive> dictRoyalCourt; //advisors and royal retainers (assumed to always be at Kingskeep) excludes family
+        private Dictionary<int, Passive> dictRoyalActors; //Act 2 Reference list of New King royal family & advisors (populated at completion of Act 1), key is ActID
         private Dictionary<int, int> dictConvertLocToRef; //dictionary to convert LocID's to RefID's (key is LocID, value is RefID)
         private Dictionary<int, int> dictConvertRefToLoc; //dictionary to convert RefID's to LocID's (key is RefID, value is LocID)
         private Dictionary<int, int> dictConvertRefToHouse; //dictionary to convert RefID's to HouseID's (key is RefID, value is HouseID)
@@ -345,11 +345,15 @@ namespace Next_Game
                                     { Game.SetError(new Error(175, $"ActorID {charID} has not had their details updated upon arriving at their Destination")); }
                                     else { Game.logTurn?.Write($"[God Mode] Player teleports from {originLocation} to {destinationLocation}"); }
                                 }
-                                //show route (Player only)
-                                if (person is Player)
+                                //show route (Player & Follower only)
+                                if (person is Active)
                                 {
                                     Game.map.UpdateMap();
                                     Game.map.DrawRoutePath(path);
+                                    
+                                }
+                                if (person is Player)
+                                {
                                     //update Horse status
                                     Player player = person as Player;
                                     if (player.horseStatus != HorseStatus.Gone)
@@ -5543,6 +5547,8 @@ namespace Next_Game
                                 displayColor = goodColor;
                                 //store current player position to enable seamless transition back to Act 1 if required
                                 Game.variable.SetValue(GameVar.God_PlayerLocID, player.LocID);
+                                //New Enemy -> DEBUG (temporary)
+                                Game.variable.SetValue(GameVar.Inquisitor_Target, 40);
                                 //teleport player to Capital
                                 InitialiseMoveActor(1, player.GetPosition(), posCapital);
                                 Game.logTurn?.Write("Player teleported to Capital");
@@ -5561,6 +5567,9 @@ namespace Next_Game
                                 displayColor = badColor;
                                 //get player's previous position in Act One
                                 locID = Game.variable.GetValue(GameVar.God_PlayerLocID);
+                                //retore player as target, ensure inquisitors are  AI control
+                                Game.variable.SetValue(GameVar.Inquisitor_Target, 1);
+                                Game.variable.SetValue(GameVar.Inquisitor_AI, 1);
                                 //check that there is a viable, non-Capital location available
                                 if (locID > 1)
                                 {

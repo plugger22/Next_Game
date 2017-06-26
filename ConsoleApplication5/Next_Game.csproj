@@ -70,6 +70,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Event_System\ActOne.cs" />
+    <Compile Include="Event_System\ActTwo.cs" />
     <Compile Include="Event_System\Card.cs" />
     <Compile Include="Event_System\Challenge.cs" />
     <Compile Include="Event_System\Result.cs" />

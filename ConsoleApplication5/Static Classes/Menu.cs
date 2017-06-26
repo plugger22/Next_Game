@@ -102,7 +102,7 @@ namespace Next_Game
                         //menuArrayText[3, 4] = "[L] Lore MENU";
                         menuArrayText[3, 6] = "[X] Quit";
                         break;
-                    case MenuMode.Actor_Active:
+                    case MenuMode.Actor_Control:
                         menuColorFore = RLColor.Blue;
                         menuColorBack = RLColor.LightGray;
                         //input categories
@@ -257,7 +257,7 @@ namespace Next_Game
                         //menuArrayText[3, 4] = "[L] Lore MENU";
                         menuArrayText[3, 6] = "[X] Quit";
                         break;
-                    case MenuMode.Actor_Active:
+                    case MenuMode.Actor_Control:
                         menuColorFore = RLColor.Blue;
                         menuColorBack = RLColor.LightGray;
                         //input categories

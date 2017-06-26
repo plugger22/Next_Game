@@ -1145,7 +1145,7 @@ namespace Next_Game
                             { CheckIfFoundTarget(pos, actor.Value.ActID); }
                             else if (actor.Value is Follower)
                             {
-                                //must be a Follower
+                                //must be a Follower or Passive NPC (Act 2)
                                 if (actor.Value.Known == true)
                                 { CheckIfFoundTarget(pos, actor.Value.ActID); }
                             }

@@ -534,7 +534,7 @@ namespace Next_Game
                         case ActorStatus.AtLocation:
                             //in a safe house
                             if (player.Conceal == ActorConceal.SafeHouse)
-                            { CreateAutoLocEvent(EventAutoFilter.SafeHouse); }
+                            { Game.actOne.CreateAutoLocEvent(EventAutoFilter.SafeHouse); }
                             //Location event
                             else
                             {
@@ -558,7 +558,7 @@ namespace Next_Game
                                         Game.world.SetMessage(new Message(tempText, MessageType.Event));
                                     }
                                     else { Game.SetError(new Error(71, "Invalid loc (null) in Player AutoLocEvent -> No Record created")); }
-                                    CreateAutoLocEvent(EventAutoFilter.None);
+                                    Game.actOne.CreateAutoLocEvent(EventAutoFilter.None);
                                     //reset back to base figure
                                     story.Ev_Player_Loc_Current = story.Ev_Player_Loc_Base;
                                     Game.logTurn?.Write(string.Format(" Chance of Player Location event {0} %", story.Ev_Player_Loc_Current));
@@ -1067,8 +1067,9 @@ namespace Next_Game
             { Game.SetError(new Error(173, "Invalid Player (null)")); }
         }
 
+        /*
         /// <summary>
-        /// create a dynamic auto player location event - assumed to be at player's current location
+        /// create a dynamic auto player location event for Act one - assumed to be at player's current location
         /// <param name="filter">Which group of people should the event focus on (from pool of people present at the location)</param>
         /// </summary>
         private void CreateAutoLocEvent(EventAutoFilter filter, int actorID = 0)
@@ -1803,7 +1804,7 @@ namespace Next_Game
                                 }
                                 else if (personWant.Office > ActorOffice.None)
                                 { actorText = string.Format("{0} {1}", personWant.Office, personWant.Name); }
-                                else { actorText = string.Format("{0} {1}", personWant.Type, personWant.Name); }*/
+                                else { actorText = string.Format("{0} {1}", personWant.Type, personWant.Name); }
                                 if (personWant is Advisor) { actorText = $"{Game.display.GetAdvisorType((Advisor)personWant)} {personWant.Name}"; }
                                 else { actorText = string.Format("{0} {1}", personWant.Type, personWant.Name); }
                                 if (personWant is Passive)
@@ -1882,7 +1883,7 @@ namespace Next_Game
                                 {
                                     actorText = string.Format("{0} {1}", personNeed.Office, personNeed.Name);
                                 }
-                                else { actorText = string.Format("{0} {1}", personNeed.Type, personNeed.Name); }*/
+                                else { actorText = string.Format("{0} {1}", personNeed.Type, personNeed.Name); }
                                 if (personNeed is Advisor) { actorText = $"{Game.display.GetAdvisorType((Advisor)personNeed)} {personNeed.Name}"; }
                                 else { actorText = string.Format("{0} {1}", personNeed.Type, personNeed.Name); }
                                 if (personNeed is Passive)
@@ -1963,7 +1964,7 @@ namespace Next_Game
                 else { Game.SetError(new Error(118, "Invalid List of Actors (Zero present at Location")); }
             }
             else { Game.SetError(new Error(118, "Invalid Player (returns Null)")); }
-        }
+        }*/
 
         /// <summary>
         /// clean up events
@@ -2025,6 +2026,48 @@ namespace Next_Game
             listFollCurrentEvents.Clear();
             listPlyrCurrentEvents.Clear();
         }
+
+        /// <summary>
+        /// Add an event Package to list of Player Current Event
+        /// </summary>
+        /// <param name="package"></param>
+        internal void AddPlyrCurrentEvent(EventPackage package)
+        {
+            if (package != null)
+            { listPlyrCurrentEvents.Add(package); }
+            else { Game.SetError(new Error(326, "Invalid package (null)")); }
+        }
+
+       /* if (listPlyrCurrentEvents.Count > 1) { listPlyrCurrentEvents.RemoveAt(0); }
+                    //add to Player dictionary (ResolveOutcome looks for it there) -> check not an instance present already
+                    if (dictPlayerEvents.ContainsKey(1000)) { dictPlayerEvents.Remove(1000); }*/
+
+        internal int GetPlyrCurrentEventsCount()
+        { return listPlyrCurrentEvents.Count; }
+
+
+        /// <summary>
+        /// remove an EventPackage from listPlyrCurrentEvents at the given index
+        /// </summary>
+        /// <param name="index"></param>
+        internal void RemoveAtPlyrCurrentEvents(int index)
+        {
+            if (index < listPlyrCurrentEvents.Count)
+            { listPlyrCurrentEvents.RemoveAt(index); }
+            else { Game.SetError(new Error(327, $"Invalid index {index} where listPlyrCurrentEvents.Count is {listPlyrCurrentEvents.Count} -> Event package not removed")); }
+        }
+
+        /// <summary>
+        /// Remove a record from dictPlayerEvents using the key as a reference. Nothing happens if key not found.
+        /// </summary>
+        /// <param name="key"></param>
+        internal void RemovePlayerEvent(int key)
+        {
+            if (dictPlayerEvents.ContainsKey(key) == true)
+            { dictPlayerEvents.Remove(key); }
+            else { Game.logTurn?.Write($"[Alert] Key \"{key}\", not found in dictPlayerEvents -> record not removed"); }
+        }
+
 
         /// <summary>
         /// Extracts all valid Follower events from a list of EventID's
@@ -3132,7 +3175,7 @@ namespace Next_Game
                                             //if introduction used to gain access to Court, or Advisors, make sure it can't be reused
                                             if (chainOutcome.Filter == EventAutoFilter.Court || chainOutcome.Filter == EventAutoFilter.Advisors)
                                             { player.IntroPresented = false; }
-                                            CreateAutoLocEvent(chainOutcome.Filter, actorID);
+                                            Game.actOne.CreateAutoLocEvent(chainOutcome.Filter, actorID);
                                             Game._eventID = eventObject.EventPID;
                                             break;
                                         case OutcomeType.Conflict:
