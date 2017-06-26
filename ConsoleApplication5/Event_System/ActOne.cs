@@ -25,7 +25,7 @@ namespace Next_Game.Event_System
         /// create a dynamic auto player location event for Act one - assumed to be at player's current location
         /// <param name="filter">Which group of people should the event focus on (from pool of people present at the location)</param>
         /// </summary>
-        internal void CreateAutoLocEvent(EventAutoFilter filter, int actorID = 0)
+        internal void CreateAutoEventOne(EventAutoFilter filter, int actorID = 0)
         {
             //get player
             Player player = (Player)Game.world.GetPlayer();

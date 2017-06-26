@@ -574,6 +574,7 @@ namespace Next_Game
                                         break;
                                     case MenuMode.God:
                                         infoChannel.SetInfoList(world.GodChangeGameAct(), ConsoleDisplay.Input);
+                                        _menuMode = menu.SwitchMenuMode(MenuMode.Main); //revert back to main menu immediately to prevent dodgy key presses
                                         break;
                                     case MenuMode.Debug:
                                         List<Snippet> inputList = new List<Snippet>();

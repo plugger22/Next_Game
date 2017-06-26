@@ -534,7 +534,7 @@ namespace Next_Game
                         case ActorStatus.AtLocation:
                             //in a safe house
                             if (player.Conceal == ActorConceal.SafeHouse)
-                            { Game.actOne.CreateAutoLocEvent(EventAutoFilter.SafeHouse); }
+                            { Game.actOne.CreateAutoEventOne(EventAutoFilter.SafeHouse); }
                             //Location event
                             else
                             {
@@ -558,7 +558,7 @@ namespace Next_Game
                                         Game.world.SetMessage(new Message(tempText, MessageType.Event));
                                     }
                                     else { Game.SetError(new Error(71, "Invalid loc (null) in Player AutoLocEvent -> No Record created")); }
-                                    Game.actOne.CreateAutoLocEvent(EventAutoFilter.None);
+                                    Game.actOne.CreateAutoEventOne(EventAutoFilter.None);
                                     //reset back to base figure
                                     story.Ev_Player_Loc_Current = story.Ev_Player_Loc_Base;
                                     Game.logTurn?.Write(string.Format(" Chance of Player Location event {0} %", story.Ev_Player_Loc_Current));
@@ -3175,7 +3175,7 @@ namespace Next_Game
                                             //if introduction used to gain access to Court, or Advisors, make sure it can't be reused
                                             if (chainOutcome.Filter == EventAutoFilter.Court || chainOutcome.Filter == EventAutoFilter.Advisors)
                                             { player.IntroPresented = false; }
-                                            Game.actOne.CreateAutoLocEvent(chainOutcome.Filter, actorID);
+                                            Game.actOne.CreateAutoEventOne(chainOutcome.Filter, actorID);
                                             Game._eventID = eventObject.EventPID;
                                             break;
                                         case OutcomeType.Conflict:

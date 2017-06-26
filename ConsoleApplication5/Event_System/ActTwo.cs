@@ -21,6 +21,18 @@ namespace Next_Game.Event_System
         }
 
 
+        /// <summary>
+        /// Auto Location Event for Act Two
+        /// </summary>
+        internal void CreateAutoEventTwo()
+        {
+            //get player
+            Player player = (Player)Game.world.GetPlayer();
+            if (player != null)
+            {
+            }
+            else { Game.SetError(new Error(328, "Invalid Player (null)")); }
+        }
         //new methods above here
     }
 }

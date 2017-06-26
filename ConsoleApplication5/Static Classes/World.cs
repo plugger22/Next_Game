@@ -40,7 +40,7 @@ namespace Next_Game
         private Dictionary<int, Rumour> dictRumoursKnown; //all rumours known to the Player (key is rumourID)
         private Dictionary<int, Possession> dictPossessions; //all possession (key is PossID)
         private Dictionary<int, Passive> dictRoyalCourt; //advisors and royal retainers (assumed to always be at Kingskeep) excludes family
-        private Dictionary<int, Passive> dictRoyalActors; //Act 2 Reference list of New King royal family & advisors (populated at completion of Act 1), key is ActID
+        private Dictionary<int, Passive> dictRoyalBackUp; //Act 2 Reference list of New King royal family & advisors (populated at completion of Act 1), key is ActID
         private Dictionary<int, int> dictConvertLocToRef; //dictionary to convert LocID's to RefID's (key is LocID, value is RefID)
         private Dictionary<int, int> dictConvertRefToLoc; //dictionary to convert RefID's to LocID's (key is RefID, value is LocID)
         private Dictionary<int, int> dictConvertRefToHouse; //dictionary to convert RefID's to HouseID's (key is RefID, value is HouseID)
@@ -67,7 +67,7 @@ namespace Next_Game
             dictEnemyActors = new Dictionary<int, Enemy>();
             dictSpecialActors = new Dictionary<int, Special>();
             dictAllActors = new Dictionary<int, Actor>();
-            dictRoyalActors = new Dictionary<int, Passive>();
+            dictRoyalBackUp = new Dictionary<int, Passive>();
             dictMajorHouses = new Dictionary<int, MajorHouse>();
             dictAllHouses = new Dictionary<int, House>();
             dictMajorHouseID = new Dictionary<int, int>();
@@ -681,7 +681,7 @@ namespace Next_Game
 
 
         internal Dictionary<int, Passive> GetAllRoyals()
-        { return dictRoyalActors; }
+        { return dictRoyalBackUp; }
 
 
         /// <summary>
@@ -5590,13 +5590,13 @@ namespace Next_Game
                                             { enemy.Value.GoodEnemy = false; Game.logTurn?.Write($"Inquisitor {enemy.Value.Name}, ActID {enemy.Value.ActID}, GoodEnemy -> {enemy.Value.GoodEnemy}"); }
                                         }
                                         //repopulate Royal Family and Advisors to Capital with correct Status
-                                        foreach(var passive in dictRoyalActors)
+                                        foreach(var passive in dictRoyalBackUp)
                                         {
                                             passive.Value.Status = ActorStatus.AtLocation;
                                             Game.logTurn?.Write($"{passive.Value.Title} {passive.Value.Name}, \"{passive.Value.Handle}\", ActID {passive.Value.ActID}, has been restored to the Capital");
                                         }
                                         //clear dictionary
-                                        dictRoyalActors.Clear();
+                                        dictRoyalBackUp.Clear();
                                         
                                     }
                                     else { Game.SetError(new Error(323, $"Invalid locReturn (null) for LocID \"{locReturn}\"")); }
@@ -5646,7 +5646,7 @@ namespace Next_Game
                             { enemy.Value.GoodEnemy = true; Game.logTurn?.Write($"Inquisitor {enemy.Value.Name}, ActID {enemy.Value.ActID}, GoodEnemy -> {enemy.Value.GoodEnemy}"); }
                         }
                         //Populate dict Of Royal Actors
-                        List<int> listOfActors = locCapital.GetActorList();
+                        /*List<int> listOfActors = locCapital.GetActorList();
                         int newKingHouseID = Game.lore.NewKing.HouseID;
                         for (int i = 0; i < listOfActors.Count; i++)
                         {
@@ -5661,12 +5661,29 @@ namespace Next_Game
                                     {
                                         //DEBUG -> set all to Captured
                                         passive.Status = ActorStatus.Captured;
-                                        dictRoyalActors.Add(actor.ActID, passive);
+                                        dictRoyalBackUp.Add(actor.ActID, passive);
                                         Game.logTurn?.Write($"{passive.Title} {passive.Name}, \"{passive.Handle}\", ActID {passive.ActID}, has been added to dictRoyalActors");
                                     }
                                 }
                             }
+                        }*/
+                        int newKingHouseID = Game.lore.NewKing.HouseID;
+                        foreach ( var actor in dictRoyalCourt)
+                        {
+                            //copy to Back Up dictionary (enables restoration for a god mode flip back to Act One)
+                            if (actor.Value is Passive)
+                            {
+                                Passive passive = actor.Value as Passive;
+                                //royal Family, not advisors
+                                if (passive.RefID == 9999 || passive.HouseID == newKingHouseID)
+                                {
+                                    passive.Status = ActorStatus.Captured;
+                                    dictRoyalBackUp.Add(passive.ActID, passive);
+                                    Game.logTurn?.Write($"{passive.Title} {passive.Name}, \"{passive.Handle}\", ActID {passive.ActID}, has been added to dictRoyalActors");
+                                }
+                            }
                         }
+
                         //debug
                         //SetInquisitorControlStatus(false);
                         //
