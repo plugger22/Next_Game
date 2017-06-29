@@ -102,7 +102,7 @@ namespace Next_Game
         }
 
         /// <summary>
-        /// GameVar is changed by this amount in this manner. Add/Subtract/RandomPlus/RandomMinus -> +/- rnd.Next(amount)
+        /// GameVar is changed by this amount in this manner. Add/Subtract/Equals/RandomPlus/RandomMinus -> +/- rnd.Next(amount)
         /// </summary>
         /// <param name="index"></param>
         /// <param name="amount"></param>
@@ -111,7 +111,10 @@ namespace Next_Game
         {
             if ((int)index < arrayOfVariables.Length)
             {
-                if (amount != 0)
+                bool proceed = true;
+                if ( apply != EventCalc.Equals)
+                { if (amount == 0) { proceed = false; }  }
+                if ( proceed == true)
                 {
                     int newValue = 0;
                     int tempNum;
@@ -129,6 +132,10 @@ namespace Next_Game
                                 Game.logTurn?.Write($"[Alert] GameVar \"{index}\" has a negative value of {newValue}. MinCapped at Zero");
                                 newValue = Math.Max(0, newValue);
                             }
+                            break;
+                        case EventCalc.Equals:
+                            if (amount == origValue) { Game.logTurn?.Write($"[Alert] Gamevar {index} orig Value {origValue} equals new Value {amount} -> Same value, no change"); }
+                            newValue = amount;
                             break;
                         case EventCalc.RandomPlus:
                             tempNum = rnd.Next(amount);

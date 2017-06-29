@@ -5559,12 +5559,17 @@ namespace Next_Game
                                 displayColor = goodColor;
                                 //store current player position to enable seamless transition back to Act 1 if required
                                 Game.variable.SetValue(GameVar.God_PlayerLocID, player.LocID);
-                                //New Enemy -> DEBUG (temporary) -> find Lord, alive, At Location who dislikes player
+                                //teleport player to Capital
+                                InitialiseMoveActor(1, player.GetPosition(), posCapital);
+                                Game.logTurn?.Write("Player teleported to Capital");
+                                //take care of all necessary details -> keep as much stuff here as possible, only God mode specifics in this method
+                                InitialiseChangeOver();
+                                //New Enemy -> DEBUG (temporary) -> find Lord, alive, At Location who dislikes player NOTE: Do AFTER InitialiseChangeOver
                                 int targetActID = 0;
-                                for(int i = 20; i < dictPassiveActors.Count; i++)
+                                for (int i = 20; i < dictPassiveActors.Count; i++)
                                 {
-                                   Passive target = dictPassiveActors[i];
-                                   if (target is Noble && target.Type == ActorType.Lord && target.Status == ActorStatus.AtLocation)
+                                    Passive target = dictPassiveActors[i];
+                                    if (target is Noble && target.Type == ActorType.Lord && target.Status == ActorStatus.AtLocation)
                                     {
                                         if (target.GetRelPlyr() < 40)
                                         {
@@ -5573,13 +5578,9 @@ namespace Next_Game
                                         }
                                     }
                                 }
-                                if (targetActID == 0) { targetActID = 40; } //give a default value, just in case
+                                //give a default value, just in case
+                                if (targetActID == 0) { targetActID = 40; Game.logTurn?.Write("[Alert] No viable Lord found, default ActID 40 used"); } 
                                 Game.variable.SetValue(GameVar.Inquisitor_Target, targetActID);
-                                //teleport player to Capital
-                                InitialiseMoveActor(1, player.GetPosition(), posCapital);
-                                Game.logTurn?.Write("Player teleported to Capital");
-                                //take care of all necessary details -> keep as much stuff here as possible, only God mode specifics in this method
-                                InitialiseChangeOver();
                             }
                             //
                             //Act One -> Player as Usurper ---

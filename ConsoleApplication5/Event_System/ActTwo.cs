@@ -354,10 +354,22 @@ namespace Next_Game.Event_System
                                                 if (Game.variable.GetValue(GameVar.Inquisitor_AI) > 0)
                                                 {
                                                     //assume direct control of Inquisitors
+                                                    OptionInteractive option_w = new OptionInteractive("Assume direct control of the Inquisitors") { ActorID = actorID };
+                                                    option_w.ReplyGood = $"{actorText} nods and murmurs that it shall be as you wish";
+                                                    if (person is Advisor)
+                                                    { OutGameVar outcome_w = new OutGameVar(eventObject.EventPID, (int)GameVar.Inquisitor_AI, 0, EventCalc.Equals); option_w.SetGoodOutcome(outcome_w); }
+                                                    else { OutEventChain outcome_w = new OutEventChain(1000, EventFilter.None); option_w.SetGoodOutcome(outcome_w); }
+                                                    eventObject.SetOption(option_w);
                                                 }
                                                 else
                                                 {
                                                     //hand control of Inquistors back to Whisperer
+                                                    OptionInteractive option_w = new OptionInteractive("Ask the Whisperer to look after the Inquisitors") { ActorID = actorID };
+                                                    option_w.ReplyGood = $"{actorText} nods and murmurs that it shall be as you wish";
+                                                    if (person is Advisor)
+                                                    { OutGameVar outcome_w = new OutGameVar(eventObject.EventPID, (int)GameVar.Inquisitor_AI, 1, EventCalc.Equals); option_w.SetGoodOutcome(outcome_w); }
+                                                    else { OutEventChain outcome_w = new OutEventChain(1000, EventFilter.None); option_w.SetGoodOutcome(outcome_w); }
+                                                    eventObject.SetOption(option_w);
                                                 }
                                                 break;
                                             case AdvisorRoyal.Hand_of_the_King:
