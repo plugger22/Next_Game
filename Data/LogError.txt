@@ -1,8 +1,0 @@
-//Exile Game file ops "LogError.txt" commenced at: 29/06/2017 11:08:21
-ERROR_29 "Location Deleted 29:26"
-Method: LocationSweeper,  Line: 1676,  Object: Map.cs,  Turn: 0,  Local Time: 11:08:22 UTC +10:00
-ERROR_232 "Invalid amount input (zero) -> Inquisitor_AI not changed"
-Method: ChangeValue,  Line: 155,  Object: Variable.cs,  Turn: 1,  Local Time: 11:08:57 UTC +10:00
-ERROR_232 "Invalid amount input (zero) -> Inquisitor_AI not changed"
-Method: ChangeValue,  Line: 155,  Object: Variable.cs,  Turn: 2,  Local Time: 11:13:41 UTC +10:00
-//Exile Game file ops "LogError.txt" Completed at: 29/06/2017 11:19:51

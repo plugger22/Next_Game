@@ -785,7 +785,7 @@ namespace Next_Game
                             if (target is Player && target.Status != ActorStatus.Captured || (target is Follower && target.Known == true))
                             {
                                 //debug
-                                Game.logTurn?.Write(string.Format(" [Search -> Debug] Active {0}, ID {1} at {2}:{3}, Enemy at {4}:{5} ({6}, ID {7}", target.Name, target.ActID,
+                                Game.logTurn?.Write(string.Format(" [Search -> Debug] Target {0}, ID {1} at {2}:{3}, Enemy at {4}:{5} ({6}, ID {7}", target.Name, target.ActID,
                                     posActive.PosX, posActive.PosY, pos.PosX, pos.PosY, enemy.Name, enemy.ActID));
                                 if (posActive.PosX == pos.PosX && posActive.PosY == pos.PosY)
                                 {
@@ -940,9 +940,9 @@ namespace Next_Game
         /// <summary>
         /// checks Target Character when moving for presence of Enemy in same place
         /// <param name="charID">ActID of target character</param>
-        /// <param name="pos">Current Position of target character</param>
+        /// <param name="posTarget">Current Position of target character</param>
         /// </summary>
-        internal bool CheckIfFoundTarget(Position pos, int charID)
+        internal bool CheckIfFoundTarget(Position posTarget, int charID)
         {
             Dictionary<int, Enemy> dictEnemyActors = Game.world.GetAllEnemyActors();
             int rndNum, threshold;
@@ -972,16 +972,16 @@ namespace Next_Game
                         {
                             found = false;
                             Position posEnemy = enemy.Value.GetPosition();
-                            if (posEnemy != null && pos != null)
+                            if (posEnemy != null && posTarget != null)
                             {
                                 //debug
-                                Game.logTurn?.Write(string.Format(" [Search -> Debug] Enemy, {0}, ID {1} at {2}:{3}, Active {4}, ID {5}, at {6}:{7}", enemy.Value.Name, enemy.Value.ActID, posEnemy.PosX, posEnemy.PosY,
-                                    target.Name, target.ActID, pos.PosX, pos.PosY));
-                                if (posEnemy.PosX == pos.PosX && posEnemy.PosY == pos.PosY)
+                                Game.logTurn?.Write(string.Format(" [Search -> Debug] Enemy, {0}, ID {1} at {2}:{3}, Target {4}, ID {5}, at {6}:{7}", enemy.Value.Name, enemy.Value.ActID, posEnemy.PosX, posEnemy.PosY,
+                                    target.Name, target.ActID, posTarget.PosX, posTarget.PosY));
+                                if (posEnemy.PosX == posTarget.PosX && posEnemy.PosY == posTarget.PosY)
                                 {
                                     //in same spot
                                     Game.logTurn?.Write(string.Format(" [Search -> Alert] {0} {1}, ActID {2}, is in the same place as Active {3}, ID {4}, (loc {5}:{6})", enemy.Value.Title, enemy.Value.Name, enemy.Value.ActID,
-                                        target.Name, target.ActID, pos.PosX, pos.PosY));
+                                        target.Name, target.ActID, posTarget.PosX, posTarget.PosY));
                                     //only search if enemy hasn't already searched for this actor this turn
                                     if (target.CheckSearchedOnList(enemy.Value.ActID) == false)
                                     {
@@ -1019,17 +1019,17 @@ namespace Next_Game
 
                                         if (found == true)
                                         {
-                                            string locName = Game.display.GetLocationName(pos);
-                                            if (String.IsNullOrEmpty(locName) == true) { locName = string.Format("Loc {0}:{1}", pos.PosX, pos.PosY); }
+                                            string locName = Game.display.GetLocationName(posTarget);
+                                            if (String.IsNullOrEmpty(locName) == true) { locName = string.Format("Loc {0}:{1}", posTarget.PosX, posTarget.PosY); }
                                             Game.logTurn?.Write(string.Format(" [SEARCH -> Active] {0} {1} has been Spotted by {2}, ActID {3} at loc {4}:{5} -> Activated {6}", target.Title, target.Name,
-                                                enemy.Value.Name, enemy.Value.ActID, pos.PosX, pos.PosY, enemy.Value.Activated));
+                                                enemy.Value.Name, enemy.Value.ActID, posTarget.PosX, posTarget.PosY, enemy.Value.Activated));
                                             target.Found = true;
                                             Game.logTurn?.Write(string.Format(" [Search -> ListEnemy] {0} {1}, ActID {2} as Spotted -> True and Enemy ActID {3} added", target.Title, target.Name,
                                                 target.ActID, enemy.Value.ActID));
                                             //Stuff that happens when found
                                             string description = "Unknown";
-                                            int locID = Game.map.GetMapInfo(MapLayer.LocID, pos.PosX, pos.PosY);
-                                            int refID = Game.map.GetMapInfo(MapLayer.RefID, pos.PosX, pos.PosY);
+                                            int locID = Game.map.GetMapInfo(MapLayer.LocID, posTarget.PosX, posTarget.PosY);
+                                            int refID = Game.map.GetMapInfo(MapLayer.RefID, posTarget.PosX, posTarget.PosY);
                                             //different outcomes for Player, Passive or Followers
                                             if (target is Player || target is Passive)
                                             {
@@ -1129,7 +1129,7 @@ namespace Next_Game
         internal void CheckStationaryTargetActors()
         {
             Game.logTurn?.Write("--- CheckStationaryTargetActors (AI.cs)");
-            //loop active actors -> Act 1 only
+            //loop active actors -> Act 1
             if (Game.gameAct == Act.One)
             {
                 Dictionary<int, Active> dictActiveActors = Game.world.GetAllActiveActors();
@@ -1156,7 +1156,7 @@ namespace Next_Game
                     else { Game.logTurn?.Write(string.Format(" [Search -> Stationary] {0} {1}, ActID {2} is {3}", actor.Value.Title, actor.Value.Name, actor.Value.ActID, actor.Value.Status)); }
                 }
             }
-            //Passive Target
+            //Passive Target -> Act Two
             else if (Game.gameAct == Act.Two)
             {
                 int targetActID = Game.variable.GetValue(GameVar.Inquisitor_Target);
@@ -1171,8 +1171,8 @@ namespace Next_Game
                         { CheckIfFoundTarget(pos, target.ActID); }
                         else { Game.SetError(new Error(162, "Invalid pos (null) for check of Target actor")); }
                     }
-                    else { Game.SetError(new Error(162, $"Invalid Target (null) for targetActID {targetActID}")); }
                 }
+                else { Game.SetError(new Error(162, $"Invalid Target (null) for targetActID {targetActID}")); }
             }
         }
 
