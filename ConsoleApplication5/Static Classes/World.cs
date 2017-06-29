@@ -919,23 +919,24 @@ namespace Next_Game
             }
             //fill Great Houses with Lords and Ladies
             Game.logStart?.Write("- House Genetics (add Lords and Ladies)");
-            foreach (KeyValuePair<int, MajorHouse> kvp in dictMajorHouses)
+            //foreach (KeyValuePair<int, MajorHouse> kvp in dictMajorHouses)
+            foreach (var house in dictMajorHouses)
             {
                 //create Lord and Lady for house
-                Location loc = Game.network.GetLocation(kvp.Value.LocID);
+                Location loc = Game.network.GetLocation(house.Value.LocID);
                 if (loc != null)
                 {
                     Position pos = loc.GetPosition();
-                    Noble actorLord = (Noble)Game.history.CreateStartingHouseActor(kvp.Value.Name, ActorType.Lord, pos, kvp.Value.LocID, kvp.Value.RefID, kvp.Value.HouseID);
-                    Noble actorLady = (Noble)Game.history.CreateStartingHouseActor(kvp.Value.Name, ActorType.Lady, pos, kvp.Value.LocID, kvp.Value.RefID, kvp.Value.HouseID,
+                    Noble actorLord = (Noble)Game.history.CreateStartingHouseActor(house.Value.Name, ActorType.Lord, pos, house.Value.LocID, house.Value.RefID, house.Value.HouseID);
+                    Noble actorLady = (Noble)Game.history.CreateStartingHouseActor(house.Value.Name, ActorType.Lady, pos, house.Value.LocID, house.Value.RefID, house.Value.HouseID,
                         ActorSex.Female, WifeStatus.First_Wife);
                     //add Lord to House
-                    kvp.Value.LordID = actorLord.ActID;
+                    house.Value.LordID = actorLord.ActID;
                     //create a knight, castellan and maester for each Major house
-                    Knight actorKnight = Game.history.CreateKnight(pos, kvp.Value.LocID, kvp.Value.RefID, kvp.Value.HouseID);
-                    Advisor actorCastellan = Game.history.CreateAdvisor(pos, kvp.Value.LocID, kvp.Value.RefID, kvp.Value.HouseID, ActorSex.Male, AdvisorNoble.Castellan);
-                    Advisor actorMaester = Game.history.CreateAdvisor(pos, kvp.Value.LocID, kvp.Value.RefID, kvp.Value.HouseID, ActorSex.Male, AdvisorNoble.Maester);
-                    Advisor actorSepton = Game.history.CreateAdvisor(pos, kvp.Value.LocID, kvp.Value.RefID, kvp.Value.HouseID, ActorSex.Male, AdvisorNoble.Septon);
+                    Knight actorKnight = Game.history.CreateKnight(pos, house.Value.LocID, house.Value.RefID, house.Value.HouseID);
+                    Advisor actorCastellan = Game.history.CreateAdvisor(pos, house.Value.LocID, house.Value.RefID, house.Value.HouseID, ActorSex.Male, AdvisorNoble.Castellan);
+                    Advisor actorMaester = Game.history.CreateAdvisor(pos, house.Value.LocID, house.Value.RefID, house.Value.HouseID, ActorSex.Male, AdvisorNoble.Maester);
+                    Advisor actorSepton = Game.history.CreateAdvisor(pos, house.Value.LocID, house.Value.RefID, house.Value.HouseID, ActorSex.Male, AdvisorNoble.Septon);
                     //add to dictionaries of actors
                     SetPassiveActor(actorLord);
                     SetPassiveActor(actorLady);
@@ -946,7 +947,7 @@ namespace Next_Game
                     //create family
                     Game.history.CreateFamily(actorLord, actorLady);
                     //add MenAtArms (needed to be done here -> sequence issues with history. InitialisePastHistory)
-                    kvp.Value.MenAtArms = menAtArms;
+                    house.Value.MenAtArms = menAtArms;
 
                 }
                 else { Game.SetError(new Error(188, "Invalid Loc (null) Lord and Lady not created")); }
@@ -980,24 +981,24 @@ namespace Next_Game
             //hand out bastards and adopted sons to lords with no heirs
             CheckGreatLords();
             //fill minor houses with BannerLords
-            foreach (KeyValuePair<int, House> kvp in dictAllHouses)
+            foreach (var house in dictAllHouses)
             {
                 //minor houses only
-                if (kvp.Value is MinorHouse)
+                if (house.Value is MinorHouse)
                 {
                     //create BannerLord for house
-                    Location loc = Game.network.GetLocation(kvp.Value.LocID);
+                    Location loc = Game.network.GetLocation(house.Value.LocID);
                     if (loc != null)
                     {
                         Position pos = loc.GetPosition();
-                        BannerLord bannerLord = (BannerLord)Game.history.CreateStartingHouseActor(kvp.Value.Name, ActorType.BannerLord, pos, kvp.Value.LocID, kvp.Value.RefID, kvp.Value.HouseID);
+                        BannerLord bannerLord = (BannerLord)Game.history.CreateStartingHouseActor(house.Value.Name, ActorType.BannerLord, pos, house.Value.LocID, house.Value.RefID, house.Value.HouseID);
                         //add to dictionaries of actors
                         dictPassiveActors.Add(bannerLord.ActID, bannerLord);
                         dictAllActors.Add(bannerLord.ActID, bannerLord);
                         //add Lord to house
-                        kvp.Value.LordID = bannerLord.ActID;
+                        house.Value.LordID = bannerLord.ActID;
                         //add MenAtArms (needed to be done here -> sequence issues with history. InitialisePastHistory)
-                        kvp.Value.MenAtArms = menAtArms / 2;
+                        house.Value.MenAtArms = menAtArms / 2;
                     }
                     else { Game.SetError(new Error(188, "Invalid Loc (null) Bannerlord not created")); }
                 }
@@ -2573,7 +2574,7 @@ namespace Next_Game
             //DEBUG -> populate dictionary with sample data
             for (int i = 3; i > 0; i--)
             { Game.director.AddVisitedLoc(Game.network.GetRandomLocation(), i * -1); }
-
+            //CheckPositions(); //debug
             InitialiseFinalPlayer();
             Game.display.ShowGeneratorStatsRL();
         }
@@ -5705,6 +5706,22 @@ namespace Next_Game
                 else { Game.SetError(new Error(324, "Invalid Capital (null)")); }
             }
             else { Game.SetError(new Error(324, "Invalid player (null)")); }
+        }
+
+
+        /// <summary>
+        /// debug method to check all passive actors are assigned positions at start of game
+        /// </summary>
+        internal void CheckPositions()
+        {
+            Game.logTurn?.Write("--- CheckPositions (History.cs)");
+            string alertText;
+            foreach (var actor in dictPassiveActors)
+            {
+                Position pos = actor.Value.GetPosition();
+                if (pos.PosX == 0 && pos.PosY == 0) { alertText = "{Alert]"; } else { alertText = ""; }
+                Game.logTurn?.Write($"{alertText} {actor.Value.Title} {actor.Value.Name}, ActID {actor.Value.ActID}, Position {pos.PosX}:{pos.PosY}");
+            }
         }
 
         //new Methods above here

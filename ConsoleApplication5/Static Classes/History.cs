@@ -687,7 +687,6 @@ namespace Next_Game
             actor.Born = Game.gameRevolt - age;
             actor.Age = age;
             //data
-            actor.SetPosition(pos);
             actor.LocID = locID;
             actor.RefID = refID;
             actor.HouseID = houseID;
@@ -697,44 +696,19 @@ namespace Next_Game
                 noble.GenID = 1;
                 noble.WifeNumber = wifeStatus;
             }
-
-            //DEBUG -> add a test Condition to actor
-            /*SkillType testSkill = (SkillType)rnd.Next(1, 7);
-            int testEffect = rnd.Next(1, 3);
-            if (rnd.Next(100) < 50) { testEffect *= -1; }
-            string[] testArray = new string[10] { "Drugged", "Wounded", "Sick", "Disease", "Love Struck", "Magical Potion", "Stimulated", "Bored", "Emotional", "Blessed" };
-            string testText = testArray[rnd.Next(10)];
-            int testTimer = rnd.Next(1, 6);
-            if (rnd.Next(100) < 20) { testTimer = 999; }
-            actor.AddCondition(new Condition(testSkill, testEffect, testText, testTimer));*/
-
             //add to Location
             Location loc = Game.network.GetLocation(locID);
             if (loc != null) { loc.AddActor(actor.ActID); }
             else { Game.SetError(new Error(8, "Invalid Noble Loc (null)"));}
+            actor.SetPosition(loc.GetPosition());
+            Position posTemp = actor.GetPosition();
+            Game.logStart?.Write($"{actor.Title} {actor.Name}, ActID {actor.ActID}, Position {posTemp.PosX}:{posTemp.PosY}");
             //house at birth (males the same, females from an adjacent house)
             actor.BornRefID = refID;
             int wifeHouseID = houseID;
             int highestHouseID = listOfMajorHouses.Count;
             if (sex == ActorSex.Female && highestHouseID >= 2)
             {
-                /*if (rnd.Next(100) < 50)
-                {
-                    //wife was born in Great House with lower HouseID
-                    wifeHouseID = houseID - 1;
-                    //can't be '0', instead roll over
-                    if (wifeHouseID == 0)
-                    { wifeHouseID = highestHouseID; }
-                }
-                else
-                {
-                    //wife born in higher HouseID
-                    wifeHouseID = houseID + 1;
-                    if (wifeHouseID > highestHouseID)
-                    { wifeHouseID = highestHouseID - 2; }
-                }
-                int bornRefID = Game.world.GetGreatHouseRefID(wifeHouseID);
-                */
                 int counter = 0;
                 MajorHouse wifeHome = null;
                 do
@@ -850,6 +824,7 @@ namespace Next_Game
                 loc.AddActor(actor.ActID);
                 //house at birth (males the same)
                 actor.BornRefID = refID;
+                actor.SetPosition(loc.GetPosition());
                 //create records of being born
                 string descriptor = string.Format("{0}, Aid {1}, born at {2}", actor.Name, actor.ActID, Game.display.GetLocationName(locID));
                 Record recordBannerLord = new Record(descriptor, actor.ActID, locID, refID, actor.Born, HistActorEvent.Born);
@@ -928,6 +903,7 @@ namespace Next_Game
             if (loc != null)
             {
                 loc.AddActor(knight.ActID);
+                knight.SetPosition(loc.GetPosition());
                 //data
                 knight.SetPosition(pos);
                 knight.LocID = locID;
@@ -989,7 +965,10 @@ namespace Next_Game
                 //add to Location
                 Location loc = Game.network.GetLocation(locID);
                 if (loc != null)
-                { loc.AddActor(advisor.ActID); }
+                {
+                    loc.AddActor(advisor.ActID);
+                    advisor.SetPosition(loc.GetPosition());
+                }
                 else { Game.SetError(new Error(11, "Invalid Loc (null) Advisor not added to Loc")); }
                 //traits
                 SkillType positiveTrait = SkillType.None;
@@ -1899,7 +1878,11 @@ namespace Next_Game
             Game.world.SetPassiveActor(child);
             //store at location
             Location loc = Game.network.GetLocation(Lord.LocID);
-            if (loc != null) { loc.AddActor(child.ActID); }
+            if (loc != null)
+            {
+                loc.AddActor(child.ActID);
+                child.SetPosition(loc.GetPosition());
+            }
             else { Game.SetError(new Error(182, "Invalid Loc (null) Child not added to Loc")); }
             //record event
             bool actualEvent = true;
@@ -3183,6 +3166,7 @@ namespace Next_Game
             }
             return firstName;
         }
+
 
         //add methods above
     }

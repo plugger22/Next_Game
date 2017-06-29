@@ -1,4 +1,4 @@
-//Exile Game file ops "LogStart.txt" commenced at: 29/06/2017 14:28:04
+//Exile Game file ops "LogStart.txt" commenced at: 29/06/2017 15:25:29
 --- Initialise Constants (FileImport.cs)
 INHERIT_TRAIT -> 50 Min 0 Max 100
 CHILDBIRTH_DEATH -> 15 Min 0 Max 100
@@ -339,20 +339,30 @@ Minor House Glover added at Deepwood Motte, RefID 114, LocID 12, ArcID 0
 "The Yellow Huntress" Inn initialised, RefID 1003, LocID 2, HouseID 99
 "The Singing Ghost" Inn initialised, RefID 1002, LocID 19, HouseID 99
 - House Genetics (add Lords and Ladies)
+Lord Aldis Lannister, ActID 10, Position 29:16
+Lady Jodoca Lannister, ActID 11, Position 29:16
 Inherited Wits trait, Actor ID 16, Parent ID 10
+Lord Garth Greyjoy, ActID 17, Position 25:6
+Lady Gynuara Greyjoy, ActID 18, Position 25:6
 Inherited Combat trait, Actor ID 23, Parent ID 18
 Inherited Charm trait, Actor ID 24, Parent ID 18
+Lord Houdouyn Arryn, ActID 25, Position 6:8
+Lady Moll Arryn, ActID 26, Position 6:8
 Inherited Wits trait, Actor ID 31, Parent ID 25
 Inherited Charm trait, Actor ID 31, Parent ID 25
 Inherited Treachery trait, Actor ID 31, Parent ID 25
 Inherited Combat trait, Actor ID 32, Parent ID 26
 Inherited Leadership trait, Actor ID 32, Parent ID 26
+Lord Forley Baratheon, ActID 33, Position 13:20
+Lady Emmot Baratheon, ActID 34, Position 13:20
 Inherited Wits trait, Actor ID 39, Parent ID 33
 Inherited Charm trait, Actor ID 39, Parent ID 33
 Inherited Treachery trait, Actor ID 39, Parent ID 33
 Inherited Leadership trait, Actor ID 39, Parent ID 33
 Inherited Charm trait, Actor ID 40, Parent ID 33
 Inherited Treachery trait, Actor ID 40, Parent ID 33
+Lord Christy Stark, ActID 41, Position 7:11
+Lady Moysant Stark, ActID 42, Position 7:11
 Inherited Combat trait, Actor ID 48, Parent ID 42
 Inherited Combat trait, Actor ID 49, Parent ID 42
 Inherited Wits trait, Actor ID 49, Parent ID 42
@@ -361,8 +371,26 @@ Inherited Leadership trait, Actor ID 50, Parent ID 41
 Inherited Wits trait, Actor ID 51, Parent ID 42
 Inherited Charm trait, Actor ID 52, Parent ID 41
 Inherited Leadership trait, Actor ID 52, Parent ID 41
+Lord Haimmon Tully, ActID 53, Position 24:19
+Lady Polly Tully, ActID 54, Position 24:19
 Inherited Treachery trait, Actor ID 59, Parent ID 54
 Inherited Leadership trait, Actor ID 61, Parent ID 53
+BannerLord Beuves Peake, ActID 62, Position 27:14
+BannerLord Amory Dondarrion, ActID 63, Position 29:8
+BannerLord Rhaegar Tarth, ActID 64, Position 27:3
+BannerLord Gilibertus Caron, ActID 65, Position 20:4
+BannerLord Ywain Slynt, ActID 66, Position 5:5
+BannerLord Heward Mullendore, ActID 67, Position 9:3
+BannerLord Varys Penrose, ActID 68, Position 7:0
+BannerLord Hamlin Hunt, ActID 69, Position 7:18
+BannerLord Karyl Codd, ActID 70, Position 8:24
+BannerLord Giradin Tarly, ActID 71, Position 5:17
+BannerLord Azer Umber, ActID 72, Position 1:15
+BannerLord Mychel Frey, ActID 73, Position 4:12
+BannerLord Gerion Tallhart, ActID 74, Position 29:19
+BannerLord Gregor Bolton, ActID 75, Position 24:26
+BannerLord Morton Fowler, ActID 76, Position 21:24
+BannerLord Varamyr Glover, ActID 77, Position 28:26
 --- InitialiseItems (World.cs)
 The fearsome Head Lopper, ItemID 2, A great sword forged hundreds of years ago from Valyrian steel by skilled craftsmen., Year 100
 The legendary Mage Ring, ItemID 3, An enchanted ring made by the mute, Hermoine the Horrible, which glows brightly when enemies are near, Year 250
@@ -499,6 +527,7 @@ BannerLord loc 8:24, houseID: 7
 BannerLord loc 5:17, houseID: 7
 BannerLord loc 1:15, houseID: 7
 Updating MapLayer -> loc 5:17, refID: 122
+Lady Evette Tarly, ActID 95, Position 13:20
 Inherited Wits trait, Actor ID 96, Parent ID 95
 Inherited Wits trait, Actor ID 98, Parent ID 95
 --- InitialisePastHistoryHouses (History.cs)
@@ -1583,5 +1612,5 @@ FoodCropEduc -> 14 records imported
 FoodCropUned -> 10 records imported
 FoodHuntEduc -> 6 records imported
 FoodHuntUned -> 10 records imported
-//Exile Game file ops "LogStart.txt" Completed at: 29/06/2017 14:28:05
-//Elapsed Time 117 ms
+//Exile Game file ops "LogStart.txt" Completed at: 29/06/2017 15:25:30
+//Elapsed Time 15 ms

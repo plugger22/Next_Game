@@ -1075,7 +1075,6 @@ namespace Next_Game
                 newLord.Handle = oldBannerLord.Handle;
                 newLord.arrayOfSkillID = oldBannerLord.arrayOfSkillID;
                 newLord.arrayOfTraitEffects = oldBannerLord.arrayOfTraitEffects;
-                //newLord.arrayOfSkillInfluences = oldBannerLord.arrayOfSkillInfluences;
                 newLord.arrayOfTraitNames = oldBannerLord.arrayOfTraitNames;
                 newLord.Type = ActorType.Lord;
                 newLord.Title = string.Format("{0}", ActorType.Lord);
@@ -1094,6 +1093,8 @@ namespace Next_Game
                 newLord.SetSecrets(oldBannerLord.GetSecrets());
                 newLord.Resources = oldBannerLord.Resources;
                 newLord.AddRelEventPlyr(new Relation("Grateful to the New King for their Title", "Supports New King", -45));
+                if (locLord != null) { newLord.SetPosition(locLord.GetPosition()); }
+                else { Game.SetError(new Error(33, "Invalid locLord (null) -> newLord not assigned Position")); }
 
                 //remove oldBannerLord from dictionaries and add newLord
                 Game.world.RemovePassiveActor(oldBannerLord.ActID);
@@ -1110,7 +1111,6 @@ namespace Next_Game
                 //remove oldking House from relevant dictionaries
                 Game.world.RemoveMajorHouse(oldkingHouse);
                 //remove old bannerlord house, add new from dictAllHouses
-                //Game.world.RemoveMinorHouse(oldBannerLordRefID);
                 Game.world.AddOtherHouse(newMinorHouse);
                 //add house to world dictionaries (do after turncoatHouse update otherwise two identical houses in world.dictAllHouses)
                 Game.world.AddMajorHouse(newMajorhouse);
