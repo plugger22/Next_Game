@@ -1,4 +1,4 @@
-//Exile Game file ops "LogTurn.txt" commenced at: 29/06/2017 15:25:30
+//Exile Game file ops "LogTurn.txt" commenced at: 29/06/2017 17:00:15
 --- ProcessStartGame (World.cs)
 --- AgePassiveCharacters (History.cs)
 --- InitialiseRoyalAccounts (World.cs)
@@ -576,104 +576,35 @@ Hand_of_the_King Gervesin Bertol is corrupt (treachery 2, rolled 0), amount take
 [AddVisitedLoc] LocID 5, "Evenfall", turn -2 -> new record added to dictLocsVisited
 [AddVisitedLoc] LocID 17, "Fishfork", turn -1 -> record added to listLocsVisited
 [AddVisitedLoc] LocID 17, "Fishfork", turn -1 -> new record added to dictLocsVisited
---- CheckPositions (History.cs)
- Lord Aldis Lannister, ActID 10, Position 29:16
- Lady Jodoca Lannister, ActID 11, Position 29:16
- Knight Ser Henry Rannulf, ActID 12, Position 29:16
- Castellan Gerbod Richardin, ActID 13, Position 29:16
- Maester Jonos Josse, ActID 14, Position 29:16
- Septon Desmond Teodric, ActID 15, Position 29:16
- Heir Frederick Lannister, ActID 16, Position 29:16
- King Garth Greyjoy, ActID 17, Position 25:6
- Queen Gynuara Greyjoy, ActID 18, Position 25:6
- Knight Ser Trystane Daw, ActID 19, Position 25:6
- Castellan Harys Gervasius, ActID 20, Position 25:6
- Maester Guntard Christian, ActID 21, Position 25:6
- Septon Ferri Humfrye, ActID 22, Position 25:6
- lady Rhaenys Greyjoy, ActID 23, Position 25:6
- lady Marekyn Greyjoy, ActID 24, Position 25:6
- Lord Houdouyn Arryn, ActID 25, Position 6:8
- Lady Moll Arryn, ActID 26, Position 6:8
- Knight Ser Hallis Francis, ActID 27, Position 6:8
- Castellan Bran Dumphry, ActID 28, Position 6:8
- Maester Martyn Samm, ActID 29, Position 6:8
- Septon Aunger Hue, ActID 30, Position 6:8
- Heir Forley Arryn, ActID 31, Position 6:8
- lady Murienne Arryn, ActID 32, Position 6:8
- King Forley Baratheon, ActID 33, Position 13:20
- Queen Emmot Baratheon, ActID 34, Position 13:20
- Knight Ser Joffery Reinald, ActID 35, Position 13:20
- Castellan Rickard Drake, ActID 36, Position 13:20
- Maester Davos Umbert, ActID 37, Position 13:20
- Septon Benjen Raimund, ActID 38, Position 13:20
- Heir Jacquelin Baratheon, ActID 39, Position 13:20
- lord Paulinus Baratheon, ActID 40, Position 13:20
- Lord Christy Stark, ActID 41, Position 7:11
- Lady Moysant Stark, ActID 42, Position 7:11
- Knight Ser Victarion Tybout, ActID 43, Position 7:11
- Castellan Vortimer Hughoc, ActID 44, Position 7:11
- Maester Ferri Dumphry, ActID 45, Position 7:11
- Septon Dicken Michell, ActID 46, Position 7:11
- Heir Walder Stark, ActID 47, Position 7:11
- lady Elison Stark, ActID 48, Position 7:11
- lady Ala Stark, ActID 49, Position 7:11
- Lord Danyll Stark, ActID 50, Position 7:11
- lady Swetiue Stark, ActID 51, Position 7:11
- lord Druettus Stark, ActID 52, Position 7:11
- Lord Haimmon Tully, ActID 53, Position 24:19
- Lady Polly Tully, ActID 54, Position 24:19
- Knight Ser Hamlin Gervase, ActID 55, Position 24:19
- Castellan Bernier Thomassin, ActID 56, Position 24:19
- Maester Iamys Mosseus, ActID 57, Position 24:19
- Septon Mace Willcock, ActID 58, Position 24:19
- lady Sephare Tully, ActID 59, Position 24:19
- Heir Peter Greyjoy, ActID 60, Position 25:6
- Heir Tybaut Tully, ActID 61, Position 24:19
- BannerLord Beuves Peake, ActID 62, Position 27:14
- BannerLord Amory Dondarrion, ActID 63, Position 29:8
- BannerLord Rhaegar Tarth, ActID 64, Position 27:3
- BannerLord Gilibertus Caron, ActID 65, Position 20:4
- BannerLord Ywain Slynt, ActID 66, Position 5:5
- BannerLord Heward Mullendore, ActID 67, Position 9:3
- BannerLord Varys Penrose, ActID 68, Position 7:0
- BannerLord Hamlin Hunt, ActID 69, Position 7:18
- BannerLord Karyl Codd, ActID 70, Position 8:24
- Lord Giradin Tarly, ActID 71, Position 13:20
- BannerLord Azer Umber, ActID 72, Position 1:15
- BannerLord Mychel Frey, ActID 73, Position 4:12
- BannerLord Gerion Tallhart, ActID 74, Position 29:19
- BannerLord Gregor Bolton, ActID 75, Position 24:26
- BannerLord Morton Fowler, ActID 76, Position 21:24
- BannerLord Varamyr Glover, ActID 77, Position 28:26
- BannerLord Marq Frey, ActID 84, Position 4:12
- BannerLord Albar Umber, ActID 85, Position 1:15
- BannerLord Harys Caron, ActID 86, Position 20:4
- BannerLord Rickard Peake, ActID 87, Position 27:14
- BannerLord Joffery Mullendore, ActID 88, Position 9:3
- lord Haimmon Stark, ActID 89, Position 7:11
- BannerLord Aunger Mormont, ActID 90, Position 5:17
- Castellan Danyll Francis, ActID 91, Position 13:20
- Maester Galot Teodric, ActID 92, Position 13:20
- Septon Druet Ivo, ActID 93, Position 13:20
- Knight Ser Bran Maukolum, ActID 94, Position 13:20
- Lady Evette Tarly, ActID 95, Position 13:20
- lady Lyn Tarly, ActID 96, Position 13:20
- Heir Tomard Tarly, ActID 97, Position 13:20
- lady Brienne Tarly, ActID 98, Position 13:20
- High_Septon Willis Heylot, ActID 78, Position 17:15
- Master_of_Coin Morton Rab, ActID 79, Position 17:15
- Master_of_Laws Henry Raaf, ActID 80, Position 17:15
- Master_of_Whisperers Will Michell, ActID 81, Position 17:15
- Hand_of_the_King Dreu Rodbertus, ActID 82, Position 17:15
- Hand_of_the_King Gervesin Bertol, ActID 99, Position 17:15
- Commander_of_City_Watch Charles Thomassin, ActID 83, Position 17:15
-{Alert] Bandit Boss Luigi HandsUp, ActID 100, Position 0:0
-{Alert] Old Lady Holy Haggard, ActID 101, Position 0:0
-{Alert] Seaman Saladin Kinghit, ActID 102, Position 0:0
-{Alert] Beast Direwolf, ActID 103, Position 0:0
 --- InitialiseFinalPlayer (World.cs)
 [AddVisitedLoc] LocID 22, "Parchments", turn 0 -> record added to listLocsVisited
 [AddVisitedLoc] LocID 22, "Parchments", turn 0 -> new record added to dictLocsVisited
+--- GodChangeGameAct (World.cs)
+[GameVar] God_PlayerLocID changed from 1 to 22
+--- InitiateMoveActor (World.cs)
+--- Move Actor (Director.cs)
+[AddVisitedLoc] LocID 1, "Kingskeep", turn 0 -> record added to listLocsVisited
+[AddVisitedLoc] LocID 1, "Kingskeep", turn 0 -> new record added to dictLocsVisited
+[God Mode] Player teleports from Parchments to Kingskeep
+Player teleported to Capital
+--- InitialiseChangeOver (World.cs)
+[Notification] Game now in Act Two
+Inquisitor Brother Set, ActID 104, GoodEnemy -> True
+Inquisitor Brother Amon, ActID 105, GoodEnemy -> True
+Inquisitor Brother Demogorgon, ActID 106, GoodEnemy -> True
+Inquisitor Brother Behemoth, ActID 107, GoodEnemy -> True
+King Garth Greyjoy, "The Circumspect", ActID 17, has been added to dictRoyalBackUp
+Queen Gynuara Greyjoy, "The Tender", ActID 18, has been added to dictRoyalBackUp
+lady Rhaenys Greyjoy, "The Vulgar", ActID 23, has been added to dictRoyalBackUp
+lady Marekyn Greyjoy, "The Plaid", ActID 24, has been added to dictRoyalBackUp
+Heir Peter Greyjoy, "The Loud", ActID 60, has been added to dictRoyalBackUp
+High_Septon Willis Heylot, "The Itchy", ActID 78, has been added to dictRoyalBackUp
+Master_of_Coin Morton Rab, "The Slippery", ActID 79, has been added to dictRoyalBackUp
+Master_of_Laws Henry Raaf, "The Literal", ActID 80, has been added to dictRoyalBackUp
+Master_of_Whisperers Will Michell, "The Crafty", ActID 81, has been added to dictRoyalBackUp
+Commander_of_City_Watch Charles Thomassin, "The So-So", ActID 83, has been added to dictRoyalBackUp
+Hand_of_the_King Gervesin Bertol, "The Sore", ActID 99, has been added to dictRoyalBackUp
+[GameVar] Inquisitor_Target changed from 1 to 50
 --- SetEndGame (Game.cs)
 [Alert] Player chose to exit (pressed 'X')
-//Exile Game file ops "LogTurn.txt" Completed at: 29/06/2017 15:25:52
+//Exile Game file ops "LogTurn.txt" Completed at: 29/06/2017 17:01:02

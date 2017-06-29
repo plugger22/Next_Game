@@ -1344,31 +1344,35 @@ namespace Next_Game
             {
                 if (enemy.Value.GoodEnemy == true)
                 {
-                    status = enemy.Value.Status;
-                    //ignore dead actors
-                    if (status != ActorStatus.Gone)
+                    if (enemy.Value is Inquisitor)
                     {
-                        locID = enemy.Value.LocID;
-                        locName = GetLocationName(locID);
-                        switch (status)
+                        Inquisitor inquisitor = enemy.Value as Inquisitor;
+                        status = enemy.Value.Status;
+                        //ignore dead actors
+                        if (status != ActorStatus.Gone)
                         {
-                            case ActorStatus.AtLocation:
-                                locStatus = $"At {locName}";
-                                break;
-                            case ActorStatus.Travelling:
-                                locStatus = string.Format("Riding to {0}", locName);
-                                break;
+                            locID = enemy.Value.LocID;
+                            locName = GetLocationName(locID);
+                            switch (status)
+                            {
+                                case ActorStatus.AtLocation:
+                                    locStatus = $"At {locName}";
+                                    break;
+                                case ActorStatus.Travelling:
+                                    locStatus = string.Format("Riding to {0}", locName);
+                                    break;
+                            }
+                            Position pos = enemy.Value.GetPosition();
+                            coordinates = string.Format("(Loc {0}:{1})", pos.PosX, pos.PosY);
+                            /*distText = string.Format("{0} {1}", "dist:", enemy.Value.CrowDistance);
+                            chance = enemy.Value.CrowChance + enemy.Value.CrowBonus;
+                            chance = Math.Min(100, chance);
+                            crowText = string.Format("{0} {1}{2}", "crow:", chance, "%");
+                            charString = string.Format("Aid {0,-2} {1,-18} {2,-30}{3,-15} {4,-11} {5,-12} {6,-12}", enemy.Key, enemy.Value.Name, locStatus, coordinates, distText, crowText,
+                                enemy.Value.Known == true ? "Known" : "Unknown");*/
+                            charString = string.Format("Num {0}  Aid {1,-2}  {2,-25} {3,-30}{4,-15}", inquisitor.TempActID, enemy.Key, enemy.Value.Name, locStatus, coordinates);
+                            listToDisplay.Add(new Snippet(charString, textColor, RLColor.Black));
                         }
-                        Position pos = enemy.Value.GetPosition();
-                        coordinates = string.Format("(Loc {0}:{1})", pos.PosX, pos.PosY);
-                        /*distText = string.Format("{0} {1}", "dist:", enemy.Value.CrowDistance);
-                        chance = enemy.Value.CrowChance + enemy.Value.CrowBonus;
-                        chance = Math.Min(100, chance);
-                        crowText = string.Format("{0} {1}{2}", "crow:", chance, "%");
-                        charString = string.Format("Aid {0,-2} {1,-18} {2,-30}{3,-15} {4,-11} {5,-12} {6,-12}", enemy.Key, enemy.Value.Name, locStatus, coordinates, distText, crowText,
-                            enemy.Value.Known == true ? "Known" : "Unknown");*/
-                        charString = string.Format("Aid {0,-2} {1,-25} {2,-30}{3,-15}", enemy.Key, enemy.Value.Name, locStatus, coordinates);
-                        listToDisplay.Add(new Snippet(charString, textColor, RLColor.Black));
                     }
                 }
             }

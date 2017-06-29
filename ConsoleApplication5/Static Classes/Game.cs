@@ -523,10 +523,13 @@ namespace Next_Game
                                             {
                                                 if (mouseLeft == true)
                                                 {
-                                                    if ((_posSelect1 != null && _posSelect2 != null) && (_posSelect1.PosX != _posSelect2.PosX || _posSelect1.PosY != _posSelect2.PosY))
-                                                    { world.InitialiseMoveActor(_charIDSelected, _posSelect1, _posSelect2);  }
-                                                    else
-                                                    { infoChannel.AppendInfoList(new Snippet("Destination the same as Origin. Journey Cancelled!", RLColor.Red, RLColor.Black), ConsoleDisplay.Input); }
+                                                    if (_charIDSelected > 0)
+                                                    {
+                                                        if ((_posSelect1 != null && _posSelect2 != null) && (_posSelect1.PosX != _posSelect2.PosX || _posSelect1.PosY != _posSelect2.PosY))
+                                                        { world.InitialiseMoveActor(_charIDSelected, _posSelect1, _posSelect2); }
+                                                        else
+                                                        { infoChannel.AppendInfoList(new Snippet("Destination the same as Origin. Journey Cancelled!", RLColor.Red, RLColor.Black), ConsoleDisplay.Input); }
+                                                    }
                                                 }
                                                 else if (mouseRight == true)
                                                 { infoChannel.AppendInfoList(new Snippet("Journey Cancelled!", RLColor.Red, RLColor.Black), ConsoleDisplay.Input); }
@@ -1013,6 +1016,13 @@ namespace Next_Game
                                         case MenuMode.Main:
                                             _menuMode = menu.SwitchMenuMode(MenuMode.Actor_Control);
                                             _charIDSelected = (int)keyPress.Key - 109; //based on a system where '1' is '110'
+                                            if (gameAct == Act.Two)
+                                            {
+                                                //convert to ActID for inquisitors
+                                                int actorID = world.GetInquisitorActID(_charIDSelected);
+                                                if (actorID > 0) { _charIDSelected = actorID; }
+                                                else { SetError(new Error(329, "Invalid actorID (zero) Inquisitor can't be moved")); }
+                                            }
                                             List<Snippet> infoList = new List<Snippet>();
                                             infoList.Add(display.ShowSelectedActor(_charIDSelected));
                                             infoChannel.SetInfoList(infoList, ConsoleDisplay.Input);

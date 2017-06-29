@@ -538,6 +538,7 @@ namespace Next_Game
 
         /// <summary>
         /// create an Inquisitor
+        /// <param name="tempActID">temporary ActID number (must be unique and between 2 and 8</param>
         /// </summary>
         public void CreateInquisitor(int locID)
         {

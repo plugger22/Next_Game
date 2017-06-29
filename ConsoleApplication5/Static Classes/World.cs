@@ -5724,6 +5724,25 @@ namespace Next_Game
             }
         }
 
+        /// <summary>
+        /// returns Inquisitor.ActID given their TempActID. Returns '0' if not found
+        /// </summary>
+        /// <param name="tempActID"></param>
+        /// <returns></returns>
+        internal int GetInquisitorActID(int tempActID)
+        {
+            foreach(var enemy in dictEnemyActors)
+            {
+                if (enemy.Value is Inquisitor)
+                {
+                    Inquisitor inquisitor = enemy.Value as Inquisitor;
+                    if (inquisitor.TempActID == tempActID)
+                    { return inquisitor.ActID; }
+                }
+            }
+            return 0;
+        }
+
         //new Methods above here
     }
 }

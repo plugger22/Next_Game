@@ -24,11 +24,13 @@ namespace Next_Game
     public class Actor
     {
         private static int characterIndex = 1; //provides  a unique ID to each character (first characters should always be the player controlled ones with ID's < 10)
+        protected static int inquisitorIndex = 2; //used for Inquisitor TempActID's which are specifically for manually moving them around in Act Two
         private Position actorPos;
         public string Name { get; set; }
         public int LocID { get; set; } //current location (if travelling then destination) -> if dead then '0'
         public int Speed { get; private set; } //speed of travel throughout the world (depends on Travel Mode)
         public int ActID { get; set; } //set in constructor except in special circumstances (eg, copying actors over in Lore.cs)
+        
         public int Age { get; set; }
         public int Born { get; set; } //year born
         public int Gone { get; set; } = 0; //year died or missing
@@ -1188,12 +1190,14 @@ namespace Next_Game
     /// </summary>
     public class Inquisitor : Enemy
     {
+        public int TempActID { get; set; } //inquisitors only -> Act Two, manual control, unique number 2 to 8
 
         public Inquisitor(string name, ActorType type = ActorType.Inquisitor, ActorSex sex = ActorSex.Male) : base(name, type, sex)
         {
             Name = "Brother " + name;
             Threat = 1;
             Activated = true;
+            if (inquisitorIndex < 8) { TempActID = inquisitorIndex++; } else { Game.SetError(new Error(209, $"Invalid inquisitorIndex \"{inquisitorIndex}\" -> not assigned to Inquisitor.TempActID")); }
         }
     }
 
