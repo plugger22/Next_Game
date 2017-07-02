@@ -345,13 +345,19 @@ namespace Next_Game
                                     { Game.SetError(new Error(175, $"ActorID {charID} has not had their details updated upon arriving at their Destination")); }
                                     else { Game.logTurn?.Write($"[God Mode] Player teleports from {originLocation} to {destinationLocation}"); }
                                 }
-                                //show route (Player & Follower only)
-                                if (person is Active)
+                                //show route (Act One -> Player & Follower only, Act Two -> Player & Inquisitors only)
+                                if (Game.gameAct == Act.One)
                                 {
-                                    Game.map.UpdateMap();
-                                    Game.map.DrawRoutePath(path);
-                                    
+                                    if (person is Active)
+                                    { Game.map.UpdateMap(); Game.map.DrawRoutePath(path); }
                                 }
+                                else if (Game.gameAct == Act.Two)
+                                {
+                                    if (person is Player || person is Inquisitor)
+                                    { Game.map.UpdateMap(); Game.map.DrawRoutePath(path); }
+                                }
+                                else
+                                //Player specific actions
                                 if (person is Player)
                                 {
                                     //update Horse status
@@ -360,7 +366,7 @@ namespace Next_Game
                                     { player.horseStatus = HorseStatus.Normal; }
                                 }
                             }
-                            else
+                            else { Game.SetError(new Error(175, $"Invalid Game Act \"{Game.gameAct}\"")); }
                             { returnText = "ERROR: The Journey has been cancelled (Destination not Found)"; }
                         }
                         else
@@ -563,7 +569,7 @@ namespace Next_Game
         }
 
 
-        /// <summary>
+        /*/// <summary>
         /// Select a Player Character from the displayed list
         /// </summary>
         /// <returns>Character ID</returns>
@@ -592,7 +598,7 @@ namespace Next_Game
                 charID = 0;
             }
             return charID;
-        }
+        }*/
 
         /// <summary>
         /// return a Passive actor from dictPassiveActors

@@ -1272,7 +1272,7 @@ namespace Next_Game
                 listToDisplay.Add(new Snippet(charString, RLColor.LightRed, RLColor.Black));
             }
             else { Game.SetError(new Error(332, "Invalid Player (null)")); }
-            listToDisplay.Add(new Snippet("--- Followers", RLColor.Yellow, RLColor.Black));
+            listToDisplay.Add(new Snippet("Followers", RLColor.Yellow, RLColor.Black));
             //Followers
             foreach (var actor in dictActiveActors)
             {
@@ -1363,8 +1363,10 @@ namespace Next_Game
             ActorStatus status;
             string locName, coordinates/*concealText, distText, ,  crowText*/;
             string locStatus = "Unknown";
-            string charString; //overall string
+            string charString;
+            //different color schemes to indicate AI (white), or manual (crimson), control 
             RLColor textColor = RLColor.White;
+            if (Game.variable.GetValue(GameVar.Inquisitor_AI) == 0) { textColor = Color._badTrait; }
             //display Player at top
             Player player = Game.world.GetPlayer();
             if (player != null)
@@ -1387,7 +1389,7 @@ namespace Next_Game
                 listToDisplay.Add(new Snippet(charString, RLColor.LightRed, RLColor.Black));
             }
             else { Game.SetError(new Error(332, "Invalid Player (null)")); }
-            listToDisplay.Add(new Snippet("--- Inquisitors", RLColor.Yellow, RLColor.Black));
+            listToDisplay.Add(new Snippet("Inquisitors", RLColor.Yellow, RLColor.Black));
             //Inquistiors
             foreach (var enemy in dictEnemyActors)
             {
@@ -1413,7 +1415,7 @@ namespace Next_Game
                             }
                             Position pos = enemy.Value.GetPosition();
                             coordinates = string.Format("(Loc {0}:{1})", pos.PosX, pos.PosY);
-                            charString = string.Format("ID {0}  (Aid {1,-2})  {2,-25} {3,-30}{4,-15}", inquisitor.TempActID, enemy.Key, enemy.Value.Name, locStatus, coordinates);
+                            charString = string.Format("ID {0}  (Aid {1,-3})  {2,-25} {3,-30}{4,-15}", inquisitor.TempActID, enemy.Key, enemy.Value.Name, locStatus, coordinates);
                             listToDisplay.Add(new Snippet(charString, textColor, RLColor.Black));
                         }
                     }
@@ -2635,25 +2637,47 @@ namespace Next_Game
         /// <returns></returns>
         public Snippet GetActorStatusRL(int actID)
         {
-            Dictionary<int, Active> dictActiveActors = Game.world.GetAllActiveActors();
             Actor person = new Actor();
             RLColor foreColor = RLColor.White;
             string charReturn = "Character doesn't exist!";
             //check character exists
-            if (dictActiveActors.ContainsKey(actID))
+            if (Game.gameAct == Act.One)
             {
-                person = dictActiveActors[actID];
-                charReturn = person.Name;
-                if (person.Status != ActorStatus.AtLocation)
-                { charReturn += " isn't currently available (must be at a Location in order to be Moved)"; foreColor = RLColor.LightRed; }
-                else
+                Dictionary<int, Active> dictActiveActors = Game.world.GetAllActiveActors();
+                if (dictActiveActors.ContainsKey(actID))
                 {
-                    Position pos = person.GetPosition();
-                    charReturn += " is awaiting your orders at ";
-                    charReturn += GetLocationName(person.LocID);
-                    charReturn += string.Format(" (loc {0}:{1})", pos.PosX, pos.PosY);
+                    person = dictActiveActors[actID];
+                    charReturn = person.Name;
+                    if (person.Status != ActorStatus.AtLocation)
+                    { charReturn += " isn't currently available (must be at a Location in order to be Moved)"; foreColor = RLColor.LightRed; }
+                    else
+                    {
+                        Position pos = person.GetPosition();
+                        charReturn += " is awaiting your orders at ";
+                        charReturn += GetLocationName(person.LocID);
+                        charReturn += string.Format(" (loc {0}:{1})", pos.PosX, pos.PosY);
+                    }
                 }
             }
+            else if (Game.gameAct == Act.Two)
+            {
+                Dictionary<int, Enemy> dictEnemyActors = Game.world.GetAllEnemyActors();
+                if (dictEnemyActors.ContainsKey(actID))
+                {
+                    person = dictEnemyActors[actID];
+                    charReturn = person.Name;
+                    if (person.Status != ActorStatus.AtLocation)
+                    { charReturn += " isn't currently available (must be at a Location in order to be Moved)"; foreColor = RLColor.LightRed; }
+                    else
+                    {
+                        Position pos = person.GetPosition();
+                        charReturn += " is awaiting your orders at ";
+                        charReturn += GetLocationName(person.LocID);
+                        charReturn += string.Format(" (loc {0}:{1})", pos.PosX, pos.PosY);
+                    }
+                }
+            }
+            else { Game.SetError(new Error(333, $"Invalid Game Act \"{Game.gameAct}\"")); }
             return new Snippet(charReturn, foreColor, RLColor.Black);
         }
 
