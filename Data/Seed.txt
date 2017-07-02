@@ -20,3 +20,5 @@ Seed 16081 -> Sunday, 2 July 2017 11:33 AM
 Seed 9758 -> Sunday, 2 July 2017 11:38 AM
 Seed 35312 -> Sunday, 2 July 2017 11:47 AM
 Seed 22146 -> Sunday, 2 July 2017 11:52 AM
+Seed 25474 -> Sunday, 2 July 2017 12:03 PM
+Seed 58420 -> Sunday, 2 July 2017 12:08 PM

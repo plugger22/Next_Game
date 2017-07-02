@@ -1268,8 +1268,8 @@ namespace Next_Game
                 }
                         Position pos = player.GetPosition();
                 coordinates = string.Format("(Loc {0}:{1})", pos.PosX, pos.PosY);
-                charString = string.Format("ID 1  (Aid {0})    {1,-25} {2,-30}{3,-15}", player.ActID, player.Name, locStatus, coordinates);
-                listToDisplay.Add(new Snippet(charString, Color._badTrait, RLColor.Black));
+                charString = string.Format("Aid {0,-2} {1,-18} {2,-30}{3,-15}", player.ActID, player.Name, locStatus, coordinates);
+                listToDisplay.Add(new Snippet(charString, RLColor.LightRed, RLColor.Black));
             }
             else { Game.SetError(new Error(332, "Invalid Player (null)")); }
             listToDisplay.Add(new Snippet("--- Followers", RLColor.Yellow, RLColor.Black));
@@ -1336,7 +1336,6 @@ namespace Next_Game
                                     else { textColor = RLColor.White; }
                                 }
                                 else { textColor = RLColor.LightGray; }
-                                //distance = Game.utility.GetDistance(posPlayer.PosX, posPlayer.PosY, pos.PosX, pos.PosY);
                                 distText = string.Format("{0} {1}", "dist:", actor.Value.CrowDistance);
                                 chance = actor.Value.CrowChance + actor.Value.CrowBonus;
                                 chance = Math.Min(100, chance);
