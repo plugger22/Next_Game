@@ -1440,6 +1440,7 @@ namespace Next_Game
             string charString = "Unknown";
             string locStatus = "Unknown";
             List<Snippet> listInquistors = new List<Snippet>();
+            List<Snippet> listTargets = new List<Snippet>();
             List<Snippet> listOthers = new List<Snippet>(); //all other enemies
             List<Snippet> listToDisplay = new List<Snippet>();
             //loop dict of enemies
@@ -1501,7 +1502,7 @@ namespace Next_Game
                 if (loc != null) { coordinates = string.Format("(Pos {0}:{1})", loc.GetPosX(), loc.GetPosY()); }
                 else { Game.SetError(new Error(184, "Invalid Loc (null) default Cordinate text used")); }
                 //split enemies into two lists for display purposes
-                if (enemy.Value is Inquisitor)
+                if (enemy.Value is Inquisitor && Game.gameAct == Act.One)
                 {
                     //Inquisitor
                     if (enemy.Value.Known == true || debugMode == true)
@@ -1565,13 +1566,65 @@ namespace Next_Game
                     }
                 }
             }
-            //set up display list
-            if (listInquistors.Count > 0)
+            //Act Two -> Target
+            if (Game.gameAct == Act.Two)
             {
-                listToDisplay.Add(new Snippet("--- Inquisitors", RLColor.Yellow, RLColor.Black));
-                for (int i = 0; i < listInquistors.Count; i++)
-                { listToDisplay.Add(listInquistors[i]); }
+                int targetActID = Game.variable.GetValue(GameVar.Inquisitor_Target);
+                Actor target = Game.world.GetPassiveActor(targetActID);
+                if (target != null)
+                {
+                    //Target
+                    if (target.Known == true || debugMode == true)
+                    {
+                        //known status
+                        if (debugMode == true)
+                        {
+                            charString = string.Format("Aid {0,-3} {1,-23} {2,-35}{3,-15} {4,-12}", target.ActID, target.Name, locStatus, coordinates,
+                              target.Known == true ? "Known" : "Unknown");
+                        }
+                        else { charString = string.Format("Aid {0,-3} {1,-23} {2,-35}{3,-15}", target.ActID, target.Name, locStatus, coordinates); }
+                        listTargets.Add(new Snippet(charString, RLColor.White, RLColor.Black));
+                    }
+                    else
+                    {
+                        if (target.TurnsUnknown <= expire)
+                        {
+                            //unknown status and info is 'x' turns or less old
+                            charString = string.Format("Aid {0,-3} {1,-23} {2,-35}{3,-15} {4} day{5} old information", target.ActID, target.Name, locStatus, coordinates, target.TurnsUnknown,
+                                target.TurnsUnknown == 1 ? "" : "s");
+                            listTargets.Add(new Snippet(charString, RLColor.LightRed, RLColor.Black));
+                        }
+                        else
+                        {
+                            //unknown status and beyond the time horizon
+                            charString = string.Format("Aid {0,-3} {1,-23} Whereabouts unknown", target.ActID, target.Name);
+                            listTargets.Add(new Snippet(charString, RLColor.LightGray, RLColor.Black));
+                        }
+                    }
+                }
+                else { Game.SetError(new Error(184, $"Invalid target (null) for TargetID {targetActID}")); }
             }
+            //set up display list
+            if (Game.gameAct == Act.One)
+            {
+                if (listInquistors.Count > 0)
+                {
+                    listToDisplay.Add(new Snippet("--- Inquisitors", RLColor.Yellow, RLColor.Black));
+                    for (int i = 0; i < listInquistors.Count; i++)
+                    { listToDisplay.Add(listInquistors[i]); }
+                }
+            }
+            else if (Game.gameAct == Act.Two)
+            {
+                if (listTargets.Count > 0)
+                {
+                    listToDisplay.Add(new Snippet("--- Main Enemy", RLColor.Yellow, RLColor.Black));
+                    for (int i = 0; i < listTargets.Count; i++)
+                    { listToDisplay.Add(listTargets[i]); }
+                }
+            }
+            else { Game.SetError(new Error(184, $"Invalid Game Act \"{Game.gameAct}\"")); }
+            //display list
             if (listOthers.Count > 0)
             {
                 listToDisplay.Add(new Snippet(""));
