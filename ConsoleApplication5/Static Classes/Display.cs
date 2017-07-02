@@ -1500,7 +1500,7 @@ namespace Next_Game
                 //get location coords
                 Location loc = Game.network.GetLocation(locID);
                 if (loc != null) { coordinates = string.Format("(Pos {0}:{1})", loc.GetPosX(), loc.GetPosY()); }
-                else { Game.SetError(new Error(184, "Invalid Loc (null) default Cordinate text used")); }
+                else { Game.SetError(new Error(184, "Invalid Loc (null) for Enemy, default Cordinate text used")); }
                 //split enemies into two lists for display purposes
                 if (enemy.Value is Inquisitor && Game.gameAct == Act.One)
                 {
@@ -1533,7 +1533,7 @@ namespace Next_Game
                         }
                     }
                 }
-                else
+                else if (!(enemy.Value is Inquisitor))
                 {
                     //All other Enemies
                     if (enemy.Value.Known == true || debugMode == true)
@@ -1573,14 +1573,69 @@ namespace Next_Game
                 Actor target = Game.world.GetPassiveActor(targetActID);
                 if (target != null)
                 {
+                    status = target.Status;
+                    locID = target.LocID;
+                    locName = GetLocationName(locID);
+                    //known
+                    if (target.Known == true || debugMode == true)
+                    {
+                        if (status == ActorStatus.AtLocation)
+                        {
+                            string activity = "?";
+                            switch (target.Goal)
+                            {
+                                case ActorAIGoal.Hide:
+                                    activity = "Hiding";
+                                    break;
+                                case ActorAIGoal.Search:
+                                    activity = "Searching";
+                                    break;
+                                case ActorAIGoal.Wait:
+                                    activity = "Waiting";
+                                    break;
+                            }
+                            locStatus = activity + " at " + locName;
+                        }
+                        else if (status == ActorStatus.Travelling)
+                        { locStatus = "Moving to " + locName; }
+                    }
+                    //unknown
+                    else
+                    {
+                        locID = target.LastKnownLocID;
+                        locName = GetLocationName(locID);
+                        if (target.LastKnownGoal == ActorAIGoal.Move)
+                        { locStatus = "Moving to " + locName; }
+                        else
+                        {
+                            string activity = "?";
+                            switch (target.LastKnownGoal)
+                            {
+                                case ActorAIGoal.Hide:
+                                    activity = "Hiding";
+                                    break;
+                                case ActorAIGoal.Search:
+                                    activity = "Searching";
+                                    break;
+                                case ActorAIGoal.Wait:
+                                    activity = "Waiting";
+                                    break;
+                            }
+                            locStatus = activity + " at " + locName;
+                        }
+                    }
+                    //get location coords
+                    Location loc = Game.network.GetLocation(locID);
+                    if (loc != null) { coordinates = string.Format("(Pos {0}:{1})", loc.GetPosX(), loc.GetPosY()); }
+                    else { Game.SetError(new Error(184, "Invalid Loc (null) for Target, default Cordinate text used")); }
                     //Target
                     if (target.Known == true || debugMode == true)
                     {
                         //known status
                         if (debugMode == true)
                         {
-                            charString = string.Format("Aid {0,-3} {1,-23} {2,-35}{3,-15} {4,-12}", target.ActID, target.Name, locStatus, coordinates,
-                              target.Known == true ? "Known" : "Unknown");
+                            charString = string.Format("Aid {0,-3} {1,-23} {2,-35}{3,-15} {4,-12}  Goal -> {5,-8} Branch -> {6}", target.ActID, target.Name, locStatus, coordinates,
+                              target.Known == true ? "Known" : "Unknown", target.Goal, target.AssignedBranch);
                         }
                         else { charString = string.Format("Aid {0,-3} {1,-23} {2,-35}{3,-15}", target.ActID, target.Name, locStatus, coordinates); }
                         listTargets.Add(new Snippet(charString, RLColor.White, RLColor.Black));

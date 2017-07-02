@@ -5591,12 +5591,25 @@ namespace Next_Game
                                 int targetActID = 0;
                                 for (int i = 20; i < dictPassiveActors.Count; i++)
                                 {
-                                    Passive target = dictPassiveActors[i];
+                                    Actor target = dictPassiveActors[i];
                                     if (target is Noble && target.Type == ActorType.Lord && target.Status == ActorStatus.AtLocation)
                                     {
                                         if (target.GetRelPlyr() < 40)
                                         {
                                             targetActID = target.ActID;
+                                            target.Goal = ActorAIGoal.Wait;
+                                            target.LastKnownGoal = ActorAIGoal.Wait;
+                                            target.GoalTurns = 0;
+                                            Location loc = Game.network.GetLocation(target.LocID);
+                                            target.Known = false;
+                                            target.TurnsUnknown = 1;
+                                            if (loc != null)
+                                            {
+                                                target.AssignedBranch = loc.GetBranch();
+                                                target.LastKnownPos = target.GetPosition();
+                                                target.LastKnownLocID = loc.LocationID;
+                                            }
+                                            else { Game.SetError(new Error(323, $"Invalid Location for target LocID \"{target.LocID}\"")); }
                                             break;
                                         }
                                     }

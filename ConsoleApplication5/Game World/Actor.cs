@@ -68,6 +68,13 @@ namespace Next_Game
         public string ConcealText { get; set; } //short descriptive text giving name of Safe house or type of disguise
         private List<int> listOfEnemies; //if found, contains actID of all enemies who found you, cleared at end of each turn
         private List<int> listOfSearched; //tracks every enemy who searches (in same place) for character to prevent enemies making multiple searches each turn. Reset at end of turn.
+        //ai controlled
+        public Position LastKnownPos { get; set; } //last known Position -> updated every turn that actor is known
+        public ActorAIGoal LastKnownGoal { get; set; } //last known activity status -> updated every turn actor is known
+        public ActorAIGoal Goal { get; set; } //current goal (mission) for an AI controlled actor
+        public int GoalTurns { get; set; } //number of turns currently spent on existing goal
+        public int AssignedBranch { get; set; } //branch allocated at start of game, '0' indicates capital
+        public bool MoveOut { get; set; } //direction of movement along branch, 'true' -> outward from capital, 'false' -> inwards to Capital
         //stats 
         public int Combat { get; set; } = 3;
         public int Wits { get; set; } = 3;
@@ -1164,14 +1171,16 @@ namespace Next_Game
 
     public class Enemy : Actor
     {
-        public bool Activated { get; set; } //Nemesis set to false at start, Inquisitor set to true. Can't capture unless activated.
-        public Position LastKnownPos { get; set; } //last known Position -> updated every turn that actor is known
+
+        /*public Position LastKnownPos { get; set; } //last known Position -> updated every turn that actor is known
         public ActorAIGoal LastKnownGoal { get; set; } //last known activity status -> updated every turn actor is known
         public ActorAIGoal Goal { get; set; } //current goal (mission) for an AI controlled actor
         public int GoalTurns { get; set; } //number of turns currently spent on existing goal
-        //ai related
         public int AssignedBranch { get; set; } //branch allocated at start of game, '0' indicates capital
-        public bool MoveOut { get; set; } //direction of movement along branch, 'true' -> outward from capital, 'false' -> inwards to Capital
+        public bool MoveOut { get; set; } //direction of movement along branch, 'true' -> outward from capital, 'false' -> inwards to Capital*/
+
+        //ai related
+        public bool Activated { get; set; } //Nemesis set to false at start, Inquisitor set to true. Can't capture unless activated.
         public bool HuntMode { get; set; } //'true' -> actively hunting player, 'false' -> patrolling branch
         public bool GoodEnemy { get; set; } //true if on your side, eg. Inquisitor in Act Two, default false
         public bool AIControl { get; set; } //true if AI controlled (can be manual in Act Two), default true. All inquisitors must have the same AIControl setting.
