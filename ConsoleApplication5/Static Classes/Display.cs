@@ -1226,99 +1226,126 @@ namespace Next_Game
         {
             List<Snippet> listToDisplay = new List<Snippet>();
             Dictionary<int, Active> dictActiveActors = Game.world.GetAllActiveActors();
-            listToDisplay.Add(new Snippet("--- Player Characters", RLColor.Yellow, RLColor.Black));
             int chance, locID;
             ActorStatus status;
             string locName, concealText, coordinates, distText, crowText;
             string locStatus = "who knows?";
             string charString; //overall string
             RLColor textColor = RLColor.White;
-            //loop actors
+            //display Player at top
+            Player player = Game.world.GetPlayer();
+            if (player != null)
+            {
+                locID = player.LocID;
+                locName = GetLocationName(locID);
+                status = player.Status;
+                switch (status)
+                {
+                    case ActorStatus.AtLocation:
+                        locStatus = $"At {locName}";
+                        if (player.Conceal == ActorConceal.SafeHouse)
+                        {  concealText = string.Format("At SafeHouse ({0} star{1})", player.ConcealLevel, player.ConcealLevel != 1 ? "s" : "");  }
+                        else if (player.Conceal == ActorConceal.Disguise)
+                        {  concealText = string.Format("In Disguise ({0} star{1})", player.ConcealLevel, player.ConcealLevel != 1 ? "s" : "");   }
+                        break;
+                    case ActorStatus.Travelling:
+                        if (player.Conceal == ActorConceal.Disguise)
+                        {
+                            concealText = string.Format("In Disguise ({0} star{1})", player.ConcealLevel, player.ConcealLevel != 1 ? "s" : "");
+                        }
+                        else if (player.Travel == TravelMode.Mounted)
+                        { concealText = GetStars(player.HorseHealth); }
+                        break;
+                    case ActorStatus.AtSea:
+                        locStatus = string.Format("On a ship to {0}, arriving in {1} day{2}", locName, player.VoyageTimer, player.VoyageTimer != 1 ? "s" : "");
+                        break;
+                    case ActorStatus.Adrift:
+                        locStatus = string.Format("Adrift in {0}. Survival time {1} day{2}", player.SeaName, player.DeathTimer, player.DeathTimer != 1 ? "s" : "");
+                        break;
+                    case ActorStatus.Captured:
+                        locStatus = string.Format("Held at {0}. Survival time {1} day{2}", locName, player.DeathTimer, player.DeathTimer != 1 ? "s" : "");
+                        break;
+                }
+                        Position pos = player.GetPosition();
+                coordinates = string.Format("(Loc {0}:{1})", pos.PosX, pos.PosY);
+                charString = string.Format("ID 1  (Aid {0})    {1,-25} {2,-30}{3,-15}", player.ActID, player.Name, locStatus, coordinates);
+                listToDisplay.Add(new Snippet(charString, Color._badTrait, RLColor.Black));
+            }
+            else { Game.SetError(new Error(332, "Invalid Player (null)")); }
+            listToDisplay.Add(new Snippet("--- Followers", RLColor.Yellow, RLColor.Black));
+            //Followers
             foreach (var actor in dictActiveActors)
             {
-                status = actor.Value.Status;
-                concealText = "";
-                //ignore dead actors
-                if (status != ActorStatus.Gone)
+                if (!(actor.Value is Player))
                 {
-                    locID = actor.Value.LocID;
-                    locName = GetLocationName(locID);
-                    switch (status)
+                    status = actor.Value.Status;
+                    concealText = "";
+                    //ignore dead actors
+                    if (status != ActorStatus.Gone)
                     {
-                        case ActorStatus.AtLocation:
-                            locStatus = $"At {locName}";
+                        locID = actor.Value.LocID;
+                        locName = GetLocationName(locID);
+                        switch (status)
+                        {
+                            case ActorStatus.AtLocation:
+                                locStatus = $"At {locName}";
+                                break;
+                            case ActorStatus.Travelling:
+                                locStatus = string.Format("{0} to {1}", actor.Value.Travel == TravelMode.Mounted ? "Riding" : "Walking", locName);
+                                break;
+                            case ActorStatus.AtSea:
+                                locStatus = string.Format("On a ship to {0}, arriving in {1} day{2}", locName, actor.Value.VoyageTimer, actor.Value.VoyageTimer != 1 ? "s" : "");
+                                break;
+                            case ActorStatus.Adrift:
+                                locStatus = string.Format("Adrift in {0}. Survival time {1} day{2}", actor.Value.SeaName, actor.Value.DeathTimer, actor.Value.DeathTimer != 1 ? "s" : "");
+                                break;
+                            case ActorStatus.Captured:
+                                locStatus = string.Format("Held at {0}. Survival time {1} day{2}", locName, actor.Value.DeathTimer, actor.Value.DeathTimer != 1 ? "s" : "");
+                                break;
+                        }
+                        //only show chosen characters (at Location or not depending on parameter)
+                        if (locationsOnly == true && status == ActorStatus.AtLocation || !locationsOnly)
+                        {
+                            Position pos = actor.Value.GetPosition();
+                            coordinates = string.Format("(Loc {0}:{1})", pos.PosX, pos.PosY);
                             if (actor.Value is Player)
                             {
-                                Player player = actor.Value as Player;
-                                if (player.Conceal == ActorConceal.SafeHouse)
-                                { concealText = string.Format("At SafeHouse ({0} star{1})", player.ConcealLevel, player.ConcealLevel != 1 ? "s" : ""); }
-                                else if (player.Conceal == ActorConceal.Disguise)
-                                { concealText = string.Format("In Disguise ({0} star{1})", player.ConcealLevel, player.ConcealLevel != 1 ? "s" : ""); }
+                                //player (no distance display)
+                                textColor = Color._player;
+                                switch (actor.Value.Status)
+                                {
+                                    case ActorStatus.AtLocation:
+                                    case ActorStatus.Travelling:
+                                        charString = string.Format("Aid {0,-2} {1,-18} {2,-30}{3,-15} {4,-11}", actor.Key, actor.Value.Name, locStatus, coordinates, concealText);
+                                        break;
+                                    case ActorStatus.AtSea:
+                                    case ActorStatus.Adrift:
+                                    case ActorStatus.Captured:
+                                        charString = string.Format("Aid {0,-2} {1,-18} {2,-30}", actor.Key, actor.Value.Name, locStatus);
+                                        break;
+                                    default:
+                                        charString = "Unknown Actor.Value.Status";
+                                        break;
+                                }
                             }
-                            break;
-                        case ActorStatus.Travelling:
-                            locStatus = string.Format("{0} to {1}", actor.Value.Travel == TravelMode.Mounted ? "Riding" : "Walking", locName);
-                            if (actor.Value is Player)
+                            else
                             {
-                                Player player = actor.Value as Player;
-                                if (player.Conceal == ActorConceal.Disguise)
-                                { concealText = string.Format("In Disguise ({0} star{1})", player.ConcealLevel, player.ConcealLevel != 1 ? "s" : ""); }
-                                else if (player.Travel == TravelMode.Mounted)
-                                { concealText = GetStars(player.HorseHealth); }
+                                if (actor.Value.Delay == 0)
+                                {
+                                    if (actor.Value.Activated == true) { textColor = Color._active; }
+                                    else { textColor = RLColor.White; }
+                                }
+                                else { textColor = RLColor.LightGray; }
+                                //distance = Game.utility.GetDistance(posPlayer.PosX, posPlayer.PosY, pos.PosX, pos.PosY);
+                                distText = string.Format("{0} {1}", "dist:", actor.Value.CrowDistance);
+                                chance = actor.Value.CrowChance + actor.Value.CrowBonus;
+                                chance = Math.Min(100, chance);
+                                crowText = string.Format("{0} {1}{2}", "crow:", chance, "%");
+                                charString = string.Format("Aid {0,-2} {1,-18} {2,-30}{3,-15} {4,-11} {5,-12} {6,-12}", actor.Key, actor.Value.Name, locStatus, coordinates, distText, crowText,
+                                    actor.Value.Known == true ? "Known" : "Unknown");
                             }
-                            break;
-                        case ActorStatus.AtSea:
-                            locStatus = string.Format("On a ship to {0}, arriving in {1} day{2}", locName, actor.Value.VoyageTimer, actor.Value.VoyageTimer != 1 ? "s" : "");
-                            break;
-                        case ActorStatus.Adrift:
-                            locStatus = string.Format("Adrift in {0}. Survival time {1} day{2}", actor.Value.SeaName, actor.Value.DeathTimer, actor.Value.DeathTimer != 1 ? "s" : "");
-                            break;
-                        case ActorStatus.Captured:
-                            locStatus = string.Format("Held at {0}. Survival time {1} day{2}", locName, actor.Value.DeathTimer, actor.Value.DeathTimer != 1 ? "s" : "");
-                            break;
-                    }
-                    //only show chosen characters (at Location or not depending on parameter)
-                    if (locationsOnly == true && status == ActorStatus.AtLocation || !locationsOnly)
-                    {
-                        Position pos = actor.Value.GetPosition();
-                        coordinates = string.Format("(Loc {0}:{1})", pos.PosX, pos.PosY);
-                        if (actor.Value is Player)
-                        {
-                            //player (no distance display)
-                            textColor = Color._player;
-                            switch (actor.Value.Status)
-                            {
-                                case ActorStatus.AtLocation:
-                                case ActorStatus.Travelling:
-                                    charString = string.Format("Aid {0,-2} {1,-18} {2,-30}{3,-15} {4,-11}", actor.Key, actor.Value.Name, locStatus, coordinates, concealText);
-                                    break;
-                                case ActorStatus.AtSea:
-                                case ActorStatus.Adrift:
-                                case ActorStatus.Captured:
-                                    charString = string.Format("Aid {0,-2} {1,-18} {2,-30}", actor.Key, actor.Value.Name, locStatus);
-                                    break;
-                                default:
-                                    charString = "Unknown Actor.Value.Status";
-                                    break;
-                            }
+                            listToDisplay.Add(new Snippet(charString, textColor, RLColor.Black));
                         }
-                        else
-                        {
-                            if (actor.Value.Delay == 0)
-                            {
-                                if (actor.Value.Activated == true) { textColor = Color._active; }
-                                else { textColor = RLColor.White; }
-                            }
-                            else { textColor = RLColor.LightGray; }
-                            //distance = Game.utility.GetDistance(posPlayer.PosX, posPlayer.PosY, pos.PosX, pos.PosY);
-                            distText = string.Format("{0} {1}", "dist:", actor.Value.CrowDistance);
-                            chance = actor.Value.CrowChance + actor.Value.CrowBonus;
-                            chance = Math.Min(100, chance);
-                            crowText = string.Format("{0} {1}{2}", "crow:", chance, "%");
-                            charString = string.Format("Aid {0,-2} {1,-18} {2,-30}{3,-15} {4,-11} {5,-12} {6,-12}", actor.Key, actor.Value.Name, locStatus, coordinates, distText, crowText,
-                                actor.Value.Known == true ? "Known" : "Unknown");
-                        }
-                        listToDisplay.Add(new Snippet(charString, textColor, RLColor.Black));
                     }
                 }
             }
@@ -1333,13 +1360,36 @@ namespace Next_Game
         {
             List<Snippet> listToDisplay = new List<Snippet>();
             Dictionary<int, Enemy> dictEnemyActors = Game.world.GetAllEnemyActors();
-            listToDisplay.Add(new Snippet("--- Inquisitors", RLColor.Yellow, RLColor.Black));
             int locID;
             ActorStatus status;
             string locName, coordinates/*concealText, distText, ,  crowText*/;
             string locStatus = "Unknown";
             string charString; //overall string
             RLColor textColor = RLColor.White;
+            //display Player at top
+            Player player = Game.world.GetPlayer();
+            if (player != null)
+            {
+                locID = player.LocID;
+                locName = GetLocationName(locID);
+                status = player.Status;
+                switch (status)
+                {
+                    case ActorStatus.AtLocation:
+                        locStatus = $"At {locName}";
+                        break;
+                    case ActorStatus.Travelling:
+                        locStatus = string.Format("Travelling to {0}", locName);
+                        break;
+                }
+                Position pos = player.GetPosition();
+                coordinates = string.Format("(Loc {0}:{1})", pos.PosX, pos.PosY);
+                charString = string.Format("ID 1  (Aid {0})    {1,-25} {2,-30}{3,-15}",player.ActID, player.Name, locStatus, coordinates);
+                listToDisplay.Add(new Snippet(charString, RLColor.LightRed, RLColor.Black));
+            }
+            else { Game.SetError(new Error(332, "Invalid Player (null)")); }
+            listToDisplay.Add(new Snippet("--- Inquisitors", RLColor.Yellow, RLColor.Black));
+            //Inquistiors
             foreach (var enemy in dictEnemyActors)
             {
                 if (enemy.Value.GoodEnemy == true)
@@ -1364,13 +1414,7 @@ namespace Next_Game
                             }
                             Position pos = enemy.Value.GetPosition();
                             coordinates = string.Format("(Loc {0}:{1})", pos.PosX, pos.PosY);
-                            /*distText = string.Format("{0} {1}", "dist:", enemy.Value.CrowDistance);
-                            chance = enemy.Value.CrowChance + enemy.Value.CrowBonus;
-                            chance = Math.Min(100, chance);
-                            crowText = string.Format("{0} {1}{2}", "crow:", chance, "%");
-                            charString = string.Format("Aid {0,-2} {1,-18} {2,-30}{3,-15} {4,-11} {5,-12} {6,-12}", enemy.Key, enemy.Value.Name, locStatus, coordinates, distText, crowText,
-                                enemy.Value.Known == true ? "Known" : "Unknown");*/
-                            charString = string.Format("Num {0}  Aid {1,-2}  {2,-25} {3,-30}{4,-15}", inquisitor.TempActID, enemy.Key, enemy.Value.Name, locStatus, coordinates);
+                            charString = string.Format("ID {0}  (Aid {1,-2})  {2,-25} {3,-30}{4,-15}", inquisitor.TempActID, enemy.Key, enemy.Value.Name, locStatus, coordinates);
                             listToDisplay.Add(new Snippet(charString, textColor, RLColor.Black));
                         }
                     }
@@ -1546,15 +1590,31 @@ namespace Next_Game
         /// <param name="charID"></param>
         public Snippet ShowSelectedActor(int charID)
         {
-            Dictionary<int, Active> dictActiveActors = Game.world.GetAllActiveActors();
             string returnText = "Character NOT KNOWN";
-            //find in dictionary
-            if (dictActiveActors.ContainsKey(charID))
+            if (Game.gameAct == Act.One)
             {
-                Actor person = dictActiveActors[charID];
-                Position pos = person.GetPosition();
-                returnText = $"{person.Name} at {GetLocationName(person.LocID)} ({pos.PosX}:{pos.PosY}) has been selected";
+                Dictionary<int, Active> dictActiveActors = Game.world.GetAllActiveActors();
+                //find in dictionary
+                if (dictActiveActors.ContainsKey(charID))
+                {
+                    Actor person = dictActiveActors[charID];
+                    Position pos = person.GetPosition();
+                    returnText = $"{person.Name} at {GetLocationName(person.LocID)} ({pos.PosX}:{pos.PosY}) has been selected";
+                }
             }
+            else if (Game.gameAct == Act.Two)
+            {
+                Dictionary<int, Enemy> dictEnemyActors = Game.world.GetAllEnemyActors();
+                //find in dictionary
+                if (dictEnemyActors.ContainsKey(charID))
+                {
+                    Actor person = dictEnemyActors[charID];
+                    Position pos = person.GetPosition();
+                    returnText = $"{person.Name} at {GetLocationName(person.LocID)} ({pos.PosX}:{pos.PosY}) has been selected";
+                }
+            }
+            else
+            { Game.SetError(new Error(330, $"Invalid GameAct \"{Game.gameAct}\"")); }
             return new Snippet(returnText);
         }
 

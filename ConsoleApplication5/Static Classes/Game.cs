@@ -23,9 +23,9 @@ namespace Next_Game
     {
         // The screen height and width are in number of tiles
 
-        //private static int seed = (int)DateTime.Now.Ticks & 0x0000FFFF;
+        private static int seed = (int)DateTime.Now.Ticks & 0x0000FFFF;
         //DEBUG: insert seed here to test a particular map
-        private static int seed = 16081;
+        //private static int seed = 16081;
 
         static Random rnd;
         
@@ -835,7 +835,7 @@ namespace Next_Game
                                         //move Active characters around map (must be AtLocation in order to move)
                                         List<Snippet> charList = new List<Snippet>();
                                         charList.Add(display.GetActorStatusRL(_charIDSelected));
-                                        _posSelect1 = world.GetActiveActorLocationByPos(_charIDSelected);
+                                        _posSelect1 = world.GetActorLocationByPos(_charIDSelected);
                                         if (_posSelect1 != null)
                                         {
                                             charList.Add(new Snippet("Click on the Destination location or press [Right Click] to cancel"));
@@ -851,7 +851,7 @@ namespace Next_Game
                                         List<Snippet> playerList = new List<Snippet>();
                                         playerList.Add(new Snippet("Teleport Player", Color._godMode, RLColor.Black));
                                         _charIDSelected = 1;
-                                        _posSelect1 = world.GetActiveActorLocationByPos(_charIDSelected);
+                                        _posSelect1 = world.GetActorLocationByPos(_charIDSelected);
                                         if (_posSelect1 != null)
                                         {
                                             playerList.Add(new Snippet("Click on the Destination location or press [Right Click] to cancel")); _mouseOn = true;

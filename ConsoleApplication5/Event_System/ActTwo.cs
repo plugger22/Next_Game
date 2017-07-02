@@ -40,11 +40,9 @@ namespace Next_Game.Event_System
                 List<Trigger> listTriggers = new List<Trigger>();
                 int limit; //loop counter, prevents overshooting the # of available function keys
                 int locID = player.LocID;
-                int rndLocID, voyageDistance;
                 int locType = 0; //1 - capital, 2 - MajorHouse, 3 - MinorHouse, 4 - Inn
                 int talkRel = Game.constant.GetValue(Global.TALK_THRESHOLD);
                 int speed = Game.constant.GetValue(Global.SEA_SPEED);
-                int chance, voyageTime;
                 string actorText = "unknown"; string optionText = "unknown"; string locName = "unknown";
                 Location loc = Game.network.GetLocation(locID);
                 if (loc != null)

@@ -818,25 +818,41 @@ namespace Next_Game
         }
 
         /// <summary>
-        /// selects an active actor for movement orders if at a location and activated, returns null otherwise
+        /// selects an actor for movement orders if at a location (both Acts) and activated (Act Two), returns null otherwise
         /// </summary>
         /// <param name="charID"></param>
         /// <returns></returns>
-        internal Position GetActiveActorLocationByPos(int charID)
+        internal Position GetActorLocationByPos(int charID)
         {
-            Position pos = new Position();
+            Position pos = null;
             //find in dictionary
-            if (dictActiveActors.ContainsKey(charID))
+            if (Game.gameAct == Act.One)
             {
-                Active person = dictActiveActors[charID];
-                pos = person.GetPosition();
-                //can't be selected if not at a Location
-                if (person.Status != ActorStatus.AtLocation) { pos = null; }
-                //can't be selected if not activated
-                if (person.Activated == false) { pos = null; }
+                if (dictActiveActors.ContainsKey(charID))
+                {
+                    Active person = dictActiveActors[charID];
+                    pos = person.GetPosition();
+                    //can't be selected if not at a Location
+                    if (person.Status != ActorStatus.AtLocation) { pos = null; }
+                    //can't be selected if not activated, eg. Crow
+                    if (person.Activated == false) { pos = null; }
+                }
             }
-            else
-            { pos = null; }
+            else if (Game.gameAct == Act.Two)
+            {
+                //player must have Manual control
+                if (Game.variable.GetValue(GameVar.Inquisitor_AI) == 0)
+                {
+                    if (dictEnemyActors.ContainsKey(charID))
+                    {
+                        Actor person = dictEnemyActors[charID];
+                        pos = person.GetPosition();
+                        //can't be selected if not at a Location
+                        if (person.Status != ActorStatus.AtLocation) { pos = null; }
+                    }
+                }
+            }
+            else { Game.SetError(new Error(331, $"Invalid Game Act \"{Game.gameAct}\"")); }
             return pos;
         }
 
