@@ -343,7 +343,12 @@ namespace Next_Game
                                     //place character at destination
                                     if (CharacterAtDestination(posDestination, charID) == false)
                                     { Game.SetError(new Error(175, $"ActorID {charID} has not had their details updated upon arriving at their Destination")); }
-                                    else { Game.logTurn?.Write($"[God Mode] Player teleports from {originLocation} to {destinationLocation}"); }
+                                    else
+                                    {
+                                        Game.logTurn?.Write($"[God Mode] Player teleports from {originLocation} to {destinationLocation}");
+                                        //remove character from original destination
+                                        loc.RemoveActor(charID);
+                                    }
                                 }
                                 //show route (Act One -> Player & Follower only, Act Two -> Player & Inquisitors only)
                                 if (Game.gameAct == Act.One)
@@ -5583,7 +5588,7 @@ namespace Next_Game
                                 //store current player position to enable seamless transition back to Act 1 if required
                                 Game.variable.SetValue(GameVar.God_PlayerLocID, player.LocID);
                                 //teleport player to Capital
-                                InitialiseMoveActor(1, player.GetPosition(), posCapital);
+                                InitialiseMoveActor(player.ActID, player.GetPosition(), posCapital);
                                 Game.logTurn?.Write("Player teleported to Capital");
                                 //take care of all necessary details -> keep as much stuff here as possible, only God mode specifics in this method
                                 InitialiseChangeOver();
@@ -5600,14 +5605,14 @@ namespace Next_Game
                                             target.Goal = ActorAIGoal.Wait;
                                             target.LastKnownGoal = ActorAIGoal.Wait;
                                             target.GoalTurns = 0;
-                                            Location loc = Game.network.GetLocation(target.LocID);
+                                            Location locTarget = Game.network.GetLocation(target.LocID);
                                             target.Known = false;
                                             target.TurnsUnknown = 1;
-                                            if (loc != null)
+                                            if (locTarget != null)
                                             {
-                                                target.AssignedBranch = loc.GetBranch();
+                                                target.AssignedBranch = locTarget.GetBranch();
                                                 target.LastKnownPos = target.GetPosition();
-                                                target.LastKnownLocID = loc.LocationID;
+                                                target.LastKnownLocID = locTarget.LocationID;
                                             }
                                             else { Game.SetError(new Error(323, $"Invalid Location for target LocID \"{target.LocID}\"")); }
                                             break;
@@ -5640,7 +5645,7 @@ namespace Next_Game
                                     if (locReturn != null)
                                     {
                                         //teleport Player back to previous location prior to ActTwo
-                                        InitialiseMoveActor(1, player.GetPosition(), locReturn.GetPosition());
+                                        InitialiseMoveActor(player.ActID, player.GetPosition(), locReturn.GetPosition());
                                         Game.logTurn?.Write($"Player teleported back to {locReturn.LocName}, LocID {locID}");
                                         Game.gameReturn = 0; //reset
                                         //change Title and Office
