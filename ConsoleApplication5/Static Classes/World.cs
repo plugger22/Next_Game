@@ -5711,7 +5711,11 @@ namespace Next_Game
                         foreach (var enemy in dictEnemyActors)
                         {
                             if (enemy.Value is Inquisitor)
-                            { enemy.Value.GoodEnemy = true; Game.logTurn?.Write($"Inquisitor {enemy.Value.Name}, ActID {enemy.Value.ActID}, GoodEnemy -> {enemy.Value.GoodEnemy}"); }
+                            {
+                                enemy.Value.Known = true;
+                                enemy.Value.GoodEnemy = true;
+                                Game.logTurn?.Write($"Inquisitor {enemy.Value.Name}, ActID {enemy.Value.ActID}, GoodEnemy -> {enemy.Value.GoodEnemy}");
+                            }
                         }
                         //Populate dictRoyalBackUp
                         List<int> listOfActors = locCapital.GetActorList();

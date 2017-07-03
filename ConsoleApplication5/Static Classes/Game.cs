@@ -17,7 +17,7 @@ namespace Next_Game
     public enum InputMode {Normal, MultiKey, Scrolling} //special input modes
     public enum SpecialMode {None, FollowerEvent, PlayerEvent, Conflict, Outcome, Notification, Confirm} //if MenuMode.Special then -> type of special (Notification -> msg, Confirm -> Y/N)
     public enum ConflictMode { None, Intro, Strategy, Cards, Outcome, Confirm, AutoResolve, ErrorStrategy, Popup, RestoreCards} //submodes within SpecialMode.Conflict, determines GUI
-    public enum InfoMode { None, Followers, Enemies}; //which characters to highlight on the map
+    public enum InfoMode { None, Followers, Enemies, Inquisitors, Threats}; //which characters to highlight on the map
 
     public static class Game
     {
@@ -751,17 +751,24 @@ namespace Next_Game
                                     case MenuMode.Debug:
                                         //Toggle display of key characters; Off -> Followers -> Enemies -> Off (handled directly by Map.DrawMapRL)
                                         //If in Debug mode All enemies are shown in current position, otherwise only those known or recently known (marker is how many days old info is)
-                                        switch (_infoMode)
+                                        if (gameAct == Act.One)
                                         {
-                                            case InfoMode.None:
-                                                _infoMode = InfoMode.Followers;
-                                                break;
-                                            case InfoMode.Followers:
-                                                _infoMode = InfoMode.Enemies;
-                                                break;
-                                            case InfoMode.Enemies:
-                                                _infoMode = InfoMode.None;
-                                                break;
+                                            switch (_infoMode)
+                                            {
+                                                case InfoMode.None:
+                                                    _infoMode = InfoMode.Followers;
+                                                    break;
+                                                case InfoMode.Followers:
+                                                    _infoMode = InfoMode.Enemies;
+                                                    break;
+                                                case InfoMode.Enemies:
+                                                    _infoMode = InfoMode.None;
+                                                    break;
+                                            }
+                                        }
+                                        else if (gameAct == Act.Two)
+                                        {
+
                                         }
                                         break;
                                 }

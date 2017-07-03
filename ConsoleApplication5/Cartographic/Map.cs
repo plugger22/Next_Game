@@ -7,7 +7,7 @@ namespace Next_Game.Cartographic
 
     //Capitals - all zero except where capital and shows house #, eg. '3'. Excludes Kings Capital
     //Topography - 1 is sea, 2 is land
-    public enum MapLayer { Base, Movement, NPC, LocID, Debug, HouseID, Capitals, RefID, Geography, Terrain, GeoID, Road, Followers, Enemies, EnemiesDebug, Count } //Count must be last
+    public enum MapLayer { Base, Movement, NPC, LocID, Debug, HouseID, Capitals, RefID, Geography, Terrain, GeoID, Road, Followers, Enemies, EnemiesDebug, Inquisitors, Threats, ThreatsDebug, Count } //Count must be last
 
     //Main Map class (single instance, it's job is to set everything up at the start)
     public class Map
@@ -1391,55 +1391,63 @@ namespace Next_Game.Cartographic
                                     { num %= 10; subCell[5] = num + 48; foreColor5 = RLColor.Magenta; }
                                     break;
                             }
-                            //information layer
-                            if (Game._infoMode == InfoMode.Followers)
+                            //information layer -> Act One
+                            if (Game.gameAct == Act.One)
                             {
-                                if (followerLayer > 0)
+                                if (Game._infoMode == InfoMode.Followers)
                                 {
-                                    switch (followerLayer)
+                                    if (followerLayer > 0)
                                     {
-                                        //Followers
-                                        case 2:
-                                        case 3:
-                                        case 4:
-                                        case 5:
-                                        case 6:
-                                        case 7:
-                                        case 8:
-                                        case 9:
-                                            subCell[5] = followerLayer + 48;
-                                            foreColor5 = RLColor.Black;
+                                        switch (followerLayer)
+                                        {
+                                            //Followers
+                                            case 2:
+                                            case 3:
+                                            case 4:
+                                            case 5:
+                                            case 6:
+                                            case 7:
+                                            case 8:
+                                            case 9:
+                                                subCell[5] = followerLayer + 48;
+                                                foreColor5 = RLColor.Black;
+                                                if (flashTimer > 7) { backColor5 = RLColor.LightGray; }
+                                                else { backColor5 = RLColor.Yellow; }
+                                                break;
+                                        }
+                                    }
+                                }
+                                else if (Game._infoMode == InfoMode.Enemies)
+                                {
+                                    //show known enemies only along with marker showing age, in turns, of information
+                                    if (Game._menuMode == MenuMode.Debug)
+                                    {
+                                        //show all enemies in debug mode
+                                        if (enemiesDebugLayer > 0)
+                                        {
+                                            subCell[5] = enemiesDebugLayer + 48;
+                                            foreColor5 = RLColor.Yellow;
                                             if (flashTimer > 7) { backColor5 = RLColor.LightGray; }
-                                            else { backColor5 = RLColor.Yellow; }
-                                            break;
+                                            else { backColor5 = RLColor.Black; }
+                                        }
+                                    }
+                                    else
+                                    {
+                                        //show only those enemies that are known
+                                        if (enemiesLayer > 0)
+                                        {
+                                            subCell[5] = enemiesLayer + 48;
+                                            foreColor5 = RLColor.Yellow;
+                                            if (flashTimer > 7) { backColor5 = RLColor.LightGray; }
+                                            else { backColor5 = RLColor.Black; }
+                                        }
                                     }
                                 }
                             }
-                            else if (Game._infoMode == InfoMode.Enemies)
+                            //Information layer -> Act Two
+                            else if (Game.gameAct == Act.Two)
                             {
-                                //show known enemies only along with marker showing age, in turns, of information
-                                if (Game._menuMode == MenuMode.Debug)
-                                {
-                                    //show all enemies in debug mode
-                                    if (enemiesDebugLayer > 0)
-                                    {
-                                        subCell[5] = enemiesDebugLayer + 48;
-                                        foreColor5 = RLColor.Yellow;
-                                        if (flashTimer > 7) { backColor5 = RLColor.LightGray; }
-                                        else { backColor5 = RLColor.Black; }
-                                    }
-                                }
-                                else
-                                {
-                                    //show only those enemies that are known
-                                    if (enemiesLayer > 0)
-                                    {
-                                        subCell[5] = enemiesLayer + 48;
-                                        foreColor5 = RLColor.Yellow;
-                                        if (flashTimer > 7) { backColor5 = RLColor.LightGray; }
-                                        else { backColor5 = RLColor.Black; }
-                                    }
-                                }
+
                             }
                         }
                     }
