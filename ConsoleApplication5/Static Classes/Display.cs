@@ -1569,8 +1569,9 @@ namespace Next_Game
             //Act Two -> Target
             if (Game.gameAct == Act.Two)
             {
-                int targetActID = Game.variable.GetValue(GameVar.Inquisitor_Target);
-                Actor target = Game.world.GetPassiveActor(targetActID);
+                /*int targetActID = Game.variable.GetValue(GameVar.Inquisitor_Target);
+                Actor target = Game.world.GetPassiveActor(targetActID);*/
+                Actor target = Game.world.GetTarget();
                 if (target != null)
                 {
                     status = target.Status;
@@ -1657,7 +1658,7 @@ namespace Next_Game
                         }
                     }
                 }
-                else { Game.SetError(new Error(184, $"Invalid target (null) for TargetID {targetActID}")); }
+                else { Game.SetError(new Error(184, "Invalid target (null) for TargetID")); }
             }
             //set up display list
             if (Game.gameAct == Act.One)

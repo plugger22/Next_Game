@@ -914,6 +914,9 @@ namespace Next_Game.Cartographic
             int followerLayer = 0;
             int enemiesLayer = 0;
             int enemiesDebugLayer = 0;
+            int inquisitorLayer = 0;
+            int threatsLayer = 0;
+            int threatsDebugLayer = 0;
             int[] subCell = new int[10]; //cell array (character ALT code), 1 to 9 (ignore cell[0])
             int houseID; //House Id for houses layer
             //Timer for flashing symbols (flashes on '1', resets on '2')
@@ -957,6 +960,9 @@ namespace Next_Game.Cartographic
                     followerLayer = mapGrid[(int)MapLayer.Followers, column, row];
                     enemiesLayer = mapGrid[(int)MapLayer.Enemies, column, row];
                     enemiesDebugLayer = mapGrid[(int)MapLayer.EnemiesDebug, column, row];
+                    inquisitorLayer = mapGrid[(int)MapLayer.Inquisitors, column, row];
+                    threatsLayer = mapGrid[(int)MapLayer.Threats, column, row];
+                    threatsDebugLayer = mapGrid[(int)MapLayer.ThreatsDebug, column, row];
                     //default values for subcells
                     for (int i = 1; i < 10; i++)
                     { subCell[i] = 32; }
@@ -1447,7 +1453,52 @@ namespace Next_Game.Cartographic
                             //Information layer -> Act Two
                             else if (Game.gameAct == Act.Two)
                             {
-
+                                if (inquisitorLayer > 0)
+                                {
+                                    switch (inquisitorLayer)
+                                    {
+                                        //Followers
+                                        case 2:
+                                        case 3:
+                                        case 4:
+                                        case 5:
+                                        case 6:
+                                        case 7:
+                                        case 8:
+                                        case 9:
+                                            subCell[5] = inquisitorLayer + 48;
+                                            foreColor5 = RLColor.Black;
+                                            if (flashTimer > 7) { backColor5 = RLColor.LightGray; }
+                                            else { backColor5 = RLColor.Yellow; }
+                                            break;
+                                    }
+                                }
+                                else if (Game._infoMode == InfoMode.Threats)
+                                {
+                                    //show known threats only along with marker showing age, in turns, of information
+                                    if (Game._menuMode == MenuMode.Debug)
+                                    {
+                                        //show all threats in debug mode
+                                        if (threatsDebugLayer > 0)
+                                        {
+                                            subCell[5] = threatsDebugLayer + 48;
+                                            foreColor5 = RLColor.Yellow;
+                                            if (flashTimer > 7) { backColor5 = RLColor.LightGray; }
+                                            else { backColor5 = RLColor.Black; }
+                                        }
+                                    }
+                                    else
+                                    {
+                                        //show only those threats that are known
+                                        if (threatsLayer > 0)
+                                        {
+                                            subCell[5] = threatsLayer + 48;
+                                            foreColor5 = RLColor.Yellow;
+                                            if (flashTimer > 7) { backColor5 = RLColor.LightGray; }
+                                            else { backColor5 = RLColor.Black; }
+                                        }
+                                    }
+                                }
                             }
                         }
                     }

@@ -168,11 +168,11 @@ namespace Next_Game
             int turnsToDestination = 0; //# of turns for Player to reach their destination if travelling (used to adjust threshold)
             Game.logTurn?.Write("--- UpdateAIController (AI.cs)");
             //get target
-            int targetActID = Game.variable.GetValue(GameVar.Inquisitor_Target);
-            Actor target = Game.world.GetAnyActor(targetActID);
-            int knownStatus = Game.world.GetTrackingStatus(target.ActID); //if '0' then Known, if > 0 then # of days since last known
+            //int targetActID = Game.variable.GetValue(GameVar.Inquisitor_Target);
+            Actor target = Game.world.GetTarget();
             if (target != null)
             {
+                int knownStatus = Game.world.GetTrackingStatus(target.ActID); //if '0' then Known, if > 0 then # of days since last known
                 //Travelling? Allow for time taken to reach destination
                 if (target.Status == ActorStatus.Travelling)
                 {
@@ -306,8 +306,9 @@ namespace Next_Game
         {
             Dictionary<int, Enemy> dictEnemyActors = Game.world.GetAllEnemyActors();
             //get target
-            int targetActID = Game.variable.GetValue(GameVar.Inquisitor_Target);
-            Actor target = Game.world.GetAnyActor(targetActID);
+            /*int targetActID = Game.variable.GetValue(GameVar.Inquisitor_Target);
+            Actor target = Game.world.GetAnyActor(targetActID);*/
+            Actor target = Game.world.GetTarget();
             if (target != null)
             {
                 int turnsDM; //DM for the # of turns spent on the same goal (prevents enemy being locked into a set goal due to bad rolls)
@@ -751,7 +752,7 @@ namespace Next_Game
             int budgetDM = Game.variable.GetValue(GameVar.Inquisitor_Budget) * Game.constant.GetValue(Global.AI_SEARCH_BUDGET); //DM for inquisitor budget allocation (higher the better)
             int knownDM = 0; //modifier for search if player known
             int onFootDM = 20; //modifier for search if player is travelling and on foot
-            int targetActID = Game.variable.GetValue(GameVar.Inquisitor_Target);
+            //int targetActID = Game.variable.GetValue(GameVar.Inquisitor_Target);
             //get enemy
             Actor actor = Game.world.GetAnyActor(charID);
             if (actor != null && actor.Status != ActorStatus.Gone)
@@ -762,9 +763,10 @@ namespace Next_Game
                     Game.logTurn?.Write("--- CheckIfFoundEnemy (AI.cs)");
                     //create a temp list with the target and any others, eg. followers
                     List<Actor> listOfTargets = new List<Actor>();
-                    Actor person = Game.world.GetAnyActor(targetActID);
+                    //Actor person = Game.world.GetAnyActor(targetActID);
+                    Actor person = Game.world.GetTarget();
                     if (person != null) { listOfTargets.Add(person); }
-                    else { Game.SetError(new Error(161, $"Invalid target, ActID \"{targetActID}\"")); }
+                    else { Game.SetError(new Error(161, "Invalid target (null)")); }
                     if (Game.gameAct == Act.One)
                     {
                         //get followers -> Act One only
@@ -1159,8 +1161,9 @@ namespace Next_Game
             //Passive Target -> Act Two
             else if (Game.gameAct == Act.Two)
             {
-                int targetActID = Game.variable.GetValue(GameVar.Inquisitor_Target);
-                Actor target = Game.world.GetAnyActor(targetActID);
+                /*int targetActID = Game.variable.GetValue(GameVar.Inquisitor_Target);
+                Actor target = Game.world.GetAnyActor(targetActID);*/
+                Actor target = Game.world.GetTarget();
                 if (target != null)
                 {
                     if (target.Status == ActorStatus.AtLocation)
@@ -1172,7 +1175,7 @@ namespace Next_Game
                         else { Game.SetError(new Error(162, "Invalid pos (null) for check of Target actor")); }
                     }
                 }
-                else { Game.SetError(new Error(162, $"Invalid Target (null) for targetActID {targetActID}")); }
+                else { Game.SetError(new Error(162, "Invalid Target (null)")); }
             }
         }
 
@@ -1429,8 +1432,9 @@ namespace Next_Game
         /// </summary>
         internal void CheckConcealment()
         {
-            int targetActID = Game.variable.GetValue(GameVar.Inquisitor_Target);
-            Actor target = Game.world.GetAnyActor(targetActID);
+            /*int targetActID = Game.variable.GetValue(GameVar.Inquisitor_Target);
+            Actor target = Game.world.GetAnyActor(targetActID);*/
+            Actor target = Game.world.GetTarget();
             int refID = Game.world.ConvertLocToRef(target.LocID);
             string lostText = "";
             //target not found but concealment level takes a hit

@@ -641,11 +641,38 @@ namespace Next_Game
         /// <returns></returns>
         internal Player GetPlayer()
         {
-            Player player = new Player();
+            Player player = null;
             if (dictActiveActors.ContainsKey(1))
             { player = (Player)dictActiveActors[1]; }
-            else { player = null; }
             return player;
+        }
+
+        /// <summary>
+        /// returns Act Two current NPC target, null otherwise
+        /// </summary>
+        /// <returns></returns>
+        internal Passive GetTarget()
+        {
+            Passive target = null;
+            int targetActID = Game.variable.GetValue(GameVar.Inquisitor_Target);
+            if (dictPassiveActors.ContainsKey(targetActID))
+            { target = dictPassiveActors[targetActID]; }
+            return target;
+        }
+
+        /// <summary>
+        /// returns Nemesis, null otherwise
+        /// </summary>
+        /// <returns></returns>
+        internal Nemesis GetNemesis()
+        {
+            Nemesis nemesis = null;
+            foreach(var enemy in dictEnemyActors)
+            {
+                if (enemy.Value is Nemesis)
+                { nemesis = enemy.Value as Nemesis;  break; }
+            }
+            return nemesis;
         }
 
         /// <summary>
@@ -3249,34 +3276,85 @@ namespace Next_Game
         }
 
         /// <summary>
-        /// shows all known enemies
+        /// shows all known enemies (Act One -> all in dictEnemies, Act Two -> Nemesis, Target & Assassin
         /// </summary>
         private void UpdateEnemiesPositions()
         {
             Game.map.ClearMapLayer(MapLayer.Enemies);
             Game.map.ClearMapLayer(MapLayer.EnemiesDebug);
             int expire = Game.constant.GetValue(Global.KNOWN_REVERT);
-            //loop dictionary -> only place on map layer if known
-            foreach (var enemy in dictEnemyActors)
+            //loop dictionary -> only place on map layer if known -> Act One
+            if (Game.gameAct == Act.One)
             {
-                if (enemy.Value.Status != ActorStatus.Gone)
+                foreach (var enemy in dictEnemyActors)
                 {
-                    Position pos = enemy.Value.GetPosition();
-                    //add to enemiesDebug layer regardless (shows all enemies at current positions)
-                    Game.map.SetMapInfo(MapLayer.EnemiesDebug, pos.PosX, pos.PosY, 1);
-                    //normal enemies Layer (only what is known by the player)
-                    if (enemy.Value.Known == true)
+                    if (enemy.Value.Status != ActorStatus.Gone)
                     {
-                        //show enemy with a map marker indicating how many days old the information is -> 1 day old as Known
+                        Position pos = enemy.Value.GetPosition();
+                        //add to enemiesDebug layer regardless (shows all enemies at current positions)
                         if (pos != null)
-                        { Game.map.SetMapInfo(MapLayer.Enemies, pos.PosX, pos.PosY, 1); }
+                        { Game.map.SetMapInfo(MapLayer.EnemiesDebug, pos.PosX, pos.PosY, 1); }
+                        //normal enemies Layer (only what is known by the player)
+                        if (enemy.Value.Known == true)
+                        {
+                            //show enemy with a map marker indicating how many days old the information is -> 1 day old as Known
+                            if (pos != null)
+                            { Game.map.SetMapInfo(MapLayer.Enemies, pos.PosX, pos.PosY, 1); }
+                        }
+                        else if (enemy.Value.TurnsUnknown <= expire)
+                        {
+                            //show enemy with a map marker indicating how many days old the information is (show last known position, not current one).
+                            Position pos_1 = enemy.Value.LastKnownPos;
+                            if (pos_1 != null)
+                            { Game.map.SetMapInfo(MapLayer.Enemies, pos_1.PosX, pos_1.PosY, enemy.Value.TurnsUnknown); }
+                        }
                     }
-                    else if (enemy.Value.TurnsUnknown <= expire)
+                }
+            }
+            //Act TWo -> Inquisitors layer and Threats (Nemesis, Target, Assassins)
+            else if (Game.gameAct == Act.Two)
+            {
+                foreach (var enemy in dictEnemyActors)
+                {
+                    if (enemy.Value is Inquisitor)
                     {
-                        //show enemy with a map marker indicating how many days old the information is (show last known position, not current one).
-                        Position pos_1 = enemy.Value.LastKnownPos;
+                        Position pos = enemy.Value.GetPosition();
+                        if (pos != null)
+                        {
+                            Inquisitor inquisitor = enemy.Value as Inquisitor;
+                            Game.map.SetMapInfo(MapLayer.Inquisitors, pos.PosX, pos.PosY, inquisitor.TempActID);
+                        }
+                    }
+                }
+                //Target
+                Passive target = GetTarget();
+                if (target != null)
+                {
+                    Position pos = target.GetPosition();
+                    //add to threatsDebug layer regardless (shows all threats at current positions)
+                    if (pos != null)
+                    { Game.map.SetMapInfo(MapLayer.ThreatsDebug, pos.PosX, pos.PosY, 1); }
+                    else if (target.TurnsUnknown <= expire)
+                    {
+                        //show target with a map marker indicating how many days old the information is (show last known position, not current one).
+                        Position pos_1 = target.LastKnownPos;
                         if (pos_1 != null)
-                        { Game.map.SetMapInfo(MapLayer.Enemies, pos_1.PosX, pos_1.PosY, enemy.Value.TurnsUnknown); }
+                        { Game.map.SetMapInfo(MapLayer.Threats, pos_1.PosX, pos_1.PosY, target.TurnsUnknown); }
+                    }
+                }
+                //Nemesis
+                Nemesis nemesis = GetNemesis();
+                if (nemesis != null)
+                {
+                    Position pos = nemesis.GetPosition();
+                    if (pos != null)
+                    { Game.map.SetMapInfo(MapLayer.ThreatsDebug, pos.PosX, pos.PosY, 0); }
+                    else if (nemesis.TurnsUnknown <= expire)
+                    {
+                        //show nemesis with a map marker indicating how many days old the information is (show last known position, not current one).
+                        Position pos_1 = nemesis.LastKnownPos;
+                        if (pos_1 != null)
+                        { Game.map.SetMapInfo(MapLayer.Threats, pos_1.PosX, pos_1.PosY, nemesis.TurnsUnknown); }
                     }
                 }
             }
@@ -4115,7 +4193,7 @@ namespace Next_Game
             else if (Game.gameAct == Act.Two)
             {
                 //debug
-                Game.variable.SetValue(GameVar.Inquisitor_Target, 25); //random NPC
+                //Game.variable.SetValue(GameVar.Inquisitor_Target, 25); //random NPC
             }
         }
 

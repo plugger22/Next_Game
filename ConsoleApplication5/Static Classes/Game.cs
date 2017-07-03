@@ -768,7 +768,18 @@ namespace Next_Game
                                         }
                                         else if (gameAct == Act.Two)
                                         {
-
+                                            switch (_infoMode)
+                                            {
+                                                case InfoMode.None:
+                                                    _infoMode = InfoMode.Inquisitors;
+                                                    break;
+                                                case InfoMode.Inquisitors:
+                                                    _infoMode = InfoMode.Threats;
+                                                    break;
+                                                case InfoMode.Threats:
+                                                    _infoMode = InfoMode.None;
+                                                    break;
+                                            }
                                         }
                                         break;
                                 }

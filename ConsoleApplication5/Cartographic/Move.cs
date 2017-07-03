@@ -65,7 +65,6 @@ namespace Next_Game.Cartographic
         public bool CheckInParty(int actorID)
         {
             bool status = false;
-            //int targetActID = Game.variable.GetValue(GameVar.Inquisitor_Target);
             for(int i = 0; i < characterList.Count; i++)
             {
                 if (characterList[i] == actorID) { status = true;  Game.logTurn?.Write($"Actor ActID {actorID} found in MoveObject \"{MapMarker}\""); }
