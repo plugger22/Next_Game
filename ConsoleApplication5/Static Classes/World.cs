@@ -648,15 +648,20 @@ namespace Next_Game
         }
 
         /// <summary>
-        /// returns Act Two current NPC target, null otherwise
+        /// returns Act One or Two current Player / NPC target, null otherwise
         /// </summary>
         /// <returns></returns>
-        internal Passive GetTarget()
+        internal Actor GetTarget()
         {
-            Passive target = null;
-            int targetActID = Game.variable.GetValue(GameVar.Inquisitor_Target);
-            if (dictPassiveActors.ContainsKey(targetActID))
-            { target = dictPassiveActors[targetActID]; }
+            Actor target = null;
+            if (Game.gameAct == Act.One)
+            { target = GetPlayer(); }
+            else if (Game.gameAct == Act.Two)
+            {
+                int targetActID = Game.variable.GetValue(GameVar.Inquisitor_Target);
+                if (dictPassiveActors.ContainsKey(targetActID))
+                { target = dictPassiveActors[targetActID]; }
+            }
             return target;
         }
 
@@ -3294,6 +3299,7 @@ namespace Next_Game
                         //add to enemiesDebug layer regardless (shows all enemies at current positions)
                         if (pos != null)
                         { Game.map.SetMapInfo(MapLayer.EnemiesDebug, pos.PosX, pos.PosY, 1); }
+                        else { Game.SetError(new Error(334, "Invalid Position (null) for Act One Enemy")); }
                         //normal enemies Layer (only what is known by the player)
                         if (enemy.Value.Known == true)
                         {
@@ -3314,6 +3320,7 @@ namespace Next_Game
             //Act TWo -> Inquisitors layer and Threats (Nemesis, Target, Assassins)
             else if (Game.gameAct == Act.Two)
             {
+                //Inquisitors
                 foreach (var enemy in dictEnemyActors)
                 {
                     if (enemy.Value is Inquisitor)
@@ -3327,13 +3334,20 @@ namespace Next_Game
                     }
                 }
                 //Target
-                Passive target = GetTarget();
+                Actor target = GetTarget();
                 if (target != null)
                 {
                     Position pos = target.GetPosition();
                     //add to threatsDebug layer regardless (shows all threats at current positions)
                     if (pos != null)
                     { Game.map.SetMapInfo(MapLayer.ThreatsDebug, pos.PosX, pos.PosY, 1); }
+                    else { Game.SetError(new Error(334, "Invalid Position (null) for Act Two Target")); }
+                    if (target.Known == true)
+                    {
+                        //show target with a map marker indicating how many days old the information is -> 1 day old as Known
+                        if (pos != null)
+                        { Game.map.SetMapInfo(MapLayer.Threats, pos.PosX, pos.PosY, 1); }
+                    }
                     else if (target.TurnsUnknown <= expire)
                     {
                         //show target with a map marker indicating how many days old the information is (show last known position, not current one).
@@ -3349,6 +3363,13 @@ namespace Next_Game
                     Position pos = nemesis.GetPosition();
                     if (pos != null)
                     { Game.map.SetMapInfo(MapLayer.ThreatsDebug, pos.PosX, pos.PosY, 0); }
+                    else { Game.SetError(new Error(334, "Invalid Position (null) for Act Two Nemesis")); }
+                    if (nemesis.Known == true)
+                    {
+                        //show nemesis with a map marker indicating how many days old the information is -> 1 day old as Known
+                        if (pos != null)
+                        { Game.map.SetMapInfo(MapLayer.Threats, pos.PosX, pos.PosY, 1); }
+                    }
                     else if (nemesis.TurnsUnknown <= expire)
                     {
                         //show nemesis with a map marker indicating how many days old the information is (show last known position, not current one).
