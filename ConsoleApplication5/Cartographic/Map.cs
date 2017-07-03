@@ -1482,7 +1482,7 @@ namespace Next_Game.Cartographic
                                         if (threatsDebugLayer > 0)
                                         {
                                             subCell[5] = threatsDebugLayer + 48;
-                                            foreColor5 = RLColor.Yellow;
+                                            foreColor5 = RLColor.LightRed;
                                             if (flashTimer > 7) { backColor5 = RLColor.LightGray; }
                                             else { backColor5 = RLColor.Black; }
                                         }
@@ -1493,7 +1493,7 @@ namespace Next_Game.Cartographic
                                         if (threatsLayer > 0)
                                         {
                                             subCell[5] = threatsLayer + 48;
-                                            foreColor5 = RLColor.Yellow;
+                                            foreColor5 = RLColor.LightRed;
                                             if (flashTimer > 7) { backColor5 = RLColor.LightGray; }
                                             else { backColor5 = RLColor.Black; }
                                         }
